@@ -2,7 +2,7 @@
 baseurl = "https://jaredszajkowski.github.io/"
 languageCode = "en-us"
 paginate = 4
-title = "jaredszajkowski.github.io"
+title = "Jared Szajkowski"
 
 # Theme i18n support
 # Available values: en, fr, id, ja, ko, pt-br, zh-cn, zh-tw, es, de, nl, it, th, el, uk, ar
