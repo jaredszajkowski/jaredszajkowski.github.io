@@ -1,7 +1,7 @@
 # Change baseurl before deploy
 baseurl = "https://jaredszajkowski.github.io/"
 languageCode = "en-us"
-paginate = 5
+paginate = 4
 title = "Jared Szajkowski"
 
 # Theme i18n support
