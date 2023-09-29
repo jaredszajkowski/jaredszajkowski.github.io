@@ -67,79 +67,45 @@ Open nvme0n1 with gdisk:
 
     # gdisk /dev/nvme0n1
 
-Create GPT partition table with option "o"
+Create GPT partition table with option "o".
 
 ### Create EFI partition
 
-Create new EFI partition w/ 550mb with option "n", using the following parameters:
-
-Partition #1
-
-Default starting sector
-+550M
-Change partition type to EFI System (ef00)
+Create new EFI partition w/ 550mb with option "n", using the following parameters:</br>
+Partition #1 </br>
+Default starting sector</br>
++550M</br>
+Change partition type to EFI System (ef00)</br>
 
 ### Create boot partition
 
-Create new boot partition w/ 550mb with option "n", using the following parameters:
-Partition #2
-Default starting sector
-+550M
-Leave default type of 8300
+Create new boot partition w/ 550mb with option "n", using the following parameters:</br>
+Partition #2 </br>
+Default starting sector</br>
++550M</br>
+Leave default type of 8300</br>
 
+### Create swap partition
 
+The old rule of thumb used to be that a swap partition should be the same size as the amount of memory in the system, but given the typical amount of memory in modern systems this is obviously no longer necessary. For my system with 16 or 32 GB of memory, a swap of 8 GB is rarely even used.</br></br>
 
- 
+Create new Swap partition w/ 8GB with option "n", using the following parameters:</br>
+Partition #3</br>
+Default starting sector</br>
++8G</br>
+Change to linux swap (8200)</br>
 
-Create new Swap partition w/ 8GB with option "n" 
+### Create root partition
 
- 
+Create new Root partition w/ remaining disk space with option "n", using the following parameters:</br>
+Partition #4</br>
+Default starting sector</br>
+Complete remaining space</br>
+Linux LUKS type 8309</br>
 
-Partition # 3 
+## Write file systems
 
- 
-
-Default starting sector 
-
- 
-
-+8G 
-
- 
-
-Change to linux swap (8200) 
-
- 
-
----- 
-
- 
-
-Create new Root partition w/ remaining disk space 
-
- 
-
-Partition #4 
-
- 
-
-Default starting sector 
-
- 
-
-Complete remaining space 
-
- 
-
-Linux LUKS type 8309 
-
- 
-
----- 
-
- 
-
-Write file system to new EFI System partition: 
+Write file system to new EFI System partition:
 
  
 
