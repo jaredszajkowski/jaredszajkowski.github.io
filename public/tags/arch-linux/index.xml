@@ -23,14 +23,20 @@
 &lt;h3 id=&#34;configure-wireless&#34;&gt;Configure Wireless&lt;/h3&gt;
 &lt;p&gt;The following command will drop you into the iwd daemon:&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;iwctl&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;# iwctl&amp;rdquo;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;From there:&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;device list
-station &lt;em&gt;device&lt;/em&gt; scan
-station &lt;em&gt;device&lt;/em&gt; get-networks
-station &lt;em&gt;device&lt;/em&gt; connect &lt;em&gt;SSID&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;device list&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;station &lt;em&gt;device&lt;/em&gt; scan&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;station &lt;em&gt;device&lt;/em&gt; get-networks&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;station &lt;em&gt;device&lt;/em&gt; connect &lt;em&gt;SSID&lt;/em&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h3 id=&#34;verify-uefi-boot-mode&#34;&gt;Verify UEFI boot mode:&lt;/h3&gt;
 &lt;blockquote&gt;
