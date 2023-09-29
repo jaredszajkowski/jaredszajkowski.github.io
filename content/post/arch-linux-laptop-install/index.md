@@ -24,11 +24,9 @@ This tutorial assumes the following:
 ### Configure Wireless
 
 The following command will drop you into the iwd daemon:
-
     # iwctl
 
 From there:</br>
-
     # device list
     # station *device* scan
     # station *device* get-networks
@@ -37,7 +35,6 @@ From there:</br>
 ### Verify UEFI boot mode
 
 The following command should show directory without error:</br>
-
     # ls /sys/firmware/efi/efivars
 
 ### Verify internet connectivity
@@ -48,6 +45,164 @@ The following command should show directory without error:</br>
 
     # timedatectl set-ntp true
     # timedatectl status
+
+## Prep disks & file systems
+
+The following assumes that your NVME drive is found as /dev/nvme0n1. Partitions will then be /dev/nvme0n1p1 and so on.
+
+### Prep disks
+
+List disks:
+    # fdisk -l
+
+Wipe all file system records:
+    # wipefs -a /dev/nvme0n1
+
+### Partition table & partitions
+
+Open nvme0n1 with gdisk:
+    # gdisk /dev/nvme0n1
+
+Create GPT partition table with option "o"
+
+#### Create EFI partition
+
+Create new EFI partition w/ 550mb with option "n", using the following parameters:
+Parition # 1
+Default starting sector
++550M
+Change partition type to EFI System (ef00)
+
+#### Create boot partition
+
+Create new boot partition w/ 550mb with option "n", using the following parameters:
+Partition # 2
+Default starting sector
++550M
+Leave default type of 8300
+
+
+
+ 
+
+Create new Swap partition w/ 8GB with option "n" 
+
+ 
+
+Partition # 3 
+
+ 
+
+Default starting sector 
+
+ 
+
++8G 
+
+ 
+
+Change to linux swap (8200) 
+
+ 
+
+---- 
+
+ 
+
+Create new Root partition w/ remaining disk space 
+
+ 
+
+Partition #4 
+
+ 
+
+Default starting sector 
+
+ 
+
+Complete remaining space 
+
+ 
+
+Linux LUKS type 8309 
+
+ 
+
+---- 
+
+ 
+
+Write file system to new EFI System partition: 
+
+ 
+
+# cat /dev/zero > /dev/nvme0n1p1 
+
+# mkfs.fat -F32 /dev/nvme0n1p1 
+
+ 
+
+Then boot partition: 
+
+ 
+
+# cat /dev/zero > /dev/nvme0n1p2 
+
+# mkfs.ext2 /dev/nvme0n1p2 
+
+ 
+
+Prepare root partition w/ LUKS 
+
+ 
+
+# cryptsetup -y -v luksFormat --type luks2 /dev/nvme0n1p4 
+
+# cryptsetup luksDump /dev/nvme0n1p4 
+
+# cryptsetup open /dev/nvme0n1p4 archcryptroot 
+
+# mkfs.ext4 /dev/mapper/archcryptroot 
+
+# mount /dev/mapper/archcryptroot /mnt 
+
+ 
+
+Then swap: 
+
+ 
+
+# mkswap /dev/nvme0n1p3 
+
+# swapon /dev/nvme0n1p3 
+
+ 
+
+Create mount points: 
+
+ 
+
+# mkdir /mnt/boot 
+
+ 
+
+# mount /dev/nvme0n1p2 /mnt/boot 
+
+ 
+
+# mkdir /mnt/boot/efi 
+
+ 
+
+# mount /dev/nvme0n1p1 /mnt/boot/efi 
+
+ 
+
+Edit mirrorlist 
+
+
+
 
 
 

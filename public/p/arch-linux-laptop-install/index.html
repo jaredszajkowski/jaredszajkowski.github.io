@@ -233,6 +233,17 @@
         <li><a href="#update-system-clock">Update system clock</a></li>
       </ol>
     </li>
+    <li><a href="#prep-disks--file-systems">Prep disks &amp; file systems</a>
+      <ol>
+        <li><a href="#prep-disks">Prep disks</a></li>
+        <li><a href="#partition-table--partitions">Partition table &amp; partitions</a>
+          <ol>
+            <li><a href="#create-efi-partition">Create EFI partition</a></li>
+            <li><a href="#create-boot-partition">Create boot partition</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
   </ol>
 
   <ol>
@@ -320,7 +331,7 @@
 
 
                 <time class="article-time--reading">
-                    3 minute read
+                    4 minute read
                 </time>
             </div>
         
@@ -344,19 +355,16 @@
 <li>You want drive encrytion on your root partition, but not on your boot/efi/swap partitions</li>
 </ul>
 <h3 id="configure-wireless">Configure Wireless</h3>
-<p>The following command will drop you into the iwd daemon:</p>
-<pre><code># iwctl
-</code></pre>
-<p>From there:</br></p>
-<pre><code># device list
-# station *device* scan
-# station *device* get-networks
-# station *device* connect *SSID*
-</code></pre>
+<p>The following command will drop you into the iwd daemon:
+# iwctl</p>
+<p>From there:</br>
+# device list
+# station <em>device</em> scan
+# station <em>device</em> get-networks
+# station <em>device</em> connect <em>SSID</em></p>
 <h3 id="verify-uefi-boot-mode">Verify UEFI boot mode</h3>
-<p>The following command should show directory without error:</br></p>
-<pre><code># ls /sys/firmware/efi/efivars
-</code></pre>
+<p>The following command should show directory without error:</br>
+# ls /sys/firmware/efi/efivars</p>
 <h3 id="verify-internet-connectivity">Verify internet connectivity</h3>
 <pre><code># ping archlinux.org
 </code></pre>
@@ -364,6 +372,62 @@
 <pre><code># timedatectl set-ntp true
 # timedatectl status
 </code></pre>
+<h2 id="prep-disks--file-systems">Prep disks &amp; file systems</h2>
+<p>The following assumes that your NVME drive is found as /dev/nvme0n1. Partitions will then be /dev/nvme0n1p1 and so on.</p>
+<h3 id="prep-disks">Prep disks</h3>
+<p>List disks:
+# fdisk -l</p>
+<p>Wipe all file system records:
+# wipefs -a /dev/nvme0n1</p>
+<h3 id="partition-table--partitions">Partition table &amp; partitions</h3>
+<p>Open nvme0n1 with gdisk:
+# gdisk /dev/nvme0n1</p>
+<p>Create GPT partition table with option &ldquo;o&rdquo;</p>
+<h4 id="create-efi-partition">Create EFI partition</h4>
+<p>Create new EFI partition w/ 550mb with option &ldquo;n&rdquo;, using the following parameters:
+Parition # 1
+Default starting sector
++550M
+Change partition type to EFI System (ef00)</p>
+<h4 id="create-boot-partition">Create boot partition</h4>
+<p>Create new boot partition w/ 550mb with option &ldquo;n&rdquo;, using the following parameters:
+Partition # 2
+Default starting sector
++550M
+Leave default type of 8300</p>
+<p>Create new Swap partition w/ 8GB with option &ldquo;n&rdquo;</p>
+<p>Partition # 3</p>
+<p>Default starting sector</p>
+<p>+8G</p>
+<p>Change to linux swap (8200)</p>
+<hr>
+<p>Create new Root partition w/ remaining disk space</p>
+<p>Partition #4</p>
+<p>Default starting sector</p>
+<p>Complete remaining space</p>
+<p>Linux LUKS type 8309</p>
+<hr>
+<p>Write file system to new EFI System partition:</p>
+<h1 id="cat-devzero--devnvme0n1p1">cat /dev/zero &gt; /dev/nvme0n1p1</h1>
+<h1 id="mkfsfat--f32-devnvme0n1p1">mkfs.fat -F32 /dev/nvme0n1p1</h1>
+<p>Then boot partition:</p>
+<h1 id="cat-devzero--devnvme0n1p2">cat /dev/zero &gt; /dev/nvme0n1p2</h1>
+<h1 id="mkfsext2-devnvme0n1p2">mkfs.ext2 /dev/nvme0n1p2</h1>
+<p>Prepare root partition w/ LUKS</p>
+<h1 id="cryptsetup--y--v-luksformat---type-luks2-devnvme0n1p4">cryptsetup -y -v luksFormat &ndash;type luks2 /dev/nvme0n1p4</h1>
+<h1 id="cryptsetup-luksdump-devnvme0n1p4">cryptsetup luksDump /dev/nvme0n1p4</h1>
+<h1 id="cryptsetup-open-devnvme0n1p4-archcryptroot">cryptsetup open /dev/nvme0n1p4 archcryptroot</h1>
+<h1 id="mkfsext4-devmapperarchcryptroot">mkfs.ext4 /dev/mapper/archcryptroot</h1>
+<h1 id="mount-devmapperarchcryptroot-mnt">mount /dev/mapper/archcryptroot /mnt</h1>
+<p>Then swap:</p>
+<h1 id="mkswap-devnvme0n1p3">mkswap /dev/nvme0n1p3</h1>
+<h1 id="swapon-devnvme0n1p3">swapon /dev/nvme0n1p3</h1>
+<p>Create mount points:</p>
+<h1 id="mkdir-mntboot">mkdir /mnt/boot</h1>
+<h1 id="mount-devnvme0n1p2-mntboot">mount /dev/nvme0n1p2 /mnt/boot</h1>
+<h1 id="mkdir-mntbootefi">mkdir /mnt/boot/efi</h1>
+<h1 id="mount-devnvme0n1p1-mntbootefi">mount /dev/nvme0n1p1 /mnt/boot/efi</h1>
+<p>Edit mirrorlist</p>
 <p>The following HTML <code>&lt;h1&gt;</code>—<code>&lt;h6&gt;</code> elements represent six levels of section headings. <code>&lt;h1&gt;</code> is the highest section level while <code>&lt;h6&gt;</code> is the lowest.</p>
 <h1 id="h1">H1</h1>
 <h2 id="h2">H2</h2>
