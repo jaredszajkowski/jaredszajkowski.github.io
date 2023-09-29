@@ -21,7 +21,7 @@ name = "LinkedIn"
 url = "https://www.linkedin.com/in/jaredszajkowski/"
 
 [social.params]
-icon = "brand-github"
+icon = "LinkedIn_icon_circle"
 
 # Twitter below
 
