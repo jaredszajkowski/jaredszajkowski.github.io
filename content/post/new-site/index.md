@@ -4,11 +4,10 @@ description: Welcome to my website
 # slug: hello-world
 date: 2023-09-29 00:00:00+0000
 # image: cover.jpg
-# categories:
-#     - Example Category
-#     - Example Category 2
-# tags:
-#     - Example Tag
+categories:
+    - Tech
+tags:
+    - Hugo
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 
