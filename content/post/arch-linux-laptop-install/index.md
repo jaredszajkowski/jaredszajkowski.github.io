@@ -135,16 +135,16 @@ I use *archcryptroot* for the name of my encrypted volume, but change as necessa
 
 ### Swap partition
 
-Then swap: 
+Then swap:
 
-    # mkswap /dev/nvme0n1p3 
-    # swapon /dev/nvme0n1p3 
+    # mkswap /dev/nvme0n1p3
+    # swapon /dev/nvme0n1p3
 
 ### Create mount points
 
-    # mkdir /mnt/boot 
-    # mount /dev/nvme0n1p2 /mnt/boot 
-    # mkdir /mnt/boot/efi 
+    # mkdir /mnt/boot
+    # mount /dev/nvme0n1p2 /mnt/boot
+    # mkdir /mnt/boot/efi
     # mount /dev/nvme0n1p1 /mnt/boot/efi
 
 ## Install system

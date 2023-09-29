@@ -102,13 +102,13 @@ Linux LUKS type 8309&lt;/br&gt;&lt;/p&gt;
 &lt;p&gt;I use &lt;em&gt;archcryptroot&lt;/em&gt; for the name of my encrypted volume, but change as necessary.&lt;/p&gt;
 &lt;h3 id=&#34;swap-partition&#34;&gt;Swap partition&lt;/h3&gt;
 &lt;p&gt;Then swap:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# mkswap /dev/nvme0n1p3 
-# swapon /dev/nvme0n1p3 
+&lt;pre&gt;&lt;code&gt;# mkswap /dev/nvme0n1p3
+# swapon /dev/nvme0n1p3
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;create-mount-points&#34;&gt;Create mount points&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;# mkdir /mnt/boot 
-# mount /dev/nvme0n1p2 /mnt/boot 
-# mkdir /mnt/boot/efi 
+&lt;pre&gt;&lt;code&gt;# mkdir /mnt/boot
+# mount /dev/nvme0n1p2 /mnt/boot
+# mkdir /mnt/boot/efi
 # mount /dev/nvme0n1p1 /mnt/boot/efi
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&#34;install-system&#34;&gt;Install system&lt;/h2&gt;

@@ -425,13 +425,13 @@ Linux LUKS type 8309</br></p>
 <p>I use <em>archcryptroot</em> for the name of my encrypted volume, but change as necessary.</p>
 <h3 id="swap-partition">Swap partition</h3>
 <p>Then swap:</p>
-<pre><code># mkswap /dev/nvme0n1p3 
-# swapon /dev/nvme0n1p3 
+<pre><code># mkswap /dev/nvme0n1p3
+# swapon /dev/nvme0n1p3
 </code></pre>
 <h3 id="create-mount-points">Create mount points</h3>
-<pre><code># mkdir /mnt/boot 
-# mount /dev/nvme0n1p2 /mnt/boot 
-# mkdir /mnt/boot/efi 
+<pre><code># mkdir /mnt/boot
+# mount /dev/nvme0n1p2 /mnt/boot
+# mkdir /mnt/boot/efi
 # mount /dev/nvme0n1p1 /mnt/boot/efi
 </code></pre>
 <h2 id="install-system">Install system</h2>

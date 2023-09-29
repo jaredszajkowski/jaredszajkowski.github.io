@@ -1,7 +1,7 @@
 ---
 title: Tech
 description: Technology, computers, software, etc.
-image:
+# image:
 
 # Badge style
 style:
