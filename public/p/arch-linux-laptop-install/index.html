@@ -344,18 +344,18 @@
 <li>You want drive encrytion on your root partition, but not on your boot/efi/swap partitions</li>
 </ul>
 <h3 id="configure-wireless">Configure Wireless</h3>
-<p>The following command will drop you into the iwd daemon:</br></p>
+<p>The following command will drop you into the iwd daemon:</p>
 <pre><code># iwctl
 </code></pre>
 <p>From there:</br></p>
-<pre><code># device list &lt;/br&gt;
-# station *device* scan &lt;/br&gt;
-# station *device* get-networks &lt;/br&gt;
-# station *device* connect *SSID* &lt;/br&gt;
+<pre><code># device list
+# station *device* scan
+# station *device* get-networks
+# station *device* connect *SSID*
 </code></pre>
 <h3 id="verify-uefi-boot-mode">Verify UEFI boot mode</h3>
 <p>The following command should show directory without error:</br></p>
-<pre><code># ls /sys/firmware/efi/efivars&lt;/br&gt;
+<pre><code># ls /sys/firmware/efi/efivars
 </code></pre>
 <h3 id="verify-internet-connectivity">Verify internet connectivity</h3>
 <pre><code># ping archlinux.org

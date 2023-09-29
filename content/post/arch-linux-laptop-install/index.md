@@ -23,22 +23,22 @@ This tutorial assumes the following:
 
 ### Configure Wireless
 
-The following command will drop you into the iwd daemon:</br>
+The following command will drop you into the iwd daemon:
 
     # iwctl
 
 From there:</br>
 
-    # device list </br>
-    # station *device* scan </br>
-    # station *device* get-networks </br>
-    # station *device* connect *SSID* </br>
+    # device list
+    # station *device* scan
+    # station *device* get-networks
+    # station *device* connect *SSID*
 
 ### Verify UEFI boot mode
 
 The following command should show directory without error:</br>
 
-    # ls /sys/firmware/efi/efivars</br>
+    # ls /sys/firmware/efi/efivars
 
 ### Verify internet connectivity
 

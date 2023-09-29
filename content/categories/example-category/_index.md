@@ -1,6 +1,6 @@
 ---
-title: Example Category
-description: A description of this category
+title: Tech
+description: Technology, computers, software, etc.
 image:
 
 # Badge style
