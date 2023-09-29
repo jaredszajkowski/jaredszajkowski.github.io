@@ -24,9 +24,11 @@ This tutorial assumes the following:
 ### Configure Wireless
 
 The following command will drop you into the iwd daemon:
+
     # iwctl
 
-From there:</br>
+From there:
+
     # device list
     # station *device* scan
     # station *device* get-networks
@@ -34,7 +36,8 @@ From there:</br>
 
 ### Verify UEFI boot mode
 
-The following command should show directory without error:</br>
+The following command should show directory without error:
+
     # ls /sys/firmware/efi/efivars
 
 ### Verify internet connectivity
@@ -50,22 +53,23 @@ The following command should show directory without error:</br>
 
 The following assumes that your NVME drive is found as /dev/nvme0n1. Partitions will then be /dev/nvme0n1p1 and so on.
 
-### Prep disks
-
 List disks:
+
     # fdisk -l
 
 Wipe all file system records:
+
     # wipefs -a /dev/nvme0n1
 
-### Partition table & partitions
+## Partition table & partitions
 
 Open nvme0n1 with gdisk:
+
     # gdisk /dev/nvme0n1
 
 Create GPT partition table with option "o"
 
-#### Create EFI partition
+### Create EFI partition
 
 Create new EFI partition w/ 550mb with option "n", using the following parameters:
 Parition # 1
@@ -73,7 +77,7 @@ Default starting sector
 +550M
 Change partition type to EFI System (ef00)
 
-#### Create boot partition
+### Create boot partition
 
 Create new boot partition w/ 550mb with option "n", using the following parameters:
 Partition # 2

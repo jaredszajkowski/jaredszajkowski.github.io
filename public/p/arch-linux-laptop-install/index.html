@@ -233,15 +233,11 @@
         <li><a href="#update-system-clock">Update system clock</a></li>
       </ol>
     </li>
-    <li><a href="#prep-disks--file-systems">Prep disks &amp; file systems</a>
+    <li><a href="#prep-disks--file-systems">Prep disks &amp; file systems</a></li>
+    <li><a href="#partition-table--partitions">Partition table &amp; partitions</a>
       <ol>
-        <li><a href="#prep-disks">Prep disks</a></li>
-        <li><a href="#partition-table--partitions">Partition table &amp; partitions</a>
-          <ol>
-            <li><a href="#create-efi-partition">Create EFI partition</a></li>
-            <li><a href="#create-boot-partition">Create boot partition</a></li>
-          </ol>
-        </li>
+        <li><a href="#create-efi-partition">Create EFI partition</a></li>
+        <li><a href="#create-boot-partition">Create boot partition</a></li>
       </ol>
     </li>
   </ol>
@@ -355,16 +351,19 @@
 <li>You want drive encrytion on your root partition, but not on your boot/efi/swap partitions</li>
 </ul>
 <h3 id="configure-wireless">Configure Wireless</h3>
-<p>The following command will drop you into the iwd daemon:
-# iwctl</p>
-<p>From there:</br>
-# device list
-# station <em>device</em> scan
-# station <em>device</em> get-networks
-# station <em>device</em> connect <em>SSID</em></p>
+<p>The following command will drop you into the iwd daemon:</p>
+<pre><code># iwctl
+</code></pre>
+<p>From there:</p>
+<pre><code># device list
+# station *device* scan
+# station *device* get-networks
+# station *device* connect *SSID*
+</code></pre>
 <h3 id="verify-uefi-boot-mode">Verify UEFI boot mode</h3>
-<p>The following command should show directory without error:</br>
-# ls /sys/firmware/efi/efivars</p>
+<p>The following command should show directory without error:</p>
+<pre><code># ls /sys/firmware/efi/efivars
+</code></pre>
 <h3 id="verify-internet-connectivity">Verify internet connectivity</h3>
 <pre><code># ping archlinux.org
 </code></pre>
@@ -374,22 +373,24 @@
 </code></pre>
 <h2 id="prep-disks--file-systems">Prep disks &amp; file systems</h2>
 <p>The following assumes that your NVME drive is found as /dev/nvme0n1. Partitions will then be /dev/nvme0n1p1 and so on.</p>
-<h3 id="prep-disks">Prep disks</h3>
-<p>List disks:
-# fdisk -l</p>
-<p>Wipe all file system records:
-# wipefs -a /dev/nvme0n1</p>
-<h3 id="partition-table--partitions">Partition table &amp; partitions</h3>
-<p>Open nvme0n1 with gdisk:
-# gdisk /dev/nvme0n1</p>
+<p>List disks:</p>
+<pre><code># fdisk -l
+</code></pre>
+<p>Wipe all file system records:</p>
+<pre><code># wipefs -a /dev/nvme0n1
+</code></pre>
+<h2 id="partition-table--partitions">Partition table &amp; partitions</h2>
+<p>Open nvme0n1 with gdisk:</p>
+<pre><code># gdisk /dev/nvme0n1
+</code></pre>
 <p>Create GPT partition table with option &ldquo;o&rdquo;</p>
-<h4 id="create-efi-partition">Create EFI partition</h4>
+<h3 id="create-efi-partition">Create EFI partition</h3>
 <p>Create new EFI partition w/ 550mb with option &ldquo;n&rdquo;, using the following parameters:
 Parition # 1
 Default starting sector
 +550M
 Change partition type to EFI System (ef00)</p>
-<h4 id="create-boot-partition">Create boot partition</h4>
+<h3 id="create-boot-partition">Create boot partition</h3>
 <p>Create new boot partition w/ 550mb with option &ldquo;n&rdquo;, using the following parameters:
 Partition # 2
 Default starting sector
