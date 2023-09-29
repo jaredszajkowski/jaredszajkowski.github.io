@@ -25,17 +25,14 @@ This tutorial assumes the following:
 
 The following command will drop you into the iwd daemon:
 
-> "# iwctl"
+> iwctl
 
 From there:
 
-> device list
-
-> station *device* scan
-
-> station *device* get-networks
-
-> station *device* connect *SSID*
+> device list </br>
+> station *device* scan </br>
+> station *device* get-networks </br>
+> station *device* connect *SSID* </br>
 
 ### Verify UEFI boot mode:
 
