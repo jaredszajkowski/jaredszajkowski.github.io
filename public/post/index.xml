@@ -49,9 +49,8 @@
         
         <guid>https://jaredszajkowski.github.io/p/new-site/</guid>
         <description>&lt;p&gt;Welcome to my website. This is meant to serve as a place for me to publish various posts from my explorations into Arch Linux, data science, quant finance, and other topics.&lt;/p&gt;
-&lt;p&gt;The theme has been adopted from the Hugo Theme Stack produced by Jimmy Cai.&lt;/p&gt;
-&lt;p&gt;For more information about this theme: &lt;a class=&#34;link&#34; href=&#34;https://github.com/CaiJimmy/hugo-theme-stack&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://github.com/CaiJimmy/hugo-theme-stack&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The theme has been adopted from the &lt;a class=&#34;link&#34; href=&#34;https://github.com/CaiJimmy/hugo-theme-stack&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Hugo Theme Stack&lt;/a&gt; produced by Jimmy Cai.&lt;/p&gt;
 &lt;p&gt;This is the only theme that I have found that checks all of the following boxes:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Theme for the static site generator Hugo&lt;/li&gt;

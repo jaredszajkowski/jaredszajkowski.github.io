@@ -14,9 +14,7 @@ date: 2023-09-29 00:00:00+0000
 
 Welcome to my website. This is meant to serve as a place for me to publish various posts from my explorations into Arch Linux, data science, quant finance, and other topics.
 
-The theme has been adopted from the Hugo Theme Stack produced by Jimmy Cai.
-
-For more information about this theme: https://github.com/CaiJimmy/hugo-theme-stack
+The theme has been adopted from the [Hugo Theme Stack](https://github.com/CaiJimmy/hugo-theme-stack) produced by Jimmy Cai.
 
 This is the only theme that I have found that checks all of the following boxes:
 
