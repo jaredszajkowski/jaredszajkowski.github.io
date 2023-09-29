@@ -13,7 +13,7 @@
         
         <guid>https://jaredszajkowski.github.io/p/arch-linux-laptop-install/</guid>
         <description>&lt;p&gt;This is the basic framework that I use to install Arch Linux, with a few changes catered to the Lenovo ThinkPad E15 Gen 2. I have found that this is a decent mid range laptop, excellent linux compatibility, great keyboard, and overall provides a good value.&lt;/p&gt;
-&lt;h2 id=&#34;getting-started&#34;&gt;Getting Started&lt;/h2&gt;
+&lt;h2 id=&#34;getting-started&#34;&gt;Getting started&lt;/h2&gt;
 &lt;p&gt;This tutorial assumes the following:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;You are booting from a USB drive with the Arch install ISO&lt;/li&gt;
@@ -41,7 +41,7 @@
 &lt;pre&gt;&lt;code&gt;# timedatectl set-ntp true
 # timedatectl status
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;prep-disks--file-systems&#34;&gt;Prep disks &amp;amp; file systems&lt;/h2&gt;
+&lt;h2 id=&#34;prep-disks&#34;&gt;Prep disks&lt;/h2&gt;
 &lt;p&gt;The following assumes that your NVME drive is found as /dev/nvme0n1. Partitions will then be /dev/nvme0n1p1 and so on.&lt;/p&gt;
 &lt;p&gt;List disks:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# fdisk -l
@@ -67,72 +67,52 @@ Default starting sector&lt;/br&gt;
 +550M&lt;/br&gt;
 Leave default type of 8300&lt;/br&gt;&lt;/p&gt;
 &lt;h3 id=&#34;create-swap-partition&#34;&gt;Create swap partition&lt;/h3&gt;
-&lt;p&gt;The old rule of thumb used to be that a swap partition should be the same size as the amount of memory in the system, but given the typical amount of memory in modern systems this is obviously no longer necessary. For my system with 16 or 32 GB of memory, a swap of 8 GB is rarely even used.&lt;/br&gt;&lt;/br&gt;&lt;/p&gt;
+&lt;p&gt;The old rule of thumb used to be that a swap partition should be the same size as the amount of memory in the system, but given the typical amount of memory in modern systems this is obviously no longer necessary. For my system with 16 or 32 GB of memory, a swap of 8 GB is rarely even used.&lt;/br&gt;&lt;/p&gt;
 &lt;p&gt;Create new Swap partition w/ 8GB with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/br&gt;
 Partition #3&lt;/br&gt;
 Default starting sector&lt;/br&gt;
 +8G&lt;/br&gt;
 Change to linux swap (8200)&lt;/br&gt;&lt;/p&gt;
 &lt;h3 id=&#34;create-root-partition&#34;&gt;Create root partition&lt;/h3&gt;
-&lt;p&gt;Create new Root partition w/ remaining disk space with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/br&gt;
+&lt;p&gt;Create new root partition w/ remaining disk space with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/br&gt;
 Partition #4&lt;/br&gt;
 Default starting sector&lt;/br&gt;
 Complete remaining space&lt;/br&gt;
 Linux LUKS type 8309&lt;/br&gt;&lt;/p&gt;
+&lt;p&gt;And then exit gdisk.&lt;/p&gt;
 &lt;h2 id=&#34;write-file-systems&#34;&gt;Write file systems&lt;/h2&gt;
+&lt;h3 id=&#34;efi-partition&#34;&gt;EFI partition&lt;/h3&gt;
 &lt;p&gt;Write file system to new EFI System partition:&lt;/p&gt;
-&lt;h1 id=&#34;cat-devzero--devnvme0n1p1&#34;&gt;cat /dev/zero &amp;gt; /dev/nvme0n1p1&lt;/h1&gt;
-&lt;h1 id=&#34;mkfsfat--f32-devnvme0n1p1&#34;&gt;mkfs.fat -F32 /dev/nvme0n1p1&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;# cat /dev/zero &amp;gt; /dev/nvme0n1p1 
+# mkfs.fat -F32 /dev/nvme0n1p1 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;boot-partition&#34;&gt;Boot partition&lt;/h3&gt;
 &lt;p&gt;Then boot partition:&lt;/p&gt;
-&lt;h1 id=&#34;cat-devzero--devnvme0n1p2&#34;&gt;cat /dev/zero &amp;gt; /dev/nvme0n1p2&lt;/h1&gt;
-&lt;h1 id=&#34;mkfsext2-devnvme0n1p2&#34;&gt;mkfs.ext2 /dev/nvme0n1p2&lt;/h1&gt;
-&lt;p&gt;Prepare root partition w/ LUKS&lt;/p&gt;
-&lt;h1 id=&#34;cryptsetup--y--v-luksformat---type-luks2-devnvme0n1p4&#34;&gt;cryptsetup -y -v luksFormat &amp;ndash;type luks2 /dev/nvme0n1p4&lt;/h1&gt;
-&lt;h1 id=&#34;cryptsetup-luksdump-devnvme0n1p4&#34;&gt;cryptsetup luksDump /dev/nvme0n1p4&lt;/h1&gt;
-&lt;h1 id=&#34;cryptsetup-open-devnvme0n1p4-archcryptroot&#34;&gt;cryptsetup open /dev/nvme0n1p4 archcryptroot&lt;/h1&gt;
-&lt;h1 id=&#34;mkfsext4-devmapperarchcryptroot&#34;&gt;mkfs.ext4 /dev/mapper/archcryptroot&lt;/h1&gt;
-&lt;h1 id=&#34;mount-devmapperarchcryptroot-mnt&#34;&gt;mount /dev/mapper/archcryptroot /mnt&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;# cat /dev/zero &amp;gt; /dev/nvme0n1p2 
+# mkfs.ext2 /dev/nvme0n1p2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;root-partition&#34;&gt;Root partition&lt;/h3&gt;
+&lt;p&gt;Prepare root partition w/ LUKS:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# cryptsetup -y -v luksFormat --type luks2 /dev/nvme0n1p4
+# cryptsetup luksDump /dev/nvme0n1p4
+# cryptsetup open /dev/nvme0n1p4 archcryptroot
+# mkfs.ext4 /dev/mapper/archcryptroot
+# mount /dev/mapper/archcryptroot /mnt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I use &lt;em&gt;archcryptroot&lt;/em&gt; for the name of my encrypted volume, but change as necessary.&lt;/p&gt;
+&lt;h3 id=&#34;swap-partition&#34;&gt;Swap partition&lt;/h3&gt;
 &lt;p&gt;Then swap:&lt;/p&gt;
-&lt;h1 id=&#34;mkswap-devnvme0n1p3&#34;&gt;mkswap /dev/nvme0n1p3&lt;/h1&gt;
-&lt;h1 id=&#34;swapon-devnvme0n1p3&#34;&gt;swapon /dev/nvme0n1p3&lt;/h1&gt;
-&lt;p&gt;Create mount points:&lt;/p&gt;
-&lt;h1 id=&#34;mkdir-mntboot&#34;&gt;mkdir /mnt/boot&lt;/h1&gt;
-&lt;h1 id=&#34;mount-devnvme0n1p2-mntboot&#34;&gt;mount /dev/nvme0n1p2 /mnt/boot&lt;/h1&gt;
-&lt;h1 id=&#34;mkdir-mntbootefi&#34;&gt;mkdir /mnt/boot/efi&lt;/h1&gt;
-&lt;h1 id=&#34;mount-devnvme0n1p1-mntbootefi&#34;&gt;mount /dev/nvme0n1p1 /mnt/boot/efi&lt;/h1&gt;
-&lt;p&gt;Edit mirrorlist&lt;/p&gt;
-&lt;p&gt;The following HTML &lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt;—&lt;code&gt;&amp;lt;h6&amp;gt;&lt;/code&gt; elements represent six levels of section headings. &lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt; is the highest section level while &lt;code&gt;&amp;lt;h6&amp;gt;&lt;/code&gt; is the lowest.&lt;/p&gt;
-&lt;h1 id=&#34;h1&#34;&gt;H1&lt;/h1&gt;
-&lt;h2 id=&#34;h2&#34;&gt;H2&lt;/h2&gt;
-&lt;h3 id=&#34;h3&#34;&gt;H3&lt;/h3&gt;
-&lt;h4 id=&#34;h4&#34;&gt;H4&lt;/h4&gt;
-&lt;h5 id=&#34;h5&#34;&gt;H5&lt;/h5&gt;
-&lt;h6 id=&#34;h6&#34;&gt;H6&lt;/h6&gt;
-&lt;h2 id=&#34;paragraph&#34;&gt;Paragraph&lt;/h2&gt;
-&lt;p&gt;Xerum, quo qui aut unt expliquam qui dolut labo. Aque venitatiusda cum, voluptionse latur sitiae dolessi aut parist aut dollo enim qui voluptate ma dolestendit peritin re plis aut quas inctum laceat est volestemque commosa as cus endigna tectur, offic to cor sequas etum rerum idem sintibus eiur? Quianimin porecus evelectur, cum que nis nust voloribus ratem aut omnimi, sitatur? Quiatem. Nam, omnis sum am facea corem alique molestrunt et eos evelece arcillit ut aut eos eos nus, sin conecerem erum fuga. Ri oditatquam, ad quibus unda veliamenimin cusam et facea ipsamus es exerum sitate dolores editium rerore eost, temped molorro ratiae volorro te reribus dolorer sperchicium faceata tiustia prat.&lt;/p&gt;
-&lt;p&gt;Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sapicia is sinveli squiatum, core et que aut hariosam ex eat.&lt;/p&gt;
-&lt;h2 id=&#34;blockquotes&#34;&gt;Blockquotes&lt;/h2&gt;
-&lt;p&gt;The blockquote element represents content that is quoted from another source, optionally with a citation which must be within a &lt;code&gt;footer&lt;/code&gt; or &lt;code&gt;cite&lt;/code&gt; element, and optionally with in-line changes such as annotations and abbreviations.&lt;/p&gt;
-&lt;h3 id=&#34;blockquote-without-attribution&#34;&gt;Blockquote without attribution&lt;/h3&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Tiam, ad mint andaepu dandae nostion secatur sequo quae.
-&lt;strong&gt;Note&lt;/strong&gt; that you can use &lt;em&gt;Markdown syntax&lt;/em&gt; within a blockquote.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&#34;blockquote-with-attribution&#34;&gt;Blockquote with attribution&lt;/h3&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Don&amp;rsquo;t communicate by sharing memory, share memory by communicating.&lt;br&gt;
-— &lt;cite&gt;Rob Pike[^1]&lt;/cite&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Welcome to Hugo theme Stack. This is your first post. Edit or delete it, then start writing!&lt;/p&gt;
-&lt;p&gt;For more information about this theme, check the documentation: &lt;a class=&#34;link&#34; href=&#34;https://stack.jimmycai.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://stack.jimmycai.com/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Want a site like this? Check out &lt;a class=&#34;link&#34; href=&#34;https://github.com/CaiJimmy/hugo-theme-stack-starter&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;hugo-theme-stack-stater&lt;/a&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Photo by &lt;a class=&#34;link&#34; href=&#34;https://unsplash.com/@pawel_czerwinski&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Pawel Czerwinski&lt;/a&gt; on &lt;a class=&#34;link&#34; href=&#34;https://unsplash.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Unsplash&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;# mkswap /dev/nvme0n1p3 
+# swapon /dev/nvme0n1p3 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;create-mount-points&#34;&gt;Create mount points&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# mkdir /mnt/boot 
+# mount /dev/nvme0n1p2 /mnt/boot 
+# mkdir /mnt/boot/efi 
+# mount /dev/nvme0n1p1 /mnt/boot/efi
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;install-system&#34;&gt;Install system&lt;/h2&gt;
+&lt;p&gt;To be continued.&lt;/p&gt;
 </description>
         </item>
         <item>

@@ -225,7 +225,7 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#getting-started">Getting Started</a>
+    <li><a href="#getting-started">Getting started</a>
       <ol>
         <li><a href="#configure-wireless">Configure Wireless</a></li>
         <li><a href="#verify-uefi-boot-mode">Verify UEFI boot mode</a></li>
@@ -233,7 +233,7 @@
         <li><a href="#update-system-clock">Update system clock</a></li>
       </ol>
     </li>
-    <li><a href="#prep-disks--file-systems">Prep disks &amp; file systems</a></li>
+    <li><a href="#prep-disks">Prep disks</a></li>
     <li><a href="#partition-table--partitions">Partition table &amp; partitions</a>
       <ol>
         <li><a href="#create-efi-partition">Create EFI partition</a></li>
@@ -242,26 +242,16 @@
         <li><a href="#create-root-partition">Create root partition</a></li>
       </ol>
     </li>
-    <li><a href="#write-file-systems">Write file systems</a></li>
-  </ol>
-
-  <ol>
-    <li><a href="#h2">H2</a>
+    <li><a href="#write-file-systems">Write file systems</a>
       <ol>
-        <li><a href="#h3">H3</a>
-          <ol>
-            <li><a href="#h4">H4</a></li>
-          </ol>
-        </li>
+        <li><a href="#efi-partition">EFI partition</a></li>
+        <li><a href="#boot-partition">Boot partition</a></li>
+        <li><a href="#root-partition">Root partition</a></li>
+        <li><a href="#swap-partition">Swap partition</a></li>
+        <li><a href="#create-mount-points">Create mount points</a></li>
       </ol>
     </li>
-    <li><a href="#paragraph">Paragraph</a></li>
-    <li><a href="#blockquotes">Blockquotes</a>
-      <ol>
-        <li><a href="#blockquote-without-attribution">Blockquote without attribution</a></li>
-        <li><a href="#blockquote-with-attribution">Blockquote with attribution</a></li>
-      </ol>
-    </li>
+    <li><a href="#install-system">Install system</a></li>
   </ol>
 </nav>
         </div>
@@ -330,7 +320,7 @@
 
 
                 <time class="article-time--reading">
-                    4 minute read
+                    3 minute read
                 </time>
             </div>
         
@@ -346,7 +336,7 @@
     
     
     <p>This is the basic framework that I use to install Arch Linux, with a few changes catered to the Lenovo ThinkPad E15 Gen 2. I have found that this is a decent mid range laptop, excellent linux compatibility, great keyboard, and overall provides a good value.</p>
-<h2 id="getting-started">Getting Started</h2>
+<h2 id="getting-started">Getting started</h2>
 <p>This tutorial assumes the following:</p>
 <ul>
 <li>You are booting from a USB drive with the Arch install ISO</li>
@@ -374,7 +364,7 @@
 <pre><code># timedatectl set-ntp true
 # timedatectl status
 </code></pre>
-<h2 id="prep-disks--file-systems">Prep disks &amp; file systems</h2>
+<h2 id="prep-disks">Prep disks</h2>
 <p>The following assumes that your NVME drive is found as /dev/nvme0n1. Partitions will then be /dev/nvme0n1p1 and so on.</p>
 <p>List disks:</p>
 <pre><code># fdisk -l
@@ -400,72 +390,52 @@ Default starting sector</br>
 +550M</br>
 Leave default type of 8300</br></p>
 <h3 id="create-swap-partition">Create swap partition</h3>
-<p>The old rule of thumb used to be that a swap partition should be the same size as the amount of memory in the system, but given the typical amount of memory in modern systems this is obviously no longer necessary. For my system with 16 or 32 GB of memory, a swap of 8 GB is rarely even used.</br></br></p>
+<p>The old rule of thumb used to be that a swap partition should be the same size as the amount of memory in the system, but given the typical amount of memory in modern systems this is obviously no longer necessary. For my system with 16 or 32 GB of memory, a swap of 8 GB is rarely even used.</br></p>
 <p>Create new Swap partition w/ 8GB with option &ldquo;n&rdquo;, using the following parameters:</br>
 Partition #3</br>
 Default starting sector</br>
 +8G</br>
 Change to linux swap (8200)</br></p>
 <h3 id="create-root-partition">Create root partition</h3>
-<p>Create new Root partition w/ remaining disk space with option &ldquo;n&rdquo;, using the following parameters:</br>
+<p>Create new root partition w/ remaining disk space with option &ldquo;n&rdquo;, using the following parameters:</br>
 Partition #4</br>
 Default starting sector</br>
 Complete remaining space</br>
 Linux LUKS type 8309</br></p>
+<p>And then exit gdisk.</p>
 <h2 id="write-file-systems">Write file systems</h2>
+<h3 id="efi-partition">EFI partition</h3>
 <p>Write file system to new EFI System partition:</p>
-<h1 id="cat-devzero--devnvme0n1p1">cat /dev/zero &gt; /dev/nvme0n1p1</h1>
-<h1 id="mkfsfat--f32-devnvme0n1p1">mkfs.fat -F32 /dev/nvme0n1p1</h1>
+<pre><code># cat /dev/zero &gt; /dev/nvme0n1p1 
+# mkfs.fat -F32 /dev/nvme0n1p1 
+</code></pre>
+<h3 id="boot-partition">Boot partition</h3>
 <p>Then boot partition:</p>
-<h1 id="cat-devzero--devnvme0n1p2">cat /dev/zero &gt; /dev/nvme0n1p2</h1>
-<h1 id="mkfsext2-devnvme0n1p2">mkfs.ext2 /dev/nvme0n1p2</h1>
-<p>Prepare root partition w/ LUKS</p>
-<h1 id="cryptsetup--y--v-luksformat---type-luks2-devnvme0n1p4">cryptsetup -y -v luksFormat &ndash;type luks2 /dev/nvme0n1p4</h1>
-<h1 id="cryptsetup-luksdump-devnvme0n1p4">cryptsetup luksDump /dev/nvme0n1p4</h1>
-<h1 id="cryptsetup-open-devnvme0n1p4-archcryptroot">cryptsetup open /dev/nvme0n1p4 archcryptroot</h1>
-<h1 id="mkfsext4-devmapperarchcryptroot">mkfs.ext4 /dev/mapper/archcryptroot</h1>
-<h1 id="mount-devmapperarchcryptroot-mnt">mount /dev/mapper/archcryptroot /mnt</h1>
+<pre><code># cat /dev/zero &gt; /dev/nvme0n1p2 
+# mkfs.ext2 /dev/nvme0n1p2
+</code></pre>
+<h3 id="root-partition">Root partition</h3>
+<p>Prepare root partition w/ LUKS:</p>
+<pre><code># cryptsetup -y -v luksFormat --type luks2 /dev/nvme0n1p4
+# cryptsetup luksDump /dev/nvme0n1p4
+# cryptsetup open /dev/nvme0n1p4 archcryptroot
+# mkfs.ext4 /dev/mapper/archcryptroot
+# mount /dev/mapper/archcryptroot /mnt
+</code></pre>
+<p>I use <em>archcryptroot</em> for the name of my encrypted volume, but change as necessary.</p>
+<h3 id="swap-partition">Swap partition</h3>
 <p>Then swap:</p>
-<h1 id="mkswap-devnvme0n1p3">mkswap /dev/nvme0n1p3</h1>
-<h1 id="swapon-devnvme0n1p3">swapon /dev/nvme0n1p3</h1>
-<p>Create mount points:</p>
-<h1 id="mkdir-mntboot">mkdir /mnt/boot</h1>
-<h1 id="mount-devnvme0n1p2-mntboot">mount /dev/nvme0n1p2 /mnt/boot</h1>
-<h1 id="mkdir-mntbootefi">mkdir /mnt/boot/efi</h1>
-<h1 id="mount-devnvme0n1p1-mntbootefi">mount /dev/nvme0n1p1 /mnt/boot/efi</h1>
-<p>Edit mirrorlist</p>
-<p>The following HTML <code>&lt;h1&gt;</code>—<code>&lt;h6&gt;</code> elements represent six levels of section headings. <code>&lt;h1&gt;</code> is the highest section level while <code>&lt;h6&gt;</code> is the lowest.</p>
-<h1 id="h1">H1</h1>
-<h2 id="h2">H2</h2>
-<h3 id="h3">H3</h3>
-<h4 id="h4">H4</h4>
-<h5 id="h5">H5</h5>
-<h6 id="h6">H6</h6>
-<h2 id="paragraph">Paragraph</h2>
-<p>Xerum, quo qui aut unt expliquam qui dolut labo. Aque venitatiusda cum, voluptionse latur sitiae dolessi aut parist aut dollo enim qui voluptate ma dolestendit peritin re plis aut quas inctum laceat est volestemque commosa as cus endigna tectur, offic to cor sequas etum rerum idem sintibus eiur? Quianimin porecus evelectur, cum que nis nust voloribus ratem aut omnimi, sitatur? Quiatem. Nam, omnis sum am facea corem alique molestrunt et eos evelece arcillit ut aut eos eos nus, sin conecerem erum fuga. Ri oditatquam, ad quibus unda veliamenimin cusam et facea ipsamus es exerum sitate dolores editium rerore eost, temped molorro ratiae volorro te reribus dolorer sperchicium faceata tiustia prat.</p>
-<p>Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sapicia is sinveli squiatum, core et que aut hariosam ex eat.</p>
-<h2 id="blockquotes">Blockquotes</h2>
-<p>The blockquote element represents content that is quoted from another source, optionally with a citation which must be within a <code>footer</code> or <code>cite</code> element, and optionally with in-line changes such as annotations and abbreviations.</p>
-<h3 id="blockquote-without-attribution">Blockquote without attribution</h3>
-<blockquote>
-<p>Tiam, ad mint andaepu dandae nostion secatur sequo quae.
-<strong>Note</strong> that you can use <em>Markdown syntax</em> within a blockquote.</p>
-</blockquote>
-<h3 id="blockquote-with-attribution">Blockquote with attribution</h3>
-<blockquote>
-<p>Don&rsquo;t communicate by sharing memory, share memory by communicating.<br>
-— <cite>Rob Pike[^1]</cite></p>
-</blockquote>
-<p>Welcome to Hugo theme Stack. This is your first post. Edit or delete it, then start writing!</p>
-<p>For more information about this theme, check the documentation: <a class="link" href="https://stack.jimmycai.com/"  target="_blank" rel="noopener"
-    >https://stack.jimmycai.com/</a></p>
-<p>Want a site like this? Check out <a class="link" href="https://github.com/CaiJimmy/hugo-theme-stack-starter"  target="_blank" rel="noopener"
-    >hugo-theme-stack-stater</a></p>
-<blockquote>
-<p>Photo by <a class="link" href="https://unsplash.com/@pawel_czerwinski"  target="_blank" rel="noopener"
-    >Pawel Czerwinski</a> on <a class="link" href="https://unsplash.com/"  target="_blank" rel="noopener"
-    >Unsplash</a></p>
-</blockquote>
+<pre><code># mkswap /dev/nvme0n1p3 
+# swapon /dev/nvme0n1p3 
+</code></pre>
+<h3 id="create-mount-points">Create mount points</h3>
+<pre><code># mkdir /mnt/boot 
+# mount /dev/nvme0n1p2 /mnt/boot 
+# mkdir /mnt/boot/efi 
+# mount /dev/nvme0n1p1 /mnt/boot/efi
+</code></pre>
+<h2 id="install-system">Install system</h2>
+<p>To be continued.</p>
 
 </section>
 

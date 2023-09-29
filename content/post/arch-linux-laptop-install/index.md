@@ -13,7 +13,7 @@ tags:
 
 This is the basic framework that I use to install Arch Linux, with a few changes catered to the Lenovo ThinkPad E15 Gen 2. I have found that this is a decent mid range laptop, excellent linux compatibility, great keyboard, and overall provides a good value.
 
-## Getting Started
+## Getting started
 
 This tutorial assumes the following:
 
@@ -49,7 +49,7 @@ The following command should show directory without error:
     # timedatectl set-ntp true
     # timedatectl status
 
-## Prep disks & file systems
+## Prep disks
 
 The following assumes that your NVME drive is found as /dev/nvme0n1. Partitions will then be /dev/nvme0n1p1 and so on.
 
@@ -87,7 +87,7 @@ Leave default type of 8300</br>
 
 ### Create swap partition
 
-The old rule of thumb used to be that a swap partition should be the same size as the amount of memory in the system, but given the typical amount of memory in modern systems this is obviously no longer necessary. For my system with 16 or 32 GB of memory, a swap of 8 GB is rarely even used.</br></br>
+The old rule of thumb used to be that a swap partition should be the same size as the amount of memory in the system, but given the typical amount of memory in modern systems this is obviously no longer necessary. For my system with 16 or 32 GB of memory, a swap of 8 GB is rarely even used.</br>
 
 Create new Swap partition w/ 8GB with option "n", using the following parameters:</br>
 Partition #3</br>
@@ -97,120 +97,56 @@ Change to linux swap (8200)</br>
 
 ### Create root partition
 
-Create new Root partition w/ remaining disk space with option "n", using the following parameters:</br>
+Create new root partition w/ remaining disk space with option "n", using the following parameters:</br>
 Partition #4</br>
 Default starting sector</br>
 Complete remaining space</br>
 Linux LUKS type 8309</br>
 
+And then exit gdisk.
+
 ## Write file systems
+
+### EFI partition
 
 Write file system to new EFI System partition:
 
- 
+    # cat /dev/zero > /dev/nvme0n1p1 
+    # mkfs.fat -F32 /dev/nvme0n1p1 
 
-# cat /dev/zero > /dev/nvme0n1p1 
+### Boot partition
 
-# mkfs.fat -F32 /dev/nvme0n1p1 
+Then boot partition:
 
- 
+    # cat /dev/zero > /dev/nvme0n1p2 
+    # mkfs.ext2 /dev/nvme0n1p2
 
-Then boot partition: 
+### Root partition
 
- 
+Prepare root partition w/ LUKS:
 
-# cat /dev/zero > /dev/nvme0n1p2 
+    # cryptsetup -y -v luksFormat --type luks2 /dev/nvme0n1p4
+    # cryptsetup luksDump /dev/nvme0n1p4
+    # cryptsetup open /dev/nvme0n1p4 archcryptroot
+    # mkfs.ext4 /dev/mapper/archcryptroot
+    # mount /dev/mapper/archcryptroot /mnt
 
-# mkfs.ext2 /dev/nvme0n1p2 
+I use *archcryptroot* for the name of my encrypted volume, but change as necessary.
 
- 
-
-Prepare root partition w/ LUKS 
-
- 
-
-# cryptsetup -y -v luksFormat --type luks2 /dev/nvme0n1p4 
-
-# cryptsetup luksDump /dev/nvme0n1p4 
-
-# cryptsetup open /dev/nvme0n1p4 archcryptroot 
-
-# mkfs.ext4 /dev/mapper/archcryptroot 
-
-# mount /dev/mapper/archcryptroot /mnt 
-
- 
+### Swap partition
 
 Then swap: 
 
- 
+    # mkswap /dev/nvme0n1p3 
+    # swapon /dev/nvme0n1p3 
 
-# mkswap /dev/nvme0n1p3 
+### Create mount points
 
-# swapon /dev/nvme0n1p3 
+    # mkdir /mnt/boot 
+    # mount /dev/nvme0n1p2 /mnt/boot 
+    # mkdir /mnt/boot/efi 
+    # mount /dev/nvme0n1p1 /mnt/boot/efi
 
- 
+## Install system
 
-Create mount points: 
-
- 
-
-# mkdir /mnt/boot 
-
- 
-
-# mount /dev/nvme0n1p2 /mnt/boot 
-
- 
-
-# mkdir /mnt/boot/efi 
-
- 
-
-# mount /dev/nvme0n1p1 /mnt/boot/efi 
-
- 
-
-Edit mirrorlist 
-
-
-
-
-
-
-The following HTML `<h1>`—`<h6>` elements represent six levels of section headings. `<h1>` is the highest section level while `<h6>` is the lowest.
-
-# H1
-## H2
-### H3
-#### H4
-##### H5
-###### H6
-
-## Paragraph
-
-Xerum, quo qui aut unt expliquam qui dolut labo. Aque venitatiusda cum, voluptionse latur sitiae dolessi aut parist aut dollo enim qui voluptate ma dolestendit peritin re plis aut quas inctum laceat est volestemque commosa as cus endigna tectur, offic to cor sequas etum rerum idem sintibus eiur? Quianimin porecus evelectur, cum que nis nust voloribus ratem aut omnimi, sitatur? Quiatem. Nam, omnis sum am facea corem alique molestrunt et eos evelece arcillit ut aut eos eos nus, sin conecerem erum fuga. Ri oditatquam, ad quibus unda veliamenimin cusam et facea ipsamus es exerum sitate dolores editium rerore eost, temped molorro ratiae volorro te reribus dolorer sperchicium faceata tiustia prat.
-
-Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sapicia is sinveli squiatum, core et que aut hariosam ex eat.
-
-## Blockquotes
-
-The blockquote element represents content that is quoted from another source, optionally with a citation which must be within a `footer` or `cite` element, and optionally with in-line changes such as annotations and abbreviations.
-
-### Blockquote without attribution
-
-> Tiam, ad mint andaepu dandae nostion secatur sequo quae.
-> **Note** that you can use *Markdown syntax* within a blockquote.
-
-### Blockquote with attribution
-
-> Don't communicate by sharing memory, share memory by communicating.<br>
-> — <cite>Rob Pike[^1]</cite>
-
-Welcome to Hugo theme Stack. This is your first post. Edit or delete it, then start writing!
-
-For more information about this theme, check the documentation: https://stack.jimmycai.com/
-
-Want a site like this? Check out [hugo-theme-stack-stater](https://github.com/CaiJimmy/hugo-theme-stack-starter)
-
-> Photo by [Pawel Czerwinski](https://unsplash.com/@pawel_czerwinski) on [Unsplash](https://unsplash.com/)
+To be continued.
