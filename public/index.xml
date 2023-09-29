@@ -21,13 +21,15 @@
 &lt;li&gt;You want drive encrytion on your root partition, but not on your boot/efi/swap partitions&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;configure-wireless&#34;&gt;Configure Wireless&lt;/h3&gt;
-&lt;p&gt;The following command will drop you into the iwd daemon:
-# iwctl&lt;/p&gt;
-&lt;p&gt;From there:
-# device list &lt;/br&gt;
-# station &lt;em&gt;device&lt;/em&gt; scan &lt;/br&gt;
-# station &lt;em&gt;device&lt;/em&gt; get-networks &lt;/br&gt;
-# station &lt;em&gt;device&lt;/em&gt; connect &lt;em&gt;SSID&lt;/em&gt; &lt;/br&gt;&lt;/p&gt;
+&lt;p&gt;The following command will drop you into the iwd daemon:&lt;/br&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# iwctl
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;From there:&lt;/br&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# device list &amp;lt;/br&amp;gt;
+# station *device* scan &amp;lt;/br&amp;gt;
+# station *device* get-networks &amp;lt;/br&amp;gt;
+# station *device* connect *SSID* &amp;lt;/br&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;verify-uefi-boot-mode&#34;&gt;Verify UEFI boot mode&lt;/h3&gt;
 &lt;blockquote&gt;
 &lt;p&gt;ls /sys/firmware/efi/efivars&lt;/p&gt;

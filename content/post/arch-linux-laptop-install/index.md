@@ -23,10 +23,12 @@ This tutorial assumes the following:
 
 ### Configure Wireless
 
-The following command will drop you into the iwd daemon:
+The following command will drop you into the iwd daemon:</br>
+
     # iwctl
 
-From there:
+From there:</br>
+
     # device list </br>
     # station *device* scan </br>
     # station *device* get-networks </br>

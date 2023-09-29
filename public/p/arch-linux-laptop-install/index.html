@@ -320,7 +320,7 @@
 
 
                 <time class="article-time--reading">
-                    2 minute read
+                    3 minute read
                 </time>
             </div>
         
@@ -344,13 +344,15 @@
 <li>You want drive encrytion on your root partition, but not on your boot/efi/swap partitions</li>
 </ul>
 <h3 id="configure-wireless">Configure Wireless</h3>
-<p>The following command will drop you into the iwd daemon:
-# iwctl</p>
-<p>From there:
-# device list </br>
-# station <em>device</em> scan </br>
-# station <em>device</em> get-networks </br>
-# station <em>device</em> connect <em>SSID</em> </br></p>
+<p>The following command will drop you into the iwd daemon:</br></p>
+<pre><code># iwctl
+</code></pre>
+<p>From there:</br></p>
+<pre><code># device list &lt;/br&gt;
+# station *device* scan &lt;/br&gt;
+# station *device* get-networks &lt;/br&gt;
+# station *device* connect *SSID* &lt;/br&gt;
+</code></pre>
 <h3 id="verify-uefi-boot-mode">Verify UEFI boot mode</h3>
 <blockquote>
 <p>ls /sys/firmware/efi/efivars</p>
