@@ -225,16 +225,14 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#configure-wireless">Configure Wireless</a></li>
-    <li><a href="#verify-uefi-boot-mode">Verify UEFI boot mode:</a></li>
-  </ol>
-
-  <ol>
-    <li><a href="#verify-internet-connectivity">Verify internet connectivity:</a></li>
-  </ol>
-
-  <ol>
-    <li><a href="#update-system-clock">Update system clock:</a></li>
+    <li><a href="#getting-started">Getting Started</a>
+      <ol>
+        <li><a href="#configure-wireless">Configure Wireless</a></li>
+        <li><a href="#verify-uefi-boot-mode">Verify UEFI boot mode:</a></li>
+        <li><a href="#verify-internet-connectivity">Verify internet connectivity:</a></li>
+        <li><a href="#update-system-clock">Update system clock:</a></li>
+      </ol>
+    </li>
   </ol>
 
   <ol>
@@ -322,7 +320,7 @@
 
 
                 <time class="article-time--reading">
-                    3 minute read
+                    2 minute read
                 </time>
             </div>
         
@@ -338,49 +336,38 @@
     
     
     <p>This is the basic framework that I use to install Arch Linux, with a few changes catered to the Lenovo ThinkPad E15 Gen 2. I have found that this is a decent mid range laptop, excellent linux compatibility, great keyboard, and overall provides a good value.</p>
-<h1 id="getting-started">Getting Started</h1>
+<h2 id="getting-started">Getting Started</h2>
 <p>This tutorial assumes the following:</p>
 <ul>
 <li>You are booting from a USB drive with the Arch install ISO</li>
 <li>Wireless or wired network is detected and drivers are configured automatically</li>
 <li>You want drive encrytion on your root partition, but not on your boot/efi/swap partitions</li>
 </ul>
-<h2 id="configure-wireless">Configure Wireless</h2>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">The following command will drop you into the iwd daemon:
-</span></span><span class="line"><span class="cl"># iwctl
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">From there:
-</span></span><span class="line"><span class="cl"># device list
-</span></span><span class="line"><span class="cl"># station *device* scan
-</span></span><span class="line"><span class="cl"># station *device* get-networks
-</span></span><span class="line"><span class="cl"># station *device* connect *SSID*
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="verify-uefi-boot-mode">Verify UEFI boot mode:</h2>
+<h3 id="configure-wireless">Configure Wireless</h3>
+<p>The following command will drop you into the iwd daemon:</p>
 <blockquote>
-<h1 id="ls-sysfirmwareefiefivars">ls /sys/firmware/efi/efivars</h1>
+<p>iwctl</p>
+</blockquote>
+<p>From there:</p>
+<blockquote>
+<p>device list
+station <em>device</em> scan
+station <em>device</em> get-networks
+station <em>device</em> connect <em>SSID</em></p>
+</blockquote>
+<h3 id="verify-uefi-boot-mode">Verify UEFI boot mode:</h3>
+<blockquote>
+<p>ls /sys/firmware/efi/efivars</p>
+</blockquote>
 <p>Note: The above command should show directory without error</p>
-</blockquote>
-<h2 id="verify-internet-connectivity">Verify internet connectivity:</h2>
+<h3 id="verify-internet-connectivity">Verify internet connectivity:</h3>
 <blockquote>
-<h1 id="ping-archlinuxorg">ping archlinux.org</h1>
+<p>ping archlinux.org</p>
 </blockquote>
-<h2 id="update-system-clock">Update system clock:</h2>
+<h3 id="update-system-clock">Update system clock:</h3>
 <blockquote>
-<h1 id="timedatectl-set-ntp-true">timedatectl set-ntp true</h1>
-<h1 id="timedatectl-status">timedatectl status</h1>
+<p>timedatectl set-ntp true
+timedatectl status</p>
 </blockquote>
 <p>The following HTML <code>&lt;h1&gt;</code>—<code>&lt;h6&gt;</code> elements represent six levels of section headings. <code>&lt;h1&gt;</code> is the highest section level while <code>&lt;h6&gt;</code> is the lowest.</p>
 <h1 id="h1">H1</h1>

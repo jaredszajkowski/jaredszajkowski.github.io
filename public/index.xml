@@ -13,49 +13,38 @@
         
         <guid>https://jaredszajkowski.github.io/p/arch-linux-laptop-install/</guid>
         <description>&lt;p&gt;This is the basic framework that I use to install Arch Linux, with a few changes catered to the Lenovo ThinkPad E15 Gen 2. I have found that this is a decent mid range laptop, excellent linux compatibility, great keyboard, and overall provides a good value.&lt;/p&gt;
-&lt;h1 id=&#34;getting-started&#34;&gt;Getting Started&lt;/h1&gt;
+&lt;h2 id=&#34;getting-started&#34;&gt;Getting Started&lt;/h2&gt;
 &lt;p&gt;This tutorial assumes the following:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;You are booting from a USB drive with the Arch install ISO&lt;/li&gt;
 &lt;li&gt;Wireless or wired network is detected and drivers are configured automatically&lt;/li&gt;
 &lt;li&gt;You want drive encrytion on your root partition, but not on your boot/efi/swap partitions&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;configure-wireless&#34;&gt;Configure Wireless&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;The following command will drop you into the iwd daemon:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# iwctl
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;From there:
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# device list
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# station *device* scan
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# station *device* get-networks
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# station *device* connect *SSID*
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;verify-uefi-boot-mode&#34;&gt;Verify UEFI boot mode:&lt;/h2&gt;
+&lt;h3 id=&#34;configure-wireless&#34;&gt;Configure Wireless&lt;/h3&gt;
+&lt;p&gt;The following command will drop you into the iwd daemon:&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;h1 id=&#34;ls-sysfirmwareefiefivars&#34;&gt;ls /sys/firmware/efi/efivars&lt;/h1&gt;
+&lt;p&gt;iwctl&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;From there:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;device list
+station &lt;em&gt;device&lt;/em&gt; scan
+station &lt;em&gt;device&lt;/em&gt; get-networks
+station &lt;em&gt;device&lt;/em&gt; connect &lt;em&gt;SSID&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;verify-uefi-boot-mode&#34;&gt;Verify UEFI boot mode:&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ls /sys/firmware/efi/efivars&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;Note: The above command should show directory without error&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;verify-internet-connectivity&#34;&gt;Verify internet connectivity:&lt;/h2&gt;
+&lt;h3 id=&#34;verify-internet-connectivity&#34;&gt;Verify internet connectivity:&lt;/h3&gt;
 &lt;blockquote&gt;
-&lt;h1 id=&#34;ping-archlinuxorg&#34;&gt;ping archlinux.org&lt;/h1&gt;
+&lt;p&gt;ping archlinux.org&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2 id=&#34;update-system-clock&#34;&gt;Update system clock:&lt;/h2&gt;
+&lt;h3 id=&#34;update-system-clock&#34;&gt;Update system clock:&lt;/h3&gt;
 &lt;blockquote&gt;
-&lt;h1 id=&#34;timedatectl-set-ntp-true&#34;&gt;timedatectl set-ntp true&lt;/h1&gt;
-&lt;h1 id=&#34;timedatectl-status&#34;&gt;timedatectl status&lt;/h1&gt;
+&lt;p&gt;timedatectl set-ntp true
+timedatectl status&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;The following HTML &lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt;—&lt;code&gt;&amp;lt;h6&amp;gt;&lt;/code&gt; elements represent six levels of section headings. &lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt; is the highest section level while &lt;code&gt;&amp;lt;h6&amp;gt;&lt;/code&gt; is the lowest.&lt;/p&gt;
 &lt;h1 id=&#34;h1&#34;&gt;H1&lt;/h1&gt;

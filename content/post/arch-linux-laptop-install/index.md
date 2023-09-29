@@ -13,7 +13,7 @@ tags:
 
 This is the basic framework that I use to install Arch Linux, with a few changes catered to the Lenovo ThinkPad E15 Gen 2. I have found that this is a decent mid range laptop, excellent linux compatibility, great keyboard, and overall provides a good value.
 
-# Getting Started
+## Getting Started
 
 This tutorial assumes the following:
 
@@ -21,32 +21,33 @@ This tutorial assumes the following:
 * Wireless or wired network is detected and drivers are configured automatically
 * You want drive encrytion on your root partition, but not on your boot/efi/swap partitions
 
-## Configure Wireless
+### Configure Wireless
 
-```html
 The following command will drop you into the iwd daemon:
-# iwctl
+
+> iwctl
 
 From there:
-# device list
-# station *device* scan
-# station *device* get-networks
-# station *device* connect *SSID*
-```
 
-## Verify UEFI boot mode: 
+> device list
+> station *device* scan
+> station *device* get-networks
+> station *device* connect *SSID*
 
-> # ls /sys/firmware/efi/efivars 
-> Note: The above command should show directory without error
+### Verify UEFI boot mode:
 
-## Verify internet connectivity: 
+> ls /sys/firmware/efi/efivars
 
-> # ping archlinux.org 
+Note: The above command should show directory without error
 
-## Update system clock: 
+### Verify internet connectivity:
 
-> # timedatectl set-ntp true 
-> # timedatectl status 
+> ping archlinux.org
+
+### Update system clock:
+
+> timedatectl set-ntp true
+> timedatectl status
 
 
 
