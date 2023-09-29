@@ -14,7 +14,7 @@ url = "https://github.com/jaredszajkowski"
 
 [social.params]
 # icon = "brand-github"
-icon = "github-mark"
+icon = "github-mark-copy"
 
 [[social]]
 identifier = "linkedin"
