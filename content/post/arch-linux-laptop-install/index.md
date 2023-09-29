@@ -2,7 +2,7 @@
 title: Arch Linux Laptop Install
 description: Guide to Arch Linux install on Lenovo ThinkPad E15 Gen 2.
 # slug: hello-world
-date: 2023-09-29 00:00:00+0001
+date: 2023-09-29 00:00:01+0000
 # image: cover.jpg
 categories:
     - Tech
