@@ -22,5 +22,7 @@ This is the only theme that I have found that checks all of the following boxes:
 * Includes modules for archives
 * Includes tags and topics/categories
 * Includes built-in search functionality
+* Simple interface that is easily navigable
+* Highly extensible including modules for image galleries, posts, comment capabilities, etc.
 
 It is hosted on [GitHub pages](https://pages.github.com/).
