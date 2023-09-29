@@ -226,9 +226,6 @@
             <nav id="TableOfContents">
   <ol>
     <li><a href="#configure-wireless">Configure Wireless</a></li>
-  </ol>
-
-  <ol>
     <li><a href="#verify-uefi-boot-mode">Verify UEFI boot mode:</a></li>
   </ol>
 
@@ -325,7 +322,7 @@
 
 
                 <time class="article-time--reading">
-                    2 minute read
+                    3 minute read
                 </time>
             </div>
         
@@ -349,16 +346,29 @@
 <li>You want drive encrytion on your root partition, but not on your boot/efi/swap partitions</li>
 </ul>
 <h2 id="configure-wireless">Configure Wireless</h2>
-<blockquote>
-<p>The following command will drop you into the iwd daemon:</p>
-<h1 id="iwctl">iwctl</h1>
-<p>From there:</p>
-<h1 id="device-list">device list</h1>
-<h1 id="station-device-scan">station <em>device</em> scan</h1>
-<h1 id="station-device-get-networks">station <em>device</em> get-networks</h1>
-<h1 id="station-device-connect-ssid">station <em>device</em> connect <em>SSID</em></h1>
-</blockquote>
-<h2 id="verify-uefi-boot-mode">Verify UEFI boot mode:</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">The following command will drop you into the iwd daemon:
+</span></span><span class="line"><span class="cl"># iwctl
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">From there:
+</span></span><span class="line"><span class="cl"># device list
+</span></span><span class="line"><span class="cl"># station *device* scan
+</span></span><span class="line"><span class="cl"># station *device* get-networks
+</span></span><span class="line"><span class="cl"># station *device* connect *SSID*
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="verify-uefi-boot-mode">Verify UEFI boot mode:</h2>
 <blockquote>
 <h1 id="ls-sysfirmwareefiefivars">ls /sys/firmware/efi/efivars</h1>
 <p>Note: The above command should show directory without error</p>
