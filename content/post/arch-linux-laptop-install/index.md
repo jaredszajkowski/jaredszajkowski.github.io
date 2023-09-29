@@ -36,18 +36,18 @@ From there:</br>
 
 ### Verify UEFI boot mode
 
-> ls /sys/firmware/efi/efivars
+The following command should show directory without error:</br>
 
-Note: The above command should show directory without error
+    # ls /sys/firmware/efi/efivars</br>
 
 ### Verify internet connectivity
 
-> ping archlinux.org
+    # ping archlinux.org
 
 ### Update system clock
 
-> timedatectl set-ntp true
-> timedatectl status
+    # timedatectl set-ntp true
+    # timedatectl status
 
 
 
