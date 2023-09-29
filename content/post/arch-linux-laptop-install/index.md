@@ -24,27 +24,25 @@ This tutorial assumes the following:
 ### Configure Wireless
 
 The following command will drop you into the iwd daemon:
-
-> iwctl
+    # iwctl
 
 From there:
+    # device list </br>
+    # station *device* scan </br>
+    # station *device* get-networks </br>
+    # station *device* connect *SSID* </br>
 
-> device list </br>
-> station *device* scan </br>
-> station *device* get-networks </br>
-> station *device* connect *SSID* </br>
-
-### Verify UEFI boot mode:
+### Verify UEFI boot mode
 
 > ls /sys/firmware/efi/efivars
 
 Note: The above command should show directory without error
 
-### Verify internet connectivity:
+### Verify internet connectivity
 
 > ping archlinux.org
 
-### Update system clock:
+### Update system clock
 
 > timedatectl set-ntp true
 > timedatectl status
