@@ -2,9 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://jaredszajkowski.github.io/p/hello-world/</loc>
-    <lastmod>2022-03-06T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://jaredszajkowski.github.io/</loc>
     <lastmod>2023-09-29T00:00:01+00:00</lastmod>
   </url><url>
@@ -65,17 +62,10 @@
     <loc>https://jaredszajkowski.github.io/archives/</loc>
     <lastmod>2022-03-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://jaredszajkowski.github.io/categories/example-category/</loc>
-    <lastmod>2022-03-06T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://jaredszajkowski.github.io/categories/example-category-2/</loc>
-    <lastmod>2022-03-06T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://jaredszajkowski.github.io/tags/example-tag/</loc>
-    <lastmod>2022-03-06T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://jaredszajkowski.github.io/page/</loc>
     <lastmod>2022-03-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://jaredszajkowski.github.io/categories/example-category/</loc>
   </url><url>
     <loc>https://jaredszajkowski.github.io/links/</loc>
   </url><url>
