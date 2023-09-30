@@ -4,6 +4,7 @@ description: Welcome to my website
 # slug: hello-world
 date: 2023-09-29 00:00:00+0000
 # image: cover.jpg
+draft: false
 categories:
     - Tech
 tags:
@@ -31,6 +32,12 @@ It is hosted on [GitHub pages](https://pages.github.com/). I followed the instal
 3. Make sure to remove the public directory from the .gitignore file. Otherwise GitHub will ignore the public directory and your site will show the README.md instead of the Hugo site.
 
 The site can be updated either through codespace, or locally as long as Hugo and it's required dependencies have been installed.
+
+Here's the full list of resources I referenced for deploying Hugo with GitHub pages:
+
+https://www.o11ycloud.com/posts/gh_hugo/
+https://github.com/CaiJimmy/hugo-theme-stack
+https://medium.com/@magstherdev/github-pages-hugo-86ae6bcbadd
 
 One last note, the simple command after making any changes and to push those updates is as follows:
 
