@@ -22,7 +22,7 @@
 &lt;/ul&gt;
 &lt;h3 id=&#34;configure-wireless&#34;&gt;Configure Wireless&lt;/h3&gt;
 &lt;p&gt;The following command will drop you into the iwd daemon:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# iwctl
+&lt;pre&gt;&lt;code&gt;&amp;lt;font color=&amp;quot;blue&amp;quot;&amp;gt;# iwctl&amp;lt;/font&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;From there:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# device list

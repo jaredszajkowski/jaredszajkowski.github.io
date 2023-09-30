@@ -25,7 +25,7 @@ This tutorial assumes the following:
 
 The following command will drop you into the iwd daemon:
 
-    # iwctl
+    <font color="blue"># iwctl</font>
 
 From there:
 
