@@ -34,4 +34,4 @@ The site can be updated either through codespace, or locally as long as Hugo and
 
 One last note, the simple command after making any changes and to push those updates is as follows:
 
-    <font color="blue">$ hugo && git add . && git commit -am "Updating site" && git push</font>
+    $ hugo && git add . && git commit -am "Updating site" && git push

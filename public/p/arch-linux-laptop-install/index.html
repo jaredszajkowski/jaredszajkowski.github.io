@@ -347,13 +347,13 @@
 <h2 id="getting-started">Getting started</h2>
 <p>This tutorial assumes the following:</p>
 <ul>
-<li>You are booting from a USB drive with the Arch install ISO</li>
-<li>Wireless or wired network is detected and drivers are configured automatically</li>
-<li>You want drive encrytion on your root partition, but not on your boot/efi/swap partitions</li>
+<li>You are booting from a USB drive with the Arch install ISO.</li>
+<li>Wireless or wired network is detected and drivers are configured automatically.</li>
+<li>You want drive encrytion on your root partition, but not on your boot/efi/swap partitions.</li>
 </ul>
 <h3 id="configure-wireless">Configure Wireless</h3>
 <p>The following command will drop you into the iwd daemon:</p>
-<pre><code>&lt;font color=&quot;blue&quot;&gt;# iwctl&lt;/font&gt;
+<pre><code># iwctl
 </code></pre>
 <p>From there:</p>
 <pre><code># device list
@@ -386,11 +386,11 @@
 </code></pre>
 <p>Create GPT partition table with option &ldquo;o&rdquo;.</p>
 <h3 id="create-efi-partition">Create EFI partition</h3>
-<p>Create new EFI partition w/ 550mb with option &ldquo;n&rdquo;, using the following parameters:</br>
-Partition #1 </br>
+<p>Create new EFI partition w/ 550mb with option &ldquo;n&rdquo;, using the following parameters:</br></p>
+<p><font color="blue">Partition #1 </br>
 Default starting sector</br>
 +550M</br>
-Change partition type to EFI System (ef00)</br></p>
+Change partition type to EFI System (ef00)</br></font></p>
 <h3 id="create-boot-partition">Create boot partition</h3>
 <p>Create new boot partition w/ 550mb with option &ldquo;n&rdquo;, using the following parameters:</br>
 Partition #2 </br>

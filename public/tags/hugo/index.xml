@@ -33,7 +33,7 @@
 &lt;/ol&gt;
 &lt;p&gt;The site can be updated either through codespace, or locally as long as Hugo and it&amp;rsquo;s required dependencies have been installed.&lt;/p&gt;
 &lt;p&gt;One last note, the simple command after making any changes and to push those updates is as follows:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;font color=&amp;quot;blue&amp;quot;&amp;gt;$ hugo &amp;amp;&amp;amp; git add . &amp;amp;&amp;amp; git commit -am &amp;quot;Updating site&amp;quot; &amp;amp;&amp;amp; git push&amp;lt;/font&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;$ hugo &amp;amp;&amp;amp; git add . &amp;amp;&amp;amp; git commit -am &amp;quot;Updating site&amp;quot; &amp;amp;&amp;amp; git push&lt;/code&gt;&lt;/pre&gt;
 </description>
         </item>
         

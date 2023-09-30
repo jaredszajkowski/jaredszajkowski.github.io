@@ -17,15 +17,15 @@ This is the basic framework that I use to install Arch Linux, with a few changes
 
 This tutorial assumes the following:
 
-* You are booting from a USB drive with the Arch install ISO
-* Wireless or wired network is detected and drivers are configured automatically
-* You want drive encrytion on your root partition, but not on your boot/efi/swap partitions
+* You are booting from a USB drive with the Arch install ISO.
+* Wireless or wired network is detected and drivers are configured automatically.
+* You want drive encrytion on your root partition, but not on your boot/efi/swap partitions.
 
 ### Configure Wireless
 
 The following command will drop you into the iwd daemon:
 
-    <font color="blue"># iwctl</font>
+    # iwctl
 
 From there:
 
@@ -72,10 +72,11 @@ Create GPT partition table with option "o".
 ### Create EFI partition
 
 Create new EFI partition w/ 550mb with option "n", using the following parameters:</br>
-Partition #1 </br>
+
+<font color="blue">Partition #1 </br>
 Default starting sector</br>
 +550M</br>
-Change partition type to EFI System (ef00)</br>
+Change partition type to EFI System (ef00)</br></font>
 
 ### Create boot partition
 
