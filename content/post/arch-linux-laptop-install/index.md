@@ -72,7 +72,8 @@ Create GPT partition table with option "o".
 ### Create EFI partition
 
 Create new EFI partition w/ 550mb with option "n", using the following parameters:
-<font color="blue">
+
+<font color="dark blue">
 Partition #1 </br>
 Default starting sector</br>
 +550M</br>
@@ -82,7 +83,8 @@ Change partition type to EFI System (ef00)</br>
 ### Create boot partition
 
 Create new boot partition w/ 550mb with option "n", using the following parameters:
-<font color="blue">
+
+<font color="dark blue">
 Partition #2 </br>
 Default starting sector</br>
 +550M</br>
@@ -94,7 +96,8 @@ Leave default type of 8300</br>
 The old rule of thumb used to be that a swap partition should be the same size as the amount of memory in the system, but given the typical amount of memory in modern systems this is obviously no longer necessary. For my system with 16 or 32 GB of memory, a swap of 8 GB is rarely even used.</br>
 
 Create new Swap partition w/ 8GB with option "n", using the following parameters:
-<font color="blue">
+
+<font color="dark blue">
 Partition #3</br>
 Default starting sector</br>
 +8G</br>
@@ -104,7 +107,8 @@ Change to linux swap (8200)</br>
 ### Create root partition
 
 Create new root partition w/ remaining disk space with option "n", using the following parameters:
-<font color ="blue">
+
+<font color="dark blue">
 Partition #4</br>
 Default starting sector</br>
 Complete remaining space</br>
