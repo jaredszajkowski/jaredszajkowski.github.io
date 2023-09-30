@@ -271,7 +271,7 @@
 
 
                 <time class="article-time--reading">
-                    1 minute read
+                    2 minute read
                 </time>
             </div>
         
@@ -299,7 +299,15 @@
 <li>Highly extensible including modules for image galleries, posts, comment capabilities, etc.</li>
 </ul>
 <p>It is hosted on <a class="link" href="https://pages.github.com/"  target="_blank" rel="noopener"
-    >GitHub pages</a>.</p>
+    >GitHub pages</a>. I followed the install instructions that the theme author provided, including using GitHub codespace for editing in the cloud. There are only two details that I ran into that he did not mention.</p>
+<ol>
+<li>Don&rsquo;t forget to run Hugo to build the site. This creates the public directory, which is where the static site files are located.</li>
+<li>Make sure to update the branch to be gh-pages under Settings -&gt; Pages -&gt; Build and deployment -&gt; Branch in GitHub.</li>
+<li>Make sure to remove the public directory from the .gitignore file. Otherwise GitHub will ignore the public directory and your site will show the README.md instead of the Hugo site.</li>
+</ol>
+<p>The site can be updated either through codespace, or locally as long as Hugo and it&rsquo;s required dependencies have been installed.</p>
+<p>One last note, the simple command after making any changes and to push those updates is as follows:</p>
+<pre><code># hugo &amp;&amp; git add . &amp;&amp; git commit -am &quot;Updating site&quot; &amp;&amp; git push</code></pre>
 
 </section>
 

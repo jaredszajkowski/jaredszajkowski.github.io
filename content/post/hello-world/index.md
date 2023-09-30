@@ -24,4 +24,14 @@ This is the only theme that I have found that checks all of the following boxes:
 * Simple interface that is easily navigable
 * Highly extensible including modules for image galleries, posts, comment capabilities, etc.
 
-It is hosted on [GitHub pages](https://pages.github.com/).
+It is hosted on [GitHub pages](https://pages.github.com/). I followed the install instructions that the theme author provided, including using GitHub codespace for editing in the cloud. There are only two details that I ran into that he did not mention.
+
+1. Don't forget to run Hugo to build the site. This creates the public directory, which is where the static site files are located.
+2. Make sure to update the branch to be gh-pages under Settings -> Pages -> Build and deployment -> Branch in GitHub.
+3. Make sure to remove the public directory from the .gitignore file. Otherwise GitHub will ignore the public directory and your site will show the README.md instead of the Hugo site.
+
+The site can be updated either through codespace, or locally as long as Hugo and it's required dependencies have been installed.
+
+One last note, the simple command after making any changes and to push those updates is as follows:
+
+    # hugo && git add . && git commit -am "Updating site" && git push

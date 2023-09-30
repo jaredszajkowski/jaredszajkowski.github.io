@@ -25,7 +25,15 @@
 &lt;li&gt;Highly extensible including modules for image galleries, posts, comment capabilities, etc.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;It is hosted on &lt;a class=&#34;link&#34; href=&#34;https://pages.github.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;GitHub pages&lt;/a&gt;.&lt;/p&gt;
+    &gt;GitHub pages&lt;/a&gt;. I followed the install instructions that the theme author provided, including using GitHub codespace for editing in the cloud. There are only two details that I ran into that he did not mention.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Don&amp;rsquo;t forget to run Hugo to build the site. This creates the public directory, which is where the static site files are located.&lt;/li&gt;
+&lt;li&gt;Make sure to update the branch to be gh-pages under Settings -&amp;gt; Pages -&amp;gt; Build and deployment -&amp;gt; Branch in GitHub.&lt;/li&gt;
+&lt;li&gt;Make sure to remove the public directory from the .gitignore file. Otherwise GitHub will ignore the public directory and your site will show the README.md instead of the Hugo site.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The site can be updated either through codespace, or locally as long as Hugo and it&amp;rsquo;s required dependencies have been installed.&lt;/p&gt;
+&lt;p&gt;One last note, the simple command after making any changes and to push those updates is as follows:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# hugo &amp;amp;&amp;amp; git add . &amp;amp;&amp;amp; git commit -am &amp;quot;Updating site&amp;quot; &amp;amp;&amp;amp; git push&lt;/code&gt;&lt;/pre&gt;
 </description>
         </item>
         
