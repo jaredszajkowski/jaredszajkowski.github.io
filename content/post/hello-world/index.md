@@ -25,7 +25,7 @@ This is the only theme that I have found that checks all of the following boxes:
 * Simple interface that is easily navigable
 * Highly extensible including modules for image galleries, posts, comment capabilities, etc.
 
-It is hosted on [GitHub pages](https://pages.github.com/). I followed the install instructions that the theme author provided, including using GitHub codespace for editing in the cloud. There are only two details that I ran into that he did not mention.
+It is hosted on [GitHub pages](https://pages.github.com/). I followed the install instructions that the theme author provided, including using GitHub codespace for editing in the cloud. There are only a few details that I ran into that he did not mention.
 
 1. Don't forget to run Hugo to build the site. This creates the public directory, which is where the static site files are located.
 2. Make sure to update the branch to be gh-pages under Settings -> Pages -> Build and deployment -> Branch in GitHub.
@@ -35,8 +35,8 @@ The site can be updated either through codespace, or locally as long as Hugo and
 
 Here's the full list of resources I referenced for deploying Hugo with GitHub pages:
 
-https://www.o11ycloud.com/posts/gh_hugo/
-https://github.com/CaiJimmy/hugo-theme-stack
+https://www.o11ycloud.com/posts/gh_hugo/</br>
+https://github.com/CaiJimmy/hugo-theme-stack</br>
 https://medium.com/@magstherdev/github-pages-hugo-86ae6bcbadd
 
 One last note, the simple command after making any changes and to push those updates is as follows:
