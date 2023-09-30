@@ -73,7 +73,7 @@ Create GPT partition table with option "o".
 
 Create new EFI partition w/ 550mb with option "n", using the following parameters:
 
-<font color="dark blue">
+<font color="rgb(0, 0, 128)">
 Partition #1 </br>
 Default starting sector</br>
 +550M</br>
@@ -84,7 +84,7 @@ Change partition type to EFI System (ef00)</br>
 
 Create new boot partition w/ 550mb with option "n", using the following parameters:
 
-<font color="dark blue">
+<font color="rgb(0, 0, 128)">
 Partition #2 </br>
 Default starting sector</br>
 +550M</br>
@@ -97,7 +97,7 @@ The old rule of thumb used to be that a swap partition should be the same size a
 
 Create new Swap partition w/ 8GB with option "n", using the following parameters:
 
-<font color="dark blue">
+<font color="rgb(0, 0, 128)">
 Partition #3</br>
 Default starting sector</br>
 +8G</br>
@@ -108,7 +108,7 @@ Change to linux swap (8200)</br>
 
 Create new root partition w/ remaining disk space with option "n", using the following parameters:
 
-<font color="dark blue">
+<font color="rgb(0, 0, 128)">
 Partition #4</br>
 Default starting sector</br>
 Complete remaining space</br>
