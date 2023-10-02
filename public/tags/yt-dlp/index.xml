@@ -6,12 +6,12 @@
         <description>Recent content in yt-dlp on Jared Szajkowski</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Fri, 29 Sep 2023 00:00:01 +0000</lastBuildDate><atom:link href="https://jaredszajkowski.github.io/tags/yt-dlp/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 01 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://jaredszajkowski.github.io/tags/yt-dlp/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Using yt-dlp With Zoom</title>
-        <link>https://jaredszajkowski.github.io/p/hello-world-2/</link>
-        <pubDate>Fri, 29 Sep 2023 00:00:01 +0000</pubDate>
+        <link>https://jaredszajkowski.github.io/p/using-yt-dlp-with-zoom/</link>
+        <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/p/hello-world-2/</guid>
+        <guid>https://jaredszajkowski.github.io/p/using-yt-dlp-with-zoom/</guid>
         <description>&lt;p&gt;This is the basic framework that I use to install Arch Linux, with a few changes catered to the Lenovo ThinkPad E15 Gen 2. I have found that this is a decent mid range laptop, excellent linux compatibility, great keyboard, and overall provides a good value.&lt;/p&gt;
 &lt;h2 id=&#34;getting-started&#34;&gt;Getting started&lt;/h2&gt;
 &lt;p&gt;This tutorial assumes the following:&lt;/p&gt;
