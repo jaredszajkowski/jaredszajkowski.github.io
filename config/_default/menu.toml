@@ -24,6 +24,14 @@ url = "https://www.linkedin.com/in/jaredszajkowski/"
 [social.params]
 icon = "LinkedIn_icon_circle"
 
+[[social]]
+identifier = "email"
+name = "Email"
+url = "mailto:jared.szajkowski@gmail.com"
+
+[social.params]
+icon = "4202011_email_gmail_mail_logo_social_icon"
+
 # Twitter below
 
 #[[social]]
