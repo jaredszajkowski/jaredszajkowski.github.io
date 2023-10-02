@@ -51,10 +51,8 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&#34;partition-table--partitions&#34;&gt;Partition table &amp;amp; partitions&lt;/h2&gt;
 &lt;p&gt;Open nvme0n1 with gdisk:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;pre&gt;&lt;code&gt;# gdisk /dev/nvme0n1
+&lt;pre&gt;&lt;code&gt; # gdisk /dev/nvme0n1
 &lt;/code&gt;&lt;/pre&gt;
-&lt;/blockquote&gt;
 &lt;p&gt;Create GPT partition table with option &amp;ldquo;o&amp;rdquo;.&lt;/p&gt;
 &lt;h3 id=&#34;create-efi-partition&#34;&gt;Create EFI partition&lt;/h3&gt;
 &lt;p&gt;Create new EFI partition w/ 550mb with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/p&gt;
@@ -66,12 +64,10 @@ Change partition type to EFI System (ef00)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h3 id=&#34;create-boot-partition&#34;&gt;Create boot partition&lt;/h3&gt;
 &lt;p&gt;Create new boot partition w/ 550mb with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/p&gt;
-&lt;font color=&#34;blue&#34;&gt;
-Partition #2 &lt;/br&gt;
-Default starting sector&lt;/br&gt;
-+550M&lt;/br&gt;
-Leave default type of 8300&lt;/br&gt;
-&lt;/font&gt;
+&lt;p&gt;&lt;code&gt;Partition #2&lt;/code&gt;
+&lt;code&gt;Default starting sector&lt;/code&gt;
+&lt;code&gt;+550M&lt;/code&gt;
+&lt;code&gt;Leave default type of 8300&lt;/code&gt;&lt;/p&gt;
 &lt;h3 id=&#34;create-swap-partition&#34;&gt;Create swap partition&lt;/h3&gt;
 &lt;p&gt;The old rule of thumb used to be that a swap partition should be the same size as the amount of memory in the system, but given the typical amount of memory in modern systems this is obviously no longer necessary. For my system with 16 or 32 GB of memory, a swap of 8 GB is rarely even used.&lt;/br&gt;&lt;/p&gt;
 &lt;p&gt;Create new Swap partition w/ 8GB with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/p&gt;

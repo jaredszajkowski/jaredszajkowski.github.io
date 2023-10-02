@@ -66,7 +66,7 @@ Wipe all file system records:
 
 Open nvme0n1 with gdisk:
 
->     # gdisk /dev/nvme0n1
+     # gdisk /dev/nvme0n1
 
 Create GPT partition table with option "o".
 
@@ -83,12 +83,10 @@ Create new EFI partition w/ 550mb with option "n", using the following parameter
 
 Create new boot partition w/ 550mb with option "n", using the following parameters:
 
-<font color="blue">
-Partition #2 </br>
-Default starting sector</br>
-+550M</br>
-Leave default type of 8300</br>
-</font>
+`Partition #2`
+`Default starting sector`
+`+550M`
+`Leave default type of 8300`
 
 ### Create swap partition
 
