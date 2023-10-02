@@ -2,8 +2,8 @@
 title: Using yt-dlp With Zoom
 description: Bash script for usage of yt-dlp with Zoom.
 #slug: hello-world-2
-published: 2023-10-01 00:00:00+0000
-lastUpdated: 2023-10-02 00:00:00+0000
+published: 2023-10-03 00:00:00+0000
+lastUpdated: 2023-10-04 00:00:00+0000
 # image: cover.jpg
 draft: false
 categories:
