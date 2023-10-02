@@ -21,8 +21,14 @@ Here's the steps to setting this up:
 
 1. Install [cookie editor](https://microsoftedge.microsoft.com/addons/detail/cookie-editor/ajfboaconbpkglpfanbmlfgojgndmhmc).
 2. Change preferred export format to `Netscape HTTP Cookie File` in the extension options.
+
+![Modify preferred export format](1.png)
+
 3. Log in to zoom.
 4. Export cookies and save to cookies.txt.
+
+![Export cookies](2.png)
+
 5. Save the following code (my bash script file name is yt-dlp.sh):
 
 ```html
