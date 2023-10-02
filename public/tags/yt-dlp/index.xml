@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>yt-dlp on Jared Szajkowski</title>
+        <link>https://jaredszajkowski.github.io/tags/yt-dlp/</link>
+        <description>Recent content in yt-dlp on Jared Szajkowski</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Fri, 29 Sep 2023 00:00:01 +0000</lastBuildDate><atom:link href="https://jaredszajkowski.github.io/tags/yt-dlp/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Using yt-dlp With Zoom</title>
+        <link>https://jaredszajkowski.github.io/p/hello-world-2/</link>
+        <pubDate>Fri, 29 Sep 2023 00:00:01 +0000</pubDate>
+        
+        <guid>https://jaredszajkowski.github.io/p/hello-world-2/</guid>
+        <description>&lt;p&gt;This is the basic framework that I use to install Arch Linux, with a few changes catered to the Lenovo ThinkPad E15 Gen 2. I have found that this is a decent mid range laptop, excellent linux compatibility, great keyboard, and overall provides a good value.&lt;/p&gt;
+&lt;h2 id=&#34;getting-started&#34;&gt;Getting started&lt;/h2&gt;
+&lt;p&gt;This tutorial assumes the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;You are booting from a USB drive with the Arch install ISO.&lt;/li&gt;
+&lt;li&gt;Wireless or wired network is detected and drivers are configured automatically.&lt;/li&gt;
+&lt;li&gt;You want drive encrytion on your root partition, but not on your boot/efi/swap partitions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;configure-wireless&#34;&gt;Configure Wireless&lt;/h3&gt;
+&lt;p&gt;The following command will drop you into the iwd daemon:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# iwctl
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;From there:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# device list
+# station *device* scan
+# station *device* get-networks
+# station *device* connect *SSID*
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;verify-uefi-boot-mode&#34;&gt;Verify UEFI boot mode&lt;/h3&gt;
+&lt;p&gt;The following command should show directory without error:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# ls /sys/firmware/efi/efivars
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;verify-internet-connectivity&#34;&gt;Verify internet connectivity&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# ping archlinux.org
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;update-system-clock&#34;&gt;Update system clock&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# timedatectl set-ntp true
+# timedatectl status
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;prep-disks&#34;&gt;Prep disks&lt;/h2&gt;
+&lt;p&gt;The following assumes that your NVME drive is found as /dev/nvme0n1. Partitions will then be /dev/nvme0n1p1 and so on.&lt;/p&gt;
+&lt;p&gt;List disks:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# fdisk -l
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Wipe all file system records:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# wipefs -a /dev/nvme0n1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;partition-table--partitions&#34;&gt;Partition table &amp;amp; partitions&lt;/h2&gt;
+&lt;p&gt;Open nvme0n1 with gdisk:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; # gdisk /dev/nvme0n1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Create GPT partition table with option &amp;ldquo;o&amp;rdquo;.&lt;/p&gt;
+&lt;h3 id=&#34;create-efi-partition&#34;&gt;Create EFI partition&lt;/h3&gt;
+&lt;p&gt;Create new EFI partition w/ 550mb with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Partition #1&lt;/br&gt;
+Default starting sector&lt;/br&gt;
++550M&lt;/br&gt;
+Change partition type to EFI System (ef00)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;create-boot-partition&#34;&gt;Create boot partition&lt;/h3&gt;
+&lt;p&gt;Create new boot partition w/ 550mb with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Partition #2&lt;/br&gt;
+Default starting sector&lt;/br&gt;
++550M&lt;/br&gt;
+Leave default type of 8300&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;create-swap-partition&#34;&gt;Create swap partition&lt;/h3&gt;
+&lt;p&gt;The old rule of thumb used to be that a swap partition should be the same size as the amount of memory in the system, but given the typical amount of memory in modern systems this is obviously no longer necessary. For my system with 16 or 32 GB of memory, a swap of 8 GB is rarely even used.&lt;/br&gt;&lt;/p&gt;
+&lt;p&gt;Create new Swap partition w/ 8GB with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Partition #3&lt;/br&gt;
+Default starting sector&lt;/br&gt;
++8G&lt;/br&gt;
+Change to linux swap (8200)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;create-root-partition&#34;&gt;Create root partition&lt;/h3&gt;
+&lt;p&gt;Create new root partition w/ remaining disk space with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Partition #4&lt;/br&gt;
+Default starting sector&lt;/br&gt;
+Complete remaining space&lt;/br&gt;
+Linux LUKS type 8309&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;And then exit gdisk.&lt;/p&gt;
+&lt;h2 id=&#34;write-file-systems&#34;&gt;Write file systems&lt;/h2&gt;
+&lt;h3 id=&#34;efi-partition&#34;&gt;EFI partition&lt;/h3&gt;
+&lt;p&gt;Write file system to new EFI System partition:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# cat /dev/zero &amp;gt; /dev/nvme0n1p1 
+# mkfs.fat -F32 /dev/nvme0n1p1 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;boot-partition&#34;&gt;Boot partition&lt;/h3&gt;
+&lt;p&gt;Then boot partition:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# cat /dev/zero &amp;gt; /dev/nvme0n1p2 
+# mkfs.ext2 /dev/nvme0n1p2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;root-partition&#34;&gt;Root partition&lt;/h3&gt;
+&lt;p&gt;Prepare root partition w/ LUKS:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# cryptsetup -y -v luksFormat --type luks2 /dev/nvme0n1p4
+# cryptsetup luksDump /dev/nvme0n1p4
+# cryptsetup open /dev/nvme0n1p4 archcryptroot
+# mkfs.ext4 /dev/mapper/archcryptroot
+# mount /dev/mapper/archcryptroot /mnt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I use &lt;em&gt;archcryptroot&lt;/em&gt; for the name of my encrypted volume, but change as necessary.&lt;/p&gt;
+&lt;h3 id=&#34;swap-partition&#34;&gt;Swap partition&lt;/h3&gt;
+&lt;p&gt;Then swap:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# mkswap /dev/nvme0n1p3
+# swapon /dev/nvme0n1p3
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;create-mount-points&#34;&gt;Create mount points&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# mkdir /mnt/boot
+# mount /dev/nvme0n1p2 /mnt/boot
+# mkdir /mnt/boot/efi
+# mount /dev/nvme0n1p1 /mnt/boot/efi
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;install-system&#34;&gt;Install system&lt;/h2&gt;
+&lt;p&gt;To be continued.&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
