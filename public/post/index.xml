@@ -12,15 +12,15 @@
         <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
         
         <guid>https://jaredszajkowski.github.io/p/using-yt-dlp-with-zoom/</guid>
-        <description>&lt;p&gt;If anyone uses Zoom to record or access video calls, here&amp;rsquo;s a simple linux bash script to download the video file and acompanying subtitles.&lt;/p&gt;
-&lt;p&gt;This requires you to have a &amp;ldquo;cookies&amp;rdquo; file, which needs to contain the export in the Netscape HTTP format of the Zoom cookies after logging in.&lt;/p&gt;
+        <description>&lt;p&gt;If anyone uses Zoom to record or access recordings of video calls, here&amp;rsquo;s a simple linux bash script to download the video file and acompanying subtitles.&lt;/p&gt;
+&lt;p&gt;This requires you to have a &amp;ldquo;cookies&amp;rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Zoom cookies after logging in.&lt;/p&gt;
 &lt;p&gt;Here&amp;rsquo;s the steps to setting this up:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Install &lt;a class=&#34;link&#34; href=&#34;https://microsoftedge.microsoft.com/addons/detail/cookie-editor/ajfboaconbpkglpfanbmlfgojgndmhmc&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;cookie editor&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;Change preferred export format to &lt;code&gt;Netscape HTTP Cookie File&lt;/code&gt; in the extension options.&lt;/li&gt;
 &lt;li&gt;Log in to zoom.&lt;/li&gt;
-&lt;li&gt;Export cookies and save to a .txt file.&lt;/li&gt;
+&lt;li&gt;Export cookies and save to cookies.txt.&lt;/li&gt;
 &lt;li&gt;Save the following code (my bash script file name is yt-dlp.sh):&lt;/li&gt;
 &lt;/ol&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -47,7 +47,7 @@
 &lt;p&gt;$ chmod +x yt-dlp.sh&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;Execute the bash script with ./yt-dlp.sh, copy and past the link to the video that you would like to save, and it should download the video and the subtitles.&lt;/p&gt;
+&lt;p&gt;Execute the bash script with ./yt-dlp.sh, copy and paste the link to the video that you would like to save, and it should download the video and the subtitles.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 </description>

@@ -286,15 +286,15 @@
     <section class="article-content">
     
     
-    <p>If anyone uses Zoom to record or access video calls, here&rsquo;s a simple linux bash script to download the video file and acompanying subtitles.</p>
-<p>This requires you to have a &ldquo;cookies&rdquo; file, which needs to contain the export in the Netscape HTTP format of the Zoom cookies after logging in.</p>
+    <p>If anyone uses Zoom to record or access recordings of video calls, here&rsquo;s a simple linux bash script to download the video file and acompanying subtitles.</p>
+<p>This requires you to have a &ldquo;cookies&rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Zoom cookies after logging in.</p>
 <p>Here&rsquo;s the steps to setting this up:</p>
 <ol>
 <li>Install <a class="link" href="https://microsoftedge.microsoft.com/addons/detail/cookie-editor/ajfboaconbpkglpfanbmlfgojgndmhmc"  target="_blank" rel="noopener"
     >cookie editor</a>.</li>
 <li>Change preferred export format to <code>Netscape HTTP Cookie File</code> in the extension options.</li>
 <li>Log in to zoom.</li>
-<li>Export cookies and save to a .txt file.</li>
+<li>Export cookies and save to cookies.txt.</li>
 <li>Save the following code (my bash script file name is yt-dlp.sh):</li>
 </ol>
 <div class="highlight"><div class="chroma">
@@ -321,7 +321,7 @@
 <p>$ chmod +x yt-dlp.sh</p>
 </li>
 <li>
-<p>Execute the bash script with ./yt-dlp.sh, copy and past the link to the video that you would like to save, and it should download the video and the subtitles.</p>
+<p>Execute the bash script with ./yt-dlp.sh, copy and paste the link to the video that you would like to save, and it should download the video and the subtitles.</p>
 </li>
 </ol>
 
