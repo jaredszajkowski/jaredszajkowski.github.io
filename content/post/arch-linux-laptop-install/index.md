@@ -74,12 +74,11 @@ Create GPT partition table with option "o".
 
 Create new EFI partition w/ 550mb with option "n", using the following parameters:
 
-<font color="blue">
-Partition #1 </br>
-Default starting sector</br>
-+550M</br>
-Change partition type to EFI System (ef00)</br>
-</font>
+> Partition #1
+> Default starting sector
+> +550M
+> Change partition type to EFI System (ef00)
+
 
 ### Create boot partition
 
