@@ -8,12 +8,11 @@ links:
   - title: Gnome Apps
     description: Apps for GNOME
     website: https://apps.gnome.org/
-#    image: https://foundation.gnome.org/wp-content/uploads/sites/12/2021/03/GnomeLogoHorizontal.svg
+    image: https://foundation.gnome.org/wp-content/uploads/sites/12/2021/03/gnome-logos-1.png
   - title: Arch Linux
     description: Arch Linux - A simple, lightweight distribution
     website: https://archlinux.org/
-#    image: https://archlinux.org/static/logos/archlinux-logo-dark-scalable.518881f04ca9.svg
-    image: https://archlinux.org/static/logos/archlinux-logo-light-1200dpi.7ccd81fd52dc.png
+    image: https://archlinux.org/static/logos/archlinux-logo-dark-90dpi.ebdee92a15b3.png
 menu:
     main: 
         weight: 4
