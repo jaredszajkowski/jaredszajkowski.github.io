@@ -211,64 +211,7 @@
     </ol>
 </aside>
 
-    <aside class="sidebar right-sidebar sticky">
-        
-            
-                
-    <section class="widget archives">
-        <div class="widget-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <line x1="5" y1="9" x2="19" y2="9" />
-  <line x1="5" y1="15" x2="19" y2="15" />
-  <line x1="11" y1="4" x2="7" y2="20" />
-  <line x1="17" y1="4" x2="13" y2="20" />
-</svg>
-
-
-
-        </div>
-        <h2 class="widget-title section-title">Table of contents</h2>
-        
-        <div class="widget--toc">
-            <nav id="TableOfContents">
-  <ol>
-    <li><a href="#getting-started">Getting started</a>
-      <ol>
-        <li><a href="#configure-wireless">Configure Wireless</a></li>
-        <li><a href="#verify-uefi-boot-mode">Verify UEFI boot mode</a></li>
-        <li><a href="#verify-internet-connectivity">Verify internet connectivity</a></li>
-        <li><a href="#update-system-clock">Update system clock</a></li>
-      </ol>
-    </li>
-    <li><a href="#prep-disks">Prep disks</a></li>
-    <li><a href="#partition-table--partitions">Partition table &amp; partitions</a>
-      <ol>
-        <li><a href="#create-efi-partition">Create EFI partition</a></li>
-        <li><a href="#create-boot-partition">Create boot partition</a></li>
-        <li><a href="#create-swap-partition">Create swap partition</a></li>
-        <li><a href="#create-root-partition">Create root partition</a></li>
-      </ol>
-    </li>
-    <li><a href="#write-file-systems">Write file systems</a>
-      <ol>
-        <li><a href="#efi-partition">EFI partition</a></li>
-        <li><a href="#boot-partition">Boot partition</a></li>
-        <li><a href="#root-partition">Root partition</a></li>
-        <li><a href="#swap-partition">Swap partition</a></li>
-        <li><a href="#create-mount-points">Create mount points</a></li>
-      </ol>
-    </li>
-    <li><a href="#install-system">Install system</a></li>
-  </ol>
-</nav>
-        </div>
-    </section>
-
-            
-        
-    </aside>
-
+    
 
             <main class="main full-width">
     <article class="main-article">
@@ -328,7 +271,7 @@
 
 
                 <time class="article-time--reading">
-                    3 minute read
+                    1 minute read
                 </time>
             </div>
         
@@ -343,115 +286,44 @@
     <section class="article-content">
     
     
-    <p>This is the basic framework that I use to install Arch Linux, with a few changes catered to the Lenovo ThinkPad E15 Gen 2. I have found that this is a decent mid range laptop, excellent linux compatibility, great keyboard, and overall provides a good value.</p>
-<h2 id="getting-started">Getting started</h2>
-<p>This tutorial assumes the following:</p>
-<ul>
-<li>You are booting from a USB drive with the Arch install ISO.</li>
-<li>Wireless or wired network is detected and drivers are configured automatically.</li>
-<li>You want drive encrytion on your root partition, but not on your boot/efi/swap partitions.</li>
-</ul>
-<h3 id="configure-wireless">Configure Wireless</h3>
-<p>The following command will drop you into the iwd daemon:</p>
-<pre><code># iwctl
-</code></pre>
-<p>From there:</p>
-<pre><code># device list
-# station *device* scan
-# station *device* get-networks
-# station *device* connect *SSID*
-</code></pre>
-<h3 id="verify-uefi-boot-mode">Verify UEFI boot mode</h3>
-<p>The following command should show directory without error:</p>
-<pre><code># ls /sys/firmware/efi/efivars
-</code></pre>
-<h3 id="verify-internet-connectivity">Verify internet connectivity</h3>
-<pre><code># ping archlinux.org
-</code></pre>
-<h3 id="update-system-clock">Update system clock</h3>
-<pre><code># timedatectl set-ntp true
-# timedatectl status
-</code></pre>
-<h2 id="prep-disks">Prep disks</h2>
-<p>The following assumes that your NVME drive is found as /dev/nvme0n1. Partitions will then be /dev/nvme0n1p1 and so on.</p>
-<p>List disks:</p>
-<pre><code># fdisk -l
-</code></pre>
-<p>Wipe all file system records:</p>
-<pre><code># wipefs -a /dev/nvme0n1
-</code></pre>
-<h2 id="partition-table--partitions">Partition table &amp; partitions</h2>
-<p>Open nvme0n1 with gdisk:</p>
-<pre><code> # gdisk /dev/nvme0n1
-</code></pre>
-<p>Create GPT partition table with option &ldquo;o&rdquo;.</p>
-<h3 id="create-efi-partition">Create EFI partition</h3>
-<p>Create new EFI partition w/ 550mb with option &ldquo;n&rdquo;, using the following parameters:</p>
-<blockquote>
-<p>Partition #1</br>
-Default starting sector</br>
-+550M</br>
-Change partition type to EFI System (ef00)</p>
-</blockquote>
-<h3 id="create-boot-partition">Create boot partition</h3>
-<p>Create new boot partition w/ 550mb with option &ldquo;n&rdquo;, using the following parameters:</p>
-<blockquote>
-<p>Partition #2</br>
-Default starting sector</br>
-+550M</br>
-Leave default type of 8300</p>
-</blockquote>
-<h3 id="create-swap-partition">Create swap partition</h3>
-<p>The old rule of thumb used to be that a swap partition should be the same size as the amount of memory in the system, but given the typical amount of memory in modern systems this is obviously no longer necessary. For my system with 16 or 32 GB of memory, a swap of 8 GB is rarely even used.</br></p>
-<p>Create new Swap partition w/ 8GB with option &ldquo;n&rdquo;, using the following parameters:</p>
-<blockquote>
-<p>Partition #3</br>
-Default starting sector</br>
-+8G</br>
-Change to linux swap (8200)</p>
-</blockquote>
-<h3 id="create-root-partition">Create root partition</h3>
-<p>Create new root partition w/ remaining disk space with option &ldquo;n&rdquo;, using the following parameters:</p>
-<blockquote>
-<p>Partition #4</br>
-Default starting sector</br>
-Complete remaining space</br>
-Linux LUKS type 8309</p>
-</blockquote>
-<p>And then exit gdisk.</p>
-<h2 id="write-file-systems">Write file systems</h2>
-<h3 id="efi-partition">EFI partition</h3>
-<p>Write file system to new EFI System partition:</p>
-<pre><code># cat /dev/zero &gt; /dev/nvme0n1p1 
-# mkfs.fat -F32 /dev/nvme0n1p1 
-</code></pre>
-<h3 id="boot-partition">Boot partition</h3>
-<p>Then boot partition:</p>
-<pre><code># cat /dev/zero &gt; /dev/nvme0n1p2 
-# mkfs.ext2 /dev/nvme0n1p2
-</code></pre>
-<h3 id="root-partition">Root partition</h3>
-<p>Prepare root partition w/ LUKS:</p>
-<pre><code># cryptsetup -y -v luksFormat --type luks2 /dev/nvme0n1p4
-# cryptsetup luksDump /dev/nvme0n1p4
-# cryptsetup open /dev/nvme0n1p4 archcryptroot
-# mkfs.ext4 /dev/mapper/archcryptroot
-# mount /dev/mapper/archcryptroot /mnt
-</code></pre>
-<p>I use <em>archcryptroot</em> for the name of my encrypted volume, but change as necessary.</p>
-<h3 id="swap-partition">Swap partition</h3>
-<p>Then swap:</p>
-<pre><code># mkswap /dev/nvme0n1p3
-# swapon /dev/nvme0n1p3
-</code></pre>
-<h3 id="create-mount-points">Create mount points</h3>
-<pre><code># mkdir /mnt/boot
-# mount /dev/nvme0n1p2 /mnt/boot
-# mkdir /mnt/boot/efi
-# mount /dev/nvme0n1p1 /mnt/boot/efi
-</code></pre>
-<h2 id="install-system">Install system</h2>
-<p>To be continued.</p>
+    <p>If anyone uses Zoom to record or access video calls, here&rsquo;s a simple linux bash script to download the video file and acompanying subtitles.</p>
+<p>This requires you to have a &ldquo;cookies&rdquo; file, which needs to contain the export in the Netscape HTTP format of the Zoom cookies after logging in.</p>
+<p>Here&rsquo;s the steps to setting this up:</p>
+<ol>
+<li>Install <a class="link" href="https://microsoftedge.microsoft.com/addons/detail/cookie-editor/ajfboaconbpkglpfanbmlfgojgndmhmc"  target="_blank" rel="noopener"
+    >cookie editor</a>.</li>
+<li>Change preferred export format to <code>Netscape HTTP Cookie File</code> in the extension options.</li>
+<li>Log in to zoom.</li>
+<li>Export cookies and save to a .txt file.</li>
+<li>Save the following code (my bash script file name is yt-dlp.sh):</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">#!/bin/bash
+</span></span><span class="line"><span class="cl">echo What is the link?
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">read link
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">yt-dlp --referer &#34;https://zoom.us/&#34; --cookies /path/to/cookies/file/cookies.txt -o &#34;%(title)s-%(id)s.%(ext)s&#34; --write-subs $link
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="6">
+<li>
+<p>Change permissions of the bash script to allow execution:</p>
+<p>$ chmod +x yt-dlp.sh</p>
+</li>
+<li>
+<p>Execute the bash script with ./yt-dlp.sh, copy and past the link to the video that you would like to save, and it should download the video and the subtitles.</p>
+</li>
+</ol>
 
 </section>
 

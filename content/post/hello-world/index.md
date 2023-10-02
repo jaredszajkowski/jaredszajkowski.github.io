@@ -3,7 +3,6 @@ title: Hello World
 description: Welcome to my website
 # slug: hello-world
 date: 2023-09-26 00:00:00+0000
-updated: 2023-09-29 00:00:00+0000
 # image: cover.jpg
 draft: false
 categories:
