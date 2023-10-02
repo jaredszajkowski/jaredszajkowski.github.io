@@ -83,10 +83,10 @@ Create new EFI partition w/ 550mb with option "n", using the following parameter
 
 Create new boot partition w/ 550mb with option "n", using the following parameters:
 
-`Partition #2`
-`Default starting sector`
-`+550M`
-`Leave default type of 8300`
+> Partition #2</br>
+> Default starting sector</br>
+> +550M</br>
+> Leave default type of 8300
 
 ### Create swap partition
 
@@ -94,23 +94,19 @@ The old rule of thumb used to be that a swap partition should be the same size a
 
 Create new Swap partition w/ 8GB with option "n", using the following parameters:
 
-<font color="blue">
-Partition #3</br>
-Default starting sector</br>
-+8G</br>
-Change to linux swap (8200)</br>
-</font>
+> Partition #3</br>
+> Default starting sector</br>
+> +8G</br>
+> Change to linux swap (8200)
 
 ### Create root partition
 
 Create new root partition w/ remaining disk space with option "n", using the following parameters:
 
-<font color="blue">
-Partition #4</br>
-Default starting sector</br>
-Complete remaining space</br>
-Linux LUKS type 8309</br>
-</font>
+> Partition #4</br>
+> Default starting sector</br>
+> Complete remaining space</br>
+> Linux LUKS type 8309
 
 And then exit gdisk.
 
