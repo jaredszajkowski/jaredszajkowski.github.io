@@ -51,15 +51,17 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&#34;partition-table--partitions&#34;&gt;Partition table &amp;amp; partitions&lt;/h2&gt;
 &lt;p&gt;Open nvme0n1 with gdisk:&lt;/p&gt;
+&lt;blockquote&gt;
 &lt;pre&gt;&lt;code&gt;# gdisk /dev/nvme0n1
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;Create GPT partition table with option &amp;ldquo;o&amp;rdquo;.&lt;/p&gt;
 &lt;h3 id=&#34;create-efi-partition&#34;&gt;Create EFI partition&lt;/h3&gt;
 &lt;p&gt;Create new EFI partition w/ 550mb with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;Partition #1
-Default starting sector
-+550M
+&lt;p&gt;Partition #1&lt;/br&gt;
+Default starting sector&lt;/br&gt;
++550M&lt;/br&gt;
 Change partition type to EFI System (ef00)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h3 id=&#34;create-boot-partition&#34;&gt;Create boot partition&lt;/h3&gt;
