@@ -1,5 +1,6 @@
 ---
-title: Links
+title: "Links"
+slug: "links"
 links:
   - title: GitHub
     description: GitHub is the world's largest software development platform.
@@ -15,7 +16,7 @@ links:
 #    image: https://archlinux.org/static/logos/archlinux-logo-dark-90dpi.ebdee92a15b3.png
 menu:
     main: 
-        weight: 4
+        weight: 5
         params:
 #            icon: link
 
