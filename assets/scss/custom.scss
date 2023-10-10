@@ -2,6 +2,13 @@
     You can add your own custom styles here.
 */
 
-body {
+:root body {
     background-color: #ffffff; /* Change the background color to white */
   }
+
+/* Custom CSS for Dark Theme Background */
+
+:root[data-scheme=dark] body {
+  background-color: #303030; /* Replace with your desired 
+  background color for the dark theme */
+}
