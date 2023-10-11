@@ -249,7 +249,359 @@
   color:#d88200}
   
 [data-scheme=light] .chroma .sa{
-  color:#d88200}[data-scheme=light] .chroma .sb{color:#d88200}[data-scheme=light] .chroma .sc{color:#d88200}[data-scheme=light] .chroma .dl{color:#d88200}[data-scheme=light] .chroma .sd{color:#d88200}[data-scheme=light] .chroma .s2{color:#d88200}[data-scheme=light] .chroma .se{color:#ae81ff}[data-scheme=light] .chroma .sh{color:#d88200}[data-scheme=light] .chroma .si{color:#d88200}[data-scheme=light] .chroma .sx{color:#d88200}[data-scheme=light] .chroma .sr{color:#d88200}[data-scheme=light] .chroma .s1{color:#d88200}[data-scheme=light] .chroma .ss{color:#d88200}[data-scheme=light] .chroma .m{color:#ae81ff}[data-scheme=light] .chroma .mb{color:#ae81ff}[data-scheme=light] .chroma .mf{color:#ae81ff}[data-scheme=light] .chroma .mh{color:#ae81ff}[data-scheme=light] .chroma .mi{color:#ae81ff}[data-scheme=light] .chroma .il{color:#ae81ff}[data-scheme=light] .chroma .mo{color:#ae81ff}[data-scheme=light] .chroma .o{color:#f92672}[data-scheme=light] .chroma .ow{color:#f92672}[data-scheme=light] .chroma .p{color:#111}[data-scheme=light] .chroma .c{color:#75715e}[data-scheme=light] .chroma .ch{color:#75715e}[data-scheme=light] .chroma .cm{color:#75715e}[data-scheme=light] .chroma .c1{color:#75715e}[data-scheme=light] .chroma .cs{color:#75715e}[data-scheme=light] .chroma .cp{color:#75715e}[data-scheme=light] .chroma .cpf{color:#75715e}[data-scheme=light] .chroma .gd{color:#f92672}[data-scheme=light] .chroma .ge{font-style:italic}[data-scheme=light] .chroma .gi{color:#75af00}[data-scheme=light] .chroma .gs{font-weight:700}[data-scheme=light] .chroma .gu{color:#75715e}[data-scheme=dark]{--pre-text-color:#f8f8f2;--pre-background-color:#272822}[data-scheme=dark] .chroma{color:#f8f8f2;background-color:#272822}[data-scheme=dark] .chroma .err{color:#bb0064}[data-scheme=dark] .chroma .lntd{vertical-align:top;padding:0;margin:0;border:0}[data-scheme=dark] .chroma .lntable{border-spacing:0;padding:0;margin:0;border:0;width:100%;display:block}[data-scheme=dark] .chroma .lntable>tbody{display:block;width:100%}[data-scheme=dark] .chroma .lntable>tbody>tr{display:flex;width:100%}[data-scheme=dark] .chroma .lntable>tbody>tr>td:last-child{overflow-x:auto}[data-scheme=dark] .chroma .hl{display:block;width:100%;background-color:#ffc}[data-scheme=dark] .chroma .lnt{margin-right:.4em;padding:0 .4em;color:#7f7f7f;display:block}[data-scheme=dark] .chroma .ln{margin-right:.4em;padding:0 .4em;color:#7f7f7f}[data-scheme=dark] .chroma .k{color:#66d9ef}[data-scheme=dark] .chroma .kc{color:#66d9ef}[data-scheme=dark] .chroma .kd{color:#66d9ef}[data-scheme=dark] .chroma .kn{color:#f92672}[data-scheme=dark] .chroma .kp{color:#66d9ef}[data-scheme=dark] .chroma .kr{color:#66d9ef}[data-scheme=dark] .chroma .kt{color:#66d9ef}[data-scheme=dark] .chroma .n{color:#f8f8f2}[data-scheme=dark] .chroma .na{color:#a6e22e}[data-scheme=dark] .chroma .nb{color:#f8f8f2}[data-scheme=dark] .chroma .bp{color:#f8f8f2}[data-scheme=dark] .chroma .nc{color:#a6e22e}[data-scheme=dark] .chroma .no{color:#66d9ef}[data-scheme=dark] .chroma .nd{color:#a6e22e}[data-scheme=dark] .chroma .ni{color:#f8f8f2}[data-scheme=dark] .chroma .ne{color:#a6e22e}[data-scheme=dark] .chroma .nf{color:#a6e22e}[data-scheme=dark] .chroma .fm{color:#f8f8f2}[data-scheme=dark] .chroma .nl{color:#f8f8f2}[data-scheme=dark] .chroma .nn{color:#f8f8f2}[data-scheme=dark] .chroma .nx{color:#a6e22e}[data-scheme=dark] .chroma .py{color:#f8f8f2}[data-scheme=dark] .chroma .nt{color:#f92672}[data-scheme=dark] .chroma .nv{color:#f8f8f2}[data-scheme=dark] .chroma .vc{color:#f8f8f2}[data-scheme=dark] .chroma .vg{color:#f8f8f2}[data-scheme=dark] .chroma .vi{color:#f8f8f2}[data-scheme=dark] .chroma .vm{color:#f8f8f2}[data-scheme=dark] .chroma .l{color:#ae81ff}[data-scheme=dark] .chroma .ld{color:#e6db74}[data-scheme=dark] .chroma .s{color:#e6db74}[data-scheme=dark] .chroma .sa{color:#e6db74}[data-scheme=dark] .chroma .sb{color:#e6db74}[data-scheme=dark] .chroma .sc{color:#e6db74}[data-scheme=dark] .chroma .dl{color:#e6db74}[data-scheme=dark] .chroma .sd{color:#e6db74}[data-scheme=dark] .chroma .s2{color:#e6db74}[data-scheme=dark] .chroma .se{color:#ae81ff}[data-scheme=dark] .chroma .sh{color:#e6db74}[data-scheme=dark] .chroma .si{color:#e6db74}[data-scheme=dark] .chroma .sx{color:#e6db74}[data-scheme=dark] .chroma .sr{color:#e6db74}[data-scheme=dark] .chroma .s1{color:#e6db74}[data-scheme=dark] .chroma .ss{color:#e6db74}[data-scheme=dark] .chroma .m{color:#ae81ff}[data-scheme=dark] .chroma .mb{color:#ae81ff}[data-scheme=dark] .chroma .mf{color:#ae81ff}[data-scheme=dark] .chroma .mh{color:#ae81ff}[data-scheme=dark] .chroma .mi{color:#ae81ff}[data-scheme=dark] .chroma .il{color:#ae81ff}[data-scheme=dark] .chroma .mo{color:#ae81ff}[data-scheme=dark] .chroma .o{color:#f92672}[data-scheme=dark] .chroma .ow{color:#f92672}[data-scheme=dark] .chroma .p{color:#f8f8f2}[data-scheme=dark] .chroma .c{color:#75715e}[data-scheme=dark] .chroma .ch{color:#75715e}[data-scheme=dark] .chroma .cm{color:#75715e}[data-scheme=dark] .chroma .c1{color:#75715e}[data-scheme=dark] .chroma .cs{color:#75715e}[data-scheme=dark] .chroma .cp{color:#75715e}[data-scheme=dark] .chroma .cpf{color:#75715e}[data-scheme=dark] .chroma .gd{color:#f92672}[data-scheme=dark] .chroma .ge{font-style:italic}[data-scheme=dark] .chroma .gi{color:#a6e22e}[data-scheme=dark] .chroma .gs{font-weight:700}[data-scheme=dark] .chroma .gu{color:#75715e}
+  color:#d88200}
+  
+[data-scheme=light] .chroma .sb{
+  color:#d88200}
+  
+[data-scheme=light] .chroma .sc{
+  color:#d88200}
+  
+[data-scheme=light] .chroma .dl{
+  color:#d88200}
+  
+[data-scheme=light] .chroma .sd{
+  color:#d88200}
+  
+[data-scheme=light] .chroma .s2{
+  color:#d88200}
+  
+[data-scheme=light] .chroma .se{
+  color:#ae81ff}
+  
+[data-scheme=light] .chroma .sh{
+  color:#d88200}
+  
+[data-scheme=light] .chroma .si{
+  color:#d88200}
+  
+[data-scheme=light] .chroma .sx{
+  color:#d88200}
+  
+[data-scheme=light] .chroma .sr{
+  color:#d88200}
+  
+[data-scheme=light] .chroma .s1{
+  color:#d88200}
+  
+[data-scheme=light] .chroma .ss{
+  color:#d88200}
+  
+[data-scheme=light] .chroma .m{
+  color:#ae81ff}
+  
+[data-scheme=light] .chroma .mb{
+  color:#ae81ff}
+  
+[data-scheme=light] .chroma .mf{
+  color:#ae81ff}
+  
+[data-scheme=light] .chroma .mh{
+  color:#ae81ff}
+  
+[data-scheme=light] .chroma .mi{
+  color:#ae81ff}
+  
+[data-scheme=light] .chroma .il{
+  color:#ae81ff}
+  
+[data-scheme=light] .chroma .mo{
+  color:#ae81ff}
+  
+[data-scheme=light] .chroma .o{
+  color:#f92672}
+  
+[data-scheme=light] .chroma .ow{
+  color:#f92672}
+  
+[data-scheme=light] .chroma .p{
+  color:#111}
+  
+[data-scheme=light] .chroma .c{
+  color:#75715e}
+  
+[data-scheme=light] .chroma .ch{
+  color:#75715e}
+  
+[data-scheme=light] .chroma .cm{
+  color:#75715e}
+  
+[data-scheme=light] .chroma .c1{
+  color:#75715e}
+  
+[data-scheme=light] .chroma .cs{
+  color:#75715e}
+  
+[data-scheme=light] .chroma .cp{
+  color:#75715e}
+  
+[data-scheme=light] .chroma .cpf{
+  color:#75715e}
+  
+[data-scheme=light] .chroma .gd{
+  color:#f92672}
+  
+[data-scheme=light] .chroma .ge{
+  font-style:italic}
+  
+[data-scheme=light] .chroma .gi{
+  color:#75af00}
+  
+[data-scheme=light] .chroma .gs{
+  font-weight:700}
+  
+[data-scheme=light] .chroma .gu{
+  color:#75715e}
+  
+[data-scheme=dark]{
+  --pre-text-color:#f8f8f2;
+  --pre-background-color:#272822}
+  
+[data-scheme=dark] .chroma{
+  color:#f8f8f2;
+  background-color:#272822}
+  
+[data-scheme=dark] .chroma .err{
+  color:#bb0064}
+  
+[data-scheme=dark] .chroma .lntd{
+  vertical-align:top;
+  padding:0;
+  margin:0;
+  border:0}
+  
+[data-scheme=dark] .chroma .lntable{
+  border-spacing:0;
+  padding:0;
+  margin:0;
+  border:0;
+  width:100%;
+  display:block}
+  
+[data-scheme=dark] .chroma .lntable>tbody{
+  display:block;
+  width:100%}
+  
+[data-scheme=dark] .chroma .lntable>tbody>tr{
+  display:flex;
+  width:100%}
+  
+[data-scheme=dark] .chroma .lntable>tbody>tr>td:last-child{
+  overflow-x:auto}
+  
+[data-scheme=dark] .chroma .hl{
+  display:block;
+  width:100%;
+  background-color:#ffc}
+  
+[data-scheme=dark] .chroma .lnt{
+  margin-right:.4em;
+  padding:0 .4em;
+  color:#7f7f7f;
+  display:block}
+  
+[data-scheme=dark] .chroma .ln{
+  margin-right:.4em;
+  padding:0 .4em;
+  color:#7f7f7f}
+  
+[data-scheme=dark] .chroma .k{
+  color:#66d9ef}
+  
+[data-scheme=dark] .chroma .kc{
+  color:#66d9ef}
+
+[data-scheme=dark] .chroma .kd{
+  color:#66d9ef}
+  
+[data-scheme=dark] .chroma .kn{
+  color:#f92672}
+  
+[data-scheme=dark] .chroma .kp{
+  color:#66d9ef}
+  
+[data-scheme=dark] .chroma .kr{
+  color:#66d9ef}
+  
+[data-scheme=dark] .chroma .kt{
+  color:#66d9ef}
+
+[data-scheme=dark] .chroma .n{
+  color:#f8f8f2}
+  
+[data-scheme=dark] .chroma .na{
+  color:#a6e22e}
+  
+[data-scheme=dark] .chroma .nb{
+  color:#f8f8f2}
+  
+[data-scheme=dark] .chroma .bp{
+  color:#f8f8f2}
+  
+[data-scheme=dark] .chroma .nc{
+  color:#a6e22e}
+  
+[data-scheme=dark] .chroma .no{
+  color:#66d9ef}
+  
+[data-scheme=dark] .chroma .nd{
+  color:#a6e22e}
+  
+[data-scheme=dark] .chroma .ni{
+  color:#f8f8f2}
+  
+[data-scheme=dark] .chroma .ne{
+  color:#a6e22e}
+  
+[data-scheme=dark] .chroma .nf{
+  color:#a6e22e}
+  
+[data-scheme=dark] .chroma .fm{
+  color:#f8f8f2}
+  
+[data-scheme=dark] .chroma .nl{
+  color:#f8f8f2}
+  
+[data-scheme=dark] .chroma .nn{
+  color:#f8f8f2}
+  
+[data-scheme=dark] .chroma .nx{
+  color:#a6e22e}
+  
+[data-scheme=dark] .chroma .py{
+  color:#f8f8f2}
+  
+[data-scheme=dark] .chroma .nt{
+  color:#f92672}
+  
+[data-scheme=dark] .chroma .nv{
+  color:#f8f8f2}
+  
+[data-scheme=dark] .chroma .vc{
+  color:#f8f8f2}
+  
+[data-scheme=dark] .chroma .vg{
+  color:#f8f8f2}
+  
+[data-scheme=dark] .chroma .vi{
+  color:#f8f8f2}
+  
+[data-scheme=dark] .chroma .vm{
+  color:#f8f8f2}
+  
+[data-scheme=dark] .chroma .l{
+  color:#ae81ff}
+  
+[data-scheme=dark] .chroma .ld{
+  color:#e6db74}
+  
+[data-scheme=dark] .chroma .s{
+  color:#e6db74}
+  
+[data-scheme=dark] .chroma .sa{
+  color:#e6db74}
+  
+[data-scheme=dark] .chroma .sb{
+  color:#e6db74}
+  
+[data-scheme=dark] .chroma .sc{
+  color:#e6db74}
+  
+[data-scheme=dark] .chroma .dl{
+  color:#e6db74}
+  
+[data-scheme=dark] .chroma .sd{
+  color:#e6db74}
+  
+[data-scheme=dark] .chroma .s2{
+  color:#e6db74}
+  
+[data-scheme=dark] .chroma .se{
+  color:#ae81ff}
+  
+[data-scheme=dark] .chroma .sh{
+  color:#e6db74}
+  
+[data-scheme=dark] .chroma .si{
+  color:#e6db74}
+  
+[data-scheme=dark] .chroma .sx{
+  color:#e6db74}
+  
+[data-scheme=dark] .chroma .sr{
+  color:#e6db74}
+  
+[data-scheme=dark] .chroma .s1{
+  color:#e6db74}
+  
+[data-scheme=dark] .chroma .ss{
+  color:#e6db74}
+  
+[data-scheme=dark] .chroma .m{
+  color:#ae81ff}
+  
+[data-scheme=dark] .chroma .mb{
+  color:#ae81ff}
+  
+[data-scheme=dark] .chroma .mf{
+  color:#ae81ff}
+  
+[data-scheme=dark] .chroma .mh{
+  color:#ae81ff}
+  
+[data-scheme=dark] .chroma .mi{
+  color:#ae81ff}
+  
+[data-scheme=dark] .chroma .il{
+  color:#ae81ff}
+  
+[data-scheme=dark] .chroma .mo{
+  color:#ae81ff}
+  
+[data-scheme=dark] .chroma .o{
+  color:#f92672}
+  
+[data-scheme=dark] .chroma .ow{
+  color:#f92672}
+  
+[data-scheme=dark] .chroma .p{
+  color:#f8f8f2}
+  
+[data-scheme=dark] .chroma .c{
+  color:#75715e}
+  
+[data-scheme=dark] .chroma .ch{
+  color:#75715e}
+  
+[data-scheme=dark] .chroma .cm{
+  color:#75715e}
+  
+[data-scheme=dark] .chroma .c1{
+  color:#75715e}
+  
+[data-scheme=dark] .chroma .cs{
+  color:#75715e}
+  
+[data-scheme=dark] .chroma .cp{
+  color:#75715e}
+  
+[data-scheme=dark] .chroma .cpf{
+  color:#75715e}
+  
+[data-scheme=dark] .chroma .gd{
+  color:#f92672}
+  
+[data-scheme=dark] .chroma .ge{
+  font-style:italic}
+  
+[data-scheme=dark] .chroma .gi{
+  color:#a6e22e}
+  
+[data-scheme=dark] .chroma .gs{
+  font-weight:700}
+  
+[data-scheme=dark] .chroma .gu{
+  color:#75715e}
   
 :root{
   --menu-icon-separation:40px; /* was 40 */
@@ -267,17 +619,17 @@
 .container .right-sidebar{
   order:-1;
   max-width:var(--right-sidebar-max-width)}
-  
+
 @media(min-width:1024px){
   .container .right-sidebar{
-    display:flex}}
-    
+    display:flex}}  
+
 @media(min-width:768px){
   .container.extended{
     max-width:1024px;
     --left-sidebar-max-width:25%;
     --right-sidebar-max-width:30%}}
-    
+
 @media(min-width:1024px){
   .container.extended{
     max-width:1280px;
