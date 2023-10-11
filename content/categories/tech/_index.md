@@ -5,6 +5,6 @@ description: Technology, computers, software, etc.
 
 # Badge style
 style:
-    background: "#2a9d8f"
+#    background: "#eaeaea" # was #2a9d8f
     color: "#fff"
 ---
