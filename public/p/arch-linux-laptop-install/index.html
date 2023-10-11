@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://jaredszajkowski.github.io/p/arch-linux-laptop-install/'>
 
-<link rel="stylesheet" href="/scss/style.min.184ded539f1e4a93d6c351e46961dcecb7add7852e944eb3aeec42b627b73bd5.css"><meta property='og:title' content='Arch Linux Laptop Install'>
+<link rel="stylesheet" href="/scss/style.min.ee1342051cbf1b6a49add86bef13706fa822b06547593161c3ed4297a9f166e5.css"><meta property='og:title' content='Arch Linux Laptop Install'>
 <meta property='og:description' content='Guide to Arch Linux install on Lenovo ThinkPad E15 Gen 2.'>
 <meta property='og:url' content='https://jaredszajkowski.github.io/p/arch-linux-laptop-install/'>
 <meta property='og:site_name' content='Jared Szajkowski'>
@@ -368,42 +368,38 @@
 </code></pre>
 <h2 id="partition-table--partitions">Partition table &amp; partitions</h2>
 <p>Open nvme0n1 with gdisk:</p>
-<pre><code> # gdisk /dev/nvme0n1
+<pre><code># gdisk /dev/nvme0n1
 </code></pre>
 <p>Create GPT partition table with option &ldquo;o&rdquo;.</p>
 <h3 id="create-efi-partition">Create EFI partition</h3>
 <p>Create new EFI partition w/ 550mb with option &ldquo;n&rdquo;, using the following parameters:</p>
-<blockquote>
-<p>Partition #1</br>
-Default starting sector</br>
-+550M</br>
-Change partition type to EFI System (ef00)</p>
-</blockquote>
+<pre><code>Partition #1&lt;/br&gt;
+Default starting sector&lt;/br&gt;
++550M&lt;/br&gt;
+Change partition type to EFI System (ef00)
+</code></pre>
 <h3 id="create-boot-partition">Create boot partition</h3>
 <p>Create new boot partition w/ 550mb with option &ldquo;n&rdquo;, using the following parameters:</p>
-<blockquote>
-<p>Partition #2</br>
-Default starting sector</br>
-+550M</br>
-Leave default type of 8300</p>
-</blockquote>
+<pre><code>Partition #2&lt;/br&gt;
+Default starting sector&lt;/br&gt;
++550M&lt;/br&gt;
+Leave default type of 8300
+</code></pre>
 <h3 id="create-swap-partition">Create swap partition</h3>
 <p>The old rule of thumb used to be that a swap partition should be the same size as the amount of memory in the system, but given the typical amount of memory in modern systems this is obviously no longer necessary. For my system with 16 or 32 GB of memory, a swap of 8 GB is rarely even used.</br></p>
 <p>Create new Swap partition w/ 8GB with option &ldquo;n&rdquo;, using the following parameters:</p>
-<blockquote>
-<p>Partition #3</br>
-Default starting sector</br>
-+8G</br>
-Change to linux swap (8200)</p>
-</blockquote>
+<pre><code>Partition #3&lt;/br&gt;
+Default starting sector&lt;/br&gt;
++8G&lt;/br&gt;
+Change to linux swap (8200)
+</code></pre>
 <h3 id="create-root-partition">Create root partition</h3>
 <p>Create new root partition w/ remaining disk space with option &ldquo;n&rdquo;, using the following parameters:</p>
-<blockquote>
-<p>Partition #4</br>
-Default starting sector</br>
-Complete remaining space</br>
-Linux LUKS type 8309</p>
-</blockquote>
+<pre><code>Partition #4&lt;/br&gt;
+Default starting sector&lt;/br&gt;
+Complete remaining space&lt;/br&gt;
+Linux LUKS type 8309
+</code></pre>
 <p>And then exit gdisk.</p>
 <h2 id="write-file-systems">Write file systems</h2>
 <h3 id="efi-partition">EFI partition</h3>
