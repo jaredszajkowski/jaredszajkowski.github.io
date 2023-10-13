@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Here are some links to software, etc. that I find interesting and use.'>
-<title>Links</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Bash script for usage of yt-dlp with Zoom.'>
+<title>Using yt-dlp With Zoom</title>
 
-<link rel='canonical' href='https://jaredszajkowski.github.io/links/'>
+<link rel='canonical' href='https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/'>
 
-<link rel="stylesheet" href="/scss/style.min.ce6c723ad2c328f0dc0e1c972fd9330bfd0bad8d3353d12079846951539e9a30.css"><meta property='og:title' content='Links'>
-<meta property='og:description' content='Here are some links to software, etc. that I find interesting and use.'>
-<meta property='og:url' content='https://jaredszajkowski.github.io/links/'>
+<link rel="stylesheet" href="/scss/style.min.ce6c723ad2c328f0dc0e1c972fd9330bfd0bad8d3353d12079846951539e9a30.css"><meta property='og:title' content='Using yt-dlp With Zoom'>
+<meta property='og:description' content='Bash script for usage of yt-dlp with Zoom.'>
+<meta property='og:url' content='https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/'>
 <meta property='og:site_name' content='Jared Szajkowski'>
-<meta property='og:type' content='article'><meta property='article:section' content='Page' />
-<meta name="twitter:title" content="Links">
-<meta name="twitter:description" content="Here are some links to software, etc. that I find interesting and use.">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='yt-dlp' /><meta property='article:tag' content='Zoom' /><meta property='article:published_time' content='2023-10-01T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-10-01T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Using yt-dlp With Zoom">
+<meta name="twitter:description" content="Bash script for usage of yt-dlp with Zoom.">
     <link rel="shortcut icon" href="/favicon.png" />
 
     </head>
@@ -160,7 +160,7 @@
         </li>
         
         
-        <li  class='current' >
+        <li >
             <a href='/links/' >
                 
                 
@@ -205,12 +205,24 @@
 
     <div class="article-details">
     
+    <header class="article-category">
+        
+            <a href="/categories/tech/" style="background-color: ; color: #fff;">
+                Tech
+            </a>
+        
+    </header>
+    
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/links/">Links</a>
+            <a href="/archives/using-yt-dlp-with-zoom/">Using yt-dlp With Zoom</a>
         </h2>
     
+        
+        <h3 class="article-subtitle">
+            Bash script for usage of yt-dlp with Zoom.
+        </h3>
         
     </div>
 
@@ -219,6 +231,19 @@
     
     
     <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">October 1, 2023</time>
+            </div>
         
 
         
@@ -247,13 +272,90 @@
     <section class="article-content">
     
     
-    <p>Here are some links to software, etc. that I find interesting and use.</p>
+    <p>If anyone uses Zoom to record or access recordings of video calls, here&rsquo;s a simple linux bash script to download the video file and acompanying subtitles.</p>
+<p>This requires you to have a &ldquo;cookies&rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Zoom cookies after logging in.</p>
+<p>Here&rsquo;s the steps to setting this up:</p>
+<ol>
+<li>Install <a class="link" href="https://microsoftedge.microsoft.com/addons/detail/cookie-editor/ajfboaconbpkglpfanbmlfgojgndmhmc"  target="_blank" rel="noopener"
+    >cookie editor</a>.</li>
+<li>Change preferred export format to <code>Netscape HTTP Cookie File</code> in the extension options.</li>
+</ol>
+<p><img src="/archives/using-yt-dlp-with-zoom/1.png"
+	width="865"
+	height="505"
+	srcset="/archives/using-yt-dlp-with-zoom/1_hu7d83a53e5cc7059d97e83cbc6f85594e_67805_480x0_resize_box_3.png 480w, /archives/using-yt-dlp-with-zoom/1_hu7d83a53e5cc7059d97e83cbc6f85594e_67805_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Modify preferred export format"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="171"
+		data-flex-basis="411px"
+	
+></p>
+<ol start="3">
+<li>Log in to zoom.</li>
+<li>Export cookies and save to cookies.txt.</li>
+</ol>
+<p><img src="/archives/using-yt-dlp-with-zoom/2.png"
+	width="579"
+	height="613"
+	srcset="/archives/using-yt-dlp-with-zoom/2_hu983aab167f860515f39f38f013d71f14_57464_480x0_resize_box_3.png 480w, /archives/using-yt-dlp-with-zoom/2_hu983aab167f860515f39f38f013d71f14_57464_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Export cookies"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="94"
+		data-flex-basis="226px"
+	
+></p>
+<ol start="5">
+<li>Save the following code (my bash script file name is yt-dlp.sh):</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">#!/bin/bash
+</span></span><span class="line"><span class="cl">echo What is the link?
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">read link
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">yt-dlp --referer &#34;https://zoom.us/&#34; --cookies /path/to/cookies/file/cookies.txt -o &#34;%(title)s-%(id)s.%(ext)s&#34; --write-subs $link
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ol start="6">
+<li>
+<p>Change permissions of the bash script to allow execution:</p>
+<p>$ chmod +x yt-dlp.sh</p>
+</li>
+<li>
+<p>Execute the bash script with ./yt-dlp.sh, copy and paste the link to the video that you would like to save, and it should download the video and the subtitles.</p>
+</li>
+</ol>
 
 </section>
 
 
     <footer class="article-footer">
     
+    <section class="article-tags">
+        
+            <a href="/tags/yt-dlp/">yt-dlp</a>
+        
+            <a href="/tags/zoom/">Zoom</a>
+        
+    </section>
+
 
     
     <section class="article-copyright">
@@ -298,71 +400,47 @@
 </article>
 
     
-        <div class="article-list--compact links">
-    
-        <article>
-            <a href="https://github.com" target="_blank" rel="noopener">
-                <div class="article-details">
-                    <h2 class="article-title">GitHub</h2>
-                    <footer class="article-time">
-                        
-                            GitHub is the world&#39;s largest software development platform.
-                        
-                    </footer>
-                </div>
-        
-                
-                    <div class="article-image">
-                        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" loading="lazy">
-                    </div>
-                
-            </a>
-        </article>
-    
-        <article>
-            <a href="https://apps.gnome.org/" target="_blank" rel="noopener">
-                <div class="article-details">
-                    <h2 class="article-title">Gnome Apps</h2>
-                    <footer class="article-time">
-                        
-                            Apps for GNOME.
-                        
-                    </footer>
-                </div>
-        
-                
-                    <div class="article-image">
-                        <img src="https://foundation.gnome.org/wp-content/uploads/sites/12/2021/03/gnome-logos-1.png" loading="lazy">
-                    </div>
-                
-            </a>
-        </article>
-    
-        <article>
-            <a href="https://archlinux.org/" target="_blank" rel="noopener">
-                <div class="article-details">
-                    <h2 class="article-title">Arch Linux</h2>
-                    <footer class="article-time">
-                        
-                            Arch Linux - A simple, lightweight distribution.
-                        
-                    </footer>
-                </div>
-        
-                
-                    <div class="article-image">
-                        <img src="https://archlinux.org/static/logos/archlinux-logo-dark-90dpi.ebdee92a15b3.png" loading="lazy">
-                    </div>
-                
-            </a>
-        </article>
-    
-</div>
-    
 
     
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/archives/arch-linux-laptop-install/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Arch Linux Laptop Install</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/archives/hello-world/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Hello World</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
 
      
+    
+        
     
 
     <footer class="site-footer">

@@ -8,10 +8,10 @@
         <language>en-us</language>
         <lastBuildDate>Sun, 01 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://jaredszajkowski.github.io/categories/tech/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Using yt-dlp With Zoom</title>
-        <link>https://jaredszajkowski.github.io/post/using-yt-dlp-with-zoom/</link>
+        <link>https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/</link>
         <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/post/using-yt-dlp-with-zoom/</guid>
+        <guid>https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/</guid>
         <description>&lt;p&gt;If anyone uses Zoom to record or access recordings of video calls, here&amp;rsquo;s a simple linux bash script to download the video file and acompanying subtitles.&lt;/p&gt;
 &lt;p&gt;This requires you to have a &amp;ldquo;cookies&amp;rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Zoom cookies after logging in.&lt;/p&gt;
 &lt;p&gt;Here&amp;rsquo;s the steps to setting this up:&lt;/p&gt;
@@ -20,10 +20,10 @@
     &gt;cookie editor&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;Change preferred export format to &lt;code&gt;Netscape HTTP Cookie File&lt;/code&gt; in the extension options.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/post/using-yt-dlp-with-zoom/1.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/1.png&#34;
 	width=&#34;865&#34;
 	height=&#34;505&#34;
-	srcset=&#34;https://jaredszajkowski.github.io/post/using-yt-dlp-with-zoom/1_hu7d83a53e5cc7059d97e83cbc6f85594e_67805_480x0_resize_box_3.png 480w, https://jaredszajkowski.github.io/post/using-yt-dlp-with-zoom/1_hu7d83a53e5cc7059d97e83cbc6f85594e_67805_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/1_hu7d83a53e5cc7059d97e83cbc6f85594e_67805_480x0_resize_box_3.png 480w, https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/1_hu7d83a53e5cc7059d97e83cbc6f85594e_67805_1024x0_resize_box_3.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Modify preferred export format&#34;
@@ -38,10 +38,10 @@
 &lt;li&gt;Log in to zoom.&lt;/li&gt;
 &lt;li&gt;Export cookies and save to cookies.txt.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/post/using-yt-dlp-with-zoom/2.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/2.png&#34;
 	width=&#34;579&#34;
 	height=&#34;613&#34;
-	srcset=&#34;https://jaredszajkowski.github.io/post/using-yt-dlp-with-zoom/2_hu983aab167f860515f39f38f013d71f14_57464_480x0_resize_box_3.png 480w, https://jaredszajkowski.github.io/post/using-yt-dlp-with-zoom/2_hu983aab167f860515f39f38f013d71f14_57464_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/2_hu983aab167f860515f39f38f013d71f14_57464_480x0_resize_box_3.png 480w, https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/2_hu983aab167f860515f39f38f013d71f14_57464_1024x0_resize_box_3.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;Export cookies&#34;
@@ -86,10 +86,10 @@
         </item>
         <item>
         <title>Arch Linux Laptop Install</title>
-        <link>https://jaredszajkowski.github.io/post/arch-linux-laptop-install/</link>
+        <link>https://jaredszajkowski.github.io/archives/arch-linux-laptop-install/</link>
         <pubDate>Fri, 29 Sep 2023 00:00:01 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/post/arch-linux-laptop-install/</guid>
+        <guid>https://jaredszajkowski.github.io/archives/arch-linux-laptop-install/</guid>
         <description>&lt;p&gt;This is the basic framework that I use to install Arch Linux, with a few changes catered to the Lenovo ThinkPad E15 Gen 2. I have found that this is a decent mid range laptop, excellent linux compatibility, great keyboard, and overall provides a good value.&lt;/p&gt;
 &lt;h2 id=&#34;getting-started&#34;&gt;Getting started&lt;/h2&gt;
 &lt;p&gt;This tutorial assumes the following:&lt;/p&gt;
@@ -199,10 +199,10 @@ Linux LUKS type 8309
         </item>
         <item>
         <title>Hello World</title>
-        <link>https://jaredszajkowski.github.io/post/hello-world/</link>
+        <link>https://jaredszajkowski.github.io/archives/hello-world/</link>
         <pubDate>Tue, 26 Sep 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/post/hello-world/</guid>
+        <guid>https://jaredszajkowski.github.io/archives/hello-world/</guid>
         <description>&lt;p&gt;Welcome to my website. This is meant to serve as a place for me to publish various posts from my explorations into Arch Linux, data science, quant finance, and other topics.&lt;/p&gt;
 &lt;p&gt;The theme has been adopted from the &lt;a class=&#34;link&#34; href=&#34;https://github.com/CaiJimmy/hugo-theme-stack&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Hugo Theme Stack&lt;/a&gt; produced by Jimmy Cai.&lt;/p&gt;
