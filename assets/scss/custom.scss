@@ -22,7 +22,7 @@
 
 :root{
   --body-background:#f5f5fa; // was #f5f5fa 
-  --accent-color:#34495e;
+  --accent-color:#3a3a3a; // was #34495e
   --accent-color-darker:#2c3e50;
   --accent-color-text:#fff;
   --body-text-color:#707070;
@@ -691,23 +691,23 @@ template{
     height:250px}}
     
 .article-list article:nth-child(5n+1) .article-category a{
-  background:#8ea885;
+  background:#3a3a3a; // was 8ea885
   color:#fff}
   
 .article-list article:nth-child(5n+2) .article-category a{
-  background:#df7988;
+  background:#3a3a3a; // was df7988
   color:#fff}
   
 .article-list article:nth-child(5n+3) .article-category a{
-  background:#0177b8;
+  background:#3a3a3a; // was 0177b8
   color:#fff}
   
 .article-list article:nth-child(5n+4) .article-category a{
-  background:#ffb900;
+  background:#3a3a3a; // was ffb900
   color:#fff}
   
 .article-list article:nth-child(5n+5) .article-category a{
-  background:#6b69d6;
+  background:#3a3a3a; // was 6b69d6
   color:#fff}
   
 .article-details{
