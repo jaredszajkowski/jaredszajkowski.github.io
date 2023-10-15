@@ -124,7 +124,7 @@ lang = ""
 [comments.cactus]
 defaultHomeserverUrl = "https://matrix.cactus.chat:8448"
 serverName = "cactus.chat"
-siteName = ""
+siteName = "jaredszajkowski"
 
 [comments.giscus]
 repo = ""
