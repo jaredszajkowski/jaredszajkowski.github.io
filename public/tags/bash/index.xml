@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>Zoom on Jared Szajkowski</title>
-        <link>https://jaredszajkowski.github.io/tags/zoom/</link>
-        <description>Recent content in Zoom on Jared Szajkowski</description>
+        <title>bash on Jared Szajkowski</title>
+        <link>https://jaredszajkowski.github.io/tags/bash/</link>
+        <description>Recent content in bash on Jared Szajkowski</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sun, 01 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://jaredszajkowski.github.io/tags/zoom/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 01 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://jaredszajkowski.github.io/tags/bash/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Using yt-dlp With Zoom</title>
         <link>https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/</link>
         <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
