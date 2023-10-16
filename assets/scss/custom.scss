@@ -826,9 +826,14 @@ template{
   .article-list--compact article .article-title{
     font-size:1.8rem}}
     
-.article-list--compact article .article-image img{
+/* .article-list--compact article .article-image img{
   width:var(--image-size);
   height:var(--image-size);
+  object-fit:cover} */
+
+.article-list--compact article .article-image img{
+  width:60px;
+  height:auto;
   object-fit:cover}
   
 .article-list--compact article .article-time{
