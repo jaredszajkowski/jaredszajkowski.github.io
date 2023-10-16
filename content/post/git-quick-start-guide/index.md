@@ -30,7 +30,7 @@ Pacman will include all required depencies.
 
 ## Initial configuration
 
-
+Some good first steps.
 
 
 If anyone uses Zoom to record and later wants to access recordings of video calls, here's a simple linux bash script to download the video file and acompanying subtitles. For a long time I used [zoomdl](https://github.com/Battleman/zoomdl), but it is no longer under active development, and I began running into various issues about a year ago.
