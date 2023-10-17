@@ -7,18 +7,18 @@
   --section-separation:20px; // was 40
   --tag-border-radius:5px; // was 4
   --card-border-radius:5px; // was 10
-  --small-card-padding:20px; // was 20
+  --small-card-padding:15px; // was 20
   --card-padding:20px;} // was 20
 
 @media(min-width:768px){
   :root{
-    --small-card-padding:25px;
-    --card-padding:25px}}
+    --small-card-padding:15px; // was 25
+    --card-padding:20px}} // was 25
 
 @media(min-width:1280px){
   :root{
     --main-top-padding:50px;
-    --card-padding:30px}}
+    --card-padding:20px}} // was 30
 
 :root{
   --body-background:#F1F1F1; // was #f5f5fa 
@@ -937,7 +937,7 @@ template{
   
 .widget.archives .archives-year a{
   font-size:1.4rem;
-  padding:18px 25px;
+  padding:10px 20px; // was 18px 25px
   display:flex}
   
 .widget.archives .archives-year a span.year{
