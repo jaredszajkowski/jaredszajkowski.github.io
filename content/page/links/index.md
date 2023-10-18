@@ -16,6 +16,10 @@ links:
     description: Arch Linux - A simple, lightweight distribution.
     website: https://archlinux.org/
     image: https://archlinux.org/static/logos/archlinux-logo-dark-90dpi.ebdee92a15b3.png
+  - title: LibreOffice
+    description: LibreOffice includes several applications that make it the most versatile Free and Open Source office suite available, including Writer (word processing), Calc (spreadsheets), Impress (presentations), Draw (vector graphics and flowcharts), Base (databases), and Math (formula editing).
+    website: https://www.libreoffice.org/
+    image: https://wiki.documentfoundation.org/images/8/8b/LibreOffice_Initial-Artwork-Logo_ColorLogoContemporary_500px.png
 menu:
     main: 
 #        name: 
