@@ -1,6 +1,7 @@
 ---
 title: "Links"
-#date: 2022-03-06
+date: 2023-10-01 00:00:00+0000
+lastmod: 2023-10-17 00:00:00+0000
 slug: "links"
 #layout: "search"
 links:

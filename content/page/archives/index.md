@@ -1,7 +1,8 @@
 ---
 title: "Archives"
-#date: 2022-03-06
-slug: "archives"
+#date: 2023-10-01 00:00:00+0000
+#lastmod: 2023-10-17 00:00:00+0000
+#slug: "archives"
 layout: "archives"
 menu:
     main:
