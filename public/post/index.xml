@@ -6,7 +6,80 @@
         <description>Recent content in Posts on Jared Szajkowski</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sun, 01 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://jaredszajkowski.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 16 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://jaredszajkowski.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Git Quick Start Guide</title>
+        <link>https://jaredszajkowski.github.io/archives/git-quick-start-guide/</link>
+        <pubDate>Mon, 16 Oct 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://jaredszajkowski.github.io/archives/git-quick-start-guide/</guid>
+        <description>&lt;p&gt;Here are my notes for some of the more commonly used git commands along with initial setup for git in Linux.&lt;/p&gt;
+&lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
+&lt;p&gt;To begin, install as follows:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# pacman -Syu git
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Or&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ yay git
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Pacman will include all required depencies.&lt;/p&gt;
+&lt;h2 id=&#34;initial-configuration&#34;&gt;Initial configuration&lt;/h2&gt;
+&lt;p&gt;First, set your name and email address:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ git config --global user.name &amp;quot;Firstname Lastname&amp;quot;
+$ git config --global user.email &amp;quot;email@address.com&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then, set your preferred text editor (if you have one). I use nano:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ git config --global core.editor &amp;quot;nano&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You can verify the updates with:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ git config --global core.editor
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Alternatively, you can edit the git configuration with:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ git config --global --edit
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;store-credentials&#34;&gt;Store credentials&lt;/h2&gt;
+&lt;p&gt;In 2021, GitHub disabled authentication via username &amp;amp; email, and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in &lt;code&gt;~/.git-credentials&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ git config --global credential.helper store
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;cloning-repositories&#34;&gt;Cloning repositories&lt;/h2&gt;
+&lt;p&gt;Repositories can be cloned with the following:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ git clone https://github.com/&amp;lt;username&amp;gt;/&amp;lt;repository&amp;gt;.git
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;updating-repositories&#34;&gt;Updating repositories&lt;/h2&gt;
+&lt;p&gt;The local record of a repository can be updated with the following command:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ cd &amp;lt;repository&amp;gt;/
+$ git pull
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;adding-committing-and-pushing&#34;&gt;Adding, committing, and pushing&lt;/h2&gt;
+&lt;p&gt;Any files or directories that have been added, modified, or removed can be add to the list of changes to be pushed with the following command:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ git add .
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then committed (staged in preparation to push) with the following command:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ git commit -am &amp;quot;Add your commit message here&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Note: Without &lt;code&gt;add&lt;/code&gt;, &lt;code&gt;commit&lt;/code&gt; will handle any changes to files that have been modified or deleted, but will not incorporate any files that have been created.&lt;/p&gt;
+&lt;p&gt;Then finally pushed:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ git push
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If, for some reason, you would like to reset a commit:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ git reset
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;These commands can be chained together with the AND operator:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ git add . &amp;amp;&amp;amp; git commit -am &amp;quot;Add your commit message here&amp;quot; &amp;amp;&amp;amp; git push
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
+&lt;p&gt;References for git (and used for above):&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens&lt;/a&gt;&lt;/br&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup#_first_time&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup#_first_time&lt;/a&gt;&lt;/br&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Setup-and-Config&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Setup-and-Config&lt;/a&gt;&lt;/br&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage#_credential_caching&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage#_credential_caching&lt;/a&gt;&lt;/br&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://www.geeksforgeeks.org/difference-between-chaining-operators-in-linux/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.geeksforgeeks.org/difference-between-chaining-operators-in-linux/&lt;/a&gt;&lt;/br&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Using yt-dlp With Zoom</title>
         <link>https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/</link>
         <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>

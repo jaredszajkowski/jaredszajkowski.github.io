@@ -3,9 +3,9 @@ title: Git Quick Start Guide
 description: Commonly used commands and functionality for git.
 #slug: hello-world-2
 date: 2023-10-16 00:00:00+0000
-lastmod: 2023-10-16 00:00:00+0000
+lastmod: 2023-10-18 00:00:00+0000
 # image: cover.jpg
-draft: true
+draft: false
 categories:
     - Tech
 tags:
@@ -24,60 +24,78 @@ To begin, install as follows:
 
 Or
 
-    # yay git
+    $ yay git
 
 Pacman will include all required depencies.
 
 ## Initial configuration
 
-Some good first steps.
+First, set your name and email address:
 
+    $ git config --global user.name "Firstname Lastname"
+    $ git config --global user.email "email@address.com"
 
-If anyone uses Zoom to record and later wants to access recordings of video calls, here's a simple linux bash script to download the video file and acompanying subtitles. For a long time I used [zoomdl](https://github.com/Battleman/zoomdl), but it is no longer under active development, and I began running into various issues about a year ago.
+Then, set your preferred text editor (if you have one). I use nano:
 
-This tutorial requires you to have a "cookies" text file, which needs to contain the cookies export in the Netscape HTTP format of the Zoom cookies after logging in.
+    $ git config --global core.editor "nano"
 
-Here's the steps to setting this up:
+You can verify the updates with:
 
-## Step 1 - Install [cookie editor](https://microsoftedge.microsoft.com/addons/detail/cookie-editor/ajfboaconbpkglpfanbmlfgojgndmhmc)
+    $ git config --global core.editor
 
-I personnally use it with Microsoft Edge, but there are similar extensions for Chrome, Firefox, etc.
+Alternatively, you can edit the git configuration with:
 
-## Step 2 - Modify cookie export format
+    $ git config --global --edit
 
-Change preferred export format to `Netscape HTTP Cookie File` in the extension options. It is necessary to export in this format, otherwise yt-dlp will not be able to read the cookies.txt file correctly.
+## Store credentials
 
-![Modify preferred export format](1.png)
+In 2021, GitHub disabled authentication via username & email, and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in `~/.git-credentials`:
 
-## Step 3 - Log in to Zoom
+    $ git config --global credential.helper store
 
-Log in to Zoom in your browser. Be sure to remain logged in while exporting the cookies under step 4.
+## Cloning repositories
 
-## Step 4 - Export cookies and save to cookies.txt
+Repositories can be cloned with the following:
 
-The export button is at the top fo the window. It copies the cookies to your clipboard, which can then be pasted into a text file (I have my saved as cookies.txt).
+    $ git clone https://github.com/<username>/<repository>.git
 
-![Export cookies](2.png)
+## Updating repositories
 
-## Step 5 - Save the following code
+The local record of a repository can be updated with the following command:
 
-Save the following code to a text file (my bash script file name is yt-dlp.sh):
+    $ cd <repository>/
+    $ git pull
 
-```html
-#!/bin/bash
-echo What is the link?
+## Adding, committing, and pushing
 
-read link
+Any files or directories that have been added, modified, or removed can be add to the list of changes to be pushed with the following command:
 
-yt-dlp --referer "https://zoom.us/" --cookies /path/to/cookies/file/cookies.txt -o "%(title)s-%(id)s.%(ext)s" --write-subs $link
-```
+    $ git add .
 
-## Step 6 - Change permissions
+Then committed (staged in preparation to push) with the following command:
 
-Modify the permissions of the bash script to allow execution:
+    $ git commit -am "Add your commit message here"
 
-    $ chmod +x yt-dlp.sh
+Note: Without `add`, `commit` will handle any changes to files that have been modified or deleted, but will not incorporate any files that have been created.
 
-## Step 7 - Execute the bash script
+Then finally pushed:
 
-Execute the bash script with ./yt-dlp.sh, copy and paste the link to the video that you would like to save, and it should download the video and the subtitles.
+    $ git push
+
+If, for some reason, you would like to reset a commit:
+
+    $ git reset
+
+These commands can be chained together with the AND operator:
+
+    $ git add . && git commit -am "Add your commit message here" && git push
+
+## References
+
+References for git (and used for above):
+
+https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens</br>
+https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup#_first_time</br>
+https://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Setup-and-Config</br>
+https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage#_credential_caching</br>
+https://www.geeksforgeeks.org/difference-between-chaining-operators-in-linux/</br>

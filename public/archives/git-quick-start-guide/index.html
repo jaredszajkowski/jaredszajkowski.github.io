@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Bash script for usage of yt-dlp with Zoom.'>
-<title>Using yt-dlp With Zoom</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Commonly used commands and functionality for git.'>
+<title>Git Quick Start Guide</title>
 
-<link rel='canonical' href='https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/'>
+<link rel='canonical' href='https://jaredszajkowski.github.io/archives/git-quick-start-guide/'>
 
-<link rel="stylesheet" href="/scss/style.min.c2b0b81f195fa781b310bf01c9e797f19483b59b73b1fa233de4c14d41401024.css"><meta property='og:title' content='Using yt-dlp With Zoom'>
-<meta property='og:description' content='Bash script for usage of yt-dlp with Zoom.'>
-<meta property='og:url' content='https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/'>
+<link rel="stylesheet" href="/scss/style.min.c2b0b81f195fa781b310bf01c9e797f19483b59b73b1fa233de4c14d41401024.css"><meta property='og:title' content='Git Quick Start Guide'>
+<meta property='og:description' content='Commonly used commands and functionality for git.'>
+<meta property='og:url' content='https://jaredszajkowski.github.io/archives/git-quick-start-guide/'>
 <meta property='og:site_name' content='Jared Szajkowski'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='yt-dlp' /><meta property='article:tag' content='Zoom' /><meta property='article:tag' content='bash' /><meta property='article:published_time' content='2023-10-01T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-10-17T00:00:00&#43;00:00'/>
-<meta name="twitter:title" content="Using yt-dlp With Zoom">
-<meta name="twitter:description" content="Bash script for usage of yt-dlp with Zoom.">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='git' /><meta property='article:tag' content='GitHub' /><meta property='article:published_time' content='2023-10-16T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-10-18T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Git Quick Start Guide">
+<meta name="twitter:description" content="Commonly used commands and functionality for git.">
     <link rel="shortcut icon" href="/favicon.png" />
 
     </head>
@@ -219,13 +219,13 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#step-1---install-cookie-editor">Step 1 - Install cookie editor</a></li>
-    <li><a href="#step-2---modify-export-format">Step 2 - Modify export format</a></li>
-    <li><a href="#step-3---log-in-to-zoom">Step 3 - Log in to Zoom</a></li>
-    <li><a href="#step-4---export-cookies">Step 4 - Export cookies</a></li>
-    <li><a href="#step-5---create-bash-script">Step 5 - Create bash script</a></li>
-    <li><a href="#step-6---change-permissions">Step 6 - Change permissions</a></li>
-    <li><a href="#step-7---execute-the-script">Step 7 - Execute the script</a></li>
+    <li><a href="#installation">Installation</a></li>
+    <li><a href="#initial-configuration">Initial configuration</a></li>
+    <li><a href="#store-credentials">Store credentials</a></li>
+    <li><a href="#cloning-repositories">Cloning repositories</a></li>
+    <li><a href="#updating-repositories">Updating repositories</a></li>
+    <li><a href="#adding-committing-and-pushing">Adding, committing, and pushing</a></li>
+    <li><a href="#references">References</a></li>
   </ol>
 </nav>
         </div>
@@ -253,12 +253,12 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/archives/using-yt-dlp-with-zoom/">Using yt-dlp With Zoom</a>
+            <a href="/archives/git-quick-start-guide/">Git Quick Start Guide</a>
         </h2>
     
         
         <h3 class="article-subtitle">
-            Bash script for usage of yt-dlp with Zoom.
+            Commonly used commands and functionality for git.
         </h3>
         
     </div>
@@ -279,7 +279,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">October 1, 2023</time>
+                <time class="article-time--published">October 16, 2023</time>
             </div>
         
 
@@ -309,73 +309,71 @@
     <section class="article-content">
     
     
-    <p>If anyone uses Zoom to record and later wants to access recordings of video calls, here&rsquo;s a simple linux bash script to download the video file and acompanying subtitles. For a long time I used <a class="link" href="https://github.com/Battleman/zoomdl"  target="_blank" rel="noopener"
-    >zoomdl</a>, but it is no longer under active development, and I began running into various issues about a year ago.</p>
-<p>This tutorial requires you to have a &ldquo;cookies&rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Zoom cookies after logging in.</p>
-<p>Here&rsquo;s the steps to setting this up:</p>
-<h2 id="step-1---install-cookie-editor">Step 1 - Install cookie editor</h2>
-<p>Install the <a class="link" href="https://microsoftedge.microsoft.com/addons/detail/cookie-editor/ajfboaconbpkglpfanbmlfgojgndmhmc"  target="_blank" rel="noopener"
-    >cookie editor</a> extension. I personnally use it with Microsoft Edge, but there are similar extensions for Chrome, Firefox, etc.</p>
-<h2 id="step-2---modify-export-format">Step 2 - Modify export format</h2>
-<p>Change the preferred cookie export format to <code>Netscape HTTP Cookie File</code> in the extension options. It is necessary to export in this format, otherwise yt-dlp will not be able to read the cookies.txt file correctly.</p>
-<p><img src="/archives/using-yt-dlp-with-zoom/1.png"
-	width="865"
-	height="505"
-	srcset="/archives/using-yt-dlp-with-zoom/1_hu7d83a53e5cc7059d97e83cbc6f85594e_67805_480x0_resize_box_3.png 480w, /archives/using-yt-dlp-with-zoom/1_hu7d83a53e5cc7059d97e83cbc6f85594e_67805_1024x0_resize_box_3.png 1024w"
-	loading="lazy"
-	
-		alt="Modify preferred export format"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="171"
-		data-flex-basis="411px"
-	
-></p>
-<h2 id="step-3---log-in-to-zoom">Step 3 - Log in to Zoom</h2>
-<p>Log in to Zoom in your browser. Be sure to remain logged in while exporting the cookies under step 4.</p>
-<h2 id="step-4---export-cookies">Step 4 - Export cookies</h2>
-<p>The export button is at the top fo the window. It copies the cookies to your clipboard, which then need to be pasted into a text file (I have my saved as cookies.txt), which yt-dlp will then read when it executes.</p>
-<p><img src="/archives/using-yt-dlp-with-zoom/2.png"
-	width="579"
-	height="613"
-	srcset="/archives/using-yt-dlp-with-zoom/2_hu983aab167f860515f39f38f013d71f14_57464_480x0_resize_box_3.png 480w, /archives/using-yt-dlp-with-zoom/2_hu983aab167f860515f39f38f013d71f14_57464_1024x0_resize_box_3.png 1024w"
-	loading="lazy"
-	
-		alt="Export cookies"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="94"
-		data-flex-basis="226px"
-	
-></p>
-<h2 id="step-5---create-bash-script">Step 5 - Create bash script</h2>
-<p>Save the following code to a text file (my bash script file name is yt-dlp.sh):</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">#!/bin/bash
-</span></span><span class="line"><span class="cl">echo What is the link?
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">read link
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">yt-dlp --referer &#34;https://zoom.us/&#34; --cookies /path/to/cookies/file/cookies.txt -o &#34;%(title)s-%(id)s.%(ext)s&#34; --write-subs $link
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="step-6---change-permissions">Step 6 - Change permissions</h2>
-<p>Modify the permissions of the bash script to allow execution:</p>
-<pre><code>$ chmod +x yt-dlp.sh
+    <p>Here are my notes for some of the more commonly used git commands along with initial setup for git in Linux.</p>
+<h2 id="installation">Installation</h2>
+<p>To begin, install as follows:</p>
+<pre><code># pacman -Syu git
 </code></pre>
-<h2 id="step-7---execute-the-script">Step 7 - Execute the script</h2>
-<p>Execute the bash script with ./yt-dlp.sh, copy and paste the link to the video that you would like to save, and it should download the video and the subtitles.</p>
+<p>Or</p>
+<pre><code>$ yay git
+</code></pre>
+<p>Pacman will include all required depencies.</p>
+<h2 id="initial-configuration">Initial configuration</h2>
+<p>First, set your name and email address:</p>
+<pre><code>$ git config --global user.name &quot;Firstname Lastname&quot;
+$ git config --global user.email &quot;email@address.com&quot;
+</code></pre>
+<p>Then, set your preferred text editor (if you have one). I use nano:</p>
+<pre><code>$ git config --global core.editor &quot;nano&quot;
+</code></pre>
+<p>You can verify the updates with:</p>
+<pre><code>$ git config --global core.editor
+</code></pre>
+<p>Alternatively, you can edit the git configuration with:</p>
+<pre><code>$ git config --global --edit
+</code></pre>
+<h2 id="store-credentials">Store credentials</h2>
+<p>In 2021, GitHub disabled authentication via username &amp; email, and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in <code>~/.git-credentials</code>:</p>
+<pre><code>$ git config --global credential.helper store
+</code></pre>
+<h2 id="cloning-repositories">Cloning repositories</h2>
+<p>Repositories can be cloned with the following:</p>
+<pre><code>$ git clone https://github.com/&lt;username&gt;/&lt;repository&gt;.git
+</code></pre>
+<h2 id="updating-repositories">Updating repositories</h2>
+<p>The local record of a repository can be updated with the following command:</p>
+<pre><code>$ cd &lt;repository&gt;/
+$ git pull
+</code></pre>
+<h2 id="adding-committing-and-pushing">Adding, committing, and pushing</h2>
+<p>Any files or directories that have been added, modified, or removed can be add to the list of changes to be pushed with the following command:</p>
+<pre><code>$ git add .
+</code></pre>
+<p>Then committed (staged in preparation to push) with the following command:</p>
+<pre><code>$ git commit -am &quot;Add your commit message here&quot;
+</code></pre>
+<p>Note: Without <code>add</code>, <code>commit</code> will handle any changes to files that have been modified or deleted, but will not incorporate any files that have been created.</p>
+<p>Then finally pushed:</p>
+<pre><code>$ git push
+</code></pre>
+<p>If, for some reason, you would like to reset a commit:</p>
+<pre><code>$ git reset
+</code></pre>
+<p>These commands can be chained together with the AND operator:</p>
+<pre><code>$ git add . &amp;&amp; git commit -am &quot;Add your commit message here&quot; &amp;&amp; git push
+</code></pre>
+<h2 id="references">References</h2>
+<p>References for git (and used for above):</p>
+<p><a class="link" href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens"  target="_blank" rel="noopener"
+    >https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens</a></br>
+<a class="link" href="https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup#_first_time"  target="_blank" rel="noopener"
+    >https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup#_first_time</a></br>
+<a class="link" href="https://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Setup-and-Config"  target="_blank" rel="noopener"
+    >https://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Setup-and-Config</a></br>
+<a class="link" href="https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage#_credential_caching"  target="_blank" rel="noopener"
+    >https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage#_credential_caching</a></br>
+<a class="link" href="https://www.geeksforgeeks.org/difference-between-chaining-operators-in-linux/"  target="_blank" rel="noopener"
+    >https://www.geeksforgeeks.org/difference-between-chaining-operators-in-linux/</a></br></p>
 
 </section>
 
@@ -384,11 +382,9 @@
     
     <section class="article-tags">
         
-            <a href="/tags/yt-dlp/">yt-dlp</a>
+            <a href="/tags/git/">git</a>
         
-            <a href="/tags/zoom/">Zoom</a>
-        
-            <a href="/tags/bash/">bash</a>
+            <a href="/tags/github/">GitHub</a>
         
     </section>
 
@@ -415,7 +411,7 @@
 
 
         <span>
-            Last updated on October 17, 2023
+            Last updated on October 18, 2023
         </span>
     </section></footer>
 
@@ -458,12 +454,25 @@
             
                 
 <article class="">
-    <a href="/archives/git-quick-start-guide/">
+    <a href="/archives/hello-world/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">Git Quick Start Guide</h2>
+            <h2 class="article-title">Hello World</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/archives/using-yt-dlp-with-zoom/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Using yt-dlp With Zoom</h2>
         </div>
     </a>
 </article>
@@ -477,19 +486,6 @@
 
         <div class="article-details">
             <h2 class="article-title">Arch Linux Laptop Install</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/archives/hello-world/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Hello World</h2>
         </div>
     </a>
 </article>
