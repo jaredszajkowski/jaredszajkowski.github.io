@@ -49,9 +49,13 @@ Alternatively, you can edit the git configuration with:
 
 ## Store credentials
 
-In 2021, GitHub disabled authentication via username & email, and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in `~/.git-credentials`:
+In 2021, GitHub disabled authentication via username and password, and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in `~/.git-credentials`:
 
     $ git config --global credential.helper store
+
+After you log in during a push with your username and token, it will be stored in the above location.
+
+Note: The token is stored in plain text, so use caution if that is a concern.
 
 ## Cloning repositories
 
@@ -98,4 +102,4 @@ https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/m
 https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup#_first_time</br>
 https://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Setup-and-Config</br>
 https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage#_credential_caching</br>
-https://www.geeksforgeeks.org/difference-between-chaining-operators-in-linux/</br>
+https://www.geeksforgeeks.org/difference-between-chaining-operators-in-linux/

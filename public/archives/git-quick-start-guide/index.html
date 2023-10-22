@@ -333,9 +333,11 @@ $ git config --global user.email &quot;email@address.com&quot;
 <pre><code>$ git config --global --edit
 </code></pre>
 <h2 id="store-credentials">Store credentials</h2>
-<p>In 2021, GitHub disabled authentication via username &amp; email, and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in <code>~/.git-credentials</code>:</p>
+<p>In 2021, GitHub disabled authentication via username and password, and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in <code>~/.git-credentials</code>:</p>
 <pre><code>$ git config --global credential.helper store
 </code></pre>
+<p>After you log in during a push with your username and token, it will be stored in the above location.</p>
+<p>Note: The token is stored in plain text, so use caution if that is a concern.</p>
 <h2 id="cloning-repositories">Cloning repositories</h2>
 <p>Repositories can be cloned with the following:</p>
 <pre><code>$ git clone https://github.com/&lt;username&gt;/&lt;repository&gt;.git
@@ -373,7 +375,7 @@ $ git pull
 <a class="link" href="https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage#_credential_caching"  target="_blank" rel="noopener"
     >https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage#_credential_caching</a></br>
 <a class="link" href="https://www.geeksforgeeks.org/difference-between-chaining-operators-in-linux/"  target="_blank" rel="noopener"
-    >https://www.geeksforgeeks.org/difference-between-chaining-operators-in-linux/</a></br></p>
+    >https://www.geeksforgeeks.org/difference-between-chaining-operators-in-linux/</a></p>
 
 </section>
 

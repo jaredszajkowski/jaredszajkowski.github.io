@@ -36,9 +36,11 @@ $ git config --global user.email &amp;quot;email@address.com&amp;quot;
 &lt;pre&gt;&lt;code&gt;$ git config --global --edit
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&#34;store-credentials&#34;&gt;Store credentials&lt;/h2&gt;
-&lt;p&gt;In 2021, GitHub disabled authentication via username &amp;amp; email, and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in &lt;code&gt;~/.git-credentials&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;In 2021, GitHub disabled authentication via username and password, and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in &lt;code&gt;~/.git-credentials&lt;/code&gt;:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git config --global credential.helper store
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;After you log in during a push with your username and token, it will be stored in the above location.&lt;/p&gt;
+&lt;p&gt;Note: The token is stored in plain text, so use caution if that is a concern.&lt;/p&gt;
 &lt;h2 id=&#34;cloning-repositories&#34;&gt;Cloning repositories&lt;/h2&gt;
 &lt;p&gt;Repositories can be cloned with the following:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git clone https://github.com/&amp;lt;username&amp;gt;/&amp;lt;repository&amp;gt;.git
@@ -76,7 +78,7 @@ $ git pull
 &lt;a class=&#34;link&#34; href=&#34;https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage#_credential_caching&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage#_credential_caching&lt;/a&gt;&lt;/br&gt;
 &lt;a class=&#34;link&#34; href=&#34;https://www.geeksforgeeks.org/difference-between-chaining-operators-in-linux/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://www.geeksforgeeks.org/difference-between-chaining-operators-in-linux/&lt;/a&gt;&lt;/br&gt;&lt;/p&gt;
+    &gt;https://www.geeksforgeeks.org/difference-between-chaining-operators-in-linux/&lt;/a&gt;&lt;/p&gt;
 </description>
         </item>
         <item>
