@@ -1348,24 +1348,24 @@ body{
   
 .related-content{
   overflow-x:auto;
-  padding-bottom:15px}
+  padding-bottom:15px} // was 15
   
 .related-content>.flex{
   float:left}
 
 .related-content article{
-  margin-right:15px;
+  margin-right:15px; // was 15px
   flex-shrink:0;
   overflow:hidden;
-  width:150px; // was 250
-  height:80px} // was 150
+  width:auto; // was 250px, then 150px
+  height:auto} // was 150px, then 75px
 
 .related-content article .article-title{
   font-size:1.8rem;
   margin:0}
   
 .related-content article.has-image .article-details{
-  padding:20px;
+  padding:15px; // was 20
   background:linear-gradient(0deg,rgba(0,0,0,.25) 0%,rgba(0,0,0,.75) 100%)}
   
 .article-content{
@@ -1599,9 +1599,9 @@ body{
   padding-bottom:15px}
 
 .subsection-list .article-list--tile article{
-  width:150px; // was 250
-  height:60px; // was 150
-  margin-right:20px;
+  width:auto; // was 250, then 150px
+  height:auto; // was 150, then 60px
+  margin-right:15px; // was 20px
   flex-shrink:0}
 
 .subsection-list .article-list--tile article .article-title{
@@ -1609,7 +1609,7 @@ body{
   font-size:1.8rem}
   
 .subsection-list .article-list--tile article .article-details{
-  padding:20px}
+  padding:15px} // was 20px
   
 .not-found-card{
   background-color:var(--card-background);
