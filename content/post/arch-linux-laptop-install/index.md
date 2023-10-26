@@ -75,18 +75,18 @@ Create GPT partition table with option "o".
 
 Create new EFI partition w/ 550mb with option "n", using the following parameters:
 
-    Partition #1</br>
-    Default starting sector</br>
-    +550M</br>
+    Partition #1
+    Default starting sector
+    +550M
     Change partition type to EFI System (ef00)
 
 ### Create boot partition
 
 Create new boot partition w/ 550mb with option "n", using the following parameters:
 
-    Partition #2</br>
-    Default starting sector</br>
-    +550M</br>
+    Partition #2
+    Default starting sector
+    +550M
     Leave default type of 8300
 
 ### Create swap partition
@@ -95,18 +95,18 @@ The old rule of thumb used to be that a swap partition should be the same size a
 
 Create new Swap partition w/ 8GB with option "n", using the following parameters:
 
-    Partition #3</br>
-    Default starting sector</br>
-    +8G</br>
+    Partition #3
+    Default starting sector
+    +8G
     Change to linux swap (8200)
 
 ### Create root partition
 
 Create new root partition w/ remaining disk space with option "n", using the following parameters:
 
-    Partition #4</br>
-    Default starting sector</br>
-    Complete remaining space</br>
+    Partition #4
+    Default starting sector
+    Remaining space
     Linux LUKS type 8309
 
 And then exit gdisk.

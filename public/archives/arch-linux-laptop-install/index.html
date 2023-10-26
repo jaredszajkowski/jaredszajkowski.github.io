@@ -373,31 +373,31 @@
 <p>Create GPT partition table with option &ldquo;o&rdquo;.</p>
 <h3 id="create-efi-partition">Create EFI partition</h3>
 <p>Create new EFI partition w/ 550mb with option &ldquo;n&rdquo;, using the following parameters:</p>
-<pre><code>Partition #1&lt;/br&gt;
-Default starting sector&lt;/br&gt;
-+550M&lt;/br&gt;
+<pre><code>Partition #1
+Default starting sector
++550M
 Change partition type to EFI System (ef00)
 </code></pre>
 <h3 id="create-boot-partition">Create boot partition</h3>
 <p>Create new boot partition w/ 550mb with option &ldquo;n&rdquo;, using the following parameters:</p>
-<pre><code>Partition #2&lt;/br&gt;
-Default starting sector&lt;/br&gt;
-+550M&lt;/br&gt;
+<pre><code>Partition #2
+Default starting sector
++550M
 Leave default type of 8300
 </code></pre>
 <h3 id="create-swap-partition">Create swap partition</h3>
 <p>The old rule of thumb used to be that a swap partition should be the same size as the amount of memory in the system, but given the typical amount of memory in modern systems this is obviously no longer necessary. For my system with 16 or 32 GB of memory, a swap of 8 GB is rarely even used.</br></p>
 <p>Create new Swap partition w/ 8GB with option &ldquo;n&rdquo;, using the following parameters:</p>
-<pre><code>Partition #3&lt;/br&gt;
-Default starting sector&lt;/br&gt;
-+8G&lt;/br&gt;
+<pre><code>Partition #3
+Default starting sector
++8G
 Change to linux swap (8200)
 </code></pre>
 <h3 id="create-root-partition">Create root partition</h3>
 <p>Create new root partition w/ remaining disk space with option &ldquo;n&rdquo;, using the following parameters:</p>
-<pre><code>Partition #4&lt;/br&gt;
-Default starting sector&lt;/br&gt;
-Complete remaining space&lt;/br&gt;
+<pre><code>Partition #4
+Default starting sector
+Remaining space
 Linux LUKS type 8309
 </code></pre>
 <p>And then exit gdisk.</p>
