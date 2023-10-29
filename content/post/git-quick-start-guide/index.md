@@ -7,7 +7,7 @@ lastmod: 2023-10-18 00:00:00+0000
 # image: cover.jpg
 draft: false
 categories:
-    - Tech
+    - Tutorial
 tags:
     - git
     - GitHub

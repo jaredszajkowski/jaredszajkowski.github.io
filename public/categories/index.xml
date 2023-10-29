@@ -7,11 +7,19 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <lastBuildDate>Mon, 16 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://jaredszajkowski.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Tech</title>
-        <link>https://jaredszajkowski.github.io/categories/tech/</link>
+        <title>Tutorial</title>
+        <link>https://jaredszajkowski.github.io/categories/tutorial/</link>
         <pubDate>Mon, 16 Oct 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/categories/tech/</guid>
+        <guid>https://jaredszajkowski.github.io/categories/tutorial/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Blog</title>
+        <link>https://jaredszajkowski.github.io/categories/blog/</link>
+        <pubDate>Tue, 26 Sep 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://jaredszajkowski.github.io/categories/blog/</guid>
         <description></description>
         </item>
         

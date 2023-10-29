@@ -7,7 +7,7 @@ lastmod: 2023-09-29 00:00:00+0000
 # image: cover.jpg
 draft: false
 categories:
-    - Tech
+    - Blog
 tags:
     - Hugo
     - GitHub
