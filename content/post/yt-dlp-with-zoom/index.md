@@ -21,27 +21,27 @@ This tutorial requires you to have a "cookies" text file, which needs to contain
 
 Here's the steps to setting this up:
 
-## Step 1 - Install cookie editor
+## Install cookie editor
 
 Install the [cookie editor](https://microsoftedge.microsoft.com/addons/detail/cookie-editor/ajfboaconbpkglpfanbmlfgojgndmhmc) extension. I personnally use it with Microsoft Edge, but there are similar extensions for Chrome, Firefox, etc.
 
-## Step 2 - Modify export format
+## Modify export format
 
 Change the preferred cookie export format to `Netscape HTTP Cookie File` in the extension options. It is necessary to export in this format, otherwise yt-dlp will not be able to read the cookies.txt file correctly.
 
 ![Modify preferred export format](1.png)
 
-## Step 3 - Log in to Zoom
+## Log in to Zoom
 
 Log in to Zoom in your browser. Be sure to remain logged in while exporting the cookies under step 4.
 
-## Step 4 - Export cookies
+## Export cookies
 
 The export button is at the top fo the window. It copies the cookies to your clipboard, which then need to be pasted into a text file (I have my saved as cookies.txt), which yt-dlp will then read when it executes.
 
 ![Export cookies](2.png)
 
-## Step 5 - Create bash script
+## Create bash script
 
 Save the following code to a text file (my bash script file name is yt-dlp.sh):
 
@@ -54,12 +54,12 @@ read link
 yt-dlp --referer "https://zoom.us/" --cookies /path/to/cookies/file/cookies.txt -o "%(title)s-%(id)s.%(ext)s" --write-subs $link
 ```
 
-## Step 6 - Change permissions
+## Change permissions
 
 Modify the permissions of the bash script to allow execution:
 
     $ chmod +x yt-dlp.sh
 
-## Step 7 - Execute the script
+## Execute the script
 
 Execute the bash script with ./yt-dlp.sh, copy and paste the link to the video that you would like to save, and it should download the video and the subtitles.
