@@ -3,7 +3,7 @@ title: Git Quick Start Guide
 description: Commonly used commands and functionality for git.
 #slug: hello-world-2
 date: 2023-10-16 00:00:00+0000
-lastmod: 2023-10-18 00:00:00+0000
+lastmod: 2023-11-02 00:00:00+0000
 # image: cover.jpg
 draft: false
 categories:
@@ -16,9 +16,9 @@ tags:
 
 Here are my notes for some of the more commonly used git commands along with initial setup for git in Linux.
 
-## Installation 
+## Installation
 
-To begin, install as follows:
+To begin, install as follows for Arch Linux:
 
     # pacman -Syu git
 
@@ -43,17 +43,17 @@ You can verify the updates with:
 
     $ git config --global core.editor
 
-Alternatively, you can edit the git configuration with:
+Alternatively, you can edit the git configuration directly with:
 
     $ git config --global --edit
 
 ## Store credentials
 
-In 2021, GitHub disabled authentication via username and password, and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in `~/.git-credentials`:
+In 2021, GitHub disabled authentication via password and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in `~/.git-credentials`:
 
     $ git config --global credential.helper store
 
-After you log in during a push with your username and token, it will be stored in the above location.
+After you log in during a `git push` with your username and token, the username or email address and token will be stored in the above location.
 
 Note: The token is stored in plain text, so use caution if that is a concern.
 

@@ -14,7 +14,7 @@
         <guid>https://jaredszajkowski.github.io/archives/git-quick-start-guide/</guid>
         <description>&lt;p&gt;Here are my notes for some of the more commonly used git commands along with initial setup for git in Linux.&lt;/p&gt;
 &lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
-&lt;p&gt;To begin, install as follows:&lt;/p&gt;
+&lt;p&gt;To begin, install as follows for Arch Linux:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# pacman -Syu git
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Or&lt;/p&gt;
@@ -32,14 +32,14 @@ $ git config --global user.email &amp;quot;email@address.com&amp;quot;
 &lt;p&gt;You can verify the updates with:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git config --global core.editor
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Alternatively, you can edit the git configuration with:&lt;/p&gt;
+&lt;p&gt;Alternatively, you can edit the git configuration directly with:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git config --global --edit
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&#34;store-credentials&#34;&gt;Store credentials&lt;/h2&gt;
-&lt;p&gt;In 2021, GitHub disabled authentication via username and password, and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in &lt;code&gt;~/.git-credentials&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;In 2021, GitHub disabled authentication via password and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in &lt;code&gt;~/.git-credentials&lt;/code&gt;:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git config --global credential.helper store
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;After you log in during a push with your username and token, it will be stored in the above location.&lt;/p&gt;
+&lt;p&gt;After you log in during a &lt;code&gt;git push&lt;/code&gt; with your username and token, the username or email address and token will be stored in the above location.&lt;/p&gt;
 &lt;p&gt;Note: The token is stored in plain text, so use caution if that is a concern.&lt;/p&gt;
 &lt;h2 id=&#34;cloning-repositories&#34;&gt;Cloning repositories&lt;/h2&gt;
 &lt;p&gt;Repositories can be cloned with the following:&lt;/p&gt;

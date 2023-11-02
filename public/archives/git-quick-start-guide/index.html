@@ -10,7 +10,7 @@
 <meta property='og:description' content='Commonly used commands and functionality for git.'>
 <meta property='og:url' content='https://jaredszajkowski.github.io/archives/git-quick-start-guide/'>
 <meta property='og:site_name' content='Jared Szajkowski'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='git' /><meta property='article:tag' content='GitHub' /><meta property='article:published_time' content='2023-10-16T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-10-18T00:00:00&#43;00:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='git' /><meta property='article:tag' content='GitHub' /><meta property='article:published_time' content='2023-10-16T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-11-02T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="Git Quick Start Guide">
 <meta name="twitter:description" content="Commonly used commands and functionality for git.">
     <link rel="shortcut icon" href="/favicon.png" />
@@ -311,7 +311,7 @@
     
     <p>Here are my notes for some of the more commonly used git commands along with initial setup for git in Linux.</p>
 <h2 id="installation">Installation</h2>
-<p>To begin, install as follows:</p>
+<p>To begin, install as follows for Arch Linux:</p>
 <pre><code># pacman -Syu git
 </code></pre>
 <p>Or</p>
@@ -329,14 +329,14 @@ $ git config --global user.email &quot;email@address.com&quot;
 <p>You can verify the updates with:</p>
 <pre><code>$ git config --global core.editor
 </code></pre>
-<p>Alternatively, you can edit the git configuration with:</p>
+<p>Alternatively, you can edit the git configuration directly with:</p>
 <pre><code>$ git config --global --edit
 </code></pre>
 <h2 id="store-credentials">Store credentials</h2>
-<p>In 2021, GitHub disabled authentication via username and password, and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in <code>~/.git-credentials</code>:</p>
+<p>In 2021, GitHub disabled authentication via password and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in <code>~/.git-credentials</code>:</p>
 <pre><code>$ git config --global credential.helper store
 </code></pre>
-<p>After you log in during a push with your username and token, it will be stored in the above location.</p>
+<p>After you log in during a <code>git push</code> with your username and token, the username or email address and token will be stored in the above location.</p>
 <p>Note: The token is stored in plain text, so use caution if that is a concern.</p>
 <h2 id="cloning-repositories">Cloning repositories</h2>
 <p>Repositories can be cloned with the following:</p>
@@ -413,7 +413,7 @@ $ git pull
 
 
         <span>
-            Last updated on October 18, 2023
+            Last updated on November 2, 2023
         </span>
     </section></footer>
 
