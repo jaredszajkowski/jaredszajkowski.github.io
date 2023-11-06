@@ -22,7 +22,7 @@
 
 :root{
   --body-background:#f0f0f0; // was #f5f5fa, then f1f1f1 
-  --accent-color:#3a3a3a; // was #34495e
+  --accent-color:#3a3a3a; // was #34495e, then 3a3a3a, then 888888
   --accent-color-darker:#2c3e50;
   --accent-color-text:#fff;
   --body-text-color:#707070;
@@ -691,23 +691,23 @@ template{
     height:250px}}
     
 .article-list article:nth-child(5n+1) .article-category a{
-  background:#888888; // was 8ea885, then 3a3a3a, then 0177b8, then 888888
+  background:#3a3a3a; // was 8ea885, then 3a3a3a, then 0177b8, then 888888
   color:#fff}
   
 .article-list article:nth-child(5n+2) .article-category a{
-  background:#888888; // was df7988, then 3a3a3a, then 0177b8, then 888888
+  background:#3a3a3a; // was df7988, then 3a3a3a, then 0177b8, then 888888
   color:#fff}
   
 .article-list article:nth-child(5n+3) .article-category a{
-  background:#888888; // was 0177b8, then 3a3a3a, then 0177b8, then 888888
+  background:#3a3a3a; // was 0177b8, then 3a3a3a, then 0177b8, then 888888
   color:#fff}
   
 .article-list article:nth-child(5n+4) .article-category a{
-  background:#888888; // was ffb900, then 3a3a3a, then 0177b8, then 888888
+  background:#3a3a3a; // was ffb900, then 3a3a3a, then 0177b8, then 888888
   color:#fff}
   
 .article-list article:nth-child(5n+5) .article-category a{
-  background:#888888; // was 6b69d6, then 3a3a3a, then 0177b8, then 888888
+  background:#3a3a3a; // was 6b69d6, then 3a3a3a, then 0177b8, then 888888
   color:#fff}
   
 .article-details{
