@@ -7,7 +7,7 @@ lastmod: 2023-10-04 00:00:00+0000
 # image: cover.jpg
 draft: false
 categories:
-    - Tutorial
+    - Tutorials
 tags:
     - Arch Linux
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
