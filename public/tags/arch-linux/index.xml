@@ -20,7 +20,11 @@
 &lt;li&gt;Wireless or wired network is detected and drivers are configured automatically.&lt;/li&gt;
 &lt;li&gt;You want drive encrytion on your root partition, but not on your boot/efi/swap partitions.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;configure-wireless&#34;&gt;Configure Wireless&lt;/h3&gt;
+&lt;h3 id=&#34;verify-uefi-boot-mode&#34;&gt;Verify UEFI boot mode&lt;/h3&gt;
+&lt;p&gt;The following command should show directory without error:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# ls /sys/firmware/efi/efivars
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;configure-wireless-network&#34;&gt;Configure wireless network&lt;/h3&gt;
 &lt;p&gt;The following command will drop you into the iwd daemon:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# iwctl
 &lt;/code&gt;&lt;/pre&gt;
@@ -30,10 +34,6 @@
 # station *device* get-networks
 # station *device* connect *SSID*
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;verify-uefi-boot-mode&#34;&gt;Verify UEFI boot mode&lt;/h3&gt;
-&lt;p&gt;The following command should show directory without error:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# ls /sys/firmware/efi/efivars
-&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;verify-internet-connectivity&#34;&gt;Verify internet connectivity&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;# ping archlinux.org
 &lt;/code&gt;&lt;/pre&gt;
@@ -41,15 +41,16 @@
 &lt;pre&gt;&lt;code&gt;# timedatectl set-ntp true
 # timedatectl status
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;prep-disks&#34;&gt;Prep disks&lt;/h2&gt;
+&lt;h2 id=&#34;disks-partition-table--partitions&#34;&gt;Disks, partition table &amp;amp; partitions&lt;/h2&gt;
 &lt;p&gt;The following assumes that your NVME drive is found as /dev/nvme0n1. Partitions will then be /dev/nvme0n1p1 and so on.&lt;/p&gt;
+&lt;h3 id=&#34;wipe-disk&#34;&gt;Wipe disk&lt;/h3&gt;
 &lt;p&gt;List disks:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# fdisk -l
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Wipe all file system records:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# wipefs -a /dev/nvme0n1
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;partition-table--partitions&#34;&gt;Partition table &amp;amp; partitions&lt;/h2&gt;
+&lt;h3 id=&#34;create-new-partition-table&#34;&gt;Create new partition table&lt;/h3&gt;
 &lt;p&gt;Open nvme0n1 with gdisk:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# gdisk /dev/nvme0n1
 &lt;/code&gt;&lt;/pre&gt;
@@ -115,7 +116,59 @@ Linux LUKS type 8309
 # mkdir /mnt/boot/efi
 # mount /dev/nvme0n1p1 /mnt/boot/efi
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;install-system&#34;&gt;Install system&lt;/h2&gt;
+&lt;h2 id=&#34;system-install&#34;&gt;System install&lt;/h2&gt;
+&lt;h3 id=&#34;install-base-packages&#34;&gt;Install base packages&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# pacstrap /mnt base base-devel linux linux-firmware grub-efi-x86_64 efibootmgr
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;generate-fstab&#34;&gt;Generate fstab&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# genfstab -U /mnt &amp;gt;&amp;gt; /mnt/etc/fstab
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;enter-new-system&#34;&gt;Enter new system&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# arch-chroot /mnt /bin/bash
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;set-clock&#34;&gt;Set clock&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime
+# hwclock –systohc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;generate-locale&#34;&gt;Generate locale&lt;/h3&gt;
+&lt;p&gt;In /etc/locale.gen &lt;strong&gt;uncomment only&lt;/strong&gt;: en_US.UTF-8 UTF-8&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# locale-gen
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In /etc/locale.conf, you should &lt;strong&gt;only&lt;/strong&gt; have this line: LANG=en_US.UTF-8&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# nano /etc/locale.conf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;set-hostname--update-hosts&#34;&gt;Set hostname &amp;amp; update hosts&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# echo linuxmachine &amp;gt; /etc/hostname
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Update /etc/hosts with the following:&lt;/p&gt;
+&lt;p&gt;127.0.0.1	localhost&lt;/br&gt;
+::1		    localhost&lt;/br&gt;
+127.0.1.1	linuxmachine.localdomain	 linuxmachine&lt;/p&gt;
+&lt;h3 id=&#34;set-root-password&#34;&gt;Set root password&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# passwd
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;update-etcmkinitcpioconf--generate-initrd-image&#34;&gt;Update /etc/mkinitcpio.conf &amp;amp; generate initrd image&lt;/h3&gt;
+&lt;p&gt;Edit /etc/mkinitcpio.conf with the following:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;HOOKS=(base udev autodetect modconf block keymap encrypt resume filesystems keyboard fsck)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then run:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# mkinitcpio -p linux
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;install-grub&#34;&gt;Install grub&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ArchLinux
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Edit /etc/default/grub so it includes a statement like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GRUB_CMDLINE_LINUX=&amp;quot;cryptdevice=/dev/nvme0n1p4:archcryptroot resume=/dev/nvme0n1p3&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Generate final grub configuration:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# grub-mkconfig -o /boot/grub/grub.cfg
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;exit--reboot&#34;&gt;Exit &amp;amp; reboot&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# exit
+# umount -R /mnt
+# swapoff -a
+# reboot
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;To be continued.&lt;/p&gt;
 </description>
         </item>
