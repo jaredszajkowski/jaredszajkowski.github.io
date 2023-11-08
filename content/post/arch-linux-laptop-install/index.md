@@ -3,7 +3,7 @@ title: Arch Linux Laptop Install
 description: Guide to Arch Linux install on Lenovo ThinkPad E15 Gen 2.
 # slug: hello-world
 date: 2023-09-29 00:00:01+0000
-lastmod: 2023-11-06 00:00:00+0000
+lastmod: 2023-11-07 00:00:00+0000
 # image: cover.jpg
 draft: false
 categories:
@@ -190,9 +190,9 @@ In /etc/locale.conf, you should **only** have this line: LANG=en_US.UTF-8
 
 Update /etc/hosts with the following:
 
-127.0.0.1	localhost</br>
-::1		    localhost</br>
-127.0.1.1	linuxmachine.localdomain	 linuxmachine
+    127.0.0.1   localhost
+    ::1         localhost
+    127.0.1.1   linuxmachine.localdomain    linuxmachine
 
 ### Set root password
 

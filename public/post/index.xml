@@ -291,9 +291,10 @@ Linux LUKS type 8309
 &lt;pre&gt;&lt;code&gt;# echo linuxmachine &amp;gt; /etc/hostname
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Update /etc/hosts with the following:&lt;/p&gt;
-&lt;p&gt;127.0.0.1	localhost&lt;/br&gt;
-::1		    localhost&lt;/br&gt;
-127.0.1.1	linuxmachine.localdomain	 linuxmachine&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;127.0.0.1   localhost
+::1         localhost
+127.0.1.1   linuxmachine.localdomain    linuxmachine
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;set-root-password&#34;&gt;Set root password&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;# passwd
 &lt;/code&gt;&lt;/pre&gt;
