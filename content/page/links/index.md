@@ -1,7 +1,7 @@
 ---
 title: "Links"
 date: 2023-10-01 00:00:00+0000
-lastmod: 2023-10-17 00:00:00+0000
+lastmod: 2023-11-09 00:00:00+0000
 slug: "links"
 #layout: "search"
 links:
@@ -31,6 +31,7 @@ menu:
         weight: 5
         params:
 #            icon: link
+            icon: "LinkedIn_icon_circle"
 
 comments: false
 ---
