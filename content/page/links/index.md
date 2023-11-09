@@ -30,8 +30,7 @@ menu:
 #        name: 
         weight: 5
         params:
-#            icon: link
-            icon: "LinkedIn_icon_circle"
+            icon: link
 
 comments: false
 ---

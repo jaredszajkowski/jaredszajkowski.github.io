@@ -9,7 +9,7 @@ menu:
 #        name: 
         weight: 3
         params: 
-#            icon: archives
+            icon: archives
 
 #comments: false
 ---

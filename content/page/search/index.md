@@ -11,7 +11,7 @@ menu:
 #        name: 
         weight: 4
         params: 
-#            icon: search
+            icon: search
 
 #comments: false
 ---
