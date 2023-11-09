@@ -94,6 +94,24 @@ These commands can be chained together with the AND operator:
 
     $ git add . && git commit -am "Add your commit message here" && git push
 
+## Stashing changes
+
+If you forget to update a repository before making changes, you can "stash" those changes and then re-apply them after running `git pull`.
+
+First, stash the changes:
+
+    $ git stash
+
+Then, update the local record of the repository:
+
+    $ git pull
+
+Finally, re-apply the changes you previously made:
+
+    $ git stash apply
+
+This has proven to be very useful for me when I forget to update a repository before making edits to the code.
+
 ## References
 
 References for git (and used for above):

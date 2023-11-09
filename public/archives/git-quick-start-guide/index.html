@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://jaredszajkowski.github.io/archives/git-quick-start-guide/'>
 
-<link rel="stylesheet" href="/scss/style.min.c86b9d0152f77df97937b155862160565575842e3ab857bc9775f6b294018df3.css"><meta property='og:title' content='Git Quick Start Guide'>
+<link rel="stylesheet" href="/scss/style.min.da837a7dbb452ea8ecf603b9aaf558dd241226e638c2b2c9c275ac1f8695c657.css"><meta property='og:title' content='Git Quick Start Guide'>
 <meta property='og:description' content='Commonly used commands and functionality for git.'>
 <meta property='og:url' content='https://jaredszajkowski.github.io/archives/git-quick-start-guide/'>
 <meta property='og:site_name' content='Jared Szajkowski'>
@@ -225,6 +225,7 @@
     <li><a href="#cloning-repositories">Cloning repositories</a></li>
     <li><a href="#updating-repositories">Updating repositories</a></li>
     <li><a href="#adding-committing-and-pushing">Adding, committing, and pushing</a></li>
+    <li><a href="#stashing-changes">Stashing changes</a></li>
     <li><a href="#references">References</a></li>
   </ol>
 </nav>
@@ -294,7 +295,7 @@
 
 
                 <time class="article-time--reading">
-                    2 minute read
+                    3 minute read
                 </time>
             </div>
         
@@ -364,6 +365,18 @@ $ git pull
 <p>These commands can be chained together with the AND operator:</p>
 <pre><code>$ git add . &amp;&amp; git commit -am &quot;Add your commit message here&quot; &amp;&amp; git push
 </code></pre>
+<h2 id="stashing-changes">Stashing changes</h2>
+<p>If you forget to update a repository before making changes, you can &ldquo;stash&rdquo; those changes and then re-apply them after running <code>git pull</code>.</p>
+<p>First, stash the changes:</p>
+<pre><code>$ git stash
+</code></pre>
+<p>Then, update the local record of the repository:</p>
+<pre><code>$ git pull
+</code></pre>
+<p>Finally, re-apply the changes you previously made:</p>
+<pre><code>$ git stash apply
+</code></pre>
+<p>This has proven to be very useful for me when I forget to update a repository before making edits to the code.</p>
 <h2 id="references">References</h2>
 <p>References for git (and used for above):</p>
 <p><a class="link" href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens"  target="_blank" rel="noopener"

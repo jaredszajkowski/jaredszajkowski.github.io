@@ -67,6 +67,18 @@ $ git pull
 &lt;p&gt;These commands can be chained together with the AND operator:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git add . &amp;amp;&amp;amp; git commit -am &amp;quot;Add your commit message here&amp;quot; &amp;amp;&amp;amp; git push
 &lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;stashing-changes&#34;&gt;Stashing changes&lt;/h2&gt;
+&lt;p&gt;If you forget to update a repository before making changes, you can &amp;ldquo;stash&amp;rdquo; those changes and then re-apply them after running &lt;code&gt;git pull&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;First, stash the changes:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ git stash
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then, update the local record of the repository:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ git pull
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Finally, re-apply the changes you previously made:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ git stash apply
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This has proven to be very useful for me when I forget to update a repository before making edits to the code.&lt;/p&gt;
 &lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
 &lt;p&gt;References for git (and used for above):&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
