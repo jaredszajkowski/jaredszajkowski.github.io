@@ -10,7 +10,7 @@ menu:
 #        name: 
         weight: 2
         params:
-            icon: "about-me-icon-27"
+            icon: "page"
 #            icon: link
 
 comments: false
