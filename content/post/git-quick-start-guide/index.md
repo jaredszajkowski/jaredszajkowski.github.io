@@ -120,4 +120,5 @@ https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/m
 https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup#_first_time</br>
 https://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Setup-and-Config</br>
 https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage#_credential_caching</br>
+https://git-scm.com/book/en/v2/Git-Tools-Stashing-and-Cleaning</br>
 https://www.geeksforgeeks.org/difference-between-chaining-operators-in-linux/
