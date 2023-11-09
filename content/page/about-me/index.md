@@ -10,7 +10,7 @@ menu:
 #        name: 
         weight: 2
         params:
-            icon: "page"
+            icon: "user"
 #            icon: link
 
 comments: false
