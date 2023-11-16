@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Commonly used commands and functionality for git.'>
-<title>Git Quick Start Guide</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='A python function to clean and format an excel data export from Bloomberg.'>
+<title>Cleaning A Bloomberg Data Excel Export</title>
 
-<link rel='canonical' href='https://jaredszajkowski.github.io/archives/git-quick-start-guide/'>
+<link rel='canonical' href='https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/'>
 
-<link rel="stylesheet" href="/scss/style.min.da837a7dbb452ea8ecf603b9aaf558dd241226e638c2b2c9c275ac1f8695c657.css"><meta property='og:title' content='Git Quick Start Guide'>
-<meta property='og:description' content='Commonly used commands and functionality for git.'>
-<meta property='og:url' content='https://jaredszajkowski.github.io/archives/git-quick-start-guide/'>
+<link rel="stylesheet" href="/scss/style.min.da837a7dbb452ea8ecf603b9aaf558dd241226e638c2b2c9c275ac1f8695c657.css"><meta property='og:title' content='Cleaning A Bloomberg Data Excel Export'>
+<meta property='og:description' content='A python function to clean and format an excel data export from Bloomberg.'>
+<meta property='og:url' content='https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/'>
 <meta property='og:site_name' content='Jared Szajkowski'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='git' /><meta property='article:tag' content='GitHub' /><meta property='article:published_time' content='2023-10-16T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-11-02T00:00:00&#43;00:00'/>
-<meta name="twitter:title" content="Git Quick Start Guide">
-<meta name="twitter:description" content="Commonly used commands and functionality for git.">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Arch Linux' /><meta property='article:published_time' content='2023-11-15T00:00:01&#43;00:00'/><meta property='article:modified_time' content='2023-11-07T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Cleaning A Bloomberg Data Excel Export">
+<meta name="twitter:description" content="A python function to clean and format an excel data export from Bloomberg.">
     <link rel="shortcut icon" href="/profile_pic.jpg" />
 
     </head>
@@ -266,14 +266,52 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#installation">Installation</a></li>
-    <li><a href="#initial-configuration">Initial configuration</a></li>
-    <li><a href="#store-credentials">Store credentials</a></li>
-    <li><a href="#cloning-repositories">Cloning repositories</a></li>
-    <li><a href="#updating-repositories">Updating repositories</a></li>
-    <li><a href="#adding-committing-and-pushing">Adding, committing, and pushing</a></li>
-    <li><a href="#stashing-changes">Stashing changes</a></li>
-    <li><a href="#references">References</a></li>
+    <li><a href="#example-of-a-bloomberg-excel-export">Example of a Bloomberg excel export</a></li>
+    <li><a href="#data-modifications">Data modifications</a></li>
+    <li><a href="#assumptions">Assumptions</a></li>
+    <li><a href="#python-function-to-modify-the-data">Python function to modify the data</a></li>
+    <li><a href="#imports">Imports</a></li>
+    <li><a href="#heading"></a>
+      <ol>
+        <li><a href="#verify-uefi-boot-mode">Verify UEFI boot mode</a></li>
+        <li><a href="#configure-wireless-network">Configure wireless network</a></li>
+        <li><a href="#verify-internet-connectivity">Verify internet connectivity</a></li>
+        <li><a href="#update-system-clock">Update system clock</a></li>
+      </ol>
+    </li>
+    <li><a href="#disks-partition-table--partitions">Disks, partition table &amp; partitions</a>
+      <ol>
+        <li><a href="#wipe-disk">Wipe disk</a></li>
+        <li><a href="#create-new-partition-table">Create new partition table</a></li>
+        <li><a href="#create-efi-partition">Create EFI partition</a></li>
+        <li><a href="#create-boot-partition">Create boot partition</a></li>
+        <li><a href="#create-swap-partition">Create swap partition</a></li>
+        <li><a href="#create-root-partition">Create root partition</a></li>
+      </ol>
+    </li>
+    <li><a href="#write-file-systems">Write file systems</a>
+      <ol>
+        <li><a href="#efi-partition">EFI partition</a></li>
+        <li><a href="#boot-partition">Boot partition</a></li>
+        <li><a href="#root-partition">Root partition</a></li>
+        <li><a href="#swap-partition">Swap partition</a></li>
+        <li><a href="#create-mount-points">Create mount points</a></li>
+      </ol>
+    </li>
+    <li><a href="#system-install">System install</a>
+      <ol>
+        <li><a href="#install-base-packages">Install base packages</a></li>
+        <li><a href="#generate-fstab">Generate fstab</a></li>
+        <li><a href="#enter-new-system">Enter new system</a></li>
+        <li><a href="#set-clock">Set clock</a></li>
+        <li><a href="#generate-locale">Generate locale</a></li>
+        <li><a href="#set-hostname--update-hosts">Set hostname &amp; update hosts</a></li>
+        <li><a href="#set-root-password">Set root password</a></li>
+        <li><a href="#update-etcmkinitcpioconf--generate-initrd-image">Update /etc/mkinitcpio.conf &amp; generate initrd image</a></li>
+        <li><a href="#install-grub">Install grub</a></li>
+        <li><a href="#exit--reboot">Exit &amp; reboot</a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
         </div>
@@ -301,12 +339,12 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/archives/git-quick-start-guide/">Git Quick Start Guide</a>
+            <a href="/archives/cleaning-a-bloomberg-data-excel-export/">Cleaning A Bloomberg Data Excel Export</a>
         </h2>
     
         
         <h3 class="article-subtitle">
-            Commonly used commands and functionality for git.
+            A python function to clean and format an excel data export from Bloomberg.
         </h3>
         
     </div>
@@ -327,7 +365,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">October 16, 2023</time>
+                <time class="article-time--published">November 15, 2023</time>
             </div>
         
 
@@ -342,7 +380,7 @@
 
 
                 <time class="article-time--reading">
-                    3 minute read
+                    5 minute read
                 </time>
             </div>
         
@@ -357,87 +395,271 @@
     <section class="article-content">
     
     
-    <p>Here are my notes for some of the more commonly used git commands along with initial setup for git in Linux.</p>
-<h2 id="installation">Installation</h2>
-<p>To begin, install as follows for Arch Linux:</p>
-<pre><code># pacman -Syu git
+    <p>In this tutorial, we will write a python function that imports an excel export from Bloomberg, removes ancillary rows and columns, and leaves the data in a format where it can then be used in time series analysis.</p>
+<h2 id="example-of-a-bloomberg-excel-export">Example of a Bloomberg excel export</h2>
+<p>We will use the SPX index data in this example. Exporting the data from Bloomberg using the excel Bloomberg add-on yields data in the following format:</p>
+<p><img src="/archives/cleaning-a-bloomberg-data-excel-export/1.png"
+	width="399"
+	height="465"
+	srcset="/archives/cleaning-a-bloomberg-data-excel-export/1_hu9fb2ee8d44c9a39b9a4f037918691a2a_54597_480x0_resize_box_3.png 480w, /archives/cleaning-a-bloomberg-data-excel-export/1_hu9fb2ee8d44c9a39b9a4f037918691a2a_54597_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Format of data in excel export from Bloomberg"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="85"
+		data-flex-basis="205px"
+	
+></p>
+<h2 id="data-modifications">Data modifications</h2>
+<p>The above format isn&rsquo;t horrible, but we want to perform the following modifications:</p>
+<ol>
+<li>Remove the first six rows of the data</li>
+<li>Convert the 7th row to become column headings</li>
+<li>Rename column 2 to &ldquo;Close&rdquo; to represent the closing price</li>
+<li>Remove column 3, as we are not concerned about volume</li>
+<li>Make the name of the excel worksheet &ldquo;data&rdquo;</li>
+</ol>
+<h2 id="assumptions">Assumptions</h2>
+<p>The remainder of this tutorial assumes that your excel file is named &ldquo;SPX_Index.xlsx&rdquo;, and the worksheet is named &ldquo;Worksheet&rdquo;.</p>
+<h2 id="python-function-to-modify-the-data">Python function to modify the data</h2>
+<p>The following function will perform the modifications mentioned above:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">import pandas as pd
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># This function takes an excel export from Bloomberg and 
+</span></span><span class="line"><span class="cl"># removes all excess data leaving date and close columns
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">def bb_data_updater(fund):
+</span></span><span class="line"><span class="cl">    # File name
+</span></span><span class="line"><span class="cl">    file = fund + &#34;_Index.xlsx&#34;
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # Import data from file as dataframe and drop rows and columns
+</span></span><span class="line"><span class="cl">    data = pd.read_excel(file, sheet_name = &#39;Worksheet&#39;, engine=&#39;openpyxl&#39;)
+</span></span><span class="line"><span class="cl">    data.columns = data.iloc[5]
+</span></span><span class="line"><span class="cl">    data.rename_axis(None, axis=1, inplace = True)
+</span></span><span class="line"><span class="cl">    data.drop(data.index[0:6], inplace=True)
+</span></span><span class="line"><span class="cl">    data.set_index(&#39;Date&#39;, inplace = True)
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    try:
+</span></span><span class="line"><span class="cl">        data.drop(columns = {&#39;PX_VOLUME&#39;}, inplace = True)
+</span></span><span class="line"><span class="cl">    except KeyError:
+</span></span><span class="line"><span class="cl">        pass
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    data.rename(columns = {&#39;PX_LAST&#39;:&#39;Close&#39;}, inplace = True)
+</span></span><span class="line"><span class="cl">    data.sort_values(by=[&#39;Date&#39;], inplace = True)
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # Export data to excel
+</span></span><span class="line"><span class="cl">    file = fund + &#34;.xlsx&#34;
+</span></span><span class="line"><span class="cl">    data.to_excel(file, sheet_name=&#39;data&#39;)
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # Output confirmation
+</span></span><span class="line"><span class="cl">    print(f&#34;The last date of data for {fund} is: &#34;)
+</span></span><span class="line"><span class="cl">    print(data[-1:])
+</span></span><span class="line"><span class="cl">    print(f&#34;Bloomberg data conversion complete for {fund} data&#34;)
+</span></span><span class="line"><span class="cl">    return print(f&#34;--------------------&#34;)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Let&rsquo;s break this down line by line.</p>
+<h2 id="imports">Imports</h2>
+<p>First, we need to import pandas:</p>
+<pre><code>import pandas as pd
 </code></pre>
-<p>Or</p>
-<pre><code>$ yay git
+<h2 id="heading"></h2>
+<p>This tutorial assumes the following:</p>
+<ul>
+<li>You are booting from a USB drive with the Arch install ISO.</li>
+<li>Wireless or wired network is detected and drivers are configured automatically.</li>
+<li>You want drive encrytion on your root partition, but not on your boot/efi/swap partitions.</li>
+</ul>
+<h3 id="verify-uefi-boot-mode">Verify UEFI boot mode</h3>
+<p>The following command should show directory without error:</p>
+<pre><code># ls /sys/firmware/efi/efivars
 </code></pre>
-<p>Pacman will include all required depencies.</p>
-<h2 id="initial-configuration">Initial configuration</h2>
-<p>First, set your name and email address:</p>
-<pre><code>$ git config --global user.name &quot;Firstname Lastname&quot;
-$ git config --global user.email &quot;email@address.com&quot;
+<h3 id="configure-wireless-network">Configure wireless network</h3>
+<p>The following command will drop you into the iwd daemon:</p>
+<pre><code># iwctl
 </code></pre>
-<p>Then, set your preferred text editor (if you have one). I use nano:</p>
-<pre><code>$ git config --global core.editor &quot;nano&quot;
+<p>From there:</p>
+<pre><code># device list
+# station *device* scan
+# station *device* get-networks
+# station *device* connect *SSID*
 </code></pre>
-<p>You can verify the updates with:</p>
-<pre><code>$ git config --global core.editor
+<h3 id="verify-internet-connectivity">Verify internet connectivity</h3>
+<pre><code># ping archlinux.org
 </code></pre>
-<p>Alternatively, you can edit the git configuration directly with:</p>
-<pre><code>$ git config --global --edit
+<h3 id="update-system-clock">Update system clock</h3>
+<pre><code># timedatectl set-ntp true
+# timedatectl status
 </code></pre>
-<h2 id="store-credentials">Store credentials</h2>
-<p>In 2021, GitHub disabled authentication via password and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in <code>~/.git-credentials</code>:</p>
-<pre><code>$ git config --global credential.helper store
+<h2 id="disks-partition-table--partitions">Disks, partition table &amp; partitions</h2>
+<p>The following assumes that your NVME drive is found as /dev/nvme0n1. Partitions will then be /dev/nvme0n1p1 and so on.</p>
+<h3 id="wipe-disk">Wipe disk</h3>
+<p>List disks:</p>
+<pre><code># fdisk -l
 </code></pre>
-<p>After you log in during a <code>git push</code> with your username and token, the username or email address and token will be stored in the above location.</p>
-<p>Note: The token is stored in plain text, so use caution if that is a concern.</p>
-<h2 id="cloning-repositories">Cloning repositories</h2>
-<p>Repositories can be cloned with the following:</p>
-<pre><code>$ git clone https://github.com/&lt;username&gt;/&lt;repository&gt;.git
+<p>Wipe all file system records:</p>
+<pre><code># wipefs -a /dev/nvme0n1
 </code></pre>
-<h2 id="updating-repositories">Updating repositories</h2>
-<p>The local record of a repository can be updated with the following command:</p>
-<pre><code>$ cd &lt;repository&gt;/
-$ git pull
+<h3 id="create-new-partition-table">Create new partition table</h3>
+<p>Open nvme0n1 with gdisk:</p>
+<pre><code># gdisk /dev/nvme0n1
 </code></pre>
-<h2 id="adding-committing-and-pushing">Adding, committing, and pushing</h2>
-<p>Any files or directories that have been added, modified, or removed can be add to the list of changes to be pushed with the following command:</p>
-<pre><code>$ git add .
+<p>Create GPT partition table with option &ldquo;o&rdquo;.</p>
+<h3 id="create-efi-partition">Create EFI partition</h3>
+<p>Create new EFI partition w/ 550mb with option &ldquo;n&rdquo;, using the following parameters:</p>
+<pre><code>Partition #1
+Default starting sector
++550M
+Change partition type to EFI System (ef00)
 </code></pre>
-<p>Then committed (staged in preparation to push) with the following command:</p>
-<pre><code>$ git commit -am &quot;Add your commit message here&quot;
+<h3 id="create-boot-partition">Create boot partition</h3>
+<p>Create new boot partition w/ 550mb with option &ldquo;n&rdquo;, using the following parameters:</p>
+<pre><code>Partition #2
+Default starting sector
++550M
+Leave default type of 8300
 </code></pre>
-<p>Note: Without <code>add</code>, <code>commit</code> will handle any changes to files that have been modified or deleted, but will not incorporate any files that have been created.</p>
-<p>Then finally pushed:</p>
-<pre><code>$ git push
+<h3 id="create-swap-partition">Create swap partition</h3>
+<p>The old rule of thumb used to be that a swap partition should be the same size as the amount of memory in the system, but given the typical amount of memory in modern systems this is obviously no longer necessary. For my system with 16 or 32 GB of memory, a swap of 8 GB is rarely even used.</br></p>
+<p>Create new Swap partition w/ 8GB with option &ldquo;n&rdquo;, using the following parameters:</p>
+<pre><code>Partition #3
+Default starting sector
++8G
+Change to linux swap (8200)
 </code></pre>
-<p>If, for some reason, you would like to reset a commit:</p>
-<pre><code>$ git reset
+<h3 id="create-root-partition">Create root partition</h3>
+<p>Create new root partition w/ remaining disk space with option &ldquo;n&rdquo;, using the following parameters:</p>
+<pre><code>Partition #4
+Default starting sector
+Remaining space
+Linux LUKS type 8309
 </code></pre>
-<p>These commands can be chained together with the AND operator:</p>
-<pre><code>$ git add . &amp;&amp; git commit -am &quot;Add your commit message here&quot; &amp;&amp; git push
+<p>And then exit gdisk.</p>
+<h2 id="write-file-systems">Write file systems</h2>
+<h3 id="efi-partition">EFI partition</h3>
+<p>Write file system to new EFI System partition:</p>
+<pre><code># cat /dev/zero &gt; /dev/nvme0n1p1 
+# mkfs.fat -F32 /dev/nvme0n1p1 
 </code></pre>
-<h2 id="stashing-changes">Stashing changes</h2>
-<p>If you forget to update a repository before making changes, you can &ldquo;stash&rdquo; those changes and then re-apply them after running <code>git pull</code>.</p>
-<p>First, stash the changes:</p>
-<pre><code>$ git stash
+<h3 id="boot-partition">Boot partition</h3>
+<p>Then boot partition:</p>
+<pre><code># cat /dev/zero &gt; /dev/nvme0n1p2 
+# mkfs.ext2 /dev/nvme0n1p2
 </code></pre>
-<p>Then, update the local record of the repository:</p>
-<pre><code>$ git pull
+<h3 id="root-partition">Root partition</h3>
+<p>Prepare root partition w/ LUKS:</p>
+<pre><code># cryptsetup -y -v luksFormat --type luks2 /dev/nvme0n1p4
+# cryptsetup luksDump /dev/nvme0n1p4
+# cryptsetup open /dev/nvme0n1p4 archcryptroot
+# mkfs.ext4 /dev/mapper/archcryptroot
+# mount /dev/mapper/archcryptroot /mnt
 </code></pre>
-<p>Finally, re-apply the changes you previously made:</p>
-<pre><code>$ git stash apply
+<p>I use <em>archcryptroot</em> for the name of my encrypted volume, but change as necessary.</p>
+<h3 id="swap-partition">Swap partition</h3>
+<p>Then swap:</p>
+<pre><code># mkswap /dev/nvme0n1p3
+# swapon /dev/nvme0n1p3
 </code></pre>
-<p>This has proven to be very useful for me when I forget to update a repository before making edits to the code.</p>
-<h2 id="references">References</h2>
-<p>References for git (and used for above):</p>
-<p><a class="link" href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens"  target="_blank" rel="noopener"
-    >https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens</a></br>
-<a class="link" href="https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup#_first_time"  target="_blank" rel="noopener"
-    >https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup#_first_time</a></br>
-<a class="link" href="https://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Setup-and-Config"  target="_blank" rel="noopener"
-    >https://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Setup-and-Config</a></br>
-<a class="link" href="https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage#_credential_caching"  target="_blank" rel="noopener"
-    >https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage#_credential_caching</a></br>
-<a class="link" href="https://git-scm.com/book/en/v2/Git-Tools-Stashing-and-Cleaning"  target="_blank" rel="noopener"
-    >https://git-scm.com/book/en/v2/Git-Tools-Stashing-and-Cleaning</a></br>
-<a class="link" href="https://www.geeksforgeeks.org/difference-between-chaining-operators-in-linux/"  target="_blank" rel="noopener"
-    >https://www.geeksforgeeks.org/difference-between-chaining-operators-in-linux/</a></p>
+<h3 id="create-mount-points">Create mount points</h3>
+<pre><code># mkdir /mnt/boot
+# mount /dev/nvme0n1p2 /mnt/boot
+# mkdir /mnt/boot/efi
+# mount /dev/nvme0n1p1 /mnt/boot/efi
+</code></pre>
+<h2 id="system-install">System install</h2>
+<h3 id="install-base-packages">Install base packages</h3>
+<pre><code># pacstrap /mnt base base-devel linux linux-firmware grub-efi-x86_64 efibootmgr
+</code></pre>
+<h3 id="generate-fstab">Generate fstab</h3>
+<pre><code># genfstab -U /mnt &gt;&gt; /mnt/etc/fstab
+</code></pre>
+<h3 id="enter-new-system">Enter new system</h3>
+<pre><code># arch-chroot /mnt /bin/bash
+</code></pre>
+<h3 id="set-clock">Set clock</h3>
+<pre><code># ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime
+# hwclock –systohc
+</code></pre>
+<h3 id="generate-locale">Generate locale</h3>
+<p>In /etc/locale.gen <strong>uncomment only</strong>: en_US.UTF-8 UTF-8</p>
+<pre><code># locale-gen
+</code></pre>
+<p>In /etc/locale.conf, you should <strong>only</strong> have this line: LANG=en_US.UTF-8</p>
+<pre><code># nano /etc/locale.conf
+</code></pre>
+<h3 id="set-hostname--update-hosts">Set hostname &amp; update hosts</h3>
+<pre><code># echo linuxmachine &gt; /etc/hostname
+</code></pre>
+<p>Update /etc/hosts with the following:</p>
+<pre><code>127.0.0.1   localhost
+::1         localhost
+127.0.1.1   linuxmachine.localdomain    linuxmachine
+</code></pre>
+<h3 id="set-root-password">Set root password</h3>
+<pre><code># passwd
+</code></pre>
+<h3 id="update-etcmkinitcpioconf--generate-initrd-image">Update /etc/mkinitcpio.conf &amp; generate initrd image</h3>
+<p>Edit /etc/mkinitcpio.conf with the following:</p>
+<pre><code>HOOKS=(base udev autodetect modconf block keymap encrypt resume filesystems keyboard fsck)
+</code></pre>
+<p>Then run:</p>
+<pre><code># mkinitcpio -p linux
+</code></pre>
+<h3 id="install-grub">Install grub</h3>
+<pre><code># grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ArchLinux
+</code></pre>
+<p>Edit /etc/default/grub so it includes a statement like this:</p>
+<pre><code>GRUB_CMDLINE_LINUX=&quot;cryptdevice=/dev/nvme0n1p4:archcryptroot resume=/dev/nvme0n1p3&quot;
+</code></pre>
+<p>Generate final grub configuration:</p>
+<pre><code># grub-mkconfig -o /boot/grub/grub.cfg
+</code></pre>
+<h3 id="exit--reboot">Exit &amp; reboot</h3>
+<pre><code># exit
+# umount -R /mnt
+# swapoff -a
+# reboot
+</code></pre>
+<p>To be continued.</p>
 
 </section>
 
@@ -446,9 +668,7 @@ $ git pull
     
     <section class="article-tags">
         
-            <a href="/tags/git/">git</a>
-        
-            <a href="/tags/github/">GitHub</a>
+            <a href="/tags/arch-linux/">Arch Linux</a>
         
     </section>
 
@@ -475,7 +695,7 @@ $ git pull
 
 
         <span>
-            Last updated on November 2, 2023
+            Last updated on November 7, 2023
         </span>
     </section></footer>
 
@@ -518,12 +738,25 @@ $ git pull
             
                 
 <article class="">
-    <a href="/archives/cleaning-a-bloomberg-data-excel-export/">
+    <a href="/archives/arch-linux-laptop-install/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">Cleaning A Bloomberg Data Excel Export</h2>
+            <h2 class="article-title">Arch Linux Laptop Install</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/archives/git-quick-start-guide/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Git Quick Start Guide</h2>
         </div>
     </a>
 </article>
@@ -537,19 +770,6 @@ $ git pull
 
         <div class="article-details">
             <h2 class="article-title">Using yt-dlp With Zoom</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/archives/arch-linux-laptop-install/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Arch Linux Laptop Install</h2>
         </div>
     </a>
 </article>

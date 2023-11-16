@@ -6,7 +6,280 @@
         <description>Recent content in Arch Linux on Jared Szajkowski</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Fri, 29 Sep 2023 00:00:01 +0000</lastBuildDate><atom:link href="https://jaredszajkowski.github.io/tags/arch-linux/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 15 Nov 2023 00:00:01 +0000</lastBuildDate><atom:link href="https://jaredszajkowski.github.io/tags/arch-linux/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Cleaning A Bloomberg Data Excel Export</title>
+        <link>https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/</link>
+        <pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate>
+        
+        <guid>https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/</guid>
+        <description>&lt;p&gt;In this tutorial, we will write a python function that imports an excel export from Bloomberg, removes ancillary rows and columns, and leaves the data in a format where it can then be used in time series analysis.&lt;/p&gt;
+&lt;h2 id=&#34;example-of-a-bloomberg-excel-export&#34;&gt;Example of a Bloomberg excel export&lt;/h2&gt;
+&lt;p&gt;We will use the SPX index data in this example. Exporting the data from Bloomberg using the excel Bloomberg add-on yields data in the following format:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/1.png&#34;
+	width=&#34;399&#34;
+	height=&#34;465&#34;
+	srcset=&#34;https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/1_hu9fb2ee8d44c9a39b9a4f037918691a2a_54597_480x0_resize_box_3.png 480w, https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/1_hu9fb2ee8d44c9a39b9a4f037918691a2a_54597_1024x0_resize_box_3.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Format of data in excel export from Bloomberg&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;85&#34;
+		data-flex-basis=&#34;205px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;data-modifications&#34;&gt;Data modifications&lt;/h2&gt;
+&lt;p&gt;The above format isn&amp;rsquo;t horrible, but we want to perform the following modifications:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Remove the first six rows of the data&lt;/li&gt;
+&lt;li&gt;Convert the 7th row to become column headings&lt;/li&gt;
+&lt;li&gt;Rename column 2 to &amp;ldquo;Close&amp;rdquo; to represent the closing price&lt;/li&gt;
+&lt;li&gt;Remove column 3, as we are not concerned about volume&lt;/li&gt;
+&lt;li&gt;Make the name of the excel worksheet &amp;ldquo;data&amp;rdquo;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;assumptions&#34;&gt;Assumptions&lt;/h2&gt;
+&lt;p&gt;The remainder of this tutorial assumes that your excel file is named &amp;ldquo;SPX_Index.xlsx&amp;rdquo;, and the worksheet is named &amp;ldquo;Worksheet&amp;rdquo;.&lt;/p&gt;
+&lt;h2 id=&#34;python-function-to-modify-the-data&#34;&gt;Python function to modify the data&lt;/h2&gt;
+&lt;p&gt;The following function will perform the modifications mentioned above:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;import pandas as pd
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# This function takes an excel export from Bloomberg and 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# removes all excess data leaving date and close columns
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;def bb_data_updater(fund):
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    # File name
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    file = fund + &amp;#34;_Index.xlsx&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    # Import data from file as dataframe and drop rows and columns
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    data = pd.read_excel(file, sheet_name = &amp;#39;Worksheet&amp;#39;, engine=&amp;#39;openpyxl&amp;#39;)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    data.columns = data.iloc[5]
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    data.rename_axis(None, axis=1, inplace = True)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    data.drop(data.index[0:6], inplace=True)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    data.set_index(&amp;#39;Date&amp;#39;, inplace = True)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    try:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        data.drop(columns = {&amp;#39;PX_VOLUME&amp;#39;}, inplace = True)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    except KeyError:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        pass
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    data.rename(columns = {&amp;#39;PX_LAST&amp;#39;:&amp;#39;Close&amp;#39;}, inplace = True)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    data.sort_values(by=[&amp;#39;Date&amp;#39;], inplace = True)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    # Export data to excel
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    file = fund + &amp;#34;.xlsx&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    data.to_excel(file, sheet_name=&amp;#39;data&amp;#39;)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    # Output confirmation
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    print(f&amp;#34;The last date of data for {fund} is: &amp;#34;)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    print(data[-1:])
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    print(f&amp;#34;Bloomberg data conversion complete for {fund} data&amp;#34;)
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    return print(f&amp;#34;--------------------&amp;#34;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Let&amp;rsquo;s break this down line by line.&lt;/p&gt;
+&lt;h2 id=&#34;imports&#34;&gt;Imports&lt;/h2&gt;
+&lt;p&gt;First, we need to import pandas:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import pandas as pd
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;heading&#34;&gt;&lt;/h2&gt;
+&lt;p&gt;This tutorial assumes the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;You are booting from a USB drive with the Arch install ISO.&lt;/li&gt;
+&lt;li&gt;Wireless or wired network is detected and drivers are configured automatically.&lt;/li&gt;
+&lt;li&gt;You want drive encrytion on your root partition, but not on your boot/efi/swap partitions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;verify-uefi-boot-mode&#34;&gt;Verify UEFI boot mode&lt;/h3&gt;
+&lt;p&gt;The following command should show directory without error:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# ls /sys/firmware/efi/efivars
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;configure-wireless-network&#34;&gt;Configure wireless network&lt;/h3&gt;
+&lt;p&gt;The following command will drop you into the iwd daemon:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# iwctl
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;From there:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# device list
+# station *device* scan
+# station *device* get-networks
+# station *device* connect *SSID*
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;verify-internet-connectivity&#34;&gt;Verify internet connectivity&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# ping archlinux.org
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;update-system-clock&#34;&gt;Update system clock&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# timedatectl set-ntp true
+# timedatectl status
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;disks-partition-table--partitions&#34;&gt;Disks, partition table &amp;amp; partitions&lt;/h2&gt;
+&lt;p&gt;The following assumes that your NVME drive is found as /dev/nvme0n1. Partitions will then be /dev/nvme0n1p1 and so on.&lt;/p&gt;
+&lt;h3 id=&#34;wipe-disk&#34;&gt;Wipe disk&lt;/h3&gt;
+&lt;p&gt;List disks:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# fdisk -l
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Wipe all file system records:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# wipefs -a /dev/nvme0n1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;create-new-partition-table&#34;&gt;Create new partition table&lt;/h3&gt;
+&lt;p&gt;Open nvme0n1 with gdisk:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# gdisk /dev/nvme0n1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Create GPT partition table with option &amp;ldquo;o&amp;rdquo;.&lt;/p&gt;
+&lt;h3 id=&#34;create-efi-partition&#34;&gt;Create EFI partition&lt;/h3&gt;
+&lt;p&gt;Create new EFI partition w/ 550mb with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Partition #1
+Default starting sector
++550M
+Change partition type to EFI System (ef00)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;create-boot-partition&#34;&gt;Create boot partition&lt;/h3&gt;
+&lt;p&gt;Create new boot partition w/ 550mb with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Partition #2
+Default starting sector
++550M
+Leave default type of 8300
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;create-swap-partition&#34;&gt;Create swap partition&lt;/h3&gt;
+&lt;p&gt;The old rule of thumb used to be that a swap partition should be the same size as the amount of memory in the system, but given the typical amount of memory in modern systems this is obviously no longer necessary. For my system with 16 or 32 GB of memory, a swap of 8 GB is rarely even used.&lt;/br&gt;&lt;/p&gt;
+&lt;p&gt;Create new Swap partition w/ 8GB with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Partition #3
+Default starting sector
++8G
+Change to linux swap (8200)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;create-root-partition&#34;&gt;Create root partition&lt;/h3&gt;
+&lt;p&gt;Create new root partition w/ remaining disk space with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Partition #4
+Default starting sector
+Remaining space
+Linux LUKS type 8309
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And then exit gdisk.&lt;/p&gt;
+&lt;h2 id=&#34;write-file-systems&#34;&gt;Write file systems&lt;/h2&gt;
+&lt;h3 id=&#34;efi-partition&#34;&gt;EFI partition&lt;/h3&gt;
+&lt;p&gt;Write file system to new EFI System partition:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# cat /dev/zero &amp;gt; /dev/nvme0n1p1 
+# mkfs.fat -F32 /dev/nvme0n1p1 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;boot-partition&#34;&gt;Boot partition&lt;/h3&gt;
+&lt;p&gt;Then boot partition:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# cat /dev/zero &amp;gt; /dev/nvme0n1p2 
+# mkfs.ext2 /dev/nvme0n1p2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;root-partition&#34;&gt;Root partition&lt;/h3&gt;
+&lt;p&gt;Prepare root partition w/ LUKS:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# cryptsetup -y -v luksFormat --type luks2 /dev/nvme0n1p4
+# cryptsetup luksDump /dev/nvme0n1p4
+# cryptsetup open /dev/nvme0n1p4 archcryptroot
+# mkfs.ext4 /dev/mapper/archcryptroot
+# mount /dev/mapper/archcryptroot /mnt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I use &lt;em&gt;archcryptroot&lt;/em&gt; for the name of my encrypted volume, but change as necessary.&lt;/p&gt;
+&lt;h3 id=&#34;swap-partition&#34;&gt;Swap partition&lt;/h3&gt;
+&lt;p&gt;Then swap:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# mkswap /dev/nvme0n1p3
+# swapon /dev/nvme0n1p3
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;create-mount-points&#34;&gt;Create mount points&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# mkdir /mnt/boot
+# mount /dev/nvme0n1p2 /mnt/boot
+# mkdir /mnt/boot/efi
+# mount /dev/nvme0n1p1 /mnt/boot/efi
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;system-install&#34;&gt;System install&lt;/h2&gt;
+&lt;h3 id=&#34;install-base-packages&#34;&gt;Install base packages&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# pacstrap /mnt base base-devel linux linux-firmware grub-efi-x86_64 efibootmgr
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;generate-fstab&#34;&gt;Generate fstab&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# genfstab -U /mnt &amp;gt;&amp;gt; /mnt/etc/fstab
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;enter-new-system&#34;&gt;Enter new system&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# arch-chroot /mnt /bin/bash
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;set-clock&#34;&gt;Set clock&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime
+# hwclock –systohc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;generate-locale&#34;&gt;Generate locale&lt;/h3&gt;
+&lt;p&gt;In /etc/locale.gen &lt;strong&gt;uncomment only&lt;/strong&gt;: en_US.UTF-8 UTF-8&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# locale-gen
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In /etc/locale.conf, you should &lt;strong&gt;only&lt;/strong&gt; have this line: LANG=en_US.UTF-8&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# nano /etc/locale.conf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;set-hostname--update-hosts&#34;&gt;Set hostname &amp;amp; update hosts&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# echo linuxmachine &amp;gt; /etc/hostname
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Update /etc/hosts with the following:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;127.0.0.1   localhost
+::1         localhost
+127.0.1.1   linuxmachine.localdomain    linuxmachine
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;set-root-password&#34;&gt;Set root password&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# passwd
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;update-etcmkinitcpioconf--generate-initrd-image&#34;&gt;Update /etc/mkinitcpio.conf &amp;amp; generate initrd image&lt;/h3&gt;
+&lt;p&gt;Edit /etc/mkinitcpio.conf with the following:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;HOOKS=(base udev autodetect modconf block keymap encrypt resume filesystems keyboard fsck)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then run:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# mkinitcpio -p linux
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;install-grub&#34;&gt;Install grub&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ArchLinux
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Edit /etc/default/grub so it includes a statement like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GRUB_CMDLINE_LINUX=&amp;quot;cryptdevice=/dev/nvme0n1p4:archcryptroot resume=/dev/nvme0n1p3&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Generate final grub configuration:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# grub-mkconfig -o /boot/grub/grub.cfg
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;exit--reboot&#34;&gt;Exit &amp;amp; reboot&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# exit
+# umount -R /mnt
+# swapoff -a
+# reboot
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To be continued.&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Arch Linux Laptop Install</title>
         <link>https://jaredszajkowski.github.io/archives/arch-linux-laptop-install/</link>
         <pubDate>Fri, 29 Sep 2023 00:00:01 +0000</pubDate>
