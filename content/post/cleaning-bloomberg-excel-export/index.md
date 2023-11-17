@@ -87,7 +87,7 @@ First, we need to import pandas:
 
 To be continued.
 
-{{%/* This tutorial assumes the following:
+{{- /* This tutorial assumes the following:
 
 * You are booting from a USB drive with the Arch install ISO.
 * Wireless or wired network is detected and drivers are configured automatically.
@@ -297,4 +297,4 @@ Generate final grub configuration:
     # swapoff -a
     # reboot
 
-To be continued. */%}}
+To be continued. */ -}}
