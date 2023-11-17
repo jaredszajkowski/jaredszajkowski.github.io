@@ -71,9 +71,11 @@ default = "auto"
 
 [imageProcessing.cover]
 enabled = true
+disableCompression = true
 
 [imageProcessing.content]
 enabled = true
+disableCompression = true
 
 ## Comments
 [comments]
