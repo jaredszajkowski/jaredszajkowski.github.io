@@ -70,14 +70,14 @@ toggle = true
 default = "auto"
 
 [imageProcessing.cover]
-enabled = true
-disableCompression = true
-resizable = false
+enabled = false
+#disableCompression = true
+#resizable = false
 
 [imageProcessing.content]
-enabled = true
-disableCompression = true
-resizable = false
+enabled = false
+#disableCompression = true
+#resizable = false
 
 ## Comments
 [comments]
