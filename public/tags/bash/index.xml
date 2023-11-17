@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>bash on Jared Szajkowski</title>
+        <title>Bash on Jared Szajkowski</title>
         <link>https://jaredszajkowski.github.io/tags/bash/</link>
-        <description>Recent content in bash on Jared Szajkowski</description>
+        <description>Recent content in Bash on Jared Szajkowski</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <lastBuildDate>Sun, 01 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://jaredszajkowski.github.io/tags/bash/index.xml" rel="self" type="application/rss+xml" /><item>
@@ -79,6 +79,10 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&#34;execute-the-script&#34;&gt;Execute the script&lt;/h2&gt;
 &lt;p&gt;Execute the bash script with ./yt-dlp.sh, copy and paste the link to the video that you would like to save, and it should download the video and the subtitles.&lt;/p&gt;
+&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
+&lt;p&gt;References for yt-dlp (and used for above):&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://ostechnix.com/yt-dlp-tutorial/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://ostechnix.com/yt-dlp-tutorial/&lt;/a&gt;&lt;/p&gt;
 </description>
         </item>
         

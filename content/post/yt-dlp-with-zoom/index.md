@@ -7,11 +7,12 @@ lastmod: 2023-10-17 00:00:00+0000
 # image: cover.jpg
 draft: false
 categories:
+    - Tech
     - Tutorials
 tags:
     - yt-dlp
     - Zoom
-    - bash
+    - Bash
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 
@@ -63,3 +64,9 @@ Modify the permissions of the bash script to allow execution:
 ## Execute the script
 
 Execute the bash script with ./yt-dlp.sh, copy and paste the link to the video that you would like to save, and it should download the video and the subtitles.
+
+## References
+
+References for yt-dlp (and used for above):
+
+https://ostechnix.com/yt-dlp-tutorial/

@@ -6,8 +6,24 @@
         <description>Recent content in Tags on Jared Szajkowski</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Mon, 16 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://jaredszajkowski.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>git</title>
+        <lastBuildDate>Wed, 15 Nov 2023 00:00:01 +0000</lastBuildDate><atom:link href="https://jaredszajkowski.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Bloomberg</title>
+        <link>https://jaredszajkowski.github.io/tags/bloomberg/</link>
+        <pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate>
+        
+        <guid>https://jaredszajkowski.github.io/tags/bloomberg/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Python</title>
+        <link>https://jaredszajkowski.github.io/tags/python/</link>
+        <pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate>
+        
+        <guid>https://jaredszajkowski.github.io/tags/python/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Git</title>
         <link>https://jaredszajkowski.github.io/tags/git/</link>
         <pubDate>Mon, 16 Oct 2023 00:00:00 +0000</pubDate>
         
@@ -23,7 +39,7 @@
         <description></description>
         </item>
         <item>
-        <title>bash</title>
+        <title>Bash</title>
         <link>https://jaredszajkowski.github.io/tags/bash/</link>
         <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
         

@@ -7,6 +7,7 @@ lastmod: 2023-11-07 00:00:00+0000
 # image: cover.jpg
 draft: false
 categories:
+    - Tech
     - Tutorials
 tags:
     - Arch Linux

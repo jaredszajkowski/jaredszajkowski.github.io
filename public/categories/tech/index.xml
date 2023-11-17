@@ -14,7 +14,7 @@
         <guid>https://jaredszajkowski.github.io/archives/git-quick-start-guide/</guid>
         <description>&lt;p&gt;Here are my notes for some of the more commonly used git commands along with initial setup for git in Linux.&lt;/p&gt;
 &lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
-&lt;p&gt;To begin, install as follows:&lt;/p&gt;
+&lt;p&gt;To begin, install as follows for Arch Linux:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# pacman -Syu git
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Or&lt;/p&gt;
@@ -32,14 +32,14 @@ $ git config --global user.email &amp;quot;email@address.com&amp;quot;
 &lt;p&gt;You can verify the updates with:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git config --global core.editor
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Alternatively, you can edit the git configuration with:&lt;/p&gt;
+&lt;p&gt;Alternatively, you can edit the git configuration directly with:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git config --global --edit
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&#34;store-credentials&#34;&gt;Store credentials&lt;/h2&gt;
-&lt;p&gt;In 2021, GitHub disabled authentication via username and password, and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in &lt;code&gt;~/.git-credentials&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;In 2021, GitHub disabled authentication via password and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in &lt;code&gt;~/.git-credentials&lt;/code&gt;:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git config --global credential.helper store
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;After you log in during a push with your username and token, it will be stored in the above location.&lt;/p&gt;
+&lt;p&gt;After you log in during a &lt;code&gt;git push&lt;/code&gt; with your username and token, the username or email address and token will be stored in the above location.&lt;/p&gt;
 &lt;p&gt;Note: The token is stored in plain text, so use caution if that is a concern.&lt;/p&gt;
 &lt;h2 id=&#34;cloning-repositories&#34;&gt;Cloning repositories&lt;/h2&gt;
 &lt;p&gt;Repositories can be cloned with the following:&lt;/p&gt;
@@ -67,6 +67,18 @@ $ git pull
 &lt;p&gt;These commands can be chained together with the AND operator:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git add . &amp;amp;&amp;amp; git commit -am &amp;quot;Add your commit message here&amp;quot; &amp;amp;&amp;amp; git push
 &lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;stashing-changes&#34;&gt;Stashing changes&lt;/h2&gt;
+&lt;p&gt;If you forget to update a repository before making changes, you can &amp;ldquo;stash&amp;rdquo; those changes and then re-apply them after running &lt;code&gt;git pull&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;First, stash the changes:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ git stash
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then, update the local record of the repository:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ git pull
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Finally, re-apply the changes you previously made:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ git stash apply
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This has proven to be very useful for me when I forget to update a repository before making edits to the code.&lt;/p&gt;
 &lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
 &lt;p&gt;References for git (and used for above):&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -77,6 +89,8 @@ $ git pull
     &gt;https://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Setup-and-Config&lt;/a&gt;&lt;/br&gt;
 &lt;a class=&#34;link&#34; href=&#34;https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage#_credential_caching&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage#_credential_caching&lt;/a&gt;&lt;/br&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://git-scm.com/book/en/v2/Git-Tools-Stashing-and-Cleaning&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://git-scm.com/book/en/v2/Git-Tools-Stashing-and-Cleaning&lt;/a&gt;&lt;/br&gt;
 &lt;a class=&#34;link&#34; href=&#34;https://www.geeksforgeeks.org/difference-between-chaining-operators-in-linux/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://www.geeksforgeeks.org/difference-between-chaining-operators-in-linux/&lt;/a&gt;&lt;/p&gt;
 </description>
@@ -91,10 +105,10 @@ $ git pull
     &gt;zoomdl&lt;/a&gt;, but it is no longer under active development, and I began running into various issues about a year ago.&lt;/p&gt;
 &lt;p&gt;This tutorial requires you to have a &amp;ldquo;cookies&amp;rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Zoom cookies after logging in.&lt;/p&gt;
 &lt;p&gt;Here&amp;rsquo;s the steps to setting this up:&lt;/p&gt;
-&lt;h2 id=&#34;step-1---install-cookie-editor&#34;&gt;Step 1 - Install cookie editor&lt;/h2&gt;
+&lt;h2 id=&#34;install-cookie-editor&#34;&gt;Install cookie editor&lt;/h2&gt;
 &lt;p&gt;Install the &lt;a class=&#34;link&#34; href=&#34;https://microsoftedge.microsoft.com/addons/detail/cookie-editor/ajfboaconbpkglpfanbmlfgojgndmhmc&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;cookie editor&lt;/a&gt; extension. I personnally use it with Microsoft Edge, but there are similar extensions for Chrome, Firefox, etc.&lt;/p&gt;
-&lt;h2 id=&#34;step-2---modify-export-format&#34;&gt;Step 2 - Modify export format&lt;/h2&gt;
+&lt;h2 id=&#34;modify-export-format&#34;&gt;Modify export format&lt;/h2&gt;
 &lt;p&gt;Change the preferred cookie export format to &lt;code&gt;Netscape HTTP Cookie File&lt;/code&gt; in the extension options. It is necessary to export in this format, otherwise yt-dlp will not be able to read the cookies.txt file correctly.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/1.png&#34;
 	width=&#34;865&#34;
@@ -110,9 +124,9 @@ $ git pull
 		data-flex-basis=&#34;411px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;step-3---log-in-to-zoom&#34;&gt;Step 3 - Log in to Zoom&lt;/h2&gt;
+&lt;h2 id=&#34;log-in-to-zoom&#34;&gt;Log in to Zoom&lt;/h2&gt;
 &lt;p&gt;Log in to Zoom in your browser. Be sure to remain logged in while exporting the cookies under step 4.&lt;/p&gt;
-&lt;h2 id=&#34;step-4---export-cookies&#34;&gt;Step 4 - Export cookies&lt;/h2&gt;
+&lt;h2 id=&#34;export-cookies&#34;&gt;Export cookies&lt;/h2&gt;
 &lt;p&gt;The export button is at the top fo the window. It copies the cookies to your clipboard, which then need to be pasted into a text file (I have my saved as cookies.txt), which yt-dlp will then read when it executes.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/2.png&#34;
 	width=&#34;579&#34;
@@ -128,7 +142,7 @@ $ git pull
 		data-flex-basis=&#34;226px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;step-5---create-bash-script&#34;&gt;Step 5 - Create bash script&lt;/h2&gt;
+&lt;h2 id=&#34;create-bash-script&#34;&gt;Create bash script&lt;/h2&gt;
 &lt;p&gt;Save the following code to a text file (my bash script file name is yt-dlp.sh):&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -148,12 +162,16 @@ $ git pull
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;yt-dlp --referer &amp;#34;https://zoom.us/&amp;#34; --cookies /path/to/cookies/file/cookies.txt -o &amp;#34;%(title)s-%(id)s.%(ext)s&amp;#34; --write-subs $link
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;step-6---change-permissions&#34;&gt;Step 6 - Change permissions&lt;/h2&gt;
+&lt;/div&gt;&lt;h2 id=&#34;change-permissions&#34;&gt;Change permissions&lt;/h2&gt;
 &lt;p&gt;Modify the permissions of the bash script to allow execution:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ chmod +x yt-dlp.sh
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;step-7---execute-the-script&#34;&gt;Step 7 - Execute the script&lt;/h2&gt;
+&lt;h2 id=&#34;execute-the-script&#34;&gt;Execute the script&lt;/h2&gt;
 &lt;p&gt;Execute the bash script with ./yt-dlp.sh, copy and paste the link to the video that you would like to save, and it should download the video and the subtitles.&lt;/p&gt;
+&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
+&lt;p&gt;References for yt-dlp (and used for above):&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://ostechnix.com/yt-dlp-tutorial/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://ostechnix.com/yt-dlp-tutorial/&lt;/a&gt;&lt;/p&gt;
 </description>
         </item>
         <item>
@@ -170,7 +188,11 @@ $ git pull
 &lt;li&gt;Wireless or wired network is detected and drivers are configured automatically.&lt;/li&gt;
 &lt;li&gt;You want drive encrytion on your root partition, but not on your boot/efi/swap partitions.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;configure-wireless&#34;&gt;Configure Wireless&lt;/h3&gt;
+&lt;h3 id=&#34;verify-uefi-boot-mode&#34;&gt;Verify UEFI boot mode&lt;/h3&gt;
+&lt;p&gt;The following command should show directory without error:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# ls /sys/firmware/efi/efivars
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;configure-wireless-network&#34;&gt;Configure wireless network&lt;/h3&gt;
 &lt;p&gt;The following command will drop you into the iwd daemon:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# iwctl
 &lt;/code&gt;&lt;/pre&gt;
@@ -180,10 +202,6 @@ $ git pull
 # station *device* get-networks
 # station *device* connect *SSID*
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;verify-uefi-boot-mode&#34;&gt;Verify UEFI boot mode&lt;/h3&gt;
-&lt;p&gt;The following command should show directory without error:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# ls /sys/firmware/efi/efivars
-&lt;/code&gt;&lt;/pre&gt;
 &lt;h3 id=&#34;verify-internet-connectivity&#34;&gt;Verify internet connectivity&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;# ping archlinux.org
 &lt;/code&gt;&lt;/pre&gt;
@@ -191,15 +209,16 @@ $ git pull
 &lt;pre&gt;&lt;code&gt;# timedatectl set-ntp true
 # timedatectl status
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;prep-disks&#34;&gt;Prep disks&lt;/h2&gt;
+&lt;h2 id=&#34;disks-partition-table--partitions&#34;&gt;Disks, partition table &amp;amp; partitions&lt;/h2&gt;
 &lt;p&gt;The following assumes that your NVME drive is found as /dev/nvme0n1. Partitions will then be /dev/nvme0n1p1 and so on.&lt;/p&gt;
+&lt;h3 id=&#34;wipe-disk&#34;&gt;Wipe disk&lt;/h3&gt;
 &lt;p&gt;List disks:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# fdisk -l
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Wipe all file system records:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# wipefs -a /dev/nvme0n1
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;partition-table--partitions&#34;&gt;Partition table &amp;amp; partitions&lt;/h2&gt;
+&lt;h3 id=&#34;create-new-partition-table&#34;&gt;Create new partition table&lt;/h3&gt;
 &lt;p&gt;Open nvme0n1 with gdisk:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# gdisk /dev/nvme0n1
 &lt;/code&gt;&lt;/pre&gt;
@@ -265,45 +284,61 @@ Linux LUKS type 8309
 # mkdir /mnt/boot/efi
 # mount /dev/nvme0n1p1 /mnt/boot/efi
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;install-system&#34;&gt;Install system&lt;/h2&gt;
+&lt;h2 id=&#34;system-install&#34;&gt;System install&lt;/h2&gt;
+&lt;h3 id=&#34;install-base-packages&#34;&gt;Install base packages&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# pacstrap /mnt base base-devel linux linux-firmware grub-efi-x86_64 efibootmgr
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;generate-fstab&#34;&gt;Generate fstab&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# genfstab -U /mnt &amp;gt;&amp;gt; /mnt/etc/fstab
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;enter-new-system&#34;&gt;Enter new system&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# arch-chroot /mnt /bin/bash
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;set-clock&#34;&gt;Set clock&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime
+# hwclock –systohc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;generate-locale&#34;&gt;Generate locale&lt;/h3&gt;
+&lt;p&gt;In /etc/locale.gen &lt;strong&gt;uncomment only&lt;/strong&gt;: en_US.UTF-8 UTF-8&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# locale-gen
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In /etc/locale.conf, you should &lt;strong&gt;only&lt;/strong&gt; have this line: LANG=en_US.UTF-8&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# nano /etc/locale.conf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;set-hostname--update-hosts&#34;&gt;Set hostname &amp;amp; update hosts&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# echo linuxmachine &amp;gt; /etc/hostname
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Update /etc/hosts with the following:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;127.0.0.1   localhost
+::1         localhost
+127.0.1.1   linuxmachine.localdomain    linuxmachine
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;set-root-password&#34;&gt;Set root password&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# passwd
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;update-etcmkinitcpioconf--generate-initrd-image&#34;&gt;Update /etc/mkinitcpio.conf &amp;amp; generate initrd image&lt;/h3&gt;
+&lt;p&gt;Edit /etc/mkinitcpio.conf with the following:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;HOOKS=(base udev autodetect modconf block keymap encrypt resume filesystems keyboard fsck)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then run:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# mkinitcpio -p linux
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;install-grub&#34;&gt;Install grub&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ArchLinux
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Edit /etc/default/grub so it includes a statement like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;GRUB_CMDLINE_LINUX=&amp;quot;cryptdevice=/dev/nvme0n1p4:archcryptroot resume=/dev/nvme0n1p3&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Generate final grub configuration:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# grub-mkconfig -o /boot/grub/grub.cfg
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;exit--reboot&#34;&gt;Exit &amp;amp; reboot&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# exit
+# umount -R /mnt
+# swapoff -a
+# reboot
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;To be continued.&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>Hello World</title>
-        <link>https://jaredszajkowski.github.io/archives/hello-world/</link>
-        <pubDate>Tue, 26 Sep 2023 00:00:00 +0000</pubDate>
-        
-        <guid>https://jaredszajkowski.github.io/archives/hello-world/</guid>
-        <description>&lt;p&gt;Welcome to my website. This is meant to serve as a place for me to publish various posts from my explorations into Arch Linux, data science, quant finance, and other topics.&lt;/p&gt;
-&lt;p&gt;The theme has been adopted from the &lt;a class=&#34;link&#34; href=&#34;https://github.com/CaiJimmy/hugo-theme-stack&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Hugo Theme Stack&lt;/a&gt; produced by Jimmy Cai.&lt;/p&gt;
-&lt;p&gt;This is the only theme that I have found that checks all of the following boxes:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Theme for the static site generator Hugo&lt;/li&gt;
-&lt;li&gt;Includes modules for archives&lt;/li&gt;
-&lt;li&gt;Includes tags and topics/categories&lt;/li&gt;
-&lt;li&gt;Includes built-in search functionality&lt;/li&gt;
-&lt;li&gt;Simple interface that is easily navigable&lt;/li&gt;
-&lt;li&gt;Highly extensible including modules for image galleries, posts, comment capabilities, etc.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;It is hosted on &lt;a class=&#34;link&#34; href=&#34;https://pages.github.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;GitHub pages&lt;/a&gt;. I followed the install instructions that the theme author provided, including using GitHub codespace for editing in the cloud. There are only a few details that I ran into that he did not mention.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Don&amp;rsquo;t forget to run Hugo to build the site. This creates the public directory, which is where the static site files are located.&lt;/li&gt;
-&lt;li&gt;Make sure to update the branch to be gh-pages under Settings -&amp;gt; Pages -&amp;gt; Build and deployment -&amp;gt; Branch in GitHub.&lt;/li&gt;
-&lt;li&gt;Make sure to remove the public directory from the .gitignore file. Otherwise GitHub will ignore the public directory and your site will show the README.md instead of the Hugo site.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;The site can be updated either through codespace, or locally as long as Hugo and it&amp;rsquo;s required dependencies have been installed.&lt;/p&gt;
-&lt;p&gt;Here&amp;rsquo;s the full list of resources I referenced for deploying Hugo with GitHub pages:&lt;/p&gt;
-&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.o11ycloud.com/posts/gh_hugo/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://www.o11ycloud.com/posts/gh_hugo/&lt;/a&gt;&lt;/br&gt;
-&lt;a class=&#34;link&#34; href=&#34;https://github.com/CaiJimmy/hugo-theme-stack&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://github.com/CaiJimmy/hugo-theme-stack&lt;/a&gt;&lt;/br&gt;
-&lt;a class=&#34;link&#34; href=&#34;https://medium.com/@magstherdev/github-pages-hugo-86ae6bcbadd&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://medium.com/@magstherdev/github-pages-hugo-86ae6bcbadd&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;One last note, the simple command after making any changes and to push those updates is as follows:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ hugo &amp;amp;&amp;amp; git add . &amp;amp;&amp;amp; git commit -am &amp;quot;Updating site&amp;quot; &amp;amp;&amp;amp; git push&lt;/code&gt;&lt;/pre&gt;
 </description>
         </item>
         
