@@ -21,7 +21,7 @@
     &gt;cookie editor&lt;/a&gt; extension. I personnally use it with Microsoft Edge, but there are similar extensions for Chrome, Firefox, etc.&lt;/p&gt;
 &lt;h2 id=&#34;modify-export-format&#34;&gt;Modify export format&lt;/h2&gt;
 &lt;p&gt;Change the preferred cookie export format to &lt;code&gt;Netscape HTTP Cookie File&lt;/code&gt; in the extension options. It is necessary to export in this format, otherwise yt-dlp will not be able to read the cookies.txt file correctly.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/1.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/Modify_preferred_export_format.png&#34;
 	width=&#34;865&#34;
 	height=&#34;505&#34;
 	
@@ -39,7 +39,7 @@
 &lt;p&gt;Log in to Zoom in your browser. Be sure to remain logged in while exporting the cookies under step 4.&lt;/p&gt;
 &lt;h2 id=&#34;export-cookies&#34;&gt;Export cookies&lt;/h2&gt;
 &lt;p&gt;The export button is at the top fo the window. It copies the cookies to your clipboard, which then need to be pasted into a text file (I have my saved as cookies.txt), which yt-dlp will then read when it executes.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/2.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/Export_cookies.png&#34;
 	width=&#34;579&#34;
 	height=&#34;613&#34;
 	

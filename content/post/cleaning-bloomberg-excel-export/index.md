@@ -21,7 +21,7 @@ In this tutorial, we will write a python function that imports an excel export f
 
 We will use the SPX index data in this example. Exporting the data from Bloomberg using the excel Bloomberg add-on yields data in the following format:
 
-![Format of data in excel export from Bloomberg](1.png)
+![Format of data in excel export from Bloomberg](Format_of_data_in_excel_export_from_Bloomberg.png)
 
 ## Data modifications
 

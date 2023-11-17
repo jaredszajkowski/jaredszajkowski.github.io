@@ -15,7 +15,7 @@
         <description>&lt;p&gt;In this tutorial, we will write a python function that imports an excel export from Bloomberg, removes ancillary rows and columns, and leaves the data in a format where it can then be used in time series analysis.&lt;/p&gt;
 &lt;h2 id=&#34;example-of-a-bloomberg-excel-export&#34;&gt;Example of a Bloomberg excel export&lt;/h2&gt;
 &lt;p&gt;We will use the SPX index data in this example. Exporting the data from Bloomberg using the excel Bloomberg add-on yields data in the following format:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/1.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/Format_of_data_in_excel_export_from_Bloomberg.png&#34;
 	width=&#34;399&#34;
 	height=&#34;465&#34;
 	
@@ -392,7 +392,7 @@ $ git pull
     &gt;cookie editor&lt;/a&gt; extension. I personnally use it with Microsoft Edge, but there are similar extensions for Chrome, Firefox, etc.&lt;/p&gt;
 &lt;h2 id=&#34;modify-export-format&#34;&gt;Modify export format&lt;/h2&gt;
 &lt;p&gt;Change the preferred cookie export format to &lt;code&gt;Netscape HTTP Cookie File&lt;/code&gt; in the extension options. It is necessary to export in this format, otherwise yt-dlp will not be able to read the cookies.txt file correctly.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/1.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/Modify_preferred_export_format.png&#34;
 	width=&#34;865&#34;
 	height=&#34;505&#34;
 	
@@ -410,7 +410,7 @@ $ git pull
 &lt;p&gt;Log in to Zoom in your browser. Be sure to remain logged in while exporting the cookies under step 4.&lt;/p&gt;
 &lt;h2 id=&#34;export-cookies&#34;&gt;Export cookies&lt;/h2&gt;
 &lt;p&gt;The export button is at the top fo the window. It copies the cookies to your clipboard, which then need to be pasted into a text file (I have my saved as cookies.txt), which yt-dlp will then read when it executes.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/2.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/Export_cookies.png&#34;
 	width=&#34;579&#34;
 	height=&#34;613&#34;
 	

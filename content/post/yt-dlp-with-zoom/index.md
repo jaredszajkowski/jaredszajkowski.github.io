@@ -30,7 +30,7 @@ Install the [cookie editor](https://microsoftedge.microsoft.com/addons/detail/co
 
 Change the preferred cookie export format to `Netscape HTTP Cookie File` in the extension options. It is necessary to export in this format, otherwise yt-dlp will not be able to read the cookies.txt file correctly.
 
-![Modify preferred export format](1.png)
+![Modify preferred export format](Modify_preferred_export_format.png)
 
 ## Log in to Zoom
 
@@ -40,7 +40,7 @@ Log in to Zoom in your browser. Be sure to remain logged in while exporting the 
 
 The export button is at the top fo the window. It copies the cookies to your clipboard, which then need to be pasted into a text file (I have my saved as cookies.txt), which yt-dlp will then read when it executes.
 
-![Export cookies](2.png)
+![Export cookies](Export_cookies.png)
 
 ## Create bash script
 
