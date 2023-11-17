@@ -5,7 +5,7 @@ description: A python function to clean and format an excel data export from Blo
 date: 2023-11-15 00:00:01+0000
 lastmod: 2023-11-07 00:00:00+0000
 # image: cover.jpg
-draft: false
+draft: true
 categories:
     - Tutorials
 tags:
