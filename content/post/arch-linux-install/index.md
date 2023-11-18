@@ -11,6 +11,7 @@ categories:
     - Tutorials
 tags:
     - Arch Linux
+    - Thinkpad E15 Gen 2
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 
