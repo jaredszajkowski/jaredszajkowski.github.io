@@ -139,7 +139,7 @@ Gives us:
 
 ![Set column headings](Set_column_headings.png)
 
-## Set column headings
+## Remove index heading
 
 Next, remove the column heading from the index column:
 
