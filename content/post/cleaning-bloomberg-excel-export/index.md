@@ -3,7 +3,7 @@ title: Cleaning A Bloomberg Data Excel Export
 description: A python function to clean and format an excel data export from Bloomberg.
 # slug: hello-world
 date: 2023-11-15 00:00:01+0000
-lastmod: 2023-11-07 00:00:00+0000
+lastmod: 2023-11-20 00:00:00+0000
 # image: cover.jpg
 draft: false
 categories:
@@ -99,7 +99,7 @@ Let's break this down line by line.
 First, we need to import pandas:
 
 ```html
-    import pandas as pd
+import pandas as pd
 ```
 
 ## Import excel data file
@@ -122,4 +122,20 @@ Gives us:
 
 ![DF excel import](DF_excel_import.png)
 
+## Set column headings
+
+Next, set the column heading:
+
+```html
+# Set the column headings from row 5 (which is physically row 6)
+df.columns = df.iloc[5]
+```
+
+Now, running:
+
+    df.head(10)
+
+Gives us:
+
+![Set column headings](Set_column_headings.png)
 
