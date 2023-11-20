@@ -392,7 +392,7 @@
 <li>Convert the 7th row to become column headings</li>
 <li>Rename column 2 to &ldquo;Close&rdquo; to represent the closing price</li>
 <li>Remove column 3, as we are not concerned about volume</li>
-<li>Make the name of the excel worksheet &ldquo;data&rdquo;</li>
+<li>Export to excel and make the name of the excel worksheet &ldquo;data&rdquo;</li>
 </ol>
 <h2 id="assumptions">Assumptions</h2>
 <p>The remainder of this tutorial assumes that your excel file is named &ldquo;SPX_Index.xlsx&rdquo;, and the worksheet is named &ldquo;Worksheet&rdquo;.</p>
@@ -589,7 +589,8 @@
 </span></span><span class="line"><span class="cl">df.rename_axis(None, axis=1, inplace = True)
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>Now, running:</p>
+</div><p>Note: The <code>axis=1</code> argument here specifies the column index.</p>
+<p>Now, running:</p>
 <pre><code>df.head(10)
 </code></pre>
 <p>Gives us:</p>
@@ -619,7 +620,8 @@
 </span></span><span class="line"><span class="cl">df.drop(df.index[0:6], inplace=True)
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>Now, running:</p>
+</div><p>Note: When dropping rows, the range to drop begins with row 0 and continues up to - but not including - row 6.</p>
+<p>Now, running:</p>
 <pre><code>df.head(10)
 </code></pre>
 <p>Gives us:</p>
@@ -710,12 +712,10 @@
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
-</span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># Rename column
 </span></span><span class="line"><span class="cl">df.rename(columns = {&#39;PX_LAST&#39;:&#39;Close&#39;}, inplace = True)
-</span></span><span class="line"><span class="cl">    pass
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Now, running:</p>
@@ -742,12 +742,10 @@
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
-</span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># Sort by date
 </span></span><span class="line"><span class="cl">df.sort_values(by=[&#39;Date&#39;], inplace = True)
-</span></span><span class="line"><span class="cl">    pass
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Now, running:</p>
@@ -775,13 +773,11 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
-</span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># Export data to excel
 </span></span><span class="line"><span class="cl">file = fund + &#34;.xlsx&#34;
 </span></span><span class="line"><span class="cl">df.to_excel(file, sheet_name=&#39;data&#39;)
-</span></span><span class="line"><span class="cl">    pass
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="output-confirmation">Output confirmation</h2>

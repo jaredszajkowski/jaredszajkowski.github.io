@@ -31,7 +31,7 @@ The above format isn't horrible, but we want to perform the following modificati
 2. Convert the 7th row to become column headings
 3. Rename column 2 to "Close" to represent the closing price
 4. Remove column 3, as we are not concerned about volume
-5. Make the name of the excel worksheet "data"
+5. Export to excel and make the name of the excel worksheet "data"
 
 ## Assumptions
 
@@ -148,6 +148,8 @@ Next, remove the column heading from the index column:
 df.rename_axis(None, axis=1, inplace = True)
 ```
 
+Note: The `axis=1` argument here specifies the column index.
+
 Now, running:
 
     df.head(10)
@@ -164,6 +166,8 @@ Next, we want to remove the first 6 rows that have unneeded data:
 # Drop the first 6 rows, 0 - 5
 df.drop(df.index[0:6], inplace=True)
 ```
+
+Note: When dropping rows, the range to drop begins with row 0 and continues up to - but not including - row 6.
 
 Now, running:
 
@@ -219,7 +223,6 @@ Next, we want to rename the "PX_LAST" column as "Close":
 ```html
 # Rename column
 df.rename(columns = {'PX_LAST':'Close'}, inplace = True)
-    pass
 ```
 
 Now, running:
@@ -237,7 +240,6 @@ Next, we want to sort the data starting with the oldest date:
 ```html
 # Sort by date
 df.sort_values(by=['Date'], inplace = True)
-    pass
 ```
 
 Now, running:
@@ -256,7 +258,6 @@ Next, we want to export the data to an excel file, for easy viewing and referenc
 # Export data to excel
 file = fund + ".xlsx"
 df.to_excel(file, sheet_name='data')
-    pass
 ```
 
 ## Output confirmation
