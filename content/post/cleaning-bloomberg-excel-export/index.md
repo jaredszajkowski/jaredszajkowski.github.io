@@ -42,37 +42,52 @@ The remainder of this tutorial assumes that your excel file is named "SPX_Index.
 The following function will perform the modifications mentioned above:
 
 ```html
-import pandas as pd
-
 # This function takes an excel export from Bloomberg and 
 # removes all excess data leaving date and close columns
 
+# Imports
+import pandas as pd
+
+# Function definition
 def bb_data_updater(fund):
-    # File name
+
+    # File name variable
     file = fund + "_Index.xlsx"
     
-    # Import data from file as dataframe and drop rows and columns
-    data = pd.read_excel(file, sheet_name = 'Worksheet', engine='openpyxl')
-    data.columns = data.iloc[5]
-    data.rename_axis(None, axis=1, inplace = True)
-    data.drop(data.index[0:6], inplace=True)
-    data.set_index('Date', inplace = True)
+    # Import data from file as a pandas dataframe and drop rows and columns
+    df = pd.read_excel(file, sheet_name = 'Worksheet', engine='openpyxl')
     
+    # Set the column headings from row 5 (which is physically row 6)
+    df.columns = df.iloc[5]
+    
+    # Set the column heading for the index to be "None"
+    df.rename_axis(None, axis=1, inplace = True)
+    
+    # Drop the first 6 rows, 0 - 5
+    df.drop(df.index[0:6], inplace=True)
+    
+    # Set the date column as the index
+    df.set_index('Date', inplace = True)
+    
+    # Drop the volume column
     try:
-        data.drop(columns = {'PX_VOLUME'}, inplace = True)
+        df.drop(columns = {'PX_VOLUME'}, inplace = True)
     except KeyError:
         pass
         
-    data.rename(columns = {'PX_LAST':'Close'}, inplace = True)
-    data.sort_values(by=['Date'], inplace = True)
+    # Rename column
+    df.rename(columns = {'PX_LAST':'Close'}, inplace = True)
+    
+    # Sort by date
+    df.sort_values(by=['Date'], inplace = True)
     
     # Export data to excel
     file = fund + ".xlsx"
-    data.to_excel(file, sheet_name='data')
+    df.to_excel(file, sheet_name='data')
     
     # Output confirmation
     print(f"The last date of data for {fund} is: ")
-    print(data[-1:])
+    print(df[-1:])
     print(f"Bloomberg data conversion complete for {fund} data")
     return print(f"--------------------")
 ```
@@ -83,6 +98,28 @@ Let's break this down line by line.
 
 First, we need to import pandas:
 
+```html
     import pandas as pd
+```
 
-To be continued.
+## Import excel data file
+
+Then import the excel file as a pandas dataframe:
+
+```html
+# File name variable
+file = fund + "_Index.xlsx"
+
+# Import data from file as a pandas dataframe and drop rows and columns
+df = pd.read_excel(file, sheet_name = 'Worksheet', engine='openpyxl')
+```
+
+Running:
+
+    df.head(10)
+
+Gives us:
+
+![DF excel import](DF_excel_import.png)
+
+

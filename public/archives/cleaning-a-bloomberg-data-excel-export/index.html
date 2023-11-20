@@ -271,6 +271,7 @@
     <li><a href="#assumptions">Assumptions</a></li>
     <li><a href="#python-function-to-modify-the-data">Python function to modify the data</a></li>
     <li><a href="#imports">Imports</a></li>
+    <li><a href="#import-excel-data-file">Import excel data file</a></li>
   </ol>
 </nav>
         </div>
@@ -343,7 +344,7 @@
 
 
                 <time class="article-time--reading">
-                    2 minute read
+                    3 minute read
                 </time>
             </div>
         
@@ -423,39 +424,69 @@
 </span><span class="lnt">31
 </span><span class="lnt">32
 </span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">import pandas as pd
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"># This function takes an excel export from Bloomberg and 
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># This function takes an excel export from Bloomberg and 
 </span></span><span class="line"><span class="cl"># removes all excess data leaving date and close columns
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Imports
+</span></span><span class="line"><span class="cl">import pandas as pd
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Function definition
 </span></span><span class="line"><span class="cl">def bb_data_updater(fund):
-</span></span><span class="line"><span class="cl">    # File name
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # File name variable
 </span></span><span class="line"><span class="cl">    file = fund + &#34;_Index.xlsx&#34;
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    # Import data from file as dataframe and drop rows and columns
-</span></span><span class="line"><span class="cl">    data = pd.read_excel(file, sheet_name = &#39;Worksheet&#39;, engine=&#39;openpyxl&#39;)
-</span></span><span class="line"><span class="cl">    data.columns = data.iloc[5]
-</span></span><span class="line"><span class="cl">    data.rename_axis(None, axis=1, inplace = True)
-</span></span><span class="line"><span class="cl">    data.drop(data.index[0:6], inplace=True)
-</span></span><span class="line"><span class="cl">    data.set_index(&#39;Date&#39;, inplace = True)
+</span></span><span class="line"><span class="cl">    # Import data from file as a pandas dataframe and drop rows and columns
+</span></span><span class="line"><span class="cl">    df = pd.read_excel(file, sheet_name = &#39;Worksheet&#39;, engine=&#39;openpyxl&#39;)
 </span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # Set the column headings from row 5 (which is physically row 6)
+</span></span><span class="line"><span class="cl">    df.columns = df.iloc[5]
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # Set the column heading for the index to be &#34;None&#34;
+</span></span><span class="line"><span class="cl">    df.rename_axis(None, axis=1, inplace = True)
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # Drop the first 6 rows, 0 - 5
+</span></span><span class="line"><span class="cl">    df.drop(df.index[0:6], inplace=True)
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # Set the date column as the index
+</span></span><span class="line"><span class="cl">    df.set_index(&#39;Date&#39;, inplace = True)
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # Drop the volume column
 </span></span><span class="line"><span class="cl">    try:
-</span></span><span class="line"><span class="cl">        data.drop(columns = {&#39;PX_VOLUME&#39;}, inplace = True)
+</span></span><span class="line"><span class="cl">        df.drop(columns = {&#39;PX_VOLUME&#39;}, inplace = True)
 </span></span><span class="line"><span class="cl">    except KeyError:
 </span></span><span class="line"><span class="cl">        pass
 </span></span><span class="line"><span class="cl">        
-</span></span><span class="line"><span class="cl">    data.rename(columns = {&#39;PX_LAST&#39;:&#39;Close&#39;}, inplace = True)
-</span></span><span class="line"><span class="cl">    data.sort_values(by=[&#39;Date&#39;], inplace = True)
+</span></span><span class="line"><span class="cl">    # Rename column
+</span></span><span class="line"><span class="cl">    df.rename(columns = {&#39;PX_LAST&#39;:&#39;Close&#39;}, inplace = True)
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # Sort by date
+</span></span><span class="line"><span class="cl">    df.sort_values(by=[&#39;Date&#39;], inplace = True)
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    # Export data to excel
 </span></span><span class="line"><span class="cl">    file = fund + &#34;.xlsx&#34;
-</span></span><span class="line"><span class="cl">    data.to_excel(file, sheet_name=&#39;data&#39;)
+</span></span><span class="line"><span class="cl">    df.to_excel(file, sheet_name=&#39;data&#39;)
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    # Output confirmation
 </span></span><span class="line"><span class="cl">    print(f&#34;The last date of data for {fund} is: &#34;)
-</span></span><span class="line"><span class="cl">    print(data[-1:])
+</span></span><span class="line"><span class="cl">    print(df[-1:])
 </span></span><span class="line"><span class="cl">    print(f&#34;Bloomberg data conversion complete for {fund} data&#34;)
 </span></span><span class="line"><span class="cl">    return print(f&#34;--------------------&#34;)
 </span></span></code></pre></td></tr></table>
@@ -463,9 +494,50 @@
 </div><p>Let&rsquo;s break this down line by line.</p>
 <h2 id="imports">Imports</h2>
 <p>First, we need to import pandas:</p>
-<pre><code>import pandas as pd
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">    import pandas as pd
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="import-excel-data-file">Import excel data file</h2>
+<p>Then import the excel file as a pandas dataframe:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># File name variable
+</span></span><span class="line"><span class="cl">file = fund + &#34;_Index.xlsx&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Import data from file as a pandas dataframe and drop rows and columns
+</span></span><span class="line"><span class="cl">df = pd.read_excel(file, sheet_name = &#39;Worksheet&#39;, engine=&#39;openpyxl&#39;)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Running:</p>
+<pre><code>df.head(10)
 </code></pre>
-<p>To be continued.</p>
+<p>Gives us:</p>
+<p><img src="/archives/cleaning-a-bloomberg-data-excel-export/DF_excel_import.png"
+	width="367"
+	height="302"
+	
+	loading="lazy"
+	
+		alt="DF excel import"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="121"
+		data-flex-basis="291px"
+	
+></p>
 
 </section>
 
