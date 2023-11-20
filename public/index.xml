@@ -239,8 +239,8 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/Remove_index_heading.png&#34;
-	width=&#34;371&#34;
-	height=&#34;291&#34;
+	width=&#34;373&#34;
+	height=&#34;299&#34;
 	
 	loading=&#34;lazy&#34;
 	
@@ -248,8 +248,8 @@
 	
 	
 		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;127&#34;
-		data-flex-basis=&#34;305px&#34;
+		data-flex-grow=&#34;124&#34;
+		data-flex-basis=&#34;299px&#34;
 	
 &gt;&lt;/p&gt;
 &lt;h2 id=&#34;drop-rows&#34;&gt;Drop rows&lt;/h2&gt;
@@ -270,8 +270,8 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/Remove_rows.png&#34;
-	width=&#34;320&#34;
-	height=&#34;294&#34;
+	width=&#34;323&#34;
+	height=&#34;298&#34;
 	
 	loading=&#34;lazy&#34;
 	
@@ -280,7 +280,7 @@
 	
 		class=&#34;gallery-image&#34; 
 		data-flex-grow=&#34;108&#34;
-		data-flex-basis=&#34;261px&#34;
+		data-flex-basis=&#34;260px&#34;
 	
 &gt;&lt;/p&gt;
 &lt;h2 id=&#34;set-index&#34;&gt;Set index&lt;/h2&gt;
@@ -338,7 +338,7 @@
 &lt;p&gt;Gives us:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/Drop_volume.png&#34;
 	width=&#34;163&#34;
-	height=&#34;323&#34;
+	height=&#34;320&#34;
 	
 	loading=&#34;lazy&#34;
 	
@@ -347,7 +347,7 @@
 	
 		class=&#34;gallery-image&#34; 
 		data-flex-grow=&#34;50&#34;
-		data-flex-basis=&#34;121px&#34;
+		data-flex-basis=&#34;122px&#34;
 	
 &gt;&lt;/p&gt;
 &lt;h2 id=&#34;rename-the-px_last-column&#34;&gt;Rename the &amp;ldquo;PX_LAST&amp;rdquo; column&lt;/h2&gt;
