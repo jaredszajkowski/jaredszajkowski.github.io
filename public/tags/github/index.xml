@@ -121,6 +121,10 @@ $ git pull
 &lt;li&gt;Make sure to remove the public directory from the .gitignore file. Otherwise GitHub will ignore the public directory and your site will show the README.md instead of the Hugo site.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;The site can be updated either through codespace, or locally as long as Hugo and it&amp;rsquo;s required dependencies have been installed.&lt;/p&gt;
+&lt;p&gt;One last note, the simple command after making any changes and to push those updates is as follows:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ hugo &amp;amp;&amp;amp; git add . &amp;amp;&amp;amp; git commit -am &amp;quot;Updating site&amp;quot; &amp;amp;&amp;amp; git push
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
 &lt;p&gt;Here&amp;rsquo;s the full list of resources I referenced for deploying Hugo with GitHub pages:&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.o11ycloud.com/posts/gh_hugo/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://www.o11ycloud.com/posts/gh_hugo/&lt;/a&gt;&lt;/br&gt;
@@ -128,8 +132,6 @@ $ git pull
     &gt;https://github.com/CaiJimmy/hugo-theme-stack&lt;/a&gt;&lt;/br&gt;
 &lt;a class=&#34;link&#34; href=&#34;https://medium.com/@magstherdev/github-pages-hugo-86ae6bcbadd&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://medium.com/@magstherdev/github-pages-hugo-86ae6bcbadd&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;One last note, the simple command after making any changes and to push those updates is as follows:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ hugo &amp;amp;&amp;amp; git add . &amp;amp;&amp;amp; git commit -am &amp;quot;Updating site&amp;quot; &amp;amp;&amp;amp; git push&lt;/code&gt;&lt;/pre&gt;
 </description>
         </item>
         

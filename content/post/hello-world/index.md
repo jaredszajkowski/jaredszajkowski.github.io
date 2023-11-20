@@ -35,12 +35,14 @@ It is hosted on [GitHub pages](https://pages.github.com/). I followed the instal
 
 The site can be updated either through codespace, or locally as long as Hugo and it's required dependencies have been installed.
 
+One last note, the simple command after making any changes and to push those updates is as follows:
+
+    $ hugo && git add . && git commit -am "Updating site" && git push
+
+## References
+
 Here's the full list of resources I referenced for deploying Hugo with GitHub pages:
 
 https://www.o11ycloud.com/posts/gh_hugo/</br>
 https://github.com/CaiJimmy/hugo-theme-stack</br>
 https://medium.com/@magstherdev/github-pages-hugo-86ae6bcbadd
-
-One last note, the simple command after making any changes and to push those updates is as follows:
-
-    $ hugo && git add . && git commit -am "Updating site" && git push
