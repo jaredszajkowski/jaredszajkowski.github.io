@@ -329,7 +329,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    pass
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;For some data records, the volume column does not exist. Therefore, we &amp;ldquo;try&amp;rdquo;, and if it fails with a KeyError, then we assume the &amp;ldquo;PX_VOLUME&amp;rdquo; column does not exist, and just &amp;ldquo;pass&amp;rdquo; to move on.&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;For some data records, the volume column does not exist. Therefore, we &lt;code&gt;try&lt;/code&gt;, and if it fails with a &lt;code&gt;KeyError&lt;/code&gt;, then we assume the &amp;ldquo;PX_VOLUME&amp;rdquo; column does not exist, and just &lt;code&gt;pass&lt;/code&gt; to move on.&lt;/p&gt;
 &lt;p&gt;Now, running:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
@@ -349,7 +349,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;h2 id=&#34;rename-the-px_last-column&#34;&gt;Rename the &amp;ldquo;PX_LAST&amp;rdquo; column&lt;/h2&gt;
-&lt;p&gt;Next, we want to raname the &amp;ldquo;PX_LAST&amp;rdquo; as &amp;ldquo;Close&amp;rdquo;:&lt;/p&gt;
+&lt;p&gt;Next, we want to rename the &amp;ldquo;PX_LAST&amp;rdquo; column as &amp;ldquo;Close&amp;rdquo;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -381,7 +381,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;h2 id=&#34;sort-data&#34;&gt;Sort data&lt;/h2&gt;
-&lt;p&gt;Next, we want to sort the data starting with the oldest:&lt;/p&gt;
+&lt;p&gt;Next, we want to sort the data starting with the oldest date:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1

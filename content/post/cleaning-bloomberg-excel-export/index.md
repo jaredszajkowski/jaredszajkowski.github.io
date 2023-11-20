@@ -202,7 +202,7 @@ except KeyError:
     pass
 ```
 
-For some data records, the volume column does not exist. Therefore, we "try", and if it fails with a KeyError, then we assume the "PX_VOLUME" column does not exist, and just "pass" to move on.
+For some data records, the volume column does not exist. Therefore, we `try`, and if it fails with a `KeyError`, then we assume the "PX_VOLUME" column does not exist, and just `pass` to move on.
 
 Now, running:
 
@@ -214,7 +214,7 @@ Gives us:
 
 ## Rename the "PX_LAST" column
 
-Next, we want to raname the "PX_LAST" as "Close":
+Next, we want to rename the "PX_LAST" column as "Close":
 
 ```html
 # Rename column
@@ -232,7 +232,7 @@ Gives us:
 
 ## Sort data
 
-Next, we want to sort the data starting with the oldest:
+Next, we want to sort the data starting with the oldest date:
 
 ```html
 # Sort by date

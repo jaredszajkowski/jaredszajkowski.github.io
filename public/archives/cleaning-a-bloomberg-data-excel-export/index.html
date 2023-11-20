@@ -685,7 +685,7 @@
 </span></span><span class="line"><span class="cl">    pass
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>For some data records, the volume column does not exist. Therefore, we &ldquo;try&rdquo;, and if it fails with a KeyError, then we assume the &ldquo;PX_VOLUME&rdquo; column does not exist, and just &ldquo;pass&rdquo; to move on.</p>
+</div><p>For some data records, the volume column does not exist. Therefore, we <code>try</code>, and if it fails with a <code>KeyError</code>, then we assume the &ldquo;PX_VOLUME&rdquo; column does not exist, and just <code>pass</code> to move on.</p>
 <p>Now, running:</p>
 <pre><code>df.head(10)
 </code></pre>
@@ -705,7 +705,7 @@
 	
 ></p>
 <h2 id="rename-the-px_last-column">Rename the &ldquo;PX_LAST&rdquo; column</h2>
-<p>Next, we want to raname the &ldquo;PX_LAST&rdquo; as &ldquo;Close&rdquo;:</p>
+<p>Next, we want to rename the &ldquo;PX_LAST&rdquo; column as &ldquo;Close&rdquo;:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -737,7 +737,7 @@
 	
 ></p>
 <h2 id="sort-data">Sort data</h2>
-<p>Next, we want to sort the data starting with the oldest:</p>
+<p>Next, we want to sort the data starting with the oldest date:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
