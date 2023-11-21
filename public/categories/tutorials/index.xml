@@ -39,7 +39,15 @@
 &lt;li&gt;Export to excel and make the name of the excel worksheet &amp;ldquo;data&amp;rdquo;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&#34;assumptions&#34;&gt;Assumptions&lt;/h2&gt;
-&lt;p&gt;The remainder of this tutorial assumes that your excel file is named &amp;ldquo;SPX_Index.xlsx&amp;rdquo;, and the worksheet is named &amp;ldquo;Worksheet&amp;rdquo;.&lt;/p&gt;
+&lt;p&gt;The remainder of this tutorial assumes the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Your excel file is named &amp;ldquo;SPX_Index.xlsx&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;The worksheet in the excel file is named &amp;ldquo;Worksheet&amp;rdquo;&lt;/li&gt;
+&lt;li&gt;You have the &lt;a class=&#34;link&#34; href=&#34;https://pandas.pydata.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;pandas&lt;/a&gt; library installed&lt;/li&gt;
+&lt;li&gt;You have the &lt;a class=&#34;link&#34; href=&#34;https://openpyxl.readthedocs.io/en/stable/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;OpenPyXL&lt;/a&gt; library installed&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2 id=&#34;python-function-to-modify-the-data&#34;&gt;Python function to modify the data&lt;/h2&gt;
 &lt;p&gt;The following function will perform the modifications mentioned above:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;

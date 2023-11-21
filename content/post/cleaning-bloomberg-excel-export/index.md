@@ -12,6 +12,8 @@ categories:
 tags:
     - Python
     - Bloomberg
+    - pandas
+    - OpenPyXL
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 
@@ -35,7 +37,12 @@ The above format isn't horrible, but we want to perform the following modificati
 
 ## Assumptions
 
-The remainder of this tutorial assumes that your excel file is named "SPX_Index.xlsx", and the worksheet is named "Worksheet".
+The remainder of this tutorial assumes the following:
+
+* Your excel file is named "SPX_Index.xlsx"
+* The worksheet in the excel file is named "Worksheet"
+* You have the [pandas](https://pandas.pydata.org/) library installed
+* You have the [OpenPyXL](https://openpyxl.readthedocs.io/en/stable/) library installed
 
 ## Python function to modify the data
 
