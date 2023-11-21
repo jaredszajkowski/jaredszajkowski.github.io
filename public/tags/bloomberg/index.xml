@@ -106,7 +106,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    # File name variable
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    file = fund + &amp;#34;_Index.xlsx&amp;#34;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    # Import data from file as a pandas dataframe and drop rows and columns
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    # Import data from file as a pandas dataframe
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    df = pd.read_excel(file, sheet_name = &amp;#39;Worksheet&amp;#39;, engine=&amp;#39;openpyxl&amp;#39;)
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    # Set the column headings from row 5 (which is physically row 6)
@@ -169,7 +169,7 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# File name variable
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;file = fund + &amp;#34;_Index.xlsx&amp;#34;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Import data from file as a pandas dataframe and drop rows and columns
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Import data from file as a pandas dataframe
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;df = pd.read_excel(file, sheet_name = &amp;#39;Worksheet&amp;#39;, engine=&amp;#39;openpyxl&amp;#39;)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
@@ -177,13 +177,13 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/DF_excel_import.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/Dataframe_excel_import.png&#34;
 	width=&#34;367&#34;
 	height=&#34;302&#34;
 	
 	loading=&#34;lazy&#34;
 	
-		alt=&#34;DF excel import&#34;
+		alt=&#34;Dataframe excel import&#34;
 	
 	
 		class=&#34;gallery-image&#34; 
@@ -424,7 +424,22 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;df.to_excel(file, sheet_name=&amp;#39;data&amp;#39;)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;output-confirmation&#34;&gt;Output confirmation&lt;/h2&gt;
+&lt;/div&gt;&lt;p&gt;And verify the output is as expected:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/Excel_export.png&#34;
+	width=&#34;278&#34;
+	height=&#34;380&#34;
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Excel export&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;73&#34;
+		data-flex-basis=&#34;175px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;output-confirmation&#34;&gt;Output confirmation&lt;/h2&gt;
 &lt;p&gt;Finally, we want to print a confirmation that the process succeeded along withe last date we have for data:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;

@@ -54,7 +54,7 @@ def bb_data_updater(fund):
     # File name variable
     file = fund + "_Index.xlsx"
     
-    # Import data from file as a pandas dataframe and drop rows and columns
+    # Import data from file as a pandas dataframe
     df = pd.read_excel(file, sheet_name = 'Worksheet', engine='openpyxl')
     
     # Set the column headings from row 5 (which is physically row 6)
@@ -110,7 +110,7 @@ Then import the excel file as a pandas dataframe:
 # File name variable
 file = fund + "_Index.xlsx"
 
-# Import data from file as a pandas dataframe and drop rows and columns
+# Import data from file as a pandas dataframe
 df = pd.read_excel(file, sheet_name = 'Worksheet', engine='openpyxl')
 ```
 
@@ -120,7 +120,7 @@ Running:
 
 Gives us:
 
-![DF excel import](DF_excel_import.png)
+![Dataframe excel import](Dataframe_excel_import.png)
 
 ## Set column headings
 
@@ -259,6 +259,10 @@ Next, we want to export the data to an excel file, for easy viewing and referenc
 file = fund + ".xlsx"
 df.to_excel(file, sheet_name='data')
 ```
+
+And verify the output is as expected:
+
+![Excel export](Excel_export.png)
 
 ## Output confirmation
 

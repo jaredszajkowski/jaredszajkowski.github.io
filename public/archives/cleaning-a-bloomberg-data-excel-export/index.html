@@ -462,7 +462,7 @@
 </span></span><span class="line"><span class="cl">    # File name variable
 </span></span><span class="line"><span class="cl">    file = fund + &#34;_Index.xlsx&#34;
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    # Import data from file as a pandas dataframe and drop rows and columns
+</span></span><span class="line"><span class="cl">    # Import data from file as a pandas dataframe
 </span></span><span class="line"><span class="cl">    df = pd.read_excel(file, sheet_name = &#39;Worksheet&#39;, engine=&#39;openpyxl&#39;)
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    # Set the column headings from row 5 (which is physically row 6)
@@ -525,7 +525,7 @@
 <pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># File name variable
 </span></span><span class="line"><span class="cl">file = fund + &#34;_Index.xlsx&#34;
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"># Import data from file as a pandas dataframe and drop rows and columns
+</span></span><span class="line"><span class="cl"># Import data from file as a pandas dataframe
 </span></span><span class="line"><span class="cl">df = pd.read_excel(file, sheet_name = &#39;Worksheet&#39;, engine=&#39;openpyxl&#39;)
 </span></span></code></pre></td></tr></table>
 </div>
@@ -533,13 +533,13 @@
 <pre><code>df.head(10)
 </code></pre>
 <p>Gives us:</p>
-<p><img src="/archives/cleaning-a-bloomberg-data-excel-export/DF_excel_import.png"
+<p><img src="/archives/cleaning-a-bloomberg-data-excel-export/Dataframe_excel_import.png"
 	width="367"
 	height="302"
 	
 	loading="lazy"
 	
-		alt="DF excel import"
+		alt="Dataframe excel import"
 	
 	
 		class="gallery-image" 
@@ -780,7 +780,22 @@
 </span></span><span class="line"><span class="cl">df.to_excel(file, sheet_name=&#39;data&#39;)
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="output-confirmation">Output confirmation</h2>
+</div><p>And verify the output is as expected:</p>
+<p><img src="/archives/cleaning-a-bloomberg-data-excel-export/Excel_export.png"
+	width="278"
+	height="380"
+	
+	loading="lazy"
+	
+		alt="Excel export"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="73"
+		data-flex-basis="175px"
+	
+></p>
+<h2 id="output-confirmation">Output confirmation</h2>
 <p>Finally, we want to print a confirmation that the process succeeded along withe last date we have for data:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
