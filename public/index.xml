@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Jared Szajkowski</title>
-        <link>https://jaredszajkowski.github.io/</link>
+        <link>https://www.jaredszajkowski.com/</link>
         <description>Recent content on Jared Szajkowski</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Wed, 15 Nov 2023 00:00:01 +0000</lastBuildDate><atom:link href="https://jaredszajkowski.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 15 Nov 2023 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Cleaning A Bloomberg Data Excel Export</title>
-        <link>https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/</link>
+        <link>https://www.jaredszajkowski.com/archives/cleaning-a-bloomberg-data-excel-export/</link>
         <pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/</guid>
+        <guid>https://www.jaredszajkowski.com/archives/cleaning-a-bloomberg-data-excel-export/</guid>
         <description>&lt;p&gt;In this tutorial, we will write a python function that imports an excel export from Bloomberg, removes ancillary rows and columns, and leaves the data in a format where it can then be used in time series analysis.&lt;/p&gt;
 &lt;h2 id=&#34;example-of-a-bloomberg-excel-export&#34;&gt;Example of a Bloomberg excel export&lt;/h2&gt;
 &lt;p&gt;We will use the SPX index data in this example. Exporting the data from Bloomberg using the excel Bloomberg add-on yields data in the following format:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/Format_of_data_in_excel_export_from_Bloomberg.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/archives/cleaning-a-bloomberg-data-excel-export/Format_of_data_in_excel_export_from_Bloomberg.png&#34;
 	width=&#34;295&#34;
 	height=&#34;455&#34;
 	
@@ -185,7 +185,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/Dataframe_excel_import.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/archives/cleaning-a-bloomberg-data-excel-export/Dataframe_excel_import.png&#34;
 	width=&#34;367&#34;
 	height=&#34;302&#34;
 	
@@ -215,7 +215,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/Set_column_headings.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/archives/cleaning-a-bloomberg-data-excel-export/Set_column_headings.png&#34;
 	width=&#34;376&#34;
 	height=&#34;296&#34;
 	
@@ -246,7 +246,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/Remove_index_heading.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/archives/cleaning-a-bloomberg-data-excel-export/Remove_index_heading.png&#34;
 	width=&#34;373&#34;
 	height=&#34;299&#34;
 	
@@ -277,7 +277,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/Remove_rows.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/archives/cleaning-a-bloomberg-data-excel-export/Remove_rows.png&#34;
 	width=&#34;323&#34;
 	height=&#34;298&#34;
 	
@@ -307,7 +307,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/Set_index.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/archives/cleaning-a-bloomberg-data-excel-export/Set_index.png&#34;
 	width=&#34;244&#34;
 	height=&#34;318&#34;
 	
@@ -344,7 +344,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/Drop_volume.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/archives/cleaning-a-bloomberg-data-excel-export/Drop_volume.png&#34;
 	width=&#34;163&#34;
 	height=&#34;320&#34;
 	
@@ -374,7 +374,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/Rename_column.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/archives/cleaning-a-bloomberg-data-excel-export/Rename_column.png&#34;
 	width=&#34;156&#34;
 	height=&#34;319&#34;
 	
@@ -404,7 +404,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/Sort_by_date.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/archives/cleaning-a-bloomberg-data-excel-export/Sort_by_date.png&#34;
 	width=&#34;136&#34;
 	height=&#34;317&#34;
 	
@@ -433,7 +433,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;And verify the output is as expected:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/Excel_export.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/archives/cleaning-a-bloomberg-data-excel-export/Excel_export.png&#34;
 	width=&#34;278&#34;
 	height=&#34;380&#34;
 	
@@ -465,7 +465,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;print(f&amp;#34;--------------------&amp;#34;)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/cleaning-a-bloomberg-data-excel-export/Output_confirmation.PNG&#34;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/archives/cleaning-a-bloomberg-data-excel-export/Output_confirmation.PNG&#34;
 	width=&#34;417&#34;
 	height=&#34;116&#34;
 	
@@ -483,10 +483,10 @@
         </item>
         <item>
         <title>Git Quick Start Guide</title>
-        <link>https://jaredszajkowski.github.io/archives/git-quick-start-guide/</link>
+        <link>https://www.jaredszajkowski.com/archives/git-quick-start-guide/</link>
         <pubDate>Mon, 16 Oct 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/archives/git-quick-start-guide/</guid>
+        <guid>https://www.jaredszajkowski.com/archives/git-quick-start-guide/</guid>
         <description>&lt;p&gt;Here are my notes for some of the more commonly used git commands along with initial setup for git in Linux.&lt;/p&gt;
 &lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
 &lt;p&gt;To begin, install as follows for Arch Linux:&lt;/p&gt;
@@ -572,19 +572,19 @@ $ git pull
         </item>
         <item>
         <title>Links</title>
-        <link>https://jaredszajkowski.github.io/links/</link>
+        <link>https://www.jaredszajkowski.com/links/</link>
         <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/links/</guid>
+        <guid>https://www.jaredszajkowski.com/links/</guid>
         <description>&lt;p&gt;Here are some links to software, etc. that I find interesting and use.&lt;/p&gt;
 </description>
         </item>
         <item>
         <title>Using yt-dlp With Zoom</title>
-        <link>https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/</link>
+        <link>https://www.jaredszajkowski.com/archives/using-yt-dlp-with-zoom/</link>
         <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/</guid>
+        <guid>https://www.jaredszajkowski.com/archives/using-yt-dlp-with-zoom/</guid>
         <description>&lt;p&gt;If anyone uses Zoom to record and later wants to access recordings of video calls, here&amp;rsquo;s a simple linux bash script to download the video file and acompanying subtitles. For a long time I used &lt;a class=&#34;link&#34; href=&#34;https://github.com/Battleman/zoomdl&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;zoomdl&lt;/a&gt;, but it is no longer under active development, and I began running into various issues about a year ago.&lt;/p&gt;
 &lt;p&gt;This tutorial requires you to have a &amp;ldquo;cookies&amp;rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Zoom cookies after logging in.&lt;/p&gt;
@@ -594,7 +594,7 @@ $ git pull
     &gt;cookie editor&lt;/a&gt; extension. I personnally use it with Microsoft Edge, but there are similar extensions for Chrome, Firefox, etc.&lt;/p&gt;
 &lt;h2 id=&#34;modify-export-format&#34;&gt;Modify export format&lt;/h2&gt;
 &lt;p&gt;Change the preferred cookie export format to &lt;code&gt;Netscape HTTP Cookie File&lt;/code&gt; in the extension options. It is necessary to export in this format, otherwise yt-dlp will not be able to read the cookies.txt file correctly.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/Modify_preferred_export_format.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/archives/using-yt-dlp-with-zoom/Modify_preferred_export_format.png&#34;
 	width=&#34;865&#34;
 	height=&#34;505&#34;
 	
@@ -612,7 +612,7 @@ $ git pull
 &lt;p&gt;Log in to Zoom in your browser. Be sure to remain logged in while exporting the cookies under step 4.&lt;/p&gt;
 &lt;h2 id=&#34;export-cookies&#34;&gt;Export cookies&lt;/h2&gt;
 &lt;p&gt;The export button is at the top fo the window. It copies the cookies to your clipboard, which then need to be pasted into a text file (I have my saved as cookies.txt), which yt-dlp will then read when it executes.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://jaredszajkowski.github.io/archives/using-yt-dlp-with-zoom/Export_cookies.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/archives/using-yt-dlp-with-zoom/Export_cookies.png&#34;
 	width=&#34;579&#34;
 	height=&#34;613&#34;
 	
@@ -660,10 +660,10 @@ $ git pull
         </item>
         <item>
         <title>Arch Linux Install</title>
-        <link>https://jaredszajkowski.github.io/archives/arch-linux-install/</link>
+        <link>https://www.jaredszajkowski.com/archives/arch-linux-install/</link>
         <pubDate>Fri, 29 Sep 2023 00:00:01 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/archives/arch-linux-install/</guid>
+        <guid>https://www.jaredszajkowski.com/archives/arch-linux-install/</guid>
         <description>&lt;p&gt;This is the basic framework that I use to install Arch Linux, with a few changes catered to the Lenovo ThinkPad E15 Gen 2. I have found that this is a decent mid range laptop, excellent linux compatibility, great keyboard, and overall provides a good value.&lt;/p&gt;
 &lt;h2 id=&#34;getting-started&#34;&gt;Getting started&lt;/h2&gt;
 &lt;p&gt;This tutorial assumes the following:&lt;/p&gt;
@@ -827,19 +827,19 @@ Linux LUKS type 8309
         </item>
         <item>
         <title>About Me</title>
-        <link>https://jaredszajkowski.github.io/about-me/</link>
+        <link>https://www.jaredszajkowski.com/about-me/</link>
         <pubDate>Tue, 26 Sep 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/about-me/</guid>
+        <guid>https://www.jaredszajkowski.com/about-me/</guid>
         <description>&lt;p&gt;Needs to be updated.&lt;/p&gt;
 </description>
         </item>
         <item>
         <title>Hello World</title>
-        <link>https://jaredszajkowski.github.io/archives/hello-world/</link>
+        <link>https://www.jaredszajkowski.com/archives/hello-world/</link>
         <pubDate>Tue, 26 Sep 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/archives/hello-world/</guid>
+        <guid>https://www.jaredszajkowski.com/archives/hello-world/</guid>
         <description>&lt;p&gt;Welcome to my website. This is meant to serve as a place for me to publish various posts from my explorations into Arch Linux, data science, quant finance, and other topics.&lt;/p&gt;
 &lt;p&gt;The theme has been adopted from the &lt;a class=&#34;link&#34; href=&#34;https://github.com/CaiJimmy/hugo-theme-stack&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Hugo Theme Stack&lt;/a&gt; produced by Jimmy Cai.&lt;/p&gt;
@@ -875,18 +875,18 @@ Linux LUKS type 8309
         </item>
         <item>
         <title>Archives</title>
-        <link>https://jaredszajkowski.github.io/archives/</link>
+        <link>https://www.jaredszajkowski.com/archives/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/archives/</guid>
+        <guid>https://www.jaredszajkowski.com/archives/</guid>
         <description></description>
         </item>
         <item>
         <title>Search</title>
-        <link>https://jaredszajkowski.github.io/search/</link>
+        <link>https://www.jaredszajkowski.com/search/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/search/</guid>
+        <guid>https://www.jaredszajkowski.com/search/</guid>
         <description></description>
         </item>
         

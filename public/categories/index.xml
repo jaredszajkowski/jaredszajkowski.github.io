@@ -2,40 +2,40 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Categories on Jared Szajkowski</title>
-        <link>https://jaredszajkowski.github.io/categories/</link>
+        <link>https://www.jaredszajkowski.com/categories/</link>
         <description>Recent content in Categories on Jared Szajkowski</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Wed, 15 Nov 2023 00:00:01 +0000</lastBuildDate><atom:link href="https://jaredszajkowski.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 15 Nov 2023 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/categories/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Financial Data</title>
-        <link>https://jaredszajkowski.github.io/categories/financial-data/</link>
+        <link>https://www.jaredszajkowski.com/categories/financial-data/</link>
         <pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/categories/financial-data/</guid>
+        <guid>https://www.jaredszajkowski.com/categories/financial-data/</guid>
         <description></description>
         </item>
         <item>
         <title>Tutorials</title>
-        <link>https://jaredszajkowski.github.io/categories/tutorials/</link>
+        <link>https://www.jaredszajkowski.com/categories/tutorials/</link>
         <pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/categories/tutorials/</guid>
+        <guid>https://www.jaredszajkowski.com/categories/tutorials/</guid>
         <description></description>
         </item>
         <item>
         <title>Tech</title>
-        <link>https://jaredszajkowski.github.io/categories/tech/</link>
+        <link>https://www.jaredszajkowski.com/categories/tech/</link>
         <pubDate>Mon, 16 Oct 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/categories/tech/</guid>
+        <guid>https://www.jaredszajkowski.com/categories/tech/</guid>
         <description></description>
         </item>
         <item>
         <title>Blog</title>
-        <link>https://jaredszajkowski.github.io/categories/blog/</link>
+        <link>https://www.jaredszajkowski.com/categories/blog/</link>
         <pubDate>Tue, 26 Sep 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/categories/blog/</guid>
+        <guid>https://www.jaredszajkowski.com/categories/blog/</guid>
         <description></description>
         </item>
         

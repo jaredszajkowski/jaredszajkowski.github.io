@@ -2,104 +2,104 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Tags on Jared Szajkowski</title>
-        <link>https://jaredszajkowski.github.io/tags/</link>
+        <link>https://www.jaredszajkowski.com/tags/</link>
         <description>Recent content in Tags on Jared Szajkowski</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Wed, 15 Nov 2023 00:00:01 +0000</lastBuildDate><atom:link href="https://jaredszajkowski.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 15 Nov 2023 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/tags/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Bloomberg</title>
-        <link>https://jaredszajkowski.github.io/tags/bloomberg/</link>
+        <link>https://www.jaredszajkowski.com/tags/bloomberg/</link>
         <pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/tags/bloomberg/</guid>
+        <guid>https://www.jaredszajkowski.com/tags/bloomberg/</guid>
         <description></description>
         </item>
         <item>
         <title>OpenPyXL</title>
-        <link>https://jaredszajkowski.github.io/tags/openpyxl/</link>
+        <link>https://www.jaredszajkowski.com/tags/openpyxl/</link>
         <pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/tags/openpyxl/</guid>
+        <guid>https://www.jaredszajkowski.com/tags/openpyxl/</guid>
         <description></description>
         </item>
         <item>
         <title>pandas</title>
-        <link>https://jaredszajkowski.github.io/tags/pandas/</link>
+        <link>https://www.jaredszajkowski.com/tags/pandas/</link>
         <pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/tags/pandas/</guid>
+        <guid>https://www.jaredszajkowski.com/tags/pandas/</guid>
         <description></description>
         </item>
         <item>
         <title>Python</title>
-        <link>https://jaredszajkowski.github.io/tags/python/</link>
+        <link>https://www.jaredszajkowski.com/tags/python/</link>
         <pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/tags/python/</guid>
+        <guid>https://www.jaredszajkowski.com/tags/python/</guid>
         <description></description>
         </item>
         <item>
         <title>Git</title>
-        <link>https://jaredszajkowski.github.io/tags/git/</link>
+        <link>https://www.jaredszajkowski.com/tags/git/</link>
         <pubDate>Mon, 16 Oct 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/tags/git/</guid>
+        <guid>https://www.jaredszajkowski.com/tags/git/</guid>
         <description></description>
         </item>
         <item>
         <title>GitHub</title>
-        <link>https://jaredszajkowski.github.io/tags/github/</link>
+        <link>https://www.jaredszajkowski.com/tags/github/</link>
         <pubDate>Mon, 16 Oct 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/tags/github/</guid>
+        <guid>https://www.jaredszajkowski.com/tags/github/</guid>
         <description></description>
         </item>
         <item>
         <title>Bash</title>
-        <link>https://jaredszajkowski.github.io/tags/bash/</link>
+        <link>https://www.jaredszajkowski.com/tags/bash/</link>
         <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/tags/bash/</guid>
+        <guid>https://www.jaredszajkowski.com/tags/bash/</guid>
         <description></description>
         </item>
         <item>
         <title>yt-dlp</title>
-        <link>https://jaredszajkowski.github.io/tags/yt-dlp/</link>
+        <link>https://www.jaredszajkowski.com/tags/yt-dlp/</link>
         <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/tags/yt-dlp/</guid>
+        <guid>https://www.jaredszajkowski.com/tags/yt-dlp/</guid>
         <description></description>
         </item>
         <item>
         <title>Zoom</title>
-        <link>https://jaredszajkowski.github.io/tags/zoom/</link>
+        <link>https://www.jaredszajkowski.com/tags/zoom/</link>
         <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/tags/zoom/</guid>
+        <guid>https://www.jaredszajkowski.com/tags/zoom/</guid>
         <description></description>
         </item>
         <item>
         <title>Arch Linux</title>
-        <link>https://jaredszajkowski.github.io/tags/arch-linux/</link>
+        <link>https://www.jaredszajkowski.com/tags/arch-linux/</link>
         <pubDate>Fri, 29 Sep 2023 00:00:01 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/tags/arch-linux/</guid>
+        <guid>https://www.jaredszajkowski.com/tags/arch-linux/</guid>
         <description></description>
         </item>
         <item>
         <title>Thinkpad E15 Gen 2</title>
-        <link>https://jaredszajkowski.github.io/tags/thinkpad-e15-gen-2/</link>
+        <link>https://www.jaredszajkowski.com/tags/thinkpad-e15-gen-2/</link>
         <pubDate>Fri, 29 Sep 2023 00:00:01 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/tags/thinkpad-e15-gen-2/</guid>
+        <guid>https://www.jaredszajkowski.com/tags/thinkpad-e15-gen-2/</guid>
         <description></description>
         </item>
         <item>
         <title>Hugo</title>
-        <link>https://jaredszajkowski.github.io/tags/hugo/</link>
+        <link>https://www.jaredszajkowski.com/tags/hugo/</link>
         <pubDate>Tue, 26 Sep 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://jaredszajkowski.github.io/tags/hugo/</guid>
+        <guid>https://www.jaredszajkowski.com/tags/hugo/</guid>
         <description></description>
         </item>
         
