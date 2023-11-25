@@ -1,7 +1,7 @@
 ---
 title: "Links"
 date: 2023-10-01 00:00:00+0000
-lastmod: 2023-11-09 00:00:00+0000
+lastmod: 2023-11-24 00:00:00+0000
 slug: "links"
 #layout: "search"
 links:
@@ -29,6 +29,10 @@ links:
     description: digiKam is an advanced open-source digital photo management application that runs on Linux, Windows, and macOS. The application provides a comprehensive set of tools for importing, managing, editing, and sharing photos and raw files.
     website: https://www.digikam.org/
     image: https://www.digikam.org/img/digikam_oxygen.svg
+  - title: Thunderbird
+    description: Thunderbird is a free and open source email, newsfeed, chat, and calendaring client, that’s easy to set up and customize. One of the core principles of Thunderbird is the use and promotion of open standards - this focus is a rejection of our world of closed platforms and services that can’t communicate with each other. We want our users to have freedom and choice in how they communicate.
+    website: https://www.thunderbird.net/en-US/
+    image: https://www.thunderbird.net/media/svg/logo-wordmark-white.svg
 menu:
     main: 
 #        name: 
