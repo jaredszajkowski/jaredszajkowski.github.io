@@ -25,6 +25,10 @@ links:
     description: Master PDF Editor is straightforward, easy to use application for working with PDF documents equipped with powerful multi-purpose functionality. With Master PDF Editor you can easily view, create and modify PDF documents. The application enables you to merge several files into one, split a source document into multiple documents, and also to comment, sign and encrypt PDF files.
     website: https://code-industry.net/masterpdfeditor/
     image: https://code-industry.net/wp-content/uploads/2023/09/master_pdf_editor.svg
+  - title: digiKam
+    description: digiKam is an advanced open-source digital photo management application that runs on Linux, Windows, and macOS. The application provides a comprehensive set of tools for importing, managing, editing, and sharing photos and raw files.
+    website: https://www.digikam.org/
+    image: https://www.digikam.org/img/digikam_oxygen.svg
 menu:
     main: 
 #        name: 
