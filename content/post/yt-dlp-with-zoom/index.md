@@ -44,7 +44,7 @@ The export button is at the top fo the window. It copies the cookies to your cli
 
 ## Create bash script
 
-Save the following code to a text file (my bash script file name is yt-dlp.sh):
+Save the following code to a text file (my bash script file name is `yt-dlp.sh`):
 
 ```html
 #!/bin/bash

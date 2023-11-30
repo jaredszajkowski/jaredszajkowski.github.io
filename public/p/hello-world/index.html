@@ -244,7 +244,39 @@
     </ol>
 </aside>
 
-    
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#updating-and-pushing-changes">Updating and pushing changes</a></li>
+    <li><a href="#references">References</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
 
             <main class="main full-width">
     <article class="main-article">
@@ -339,8 +371,34 @@
 <li>Make sure to remove the public directory from the .gitignore file. Otherwise GitHub will ignore the public directory and your site will show the README.md instead of the Hugo site.</li>
 </ol>
 <p>The site can be updated either through codespace, or locally as long as Hugo and it&rsquo;s required dependencies have been installed.</p>
-<p>One last note, the simple command after making any changes and to push those updates is as follows:</p>
+<h2 id="updating-and-pushing-changes">Updating and pushing changes</h2>
+<p>The simple command after making any changes and to push those updates is as follows:</p>
 <pre><code>$ hugo &amp;&amp; git add . &amp;&amp; git commit -am &quot;Updating site&quot; &amp;&amp; git push
+</code></pre>
+<p>This can be put in a bash script to make it easier. Save the following as <code>git-update.sh</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">#!/bin/bash
+</span></span><span class="line"><span class="cl">echo What is the commit message?
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">read message
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">hugo <span class="err">&amp;&amp;</span> git add . <span class="err">&amp;&amp;</span> git commit -am &#34;$message&#34; <span class="err">&amp;&amp;</span> git push
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Change permissions:</p>
+<pre><code>$ chmod +x git-update.sh
+</code></pre>
+<p>And then execute:</p>
+<pre><code>$ ./git-update.sh
 </code></pre>
 <h2 id="references">References</h2>
 <p>Here&rsquo;s the full list of resources I referenced for deploying Hugo with GitHub pages:</p>

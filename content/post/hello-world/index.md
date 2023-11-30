@@ -35,9 +35,30 @@ It is hosted on [GitHub pages](https://pages.github.com/). I followed the instal
 
 The site can be updated either through codespace, or locally as long as Hugo and it's required dependencies have been installed.
 
-One last note, the simple command after making any changes and to push those updates is as follows:
+## Updating and pushing changes
+
+The simple command after making any changes and to push those updates is as follows:
 
     $ hugo && git add . && git commit -am "Updating site" && git push
+
+This can be put in a bash script to make it easier. Save the following as `git-update.sh`:
+
+```html
+#!/bin/bash
+echo What is the commit message?
+
+read message
+
+hugo && git add . && git commit -am "$message" && git push
+```
+
+Change permissions:
+
+    $ chmod +x git-update.sh
+
+And then execute:
+
+    $ ./git-update.sh
 
 ## References
 
