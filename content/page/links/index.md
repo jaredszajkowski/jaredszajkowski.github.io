@@ -36,7 +36,7 @@ links:
 menu:
     main: 
 #        name: 
-        weight: 5
+        weight: 6
         params:
             icon: link
 
