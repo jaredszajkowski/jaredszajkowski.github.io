@@ -1,3 +1,4 @@
 # Permalinks format of each content section
-post = "/archives/:slug/"
+post = "/p/:slug/"
+# post = "/archives/:slug/"
 page = "/:slug/"

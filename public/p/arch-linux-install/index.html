@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Bash script for usage of yt-dlp with Zoom.'>
-<title>Using yt-dlp With Zoom</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Guide to Arch Linux install with customizations for the  Lenovo ThinkPad E15 Gen 2.'>
+<title>Arch Linux Install</title>
 
-<link rel='canonical' href='https://www.jaredszajkowski.com/p/using-yt-dlp-with-zoom/'>
+<link rel='canonical' href='https://www.jaredszajkowski.com/p/arch-linux-install/'>
 
-<link rel="stylesheet" href="/scss/style.min.da837a7dbb452ea8ecf603b9aaf558dd241226e638c2b2c9c275ac1f8695c657.css"><meta property='og:title' content='Using yt-dlp With Zoom'>
-<meta property='og:description' content='Bash script for usage of yt-dlp with Zoom.'>
-<meta property='og:url' content='https://www.jaredszajkowski.com/p/using-yt-dlp-with-zoom/'>
+<link rel="stylesheet" href="/scss/style.min.da837a7dbb452ea8ecf603b9aaf558dd241226e638c2b2c9c275ac1f8695c657.css"><meta property='og:title' content='Arch Linux Install'>
+<meta property='og:description' content='Guide to Arch Linux install with customizations for the  Lenovo ThinkPad E15 Gen 2.'>
+<meta property='og:url' content='https://www.jaredszajkowski.com/p/arch-linux-install/'>
 <meta property='og:site_name' content='Jared Szajkowski'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='yt-dlp' /><meta property='article:tag' content='Zoom' /><meta property='article:tag' content='Bash' /><meta property='article:published_time' content='2023-10-01T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-10-17T00:00:00&#43;00:00'/>
-<meta name="twitter:title" content="Using yt-dlp With Zoom">
-<meta name="twitter:description" content="Bash script for usage of yt-dlp with Zoom.">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Arch Linux' /><meta property='article:tag' content='Thinkpad E15 Gen 2' /><meta property='article:published_time' content='2023-09-29T00:00:01&#43;00:00'/><meta property='article:modified_time' content='2023-11-07T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Arch Linux Install">
+<meta name="twitter:description" content="Guide to Arch Linux install with customizations for the  Lenovo ThinkPad E15 Gen 2.">
     <link rel="shortcut icon" href="/profile_pic.jpg" />
 
     </head>
@@ -266,14 +266,47 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#install-cookie-editor">Install cookie editor</a></li>
-    <li><a href="#modify-export-format">Modify export format</a></li>
-    <li><a href="#log-in-to-zoom">Log in to Zoom</a></li>
-    <li><a href="#export-cookies">Export cookies</a></li>
-    <li><a href="#create-bash-script">Create bash script</a></li>
-    <li><a href="#change-permissions">Change permissions</a></li>
-    <li><a href="#execute-the-script">Execute the script</a></li>
-    <li><a href="#references">References</a></li>
+    <li><a href="#getting-started">Getting started</a>
+      <ol>
+        <li><a href="#verify-uefi-boot-mode">Verify UEFI boot mode</a></li>
+        <li><a href="#configure-wireless-network">Configure wireless network</a></li>
+        <li><a href="#verify-internet-connectivity">Verify internet connectivity</a></li>
+        <li><a href="#update-system-clock">Update system clock</a></li>
+      </ol>
+    </li>
+    <li><a href="#disks-partition-table--partitions">Disks, partition table &amp; partitions</a>
+      <ol>
+        <li><a href="#wipe-disk">Wipe disk</a></li>
+        <li><a href="#create-new-partition-table">Create new partition table</a></li>
+        <li><a href="#create-efi-partition">Create EFI partition</a></li>
+        <li><a href="#create-boot-partition">Create boot partition</a></li>
+        <li><a href="#create-swap-partition">Create swap partition</a></li>
+        <li><a href="#create-root-partition">Create root partition</a></li>
+      </ol>
+    </li>
+    <li><a href="#write-file-systems">Write file systems</a>
+      <ol>
+        <li><a href="#efi-partition">EFI partition</a></li>
+        <li><a href="#boot-partition">Boot partition</a></li>
+        <li><a href="#root-partition">Root partition</a></li>
+        <li><a href="#swap-partition">Swap partition</a></li>
+        <li><a href="#create-mount-points">Create mount points</a></li>
+      </ol>
+    </li>
+    <li><a href="#system-install">System install</a>
+      <ol>
+        <li><a href="#install-base-packages">Install base packages</a></li>
+        <li><a href="#generate-fstab">Generate fstab</a></li>
+        <li><a href="#enter-new-system">Enter new system</a></li>
+        <li><a href="#set-clock">Set clock</a></li>
+        <li><a href="#generate-locale">Generate locale</a></li>
+        <li><a href="#set-hostname--update-hosts">Set hostname &amp; update hosts</a></li>
+        <li><a href="#set-root-password">Set root password</a></li>
+        <li><a href="#update-etcmkinitcpioconf--generate-initrd-image">Update /etc/mkinitcpio.conf &amp; generate initrd image</a></li>
+        <li><a href="#install-grub">Install grub</a></li>
+        <li><a href="#exit--reboot">Exit &amp; reboot</a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
         </div>
@@ -305,12 +338,12 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/p/using-yt-dlp-with-zoom/">Using yt-dlp With Zoom</a>
+            <a href="/p/arch-linux-install/">Arch Linux Install</a>
         </h2>
     
         
         <h3 class="article-subtitle">
-            Bash script for usage of yt-dlp with Zoom.
+            Guide to Arch Linux install with customizations for the  Lenovo ThinkPad E15 Gen 2.
         </h3>
         
     </div>
@@ -331,7 +364,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">October 1, 2023</time>
+                <time class="article-time--published">September 29, 2023</time>
             </div>
         
 
@@ -346,7 +379,7 @@
 
 
                 <time class="article-time--reading">
-                    2 minute read
+                    4 minute read
                 </time>
             </div>
         
@@ -361,77 +394,165 @@
     <section class="article-content">
     
     
-    <p>If anyone uses Zoom to record and later wants to access recordings of video calls, here&rsquo;s a simple linux bash script to download the video file and acompanying subtitles. For a long time I used <a class="link" href="https://github.com/Battleman/zoomdl"  target="_blank" rel="noopener"
-    >zoomdl</a>, but it is no longer under active development, and I began running into various issues about a year ago.</p>
-<p>This tutorial requires you to have a &ldquo;cookies&rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Zoom cookies after logging in.</p>
-<p>Here&rsquo;s the steps to setting this up:</p>
-<h2 id="install-cookie-editor">Install cookie editor</h2>
-<p>Install the <a class="link" href="https://microsoftedge.microsoft.com/addons/detail/cookie-editor/ajfboaconbpkglpfanbmlfgojgndmhmc"  target="_blank" rel="noopener"
-    >cookie editor</a> extension. I personnally use it with Microsoft Edge, but there are similar extensions for Chrome, Firefox, etc.</p>
-<h2 id="modify-export-format">Modify export format</h2>
-<p>Change the preferred cookie export format to <code>Netscape HTTP Cookie File</code> in the extension options. It is necessary to export in this format, otherwise yt-dlp will not be able to read the cookies.txt file correctly.</p>
-<p><img src="/p/using-yt-dlp-with-zoom/Modify_preferred_export_format.png"
-	width="865"
-	height="505"
-	
-	loading="lazy"
-	
-		alt="Modify preferred export format"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="171"
-		data-flex-basis="411px"
-	
-></p>
-<h2 id="log-in-to-zoom">Log in to Zoom</h2>
-<p>Log in to Zoom in your browser. Be sure to remain logged in while exporting the cookies under step 4.</p>
-<h2 id="export-cookies">Export cookies</h2>
-<p>The export button is at the top fo the window. It copies the cookies to your clipboard, which then need to be pasted into a text file (I have my saved as cookies.txt), which yt-dlp will then read when it executes.</p>
-<p><img src="/p/using-yt-dlp-with-zoom/Export_cookies.png"
-	width="579"
-	height="613"
-	
-	loading="lazy"
-	
-		alt="Export cookies"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="94"
-		data-flex-basis="226px"
-	
-></p>
-<h2 id="create-bash-script">Create bash script</h2>
-<p>Save the following code to a text file (my bash script file name is yt-dlp.sh):</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">#!/bin/bash
-</span></span><span class="line"><span class="cl">echo What is the link?
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">read link
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">yt-dlp --referer &#34;https://zoom.us/&#34; --cookies /path/to/cookies/file/cookies.txt -o &#34;%(title)s-%(id)s.%(ext)s&#34; --write-subs $link
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="change-permissions">Change permissions</h2>
-<p>Modify the permissions of the bash script to allow execution:</p>
-<pre><code>$ chmod +x yt-dlp.sh
+    <p>This is the basic framework that I use to install Arch Linux, with a few changes catered to the Lenovo ThinkPad E15 Gen 2. I have found that this is a decent mid range laptop, excellent linux compatibility, great keyboard, and overall provides a good value.</p>
+<h2 id="getting-started">Getting started</h2>
+<p>This tutorial assumes the following:</p>
+<ul>
+<li>You are booting from a USB drive with the Arch install ISO.</li>
+<li>Wireless or wired network is detected and drivers are configured automatically.</li>
+<li>You want drive encrytion on your root partition, but not on your boot/efi/swap partitions.</li>
+</ul>
+<h3 id="verify-uefi-boot-mode">Verify UEFI boot mode</h3>
+<p>The following command should show directory without error:</p>
+<pre><code># ls /sys/firmware/efi/efivars
 </code></pre>
-<h2 id="execute-the-script">Execute the script</h2>
-<p>Execute the bash script with ./yt-dlp.sh, copy and paste the link to the video that you would like to save, and it should download the video and the subtitles.</p>
-<h2 id="references">References</h2>
-<p>References for yt-dlp (and used for above):</p>
-<p><a class="link" href="https://ostechnix.com/yt-dlp-tutorial/"  target="_blank" rel="noopener"
-    >https://ostechnix.com/yt-dlp-tutorial/</a></p>
+<h3 id="configure-wireless-network">Configure wireless network</h3>
+<p>The following command will drop you into the iwd daemon:</p>
+<pre><code># iwctl
+</code></pre>
+<p>From there:</p>
+<pre><code># device list
+# station *device* scan
+# station *device* get-networks
+# station *device* connect *SSID*
+</code></pre>
+<h3 id="verify-internet-connectivity">Verify internet connectivity</h3>
+<pre><code># ping archlinux.org
+</code></pre>
+<h3 id="update-system-clock">Update system clock</h3>
+<pre><code># timedatectl set-ntp true
+# timedatectl status
+</code></pre>
+<h2 id="disks-partition-table--partitions">Disks, partition table &amp; partitions</h2>
+<p>The following assumes that your NVME drive is found as /dev/nvme0n1. Partitions will then be /dev/nvme0n1p1 and so on.</p>
+<h3 id="wipe-disk">Wipe disk</h3>
+<p>List disks:</p>
+<pre><code># fdisk -l
+</code></pre>
+<p>Wipe all file system records:</p>
+<pre><code># wipefs -a /dev/nvme0n1
+</code></pre>
+<h3 id="create-new-partition-table">Create new partition table</h3>
+<p>Open nvme0n1 with gdisk:</p>
+<pre><code># gdisk /dev/nvme0n1
+</code></pre>
+<p>Create GPT partition table with option &ldquo;o&rdquo;.</p>
+<h3 id="create-efi-partition">Create EFI partition</h3>
+<p>Create new EFI partition w/ 550mb with option &ldquo;n&rdquo;, using the following parameters:</p>
+<pre><code>Partition #1
+Default starting sector
++550M
+Change partition type to EFI System (ef00)
+</code></pre>
+<h3 id="create-boot-partition">Create boot partition</h3>
+<p>Create new boot partition w/ 550mb with option &ldquo;n&rdquo;, using the following parameters:</p>
+<pre><code>Partition #2
+Default starting sector
++550M
+Leave default type of 8300
+</code></pre>
+<h3 id="create-swap-partition">Create swap partition</h3>
+<p>The old rule of thumb used to be that a swap partition should be the same size as the amount of memory in the system, but given the typical amount of memory in modern systems this is obviously no longer necessary. For my system with 16 or 32 GB of memory, a swap of 8 GB is rarely even used.</br></p>
+<p>Create new Swap partition w/ 8GB with option &ldquo;n&rdquo;, using the following parameters:</p>
+<pre><code>Partition #3
+Default starting sector
++8G
+Change to linux swap (8200)
+</code></pre>
+<h3 id="create-root-partition">Create root partition</h3>
+<p>Create new root partition w/ remaining disk space with option &ldquo;n&rdquo;, using the following parameters:</p>
+<pre><code>Partition #4
+Default starting sector
+Remaining space
+Linux LUKS type 8309
+</code></pre>
+<p>And then exit gdisk.</p>
+<h2 id="write-file-systems">Write file systems</h2>
+<h3 id="efi-partition">EFI partition</h3>
+<p>Write file system to new EFI System partition:</p>
+<pre><code># cat /dev/zero &gt; /dev/nvme0n1p1 
+# mkfs.fat -F32 /dev/nvme0n1p1 
+</code></pre>
+<h3 id="boot-partition">Boot partition</h3>
+<p>Then boot partition:</p>
+<pre><code># cat /dev/zero &gt; /dev/nvme0n1p2 
+# mkfs.ext2 /dev/nvme0n1p2
+</code></pre>
+<h3 id="root-partition">Root partition</h3>
+<p>Prepare root partition w/ LUKS:</p>
+<pre><code># cryptsetup -y -v luksFormat --type luks2 /dev/nvme0n1p4
+# cryptsetup luksDump /dev/nvme0n1p4
+# cryptsetup open /dev/nvme0n1p4 archcryptroot
+# mkfs.ext4 /dev/mapper/archcryptroot
+# mount /dev/mapper/archcryptroot /mnt
+</code></pre>
+<p>I use <em>archcryptroot</em> for the name of my encrypted volume, but change as necessary.</p>
+<h3 id="swap-partition">Swap partition</h3>
+<p>Then swap:</p>
+<pre><code># mkswap /dev/nvme0n1p3
+# swapon /dev/nvme0n1p3
+</code></pre>
+<h3 id="create-mount-points">Create mount points</h3>
+<pre><code># mkdir /mnt/boot
+# mount /dev/nvme0n1p2 /mnt/boot
+# mkdir /mnt/boot/efi
+# mount /dev/nvme0n1p1 /mnt/boot/efi
+</code></pre>
+<h2 id="system-install">System install</h2>
+<h3 id="install-base-packages">Install base packages</h3>
+<pre><code># pacstrap /mnt base base-devel linux linux-firmware grub-efi-x86_64 efibootmgr
+</code></pre>
+<h3 id="generate-fstab">Generate fstab</h3>
+<pre><code># genfstab -U /mnt &gt;&gt; /mnt/etc/fstab
+</code></pre>
+<h3 id="enter-new-system">Enter new system</h3>
+<pre><code># arch-chroot /mnt /bin/bash
+</code></pre>
+<h3 id="set-clock">Set clock</h3>
+<pre><code># ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime
+# hwclock –systohc
+</code></pre>
+<h3 id="generate-locale">Generate locale</h3>
+<p>In /etc/locale.gen <strong>uncomment only</strong>: en_US.UTF-8 UTF-8</p>
+<pre><code># locale-gen
+</code></pre>
+<p>In /etc/locale.conf, you should <strong>only</strong> have this line: LANG=en_US.UTF-8</p>
+<pre><code># nano /etc/locale.conf
+</code></pre>
+<h3 id="set-hostname--update-hosts">Set hostname &amp; update hosts</h3>
+<pre><code># echo linuxmachine &gt; /etc/hostname
+</code></pre>
+<p>Update /etc/hosts with the following:</p>
+<pre><code>127.0.0.1   localhost
+::1         localhost
+127.0.1.1   linuxmachine.localdomain    linuxmachine
+</code></pre>
+<h3 id="set-root-password">Set root password</h3>
+<pre><code># passwd
+</code></pre>
+<h3 id="update-etcmkinitcpioconf--generate-initrd-image">Update /etc/mkinitcpio.conf &amp; generate initrd image</h3>
+<p>Edit /etc/mkinitcpio.conf with the following:</p>
+<pre><code>HOOKS=(base udev autodetect modconf block keymap encrypt resume filesystems keyboard fsck)
+</code></pre>
+<p>Then run:</p>
+<pre><code># mkinitcpio -p linux
+</code></pre>
+<h3 id="install-grub">Install grub</h3>
+<pre><code># grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ArchLinux
+</code></pre>
+<p>Edit /etc/default/grub so it includes a statement like this:</p>
+<pre><code>GRUB_CMDLINE_LINUX=&quot;cryptdevice=/dev/nvme0n1p4:archcryptroot resume=/dev/nvme0n1p3&quot;
+</code></pre>
+<p>Generate final grub configuration:</p>
+<pre><code># grub-mkconfig -o /boot/grub/grub.cfg
+</code></pre>
+<h3 id="exit--reboot">Exit &amp; reboot</h3>
+<pre><code># exit
+# umount -R /mnt
+# swapoff -a
+# reboot
+</code></pre>
+<p>To be continued.</p>
 
 </section>
 
@@ -440,11 +561,9 @@
     
     <section class="article-tags">
         
-            <a href="/tags/yt-dlp/">yt-dlp</a>
+            <a href="/tags/arch-linux/">Arch Linux</a>
         
-            <a href="/tags/zoom/">Zoom</a>
-        
-            <a href="/tags/bash/">Bash</a>
+            <a href="/tags/thinkpad-e15-gen-2/">Thinkpad E15 Gen 2</a>
         
     </section>
 
@@ -471,7 +590,7 @@
 
 
         <span>
-            Last updated on October 17, 2023
+            Last updated on November 7, 2023
         </span>
     </section></footer>
 
@@ -527,12 +646,12 @@
             
                 
 <article class="">
-    <a href="/p/arch-linux-install/">
+    <a href="/p/using-yt-dlp-with-zoom/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">Arch Linux Install</h2>
+            <h2 class="article-title">Using yt-dlp With Zoom</h2>
         </div>
     </a>
 </article>

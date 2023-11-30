@@ -8,14 +8,14 @@
         <language>en-us</language>
         <lastBuildDate>Wed, 15 Nov 2023 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/tags/pandas/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Cleaning A Bloomberg Data Excel Export</title>
-        <link>https://www.jaredszajkowski.com/archives/cleaning-a-bloomberg-data-excel-export/</link>
+        <link>https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/</link>
         <pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/archives/cleaning-a-bloomberg-data-excel-export/</guid>
+        <guid>https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/</guid>
         <description>&lt;p&gt;In this tutorial, we will write a python function that imports an excel export from Bloomberg, removes ancillary rows and columns, and leaves the data in a format where it can then be used in time series analysis.&lt;/p&gt;
 &lt;h2 id=&#34;example-of-a-bloomberg-excel-export&#34;&gt;Example of a Bloomberg excel export&lt;/h2&gt;
 &lt;p&gt;We will use the SPX index data in this example. Exporting the data from Bloomberg using the excel Bloomberg add-on yields data in the following format:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/archives/cleaning-a-bloomberg-data-excel-export/Format_of_data_in_excel_export_from_Bloomberg.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Format_of_data_in_excel_export_from_Bloomberg.png&#34;
 	width=&#34;295&#34;
 	height=&#34;455&#34;
 	
@@ -185,7 +185,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/archives/cleaning-a-bloomberg-data-excel-export/Dataframe_excel_import.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Dataframe_excel_import.png&#34;
 	width=&#34;367&#34;
 	height=&#34;302&#34;
 	
@@ -215,7 +215,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/archives/cleaning-a-bloomberg-data-excel-export/Set_column_headings.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Set_column_headings.png&#34;
 	width=&#34;376&#34;
 	height=&#34;296&#34;
 	
@@ -246,7 +246,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/archives/cleaning-a-bloomberg-data-excel-export/Remove_index_heading.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Remove_index_heading.png&#34;
 	width=&#34;373&#34;
 	height=&#34;299&#34;
 	
@@ -277,7 +277,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/archives/cleaning-a-bloomberg-data-excel-export/Remove_rows.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Remove_rows.png&#34;
 	width=&#34;323&#34;
 	height=&#34;298&#34;
 	
@@ -307,7 +307,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/archives/cleaning-a-bloomberg-data-excel-export/Set_index.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Set_index.png&#34;
 	width=&#34;244&#34;
 	height=&#34;318&#34;
 	
@@ -344,7 +344,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/archives/cleaning-a-bloomberg-data-excel-export/Drop_volume.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Drop_volume.png&#34;
 	width=&#34;163&#34;
 	height=&#34;320&#34;
 	
@@ -374,7 +374,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/archives/cleaning-a-bloomberg-data-excel-export/Rename_column.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Rename_column.png&#34;
 	width=&#34;156&#34;
 	height=&#34;319&#34;
 	
@@ -404,7 +404,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/archives/cleaning-a-bloomberg-data-excel-export/Sort_by_date.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Sort_by_date.png&#34;
 	width=&#34;136&#34;
 	height=&#34;317&#34;
 	
@@ -433,7 +433,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;And verify the output is as expected:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/archives/cleaning-a-bloomberg-data-excel-export/Excel_export.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Excel_export.png&#34;
 	width=&#34;278&#34;
 	height=&#34;380&#34;
 	
@@ -465,7 +465,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;print(f&amp;#34;--------------------&amp;#34;)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/archives/cleaning-a-bloomberg-data-excel-export/Output_confirmation.PNG&#34;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Output_confirmation.PNG&#34;
 	width=&#34;417&#34;
 	height=&#34;116&#34;
 	
