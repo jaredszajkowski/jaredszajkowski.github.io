@@ -3,7 +3,7 @@ title: Hello World
 description: Welcome to my website.
 # slug: hello-world
 date: 2023-09-26 00:00:00+0000
-lastmod: 2023-11-20 00:00:00+0000
+lastmod: 2023-12-10 00:00:00+0000
 # image: cover.jpg
 draft: false
 categories:
@@ -13,6 +13,8 @@ tags:
     - GitHub
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
+
+## Hello World
 
 Welcome to my website. This is meant to serve as a place for me to publish various posts from my explorations into Arch Linux, data science, quant finance, and other topics.
 

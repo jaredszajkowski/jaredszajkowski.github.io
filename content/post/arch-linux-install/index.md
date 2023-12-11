@@ -15,6 +15,8 @@ tags:
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 
+## Introduction
+
 This is the basic framework that I use to install Arch Linux, with a few changes catered to the Lenovo ThinkPad E15 Gen 2. I have found that this is a decent mid range laptop, excellent linux compatibility, great keyboard, and overall provides a good value.
 
 ## Getting started

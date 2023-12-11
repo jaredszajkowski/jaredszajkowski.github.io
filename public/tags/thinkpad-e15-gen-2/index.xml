@@ -12,7 +12,8 @@
         <pubDate>Fri, 29 Sep 2023 00:00:01 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/p/arch-linux-install/</guid>
-        <description>&lt;p&gt;This is the basic framework that I use to install Arch Linux, with a few changes catered to the Lenovo ThinkPad E15 Gen 2. I have found that this is a decent mid range laptop, excellent linux compatibility, great keyboard, and overall provides a good value.&lt;/p&gt;
+        <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;This is the basic framework that I use to install Arch Linux, with a few changes catered to the Lenovo ThinkPad E15 Gen 2. I have found that this is a decent mid range laptop, excellent linux compatibility, great keyboard, and overall provides a good value.&lt;/p&gt;
 &lt;h2 id=&#34;getting-started&#34;&gt;Getting started&lt;/h2&gt;
 &lt;p&gt;This tutorial assumes the following:&lt;/p&gt;
 &lt;ul&gt;

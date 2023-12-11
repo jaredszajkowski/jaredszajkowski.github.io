@@ -12,7 +12,8 @@
         <pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/</guid>
-        <description>&lt;p&gt;In this tutorial, we will write a python function that imports an excel export from Bloomberg, removes ancillary rows and columns, and leaves the data in a format where it can then be used in time series analysis.&lt;/p&gt;
+        <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;In this tutorial, we will write a python function that imports an excel export from Bloomberg, removes ancillary rows and columns, and leaves the data in a format where it can then be used in time series analysis.&lt;/p&gt;
 &lt;h2 id=&#34;example-of-a-bloomberg-excel-export&#34;&gt;Example of a Bloomberg excel export&lt;/h2&gt;
 &lt;p&gt;We will use the SPX index data in this example. Exporting the data from Bloomberg using the excel Bloomberg add-on yields data in the following format:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Format_of_data_in_excel_export_from_Bloomberg.png&#34;

@@ -15,6 +15,8 @@ tags:
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 
+## Introduction
+
 Here are my notes for some of the more commonly used git commands along with initial setup for git in Linux.
 
 ## Installation

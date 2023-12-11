@@ -10,7 +10,7 @@
 <meta property='og:description' content='Bash script for usage of yt-dlp with Zoom.'>
 <meta property='og:url' content='https://www.jaredszajkowski.com/p/using-yt-dlp-with-zoom/'>
 <meta property='og:site_name' content='Jared Szajkowski'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='yt-dlp' /><meta property='article:tag' content='Zoom' /><meta property='article:tag' content='Bash' /><meta property='article:published_time' content='2023-10-01T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-10-17T00:00:00&#43;00:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='yt-dlp' /><meta property='article:tag' content='Zoom' /><meta property='article:tag' content='Bash' /><meta property='article:published_time' content='2023-10-01T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-12-10T00:00:00&#43;00:00'/>
 <meta name="twitter:title" content="Using yt-dlp With Zoom">
 <meta name="twitter:description" content="Bash script for usage of yt-dlp with Zoom.">
     <link rel="shortcut icon" href="/profile_pic.jpg" />
@@ -266,6 +266,7 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
+    <li><a href="#introduction">Introduction</a></li>
     <li><a href="#install-cookie-editor">Install cookie editor</a></li>
     <li><a href="#modify-export-format">Modify export format</a></li>
     <li><a href="#log-in-to-zoom">Log in to Zoom</a></li>
@@ -361,7 +362,8 @@
     <section class="article-content">
     
     
-    <p>If anyone uses Zoom to record and later wants to access recordings of video calls, here&rsquo;s a simple linux bash script to download the video file and acompanying subtitles. For a long time I used <a class="link" href="https://github.com/Battleman/zoomdl"  target="_blank" rel="noopener"
+    <h2 id="introduction">Introduction</h2>
+<p>If anyone uses Zoom to record and later wants to access recordings of video calls, here&rsquo;s a simple linux bash script to download the video file and acompanying subtitles. For a long time I used <a class="link" href="https://github.com/Battleman/zoomdl"  target="_blank" rel="noopener"
     >zoomdl</a>, but it is no longer under active development, and I began running into various issues about a year ago.</p>
 <p>This tutorial requires you to have a &ldquo;cookies&rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Zoom cookies after logging in.</p>
 <p>Here&rsquo;s the steps to setting this up:</p>
@@ -403,7 +405,7 @@
 	
 ></p>
 <h2 id="create-bash-script">Create bash script</h2>
-<p>Save the following code to a text file (my bash script file name is <code>yt-dlp.sh</code>):</p>
+<p>Save the following code to a text file (my bash script file name is <code>yt-dlp-zoom.sh</code>):</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -424,10 +426,10 @@
 </div>
 </div><h2 id="change-permissions">Change permissions</h2>
 <p>Modify the permissions of the bash script to allow execution:</p>
-<pre><code>$ chmod +x yt-dlp.sh
+<pre><code>$ chmod +x yt-dlp-zoom.sh
 </code></pre>
 <h2 id="execute-the-script">Execute the script</h2>
-<p>Execute the bash script with ./yt-dlp.sh, copy and paste the link to the video that you would like to save, and it should download the video and the subtitles.</p>
+<p>Execute the bash script with ./yt-dlp-zoom.sh, copy and paste the link to the video that you would like to save, and it should download the video and the subtitles.</p>
 <h2 id="references">References</h2>
 <p>References for yt-dlp (and used for above):</p>
 <p><a class="link" href="https://ostechnix.com/yt-dlp-tutorial/"  target="_blank" rel="noopener"
@@ -471,7 +473,7 @@
 
 
         <span>
-            Last updated on October 17, 2023
+            Last updated on December 10, 2023
         </span>
     </section></footer>
 
@@ -511,6 +513,19 @@
     <h2 class="section-title">Related content</h2>
     <div class="related-content">
         <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/using-yt-dlp-with-panopto/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Using yt-dlp With Panopto</h2>
+        </div>
+    </a>
+</article>
+
             
                 
 <article class="">

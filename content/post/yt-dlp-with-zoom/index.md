@@ -3,7 +3,7 @@ title: Using yt-dlp With Zoom
 description: Bash script for usage of yt-dlp with Zoom.
 #slug: hello-world-2
 date: 2023-10-01 00:00:00+0000
-lastmod: 2023-10-17 00:00:00+0000
+lastmod: 2023-12-10 00:00:00+0000
 # image: cover.jpg
 draft: false
 categories:
@@ -15,6 +15,8 @@ tags:
     - Bash
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
+
+## Introduction
 
 If anyone uses Zoom to record and later wants to access recordings of video calls, here's a simple linux bash script to download the video file and acompanying subtitles. For a long time I used [zoomdl](https://github.com/Battleman/zoomdl), but it is no longer under active development, and I began running into various issues about a year ago.
 
@@ -44,7 +46,7 @@ The export button is at the top fo the window. It copies the cookies to your cli
 
 ## Create bash script
 
-Save the following code to a text file (my bash script file name is `yt-dlp.sh`):
+Save the following code to a text file (my bash script file name is `yt-dlp-zoom.sh`):
 
 ```html
 #!/bin/bash
@@ -59,11 +61,11 @@ yt-dlp --referer "https://zoom.us/" --cookies /path/to/cookies/file/cookies.txt 
 
 Modify the permissions of the bash script to allow execution:
 
-    $ chmod +x yt-dlp.sh
+    $ chmod +x yt-dlp-zoom.sh
 
 ## Execute the script
 
-Execute the bash script with ./yt-dlp.sh, copy and paste the link to the video that you would like to save, and it should download the video and the subtitles.
+Execute the bash script with ./yt-dlp-zoom.sh, copy and paste the link to the video that you would like to save, and it should download the video and the subtitles.
 
 ## References
 
