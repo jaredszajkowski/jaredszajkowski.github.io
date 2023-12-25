@@ -302,9 +302,13 @@ We will then drop the original ‘split’ column before combining the split dat
 df_splits.drop(columns = {'split'}, inplace = True)
 ``` 
 
+Which gives us:
+
+
+
 ## Combining dataframes
 
-Now we will combine the ‘split’ dataframe with the original dataframe so that the cumulative split column is part of the original dataframe:
+Now we will merge the ‘split’ dataframe with the original dataframe so that the cumulative split column is part of the original dataframe:
 
 ```html
 # Merge df and df_split dataframes
