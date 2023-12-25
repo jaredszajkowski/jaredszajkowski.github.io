@@ -295,18 +295,21 @@ Which gives us:
 
 ![Dataframe with split and cumulative split values](08_Dataframe_with_cumulative_split_column.png)
 
+We will then drop the original ‘split’ column before combining the split data frame with the original data frame, as follows:
 
+```html
+# Drop original split column before combining dataframes
+df_splits.drop(columns = {'split'}, inplace = True)
+``` 
 
+## Combining dataframes
 
+Now we will combine the ‘split’ dataframe with the original dataframe so that the cumulative split column is part of the original dataframe:
 
-    
-    
-    
-    # Drop original split column before combining dataframes
-    df_splits.drop(columns = {'split'}, inplace = True)
-    
-    # Merge df and df_split dataframes
-    df_comp = pd.merge(df, df_splits, on='Date', how='outer')
+```html
+# Merge df and df_split dataframes
+df_comp = pd.merge(df, df_splits, on='Date', how='outer')
+```
     
     # Forward fill for all split and cumulative split values
     df_comp['split'].fillna(method = 'ffill', inplace = True)
