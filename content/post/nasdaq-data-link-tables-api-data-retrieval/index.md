@@ -3,7 +3,7 @@ title: Nasdaq Data Link Tables API Data Retrieval
 description: A python function to pull data from Nasdaq Data Link using the tables API and then complete the data for ease of use.
 # slug: hello-world
 date: 2023-12-24 00:00:01+0000
-#lastmod: 2023-11-24 00:00:00+0000
+lastmod: 2023-12-25 00:00:00+0000
 # image: cover.jpg
 draft: false
 categories:
@@ -295,7 +295,7 @@ Which gives us:
 
 ![Dataframe with split and cumulative split values](08_Dataframe_with_cumulative_split_column.png)
 
-We will then drop the original ‘split’ column before combining the split data frame with the original data frame, as follows:
+We will then drop the original `split` column before combining the split data frame with the original data frame, as follows:
 
 ```html
 # Drop original split column before combining dataframes
@@ -304,53 +304,97 @@ df_splits.drop(columns = {'split'}, inplace = True)
 
 Which gives us:
 
-
+![Dataframe with only cumulative split values](09_Dataframe_with_only_cumulative_split_column.png)
 
 ## Combining dataframes
 
-Now we will merge the ‘split’ dataframe with the original dataframe so that the cumulative split column is part of the original dataframe:
+Now we will merge the `df_split` dataframe with the original `df` dataframe so that the cumulative split column is part of the original dataframe. We will call this data frame `df_comp`:
 
 ```html
 # Merge df and df_split dataframes
 df_comp = pd.merge(df, df_splits, on='Date', how='outer')
 ```
-    
-    # Forward fill for all split and cumulative split values
-    df_comp['split'].fillna(method = 'ffill', inplace = True)
-    df_comp['Cum_Split'].fillna(method = 'ffill', inplace = True)
-    
-    # Replace all split and cumulative split values of NaN with 1.0 to have complete split values
-    df_comp['split'] = df_comp['split'].replace(np.nan, 1.0)
-    df_comp['Cum_Split'] = df_comp['Cum_Split'].replace(np.nan, 1.0)
 
-    # Calculate the non adjusted prices based on the splits only
-    df_comp['non_adj_open_split_only'] = df_comp['open'] * df_comp['Cum_Split'] 
-    df_comp['non_adj_high_split_only'] = df_comp['high'] * df_comp['Cum_Split']    
-    df_comp['non_adj_low_split_only'] = df_comp['low'] * df_comp['Cum_Split']    
-    df_comp['non_adj_close_split_only'] = df_comp['close'] * df_comp['Cum_Split']
-    df_comp['non_adj_dividend_split_only'] = df_comp['dividend'] * df_comp['Cum_Split']
+We are using the merge function of pandas, which includes arguments for the names of both dataframes to be merged, the column to match between the dataframes, and the parameter for the type of merge to be performed. The `outer` argument specifies that all rows from both dataframes will be included, and any missing values will be filled in with `NaN` if there is no matching data. This ensures that all data from both dataframes is retained.
 
-    # Calculate the adjusted prices based on the splits
-    df_comp['Open'] = df_comp['non_adj_open_split_only'] / df_comp['Cum_Split'][-1]
-    df_comp['High'] = df_comp['non_adj_high_split_only'] / df_comp['Cum_Split'][-1]
-    df_comp['Low'] = df_comp['non_adj_low_split_only'] / df_comp['Cum_Split'][-1]
-    df_comp['Close'] = df_comp['non_adj_close_split_only'] / df_comp['Cum_Split'][-1]
-    df_comp['Dividend'] = df_comp['non_adj_dividend_split_only'] / df_comp['Cum_Split'][-1]
-    df_comp['Dividend_Pct_Orig'] = df_comp['dividend'] / df_comp['close']
-    df_comp['Dividend_Pct_Adj'] = df_comp['Dividend'] / df_comp['Close']
+Running:
 
-    # Export data to excel
-    file = fund + "_NDL.xlsx"
-    df_comp.to_excel(file, sheet_name='data')
-    
-    # Output confirmation
-    print(f"The last date of data for {fund} is: ")
-    print(df_comp[-1:])
-    print(f"NDL data updater complete for {fund} data")
-    return print(f"--------------------")
+    df_comp.head(10)
+
+Gives us:
+
+![Complete dataframe incluidng the cumulative split values](10_Complete_dataframe_including_cumulative_split.png)
+
+## Forward filling cumulative split values
+
+From here, we want to fill in the rest of the `split` and `Cum_Split` values. This is done using the forward fill function, which for all cells that have a value of `NaN` will fill in the previous valid value until another value is encountered. Here's the code:
+
+```html
+# Forward fill for all split and cumulative split values
+df_comp['split'].fillna(method = 'ffill', inplace = True)
+df_comp['Cum_Split'].fillna(method = 'ffill', inplace = True)
 ```
 
+Running:
 
+    df_comp.head(10)
+
+Gives us:
+
+![First 10 rows of complete dataframe with split values](11_Complete_dataframe_ffill_split_values_first_10_rows.png)
+
+At first glance, it doesn't look like anything changed. That's because there wasn't any ffill action taken on the initial values until pandas encountered a valid value to then forward fill. However, checking the last 10 rows:
+
+    df_comp.tail(10)
+
+Gives us:
+
+![Last 10 rows of complete dataframe with split values](12_Complete_dataframe_ffill_split_values_last_10_rows.png)
+
+Which is the result that we were expecting. But, what about the first rows from 12/12/1980 to 6/15/1987? We can fill those `split` and `Cum_Split` values with the following code:
+
+```html
+# Replace all split and cumulative split values of NaN with 1.0 to have complete split values
+df_comp['split'] = df_comp['split'].replace(np.nan, 1.0)
+df_comp['Cum_Split'] = df_comp['Cum_Split'].replace(np.nan, 1.0)
+```
+
+Now, checking the first 10 rows:
+
+    df_comp.head(10)
+
+Gives us:
+
+![First 10 rows of complete dataframe with split values](13_Complete_dataframe_ffill_split_values_first_10_rows.png)
+
+With this data, we now know for every day in the data set the following pieces of information:
+
+1. If the stock split on that day
+2. What the total split ratio is up to and including that day
+
+## Calculating adjusted and non-adjusted prices
+
+From here, we can complete our dataset by calculating the adjusted and non-adjusted prices using the cumulative split ratios from above:
+
+```html
+# Calculate the non adjusted prices based on the splits only
+df_comp['non_adj_open_split_only'] = df_comp['open'] * df_comp['Cum_Split'] 
+df_comp['non_adj_high_split_only'] = df_comp['high'] * df_comp['Cum_Split']    
+df_comp['non_adj_low_split_only'] = df_comp['low'] * df_comp['Cum_Split']    
+df_comp['non_adj_close_split_only'] = df_comp['close'] * df_comp['Cum_Split']
+df_comp['non_adj_dividend_split_only'] = df_comp['dividend'] * df_comp['Cum_Split']
+
+# Calculate the adjusted prices based on the splits
+df_comp['Open'] = df_comp['non_adj_open_split_only'] / df_comp['Cum_Split'][-1]
+df_comp['High'] = df_comp['non_adj_high_split_only'] / df_comp['Cum_Split'][-1]
+df_comp['Low'] = df_comp['non_adj_low_split_only'] / df_comp['Cum_Split'][-1]
+df_comp['Close'] = df_comp['non_adj_close_split_only'] / df_comp['Cum_Split'][-1]
+df_comp['Dividend'] = df_comp['non_adj_dividend_split_only'] / df_comp['Cum_Split'][-1]
+df_comp['Dividend_Pct_Orig'] = df_comp['dividend'] / df_comp['close']
+df_comp['Dividend_Pct_Adj'] = df_comp['Dividend'] / df_comp['Close']
+```
+
+Included above is the adjusted dividends values. For any time series analysis, not only are the adjusted prices needed, but so are the adusted dividends. Remember, we already have the adjusted total return prices - those come directly from NDL.
 
 ## Export data
 
@@ -358,13 +402,13 @@ Next, we want to export the data to an excel file, for easy viewing and referenc
 
 ```html
 # Export data to excel
-file = fund + ".xlsx"
-df.to_excel(file, sheet_name='data')
+file = fund + "_NDL.xlsx"
+df_comp.to_excel(file, sheet_name='data')
 ```
 
 And verify the output is as expected:
 
-![Excel export](Excel_export.png)
+![Excel export](14_Excel_export.png)
 
 ## Output confirmation
 
@@ -373,16 +417,16 @@ Finally, we want to print a confirmation that the process succeeded along withe 
 ```html
 # Output confirmation
 print(f"The last date of data for {fund} is: ")
-print(df[-1:])
-print(f"Bloomberg data conversion complete for {fund} data")
+print(df_comp[-1:])
+print(f"NDL data updater complete for {fund} data")
 print(f"--------------------")
 ```
 
-![Output confirmation](Output_confirmation.png)
+![Output confirmation](15_Output_confirmation.png)
 
 ## References
 
-https://docs.data.nasdaq.com/docs
-https://docs.data.nasdaq.com/docs/tables-1
-https://docs.data.nasdaq.com/docs/time-series
+https://docs.data.nasdaq.com/docs</br>
+https://docs.data.nasdaq.com/docs/tables-1</br>
+https://docs.data.nasdaq.com/docs/time-series</br>
 https://docs.data.nasdaq.com/docs/python
