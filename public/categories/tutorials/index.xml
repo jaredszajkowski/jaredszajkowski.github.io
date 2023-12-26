@@ -557,11 +557,9 @@
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Forward fill for all split and cumulative split values
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;df_comp[&amp;#39;split&amp;#39;].fillna(method = &amp;#39;ffill&amp;#39;, inplace = True)
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;# Forward fill for all cumulative split values
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;df_comp[&amp;#39;Cum_Split&amp;#39;].fillna(method = &amp;#39;ffill&amp;#39;, inplace = True)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
@@ -570,8 +568,8 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/nasdaq-data-link-tables-api-data-retrieval/11_Complete_dataframe_ffill_split_values_first_10_rows.png&#34;
-	width=&#34;1060&#34;
-	height=&#34;317&#34;
+	width=&#34;1029&#34;
+	height=&#34;344&#34;
 	
 	loading=&#34;lazy&#34;
 	
@@ -579,8 +577,8 @@
 	
 	
 		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;334&#34;
-		data-flex-basis=&#34;802px&#34;
+		data-flex-grow=&#34;299&#34;
+		data-flex-basis=&#34;717px&#34;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;At first glance, it doesn&amp;rsquo;t look like anything changed. That&amp;rsquo;s because there wasn&amp;rsquo;t any ffill action taken on the initial values until pandas encountered a valid value to then forward fill. However, checking the last 10 rows:&lt;/p&gt;
@@ -588,8 +586,8 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/nasdaq-data-link-tables-api-data-retrieval/12_Complete_dataframe_ffill_split_values_last_10_rows.png&#34;
-	width=&#34;1095&#34;
-	height=&#34;317&#34;
+	width=&#34;1086&#34;
+	height=&#34;341&#34;
 	
 	loading=&#34;lazy&#34;
 	
@@ -597,8 +595,8 @@
 	
 	
 		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;345&#34;
-		data-flex-basis=&#34;829px&#34;
+		data-flex-grow=&#34;318&#34;
+		data-flex-basis=&#34;764px&#34;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;Which is the result that we were expecting. But, what about the first rows from 12/12/1980 to 6/15/1987? We can fill those &lt;code&gt;split&lt;/code&gt; and &lt;code&gt;Cum_Split&lt;/code&gt; values with the following code:&lt;/p&gt;
@@ -723,9 +721,10 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;print(f&amp;#34;--------------------&amp;#34;)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/nasdaq-data-link-tables-api-data-retrieval/15_Output_confirmation.png&#34;
-	width=&#34;711&#34;
-	height=&#34;466&#34;
+&lt;/div&gt;&lt;p&gt;And confirming the output:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/nasdaq-data-link-tables-api-data-retrieval/15_Output_confirmation.png&#34;
+	width=&#34;643&#34;
+	height=&#34;470&#34;
 	
 	loading=&#34;lazy&#34;
 	
@@ -733,8 +732,8 @@
 	
 	
 		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;152&#34;
-		data-flex-basis=&#34;366px&#34;
+		data-flex-grow=&#34;136&#34;
+		data-flex-basis=&#34;328px&#34;
 	
 &gt;&lt;/p&gt;
 &lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
@@ -1288,7 +1287,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;print(f&amp;#34;--------------------&amp;#34;)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Output_confirmation.PNG&#34;
+&lt;/div&gt;&lt;p&gt;And confirming the output:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Output_confirmation.PNG&#34;
 	width=&#34;417&#34;
 	height=&#34;116&#34;
 	
@@ -1302,6 +1302,9 @@
 		data-flex-basis=&#34;862px&#34;
 	
 &gt;&lt;/p&gt;
+&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.bloomberg.com/professional/support/software-updates/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.bloomberg.com/professional/support/software-updates/&lt;/a&gt;&lt;/p&gt;
 </description>
         </item>
         <item>

@@ -285,4 +285,10 @@ print(f"Bloomberg data conversion complete for {fund} data")
 print(f"--------------------")
 ```
 
+And confirming the output:
+
 ![Output confirmation](Output_confirmation.png)
+
+## References
+
+https://www.bloomberg.com/professional/support/software-updates/

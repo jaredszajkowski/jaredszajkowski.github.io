@@ -3,7 +3,7 @@ title: Nasdaq Data Link Tables API Data Retrieval
 description: A python function to pull data from Nasdaq Data Link using the tables API and then complete the data for ease of use.
 # slug: hello-world
 date: 2023-12-24 00:00:01+0000
-lastmod: 2023-12-25 00:00:00+0000
+lastmod: 2023-12-26 00:00:00+0000
 # image: cover.jpg
 draft: false
 categories:
@@ -330,8 +330,7 @@ Gives us:
 From here, we want to fill in the rest of the `split` and `Cum_Split` values. This is done using the forward fill function, which for all cells that have a value of `NaN` will fill in the previous valid value until another value is encountered. Here's the code:
 
 ```html
-# Forward fill for all split and cumulative split values
-df_comp['split'].fillna(method = 'ffill', inplace = True)
+# Forward fill for all cumulative split values
 df_comp['Cum_Split'].fillna(method = 'ffill', inplace = True)
 ```
 
@@ -421,6 +420,8 @@ print(df_comp[-1:])
 print(f"NDL data updater complete for {fund} data")
 print(f"--------------------")
 ```
+
+And confirming the output:
 
 ![Output confirmation](15_Output_confirmation.png)
 

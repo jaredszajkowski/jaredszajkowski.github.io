@@ -466,7 +466,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;print(f&amp;#34;--------------------&amp;#34;)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Output_confirmation.PNG&#34;
+&lt;/div&gt;&lt;p&gt;And confirming the output:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Output_confirmation.PNG&#34;
 	width=&#34;417&#34;
 	height=&#34;116&#34;
 	
@@ -480,6 +481,9 @@
 		data-flex-basis=&#34;862px&#34;
 	
 &gt;&lt;/p&gt;
+&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.bloomberg.com/professional/support/software-updates/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.bloomberg.com/professional/support/software-updates/&lt;/a&gt;&lt;/p&gt;
 </description>
         </item>
         
