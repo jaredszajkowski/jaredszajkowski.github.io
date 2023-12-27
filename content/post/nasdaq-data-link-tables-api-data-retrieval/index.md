@@ -122,8 +122,7 @@ def ndl_data_updater(fund):
     # Merge df and df_split dataframes
     df_comp = pd.merge(df, df_splits, on='Date', how='outer')
     
-    # Forward fill for all split and cumulative split values
-    df_comp['split'].fillna(method = 'ffill', inplace = True)
+    # Forward fill for all cumulative split values
     df_comp['Cum_Split'].fillna(method = 'ffill', inplace = True)
     
     # Replace all split and cumulative split values of NaN with 1.0 to have complete split values

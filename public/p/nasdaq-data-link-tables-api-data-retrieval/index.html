@@ -526,7 +526,6 @@
 </span><span class="lnt">73
 </span><span class="lnt">74
 </span><span class="lnt">75
-</span><span class="lnt">76
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># This function pulls the data for the specific fund from from Nasdaq Data
@@ -572,8 +571,7 @@
 </span></span><span class="line"><span class="cl">    # Merge df and df_split dataframes
 </span></span><span class="line"><span class="cl">    df_comp = pd.merge(df, df_splits, on=&#39;Date&#39;, how=&#39;outer&#39;)
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    # Forward fill for all split and cumulative split values
-</span></span><span class="line"><span class="cl">    df_comp[&#39;split&#39;].fillna(method = &#39;ffill&#39;, inplace = True)
+</span></span><span class="line"><span class="cl">    # Forward fill for all cumulative split values
 </span></span><span class="line"><span class="cl">    df_comp[&#39;Cum_Split&#39;].fillna(method = &#39;ffill&#39;, inplace = True)
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    # Replace all split and cumulative split values of NaN with 1.0 to have complete split values
