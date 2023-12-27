@@ -1,7 +1,7 @@
 ---
 title: "Links"
 date: 2023-10-01 00:00:00+0000
-lastmod: 2023-11-24 00:00:00+0000
+lastmod: 2023-12-27 00:00:00+0000
 slug: "links"
 #layout: "search"
 links:
@@ -16,7 +16,8 @@ links:
   - title: Arch Linux
     description: Arch Linux - A simple, lightweight distribution.
     website: https://archlinux.org/
-    image: https://archlinux.org/static/logos/archlinux-logo-dark-90dpi.ebdee92a15b3.png
+    image: https://archlinux.org/static/logos/archlinux-logo-dark-scalable.518881f04ca9.svg
+#    image: {{ if data-scheme=dark}} "https://archlinux.org/static/logos/archlinux-logo-light-scalable.1ae4cc2e2469.svg" {{ else }} "https://archlinux.org/static/logos/archlinux-logo-dark-scalable.518881f04ca9.svg" {{ end }}
   - title: LibreOffice
     description: LibreOffice includes several applications that make it the most versatile Free and Open Source office suite available, including Writer (word processing), Calc (spreadsheets), Impress (presentations), Draw (vector graphics and flowcharts), Base (databases), and Math (formula editing).
     website: https://www.libreoffice.org/
