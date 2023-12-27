@@ -33,6 +33,10 @@ links:
     description: Thunderbird is a free and open source email, newsfeed, chat, and calendaring client, that’s easy to set up and customize. One of the core principles of Thunderbird is the use and promotion of open standards - this focus is a rejection of our world of closed platforms and services that can’t communicate with each other. We want our users to have freedom and choice in how they communicate.
     website: https://www.thunderbird.net/en-US/
     image: https://www.thunderbird.net/media/img/thunderbird/logos/release.png
+  - title: pandas
+    description: pandas is a fast, powerful, flexible and easy to use open source data analysis and manipulation tool, built on top of the Python programming language.
+    website: https://pandas.pydata.org/
+    image: https://pandas.pydata.org/static/img/pandas_mark.svg
 menu:
     main: 
 #        name: 
