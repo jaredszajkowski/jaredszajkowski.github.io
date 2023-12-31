@@ -82,7 +82,7 @@ enabled = false
 ## Comments
 [comments]
 enabled = true
-provider = "giscus"
+provider = "remark42"
 
 [comments.disqusjs]
 shortname = ""
@@ -97,8 +97,8 @@ issueTerm = "pathname"
 label = ""
 
 [comments.remark42]
-host = ""
-site = ""
+host = "https://www.jaredszajkowski.com"
+site = "remark"
 locale = ""
 
 [comments.vssue]

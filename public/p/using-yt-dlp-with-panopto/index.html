@@ -574,54 +574,32 @@
      
     
         
-    <script
-    src="https://giscus.app/client.js"
-    data-repo="jaredszajkowski/jaredszajkowski.github.io"
-    data-repo-id="R_kgDOKZLn5w"
-    data-category="Announcements"
-    data-category-id="DIC_kwDOKZLn584CaJwO"
-    data-mapping="title"
-    data-strict="0"
-    data-reactions-enabled="1"
-    data-emit-metadata="0"
-    data-input-position="top"
-    data-theme="light"
-    data-lang="en"
-    crossorigin="anonymous"
-    async
-></script>
+    <div id="remark42"></div>
 <script>
-    function setGiscusTheme(theme) {
-        let giscus = document.querySelector("iframe.giscus-frame");
-        if (giscus) {
-            giscus.contentWindow.postMessage(
-                {
-                    giscus: {
-                        setConfig: {
-                            theme: theme,
-                        },
-                    },
-                },
-                "https://giscus.app"
-            );
-        }
-    }
+    var remark_config = {
+        host: 'https:\/\/www.jaredszajkowski.com',
+        site_id: 'remark',
+        components: ['embed'],
+        url: 'https:\/\/www.jaredszajkowski.com\/p\/using-yt-dlp-with-panopto\/',
+        max_shown_comments:  15 ,
+        theme: document.documentElement.dataset.scheme,
+        page_title: 'Using yt-dlp With Panopto',
+        locale: 'en',
+        show_email_subscription:  true 
+    };
 
-    (function () {
-        addEventListener("message", (e) => {
-            if (event.origin !== "https://giscus.app") return;
-            handler();
-        });
-        window.addEventListener("onColorSchemeChange", handler);
-
-        function handler() {
-            if (document.documentElement.dataset.scheme === "light") {
-                setGiscusTheme('light');
-            } else {
-                setGiscusTheme('dark');
-            }
+    !function(e, n) {
+        for (var o = 0; o < e.length; o++) {
+            var r = n.createElement('script'),
+            c = '.js',
+            d = n.head || n.body;
+            'noModule' in r ? (r.type = 'module', c = '.mjs') : r.async = !0, r.defer = !0, r.src = remark_config.host + '/web/' + e[o] + c, d.appendChild(r)
         }
-    })();
+    }(remark_config.components || ['embed'], document);
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        window.REMARK42.changeTheme(e.detail);
+    })
 </script>
 
     
