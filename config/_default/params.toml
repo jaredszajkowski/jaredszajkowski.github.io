@@ -98,8 +98,8 @@ label = ""
 
 [comments.remark42]
 host = "https://www.jaredszajkowski.com"
-site = "remark"
-locale = ""
+site = "Jared Szajkowski"
+locale = "en-us"
 
 [comments.vssue]
 platform = ""
