@@ -81,7 +81,7 @@ enabled = false
 
 ## Comments
 [comments]
-enabled = true
+enabled = false
 provider = "remark42"
 
 [comments.disqusjs]
