@@ -14,7 +14,6 @@ url = "https://github.com/jaredszajkowski"
 
 [social.params]
 icon = "brand-github"
-# icon = "github-mark-copy"
 
 [[social]]
 identifier = "linkedin"
@@ -22,8 +21,7 @@ name = "LinkedIn"
 url = "https://www.linkedin.com/in/jaredszajkowski/"
 
 [social.params]
-icon = "LinkedIn_icon_circle"
-#icon = "brand-linkedin"
+icon = "brand-linkedin"
 
 [[social]]
 identifier = "email"
@@ -31,8 +29,7 @@ name = "Email"
 url = "mailto:jared.szajkowski@gmail.com"
 
 [social.params]
-icon = "4202011_email_gmail_mail_logo_social_icon"
-#icon = "contact"
+icon = "mail"
 
 # Twitter below
 
