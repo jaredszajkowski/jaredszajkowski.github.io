@@ -8,10 +8,10 @@
         <language>en-us</language>
         <lastBuildDate>Sun, 24 Dec 2023 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/tags/openpyxl/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Nasdaq Data Link Tables API Data Retrieval</title>
-        <link>https://www.jaredszajkowski.com/p/nasdaq-data-link-tables-api-data-retrieval/</link>
+        <link>https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/</link>
         <pubDate>Sun, 24 Dec 2023 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/p/nasdaq-data-link-tables-api-data-retrieval/</guid>
+        <guid>https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/</guid>
         <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;In this tutorial, we will write a python function that pulls data from Nasdaq Data Link through the tables API, adds relevant columns that are not present in the raw data, updates columns to allow for ease of use, and leaves the data in a format where it can then be used in time series analysis.&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.nasdaq.com/nasdaq-data-link&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -21,7 +21,7 @@
 &lt;h2 id=&#34;nasdaq-data-link-initial-data-retrieval&#34;&gt;Nasdaq Data Link Initial Data Retrieval&lt;/h2&gt;
 &lt;p&gt;We will use the data for AAPL for this example. This will give us a data set that requires some thought as to how the splits need to be handled as well as the dividends.&lt;/p&gt;
 &lt;p&gt;We&amp;rsquo;ll start with pulling the initial data set, with the first 10 rows shown as follows from the pandas dataframe:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows.png&#34;
 	width=&#34;1067&#34;
 	height=&#34;320&#34;
 	
@@ -36,7 +36,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;And the last 10 rows:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/nasdaq-data-link-tables-api-data-retrieval/02_AAPL_data_last_10_rows.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/02_AAPL_data_last_10_rows.png&#34;
 	width=&#34;1038&#34;
 	height=&#34;317&#34;
 	
@@ -301,7 +301,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows.png&#34;
 	width=&#34;1067&#34;
 	height=&#34;320&#34;
 	
@@ -332,7 +332,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/nasdaq-data-link-tables-api-data-retrieval/03_Sorted_by_date_ascending.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/03_Sorted_by_date_ascending.png&#34;
 	width=&#34;1039&#34;
 	height=&#34;321&#34;
 	
@@ -368,7 +368,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/nasdaq-data-link-tables-api-data-retrieval/04_Date_as_the_index.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/04_Date_as_the_index.png&#34;
 	width=&#34;986&#34;
 	height=&#34;321&#34;
 	
@@ -396,7 +396,7 @@
 &lt;pre&gt;&lt;code&gt;df_not_1_split.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/nasdaq-data-link-tables-api-data-retrieval/05_Actual_splits.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/05_Actual_splits.png&#34;
 	width=&#34;1059&#34;
 	height=&#34;192&#34;
 	
@@ -422,7 +422,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;This gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/nasdaq-data-link-tables-api-data-retrieval/06_Splits_replaced.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/06_Splits_replaced.png&#34;
 	width=&#34;988&#34;
 	height=&#34;316&#34;
 	
@@ -452,7 +452,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Which gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/nasdaq-data-link-tables-api-data-retrieval/07_Dataframe_with_split_values_only.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/07_Dataframe_with_split_values_only.png&#34;
 	width=&#34;156&#34;
 	height=&#34;195&#34;
 	
@@ -478,7 +478,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Which gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/nasdaq-data-link-tables-api-data-retrieval/08_Dataframe_with_cumulative_split_column.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/08_Dataframe_with_cumulative_split_column.png&#34;
 	width=&#34;234&#34;
 	height=&#34;195&#34;
 	
@@ -504,7 +504,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Which gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/nasdaq-data-link-tables-api-data-retrieval/09_Dataframe_with_only_cumulative_split_column.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/09_Dataframe_with_only_cumulative_split_column.png&#34;
 	width=&#34;194&#34;
 	height=&#34;193&#34;
 	
@@ -535,7 +535,7 @@
 &lt;pre&gt;&lt;code&gt;df_comp.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/nasdaq-data-link-tables-api-data-retrieval/10_Complete_dataframe_including_cumulative_split.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/10_Complete_dataframe_including_cumulative_split.png&#34;
 	width=&#34;1060&#34;
 	height=&#34;317&#34;
 	
@@ -565,7 +565,7 @@
 &lt;pre&gt;&lt;code&gt;df_comp.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/nasdaq-data-link-tables-api-data-retrieval/11_Complete_dataframe_ffill_split_values_first_10_rows.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/11_Complete_dataframe_ffill_split_values_first_10_rows.png&#34;
 	width=&#34;1029&#34;
 	height=&#34;344&#34;
 	
@@ -583,7 +583,7 @@
 &lt;pre&gt;&lt;code&gt;df_comp.tail(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/nasdaq-data-link-tables-api-data-retrieval/12_Complete_dataframe_ffill_split_values_last_10_rows.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/12_Complete_dataframe_ffill_split_values_last_10_rows.png&#34;
 	width=&#34;1086&#34;
 	height=&#34;341&#34;
 	
@@ -614,7 +614,7 @@
 &lt;pre&gt;&lt;code&gt;df_comp.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/nasdaq-data-link-tables-api-data-retrieval/13_Complete_dataframe_ffill_split_values_first_10_rows.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/13_Complete_dataframe_ffill_split_values_first_10_rows.png&#34;
 	width=&#34;1068&#34;
 	height=&#34;317&#34;
 	
@@ -687,7 +687,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;And verify the output is as expected:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/nasdaq-data-link-tables-api-data-retrieval/14_Excel_export.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/14_Excel_export.png&#34;
 	width=&#34;3491&#34;
 	height=&#34;220&#34;
 	
@@ -720,7 +720,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;And confirming the output:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/nasdaq-data-link-tables-api-data-retrieval/15_Output_confirmation.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/15_Output_confirmation.png&#34;
 	width=&#34;643&#34;
 	height=&#34;470&#34;
 	
@@ -747,15 +747,15 @@
         </item>
         <item>
         <title>Cleaning A Bloomberg Data Excel Export</title>
-        <link>https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/</link>
+        <link>https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/</link>
         <pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/</guid>
+        <guid>https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/</guid>
         <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;In this tutorial, we will write a python function that imports an excel export from Bloomberg, removes ancillary rows and columns, and leaves the data in a format where it can then be used in time series analysis.&lt;/p&gt;
 &lt;h2 id=&#34;example-of-a-bloomberg-excel-export&#34;&gt;Example of a Bloomberg excel export&lt;/h2&gt;
 &lt;p&gt;We will use the SPX index data in this example. Exporting the data from Bloomberg using the excel Bloomberg add-on yields data in the following format:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Format_of_data_in_excel_export_from_Bloomberg.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Format_of_data_in_excel_export_from_Bloomberg.png&#34;
 	width=&#34;295&#34;
 	height=&#34;455&#34;
 	
@@ -925,7 +925,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Dataframe_excel_import.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Dataframe_excel_import.png&#34;
 	width=&#34;367&#34;
 	height=&#34;302&#34;
 	
@@ -955,7 +955,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Set_column_headings.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Set_column_headings.png&#34;
 	width=&#34;376&#34;
 	height=&#34;296&#34;
 	
@@ -986,7 +986,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Remove_index_heading.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Remove_index_heading.png&#34;
 	width=&#34;373&#34;
 	height=&#34;299&#34;
 	
@@ -1017,7 +1017,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Remove_rows.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Remove_rows.png&#34;
 	width=&#34;323&#34;
 	height=&#34;298&#34;
 	
@@ -1047,7 +1047,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Set_index.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Set_index.png&#34;
 	width=&#34;244&#34;
 	height=&#34;318&#34;
 	
@@ -1084,7 +1084,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Drop_volume.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Drop_volume.png&#34;
 	width=&#34;163&#34;
 	height=&#34;320&#34;
 	
@@ -1114,7 +1114,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Rename_column.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Rename_column.png&#34;
 	width=&#34;156&#34;
 	height=&#34;319&#34;
 	
@@ -1144,7 +1144,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Sort_by_date.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Sort_by_date.png&#34;
 	width=&#34;136&#34;
 	height=&#34;317&#34;
 	
@@ -1173,7 +1173,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;And verify the output is as expected:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Excel_export.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Excel_export.png&#34;
 	width=&#34;278&#34;
 	height=&#34;380&#34;
 	
@@ -1206,7 +1206,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;And confirming the output:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/cleaning-a-bloomberg-data-excel-export/Output_confirmation.PNG&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Output_confirmation.PNG&#34;
 	width=&#34;417&#34;
 	height=&#34;116&#34;
 	

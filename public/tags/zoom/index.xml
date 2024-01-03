@@ -8,10 +8,10 @@
         <language>en-us</language>
         <lastBuildDate>Sun, 01 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/tags/zoom/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Using yt-dlp With Zoom</title>
-        <link>https://www.jaredszajkowski.com/p/using-yt-dlp-with-zoom/</link>
+        <link>https://www.jaredszajkowski.com/2023/10/using-yt-dlp-with-zoom/</link>
         <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/p/using-yt-dlp-with-zoom/</guid>
+        <guid>https://www.jaredszajkowski.com/2023/10/using-yt-dlp-with-zoom/</guid>
         <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;If anyone uses Zoom to record and later wants to access recordings of video calls, here&amp;rsquo;s a simple linux bash script to download the video file and acompanying subtitles. For a long time I used &lt;a class=&#34;link&#34; href=&#34;https://github.com/Battleman/zoomdl&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;zoomdl&lt;/a&gt;, but it is no longer under active development, and I began running into various issues about a year ago.&lt;/p&gt;
@@ -22,7 +22,7 @@
     &gt;cookie editor&lt;/a&gt; extension. I personnally use it with Microsoft Edge, but there are similar extensions for Chrome, Firefox, etc.&lt;/p&gt;
 &lt;h2 id=&#34;modify-export-format&#34;&gt;Modify export format&lt;/h2&gt;
 &lt;p&gt;Change the preferred cookie export format to &lt;code&gt;Netscape HTTP Cookie File&lt;/code&gt; in the extension options. It is necessary to export in this format, otherwise yt-dlp will not be able to read the cookies.txt file correctly.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/using-yt-dlp-with-zoom/Modify_preferred_export_format.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/10/using-yt-dlp-with-zoom/Modify_preferred_export_format.png&#34;
 	width=&#34;865&#34;
 	height=&#34;505&#34;
 	
@@ -40,7 +40,7 @@
 &lt;p&gt;Log in to Zoom in your browser. Be sure to remain logged in while exporting the cookies under step 4.&lt;/p&gt;
 &lt;h2 id=&#34;export-cookies&#34;&gt;Export cookies&lt;/h2&gt;
 &lt;p&gt;The export button is at the top fo the window. It copies the cookies to your clipboard, which then need to be pasted into a text file (I have my saved as cookies.txt), which yt-dlp will then read when it executes.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/p/using-yt-dlp-with-zoom/Export_cookies.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/10/using-yt-dlp-with-zoom/Export_cookies.png&#34;
 	width=&#34;579&#34;
 	height=&#34;613&#34;
 	

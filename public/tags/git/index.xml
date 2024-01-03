@@ -8,10 +8,10 @@
         <language>en-us</language>
         <lastBuildDate>Mon, 16 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/tags/git/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Git Quick Start Guide</title>
-        <link>https://www.jaredszajkowski.com/p/git-quick-start-guide/</link>
+        <link>https://www.jaredszajkowski.com/2023/10/git-quick-start-guide/</link>
         <pubDate>Mon, 16 Oct 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/p/git-quick-start-guide/</guid>
+        <guid>https://www.jaredszajkowski.com/2023/10/git-quick-start-guide/</guid>
         <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;Here are my notes for some of the more commonly used git commands along with initial setup for git in Linux.&lt;/p&gt;
 &lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
