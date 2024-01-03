@@ -39,19 +39,19 @@ type = "search"
 type = "archives"
 
 [widgets.homepage.params]
-limit = 20
+limit = 100
 
 [[widgets.homepage]]
 type = "categories"
 
 [widgets.homepage.params]
-limit = 20
+limit = 100
 
 [[widgets.homepage]]
 type = "tag-cloud"
 
 [widgets.homepage.params]
-limit = 20
+limit = 100
 
 [[widgets.page]]
 type = "toc"
@@ -81,8 +81,8 @@ enabled = false
 
 ## Comments
 [comments]
-enabled = false
-provider = "remark42"
+enabled = true
+provider = "giscus"
 
 [comments.disqusjs]
 shortname = ""
@@ -140,7 +140,7 @@ categoryID = "DIC_kwDOKZLn584CaJwO"
 mapping = "title"
 lightTheme = "light"
 darkTheme = "dark"
-reactionsEnabled = 1
+reactionsEnabled = 0
 emitMetadata = 0
 
 # data-repo="jaredszajkowski/jaredszajkowski.github.io"
