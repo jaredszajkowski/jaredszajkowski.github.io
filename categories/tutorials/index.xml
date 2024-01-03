@@ -1,0 +1,1429 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tutorials on Jared Szajkowski</title><link>https://www.jaredszajkowski.com/categories/tutorials/</link><description>Recent content in Tutorials on Jared Szajkowski</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 24 Dec 2023 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/categories/tutorials/index.xml" rel="self" type="application/rss+xml"/><item><title>Nasdaq Data Link Tables API Data Retrieval</title><link>https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/</link><pubDate>Sun, 24 Dec 2023 00:00:01 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/</guid><description>&lt;h2 id="introduction">Introduction&lt;/h2>
+&lt;p>In this tutorial, we will write a python function that pulls data from Nasdaq Data Link through the tables API, adds relevant columns that are not present in the raw data, updates columns to allow for ease of use, and leaves the data in a format where it can then be used in time series analysis.&lt;/p>
+&lt;p>&lt;a class="link" href="https://www.nasdaq.com/nasdaq-data-link" target="_blank" rel="noopener"
+>Nasdaq Data Link&lt;/a> is a provider of numerous different types of financial data from many different asset classes. It provides API&amp;rsquo;s that allow access from Python, R, Excel, and other methods. It is available to &lt;a class="link" href="https://data.nasdaq.com/institutional-investors" target="_blank" rel="noopener"
+>institutional investors&lt;/a> as well as &lt;a class="link" href="https://data.nasdaq.com/individual-users" target="_blank" rel="noopener"
+>individual retail investors&lt;/a>.&lt;/p>
+&lt;h2 id="nasdaq-data-link-initial-data-retrieval">Nasdaq Data Link Initial Data Retrieval&lt;/h2>
+&lt;p>We will use the data for AAPL for this example. This will give us a data set that requires some thought as to how the splits need to be handled as well as the dividends.&lt;/p>
+&lt;p>We&amp;rsquo;ll start with pulling the initial data set, with the first 10 rows shown as follows from the pandas dataframe:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows.png"
+width="1067"
+height="320"
+loading="lazy"
+alt="AAPL Data - First 10 Rows"
+class="gallery-image"
+data-flex-grow="333"
+data-flex-basis="800px"
+>&lt;/p>
+&lt;p>And the last 10 rows:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/02_AAPL_data_last_10_rows.png"
+width="1038"
+height="317"
+loading="lazy"
+alt="AAPL Data - Last 10 Rows"
+class="gallery-image"
+data-flex-grow="327"
+data-flex-basis="785px"
+>&lt;/p>
+&lt;p>From left to right, we have the following columns:&lt;/p>
+&lt;ol>
+&lt;li>Row number: 0 indexed, gives us the total number of rows/dates of data&lt;/li>
+&lt;li>Ticker: The ticker symbol for our data&lt;/li>
+&lt;li>Date: In the format YYYY-MM-DD&lt;/li>
+&lt;li>Open: Daily open&lt;/li>
+&lt;li>High: Daily high&lt;/li>
+&lt;li>Low: Daily low&lt;/li>
+&lt;li>Close: Daily close&lt;/li>
+&lt;li>Volume: Volume of shares traded&lt;/li>
+&lt;li>Dividend: Dividend paid on that date&lt;/li>
+&lt;li>Split: Split executed on that date&lt;/li>
+&lt;li>Adjusted Open: Daily open price adusted for all splits and dividends&lt;/li>
+&lt;li>Adjusted High: Daily high price adusted for all splits and dividends&lt;/li>
+&lt;li>Adjusted Low: Daily low price adusted for all splits and dividends&lt;/li>
+&lt;li>Adjusted Close: Daily close price adusted for all splits and dividends&lt;/li>
+&lt;li>Adjusted Volume: Daily volume price adusted for all splits&lt;/li>
+&lt;/ol>
+&lt;h2 id="data-questions">Data questions&lt;/h2>
+&lt;p>The above information is a good starting point, but what if we are looking for the following answers?&lt;/p>
+&lt;ol>
+&lt;li>The data shows a split value for every day, but we know the stock didn&amp;rsquo;t split every day. What does this represent?&lt;/li>
+&lt;li>What is the total cumulative split ratio?&lt;/li>
+&lt;li>What is the split ratio at different points in time?&lt;/li>
+&lt;li>What is the adjusted share price without including the dividends? This would be needed for any time series analysis.&lt;/li>
+&lt;li>What is the dividend dollar value based on an adjusted share price?&lt;/li>
+&lt;li>What would the share price be if the stock hadn&amp;rsquo;t split?&lt;/li>
+&lt;/ol>
+&lt;p>We&amp;rsquo;ll add columns and modify as necessary to answer the above questions and more.&lt;/p>
+&lt;h2 id="assumptions">Assumptions&lt;/h2>
+&lt;p>The remainder of this tutorial assumes the following:&lt;/p>
+&lt;ul>
+&lt;li>You have the &lt;a class="link" href="https://github.com/Nasdaq/data-link-python" target="_blank" rel="noopener"
+>Nasdaq Data Link&lt;/a> library installed&lt;/li>
+&lt;li>You have the &lt;a class="link" href="https://pandas.pydata.org/" target="_blank" rel="noopener"
+>pandas&lt;/a> library installed&lt;/li>
+&lt;li>You have the &lt;a class="link" href="https://openpyxl.readthedocs.io/en/stable/" target="_blank" rel="noopener"
+>OpenPyXL&lt;/a> library installed&lt;/li>
+&lt;/ul>
+&lt;h2 id="python-function-to-modify-the-data">Python function to modify the data&lt;/h2>
+&lt;p>The following function will perform the desired modifications:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;span class="lnt">51
+&lt;/span>&lt;span class="lnt">52
+&lt;/span>&lt;span class="lnt">53
+&lt;/span>&lt;span class="lnt">54
+&lt;/span>&lt;span class="lnt">55
+&lt;/span>&lt;span class="lnt">56
+&lt;/span>&lt;span class="lnt">57
+&lt;/span>&lt;span class="lnt">58
+&lt;/span>&lt;span class="lnt">59
+&lt;/span>&lt;span class="lnt">60
+&lt;/span>&lt;span class="lnt">61
+&lt;/span>&lt;span class="lnt">62
+&lt;/span>&lt;span class="lnt">63
+&lt;/span>&lt;span class="lnt">64
+&lt;/span>&lt;span class="lnt">65
+&lt;/span>&lt;span class="lnt">66
+&lt;/span>&lt;span class="lnt">67
+&lt;/span>&lt;span class="lnt">68
+&lt;/span>&lt;span class="lnt">69
+&lt;/span>&lt;span class="lnt">70
+&lt;/span>&lt;span class="lnt">71
+&lt;/span>&lt;span class="lnt">72
+&lt;/span>&lt;span class="lnt">73
+&lt;/span>&lt;span class="lnt">74
+&lt;/span>&lt;span class="lnt">75
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># This function pulls the data for the specific fund from from Nasdaq Data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Link and adds many missing columns
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Imports
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">import nasdaqdatalink
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">import pandas as pd
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">import numpy as np
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Add API key for reference to allow access to unrestricted data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">nasdaqdatalink.ApiConfig.api_key = &amp;#39;your_key&amp;#39;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Function definition
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">def ndl_data_updater(fund):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Command to pull data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # If start date and end date are not specified the entire data set is included
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df = nasdaqdatalink.get_table(&amp;#39;QUOTEMEDIA/PRICES&amp;#39;, ticker = fund, paginate=True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Sort columns by date ascending
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.sort_values(&amp;#39;date&amp;#39;, ascending = True, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Rename date column
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.rename(columns = {&amp;#39;date&amp;#39;:&amp;#39;Date&amp;#39;}, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set index to date column
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.set_index(&amp;#39;Date&amp;#39;, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Replace all split values of 1.0 with NaN
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df[&amp;#39;split&amp;#39;] = df[&amp;#39;split&amp;#39;].replace(1.0, np.nan)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Create a new data frame with split values only
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_splits = df.drop(columns = {&amp;#39;ticker&amp;#39;, &amp;#39;open&amp;#39;, &amp;#39;high&amp;#39;, &amp;#39;low&amp;#39;, &amp;#39;close&amp;#39;, &amp;#39;volume&amp;#39;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#39;dividend&amp;#39;, &amp;#39;adj_open&amp;#39;, &amp;#39;adj_high&amp;#39;, &amp;#39;adj_low&amp;#39;, &amp;#39;adj_close&amp;#39;, &amp;#39;adj_volume&amp;#39;}).dropna()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Create a new column for cumulative split
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_splits[&amp;#39;Cum_Split&amp;#39;] = df_splits[&amp;#39;split&amp;#39;].cumprod()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Drop original split column before combining dataframes
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_splits.drop(columns = {&amp;#39;split&amp;#39;}, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Merge df and df_split dataframes
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp = pd.merge(df, df_splits, on=&amp;#39;Date&amp;#39;, how=&amp;#39;outer&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Forward fill for all cumulative split values
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;Cum_Split&amp;#39;].fillna(method = &amp;#39;ffill&amp;#39;, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Replace all split and cumulative split values of NaN with 1.0 to have complete split values
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;split&amp;#39;] = df_comp[&amp;#39;split&amp;#39;].replace(np.nan, 1.0)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;Cum_Split&amp;#39;] = df_comp[&amp;#39;Cum_Split&amp;#39;].replace(np.nan, 1.0)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Calculate the non adjusted prices based on the splits only
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;non_adj_open_split_only&amp;#39;] = df_comp[&amp;#39;open&amp;#39;] * df_comp[&amp;#39;Cum_Split&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;non_adj_high_split_only&amp;#39;] = df_comp[&amp;#39;high&amp;#39;] * df_comp[&amp;#39;Cum_Split&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;non_adj_low_split_only&amp;#39;] = df_comp[&amp;#39;low&amp;#39;] * df_comp[&amp;#39;Cum_Split&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;non_adj_close_split_only&amp;#39;] = df_comp[&amp;#39;close&amp;#39;] * df_comp[&amp;#39;Cum_Split&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;non_adj_dividend_split_only&amp;#39;] = df_comp[&amp;#39;dividend&amp;#39;] * df_comp[&amp;#39;Cum_Split&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Calculate the adjusted prices based on the splits
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;Open&amp;#39;] = df_comp[&amp;#39;non_adj_open_split_only&amp;#39;] / df_comp[&amp;#39;Cum_Split&amp;#39;][-1]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;High&amp;#39;] = df_comp[&amp;#39;non_adj_high_split_only&amp;#39;] / df_comp[&amp;#39;Cum_Split&amp;#39;][-1]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;Low&amp;#39;] = df_comp[&amp;#39;non_adj_low_split_only&amp;#39;] / df_comp[&amp;#39;Cum_Split&amp;#39;][-1]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;Close&amp;#39;] = df_comp[&amp;#39;non_adj_close_split_only&amp;#39;] / df_comp[&amp;#39;Cum_Split&amp;#39;][-1]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;Dividend&amp;#39;] = df_comp[&amp;#39;non_adj_dividend_split_only&amp;#39;] / df_comp[&amp;#39;Cum_Split&amp;#39;][-1]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;Dividend_Pct_Orig&amp;#39;] = df_comp[&amp;#39;dividend&amp;#39;] / df_comp[&amp;#39;close&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;Dividend_Pct_Adj&amp;#39;] = df_comp[&amp;#39;Dividend&amp;#39;] / df_comp[&amp;#39;Close&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Export data to excel
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> file = fund + &amp;#34;_NDL.xlsx&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp.to_excel(file, sheet_name=&amp;#39;data&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Output confirmation
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> print(f&amp;#34;The last date of data for {fund} is: &amp;#34;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> print(df_comp[-1:])
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> print(f&amp;#34;NDL data updater complete for {fund} data&amp;#34;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> return print(f&amp;#34;--------------------&amp;#34;)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Let&amp;rsquo;s break this down line by line.&lt;/p>
+&lt;h2 id="imports">Imports&lt;/h2>
+&lt;p>First, we need to import the required libraries:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Imports
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">import nasdaqdatalink
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">import pandas as pd
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">import numpy as np
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="ndl-api-key">NDL API Key&lt;/h2>
+&lt;p>To gain access to anything beyond the free tier, you will need to provide your access key:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Add API key for reference to allow access to unrestricted data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">nasdaqdatalink.ApiConfig.api_key = &amp;#39;your_key&amp;#39;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="download-data-as-a-dataframe">Download data as a dataframe&lt;/h2>
+&lt;p>Moving on to the function definition, we have the command to pull data from NDL. There are two separate APIs - the &lt;a class="link" href="https://docs.data.nasdaq.com/docs/time-series" target="_blank" rel="noopener"
+>time series&lt;/a> and the &lt;a class="link" href="https://docs.data.nasdaq.com/docs/tables-1" target="_blank" rel="noopener"
+>tables&lt;/a>. The syntax is different, and some data sets are only available as one or the other. We will use the tables API for this tutorial.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Command to pull data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># If start date and end date are not specified the entire data set is included
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df = nasdaqdatalink.get_table(&amp;#39;QUOTEMEDIA/PRICES&amp;#39;, ticker = fund, paginate=True)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>In the example above, the &lt;code>fund&lt;/code> is an input parameter to the function.&lt;/p>
+&lt;p>The &lt;code>'QUOTEMEDIA/PRICES'&lt;/code> is the data source that we are accessing.&lt;/p>
+&lt;p>There are many other arguments that we could pass in the above, including specifying columns, period start date, period end date, and others. Nasdaq as a few examples to get you started:&lt;/p>
+&lt;p>&lt;a class="link" href="https://docs.data.nasdaq.com/docs/python-tables" target="_blank" rel="noopener"
+>https://docs.data.nasdaq.com/docs/python-tables&lt;/a>&lt;/p>
+&lt;p>Running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows.png"
+width="1067"
+height="320"
+loading="lazy"
+alt="AAPL Data - First 10 Rows"
+class="gallery-image"
+data-flex-grow="333"
+data-flex-basis="800px"
+>&lt;/p>
+&lt;h2 id="sort-columns-by-date">Sort columns by date&lt;/h2>
+&lt;p>Next, we will sort the columns by date ascending. By default, the dataframe is created with the data sorted by descending date, and we want to change that:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Sort columns by date ascending
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df.sort_values(&amp;#39;date&amp;#39;, ascending = True, inplace = True)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>The &lt;code>inplace = True&lt;/code> argument specifies that the sort function should take effect on the existing dataframe.&lt;/p>
+&lt;p>Now, running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/03_Sorted_by_date_ascending.png"
+width="1039"
+height="321"
+loading="lazy"
+alt="Data sorted by ascending date"
+class="gallery-image"
+data-flex-grow="323"
+data-flex-basis="776px"
+>&lt;/p>
+&lt;h2 id="setting-the-date-as-the-index">Setting the date as the index&lt;/h2>
+&lt;p>Next, we will rename the &lt;code>date&lt;/code> column from &amp;lsquo;date&amp;rsquo; to &amp;lsquo;Date&amp;rsquo;, and set the index to be the &lt;code>Date&lt;/code> column:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Rename date column
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df.rename(columns = {&amp;#39;date&amp;#39;:&amp;#39;Date&amp;#39;}, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Set index to date column
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df.set_index(&amp;#39;Date&amp;#39;, inplace = True)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now, running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/04_Date_as_the_index.png"
+width="986"
+height="321"
+loading="lazy"
+alt="Indexed by the &amp;lsquo;Date&amp;rsquo; column"
+class="gallery-image"
+data-flex-grow="307"
+data-flex-basis="737px"
+>&lt;/p>
+&lt;h2 id="calculating-splits">Calculating splits&lt;/h2>
+&lt;p>The next sections deal with the split column. So far we have only seen a split value of 1.0 in the data, but we&amp;rsquo;ve only looked at the first 10 and last 10 rows. Are there any other values? Let&amp;rsquo;s check by running:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">df_not_1_split = df[df[&amp;#39;split&amp;#39;] != 1.0]
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>And checking the first 10 rows:&lt;/p>
+&lt;pre>&lt;code>df_not_1_split.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/05_Actual_splits.png"
+width="1059"
+height="192"
+loading="lazy"
+alt="Split values"
+class="gallery-image"
+data-flex-grow="551"
+data-flex-basis="1323px"
+>&lt;/p>
+&lt;p>So we now know that the stock did in fact split several times. Next, we will replace all of the &lt;code>1.0&lt;/code> split values - because they are really meaningless - and then create a new dataframe to deal with the splits.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Replace all split values of 1.0 with NaN
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df[&amp;#39;split&amp;#39;] = df[&amp;#39;split&amp;#39;].replace(1.0, np.nan)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>This gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/06_Splits_replaced.png"
+width="988"
+height="316"
+loading="lazy"
+alt="Split values replaced with NaN"
+class="gallery-image"
+data-flex-grow="312"
+data-flex-basis="750px"
+>&lt;/p>
+&lt;p>We will now create a dataframe with only the split values:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Create a new data frame with split values only
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_splits = df.drop(columns = {&amp;#39;ticker&amp;#39;, &amp;#39;open&amp;#39;, &amp;#39;high&amp;#39;, &amp;#39;low&amp;#39;, &amp;#39;close&amp;#39;, &amp;#39;volume&amp;#39;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#39;dividend&amp;#39;, &amp;#39;adj_open&amp;#39;, &amp;#39;adj_high&amp;#39;, &amp;#39;adj_low&amp;#39;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#39;adj_close&amp;#39;, &amp;#39;adj_volume&amp;#39;}).dropna()
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Which gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/07_Dataframe_with_split_values_only.png"
+width="156"
+height="195"
+loading="lazy"
+alt="Dataframe with split values only"
+class="gallery-image"
+data-flex-grow="80"
+data-flex-basis="192px"
+>&lt;/p>
+&lt;p>Creating a column for the cumulative split will provide an accurate perspective on the stock price. We can do that with the following:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Create a new column for cumulative split
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_splits[&amp;#39;Cum_Split&amp;#39;] = df_splits[&amp;#39;split&amp;#39;].cumprod()
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Which gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/08_Dataframe_with_cumulative_split_column.png"
+width="234"
+height="195"
+loading="lazy"
+alt="Dataframe with split and cumulative split values"
+class="gallery-image"
+data-flex-grow="120"
+data-flex-basis="288px"
+>&lt;/p>
+&lt;p>We will then drop the original &lt;code>split&lt;/code> column before combining the split data frame with the original data frame, as follows:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Drop original split column before combining dataframes
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_splits.drop(columns = {&amp;#39;split&amp;#39;}, inplace = True)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Which gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/09_Dataframe_with_only_cumulative_split_column.png"
+width="194"
+height="193"
+loading="lazy"
+alt="Dataframe with only cumulative split values"
+class="gallery-image"
+data-flex-grow="100"
+data-flex-basis="241px"
+>&lt;/p>
+&lt;h2 id="combining-dataframes">Combining dataframes&lt;/h2>
+&lt;p>Now we will merge the &lt;code>df_split&lt;/code> dataframe with the original &lt;code>df&lt;/code> dataframe so that the cumulative split column is part of the original dataframe. We will call this data frame &lt;code>df_comp&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Merge df and df_split dataframes
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp = pd.merge(df, df_splits, on=&amp;#39;Date&amp;#39;, how=&amp;#39;outer&amp;#39;)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>We are using the merge function of pandas, which includes arguments for the names of both dataframes to be merged, the column to match between the dataframes, and the parameter for the type of merge to be performed. The &lt;code>outer&lt;/code> argument specifies that all rows from both dataframes will be included, and any missing values will be filled in with &lt;code>NaN&lt;/code> if there is no matching data. This ensures that all data from both dataframes is retained.&lt;/p>
+&lt;p>Running:&lt;/p>
+&lt;pre>&lt;code>df_comp.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/10_Complete_dataframe_including_cumulative_split.png"
+width="1060"
+height="317"
+loading="lazy"
+alt="Complete dataframe incluidng the cumulative split values"
+class="gallery-image"
+data-flex-grow="334"
+data-flex-basis="802px"
+>&lt;/p>
+&lt;h2 id="forward-filling-cumulative-split-values">Forward filling cumulative split values&lt;/h2>
+&lt;p>From here, we want to fill in the rest of the &lt;code>split&lt;/code> and &lt;code>Cum_Split&lt;/code> values. This is done using the forward fill function, which for all cells that have a value of &lt;code>NaN&lt;/code> will fill in the previous valid value until another value is encountered. Here&amp;rsquo;s the code:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Forward fill for all cumulative split values
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;Cum_Split&amp;#39;].fillna(method = &amp;#39;ffill&amp;#39;, inplace = True)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Running:&lt;/p>
+&lt;pre>&lt;code>df_comp.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/11_Complete_dataframe_ffill_split_values_first_10_rows.png"
+width="1029"
+height="344"
+loading="lazy"
+alt="First 10 rows of complete dataframe with split values"
+class="gallery-image"
+data-flex-grow="299"
+data-flex-basis="717px"
+>&lt;/p>
+&lt;p>At first glance, it doesn&amp;rsquo;t look like anything changed. That&amp;rsquo;s because there wasn&amp;rsquo;t any ffill action taken on the initial values until pandas encountered a valid value to then forward fill. However, checking the last 10 rows:&lt;/p>
+&lt;pre>&lt;code>df_comp.tail(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/12_Complete_dataframe_ffill_split_values_last_10_rows.png"
+width="1086"
+height="341"
+loading="lazy"
+alt="Last 10 rows of complete dataframe with split values"
+class="gallery-image"
+data-flex-grow="318"
+data-flex-basis="764px"
+>&lt;/p>
+&lt;p>Which is the result that we were expecting. But, what about the first rows from 12/12/1980 to 6/15/1987? We can fill those &lt;code>split&lt;/code> and &lt;code>Cum_Split&lt;/code> values with the following code:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Replace all split and cumulative split values of NaN with 1.0 to have complete split values
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;split&amp;#39;] = df_comp[&amp;#39;split&amp;#39;].replace(np.nan, 1.0)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;Cum_Split&amp;#39;] = df_comp[&amp;#39;Cum_Split&amp;#39;].replace(np.nan, 1.0)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now, checking the first 10 rows:&lt;/p>
+&lt;pre>&lt;code>df_comp.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/13_Complete_dataframe_ffill_split_values_first_10_rows.png"
+width="1068"
+height="317"
+loading="lazy"
+alt="First 10 rows of complete dataframe with split values"
+class="gallery-image"
+data-flex-grow="336"
+data-flex-basis="808px"
+>&lt;/p>
+&lt;p>With this data, we now know for every day in the data set the following pieces of information:&lt;/p>
+&lt;ol>
+&lt;li>If the stock split on that day&lt;/li>
+&lt;li>What the total split ratio is up to and including that day&lt;/li>
+&lt;/ol>
+&lt;h2 id="calculating-adjusted-and-non-adjusted-prices">Calculating adjusted and non-adjusted prices&lt;/h2>
+&lt;p>From here, we can complete our dataset by calculating the adjusted and non-adjusted prices using the cumulative split ratios from above:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Calculate the non adjusted prices based on the splits only
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;non_adj_open_split_only&amp;#39;] = df_comp[&amp;#39;open&amp;#39;] * df_comp[&amp;#39;Cum_Split&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;non_adj_high_split_only&amp;#39;] = df_comp[&amp;#39;high&amp;#39;] * df_comp[&amp;#39;Cum_Split&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;non_adj_low_split_only&amp;#39;] = df_comp[&amp;#39;low&amp;#39;] * df_comp[&amp;#39;Cum_Split&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;non_adj_close_split_only&amp;#39;] = df_comp[&amp;#39;close&amp;#39;] * df_comp[&amp;#39;Cum_Split&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;non_adj_dividend_split_only&amp;#39;] = df_comp[&amp;#39;dividend&amp;#39;] * df_comp[&amp;#39;Cum_Split&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Calculate the adjusted prices based on the splits
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;Open&amp;#39;] = df_comp[&amp;#39;non_adj_open_split_only&amp;#39;] / df_comp[&amp;#39;Cum_Split&amp;#39;][-1]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;High&amp;#39;] = df_comp[&amp;#39;non_adj_high_split_only&amp;#39;] / df_comp[&amp;#39;Cum_Split&amp;#39;][-1]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;Low&amp;#39;] = df_comp[&amp;#39;non_adj_low_split_only&amp;#39;] / df_comp[&amp;#39;Cum_Split&amp;#39;][-1]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;Close&amp;#39;] = df_comp[&amp;#39;non_adj_close_split_only&amp;#39;] / df_comp[&amp;#39;Cum_Split&amp;#39;][-1]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;Dividend&amp;#39;] = df_comp[&amp;#39;non_adj_dividend_split_only&amp;#39;] / df_comp[&amp;#39;Cum_Split&amp;#39;][-1]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;Dividend_Pct_Orig&amp;#39;] = df_comp[&amp;#39;dividend&amp;#39;] / df_comp[&amp;#39;close&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;Dividend_Pct_Adj&amp;#39;] = df_comp[&amp;#39;Dividend&amp;#39;] / df_comp[&amp;#39;Close&amp;#39;]
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Included above is the adjusted dividends values. For any time series analysis, not only are the adjusted prices needed, but so are the adusted dividends. Remember, we already have the adjusted total return prices - those come directly from NDL.&lt;/p>
+&lt;h2 id="export-data">Export data&lt;/h2>
+&lt;p>Next, we want to export the data to an excel file, for easy viewing and reference later:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Export data to excel
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">file = fund + &amp;#34;_NDL.xlsx&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp.to_excel(file, sheet_name=&amp;#39;data&amp;#39;)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>And verify the output is as expected:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/14_Excel_export.png"
+width="3491"
+height="220"
+loading="lazy"
+alt="Excel export"
+class="gallery-image"
+data-flex-grow="1586"
+data-flex-basis="3808px"
+>&lt;/p>
+&lt;h2 id="output-confirmation">Output confirmation&lt;/h2>
+&lt;p>Finally, we want to print a confirmation that the process succeeded along withe last date we have for data:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Output confirmation
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">print(f&amp;#34;The last date of data for {fund} is: &amp;#34;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">print(df_comp[-1:])
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">print(f&amp;#34;NDL data updater complete for {fund} data&amp;#34;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">print(f&amp;#34;--------------------&amp;#34;)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>And confirming the output:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/15_Output_confirmation.png"
+width="643"
+height="470"
+loading="lazy"
+alt="Output confirmation"
+class="gallery-image"
+data-flex-grow="136"
+data-flex-basis="328px"
+>&lt;/p>
+&lt;h2 id="references">References&lt;/h2>
+&lt;p>&lt;a class="link" href="https://docs.data.nasdaq.com/docs" target="_blank" rel="noopener"
+>https://docs.data.nasdaq.com/docs&lt;/a>&lt;/br>
+&lt;a class="link" href="https://docs.data.nasdaq.com/docs/tables-1" target="_blank" rel="noopener"
+>https://docs.data.nasdaq.com/docs/tables-1&lt;/a>&lt;/br>
+&lt;a class="link" href="https://docs.data.nasdaq.com/docs/time-series" target="_blank" rel="noopener"
+>https://docs.data.nasdaq.com/docs/time-series&lt;/a>&lt;/br>
+&lt;a class="link" href="https://docs.data.nasdaq.com/docs/python" target="_blank" rel="noopener"
+>https://docs.data.nasdaq.com/docs/python&lt;/a>&lt;/p></description></item><item><title>Using yt-dlp With Panopto</title><link>https://www.jaredszajkowski.com/2023/12/using-yt-dlp-with-panopto/</link><pubDate>Sun, 10 Dec 2023 00:00:00 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/12/using-yt-dlp-with-panopto/</guid><description>&lt;h2 id="introduction">Introduction&lt;/h2>
+&lt;p>As a follow up to &lt;a class="link" href="https://www.jaredszajkowski.com/p/using-yt-dlp-with-zoom/" target="_blank" rel="noopener"
+>this post about using yt-dlp with Zoom&lt;/a>, I found the need to also download videos hosted by Panopto for offline viewing.&lt;/p>
+&lt;p>Similar to the Zoom tutorial, this also requires you to have a &amp;ldquo;cookies&amp;rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Panopto hosting site after logging in.&lt;/p>
+&lt;p>Here&amp;rsquo;s the steps to setting this up:&lt;/p>
+&lt;h2 id="install-cookie-editor">Install cookie editor&lt;/h2>
+&lt;p>Install the &lt;a class="link" href="https://microsoftedge.microsoft.com/addons/detail/cookie-editor/ajfboaconbpkglpfanbmlfgojgndmhmc" target="_blank" rel="noopener"
+>cookie editor&lt;/a> extension. I personnally use it with Microsoft Edge, but there are similar extensions for Chrome, Firefox, etc.&lt;/p>
+&lt;h2 id="modify-export-format">Modify export format&lt;/h2>
+&lt;p>Change the preferred cookie export format to &lt;code>Netscape HTTP Cookie File&lt;/code> in the extension options. It is necessary to export in this format, otherwise yt-dlp will not be able to read the cookies.txt file correctly.&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/using-yt-dlp-with-panopto/Modify_preferred_export_format.png"
+width="865"
+height="505"
+loading="lazy"
+alt="Modify preferred export format"
+class="gallery-image"
+data-flex-grow="171"
+data-flex-basis="411px"
+>&lt;/p>
+&lt;h2 id="log-in-to-panopto">Log in to Panopto&lt;/h2>
+&lt;p>Log in to Panopto in your browser. Be sure to remain logged in while exporting the cookies under step 4.&lt;/p>
+&lt;h2 id="export-cookies">Export cookies&lt;/h2>
+&lt;p>The export button is at the top fo the window. It copies the cookies to your clipboard, which then need to be pasted into a text file (I have my saved as cookies.txt), which yt-dlp will then read when it executes.&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/using-yt-dlp-with-panopto/Export_cookies.png"
+width="579"
+height="613"
+loading="lazy"
+alt="Export cookies"
+class="gallery-image"
+data-flex-grow="94"
+data-flex-basis="226px"
+>&lt;/p>
+&lt;h2 id="create-bash-script">Create bash script&lt;/h2>
+&lt;p>Save the following code to a text file (my bash script file name is &lt;code>yt-dlp-panopto.sh&lt;/code>):&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">#!/bin/bash
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">echo What is the link?
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">read link
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">yt-dlp --cookies /path/to/cookies/file/cookies.txt -o &amp;#34;%(title)s-%(id)s.%(ext)s&amp;#34; --write-subs $link
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="change-permissions">Change permissions&lt;/h2>
+&lt;p>Modify the permissions of the bash script to allow execution:&lt;/p>
+&lt;pre>&lt;code>$ chmod +x yt-dlp-panopto.sh
+&lt;/code>&lt;/pre>
+&lt;h2 id="execute-the-script">Execute the script&lt;/h2>
+&lt;p>Execute the bash script with ./yt-dlp-panopto.sh, copy and paste the link to the video that you would like to save, and it should download the video and the subtitles. If there are not any subtitles present in the stream, then it will notify you and only download the video stream.&lt;/p>
+&lt;h2 id="references">References&lt;/h2>
+&lt;p>References for yt-dlp (and used for above):&lt;/p>
+&lt;p>&lt;a class="link" href="https://ostechnix.com/yt-dlp-tutorial/" target="_blank" rel="noopener"
+>https://ostechnix.com/yt-dlp-tutorial/&lt;/a>&lt;/p></description></item><item><title>Cleaning A Bloomberg Data Excel Export</title><link>https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/</link><pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/</guid><description>&lt;h2 id="introduction">Introduction&lt;/h2>
+&lt;p>In this tutorial, we will write a python function that imports an excel export from Bloomberg, removes ancillary rows and columns, and leaves the data in a format where it can then be used in time series analysis.&lt;/p>
+&lt;h2 id="example-of-a-bloomberg-excel-export">Example of a Bloomberg excel export&lt;/h2>
+&lt;p>We will use the SPX index data in this example. Exporting the data from Bloomberg using the excel Bloomberg add-on yields data in the following format:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Format_of_data_in_excel_export_from_Bloomberg.png"
+width="295"
+height="455"
+loading="lazy"
+alt="Format of data in excel export from Bloomberg"
+class="gallery-image"
+data-flex-grow="64"
+data-flex-basis="155px"
+>&lt;/p>
+&lt;h2 id="data-modifications">Data modifications&lt;/h2>
+&lt;p>The above format isn&amp;rsquo;t horrible, but we want to perform the following modifications:&lt;/p>
+&lt;ol>
+&lt;li>Remove the first six rows of the data&lt;/li>
+&lt;li>Convert the 7th row to become column headings&lt;/li>
+&lt;li>Rename column 2 to &amp;ldquo;Close&amp;rdquo; to represent the closing price&lt;/li>
+&lt;li>Remove column 3, as we are not concerned about volume&lt;/li>
+&lt;li>Export to excel and make the name of the excel worksheet &amp;ldquo;data&amp;rdquo;&lt;/li>
+&lt;/ol>
+&lt;h2 id="assumptions">Assumptions&lt;/h2>
+&lt;p>The remainder of this tutorial assumes the following:&lt;/p>
+&lt;ul>
+&lt;li>Your excel file is named &amp;ldquo;SPX_Index.xlsx&amp;rdquo;&lt;/li>
+&lt;li>The worksheet in the excel file is named &amp;ldquo;Worksheet&amp;rdquo;&lt;/li>
+&lt;li>You have the &lt;a class="link" href="https://pandas.pydata.org/" target="_blank" rel="noopener"
+>pandas&lt;/a> library installed&lt;/li>
+&lt;li>You have the &lt;a class="link" href="https://openpyxl.readthedocs.io/en/stable/" target="_blank" rel="noopener"
+>OpenPyXL&lt;/a> library installed&lt;/li>
+&lt;/ul>
+&lt;h2 id="python-function-to-modify-the-data">Python function to modify the data&lt;/h2>
+&lt;p>The following function will perform the modifications mentioned above:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># This function takes an excel export from Bloomberg and
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># removes all excess data leaving date and close columns
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Imports
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">import pandas as pd
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Function definition
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">def bb_data_updater(fund):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # File name variable
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> file = fund + &amp;#34;_Index.xlsx&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Import data from file as a pandas dataframe
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df = pd.read_excel(file, sheet_name = &amp;#39;Worksheet&amp;#39;, engine=&amp;#39;openpyxl&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set the column headings from row 5 (which is physically row 6)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.columns = df.iloc[5]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set the column heading for the index to be &amp;#34;None&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.rename_axis(None, axis=1, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Drop the first 6 rows, 0 - 5
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.drop(df.index[0:6], inplace=True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set the date column as the index
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.set_index(&amp;#39;Date&amp;#39;, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Drop the volume column
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> try:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.drop(columns = {&amp;#39;PX_VOLUME&amp;#39;}, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> except KeyError:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> pass
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Rename column
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.rename(columns = {&amp;#39;PX_LAST&amp;#39;:&amp;#39;Close&amp;#39;}, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Sort by date
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.sort_values(by=[&amp;#39;Date&amp;#39;], inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Export data to excel
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> file = fund + &amp;#34;.xlsx&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.to_excel(file, sheet_name=&amp;#39;data&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Output confirmation
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> print(f&amp;#34;The last date of data for {fund} is: &amp;#34;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> print(df[-1:])
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> print(f&amp;#34;Bloomberg data conversion complete for {fund} data&amp;#34;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> return print(f&amp;#34;--------------------&amp;#34;)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Let&amp;rsquo;s break this down line by line.&lt;/p>
+&lt;h2 id="imports">Imports&lt;/h2>
+&lt;p>First, we need to import pandas:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">import pandas as pd
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="import-excel-data-file">Import excel data file&lt;/h2>
+&lt;p>Then import the excel file as a pandas dataframe:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># File name variable
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">file = fund + &amp;#34;_Index.xlsx&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Import data from file as a pandas dataframe
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df = pd.read_excel(file, sheet_name = &amp;#39;Worksheet&amp;#39;, engine=&amp;#39;openpyxl&amp;#39;)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Dataframe_excel_import.png"
+width="367"
+height="302"
+loading="lazy"
+alt="Dataframe excel import"
+class="gallery-image"
+data-flex-grow="121"
+data-flex-basis="291px"
+>&lt;/p>
+&lt;h2 id="set-column-headings">Set column headings&lt;/h2>
+&lt;p>Next, set the column heading:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Set the column headings from row 5 (which is physically row 6)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df.columns = df.iloc[5]
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now, running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Set_column_headings.png"
+width="376"
+height="296"
+loading="lazy"
+alt="Set column headings"
+class="gallery-image"
+data-flex-grow="127"
+data-flex-basis="304px"
+>&lt;/p>
+&lt;h2 id="remove-index-heading">Remove index heading&lt;/h2>
+&lt;p>Next, remove the column heading from the index column:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Set the column heading for the index to be &amp;#34;None&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df.rename_axis(None, axis=1, inplace = True)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Note: The &lt;code>axis=1&lt;/code> argument here specifies the column index.&lt;/p>
+&lt;p>Now, running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Remove_index_heading.png"
+width="373"
+height="299"
+loading="lazy"
+alt="Remove index heading"
+class="gallery-image"
+data-flex-grow="124"
+data-flex-basis="299px"
+>&lt;/p>
+&lt;h2 id="drop-rows">Drop rows&lt;/h2>
+&lt;p>Next, we want to remove the first 6 rows that have unneeded data:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Drop the first 6 rows, 0 - 5
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df.drop(df.index[0:6], inplace=True)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Note: When dropping rows, the range to drop begins with row 0 and continues up to - but not including - row 6.&lt;/p>
+&lt;p>Now, running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Remove_rows.png"
+width="323"
+height="298"
+loading="lazy"
+alt="Remove rows"
+class="gallery-image"
+data-flex-grow="108"
+data-flex-basis="260px"
+>&lt;/p>
+&lt;h2 id="set-index">Set index&lt;/h2>
+&lt;p>Next, we want to set the date column as the index:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Set the date column as the index
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df.set_index(&amp;#39;Date&amp;#39;, inplace = True)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now, running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Set_index.png"
+width="244"
+height="318"
+loading="lazy"
+alt="Set index"
+class="gallery-image"
+data-flex-grow="76"
+data-flex-basis="184px"
+>&lt;/p>
+&lt;h2 id="drop-the-px_volume-column">Drop the &amp;ldquo;PX_VOLUME&amp;rdquo; column&lt;/h2>
+&lt;p>Next, we want to drop the volume column:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Drop the volume column
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">try:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.drop(columns = {&amp;#39;PX_VOLUME&amp;#39;}, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">except KeyError:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> pass
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>For some data records, the volume column does not exist. Therefore, we &lt;code>try&lt;/code>, and if it fails with a &lt;code>KeyError&lt;/code>, then we assume the &amp;ldquo;PX_VOLUME&amp;rdquo; column does not exist, and just &lt;code>pass&lt;/code> to move on.&lt;/p>
+&lt;p>Now, running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Drop_volume.png"
+width="163"
+height="320"
+loading="lazy"
+alt="Drop volume"
+class="gallery-image"
+data-flex-grow="50"
+data-flex-basis="122px"
+>&lt;/p>
+&lt;h2 id="rename-the-px_last-column">Rename the &amp;ldquo;PX_LAST&amp;rdquo; column&lt;/h2>
+&lt;p>Next, we want to rename the &amp;ldquo;PX_LAST&amp;rdquo; column as &amp;ldquo;Close&amp;rdquo;:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Rename column
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df.rename(columns = {&amp;#39;PX_LAST&amp;#39;:&amp;#39;Close&amp;#39;}, inplace = True)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now, running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Rename_column.png"
+width="156"
+height="319"
+loading="lazy"
+alt="Rename column"
+class="gallery-image"
+data-flex-grow="48"
+data-flex-basis="117px"
+>&lt;/p>
+&lt;h2 id="sort-data">Sort data&lt;/h2>
+&lt;p>Next, we want to sort the data starting with the oldest date:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Sort by date
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df.sort_values(by=[&amp;#39;Date&amp;#39;], inplace = True)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now, running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Sort_by_date.png"
+width="136"
+height="317"
+loading="lazy"
+alt="Sort by date"
+class="gallery-image"
+data-flex-grow="42"
+data-flex-basis="102px"
+>&lt;/p>
+&lt;h2 id="export-data">Export data&lt;/h2>
+&lt;p>Next, we want to export the data to an excel file, for easy viewing and reference later:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Export data to excel
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">file = fund + &amp;#34;.xlsx&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df.to_excel(file, sheet_name=&amp;#39;data&amp;#39;)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>And verify the output is as expected:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Excel_export.png"
+width="278"
+height="380"
+loading="lazy"
+alt="Excel export"
+class="gallery-image"
+data-flex-grow="73"
+data-flex-basis="175px"
+>&lt;/p>
+&lt;h2 id="output-confirmation">Output confirmation&lt;/h2>
+&lt;p>Finally, we want to print a confirmation that the process succeeded along withe last date we have for data:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Output confirmation
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">print(f&amp;#34;The last date of data for {fund} is: &amp;#34;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">print(df[-1:])
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">print(f&amp;#34;Bloomberg data conversion complete for {fund} data&amp;#34;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">print(f&amp;#34;--------------------&amp;#34;)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>And confirming the output:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Output_confirmation.PNG"
+width="417"
+height="116"
+loading="lazy"
+alt="Output confirmation"
+class="gallery-image"
+data-flex-grow="359"
+data-flex-basis="862px"
+>&lt;/p>
+&lt;h2 id="references">References&lt;/h2>
+&lt;p>&lt;a class="link" href="https://www.bloomberg.com/professional/support/software-updates/" target="_blank" rel="noopener"
+>https://www.bloomberg.com/professional/support/software-updates/&lt;/a>&lt;/p></description></item><item><title>Git Quick Start Guide</title><link>https://www.jaredszajkowski.com/2023/10/git-quick-start-guide/</link><pubDate>Mon, 16 Oct 2023 00:00:00 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/10/git-quick-start-guide/</guid><description>&lt;h2 id="introduction">Introduction&lt;/h2>
+&lt;p>Here are my notes for some of the more commonly used git commands along with initial setup for git in Linux.&lt;/p>
+&lt;h2 id="installation">Installation&lt;/h2>
+&lt;p>To begin, install as follows for Arch Linux:&lt;/p>
+&lt;pre>&lt;code># pacman -Syu git
+&lt;/code>&lt;/pre>
+&lt;p>Or&lt;/p>
+&lt;pre>&lt;code>$ yay git
+&lt;/code>&lt;/pre>
+&lt;p>Pacman will include all required depencies.&lt;/p>
+&lt;h2 id="initial-configuration">Initial configuration&lt;/h2>
+&lt;p>First, set your name and email address:&lt;/p>
+&lt;pre>&lt;code>$ git config --global user.name &amp;quot;Firstname Lastname&amp;quot;
+$ git config --global user.email &amp;quot;email@address.com&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>Then, set your preferred text editor (if you have one). I use nano:&lt;/p>
+&lt;pre>&lt;code>$ git config --global core.editor &amp;quot;nano&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>You can verify the updates with:&lt;/p>
+&lt;pre>&lt;code>$ git config --global core.editor
+&lt;/code>&lt;/pre>
+&lt;p>Alternatively, you can edit the git configuration directly with:&lt;/p>
+&lt;pre>&lt;code>$ git config --global --edit
+&lt;/code>&lt;/pre>
+&lt;h2 id="store-credentials">Store credentials&lt;/h2>
+&lt;p>In 2021, GitHub disabled authentication via password and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in &lt;code>~/.git-credentials&lt;/code>:&lt;/p>
+&lt;pre>&lt;code>$ git config --global credential.helper store
+&lt;/code>&lt;/pre>
+&lt;p>After you log in during a &lt;code>git push&lt;/code> with your username and token, the username or email address and token will be stored in the above location.&lt;/p>
+&lt;p>Note: The token is stored in plain text, so use caution if that is a concern.&lt;/p>
+&lt;h2 id="cloning-repositories">Cloning repositories&lt;/h2>
+&lt;p>Repositories can be cloned with the following:&lt;/p>
+&lt;pre>&lt;code>$ git clone https://github.com/&amp;lt;username&amp;gt;/&amp;lt;repository&amp;gt;.git
+&lt;/code>&lt;/pre>
+&lt;h2 id="updating-repositories">Updating repositories&lt;/h2>
+&lt;p>The local record of a repository can be updated with the following command:&lt;/p>
+&lt;pre>&lt;code>$ cd &amp;lt;repository&amp;gt;/
+$ git pull
+&lt;/code>&lt;/pre>
+&lt;h2 id="adding-committing-and-pushing">Adding, committing, and pushing&lt;/h2>
+&lt;p>Any files or directories that have been added, modified, or removed can be add to the list of changes to be pushed with the following command:&lt;/p>
+&lt;pre>&lt;code>$ git add .
+&lt;/code>&lt;/pre>
+&lt;p>Then committed (staged in preparation to push) with the following command:&lt;/p>
+&lt;pre>&lt;code>$ git commit -am &amp;quot;Add your commit message here&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>Note: Without &lt;code>add&lt;/code>, &lt;code>commit&lt;/code> will handle any changes to files that have been modified or deleted, but will not incorporate any files that have been created.&lt;/p>
+&lt;p>Then finally pushed:&lt;/p>
+&lt;pre>&lt;code>$ git push
+&lt;/code>&lt;/pre>
+&lt;p>If, for some reason, you would like to reset a commit:&lt;/p>
+&lt;pre>&lt;code>$ git reset
+&lt;/code>&lt;/pre>
+&lt;p>These commands can be chained together with the AND operator:&lt;/p>
+&lt;pre>&lt;code>$ git add . &amp;amp;&amp;amp; git commit -am &amp;quot;Add your commit message here&amp;quot; &amp;amp;&amp;amp; git push
+&lt;/code>&lt;/pre>
+&lt;h2 id="stashing-changes">Stashing changes&lt;/h2>
+&lt;p>If you forget to update a repository before making changes, you can &amp;ldquo;stash&amp;rdquo; those changes and then re-apply them after running &lt;code>git pull&lt;/code>.&lt;/p>
+&lt;p>First, stash the changes:&lt;/p>
+&lt;pre>&lt;code>$ git stash
+&lt;/code>&lt;/pre>
+&lt;p>Then, update the local record of the repository:&lt;/p>
+&lt;pre>&lt;code>$ git pull
+&lt;/code>&lt;/pre>
+&lt;p>Finally, re-apply the changes you previously made:&lt;/p>
+&lt;pre>&lt;code>$ git stash apply
+&lt;/code>&lt;/pre>
+&lt;p>This has proven to be very useful for me when I forget to update a repository before making edits to the code.&lt;/p>
+&lt;h2 id="references">References&lt;/h2>
+&lt;p>References for git (and used for above):&lt;/p>
+&lt;p>&lt;a class="link" href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" target="_blank" rel="noopener"
+>https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens&lt;/a>&lt;/br>
+&lt;a class="link" href="https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup#_first_time" target="_blank" rel="noopener"
+>https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup#_first_time&lt;/a>&lt;/br>
+&lt;a class="link" href="https://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Setup-and-Config" target="_blank" rel="noopener"
+>https://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Setup-and-Config&lt;/a>&lt;/br>
+&lt;a class="link" href="https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage#_credential_caching" target="_blank" rel="noopener"
+>https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage#_credential_caching&lt;/a>&lt;/br>
+&lt;a class="link" href="https://git-scm.com/book/en/v2/Git-Tools-Stashing-and-Cleaning" target="_blank" rel="noopener"
+>https://git-scm.com/book/en/v2/Git-Tools-Stashing-and-Cleaning&lt;/a>&lt;/br>
+&lt;a class="link" href="https://www.geeksforgeeks.org/difference-between-chaining-operators-in-linux/" target="_blank" rel="noopener"
+>https://www.geeksforgeeks.org/difference-between-chaining-operators-in-linux/&lt;/a>&lt;/p></description></item><item><title>Using yt-dlp With Zoom</title><link>https://www.jaredszajkowski.com/2023/10/using-yt-dlp-with-zoom/</link><pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/10/using-yt-dlp-with-zoom/</guid><description>&lt;h2 id="introduction">Introduction&lt;/h2>
+&lt;p>If anyone uses Zoom to record and later wants to access recordings of video calls, here&amp;rsquo;s a simple linux bash script to download the video file and acompanying subtitles. For a long time I used &lt;a class="link" href="https://github.com/Battleman/zoomdl" target="_blank" rel="noopener"
+>zoomdl&lt;/a>, but it is no longer under active development, and I began running into various issues about a year ago.&lt;/p>
+&lt;p>This tutorial requires you to have a &amp;ldquo;cookies&amp;rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Zoom cookies after logging in.&lt;/p>
+&lt;p>Here&amp;rsquo;s the steps to setting this up:&lt;/p>
+&lt;h2 id="install-cookie-editor">Install cookie editor&lt;/h2>
+&lt;p>Install the &lt;a class="link" href="https://microsoftedge.microsoft.com/addons/detail/cookie-editor/ajfboaconbpkglpfanbmlfgojgndmhmc" target="_blank" rel="noopener"
+>cookie editor&lt;/a> extension. I personnally use it with Microsoft Edge, but there are similar extensions for Chrome, Firefox, etc.&lt;/p>
+&lt;h2 id="modify-export-format">Modify export format&lt;/h2>
+&lt;p>Change the preferred cookie export format to &lt;code>Netscape HTTP Cookie File&lt;/code> in the extension options. It is necessary to export in this format, otherwise yt-dlp will not be able to read the cookies.txt file correctly.&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/10/using-yt-dlp-with-zoom/Modify_preferred_export_format.png"
+width="865"
+height="505"
+loading="lazy"
+alt="Modify preferred export format"
+class="gallery-image"
+data-flex-grow="171"
+data-flex-basis="411px"
+>&lt;/p>
+&lt;h2 id="log-in-to-zoom">Log in to Zoom&lt;/h2>
+&lt;p>Log in to Zoom in your browser. Be sure to remain logged in while exporting the cookies under step 4.&lt;/p>
+&lt;h2 id="export-cookies">Export cookies&lt;/h2>
+&lt;p>The export button is at the top fo the window. It copies the cookies to your clipboard, which then need to be pasted into a text file (I have my saved as cookies.txt), which yt-dlp will then read when it executes.&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/10/using-yt-dlp-with-zoom/Export_cookies.png"
+width="579"
+height="613"
+loading="lazy"
+alt="Export cookies"
+class="gallery-image"
+data-flex-grow="94"
+data-flex-basis="226px"
+>&lt;/p>
+&lt;h2 id="create-bash-script">Create bash script&lt;/h2>
+&lt;p>Save the following code to a text file (my bash script file name is &lt;code>yt-dlp-zoom.sh&lt;/code>):&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">#!/bin/bash
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">echo What is the link?
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">read link
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">yt-dlp --referer &amp;#34;https://zoom.us/&amp;#34; --cookies /path/to/cookies/file/cookies.txt -o &amp;#34;%(title)s-%(id)s.%(ext)s&amp;#34; --write-subs $link
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="change-permissions">Change permissions&lt;/h2>
+&lt;p>Modify the permissions of the bash script to allow execution:&lt;/p>
+&lt;pre>&lt;code>$ chmod +x yt-dlp-zoom.sh
+&lt;/code>&lt;/pre>
+&lt;h2 id="execute-the-script">Execute the script&lt;/h2>
+&lt;p>Execute the bash script with ./yt-dlp-zoom.sh, copy and paste the link to the video that you would like to save, and it should download the video and the subtitles.&lt;/p>
+&lt;h2 id="references">References&lt;/h2>
+&lt;p>References for yt-dlp (and used for above):&lt;/p>
+&lt;p>&lt;a class="link" href="https://ostechnix.com/yt-dlp-tutorial/" target="_blank" rel="noopener"
+>https://ostechnix.com/yt-dlp-tutorial/&lt;/a>&lt;/p></description></item><item><title>Arch Linux Install</title><link>https://www.jaredszajkowski.com/2023/09/arch-linux-install/</link><pubDate>Fri, 29 Sep 2023 00:00:01 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/09/arch-linux-install/</guid><description>&lt;h2 id="introduction">Introduction&lt;/h2>
+&lt;p>This is the basic framework that I use to install Arch Linux, with a few changes catered to the Lenovo ThinkPad E15 Gen 2. I have found that this is a decent mid range laptop, excellent linux compatibility, great keyboard, and overall provides a good value.&lt;/p>
+&lt;h2 id="getting-started">Getting started&lt;/h2>
+&lt;p>This tutorial assumes the following:&lt;/p>
+&lt;ul>
+&lt;li>You are booting from a USB drive with the Arch install ISO.&lt;/li>
+&lt;li>Wireless or wired network is detected and drivers are configured automatically.&lt;/li>
+&lt;li>You want drive encrytion on your root partition, but not on your boot/efi/swap partitions.&lt;/li>
+&lt;/ul>
+&lt;h3 id="verify-uefi-boot-mode">Verify UEFI boot mode&lt;/h3>
+&lt;p>The following command should show directory without error:&lt;/p>
+&lt;pre>&lt;code># ls /sys/firmware/efi/efivars
+&lt;/code>&lt;/pre>
+&lt;h3 id="configure-wireless-network">Configure wireless network&lt;/h3>
+&lt;p>The following command will drop you into the iwd daemon:&lt;/p>
+&lt;pre>&lt;code># iwctl
+&lt;/code>&lt;/pre>
+&lt;p>From there:&lt;/p>
+&lt;pre>&lt;code># device list
+# station *device* scan
+# station *device* get-networks
+# station *device* connect *SSID*
+&lt;/code>&lt;/pre>
+&lt;h3 id="verify-internet-connectivity">Verify internet connectivity&lt;/h3>
+&lt;pre>&lt;code># ping archlinux.org
+&lt;/code>&lt;/pre>
+&lt;h3 id="update-system-clock">Update system clock&lt;/h3>
+&lt;pre>&lt;code># timedatectl set-ntp true
+# timedatectl status
+&lt;/code>&lt;/pre>
+&lt;h2 id="disks-partition-table--partitions">Disks, partition table &amp;amp; partitions&lt;/h2>
+&lt;p>The following assumes that your NVME drive is found as /dev/nvme0n1. Partitions will then be /dev/nvme0n1p1 and so on.&lt;/p>
+&lt;h3 id="wipe-disk">Wipe disk&lt;/h3>
+&lt;p>List disks:&lt;/p>
+&lt;pre>&lt;code># fdisk -l
+&lt;/code>&lt;/pre>
+&lt;p>Wipe all file system records:&lt;/p>
+&lt;pre>&lt;code># wipefs -a /dev/nvme0n1
+&lt;/code>&lt;/pre>
+&lt;h3 id="create-new-partition-table">Create new partition table&lt;/h3>
+&lt;p>Open nvme0n1 with gdisk:&lt;/p>
+&lt;pre>&lt;code># gdisk /dev/nvme0n1
+&lt;/code>&lt;/pre>
+&lt;p>Create GPT partition table with option &amp;ldquo;o&amp;rdquo;.&lt;/p>
+&lt;h3 id="create-efi-partition">Create EFI partition&lt;/h3>
+&lt;p>Create new EFI partition w/ 550mb with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/p>
+&lt;pre>&lt;code>Partition #1
+Default starting sector
++550M
+Change partition type to EFI System (ef00)
+&lt;/code>&lt;/pre>
+&lt;h3 id="create-boot-partition">Create boot partition&lt;/h3>
+&lt;p>Create new boot partition w/ 550mb with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/p>
+&lt;pre>&lt;code>Partition #2
+Default starting sector
++550M
+Leave default type of 8300
+&lt;/code>&lt;/pre>
+&lt;h3 id="create-swap-partition">Create swap partition&lt;/h3>
+&lt;p>The old rule of thumb used to be that a swap partition should be the same size as the amount of memory in the system, but given the typical amount of memory in modern systems this is obviously no longer necessary. For my system with 16 or 32 GB of memory, a swap of 8 GB is rarely even used.&lt;/br>&lt;/p>
+&lt;p>Create new Swap partition w/ 8GB with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/p>
+&lt;pre>&lt;code>Partition #3
+Default starting sector
++8G
+Change to linux swap (8200)
+&lt;/code>&lt;/pre>
+&lt;h3 id="create-root-partition">Create root partition&lt;/h3>
+&lt;p>Create new root partition w/ remaining disk space with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/p>
+&lt;pre>&lt;code>Partition #4
+Default starting sector
+Remaining space
+Linux LUKS type 8309
+&lt;/code>&lt;/pre>
+&lt;p>And then exit gdisk.&lt;/p>
+&lt;h2 id="write-file-systems">Write file systems&lt;/h2>
+&lt;h3 id="efi-partition">EFI partition&lt;/h3>
+&lt;p>Write file system to new EFI System partition:&lt;/p>
+&lt;pre>&lt;code># cat /dev/zero &amp;gt; /dev/nvme0n1p1
+# mkfs.fat -F32 /dev/nvme0n1p1
+&lt;/code>&lt;/pre>
+&lt;h3 id="boot-partition">Boot partition&lt;/h3>
+&lt;p>Then boot partition:&lt;/p>
+&lt;pre>&lt;code># cat /dev/zero &amp;gt; /dev/nvme0n1p2
+# mkfs.ext2 /dev/nvme0n1p2
+&lt;/code>&lt;/pre>
+&lt;h3 id="root-partition">Root partition&lt;/h3>
+&lt;p>Prepare root partition w/ LUKS:&lt;/p>
+&lt;pre>&lt;code># cryptsetup -y -v luksFormat --type luks2 /dev/nvme0n1p4
+# cryptsetup luksDump /dev/nvme0n1p4
+# cryptsetup open /dev/nvme0n1p4 archcryptroot
+# mkfs.ext4 /dev/mapper/archcryptroot
+# mount /dev/mapper/archcryptroot /mnt
+&lt;/code>&lt;/pre>
+&lt;p>I use &lt;em>archcryptroot&lt;/em> for the name of my encrypted volume, but change as necessary.&lt;/p>
+&lt;h3 id="swap-partition">Swap partition&lt;/h3>
+&lt;p>Then swap:&lt;/p>
+&lt;pre>&lt;code># mkswap /dev/nvme0n1p3
+# swapon /dev/nvme0n1p3
+&lt;/code>&lt;/pre>
+&lt;h3 id="create-mount-points">Create mount points&lt;/h3>
+&lt;pre>&lt;code># mkdir /mnt/boot
+# mount /dev/nvme0n1p2 /mnt/boot
+# mkdir /mnt/boot/efi
+# mount /dev/nvme0n1p1 /mnt/boot/efi
+&lt;/code>&lt;/pre>
+&lt;h2 id="system-install">System install&lt;/h2>
+&lt;h3 id="install-base-packages">Install base packages&lt;/h3>
+&lt;pre>&lt;code># pacstrap /mnt base base-devel linux linux-firmware grub-efi-x86_64 efibootmgr
+&lt;/code>&lt;/pre>
+&lt;h3 id="generate-fstab">Generate fstab&lt;/h3>
+&lt;pre>&lt;code># genfstab -U /mnt &amp;gt;&amp;gt; /mnt/etc/fstab
+&lt;/code>&lt;/pre>
+&lt;h3 id="enter-new-system">Enter new system&lt;/h3>
+&lt;pre>&lt;code># arch-chroot /mnt /bin/bash
+&lt;/code>&lt;/pre>
+&lt;h3 id="set-clock">Set clock&lt;/h3>
+&lt;pre>&lt;code># ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime
+# hwclock –systohc
+&lt;/code>&lt;/pre>
+&lt;h3 id="generate-locale">Generate locale&lt;/h3>
+&lt;p>In /etc/locale.gen &lt;strong>uncomment only&lt;/strong>: en_US.UTF-8 UTF-8&lt;/p>
+&lt;pre>&lt;code># locale-gen
+&lt;/code>&lt;/pre>
+&lt;p>In /etc/locale.conf, you should &lt;strong>only&lt;/strong> have this line: LANG=en_US.UTF-8&lt;/p>
+&lt;pre>&lt;code># nano /etc/locale.conf
+&lt;/code>&lt;/pre>
+&lt;h3 id="set-hostname--update-hosts">Set hostname &amp;amp; update hosts&lt;/h3>
+&lt;pre>&lt;code># echo linuxmachine &amp;gt; /etc/hostname
+&lt;/code>&lt;/pre>
+&lt;p>Update /etc/hosts with the following:&lt;/p>
+&lt;pre>&lt;code>127.0.0.1 localhost
+::1 localhost
+127.0.1.1 linuxmachine.localdomain linuxmachine
+&lt;/code>&lt;/pre>
+&lt;h3 id="set-root-password">Set root password&lt;/h3>
+&lt;pre>&lt;code># passwd
+&lt;/code>&lt;/pre>
+&lt;h3 id="update-etcmkinitcpioconf--generate-initrd-image">Update /etc/mkinitcpio.conf &amp;amp; generate initrd image&lt;/h3>
+&lt;p>Edit /etc/mkinitcpio.conf with the following:&lt;/p>
+&lt;pre>&lt;code>HOOKS=(base udev autodetect modconf block keymap encrypt resume filesystems keyboard fsck)
+&lt;/code>&lt;/pre>
+&lt;p>Then run:&lt;/p>
+&lt;pre>&lt;code># mkinitcpio -p linux
+&lt;/code>&lt;/pre>
+&lt;h3 id="install-grub">Install grub&lt;/h3>
+&lt;pre>&lt;code># grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ArchLinux
+&lt;/code>&lt;/pre>
+&lt;p>Edit /etc/default/grub so it includes a statement like this:&lt;/p>
+&lt;pre>&lt;code>GRUB_CMDLINE_LINUX=&amp;quot;cryptdevice=/dev/nvme0n1p4:archcryptroot resume=/dev/nvme0n1p3&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>Generate final grub configuration:&lt;/p>
+&lt;pre>&lt;code># grub-mkconfig -o /boot/grub/grub.cfg
+&lt;/code>&lt;/pre>
+&lt;h3 id="exit--reboot">Exit &amp;amp; reboot&lt;/h3>
+&lt;pre>&lt;code># exit
+# umount -R /mnt
+# swapoff -a
+# reboot
+&lt;/code>&lt;/pre>
+&lt;p>To be continued.&lt;/p></description></item></channel></rss>

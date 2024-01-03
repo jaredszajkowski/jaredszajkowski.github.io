@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bloomberg on Jared Szajkowski</title><link>https://www.jaredszajkowski.com/tags/bloomberg/</link><description>Recent content in Bloomberg on Jared Szajkowski</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 15 Nov 2023 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/tags/bloomberg/index.xml" rel="self" type="application/rss+xml"/><item><title>Cleaning A Bloomberg Data Excel Export</title><link>https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/</link><pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/</guid><description>&lt;h2 id="introduction">Introduction&lt;/h2>
+&lt;p>In this tutorial, we will write a python function that imports an excel export from Bloomberg, removes ancillary rows and columns, and leaves the data in a format where it can then be used in time series analysis.&lt;/p>
+&lt;h2 id="example-of-a-bloomberg-excel-export">Example of a Bloomberg excel export&lt;/h2>
+&lt;p>We will use the SPX index data in this example. Exporting the data from Bloomberg using the excel Bloomberg add-on yields data in the following format:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Format_of_data_in_excel_export_from_Bloomberg.png"
+width="295"
+height="455"
+loading="lazy"
+alt="Format of data in excel export from Bloomberg"
+class="gallery-image"
+data-flex-grow="64"
+data-flex-basis="155px"
+>&lt;/p>
+&lt;h2 id="data-modifications">Data modifications&lt;/h2>
+&lt;p>The above format isn&amp;rsquo;t horrible, but we want to perform the following modifications:&lt;/p>
+&lt;ol>
+&lt;li>Remove the first six rows of the data&lt;/li>
+&lt;li>Convert the 7th row to become column headings&lt;/li>
+&lt;li>Rename column 2 to &amp;ldquo;Close&amp;rdquo; to represent the closing price&lt;/li>
+&lt;li>Remove column 3, as we are not concerned about volume&lt;/li>
+&lt;li>Export to excel and make the name of the excel worksheet &amp;ldquo;data&amp;rdquo;&lt;/li>
+&lt;/ol>
+&lt;h2 id="assumptions">Assumptions&lt;/h2>
+&lt;p>The remainder of this tutorial assumes the following:&lt;/p>
+&lt;ul>
+&lt;li>Your excel file is named &amp;ldquo;SPX_Index.xlsx&amp;rdquo;&lt;/li>
+&lt;li>The worksheet in the excel file is named &amp;ldquo;Worksheet&amp;rdquo;&lt;/li>
+&lt;li>You have the &lt;a class="link" href="https://pandas.pydata.org/" target="_blank" rel="noopener"
+>pandas&lt;/a> library installed&lt;/li>
+&lt;li>You have the &lt;a class="link" href="https://openpyxl.readthedocs.io/en/stable/" target="_blank" rel="noopener"
+>OpenPyXL&lt;/a> library installed&lt;/li>
+&lt;/ul>
+&lt;h2 id="python-function-to-modify-the-data">Python function to modify the data&lt;/h2>
+&lt;p>The following function will perform the modifications mentioned above:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># This function takes an excel export from Bloomberg and
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># removes all excess data leaving date and close columns
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Imports
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">import pandas as pd
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Function definition
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">def bb_data_updater(fund):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # File name variable
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> file = fund + &amp;#34;_Index.xlsx&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Import data from file as a pandas dataframe
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df = pd.read_excel(file, sheet_name = &amp;#39;Worksheet&amp;#39;, engine=&amp;#39;openpyxl&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set the column headings from row 5 (which is physically row 6)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.columns = df.iloc[5]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set the column heading for the index to be &amp;#34;None&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.rename_axis(None, axis=1, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Drop the first 6 rows, 0 - 5
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.drop(df.index[0:6], inplace=True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set the date column as the index
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.set_index(&amp;#39;Date&amp;#39;, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Drop the volume column
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> try:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.drop(columns = {&amp;#39;PX_VOLUME&amp;#39;}, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> except KeyError:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> pass
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Rename column
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.rename(columns = {&amp;#39;PX_LAST&amp;#39;:&amp;#39;Close&amp;#39;}, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Sort by date
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.sort_values(by=[&amp;#39;Date&amp;#39;], inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Export data to excel
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> file = fund + &amp;#34;.xlsx&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.to_excel(file, sheet_name=&amp;#39;data&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Output confirmation
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> print(f&amp;#34;The last date of data for {fund} is: &amp;#34;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> print(df[-1:])
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> print(f&amp;#34;Bloomberg data conversion complete for {fund} data&amp;#34;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> return print(f&amp;#34;--------------------&amp;#34;)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Let&amp;rsquo;s break this down line by line.&lt;/p>
+&lt;h2 id="imports">Imports&lt;/h2>
+&lt;p>First, we need to import pandas:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">import pandas as pd
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="import-excel-data-file">Import excel data file&lt;/h2>
+&lt;p>Then import the excel file as a pandas dataframe:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># File name variable
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">file = fund + &amp;#34;_Index.xlsx&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Import data from file as a pandas dataframe
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df = pd.read_excel(file, sheet_name = &amp;#39;Worksheet&amp;#39;, engine=&amp;#39;openpyxl&amp;#39;)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Dataframe_excel_import.png"
+width="367"
+height="302"
+loading="lazy"
+alt="Dataframe excel import"
+class="gallery-image"
+data-flex-grow="121"
+data-flex-basis="291px"
+>&lt;/p>
+&lt;h2 id="set-column-headings">Set column headings&lt;/h2>
+&lt;p>Next, set the column heading:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Set the column headings from row 5 (which is physically row 6)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df.columns = df.iloc[5]
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now, running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Set_column_headings.png"
+width="376"
+height="296"
+loading="lazy"
+alt="Set column headings"
+class="gallery-image"
+data-flex-grow="127"
+data-flex-basis="304px"
+>&lt;/p>
+&lt;h2 id="remove-index-heading">Remove index heading&lt;/h2>
+&lt;p>Next, remove the column heading from the index column:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Set the column heading for the index to be &amp;#34;None&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df.rename_axis(None, axis=1, inplace = True)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Note: The &lt;code>axis=1&lt;/code> argument here specifies the column index.&lt;/p>
+&lt;p>Now, running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Remove_index_heading.png"
+width="373"
+height="299"
+loading="lazy"
+alt="Remove index heading"
+class="gallery-image"
+data-flex-grow="124"
+data-flex-basis="299px"
+>&lt;/p>
+&lt;h2 id="drop-rows">Drop rows&lt;/h2>
+&lt;p>Next, we want to remove the first 6 rows that have unneeded data:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Drop the first 6 rows, 0 - 5
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df.drop(df.index[0:6], inplace=True)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Note: When dropping rows, the range to drop begins with row 0 and continues up to - but not including - row 6.&lt;/p>
+&lt;p>Now, running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Remove_rows.png"
+width="323"
+height="298"
+loading="lazy"
+alt="Remove rows"
+class="gallery-image"
+data-flex-grow="108"
+data-flex-basis="260px"
+>&lt;/p>
+&lt;h2 id="set-index">Set index&lt;/h2>
+&lt;p>Next, we want to set the date column as the index:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Set the date column as the index
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df.set_index(&amp;#39;Date&amp;#39;, inplace = True)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now, running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Set_index.png"
+width="244"
+height="318"
+loading="lazy"
+alt="Set index"
+class="gallery-image"
+data-flex-grow="76"
+data-flex-basis="184px"
+>&lt;/p>
+&lt;h2 id="drop-the-px_volume-column">Drop the &amp;ldquo;PX_VOLUME&amp;rdquo; column&lt;/h2>
+&lt;p>Next, we want to drop the volume column:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Drop the volume column
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">try:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.drop(columns = {&amp;#39;PX_VOLUME&amp;#39;}, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">except KeyError:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> pass
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>For some data records, the volume column does not exist. Therefore, we &lt;code>try&lt;/code>, and if it fails with a &lt;code>KeyError&lt;/code>, then we assume the &amp;ldquo;PX_VOLUME&amp;rdquo; column does not exist, and just &lt;code>pass&lt;/code> to move on.&lt;/p>
+&lt;p>Now, running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Drop_volume.png"
+width="163"
+height="320"
+loading="lazy"
+alt="Drop volume"
+class="gallery-image"
+data-flex-grow="50"
+data-flex-basis="122px"
+>&lt;/p>
+&lt;h2 id="rename-the-px_last-column">Rename the &amp;ldquo;PX_LAST&amp;rdquo; column&lt;/h2>
+&lt;p>Next, we want to rename the &amp;ldquo;PX_LAST&amp;rdquo; column as &amp;ldquo;Close&amp;rdquo;:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Rename column
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df.rename(columns = {&amp;#39;PX_LAST&amp;#39;:&amp;#39;Close&amp;#39;}, inplace = True)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now, running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Rename_column.png"
+width="156"
+height="319"
+loading="lazy"
+alt="Rename column"
+class="gallery-image"
+data-flex-grow="48"
+data-flex-basis="117px"
+>&lt;/p>
+&lt;h2 id="sort-data">Sort data&lt;/h2>
+&lt;p>Next, we want to sort the data starting with the oldest date:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Sort by date
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df.sort_values(by=[&amp;#39;Date&amp;#39;], inplace = True)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now, running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Sort_by_date.png"
+width="136"
+height="317"
+loading="lazy"
+alt="Sort by date"
+class="gallery-image"
+data-flex-grow="42"
+data-flex-basis="102px"
+>&lt;/p>
+&lt;h2 id="export-data">Export data&lt;/h2>
+&lt;p>Next, we want to export the data to an excel file, for easy viewing and reference later:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Export data to excel
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">file = fund + &amp;#34;.xlsx&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df.to_excel(file, sheet_name=&amp;#39;data&amp;#39;)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>And verify the output is as expected:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Excel_export.png"
+width="278"
+height="380"
+loading="lazy"
+alt="Excel export"
+class="gallery-image"
+data-flex-grow="73"
+data-flex-basis="175px"
+>&lt;/p>
+&lt;h2 id="output-confirmation">Output confirmation&lt;/h2>
+&lt;p>Finally, we want to print a confirmation that the process succeeded along withe last date we have for data:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Output confirmation
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">print(f&amp;#34;The last date of data for {fund} is: &amp;#34;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">print(df[-1:])
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">print(f&amp;#34;Bloomberg data conversion complete for {fund} data&amp;#34;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">print(f&amp;#34;--------------------&amp;#34;)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>And confirming the output:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Output_confirmation.PNG"
+width="417"
+height="116"
+loading="lazy"
+alt="Output confirmation"
+class="gallery-image"
+data-flex-grow="359"
+data-flex-basis="862px"
+>&lt;/p>
+&lt;h2 id="references">References&lt;/h2>
+&lt;p>&lt;a class="link" href="https://www.bloomberg.com/professional/support/software-updates/" target="_blank" rel="noopener"
+>https://www.bloomberg.com/professional/support/software-updates/&lt;/a>&lt;/p></description></item></channel></rss>
