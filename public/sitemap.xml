@@ -3,10 +3,31 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.jaredszajkowski.com/</loc>
-    <lastmod>2023-12-27T00:00:00+00:00</lastmod>
+    <lastmod>2024-01-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.jaredszajkowski.com/tags/backup/</loc>
+    <lastmod>2024-01-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.jaredszajkowski.com/tags/bash/</loc>
+    <lastmod>2024-01-12T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.jaredszajkowski.com/categories/</loc>
-    <lastmod>2023-12-26T00:00:00+00:00</lastmod>
+    <lastmod>2024-01-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.jaredszajkowski.com/post/</loc>
+    <lastmod>2024-01-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.jaredszajkowski.com/2024/01/simple-incremental-bash-backup-script/</loc>
+    <lastmod>2024-01-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.jaredszajkowski.com/tags/</loc>
+    <lastmod>2024-01-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.jaredszajkowski.com/categories/tech/</loc>
+    <lastmod>2024-01-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.jaredszajkowski.com/categories/tutorials/</loc>
+    <lastmod>2024-01-12T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.jaredszajkowski.com/categories/financial-data/</loc>
     <lastmod>2023-12-26T00:00:00+00:00</lastmod>
@@ -23,25 +44,10 @@
     <loc>https://www.jaredszajkowski.com/tags/pandas/</loc>
     <lastmod>2023-12-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://www.jaredszajkowski.com/post/</loc>
-    <lastmod>2023-12-26T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://www.jaredszajkowski.com/tags/python/</loc>
     <lastmod>2023-12-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://www.jaredszajkowski.com/tags/</loc>
-    <lastmod>2023-12-26T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.jaredszajkowski.com/categories/tutorials/</loc>
-    <lastmod>2023-12-26T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.jaredszajkowski.com/tags/bash/</loc>
-    <lastmod>2023-12-10T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://www.jaredszajkowski.com/tags/panopto/</loc>
-    <lastmod>2023-12-10T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.jaredszajkowski.com/categories/tech/</loc>
     <lastmod>2023-12-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.jaredszajkowski.com/2023/12/using-yt-dlp-with-panopto/</loc>
