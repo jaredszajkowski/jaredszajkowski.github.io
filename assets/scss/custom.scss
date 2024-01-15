@@ -4,7 +4,7 @@
 
 :root{
   --main-top-padding:35px;
-  --section-separation:20px; // was 40
+  --section-separation:30px; // was 40
   --tag-border-radius:5px; // was 4
   --card-border-radius:5px; // was 10
   --small-card-padding:15px; // was 20
@@ -13,12 +13,12 @@
 @media(min-width:768px){
   :root{
     --small-card-padding:15px; // was 25
-    --card-padding:20px}} // was 25
+    --card-padding:25px}} // was 25
 
 @media(min-width:1280px){
   :root{
     --main-top-padding:50px;
-    --card-padding:20px}} // was 30
+    --card-padding:30px}} // was 30
 
 :root{
   --body-background:#f0f0f0; // was #f5f5fa, then f1f1f1 
