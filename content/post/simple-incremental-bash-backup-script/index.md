@@ -19,6 +19,8 @@ tags:
 
 While there are [numerous backup solutions available for Linux](https://wiki.archlinux.org/title/Synchronization_and_backup_programs), many require extensive configuration and maintenance, and restoring from the backup is not always simple. Incremental backups are ideal because they maintain snapshots of the files and allow for access to previous versions of files.
 
+Linux Journal recently [published an article](https://www.linuxjournal.com/content/exploring-rsync-tar-and-other-backup-solutions), and I thought I'd provide my incremental backup script that uses `rsync` and `cp`.
+
 ## Incremental backup script
 
 This script provides an incremental backup solution and only requires `rsync` and `cp` to be installed on the system.
