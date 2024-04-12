@@ -4,7 +4,7 @@ description: Welcome to my website.
 # slug: hello-world
 date: 2023-09-26 00:00:00+0000
 lastmod: 2023-12-10 00:00:00+0000
-# image: cover.jpg
+image: cover.jpg
 draft: false
 categories:
     - Blog

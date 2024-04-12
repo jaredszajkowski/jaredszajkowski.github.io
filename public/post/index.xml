@@ -2126,7 +2126,7 @@ Linux LUKS type 8309
         <pubDate>Tue, 26 Sep 2023 00:00:00 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/2023/09/hello-world/</guid>
-        <description>&lt;h2 id=&#34;hello-world&#34;&gt;
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/09/hello-world/cover.jpg" alt="Featured image of post Hello World" /&gt;&lt;h2 id=&#34;hello-world&#34;&gt;
     &lt;a href=&#34;#hello-world&#34;&gt;#&lt;/a&gt;
     Hello World
 &lt;/h2&gt;&lt;p&gt;Welcome to my website. This is meant to serve as a place for me to publish various posts from my explorations into Arch Linux, data science, quant finance, and other topics.&lt;/p&gt;
