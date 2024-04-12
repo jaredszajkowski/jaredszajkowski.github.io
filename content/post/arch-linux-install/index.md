@@ -4,7 +4,7 @@ description: Guide to Arch Linux install with customizations for the  Lenovo Thi
 # slug: hello-world
 date: 2023-09-29 00:00:01+0000
 lastmod: 2023-11-07 00:00:00+0000
-# image: cover.jpg
+image: cover.jpg
 draft: false
 categories:
     - Tech
