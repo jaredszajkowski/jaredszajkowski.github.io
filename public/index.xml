@@ -1178,7 +1178,7 @@
         <pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/</guid>
-        <description>&lt;h2 id=&#34;introduction&#34;&gt;
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/cover.jpg" alt="Featured image of post Cleaning A Bloomberg Data Excel Export" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;
     &lt;a href=&#34;#introduction&#34;&gt;#&lt;/a&gt;
     Introduction
 &lt;/h2&gt;&lt;p&gt;In this tutorial, we will write a python function that imports an excel export from Bloomberg, removes ancillary rows and columns, and leaves the data in a format where it can then be used in time series analysis.&lt;/p&gt;
@@ -2223,7 +2223,7 @@ Linux LUKS type 8309
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/archives/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/archives/cover.jpg" alt="Featured image of post Archives" /&gt;</description>
+        <description></description>
         </item>
         <item>
         <title>Search</title>
