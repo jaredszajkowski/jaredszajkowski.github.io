@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='A python function to pull data from Nasdaq Data Link using the tables API and then complete the data for ease of use.'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="A python function to pull data from Nasdaq Data Link using the tables API and then complete the data for ease of use.">
 <title>Nasdaq Data Link Tables API Data Retrieval</title>
 
 <link rel='canonical' href='https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/'>
 
-<link rel="stylesheet" href="/scss/style.min.dbe2e9e902aac01bf50d85fb788ea79a3ad9eca9eb14affb035dda080b8ad34f.css"><meta property='og:title' content='Nasdaq Data Link Tables API Data Retrieval'>
-<meta property='og:description' content='A python function to pull data from Nasdaq Data Link using the tables API and then complete the data for ease of use.'>
+<link rel="stylesheet" href="/scss/style.min.16bf6e382b554a45649fe2bb6c85fcec681e2372982651dc4db30f28a16b66c0.css"><meta property='og:title' content="Nasdaq Data Link Tables API Data Retrieval">
+<meta property='og:description' content="A python function to pull data from Nasdaq Data Link using the tables API and then complete the data for ease of use.">
 <meta property='og:url' content='https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/'>
 <meta property='og:site_name' content='Jared Szajkowski'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Python' /><meta property='article:tag' content='Nasdaq Data Link' /><meta property='article:tag' content='pandas' /><meta property='article:tag' content='OpenPyXL' /><meta property='article:published_time' content='2023-12-24T00:00:01&#43;00:00'/><meta property='article:modified_time' content='2023-12-26T00:00:00&#43;00:00'/>
@@ -72,7 +72,7 @@
             <h1 class="site-name"><a href="/">Jared Szajkowski</a></h1>
             <h2 class="site-description"></h2>
         </div>
-    </header><ol class="social-menu">
+    </header><ol class="menu-social">
             
                 <li>
                     <a 
@@ -222,12 +222,12 @@
             </a>
         </li>
         
+        <li class="menu-bottom-section">
+            <ol class="menu">
 
-        <div class="menu-bottom-section">
-            
-            
-                <li id="dark-mode-toggle">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="8" cy="12" r="2" />
   <rect x="2" y="6" width="20" height="12" rx="6" />
@@ -235,7 +235,7 @@
 
 
 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="16" cy="12" r="2" />
   <rect x="2" y="6" width="20" height="12" rx="6" />
@@ -243,10 +243,11 @@
 
 
 
-                    <span>Dark Mode</span>
-                </li>
-            
-        </div>
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
     </ol>
 </aside>
 
@@ -376,14 +377,18 @@
     <section class="article-content">
     
     
-    <h2 id="introduction">Introduction</h2>
-<p>In this tutorial, we will write a python function that pulls data from Nasdaq Data Link through the tables API, adds relevant columns that are not present in the raw data, updates columns to allow for ease of use, and leaves the data in a format where it can then be used in time series analysis.</p>
+    <h2 id="introduction">
+    <a href="#introduction">#</a>
+    Introduction
+</h2><p>In this tutorial, we will write a python function that pulls data from Nasdaq Data Link through the tables API, adds relevant columns that are not present in the raw data, updates columns to allow for ease of use, and leaves the data in a format where it can then be used in time series analysis.</p>
 <p><a class="link" href="https://www.nasdaq.com/nasdaq-data-link"  target="_blank" rel="noopener"
     >Nasdaq Data Link</a> is a provider of numerous different types of financial data from many different asset classes. It provides API&rsquo;s that allow access from Python, R, Excel, and other methods. It is available to <a class="link" href="https://data.nasdaq.com/institutional-investors"  target="_blank" rel="noopener"
     >institutional investors</a> as well as <a class="link" href="https://data.nasdaq.com/individual-users"  target="_blank" rel="noopener"
     >individual retail investors</a>.</p>
-<h2 id="nasdaq-data-link-initial-data-retrieval">Nasdaq Data Link Initial Data Retrieval</h2>
-<p>We will use the data for AAPL for this example. This will give us a data set that requires some thought as to how the splits need to be handled as well as the dividends.</p>
+<h2 id="nasdaq-data-link-initial-data-retrieval">
+    <a href="#nasdaq-data-link-initial-data-retrieval">#</a>
+    Nasdaq Data Link Initial Data Retrieval
+</h2><p>We will use the data for AAPL for this example. This will give us a data set that requires some thought as to how the splits need to be handled as well as the dividends.</p>
 <p>We&rsquo;ll start with pulling the initial data set, with the first 10 rows shown as follows from the pandas dataframe:</p>
 <p><img src="/2023/12/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows.png"
 	width="1067"
@@ -432,8 +437,10 @@
 <li>Adjusted Close: Daily close price adusted for all splits and dividends</li>
 <li>Adjusted Volume: Daily volume price adusted for all splits</li>
 </ol>
-<h2 id="data-questions">Data questions</h2>
-<p>The above information is a good starting point, but what if we are looking for the following answers?</p>
+<h2 id="data-questions">
+    <a href="#data-questions">#</a>
+    Data questions
+</h2><p>The above information is a good starting point, but what if we are looking for the following answers?</p>
 <ol>
 <li>The data shows a split value for every day, but we know the stock didn&rsquo;t split every day. What does this represent?</li>
 <li>What is the total cumulative split ratio?</li>
@@ -443,8 +450,10 @@
 <li>What would the share price be if the stock hadn&rsquo;t split?</li>
 </ol>
 <p>We&rsquo;ll add columns and modify as necessary to answer the above questions and more.</p>
-<h2 id="assumptions">Assumptions</h2>
-<p>The remainder of this tutorial assumes the following:</p>
+<h2 id="assumptions">
+    <a href="#assumptions">#</a>
+    Assumptions
+</h2><p>The remainder of this tutorial assumes the following:</p>
 <ul>
 <li>You have the <a class="link" href="https://github.com/Nasdaq/data-link-python"  target="_blank" rel="noopener"
     >Nasdaq Data Link</a> library installed</li>
@@ -453,8 +462,10 @@
 <li>You have the <a class="link" href="https://openpyxl.readthedocs.io/en/stable/"  target="_blank" rel="noopener"
     >OpenPyXL</a> library installed</li>
 </ul>
-<h2 id="python-function-to-modify-the-data">Python function to modify the data</h2>
-<p>The following function will perform the desired modifications:</p>
+<h2 id="python-function-to-modify-the-data">
+    <a href="#python-function-to-modify-the-data">#</a>
+    Python function to modify the data
+</h2><p>The following function will perform the desired modifications:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -612,8 +623,10 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Let&rsquo;s break this down line by line.</p>
-<h2 id="imports">Imports</h2>
-<p>First, we need to import the required libraries:</p>
+<h2 id="imports">
+    <a href="#imports">#</a>
+    Imports
+</h2><p>First, we need to import the required libraries:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -628,8 +641,10 @@
 </span></span><span class="line"><span class="cl">import numpy as np
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="ndl-api-key">NDL API Key</h2>
-<p>To gain access to anything beyond the free tier, you will need to provide your access key:</p>
+</div><h2 id="ndl-api-key">
+    <a href="#ndl-api-key">#</a>
+    NDL API Key
+</h2><p>To gain access to anything beyond the free tier, you will need to provide your access key:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -640,8 +655,10 @@
 </span></span><span class="line"><span class="cl">nasdaqdatalink.ApiConfig.api_key = &#39;your_key&#39;
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="download-data-as-a-dataframe">Download data as a dataframe</h2>
-<p>Moving on to the function definition, we have the command to pull data from NDL. There are two separate APIs - the <a class="link" href="https://docs.data.nasdaq.com/docs/time-series"  target="_blank" rel="noopener"
+</div><h2 id="download-data-as-a-dataframe">
+    <a href="#download-data-as-a-dataframe">#</a>
+    Download data as a dataframe
+</h2><p>Moving on to the function definition, we have the command to pull data from NDL. There are two separate APIs - the <a class="link" href="https://docs.data.nasdaq.com/docs/time-series"  target="_blank" rel="noopener"
     >time series</a> and the <a class="link" href="https://docs.data.nasdaq.com/docs/tables-1"  target="_blank" rel="noopener"
     >tables</a>. The syntax is different, and some data sets are only available as one or the other. We will use the tables API for this tutorial.</p>
 <div class="highlight"><div class="chroma">
@@ -679,8 +696,10 @@
 		data-flex-basis="800px"
 	
 ></p>
-<h2 id="sort-columns-by-date">Sort columns by date</h2>
-<p>Next, we will sort the columns by date ascending. By default, the dataframe is created with the data sorted by descending date, and we want to change that:</p>
+<h2 id="sort-columns-by-date">
+    <a href="#sort-columns-by-date">#</a>
+    Sort columns by date
+</h2><p>Next, we will sort the columns by date ascending. By default, the dataframe is created with the data sorted by descending date, and we want to change that:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -710,8 +729,10 @@
 		data-flex-basis="776px"
 	
 ></p>
-<h2 id="setting-the-date-as-the-index">Setting the date as the index</h2>
-<p>Next, we will rename the <code>date</code> column from &lsquo;date&rsquo; to &lsquo;Date&rsquo;, and set the index to be the <code>Date</code> column:</p>
+<h2 id="setting-the-date-as-the-index">
+    <a href="#setting-the-date-as-the-index">#</a>
+    Setting the date as the index
+</h2><p>Next, we will rename the <code>date</code> column from &lsquo;date&rsquo; to &lsquo;Date&rsquo;, and set the index to be the <code>Date</code> column:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -746,8 +767,10 @@
 		data-flex-basis="737px"
 	
 ></p>
-<h2 id="calculating-splits">Calculating splits</h2>
-<p>The next sections deal with the split column. So far we have only seen a split value of 1.0 in the data, but we&rsquo;ve only looked at the first 10 and last 10 rows. Are there any other values? Let&rsquo;s check by running:</p>
+<h2 id="calculating-splits">
+    <a href="#calculating-splits">#</a>
+    Calculating splits
+</h2><p>The next sections deal with the split column. So far we have only seen a split value of 1.0 in the data, but we&rsquo;ve only looked at the first 10 and last 10 rows. Are there any other values? Let&rsquo;s check by running:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -882,8 +905,10 @@
 		data-flex-basis="241px"
 	
 ></p>
-<h2 id="combining-dataframes">Combining dataframes</h2>
-<p>Now we will merge the <code>df_split</code> dataframe with the original <code>df</code> dataframe so that the cumulative split column is part of the original dataframe. We will call this data frame <code>df_comp</code>:</p>
+<h2 id="combining-dataframes">
+    <a href="#combining-dataframes">#</a>
+    Combining dataframes
+</h2><p>Now we will merge the <code>df_split</code> dataframe with the original <code>df</code> dataframe so that the cumulative split column is part of the original dataframe. We will call this data frame <code>df_comp</code>:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -913,8 +938,10 @@
 		data-flex-basis="802px"
 	
 ></p>
-<h2 id="forward-filling-cumulative-split-values">Forward filling cumulative split values</h2>
-<p>From here, we want to fill in the rest of the <code>split</code> and <code>Cum_Split</code> values. This is done using the forward fill function, which for all cells that have a value of <code>NaN</code> will fill in the previous valid value until another value is encountered. Here&rsquo;s the code:</p>
+<h2 id="forward-filling-cumulative-split-values">
+    <a href="#forward-filling-cumulative-split-values">#</a>
+    Forward filling cumulative split values
+</h2><p>From here, we want to fill in the rest of the <code>split</code> and <code>Cum_Split</code> values. This is done using the forward fill function, which for all cells that have a value of <code>NaN</code> will fill in the previous valid value until another value is encountered. Here&rsquo;s the code:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -997,8 +1024,10 @@
 <li>If the stock split on that day</li>
 <li>What the total split ratio is up to and including that day</li>
 </ol>
-<h2 id="calculating-adjusted-and-non-adjusted-prices">Calculating adjusted and non-adjusted prices</h2>
-<p>From here, we can complete our dataset by calculating the adjusted and non-adjusted prices using the cumulative split ratios from above:</p>
+<h2 id="calculating-adjusted-and-non-adjusted-prices">
+    <a href="#calculating-adjusted-and-non-adjusted-prices">#</a>
+    Calculating adjusted and non-adjusted prices
+</h2><p>From here, we can complete our dataset by calculating the adjusted and non-adjusted prices using the cumulative split ratios from above:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1036,8 +1065,10 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Included above is the adjusted dividends values. For any time series analysis, not only are the adjusted prices needed, but so are the adusted dividends. Remember, we already have the adjusted total return prices - those come directly from NDL.</p>
-<h2 id="export-data">Export data</h2>
-<p>Next, we want to export the data to an excel file, for easy viewing and reference later:</p>
+<h2 id="export-data">
+    <a href="#export-data">#</a>
+    Export data
+</h2><p>Next, we want to export the data to an excel file, for easy viewing and reference later:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1065,8 +1096,10 @@
 		data-flex-basis="3808px"
 	
 ></p>
-<h2 id="output-confirmation">Output confirmation</h2>
-<p>Finally, we want to print a confirmation that the process succeeded along withe last date we have for data:</p>
+<h2 id="output-confirmation">
+    <a href="#output-confirmation">#</a>
+    Output confirmation
+</h2><p>Finally, we want to print a confirmation that the process succeeded along withe last date we have for data:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1098,8 +1131,10 @@
 		data-flex-basis="328px"
 	
 ></p>
-<h2 id="references">References</h2>
-<p><a class="link" href="https://docs.data.nasdaq.com/docs"  target="_blank" rel="noopener"
+<h2 id="references">
+    <a href="#references">#</a>
+    References
+</h2><p><a class="link" href="https://docs.data.nasdaq.com/docs"  target="_blank" rel="noopener"
     >https://docs.data.nasdaq.com/docs</a></br>
 <a class="link" href="https://docs.data.nasdaq.com/docs/tables-1"  target="_blank" rel="noopener"
     >https://docs.data.nasdaq.com/docs/tables-1</a></br>
@@ -1119,7 +1154,7 @@
         
             <a href="/tags/nasdaq-data-link/">Nasdaq Data Link</a>
         
-            <a href="/tags/pandas/">pandas</a>
+            <a href="/tags/pandas/">Pandas</a>
         
             <a href="/tags/openpyxl/">OpenPyXL</a>
         
@@ -1156,18 +1191,18 @@
     
         <link 
                 rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.css"integrity="sha256-J&#43;iAE0sgH8QSz9hpcDxXIftnj65JEZgNhGcgReTTK9s="crossorigin="anonymous"
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
             ><script 
-                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.js"integrity="sha256-InsNdER1b2xUewP&#43;pKCUJpkhiqwHgqiPXDlIk7GzBu4="crossorigin="anonymous"
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
                 defer
                 >
             </script><script 
-                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/contrib/auto-render.min.js"integrity="sha256-y39Mpg7V3D4lhBX4x6O0bUqTV4pSrfgwEfGKfxkOdgI="crossorigin="anonymous"
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
                 defer
                 >
             </script><script>
     window.addEventListener("DOMContentLoaded", () => {
-        renderMathInElement(document.querySelector(`.article-content`), {
+        renderMathInElement(document.body, {
             delimiters: [
                 { left: "$$", right: "$$", display: true },
                 { left: "$", right: "$", display: false },
@@ -1203,9 +1238,15 @@
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/2024/01/simple-incremental-bash-backup-script/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/cover.jpg" loading="lazy" data-key="" data-hash="/cover.jpg"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -1324,7 +1365,7 @@
     
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.21.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.25.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
     </section>
 </footer>
 

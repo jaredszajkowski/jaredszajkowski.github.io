@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='A python function to clean and format an excel data export from Bloomberg.'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="A python function to clean and format an excel data export from Bloomberg.">
 <title>Cleaning A Bloomberg Data Excel Export</title>
 
 <link rel='canonical' href='https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/'>
 
-<link rel="stylesheet" href="/scss/style.min.dbe2e9e902aac01bf50d85fb788ea79a3ad9eca9eb14affb035dda080b8ad34f.css"><meta property='og:title' content='Cleaning A Bloomberg Data Excel Export'>
-<meta property='og:description' content='A python function to clean and format an excel data export from Bloomberg.'>
+<link rel="stylesheet" href="/scss/style.min.16bf6e382b554a45649fe2bb6c85fcec681e2372982651dc4db30f28a16b66c0.css"><meta property='og:title' content="Cleaning A Bloomberg Data Excel Export">
+<meta property='og:description' content="A python function to clean and format an excel data export from Bloomberg.">
 <meta property='og:url' content='https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/'>
 <meta property='og:site_name' content='Jared Szajkowski'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Python' /><meta property='article:tag' content='Bloomberg' /><meta property='article:tag' content='pandas' /><meta property='article:tag' content='OpenPyXL' /><meta property='article:published_time' content='2023-11-15T00:00:01&#43;00:00'/><meta property='article:modified_time' content='2023-12-26T00:00:00&#43;00:00'/>
@@ -72,7 +72,7 @@
             <h1 class="site-name"><a href="/">Jared Szajkowski</a></h1>
             <h2 class="site-description"></h2>
         </div>
-    </header><ol class="social-menu">
+    </header><ol class="menu-social">
             
                 <li>
                     <a 
@@ -222,12 +222,12 @@
             </a>
         </li>
         
+        <li class="menu-bottom-section">
+            <ol class="menu">
 
-        <div class="menu-bottom-section">
-            
-            
-                <li id="dark-mode-toggle">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="8" cy="12" r="2" />
   <rect x="2" y="6" width="20" height="12" rx="6" />
@@ -235,7 +235,7 @@
 
 
 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="16" cy="12" r="2" />
   <rect x="2" y="6" width="20" height="12" rx="6" />
@@ -243,10 +243,11 @@
 
 
 
-                    <span>Dark Mode</span>
-                </li>
-            
-        </div>
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
     </ol>
 </aside>
 
@@ -376,10 +377,14 @@
     <section class="article-content">
     
     
-    <h2 id="introduction">Introduction</h2>
-<p>In this tutorial, we will write a python function that imports an excel export from Bloomberg, removes ancillary rows and columns, and leaves the data in a format where it can then be used in time series analysis.</p>
-<h2 id="example-of-a-bloomberg-excel-export">Example of a Bloomberg excel export</h2>
-<p>We will use the SPX index data in this example. Exporting the data from Bloomberg using the excel Bloomberg add-on yields data in the following format:</p>
+    <h2 id="introduction">
+    <a href="#introduction">#</a>
+    Introduction
+</h2><p>In this tutorial, we will write a python function that imports an excel export from Bloomberg, removes ancillary rows and columns, and leaves the data in a format where it can then be used in time series analysis.</p>
+<h2 id="example-of-a-bloomberg-excel-export">
+    <a href="#example-of-a-bloomberg-excel-export">#</a>
+    Example of a Bloomberg excel export
+</h2><p>We will use the SPX index data in this example. Exporting the data from Bloomberg using the excel Bloomberg add-on yields data in the following format:</p>
 <p><img src="/2023/11/cleaning-a-bloomberg-data-excel-export/Format_of_data_in_excel_export_from_Bloomberg.png"
 	width="295"
 	height="455"
@@ -394,8 +399,10 @@
 		data-flex-basis="155px"
 	
 ></p>
-<h2 id="data-modifications">Data modifications</h2>
-<p>The above format isn&rsquo;t horrible, but we want to perform the following modifications:</p>
+<h2 id="data-modifications">
+    <a href="#data-modifications">#</a>
+    Data modifications
+</h2><p>The above format isn&rsquo;t horrible, but we want to perform the following modifications:</p>
 <ol>
 <li>Remove the first six rows of the data</li>
 <li>Convert the 7th row to become column headings</li>
@@ -403,8 +410,10 @@
 <li>Remove column 3, as we are not concerned about volume</li>
 <li>Export to excel and make the name of the excel worksheet &ldquo;data&rdquo;</li>
 </ol>
-<h2 id="assumptions">Assumptions</h2>
-<p>The remainder of this tutorial assumes the following:</p>
+<h2 id="assumptions">
+    <a href="#assumptions">#</a>
+    Assumptions
+</h2><p>The remainder of this tutorial assumes the following:</p>
 <ul>
 <li>Your excel file is named &ldquo;SPX_Index.xlsx&rdquo;</li>
 <li>The worksheet in the excel file is named &ldquo;Worksheet&rdquo;</li>
@@ -413,8 +422,10 @@
 <li>You have the <a class="link" href="https://openpyxl.readthedocs.io/en/stable/"  target="_blank" rel="noopener"
     >OpenPyXL</a> library installed</li>
 </ul>
-<h2 id="python-function-to-modify-the-data">Python function to modify the data</h2>
-<p>The following function will perform the modifications mentioned above:</p>
+<h2 id="python-function-to-modify-the-data">
+    <a href="#python-function-to-modify-the-data">#</a>
+    Python function to modify the data
+</h2><p>The following function will perform the modifications mentioned above:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -518,8 +529,10 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Let&rsquo;s break this down line by line.</p>
-<h2 id="imports">Imports</h2>
-<p>First, we need to import pandas:</p>
+<h2 id="imports">
+    <a href="#imports">#</a>
+    Imports
+</h2><p>First, we need to import pandas:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -528,8 +541,10 @@
 <pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">import pandas as pd
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="import-excel-data-file">Import excel data file</h2>
-<p>Then import the excel file as a pandas dataframe:</p>
+</div><h2 id="import-excel-data-file">
+    <a href="#import-excel-data-file">#</a>
+    Import excel data file
+</h2><p>Then import the excel file as a pandas dataframe:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -564,8 +579,10 @@
 		data-flex-basis="291px"
 	
 ></p>
-<h2 id="set-column-headings">Set column headings</h2>
-<p>Next, set the column heading:</p>
+<h2 id="set-column-headings">
+    <a href="#set-column-headings">#</a>
+    Set column headings
+</h2><p>Next, set the column heading:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -594,8 +611,10 @@
 		data-flex-basis="304px"
 	
 ></p>
-<h2 id="remove-index-heading">Remove index heading</h2>
-<p>Next, remove the column heading from the index column:</p>
+<h2 id="remove-index-heading">
+    <a href="#remove-index-heading">#</a>
+    Remove index heading
+</h2><p>Next, remove the column heading from the index column:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -625,8 +644,10 @@
 		data-flex-basis="299px"
 	
 ></p>
-<h2 id="drop-rows">Drop rows</h2>
-<p>Next, we want to remove the first 6 rows that have unneeded data:</p>
+<h2 id="drop-rows">
+    <a href="#drop-rows">#</a>
+    Drop rows
+</h2><p>Next, we want to remove the first 6 rows that have unneeded data:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -656,8 +677,10 @@
 		data-flex-basis="260px"
 	
 ></p>
-<h2 id="set-index">Set index</h2>
-<p>Next, we want to set the date column as the index:</p>
+<h2 id="set-index">
+    <a href="#set-index">#</a>
+    Set index
+</h2><p>Next, we want to set the date column as the index:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -686,8 +709,10 @@
 		data-flex-basis="184px"
 	
 ></p>
-<h2 id="drop-the-px_volume-column">Drop the &ldquo;PX_VOLUME&rdquo; column</h2>
-<p>Next, we want to drop the volume column:</p>
+<h2 id="drop-the-px_volume-column">
+    <a href="#drop-the-px_volume-column">#</a>
+    Drop the &ldquo;PX_VOLUME&rdquo; column
+</h2><p>Next, we want to drop the volume column:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -723,8 +748,10 @@
 		data-flex-basis="122px"
 	
 ></p>
-<h2 id="rename-the-px_last-column">Rename the &ldquo;PX_LAST&rdquo; column</h2>
-<p>Next, we want to rename the &ldquo;PX_LAST&rdquo; column as &ldquo;Close&rdquo;:</p>
+<h2 id="rename-the-px_last-column">
+    <a href="#rename-the-px_last-column">#</a>
+    Rename the &ldquo;PX_LAST&rdquo; column
+</h2><p>Next, we want to rename the &ldquo;PX_LAST&rdquo; column as &ldquo;Close&rdquo;:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -753,8 +780,10 @@
 		data-flex-basis="117px"
 	
 ></p>
-<h2 id="sort-data">Sort data</h2>
-<p>Next, we want to sort the data starting with the oldest date:</p>
+<h2 id="sort-data">
+    <a href="#sort-data">#</a>
+    Sort data
+</h2><p>Next, we want to sort the data starting with the oldest date:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -783,8 +812,10 @@
 		data-flex-basis="102px"
 	
 ></p>
-<h2 id="export-data">Export data</h2>
-<p>Next, we want to export the data to an excel file, for easy viewing and reference later:</p>
+<h2 id="export-data">
+    <a href="#export-data">#</a>
+    Export data
+</h2><p>Next, we want to export the data to an excel file, for easy viewing and reference later:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -812,8 +843,10 @@
 		data-flex-basis="175px"
 	
 ></p>
-<h2 id="output-confirmation">Output confirmation</h2>
-<p>Finally, we want to print a confirmation that the process succeeded along withe last date we have for data:</p>
+<h2 id="output-confirmation">
+    <a href="#output-confirmation">#</a>
+    Output confirmation
+</h2><p>Finally, we want to print a confirmation that the process succeeded along withe last date we have for data:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -845,8 +878,10 @@
 		data-flex-basis="862px"
 	
 ></p>
-<h2 id="references">References</h2>
-<p><a class="link" href="https://www.bloomberg.com/professional/support/software-updates/"  target="_blank" rel="noopener"
+<h2 id="references">
+    <a href="#references">#</a>
+    References
+</h2><p><a class="link" href="https://www.bloomberg.com/professional/support/software-updates/"  target="_blank" rel="noopener"
     >https://www.bloomberg.com/professional/support/software-updates/</a></p>
 
 </section>
@@ -860,7 +895,7 @@
         
             <a href="/tags/bloomberg/">Bloomberg</a>
         
-            <a href="/tags/pandas/">pandas</a>
+            <a href="/tags/pandas/">Pandas</a>
         
             <a href="/tags/openpyxl/">OpenPyXL</a>
         
@@ -897,18 +932,18 @@
     
         <link 
                 rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.css"integrity="sha256-J&#43;iAE0sgH8QSz9hpcDxXIftnj65JEZgNhGcgReTTK9s="crossorigin="anonymous"
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
             ><script 
-                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.js"integrity="sha256-InsNdER1b2xUewP&#43;pKCUJpkhiqwHgqiPXDlIk7GzBu4="crossorigin="anonymous"
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
                 defer
                 >
             </script><script 
-                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/contrib/auto-render.min.js"integrity="sha256-y39Mpg7V3D4lhBX4x6O0bUqTV4pSrfgwEfGKfxkOdgI="crossorigin="anonymous"
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
                 defer
                 >
             </script><script>
     window.addEventListener("DOMContentLoaded", () => {
-        renderMathInElement(document.querySelector(`.article-content`), {
+        renderMathInElement(document.body, {
             delimiters: [
                 { left: "$$", right: "$$", display: true },
                 { left: "$", right: "$", display: false },
@@ -944,9 +979,15 @@
 
             
                 
-<article class="">
+<article class="has-image">
     <a href="/2024/01/simple-incremental-bash-backup-script/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/cover.jpg" loading="lazy" data-key="" data-hash="/cover.jpg"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -1065,7 +1106,7 @@
     
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.21.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.25.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
     </section>
 </footer>
 

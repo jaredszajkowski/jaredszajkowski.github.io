@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Commonly used commands and functionality for git.'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Commonly used commands and functionality for git.">
 <title>Git Quick Start Guide</title>
 
 <link rel='canonical' href='https://www.jaredszajkowski.com/2023/10/git-quick-start-guide/'>
 
-<link rel="stylesheet" href="/scss/style.min.dbe2e9e902aac01bf50d85fb788ea79a3ad9eca9eb14affb035dda080b8ad34f.css"><meta property='og:title' content='Git Quick Start Guide'>
-<meta property='og:description' content='Commonly used commands and functionality for git.'>
+<link rel="stylesheet" href="/scss/style.min.16bf6e382b554a45649fe2bb6c85fcec681e2372982651dc4db30f28a16b66c0.css"><meta property='og:title' content="Git Quick Start Guide">
+<meta property='og:description' content="Commonly used commands and functionality for git.">
 <meta property='og:url' content='https://www.jaredszajkowski.com/2023/10/git-quick-start-guide/'>
 <meta property='og:site_name' content='Jared Szajkowski'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Git' /><meta property='article:tag' content='GitHub' /><meta property='article:published_time' content='2023-10-16T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-11-02T00:00:00&#43;00:00'/>
@@ -72,7 +72,7 @@
             <h1 class="site-name"><a href="/">Jared Szajkowski</a></h1>
             <h2 class="site-description"></h2>
         </div>
-    </header><ol class="social-menu">
+    </header><ol class="menu-social">
             
                 <li>
                     <a 
@@ -222,12 +222,12 @@
             </a>
         </li>
         
+        <li class="menu-bottom-section">
+            <ol class="menu">
 
-        <div class="menu-bottom-section">
-            
-            
-                <li id="dark-mode-toggle">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="8" cy="12" r="2" />
   <rect x="2" y="6" width="20" height="12" rx="6" />
@@ -235,7 +235,7 @@
 
 
 
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="16" cy="12" r="2" />
   <rect x="2" y="6" width="20" height="12" rx="6" />
@@ -243,10 +243,11 @@
 
 
 
-                    <span>Dark Mode</span>
-                </li>
-            
-        </div>
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
     </ol>
 </aside>
 
@@ -368,18 +369,24 @@
     <section class="article-content">
     
     
-    <h2 id="introduction">Introduction</h2>
-<p>Here are my notes for some of the more commonly used git commands along with initial setup for git in Linux.</p>
-<h2 id="installation">Installation</h2>
-<p>To begin, install as follows for Arch Linux:</p>
+    <h2 id="introduction">
+    <a href="#introduction">#</a>
+    Introduction
+</h2><p>Here are my notes for some of the more commonly used git commands along with initial setup for git in Linux.</p>
+<h2 id="installation">
+    <a href="#installation">#</a>
+    Installation
+</h2><p>To begin, install as follows for Arch Linux:</p>
 <pre><code># pacman -Syu git
 </code></pre>
 <p>Or</p>
 <pre><code>$ yay git
 </code></pre>
 <p>Pacman will include all required depencies.</p>
-<h2 id="initial-configuration">Initial configuration</h2>
-<p>First, set your name and email address:</p>
+<h2 id="initial-configuration">
+    <a href="#initial-configuration">#</a>
+    Initial configuration
+</h2><p>First, set your name and email address:</p>
 <pre><code>$ git config --global user.name &quot;Firstname Lastname&quot;
 $ git config --global user.email &quot;email@address.com&quot;
 </code></pre>
@@ -392,23 +399,31 @@ $ git config --global user.email &quot;email@address.com&quot;
 <p>Alternatively, you can edit the git configuration directly with:</p>
 <pre><code>$ git config --global --edit
 </code></pre>
-<h2 id="store-credentials">Store credentials</h2>
-<p>In 2021, GitHub disabled authentication via password and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in <code>~/.git-credentials</code>:</p>
+<h2 id="store-credentials">
+    <a href="#store-credentials">#</a>
+    Store credentials
+</h2><p>In 2021, GitHub disabled authentication via password and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in <code>~/.git-credentials</code>:</p>
 <pre><code>$ git config --global credential.helper store
 </code></pre>
 <p>After you log in during a <code>git push</code> with your username and token, the username or email address and token will be stored in the above location.</p>
 <p>Note: The token is stored in plain text, so use caution if that is a concern.</p>
-<h2 id="cloning-repositories">Cloning repositories</h2>
-<p>Repositories can be cloned with the following:</p>
+<h2 id="cloning-repositories">
+    <a href="#cloning-repositories">#</a>
+    Cloning repositories
+</h2><p>Repositories can be cloned with the following:</p>
 <pre><code>$ git clone https://github.com/&lt;username&gt;/&lt;repository&gt;.git
 </code></pre>
-<h2 id="updating-repositories">Updating repositories</h2>
-<p>The local record of a repository can be updated with the following command:</p>
+<h2 id="updating-repositories">
+    <a href="#updating-repositories">#</a>
+    Updating repositories
+</h2><p>The local record of a repository can be updated with the following command:</p>
 <pre><code>$ cd &lt;repository&gt;/
 $ git pull
 </code></pre>
-<h2 id="adding-committing-and-pushing">Adding, committing, and pushing</h2>
-<p>Any files or directories that have been added, modified, or removed can be add to the list of changes to be pushed with the following command:</p>
+<h2 id="adding-committing-and-pushing">
+    <a href="#adding-committing-and-pushing">#</a>
+    Adding, committing, and pushing
+</h2><p>Any files or directories that have been added, modified, or removed can be add to the list of changes to be pushed with the following command:</p>
 <pre><code>$ git add .
 </code></pre>
 <p>Then committed (staged in preparation to push) with the following command:</p>
@@ -424,8 +439,10 @@ $ git pull
 <p>These commands can be chained together with the AND operator:</p>
 <pre><code>$ git add . &amp;&amp; git commit -am &quot;Add your commit message here&quot; &amp;&amp; git push
 </code></pre>
-<h2 id="stashing-changes">Stashing changes</h2>
-<p>If you forget to update a repository before making changes, you can &ldquo;stash&rdquo; those changes and then re-apply them after running <code>git pull</code>.</p>
+<h2 id="stashing-changes">
+    <a href="#stashing-changes">#</a>
+    Stashing changes
+</h2><p>If you forget to update a repository before making changes, you can &ldquo;stash&rdquo; those changes and then re-apply them after running <code>git pull</code>.</p>
 <p>First, stash the changes:</p>
 <pre><code>$ git stash
 </code></pre>
@@ -436,8 +453,10 @@ $ git pull
 <pre><code>$ git stash apply
 </code></pre>
 <p>This has proven to be very useful for me when I forget to update a repository before making edits to the code.</p>
-<h2 id="references">References</h2>
-<p>References for git (and used for above):</p>
+<h2 id="references">
+    <a href="#references">#</a>
+    References
+</h2><p>References for git (and used for above):</p>
 <p><a class="link" href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens"  target="_blank" rel="noopener"
     >https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens</a></br>
 <a class="link" href="https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup#_first_time"  target="_blank" rel="noopener"
@@ -495,18 +514,18 @@ $ git pull
     
         <link 
                 rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.css"integrity="sha256-J&#43;iAE0sgH8QSz9hpcDxXIftnj65JEZgNhGcgReTTK9s="crossorigin="anonymous"
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
             ><script 
-                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/katex.min.js"integrity="sha256-InsNdER1b2xUewP&#43;pKCUJpkhiqwHgqiPXDlIk7GzBu4="crossorigin="anonymous"
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
                 defer
                 >
             </script><script 
-                src="https://cdn.jsdelivr.net/npm/katex@0.15.6/dist/contrib/auto-render.min.js"integrity="sha256-y39Mpg7V3D4lhBX4x6O0bUqTV4pSrfgwEfGKfxkOdgI="crossorigin="anonymous"
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
                 defer
                 >
             </script><script>
     window.addEventListener("DOMContentLoaded", () => {
-        renderMathInElement(document.querySelector(`.article-content`), {
+        renderMathInElement(document.body, {
             delimiters: [
                 { left: "$$", right: "$$", display: true },
                 { left: "$", right: "$", display: false },
@@ -529,9 +548,15 @@ $ git pull
         <div class="flex article-list--tile">
             
                 
-<article class="">
+<article class="has-image">
     <a href="/2024/01/simple-incremental-bash-backup-script/">
         
+        
+            <div class="article-image">
+                
+                    <img src="/cover.jpg" loading="lazy" data-key="" data-hash="/cover.jpg"/>
+                
+            </div>
         
 
         <div class="article-details">
@@ -663,7 +688,7 @@ $ git pull
     
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.21.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.25.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
     </section>
 </footer>
 

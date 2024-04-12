@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>pandas on Jared Szajkowski</title>
+        <title>Pandas on Jared Szajkowski</title>
         <link>https://www.jaredszajkowski.com/tags/pandas/</link>
-        <description>Recent content in pandas on Jared Szajkowski</description>
+        <description>Recent content in Pandas on Jared Szajkowski</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <lastBuildDate>Sun, 24 Dec 2023 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/tags/pandas/index.xml" rel="self" type="application/rss+xml" /><item>
@@ -12,14 +12,18 @@
         <pubDate>Sun, 24 Dec 2023 00:00:01 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/</guid>
-        <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
-&lt;p&gt;In this tutorial, we will write a python function that pulls data from Nasdaq Data Link through the tables API, adds relevant columns that are not present in the raw data, updates columns to allow for ease of use, and leaves the data in a format where it can then be used in time series analysis.&lt;/p&gt;
+        <description>&lt;h2 id=&#34;introduction&#34;&gt;
+    &lt;a href=&#34;#introduction&#34;&gt;#&lt;/a&gt;
+    Introduction
+&lt;/h2&gt;&lt;p&gt;In this tutorial, we will write a python function that pulls data from Nasdaq Data Link through the tables API, adds relevant columns that are not present in the raw data, updates columns to allow for ease of use, and leaves the data in a format where it can then be used in time series analysis.&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.nasdaq.com/nasdaq-data-link&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Nasdaq Data Link&lt;/a&gt; is a provider of numerous different types of financial data from many different asset classes. It provides API&amp;rsquo;s that allow access from Python, R, Excel, and other methods. It is available to &lt;a class=&#34;link&#34; href=&#34;https://data.nasdaq.com/institutional-investors&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;institutional investors&lt;/a&gt; as well as &lt;a class=&#34;link&#34; href=&#34;https://data.nasdaq.com/individual-users&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;individual retail investors&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;nasdaq-data-link-initial-data-retrieval&#34;&gt;Nasdaq Data Link Initial Data Retrieval&lt;/h2&gt;
-&lt;p&gt;We will use the data for AAPL for this example. This will give us a data set that requires some thought as to how the splits need to be handled as well as the dividends.&lt;/p&gt;
+&lt;h2 id=&#34;nasdaq-data-link-initial-data-retrieval&#34;&gt;
+    &lt;a href=&#34;#nasdaq-data-link-initial-data-retrieval&#34;&gt;#&lt;/a&gt;
+    Nasdaq Data Link Initial Data Retrieval
+&lt;/h2&gt;&lt;p&gt;We will use the data for AAPL for this example. This will give us a data set that requires some thought as to how the splits need to be handled as well as the dividends.&lt;/p&gt;
 &lt;p&gt;We&amp;rsquo;ll start with pulling the initial data set, with the first 10 rows shown as follows from the pandas dataframe:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows.png&#34;
 	width=&#34;1067&#34;
@@ -68,8 +72,10 @@
 &lt;li&gt;Adjusted Close: Daily close price adusted for all splits and dividends&lt;/li&gt;
 &lt;li&gt;Adjusted Volume: Daily volume price adusted for all splits&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;data-questions&#34;&gt;Data questions&lt;/h2&gt;
-&lt;p&gt;The above information is a good starting point, but what if we are looking for the following answers?&lt;/p&gt;
+&lt;h2 id=&#34;data-questions&#34;&gt;
+    &lt;a href=&#34;#data-questions&#34;&gt;#&lt;/a&gt;
+    Data questions
+&lt;/h2&gt;&lt;p&gt;The above information is a good starting point, but what if we are looking for the following answers?&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;The data shows a split value for every day, but we know the stock didn&amp;rsquo;t split every day. What does this represent?&lt;/li&gt;
 &lt;li&gt;What is the total cumulative split ratio?&lt;/li&gt;
@@ -79,8 +85,10 @@
 &lt;li&gt;What would the share price be if the stock hadn&amp;rsquo;t split?&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;We&amp;rsquo;ll add columns and modify as necessary to answer the above questions and more.&lt;/p&gt;
-&lt;h2 id=&#34;assumptions&#34;&gt;Assumptions&lt;/h2&gt;
-&lt;p&gt;The remainder of this tutorial assumes the following:&lt;/p&gt;
+&lt;h2 id=&#34;assumptions&#34;&gt;
+    &lt;a href=&#34;#assumptions&#34;&gt;#&lt;/a&gt;
+    Assumptions
+&lt;/h2&gt;&lt;p&gt;The remainder of this tutorial assumes the following:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;You have the &lt;a class=&#34;link&#34; href=&#34;https://github.com/Nasdaq/data-link-python&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Nasdaq Data Link&lt;/a&gt; library installed&lt;/li&gt;
@@ -89,8 +97,10 @@
 &lt;li&gt;You have the &lt;a class=&#34;link&#34; href=&#34;https://openpyxl.readthedocs.io/en/stable/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;OpenPyXL&lt;/a&gt; library installed&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;python-function-to-modify-the-data&#34;&gt;Python function to modify the data&lt;/h2&gt;
-&lt;p&gt;The following function will perform the desired modifications:&lt;/p&gt;
+&lt;h2 id=&#34;python-function-to-modify-the-data&#34;&gt;
+    &lt;a href=&#34;#python-function-to-modify-the-data&#34;&gt;#&lt;/a&gt;
+    Python function to modify the data
+&lt;/h2&gt;&lt;p&gt;The following function will perform the desired modifications:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
@@ -248,8 +258,10 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Let&amp;rsquo;s break this down line by line.&lt;/p&gt;
-&lt;h2 id=&#34;imports&#34;&gt;Imports&lt;/h2&gt;
-&lt;p&gt;First, we need to import the required libraries:&lt;/p&gt;
+&lt;h2 id=&#34;imports&#34;&gt;
+    &lt;a href=&#34;#imports&#34;&gt;#&lt;/a&gt;
+    Imports
+&lt;/h2&gt;&lt;p&gt;First, we need to import the required libraries:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -264,8 +276,10 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;import numpy as np
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;ndl-api-key&#34;&gt;NDL API Key&lt;/h2&gt;
-&lt;p&gt;To gain access to anything beyond the free tier, you will need to provide your access key:&lt;/p&gt;
+&lt;/div&gt;&lt;h2 id=&#34;ndl-api-key&#34;&gt;
+    &lt;a href=&#34;#ndl-api-key&#34;&gt;#&lt;/a&gt;
+    NDL API Key
+&lt;/h2&gt;&lt;p&gt;To gain access to anything beyond the free tier, you will need to provide your access key:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -276,8 +290,10 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nasdaqdatalink.ApiConfig.api_key = &amp;#39;your_key&amp;#39;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;download-data-as-a-dataframe&#34;&gt;Download data as a dataframe&lt;/h2&gt;
-&lt;p&gt;Moving on to the function definition, we have the command to pull data from NDL. There are two separate APIs - the &lt;a class=&#34;link&#34; href=&#34;https://docs.data.nasdaq.com/docs/time-series&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+&lt;/div&gt;&lt;h2 id=&#34;download-data-as-a-dataframe&#34;&gt;
+    &lt;a href=&#34;#download-data-as-a-dataframe&#34;&gt;#&lt;/a&gt;
+    Download data as a dataframe
+&lt;/h2&gt;&lt;p&gt;Moving on to the function definition, we have the command to pull data from NDL. There are two separate APIs - the &lt;a class=&#34;link&#34; href=&#34;https://docs.data.nasdaq.com/docs/time-series&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;time series&lt;/a&gt; and the &lt;a class=&#34;link&#34; href=&#34;https://docs.data.nasdaq.com/docs/tables-1&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;tables&lt;/a&gt;. The syntax is different, and some data sets are only available as one or the other. We will use the tables API for this tutorial.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -315,8 +331,10 @@
 		data-flex-basis=&#34;800px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;sort-columns-by-date&#34;&gt;Sort columns by date&lt;/h2&gt;
-&lt;p&gt;Next, we will sort the columns by date ascending. By default, the dataframe is created with the data sorted by descending date, and we want to change that:&lt;/p&gt;
+&lt;h2 id=&#34;sort-columns-by-date&#34;&gt;
+    &lt;a href=&#34;#sort-columns-by-date&#34;&gt;#&lt;/a&gt;
+    Sort columns by date
+&lt;/h2&gt;&lt;p&gt;Next, we will sort the columns by date ascending. By default, the dataframe is created with the data sorted by descending date, and we want to change that:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -346,8 +364,10 @@
 		data-flex-basis=&#34;776px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;setting-the-date-as-the-index&#34;&gt;Setting the date as the index&lt;/h2&gt;
-&lt;p&gt;Next, we will rename the &lt;code&gt;date&lt;/code&gt; column from &amp;lsquo;date&amp;rsquo; to &amp;lsquo;Date&amp;rsquo;, and set the index to be the &lt;code&gt;Date&lt;/code&gt; column:&lt;/p&gt;
+&lt;h2 id=&#34;setting-the-date-as-the-index&#34;&gt;
+    &lt;a href=&#34;#setting-the-date-as-the-index&#34;&gt;#&lt;/a&gt;
+    Setting the date as the index
+&lt;/h2&gt;&lt;p&gt;Next, we will rename the &lt;code&gt;date&lt;/code&gt; column from &amp;lsquo;date&amp;rsquo; to &amp;lsquo;Date&amp;rsquo;, and set the index to be the &lt;code&gt;Date&lt;/code&gt; column:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -382,8 +402,10 @@
 		data-flex-basis=&#34;737px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;calculating-splits&#34;&gt;Calculating splits&lt;/h2&gt;
-&lt;p&gt;The next sections deal with the split column. So far we have only seen a split value of 1.0 in the data, but we&amp;rsquo;ve only looked at the first 10 and last 10 rows. Are there any other values? Let&amp;rsquo;s check by running:&lt;/p&gt;
+&lt;h2 id=&#34;calculating-splits&#34;&gt;
+    &lt;a href=&#34;#calculating-splits&#34;&gt;#&lt;/a&gt;
+    Calculating splits
+&lt;/h2&gt;&lt;p&gt;The next sections deal with the split column. So far we have only seen a split value of 1.0 in the data, but we&amp;rsquo;ve only looked at the first 10 and last 10 rows. Are there any other values? Let&amp;rsquo;s check by running:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -518,8 +540,10 @@
 		data-flex-basis=&#34;241px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;combining-dataframes&#34;&gt;Combining dataframes&lt;/h2&gt;
-&lt;p&gt;Now we will merge the &lt;code&gt;df_split&lt;/code&gt; dataframe with the original &lt;code&gt;df&lt;/code&gt; dataframe so that the cumulative split column is part of the original dataframe. We will call this data frame &lt;code&gt;df_comp&lt;/code&gt;:&lt;/p&gt;
+&lt;h2 id=&#34;combining-dataframes&#34;&gt;
+    &lt;a href=&#34;#combining-dataframes&#34;&gt;#&lt;/a&gt;
+    Combining dataframes
+&lt;/h2&gt;&lt;p&gt;Now we will merge the &lt;code&gt;df_split&lt;/code&gt; dataframe with the original &lt;code&gt;df&lt;/code&gt; dataframe so that the cumulative split column is part of the original dataframe. We will call this data frame &lt;code&gt;df_comp&lt;/code&gt;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -549,8 +573,10 @@
 		data-flex-basis=&#34;802px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;forward-filling-cumulative-split-values&#34;&gt;Forward filling cumulative split values&lt;/h2&gt;
-&lt;p&gt;From here, we want to fill in the rest of the &lt;code&gt;split&lt;/code&gt; and &lt;code&gt;Cum_Split&lt;/code&gt; values. This is done using the forward fill function, which for all cells that have a value of &lt;code&gt;NaN&lt;/code&gt; will fill in the previous valid value until another value is encountered. Here&amp;rsquo;s the code:&lt;/p&gt;
+&lt;h2 id=&#34;forward-filling-cumulative-split-values&#34;&gt;
+    &lt;a href=&#34;#forward-filling-cumulative-split-values&#34;&gt;#&lt;/a&gt;
+    Forward filling cumulative split values
+&lt;/h2&gt;&lt;p&gt;From here, we want to fill in the rest of the &lt;code&gt;split&lt;/code&gt; and &lt;code&gt;Cum_Split&lt;/code&gt; values. This is done using the forward fill function, which for all cells that have a value of &lt;code&gt;NaN&lt;/code&gt; will fill in the previous valid value until another value is encountered. Here&amp;rsquo;s the code:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -633,8 +659,10 @@
 &lt;li&gt;If the stock split on that day&lt;/li&gt;
 &lt;li&gt;What the total split ratio is up to and including that day&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;calculating-adjusted-and-non-adjusted-prices&#34;&gt;Calculating adjusted and non-adjusted prices&lt;/h2&gt;
-&lt;p&gt;From here, we can complete our dataset by calculating the adjusted and non-adjusted prices using the cumulative split ratios from above:&lt;/p&gt;
+&lt;h2 id=&#34;calculating-adjusted-and-non-adjusted-prices&#34;&gt;
+    &lt;a href=&#34;#calculating-adjusted-and-non-adjusted-prices&#34;&gt;#&lt;/a&gt;
+    Calculating adjusted and non-adjusted prices
+&lt;/h2&gt;&lt;p&gt;From here, we can complete our dataset by calculating the adjusted and non-adjusted prices using the cumulative split ratios from above:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
@@ -672,8 +700,10 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Included above is the adjusted dividends values. For any time series analysis, not only are the adjusted prices needed, but so are the adusted dividends. Remember, we already have the adjusted total return prices - those come directly from NDL.&lt;/p&gt;
-&lt;h2 id=&#34;export-data&#34;&gt;Export data&lt;/h2&gt;
-&lt;p&gt;Next, we want to export the data to an excel file, for easy viewing and reference later:&lt;/p&gt;
+&lt;h2 id=&#34;export-data&#34;&gt;
+    &lt;a href=&#34;#export-data&#34;&gt;#&lt;/a&gt;
+    Export data
+&lt;/h2&gt;&lt;p&gt;Next, we want to export the data to an excel file, for easy viewing and reference later:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -701,8 +731,10 @@
 		data-flex-basis=&#34;3808px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;output-confirmation&#34;&gt;Output confirmation&lt;/h2&gt;
-&lt;p&gt;Finally, we want to print a confirmation that the process succeeded along withe last date we have for data:&lt;/p&gt;
+&lt;h2 id=&#34;output-confirmation&#34;&gt;
+    &lt;a href=&#34;#output-confirmation&#34;&gt;#&lt;/a&gt;
+    Output confirmation
+&lt;/h2&gt;&lt;p&gt;Finally, we want to print a confirmation that the process succeeded along withe last date we have for data:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -734,8 +766,10 @@
 		data-flex-basis=&#34;328px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
-&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://docs.data.nasdaq.com/docs&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+&lt;h2 id=&#34;references&#34;&gt;
+    &lt;a href=&#34;#references&#34;&gt;#&lt;/a&gt;
+    References
+&lt;/h2&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://docs.data.nasdaq.com/docs&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://docs.data.nasdaq.com/docs&lt;/a&gt;&lt;/br&gt;
 &lt;a class=&#34;link&#34; href=&#34;https://docs.data.nasdaq.com/docs/tables-1&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://docs.data.nasdaq.com/docs/tables-1&lt;/a&gt;&lt;/br&gt;
@@ -751,10 +785,14 @@
         <pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/</guid>
-        <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
-&lt;p&gt;In this tutorial, we will write a python function that imports an excel export from Bloomberg, removes ancillary rows and columns, and leaves the data in a format where it can then be used in time series analysis.&lt;/p&gt;
-&lt;h2 id=&#34;example-of-a-bloomberg-excel-export&#34;&gt;Example of a Bloomberg excel export&lt;/h2&gt;
-&lt;p&gt;We will use the SPX index data in this example. Exporting the data from Bloomberg using the excel Bloomberg add-on yields data in the following format:&lt;/p&gt;
+        <description>&lt;h2 id=&#34;introduction&#34;&gt;
+    &lt;a href=&#34;#introduction&#34;&gt;#&lt;/a&gt;
+    Introduction
+&lt;/h2&gt;&lt;p&gt;In this tutorial, we will write a python function that imports an excel export from Bloomberg, removes ancillary rows and columns, and leaves the data in a format where it can then be used in time series analysis.&lt;/p&gt;
+&lt;h2 id=&#34;example-of-a-bloomberg-excel-export&#34;&gt;
+    &lt;a href=&#34;#example-of-a-bloomberg-excel-export&#34;&gt;#&lt;/a&gt;
+    Example of a Bloomberg excel export
+&lt;/h2&gt;&lt;p&gt;We will use the SPX index data in this example. Exporting the data from Bloomberg using the excel Bloomberg add-on yields data in the following format:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Format_of_data_in_excel_export_from_Bloomberg.png&#34;
 	width=&#34;295&#34;
 	height=&#34;455&#34;
@@ -769,8 +807,10 @@
 		data-flex-basis=&#34;155px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;data-modifications&#34;&gt;Data modifications&lt;/h2&gt;
-&lt;p&gt;The above format isn&amp;rsquo;t horrible, but we want to perform the following modifications:&lt;/p&gt;
+&lt;h2 id=&#34;data-modifications&#34;&gt;
+    &lt;a href=&#34;#data-modifications&#34;&gt;#&lt;/a&gt;
+    Data modifications
+&lt;/h2&gt;&lt;p&gt;The above format isn&amp;rsquo;t horrible, but we want to perform the following modifications:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Remove the first six rows of the data&lt;/li&gt;
 &lt;li&gt;Convert the 7th row to become column headings&lt;/li&gt;
@@ -778,8 +818,10 @@
 &lt;li&gt;Remove column 3, as we are not concerned about volume&lt;/li&gt;
 &lt;li&gt;Export to excel and make the name of the excel worksheet &amp;ldquo;data&amp;rdquo;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;assumptions&#34;&gt;Assumptions&lt;/h2&gt;
-&lt;p&gt;The remainder of this tutorial assumes the following:&lt;/p&gt;
+&lt;h2 id=&#34;assumptions&#34;&gt;
+    &lt;a href=&#34;#assumptions&#34;&gt;#&lt;/a&gt;
+    Assumptions
+&lt;/h2&gt;&lt;p&gt;The remainder of this tutorial assumes the following:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Your excel file is named &amp;ldquo;SPX_Index.xlsx&amp;rdquo;&lt;/li&gt;
 &lt;li&gt;The worksheet in the excel file is named &amp;ldquo;Worksheet&amp;rdquo;&lt;/li&gt;
@@ -788,8 +830,10 @@
 &lt;li&gt;You have the &lt;a class=&#34;link&#34; href=&#34;https://openpyxl.readthedocs.io/en/stable/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;OpenPyXL&lt;/a&gt; library installed&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;python-function-to-modify-the-data&#34;&gt;Python function to modify the data&lt;/h2&gt;
-&lt;p&gt;The following function will perform the modifications mentioned above:&lt;/p&gt;
+&lt;h2 id=&#34;python-function-to-modify-the-data&#34;&gt;
+    &lt;a href=&#34;#python-function-to-modify-the-data&#34;&gt;#&lt;/a&gt;
+    Python function to modify the data
+&lt;/h2&gt;&lt;p&gt;The following function will perform the modifications mentioned above:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
@@ -893,8 +937,10 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Let&amp;rsquo;s break this down line by line.&lt;/p&gt;
-&lt;h2 id=&#34;imports&#34;&gt;Imports&lt;/h2&gt;
-&lt;p&gt;First, we need to import pandas:&lt;/p&gt;
+&lt;h2 id=&#34;imports&#34;&gt;
+    &lt;a href=&#34;#imports&#34;&gt;#&lt;/a&gt;
+    Imports
+&lt;/h2&gt;&lt;p&gt;First, we need to import pandas:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -903,8 +949,10 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;import pandas as pd
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;import-excel-data-file&#34;&gt;Import excel data file&lt;/h2&gt;
-&lt;p&gt;Then import the excel file as a pandas dataframe:&lt;/p&gt;
+&lt;/div&gt;&lt;h2 id=&#34;import-excel-data-file&#34;&gt;
+    &lt;a href=&#34;#import-excel-data-file&#34;&gt;#&lt;/a&gt;
+    Import excel data file
+&lt;/h2&gt;&lt;p&gt;Then import the excel file as a pandas dataframe:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -939,8 +987,10 @@
 		data-flex-basis=&#34;291px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;set-column-headings&#34;&gt;Set column headings&lt;/h2&gt;
-&lt;p&gt;Next, set the column heading:&lt;/p&gt;
+&lt;h2 id=&#34;set-column-headings&#34;&gt;
+    &lt;a href=&#34;#set-column-headings&#34;&gt;#&lt;/a&gt;
+    Set column headings
+&lt;/h2&gt;&lt;p&gt;Next, set the column heading:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -969,8 +1019,10 @@
 		data-flex-basis=&#34;304px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;remove-index-heading&#34;&gt;Remove index heading&lt;/h2&gt;
-&lt;p&gt;Next, remove the column heading from the index column:&lt;/p&gt;
+&lt;h2 id=&#34;remove-index-heading&#34;&gt;
+    &lt;a href=&#34;#remove-index-heading&#34;&gt;#&lt;/a&gt;
+    Remove index heading
+&lt;/h2&gt;&lt;p&gt;Next, remove the column heading from the index column:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -1000,8 +1052,10 @@
 		data-flex-basis=&#34;299px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;drop-rows&#34;&gt;Drop rows&lt;/h2&gt;
-&lt;p&gt;Next, we want to remove the first 6 rows that have unneeded data:&lt;/p&gt;
+&lt;h2 id=&#34;drop-rows&#34;&gt;
+    &lt;a href=&#34;#drop-rows&#34;&gt;#&lt;/a&gt;
+    Drop rows
+&lt;/h2&gt;&lt;p&gt;Next, we want to remove the first 6 rows that have unneeded data:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -1031,8 +1085,10 @@
 		data-flex-basis=&#34;260px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;set-index&#34;&gt;Set index&lt;/h2&gt;
-&lt;p&gt;Next, we want to set the date column as the index:&lt;/p&gt;
+&lt;h2 id=&#34;set-index&#34;&gt;
+    &lt;a href=&#34;#set-index&#34;&gt;#&lt;/a&gt;
+    Set index
+&lt;/h2&gt;&lt;p&gt;Next, we want to set the date column as the index:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -1061,8 +1117,10 @@
 		data-flex-basis=&#34;184px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;drop-the-px_volume-column&#34;&gt;Drop the &amp;ldquo;PX_VOLUME&amp;rdquo; column&lt;/h2&gt;
-&lt;p&gt;Next, we want to drop the volume column:&lt;/p&gt;
+&lt;h2 id=&#34;drop-the-px_volume-column&#34;&gt;
+    &lt;a href=&#34;#drop-the-px_volume-column&#34;&gt;#&lt;/a&gt;
+    Drop the &amp;ldquo;PX_VOLUME&amp;rdquo; column
+&lt;/h2&gt;&lt;p&gt;Next, we want to drop the volume column:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -1098,8 +1156,10 @@
 		data-flex-basis=&#34;122px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;rename-the-px_last-column&#34;&gt;Rename the &amp;ldquo;PX_LAST&amp;rdquo; column&lt;/h2&gt;
-&lt;p&gt;Next, we want to rename the &amp;ldquo;PX_LAST&amp;rdquo; column as &amp;ldquo;Close&amp;rdquo;:&lt;/p&gt;
+&lt;h2 id=&#34;rename-the-px_last-column&#34;&gt;
+    &lt;a href=&#34;#rename-the-px_last-column&#34;&gt;#&lt;/a&gt;
+    Rename the &amp;ldquo;PX_LAST&amp;rdquo; column
+&lt;/h2&gt;&lt;p&gt;Next, we want to rename the &amp;ldquo;PX_LAST&amp;rdquo; column as &amp;ldquo;Close&amp;rdquo;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -1128,8 +1188,10 @@
 		data-flex-basis=&#34;117px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;sort-data&#34;&gt;Sort data&lt;/h2&gt;
-&lt;p&gt;Next, we want to sort the data starting with the oldest date:&lt;/p&gt;
+&lt;h2 id=&#34;sort-data&#34;&gt;
+    &lt;a href=&#34;#sort-data&#34;&gt;#&lt;/a&gt;
+    Sort data
+&lt;/h2&gt;&lt;p&gt;Next, we want to sort the data starting with the oldest date:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -1158,8 +1220,10 @@
 		data-flex-basis=&#34;102px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;export-data&#34;&gt;Export data&lt;/h2&gt;
-&lt;p&gt;Next, we want to export the data to an excel file, for easy viewing and reference later:&lt;/p&gt;
+&lt;h2 id=&#34;export-data&#34;&gt;
+    &lt;a href=&#34;#export-data&#34;&gt;#&lt;/a&gt;
+    Export data
+&lt;/h2&gt;&lt;p&gt;Next, we want to export the data to an excel file, for easy viewing and reference later:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -1187,8 +1251,10 @@
 		data-flex-basis=&#34;175px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;output-confirmation&#34;&gt;Output confirmation&lt;/h2&gt;
-&lt;p&gt;Finally, we want to print a confirmation that the process succeeded along withe last date we have for data:&lt;/p&gt;
+&lt;h2 id=&#34;output-confirmation&#34;&gt;
+    &lt;a href=&#34;#output-confirmation&#34;&gt;#&lt;/a&gt;
+    Output confirmation
+&lt;/h2&gt;&lt;p&gt;Finally, we want to print a confirmation that the process succeeded along withe last date we have for data:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -1220,8 +1286,10 @@
 		data-flex-basis=&#34;862px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
-&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.bloomberg.com/professional/support/software-updates/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+&lt;h2 id=&#34;references&#34;&gt;
+    &lt;a href=&#34;#references&#34;&gt;#&lt;/a&gt;
+    References
+&lt;/h2&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.bloomberg.com/professional/support/software-updates/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://www.bloomberg.com/professional/support/software-updates/&lt;/a&gt;&lt;/p&gt;
 </description>
         </item>

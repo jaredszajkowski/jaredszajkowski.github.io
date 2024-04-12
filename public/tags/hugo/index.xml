@@ -12,8 +12,10 @@
         <pubDate>Tue, 26 Sep 2023 00:00:00 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/2023/09/hello-world/</guid>
-        <description>&lt;h2 id=&#34;hello-world&#34;&gt;Hello World&lt;/h2&gt;
-&lt;p&gt;Welcome to my website. This is meant to serve as a place for me to publish various posts from my explorations into Arch Linux, data science, quant finance, and other topics.&lt;/p&gt;
+        <description>&lt;h2 id=&#34;hello-world&#34;&gt;
+    &lt;a href=&#34;#hello-world&#34;&gt;#&lt;/a&gt;
+    Hello World
+&lt;/h2&gt;&lt;p&gt;Welcome to my website. This is meant to serve as a place for me to publish various posts from my explorations into Arch Linux, data science, quant finance, and other topics.&lt;/p&gt;
 &lt;p&gt;The theme has been adopted from the &lt;a class=&#34;link&#34; href=&#34;https://github.com/CaiJimmy/hugo-theme-stack&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Hugo Theme Stack&lt;/a&gt; produced by Jimmy Cai.&lt;/p&gt;
 &lt;p&gt;This is the only theme that I have found that checks all of the following boxes:&lt;/p&gt;
@@ -33,8 +35,10 @@
 &lt;li&gt;Make sure to remove the public directory from the .gitignore file. Otherwise GitHub will ignore the public directory and your site will show the README.md instead of the Hugo site.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;The site can be updated either through codespace, or locally as long as Hugo and it&amp;rsquo;s required dependencies have been installed.&lt;/p&gt;
-&lt;h2 id=&#34;updating-and-pushing-changes&#34;&gt;Updating and pushing changes&lt;/h2&gt;
-&lt;p&gt;The simple command after making any changes and to push those updates is as follows:&lt;/p&gt;
+&lt;h2 id=&#34;updating-and-pushing-changes&#34;&gt;
+    &lt;a href=&#34;#updating-and-pushing-changes&#34;&gt;#&lt;/a&gt;
+    Updating and pushing changes
+&lt;/h2&gt;&lt;p&gt;The simple command after making any changes and to push those updates is as follows:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ hugo &amp;amp;&amp;amp; git add . &amp;amp;&amp;amp; git commit -am &amp;quot;Updating site&amp;quot; &amp;amp;&amp;amp; git push
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This can be put in a bash script to make it easier. Save the following as &lt;code&gt;git-update.sh&lt;/code&gt;:&lt;/p&gt;
@@ -62,8 +66,10 @@
 &lt;p&gt;And then execute:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ ./git-update.sh
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;references&#34;&gt;References&lt;/h2&gt;
-&lt;p&gt;Here&amp;rsquo;s the full list of resources I referenced for deploying Hugo with GitHub pages:&lt;/p&gt;
+&lt;h2 id=&#34;references&#34;&gt;
+    &lt;a href=&#34;#references&#34;&gt;#&lt;/a&gt;
+    References
+&lt;/h2&gt;&lt;p&gt;Here&amp;rsquo;s the full list of resources I referenced for deploying Hugo with GitHub pages:&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.o11ycloud.com/posts/gh_hugo/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://www.o11ycloud.com/posts/gh_hugo/&lt;/a&gt;&lt;/br&gt;
 &lt;a class=&#34;link&#34; href=&#34;https://github.com/CaiJimmy/hugo-theme-stack&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
