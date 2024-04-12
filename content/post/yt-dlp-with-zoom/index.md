@@ -4,7 +4,7 @@ description: Bash script for usage of yt-dlp with Zoom.
 #slug: hello-world-2
 date: 2023-10-01 00:00:00+0000
 lastmod: 2023-12-10 00:00:00+0000
-image: banner.svg
+image: banner_1.svg
 draft: false
 categories:
     - Tech

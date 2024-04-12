@@ -1800,7 +1800,7 @@ $ git pull
         <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/2023/10/using-yt-dlp-with-zoom/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/10/using-yt-dlp-with-zoom/banner.svg" alt="Featured image of post Using yt-dlp With Zoom" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/10/using-yt-dlp-with-zoom/banner_1.svg" alt="Featured image of post Using yt-dlp With Zoom" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;
     &lt;a href=&#34;#introduction&#34;&gt;#&lt;/a&gt;
     Introduction
 &lt;/h2&gt;&lt;p&gt;If anyone uses Zoom to record and later wants to access recordings of video calls, here&amp;rsquo;s a simple linux bash script to download the video file and acompanying subtitles. For a long time I used &lt;a class=&#34;link&#34; href=&#34;https://github.com/Battleman/zoomdl&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
