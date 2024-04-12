@@ -14,7 +14,7 @@ tags:
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 
-## Hello World
+# Hello World
 
 Welcome to my website. This is meant to serve as a place for me to publish various posts from my explorations into Arch Linux, data science, quant finance, and other topics.
 
@@ -37,7 +37,7 @@ It is hosted on [GitHub pages](https://pages.github.com/). I followed the instal
 
 The site can be updated either through codespace, or locally as long as Hugo and it's required dependencies have been installed.
 
-## Updating and pushing changes
+# Updating and pushing changes
 
 The simple command after making any changes and to push those updates is as follows:
 
@@ -62,7 +62,7 @@ And then execute:
 
     $ ./git-update.sh
 
-## References
+# References
 
 Here's the full list of resources I referenced for deploying Hugo with GitHub pages:
 
