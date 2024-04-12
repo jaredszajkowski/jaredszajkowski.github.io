@@ -4,7 +4,7 @@ description: Bash script for usage of yt-dlp with Panopto.
 #slug: hello-world-2
 date: 2023-12-10 00:00:00+0000
 #lastmod: 2023-10-17 00:00:00+0000
-# image: cover.jpg
+image: banner.svg
 draft: false
 categories:
     - Tech
