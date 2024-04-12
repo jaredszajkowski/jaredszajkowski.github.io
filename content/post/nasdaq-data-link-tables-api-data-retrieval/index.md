@@ -4,7 +4,7 @@ description: A python function to pull data from Nasdaq Data Link using the tabl
 # slug: hello-world
 date: 2023-12-24 00:00:01+0000
 lastmod: 2023-12-26 00:00:00+0000
-# image: cover.jpg
+image: cover.jpg
 draft: false
 categories:
     - Financial Data

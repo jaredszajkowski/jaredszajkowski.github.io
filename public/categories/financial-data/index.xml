@@ -12,7 +12,7 @@
         <pubDate>Sun, 24 Dec 2023 00:00:01 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/</guid>
-        <description>&lt;h2 id=&#34;introduction&#34;&gt;
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/cover.jpg" alt="Featured image of post Nasdaq Data Link Tables API Data Retrieval" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;
     &lt;a href=&#34;#introduction&#34;&gt;#&lt;/a&gt;
     Introduction
 &lt;/h2&gt;&lt;p&gt;In this tutorial, we will write a python function that pulls data from Nasdaq Data Link through the tables API, adds relevant columns that are not present in the raw data, updates columns to allow for ease of use, and leaves the data in a format where it can then be used in time series analysis.&lt;/p&gt;
