@@ -4,7 +4,7 @@ description: Commonly used commands and functionality for git.
 #slug: hello-world-2
 date: 2023-10-16 00:00:00+0000
 lastmod: 2023-11-02 00:00:00+0000
-# image: cover.jpg
+image: cover.jpg
 draft: false
 categories:
     - Tech
