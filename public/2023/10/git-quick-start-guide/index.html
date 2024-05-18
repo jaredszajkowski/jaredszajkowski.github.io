@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://www.jaredszajkowski.com/2023/10/git-quick-start-guide/'>
 
-<link rel="stylesheet" href="/scss/style.min.16bf6e382b554a45649fe2bb6c85fcec681e2372982651dc4db30f28a16b66c0.css"><meta property='og:title' content="Git Quick Start Guide">
+<link rel="stylesheet" href="/scss/style.min.783442c32a9e37cafd1e223d73a4572030f2df38ba44dc0ef4d1d8b3d6f9007d.css"><meta property='og:title' content="Git Quick Start Guide">
 <meta property='og:description' content="Commonly used commands and functionality for git.">
 <meta property='og:url' content='https://www.jaredszajkowski.com/2023/10/git-quick-start-guide/'>
 <meta property='og:site_name' content='Jared Szajkowski'>
@@ -15,6 +15,9 @@
 <meta name="twitter:description" content="Commonly used commands and functionality for git."><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://www.jaredszajkowski.com/2023/10/git-quick-start-guide/cover.jpg' />
     <link rel="shortcut icon" href="/profile_pic.jpg" />
+
+  
+
 
     </head>
     <body class="
@@ -382,13 +385,9 @@
     <section class="article-content">
     
     
-    <h2 id="introduction">
-    <a href="#introduction">#</a>
-    Introduction
+    <h2 id="introduction">Introduction
 </h2><p>Here are my notes for some of the more commonly used git commands along with initial setup for git in Linux.</p>
-<h2 id="installation">
-    <a href="#installation">#</a>
-    Installation
+<h2 id="installation">Installation
 </h2><p>To begin, install as follows for Arch Linux:</p>
 <pre><code># pacman -Syu git
 </code></pre>
@@ -396,9 +395,7 @@
 <pre><code>$ yay git
 </code></pre>
 <p>Pacman will include all required depencies.</p>
-<h2 id="initial-configuration">
-    <a href="#initial-configuration">#</a>
-    Initial configuration
+<h2 id="initial-configuration">Initial configuration
 </h2><p>First, set your name and email address:</p>
 <pre><code>$ git config --global user.name &quot;Firstname Lastname&quot;
 $ git config --global user.email &quot;email@address.com&quot;
@@ -412,30 +409,22 @@ $ git config --global user.email &quot;email@address.com&quot;
 <p>Alternatively, you can edit the git configuration directly with:</p>
 <pre><code>$ git config --global --edit
 </code></pre>
-<h2 id="store-credentials">
-    <a href="#store-credentials">#</a>
-    Store credentials
+<h2 id="store-credentials">Store credentials
 </h2><p>In 2021, GitHub disabled authentication via password and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in <code>~/.git-credentials</code>:</p>
 <pre><code>$ git config --global credential.helper store
 </code></pre>
 <p>After you log in during a <code>git push</code> with your username and token, the username or email address and token will be stored in the above location.</p>
 <p>Note: The token is stored in plain text, so use caution if that is a concern.</p>
-<h2 id="cloning-repositories">
-    <a href="#cloning-repositories">#</a>
-    Cloning repositories
+<h2 id="cloning-repositories">Cloning repositories
 </h2><p>Repositories can be cloned with the following:</p>
 <pre><code>$ git clone https://github.com/&lt;username&gt;/&lt;repository&gt;.git
 </code></pre>
-<h2 id="updating-repositories">
-    <a href="#updating-repositories">#</a>
-    Updating repositories
+<h2 id="updating-repositories">Updating repositories
 </h2><p>The local record of a repository can be updated with the following command:</p>
 <pre><code>$ cd &lt;repository&gt;/
 $ git pull
 </code></pre>
-<h2 id="adding-committing-and-pushing">
-    <a href="#adding-committing-and-pushing">#</a>
-    Adding, committing, and pushing
+<h2 id="adding-committing-and-pushing">Adding, committing, and pushing
 </h2><p>Any files or directories that have been added, modified, or removed can be add to the list of changes to be pushed with the following command:</p>
 <pre><code>$ git add .
 </code></pre>
@@ -452,9 +441,7 @@ $ git pull
 <p>These commands can be chained together with the AND operator:</p>
 <pre><code>$ git add . &amp;&amp; git commit -am &quot;Add your commit message here&quot; &amp;&amp; git push
 </code></pre>
-<h2 id="stashing-changes">
-    <a href="#stashing-changes">#</a>
-    Stashing changes
+<h2 id="stashing-changes">Stashing changes
 </h2><p>If you forget to update a repository before making changes, you can &ldquo;stash&rdquo; those changes and then re-apply them after running <code>git pull</code>.</p>
 <p>First, stash the changes:</p>
 <pre><code>$ git stash
@@ -466,9 +453,7 @@ $ git pull
 <pre><code>$ git stash apply
 </code></pre>
 <p>This has proven to be very useful for me when I forget to update a repository before making edits to the code.</p>
-<h2 id="references">
-    <a href="#references">#</a>
-    References
+<h2 id="references">References
 </h2><p>References for git (and used for above):</p>
 <p><a class="link" href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens"  target="_blank" rel="noopener"
     >https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens</a></br>
@@ -740,7 +725,7 @@ $ git pull
     
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.25.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.26.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
     </section>
 </footer>
 

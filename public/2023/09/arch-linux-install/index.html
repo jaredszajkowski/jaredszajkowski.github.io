@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://www.jaredszajkowski.com/2023/09/arch-linux-install/'>
 
-<link rel="stylesheet" href="/scss/style.min.16bf6e382b554a45649fe2bb6c85fcec681e2372982651dc4db30f28a16b66c0.css"><meta property='og:title' content="Arch Linux Install">
+<link rel="stylesheet" href="/scss/style.min.783442c32a9e37cafd1e223d73a4572030f2df38ba44dc0ef4d1d8b3d6f9007d.css"><meta property='og:title' content="Arch Linux Install">
 <meta property='og:description' content="Guide to Arch Linux install with customizations for the  Lenovo ThinkPad E15 Gen 2.">
 <meta property='og:url' content='https://www.jaredszajkowski.com/2023/09/arch-linux-install/'>
 <meta property='og:site_name' content='Jared Szajkowski'>
@@ -15,6 +15,9 @@
 <meta name="twitter:description" content="Guide to Arch Linux install with customizations for the  Lenovo ThinkPad E15 Gen 2."><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://www.jaredszajkowski.com/2023/09/arch-linux-install/cover.jpg' />
     <link rel="shortcut icon" href="/profile_pic.jpg" />
+
+  
+
 
     </head>
     <body class="
@@ -415,28 +418,20 @@
     <section class="article-content">
     
     
-    <h2 id="introduction">
-    <a href="#introduction">#</a>
-    Introduction
+    <h2 id="introduction">Introduction
 </h2><p>This is the basic framework that I use to install Arch Linux, with a few changes catered to the Lenovo ThinkPad E15 Gen 2. I have found that this is a decent mid range laptop, excellent linux compatibility, great keyboard, and overall provides a good value.</p>
-<h2 id="getting-started">
-    <a href="#getting-started">#</a>
-    Getting started
+<h2 id="getting-started">Getting started
 </h2><p>This tutorial assumes the following:</p>
 <ul>
 <li>You are booting from a USB drive with the Arch install ISO.</li>
 <li>Wireless or wired network is detected and drivers are configured automatically.</li>
 <li>You want drive encrytion on your root partition, but not on your boot/efi/swap partitions.</li>
 </ul>
-<h3 id="verify-uefi-boot-mode">
-    <a href="#verify-uefi-boot-mode">#</a>
-    Verify UEFI boot mode
+<h3 id="verify-uefi-boot-mode">Verify UEFI boot mode
 </h3><p>The following command should show directory without error:</p>
 <pre><code># ls /sys/firmware/efi/efivars
 </code></pre>
-<h3 id="configure-wireless-network">
-    <a href="#configure-wireless-network">#</a>
-    Configure wireless network
+<h3 id="configure-wireless-network">Configure wireless network
 </h3><p>The following command will drop you into the iwd daemon:</p>
 <pre><code># iwctl
 </code></pre>
@@ -446,58 +441,42 @@
 # station *device* get-networks
 # station *device* connect *SSID*
 </code></pre>
-<h3 id="verify-internet-connectivity">
-    <a href="#verify-internet-connectivity">#</a>
-    Verify internet connectivity
+<h3 id="verify-internet-connectivity">Verify internet connectivity
 </h3><pre><code># ping archlinux.org
 </code></pre>
-<h3 id="update-system-clock">
-    <a href="#update-system-clock">#</a>
-    Update system clock
+<h3 id="update-system-clock">Update system clock
 </h3><pre><code># timedatectl set-ntp true
 # timedatectl status
 </code></pre>
-<h2 id="disks-partition-table--partitions">
-    <a href="#disks-partition-table--partitions">#</a>
-    Disks, partition table &amp; partitions
+<h2 id="disks-partition-table--partitions">Disks, partition table &amp; partitions
 </h2><p>The following assumes that your NVME drive is found as /dev/nvme0n1. Partitions will then be /dev/nvme0n1p1 and so on.</p>
-<h3 id="wipe-disk">
-    <a href="#wipe-disk">#</a>
-    Wipe disk
+<h3 id="wipe-disk">Wipe disk
 </h3><p>List disks:</p>
 <pre><code># fdisk -l
 </code></pre>
 <p>Wipe all file system records:</p>
 <pre><code># wipefs -a /dev/nvme0n1
 </code></pre>
-<h3 id="create-new-partition-table">
-    <a href="#create-new-partition-table">#</a>
-    Create new partition table
+<h3 id="create-new-partition-table">Create new partition table
 </h3><p>Open nvme0n1 with gdisk:</p>
 <pre><code># gdisk /dev/nvme0n1
 </code></pre>
 <p>Create GPT partition table with option &ldquo;o&rdquo;.</p>
-<h3 id="create-efi-partition">
-    <a href="#create-efi-partition">#</a>
-    Create EFI partition
+<h3 id="create-efi-partition">Create EFI partition
 </h3><p>Create new EFI partition w/ 550mb with option &ldquo;n&rdquo;, using the following parameters:</p>
 <pre><code>Partition #1
 Default starting sector
 +550M
 Change partition type to EFI System (ef00)
 </code></pre>
-<h3 id="create-boot-partition">
-    <a href="#create-boot-partition">#</a>
-    Create boot partition
+<h3 id="create-boot-partition">Create boot partition
 </h3><p>Create new boot partition w/ 550mb with option &ldquo;n&rdquo;, using the following parameters:</p>
 <pre><code>Partition #2
 Default starting sector
 +550M
 Leave default type of 8300
 </code></pre>
-<h3 id="create-swap-partition">
-    <a href="#create-swap-partition">#</a>
-    Create swap partition
+<h3 id="create-swap-partition">Create swap partition
 </h3><p>The old rule of thumb used to be that a swap partition should be the same size as the amount of memory in the system, but given the typical amount of memory in modern systems this is obviously no longer necessary. For my system with 16 or 32 GB of memory, a swap of 8 GB is rarely even used.</br></p>
 <p>Create new Swap partition w/ 8GB with option &ldquo;n&rdquo;, using the following parameters:</p>
 <pre><code>Partition #3
@@ -505,9 +484,7 @@ Default starting sector
 +8G
 Change to linux swap (8200)
 </code></pre>
-<h3 id="create-root-partition">
-    <a href="#create-root-partition">#</a>
-    Create root partition
+<h3 id="create-root-partition">Create root partition
 </h3><p>Create new root partition w/ remaining disk space with option &ldquo;n&rdquo;, using the following parameters:</p>
 <pre><code>Partition #4
 Default starting sector
@@ -515,26 +492,18 @@ Remaining space
 Linux LUKS type 8309
 </code></pre>
 <p>And then exit gdisk.</p>
-<h2 id="write-file-systems">
-    <a href="#write-file-systems">#</a>
-    Write file systems
-</h2><h3 id="efi-partition">
-    <a href="#efi-partition">#</a>
-    EFI partition
+<h2 id="write-file-systems">Write file systems
+</h2><h3 id="efi-partition">EFI partition
 </h3><p>Write file system to new EFI System partition:</p>
 <pre><code># cat /dev/zero &gt; /dev/nvme0n1p1 
 # mkfs.fat -F32 /dev/nvme0n1p1 
 </code></pre>
-<h3 id="boot-partition">
-    <a href="#boot-partition">#</a>
-    Boot partition
+<h3 id="boot-partition">Boot partition
 </h3><p>Then boot partition:</p>
 <pre><code># cat /dev/zero &gt; /dev/nvme0n1p2 
 # mkfs.ext2 /dev/nvme0n1p2
 </code></pre>
-<h3 id="root-partition">
-    <a href="#root-partition">#</a>
-    Root partition
+<h3 id="root-partition">Root partition
 </h3><p>Prepare root partition w/ LUKS:</p>
 <pre><code># cryptsetup -y -v luksFormat --type luks2 /dev/nvme0n1p4
 # cryptsetup luksDump /dev/nvme0n1p4
@@ -543,57 +512,39 @@ Linux LUKS type 8309
 # mount /dev/mapper/archcryptroot /mnt
 </code></pre>
 <p>I use <em>archcryptroot</em> for the name of my encrypted volume, but change as necessary.</p>
-<h3 id="swap-partition">
-    <a href="#swap-partition">#</a>
-    Swap partition
+<h3 id="swap-partition">Swap partition
 </h3><p>Then swap:</p>
 <pre><code># mkswap /dev/nvme0n1p3
 # swapon /dev/nvme0n1p3
 </code></pre>
-<h3 id="create-mount-points">
-    <a href="#create-mount-points">#</a>
-    Create mount points
+<h3 id="create-mount-points">Create mount points
 </h3><pre><code># mkdir /mnt/boot
 # mount /dev/nvme0n1p2 /mnt/boot
 # mkdir /mnt/boot/efi
 # mount /dev/nvme0n1p1 /mnt/boot/efi
 </code></pre>
-<h2 id="system-install">
-    <a href="#system-install">#</a>
-    System install
-</h2><h3 id="install-base-packages">
-    <a href="#install-base-packages">#</a>
-    Install base packages
+<h2 id="system-install">System install
+</h2><h3 id="install-base-packages">Install base packages
 </h3><pre><code># pacstrap /mnt base base-devel linux linux-firmware grub-efi-x86_64 efibootmgr
 </code></pre>
-<h3 id="generate-fstab">
-    <a href="#generate-fstab">#</a>
-    Generate fstab
+<h3 id="generate-fstab">Generate fstab
 </h3><pre><code># genfstab -U /mnt &gt;&gt; /mnt/etc/fstab
 </code></pre>
-<h3 id="enter-new-system">
-    <a href="#enter-new-system">#</a>
-    Enter new system
+<h3 id="enter-new-system">Enter new system
 </h3><pre><code># arch-chroot /mnt /bin/bash
 </code></pre>
-<h3 id="set-clock">
-    <a href="#set-clock">#</a>
-    Set clock
+<h3 id="set-clock">Set clock
 </h3><pre><code># ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime
 # hwclock –systohc
 </code></pre>
-<h3 id="generate-locale">
-    <a href="#generate-locale">#</a>
-    Generate locale
+<h3 id="generate-locale">Generate locale
 </h3><p>In /etc/locale.gen <strong>uncomment only</strong>: en_US.UTF-8 UTF-8</p>
 <pre><code># locale-gen
 </code></pre>
 <p>In /etc/locale.conf, you should <strong>only</strong> have this line: LANG=en_US.UTF-8</p>
 <pre><code># nano /etc/locale.conf
 </code></pre>
-<h3 id="set-hostname--update-hosts">
-    <a href="#set-hostname--update-hosts">#</a>
-    Set hostname &amp; update hosts
+<h3 id="set-hostname--update-hosts">Set hostname &amp; update hosts
 </h3><pre><code># echo linuxmachine &gt; /etc/hostname
 </code></pre>
 <p>Update /etc/hosts with the following:</p>
@@ -601,23 +552,17 @@ Linux LUKS type 8309
 ::1         localhost
 127.0.1.1   linuxmachine.localdomain    linuxmachine
 </code></pre>
-<h3 id="set-root-password">
-    <a href="#set-root-password">#</a>
-    Set root password
+<h3 id="set-root-password">Set root password
 </h3><pre><code># passwd
 </code></pre>
-<h3 id="update-etcmkinitcpioconf--generate-initrd-image">
-    <a href="#update-etcmkinitcpioconf--generate-initrd-image">#</a>
-    Update /etc/mkinitcpio.conf &amp; generate initrd image
+<h3 id="update-etcmkinitcpioconf--generate-initrd-image">Update /etc/mkinitcpio.conf &amp; generate initrd image
 </h3><p>Edit /etc/mkinitcpio.conf with the following:</p>
 <pre><code>HOOKS=(base udev autodetect modconf block keymap encrypt resume filesystems keyboard fsck)
 </code></pre>
 <p>Then run:</p>
 <pre><code># mkinitcpio -p linux
 </code></pre>
-<h3 id="install-grub">
-    <a href="#install-grub">#</a>
-    Install grub
+<h3 id="install-grub">Install grub
 </h3><pre><code># grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ArchLinux
 </code></pre>
 <p>Edit /etc/default/grub so it includes a statement like this:</p>
@@ -626,9 +571,7 @@ Linux LUKS type 8309
 <p>Generate final grub configuration:</p>
 <pre><code># grub-mkconfig -o /boot/grub/grub.cfg
 </code></pre>
-<h3 id="exit--reboot">
-    <a href="#exit--reboot">#</a>
-    Exit &amp; reboot
+<h3 id="exit--reboot">Exit &amp; reboot
 </h3><pre><code># exit
 # umount -R /mnt
 # swapoff -a
@@ -893,7 +836,7 @@ Linux LUKS type 8309
     
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.25.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.26.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
     </section>
 </footer>
 

@@ -16,7 +16,11 @@ menu:
 comments: false
 ---
 
-A few quotes that I find inspirational:
+A few quotes that I find useful and inspirational:
+
+{{< quote author="Unknown">}}
+The conversations that you have in your head are the conversations you should be having out loud.
+{{< /quote >}}
 
 {{< quote author="Alex Hormozi" source="LinkedIn" url="https://www.linkedin.com/posts/alexhormozi_the-life-you-want-is-on-the-other-side-of-activity-7105928499927891968-Pyry?utm_source=share&utm_medium=member_desktop">}}
 The life you want is on the other side of a few hard conversations.

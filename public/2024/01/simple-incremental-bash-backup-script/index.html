@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://www.jaredszajkowski.com/2024/01/simple-incremental-bash-backup-script/'>
 
-<link rel="stylesheet" href="/scss/style.min.16bf6e382b554a45649fe2bb6c85fcec681e2372982651dc4db30f28a16b66c0.css"><meta property='og:title' content="Simple Incremental Bash Backup Script">
+<link rel="stylesheet" href="/scss/style.min.783442c32a9e37cafd1e223d73a4572030f2df38ba44dc0ef4d1d8b3d6f9007d.css"><meta property='og:title' content="Simple Incremental Bash Backup Script">
 <meta property='og:description' content="A bash script to incrementally backup multiple different directories.">
 <meta property='og:url' content='https://www.jaredszajkowski.com/2024/01/simple-incremental-bash-backup-script/'>
 <meta property='og:site_name' content='Jared Szajkowski'>
@@ -15,6 +15,9 @@
 <meta name="twitter:description" content="A bash script to incrementally backup multiple different directories."><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://www.jaredszajkowski.com/2024/01/simple-incremental-bash-backup-script/cover.jpg' />
     <link rel="shortcut icon" href="/profile_pic.jpg" />
+
+  
+
 
     </head>
     <body class="
@@ -381,16 +384,12 @@
     <section class="article-content">
     
     
-    <h2 id="introduction">
-    <a href="#introduction">#</a>
-    Introduction
+    <h2 id="introduction">Introduction
 </h2><p>While there are <a class="link" href="https://wiki.archlinux.org/title/Synchronization_and_backup_programs"  target="_blank" rel="noopener"
     >numerous backup solutions available for Linux</a>, many require extensive configuration and maintenance, and restoring from the backup is not always simple. Incremental backups are ideal because they maintain snapshots of the files and allow for access to previous versions of files.</p>
 <p>Linux Journal recently <a class="link" href="https://www.linuxjournal.com/content/exploring-rsync-tar-and-other-backup-solutions"  target="_blank" rel="noopener"
     >published an article on various backup solutions</a>, and I thought I&rsquo;d provide my incremental backup script that uses <code>rsync</code> and <code>cp</code>.</p>
-<h2 id="incremental-backup-script">
-    <a href="#incremental-backup-script">#</a>
-    Incremental backup script
+<h2 id="incremental-backup-script">Incremental backup script
 </h2><p>This script provides an incremental backup solution and only requires <code>rsync</code> and <code>cp</code> to be installed on the system.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -493,9 +492,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Let&rsquo;s break this down line by line.</p>
-<h2 id="source-and-backup-directories">
-    <a href="#source-and-backup-directories">#</a>
-    Source and backup directories
+<h2 id="source-and-backup-directories">Source and backup directories
 </h2><p>First, we need to define the source and backup directories, and any directories from the source that are to be excluded from the backup:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -524,9 +521,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>You can add as many directories as you want here.</p>
-<h2 id="backup-function">
-    <a href="#backup-function">#</a>
-    Backup function
+<h2 id="backup-function">Backup function
 </h2><p>Then we have the backup function. This performs the following:</p>
 <ol>
 <li>Takes an input of the source and backup directories (defined above)</li>
@@ -598,9 +593,7 @@
 </div>
 </div><p><code>rsync</code> is used to compare the files in the source to the <code>Monthly</code> backup directory and then update or delete files accordingly.</p>
 <p>Once the files are copied over via <code>rsync</code>, then the <code>cp</code> command is used to link the files in the <code>Monthly</code> directory to the <code>year/date/</code> diorectory. As the files change in the <code>Monthly</code> directory, then the link also changes. This method saves disk space because files are not copied over and over again. Any files that do not change are simply linked within the filesystem. The links take up a trivial amount of disk space, and the filesystem handles all of the heavy lifting associated with tracking which files are linked and where on the filesystem. There is no database, log, etc. required to track the individual files and/or their versions.</p>
-<h2 id="running-backups">
-    <a href="#running-backups">#</a>
-    Running backups
+<h2 id="running-backups">Running backups
 </h2><p>Finally, run the backups and confirm complete:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -620,9 +613,7 @@
 </span></span><span class="line"><span class="cl">echo &#34;Backup complete&#34;
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="results">
-    <a href="#results">#</a>
-    Results
+</div><h2 id="results">Results
 </h2><p>This script provides an incremental backup record organized by year and date:</p>
 <p><img src="/2024/01/simple-incremental-bash-backup-script/01_Backup_directory.png"
 	width="1038"
@@ -653,13 +644,9 @@
 	
 ></p>
 <p>Accessing older backups is straightforward - simply navigate to the desired directory within the filesystem.</p>
-<h2 id="deleting-old-backups">
-    <a href="#deleting-old-backups">#</a>
-    Deleting old backups
+<h2 id="deleting-old-backups">Deleting old backups
 </h2><p>Deleting or removing old and out-of-date backups is as simple as deleting the directories. The filesystem links and files that are not linked elsewhere are removed from the filesystem, freeing up the disk space.</p>
-<h2 id="references">
-    <a href="#references">#</a>
-    References
+<h2 id="references">References
 </h2><p><a class="link" href="https://rsync.samba.org/"  target="_blank" rel="noopener"
     >https://rsync.samba.org/</a></br>
 <a class="link" href="https://github.com/WayneD/rsync"  target="_blank" rel="noopener"
@@ -926,7 +913,7 @@
     
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.25.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.26.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
     </section>
 </footer>
 

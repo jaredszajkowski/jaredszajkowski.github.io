@@ -12,16 +12,12 @@
         <pubDate>Fri, 12 Jan 2024 00:00:01 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/2024/01/simple-incremental-bash-backup-script/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2024/01/simple-incremental-bash-backup-script/cover.jpg" alt="Featured image of post Simple Incremental Bash Backup Script" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;
-    &lt;a href=&#34;#introduction&#34;&gt;#&lt;/a&gt;
-    Introduction
+        <description>&lt;img src="https://www.jaredszajkowski.com/2024/01/simple-incremental-bash-backup-script/cover.jpg" alt="Featured image of post Simple Incremental Bash Backup Script" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;While there are &lt;a class=&#34;link&#34; href=&#34;https://wiki.archlinux.org/title/Synchronization_and_backup_programs&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;numerous backup solutions available for Linux&lt;/a&gt;, many require extensive configuration and maintenance, and restoring from the backup is not always simple. Incremental backups are ideal because they maintain snapshots of the files and allow for access to previous versions of files.&lt;/p&gt;
 &lt;p&gt;Linux Journal recently &lt;a class=&#34;link&#34; href=&#34;https://www.linuxjournal.com/content/exploring-rsync-tar-and-other-backup-solutions&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;published an article on various backup solutions&lt;/a&gt;, and I thought I&amp;rsquo;d provide my incremental backup script that uses &lt;code&gt;rsync&lt;/code&gt; and &lt;code&gt;cp&lt;/code&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;incremental-backup-script&#34;&gt;
-    &lt;a href=&#34;#incremental-backup-script&#34;&gt;#&lt;/a&gt;
-    Incremental backup script
+&lt;h2 id=&#34;incremental-backup-script&#34;&gt;Incremental backup script
 &lt;/h2&gt;&lt;p&gt;This script provides an incremental backup solution and only requires &lt;code&gt;rsync&lt;/code&gt; and &lt;code&gt;cp&lt;/code&gt; to be installed on the system.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -124,9 +120,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Let&amp;rsquo;s break this down line by line.&lt;/p&gt;
-&lt;h2 id=&#34;source-and-backup-directories&#34;&gt;
-    &lt;a href=&#34;#source-and-backup-directories&#34;&gt;#&lt;/a&gt;
-    Source and backup directories
+&lt;h2 id=&#34;source-and-backup-directories&#34;&gt;Source and backup directories
 &lt;/h2&gt;&lt;p&gt;First, we need to define the source and backup directories, and any directories from the source that are to be excluded from the backup:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -155,9 +149,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;You can add as many directories as you want here.&lt;/p&gt;
-&lt;h2 id=&#34;backup-function&#34;&gt;
-    &lt;a href=&#34;#backup-function&#34;&gt;#&lt;/a&gt;
-    Backup function
+&lt;h2 id=&#34;backup-function&#34;&gt;Backup function
 &lt;/h2&gt;&lt;p&gt;Then we have the backup function. This performs the following:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Takes an input of the source and backup directories (defined above)&lt;/li&gt;
@@ -229,9 +221,7 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;&lt;code&gt;rsync&lt;/code&gt; is used to compare the files in the source to the &lt;code&gt;Monthly&lt;/code&gt; backup directory and then update or delete files accordingly.&lt;/p&gt;
 &lt;p&gt;Once the files are copied over via &lt;code&gt;rsync&lt;/code&gt;, then the &lt;code&gt;cp&lt;/code&gt; command is used to link the files in the &lt;code&gt;Monthly&lt;/code&gt; directory to the &lt;code&gt;year/date/&lt;/code&gt; diorectory. As the files change in the &lt;code&gt;Monthly&lt;/code&gt; directory, then the link also changes. This method saves disk space because files are not copied over and over again. Any files that do not change are simply linked within the filesystem. The links take up a trivial amount of disk space, and the filesystem handles all of the heavy lifting associated with tracking which files are linked and where on the filesystem. There is no database, log, etc. required to track the individual files and/or their versions.&lt;/p&gt;
-&lt;h2 id=&#34;running-backups&#34;&gt;
-    &lt;a href=&#34;#running-backups&#34;&gt;#&lt;/a&gt;
-    Running backups
+&lt;h2 id=&#34;running-backups&#34;&gt;Running backups
 &lt;/h2&gt;&lt;p&gt;Finally, run the backups and confirm complete:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -251,9 +241,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;echo &amp;#34;Backup complete&amp;#34;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;results&#34;&gt;
-    &lt;a href=&#34;#results&#34;&gt;#&lt;/a&gt;
-    Results
+&lt;/div&gt;&lt;h2 id=&#34;results&#34;&gt;Results
 &lt;/h2&gt;&lt;p&gt;This script provides an incremental backup record organized by year and date:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/01/simple-incremental-bash-backup-script/01_Backup_directory.png&#34;
 	width=&#34;1038&#34;
@@ -284,13 +272,9 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;Accessing older backups is straightforward - simply navigate to the desired directory within the filesystem.&lt;/p&gt;
-&lt;h2 id=&#34;deleting-old-backups&#34;&gt;
-    &lt;a href=&#34;#deleting-old-backups&#34;&gt;#&lt;/a&gt;
-    Deleting old backups
+&lt;h2 id=&#34;deleting-old-backups&#34;&gt;Deleting old backups
 &lt;/h2&gt;&lt;p&gt;Deleting or removing old and out-of-date backups is as simple as deleting the directories. The filesystem links and files that are not linked elsewhere are removed from the filesystem, freeing up the disk space.&lt;/p&gt;
-&lt;h2 id=&#34;references&#34;&gt;
-    &lt;a href=&#34;#references&#34;&gt;#&lt;/a&gt;
-    References
+&lt;h2 id=&#34;references&#34;&gt;References
 &lt;/h2&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://rsync.samba.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://rsync.samba.org/&lt;/a&gt;&lt;/br&gt;
 &lt;a class=&#34;link&#34; href=&#34;https://github.com/WayneD/rsync&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -307,21 +291,15 @@
         <pubDate>Sun, 10 Dec 2023 00:00:00 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/2023/12/using-yt-dlp-with-panopto/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/12/using-yt-dlp-with-panopto/banner_1.svg" alt="Featured image of post Using yt-dlp With Panopto" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;
-    &lt;a href=&#34;#introduction&#34;&gt;#&lt;/a&gt;
-    Introduction
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/12/using-yt-dlp-with-panopto/banner_1.svg" alt="Featured image of post Using yt-dlp With Panopto" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;As a follow up to &lt;a class=&#34;link&#34; href=&#34;https://www.jaredszajkowski.com/p/using-yt-dlp-with-zoom/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;this post about using yt-dlp with Zoom&lt;/a&gt;, I found the need to also download videos hosted by Panopto for offline viewing.&lt;/p&gt;
 &lt;p&gt;Similar to the Zoom tutorial, this also requires you to have a &amp;ldquo;cookies&amp;rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Panopto hosting site after logging in.&lt;/p&gt;
 &lt;p&gt;Here&amp;rsquo;s the steps to setting this up:&lt;/p&gt;
-&lt;h2 id=&#34;install-cookie-editor&#34;&gt;
-    &lt;a href=&#34;#install-cookie-editor&#34;&gt;#&lt;/a&gt;
-    Install cookie editor
+&lt;h2 id=&#34;install-cookie-editor&#34;&gt;Install cookie editor
 &lt;/h2&gt;&lt;p&gt;Install the &lt;a class=&#34;link&#34; href=&#34;https://microsoftedge.microsoft.com/addons/detail/cookie-editor/ajfboaconbpkglpfanbmlfgojgndmhmc&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;cookie editor&lt;/a&gt; extension. I personnally use it with Microsoft Edge, but there are similar extensions for Chrome, Firefox, etc.&lt;/p&gt;
-&lt;h2 id=&#34;modify-export-format&#34;&gt;
-    &lt;a href=&#34;#modify-export-format&#34;&gt;#&lt;/a&gt;
-    Modify export format
+&lt;h2 id=&#34;modify-export-format&#34;&gt;Modify export format
 &lt;/h2&gt;&lt;p&gt;Change the preferred cookie export format to &lt;code&gt;Netscape HTTP Cookie File&lt;/code&gt; in the extension options. It is necessary to export in this format, otherwise yt-dlp will not be able to read the cookies.txt file correctly.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/using-yt-dlp-with-panopto/Modify_preferred_export_format.png&#34;
 	width=&#34;865&#34;
@@ -337,13 +315,9 @@
 		data-flex-basis=&#34;411px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;log-in-to-panopto&#34;&gt;
-    &lt;a href=&#34;#log-in-to-panopto&#34;&gt;#&lt;/a&gt;
-    Log in to Panopto
+&lt;h2 id=&#34;log-in-to-panopto&#34;&gt;Log in to Panopto
 &lt;/h2&gt;&lt;p&gt;Log in to Panopto in your browser. Be sure to remain logged in while exporting the cookies under step 4.&lt;/p&gt;
-&lt;h2 id=&#34;export-cookies&#34;&gt;
-    &lt;a href=&#34;#export-cookies&#34;&gt;#&lt;/a&gt;
-    Export cookies
+&lt;h2 id=&#34;export-cookies&#34;&gt;Export cookies
 &lt;/h2&gt;&lt;p&gt;The export button is at the top fo the window. It copies the cookies to your clipboard, which then need to be pasted into a text file (I have my saved as cookies.txt), which yt-dlp will then read when it executes.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/using-yt-dlp-with-panopto/Export_cookies.png&#34;
 	width=&#34;579&#34;
@@ -359,9 +333,7 @@
 		data-flex-basis=&#34;226px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;create-bash-script&#34;&gt;
-    &lt;a href=&#34;#create-bash-script&#34;&gt;#&lt;/a&gt;
-    Create bash script
+&lt;h2 id=&#34;create-bash-script&#34;&gt;Create bash script
 &lt;/h2&gt;&lt;p&gt;Save the following code to a text file (my bash script file name is &lt;code&gt;yt-dlp-panopto.sh&lt;/code&gt;):&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -381,19 +353,13 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;yt-dlp --cookies /path/to/cookies/file/cookies.txt -o &amp;#34;%(title)s-%(id)s.%(ext)s&amp;#34; --write-subs $link
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;change-permissions&#34;&gt;
-    &lt;a href=&#34;#change-permissions&#34;&gt;#&lt;/a&gt;
-    Change permissions
+&lt;/div&gt;&lt;h2 id=&#34;change-permissions&#34;&gt;Change permissions
 &lt;/h2&gt;&lt;p&gt;Modify the permissions of the bash script to allow execution:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ chmod +x yt-dlp-panopto.sh
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;execute-the-script&#34;&gt;
-    &lt;a href=&#34;#execute-the-script&#34;&gt;#&lt;/a&gt;
-    Execute the script
+&lt;h2 id=&#34;execute-the-script&#34;&gt;Execute the script
 &lt;/h2&gt;&lt;p&gt;Execute the bash script with ./yt-dlp-panopto.sh, copy and paste the link to the video that you would like to save, and it should download the video and the subtitles. If there are not any subtitles present in the stream, then it will notify you and only download the video stream.&lt;/p&gt;
-&lt;h2 id=&#34;references&#34;&gt;
-    &lt;a href=&#34;#references&#34;&gt;#&lt;/a&gt;
-    References
+&lt;h2 id=&#34;references&#34;&gt;References
 &lt;/h2&gt;&lt;p&gt;References for yt-dlp (and used for above):&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://ostechnix.com/yt-dlp-tutorial/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://ostechnix.com/yt-dlp-tutorial/&lt;/a&gt;&lt;/p&gt;
@@ -405,21 +371,15 @@
         <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/2023/10/using-yt-dlp-with-zoom/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/10/using-yt-dlp-with-zoom/banner_1.svg" alt="Featured image of post Using yt-dlp With Zoom" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;
-    &lt;a href=&#34;#introduction&#34;&gt;#&lt;/a&gt;
-    Introduction
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/10/using-yt-dlp-with-zoom/banner_1.svg" alt="Featured image of post Using yt-dlp With Zoom" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;If anyone uses Zoom to record and later wants to access recordings of video calls, here&amp;rsquo;s a simple linux bash script to download the video file and acompanying subtitles. For a long time I used &lt;a class=&#34;link&#34; href=&#34;https://github.com/Battleman/zoomdl&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;zoomdl&lt;/a&gt;, but it is no longer under active development, and I began running into various issues about a year ago.&lt;/p&gt;
 &lt;p&gt;This tutorial requires you to have a &amp;ldquo;cookies&amp;rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Zoom cookies after logging in.&lt;/p&gt;
 &lt;p&gt;Here&amp;rsquo;s the steps to setting this up:&lt;/p&gt;
-&lt;h2 id=&#34;install-cookie-editor&#34;&gt;
-    &lt;a href=&#34;#install-cookie-editor&#34;&gt;#&lt;/a&gt;
-    Install cookie editor
+&lt;h2 id=&#34;install-cookie-editor&#34;&gt;Install cookie editor
 &lt;/h2&gt;&lt;p&gt;Install the &lt;a class=&#34;link&#34; href=&#34;https://microsoftedge.microsoft.com/addons/detail/cookie-editor/ajfboaconbpkglpfanbmlfgojgndmhmc&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;cookie editor&lt;/a&gt; extension. I personnally use it with Microsoft Edge, but there are similar extensions for Chrome, Firefox, etc.&lt;/p&gt;
-&lt;h2 id=&#34;modify-export-format&#34;&gt;
-    &lt;a href=&#34;#modify-export-format&#34;&gt;#&lt;/a&gt;
-    Modify export format
+&lt;h2 id=&#34;modify-export-format&#34;&gt;Modify export format
 &lt;/h2&gt;&lt;p&gt;Change the preferred cookie export format to &lt;code&gt;Netscape HTTP Cookie File&lt;/code&gt; in the extension options. It is necessary to export in this format, otherwise yt-dlp will not be able to read the cookies.txt file correctly.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/10/using-yt-dlp-with-zoom/Modify_preferred_export_format.png&#34;
 	width=&#34;865&#34;
@@ -435,13 +395,9 @@
 		data-flex-basis=&#34;411px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;log-in-to-zoom&#34;&gt;
-    &lt;a href=&#34;#log-in-to-zoom&#34;&gt;#&lt;/a&gt;
-    Log in to Zoom
+&lt;h2 id=&#34;log-in-to-zoom&#34;&gt;Log in to Zoom
 &lt;/h2&gt;&lt;p&gt;Log in to Zoom in your browser. Be sure to remain logged in while exporting the cookies under step 4.&lt;/p&gt;
-&lt;h2 id=&#34;export-cookies&#34;&gt;
-    &lt;a href=&#34;#export-cookies&#34;&gt;#&lt;/a&gt;
-    Export cookies
+&lt;h2 id=&#34;export-cookies&#34;&gt;Export cookies
 &lt;/h2&gt;&lt;p&gt;The export button is at the top fo the window. It copies the cookies to your clipboard, which then need to be pasted into a text file (I have my saved as cookies.txt), which yt-dlp will then read when it executes.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/10/using-yt-dlp-with-zoom/Export_cookies.png&#34;
 	width=&#34;579&#34;
@@ -457,9 +413,7 @@
 		data-flex-basis=&#34;226px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;create-bash-script&#34;&gt;
-    &lt;a href=&#34;#create-bash-script&#34;&gt;#&lt;/a&gt;
-    Create bash script
+&lt;h2 id=&#34;create-bash-script&#34;&gt;Create bash script
 &lt;/h2&gt;&lt;p&gt;Save the following code to a text file (my bash script file name is &lt;code&gt;yt-dlp-zoom.sh&lt;/code&gt;):&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -479,19 +433,13 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;yt-dlp --referer &amp;#34;https://zoom.us/&amp;#34; --cookies /path/to/cookies/file/cookies.txt -o &amp;#34;%(title)s-%(id)s.%(ext)s&amp;#34; --write-subs $link
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;change-permissions&#34;&gt;
-    &lt;a href=&#34;#change-permissions&#34;&gt;#&lt;/a&gt;
-    Change permissions
+&lt;/div&gt;&lt;h2 id=&#34;change-permissions&#34;&gt;Change permissions
 &lt;/h2&gt;&lt;p&gt;Modify the permissions of the bash script to allow execution:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ chmod +x yt-dlp-zoom.sh
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;execute-the-script&#34;&gt;
-    &lt;a href=&#34;#execute-the-script&#34;&gt;#&lt;/a&gt;
-    Execute the script
+&lt;h2 id=&#34;execute-the-script&#34;&gt;Execute the script
 &lt;/h2&gt;&lt;p&gt;Execute the bash script with ./yt-dlp-zoom.sh, copy and paste the link to the video that you would like to save, and it should download the video and the subtitles.&lt;/p&gt;
-&lt;h2 id=&#34;references&#34;&gt;
-    &lt;a href=&#34;#references&#34;&gt;#&lt;/a&gt;
-    References
+&lt;h2 id=&#34;references&#34;&gt;References
 &lt;/h2&gt;&lt;p&gt;References for yt-dlp (and used for above):&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://ostechnix.com/yt-dlp-tutorial/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://ostechnix.com/yt-dlp-tutorial/&lt;/a&gt;&lt;/p&gt;

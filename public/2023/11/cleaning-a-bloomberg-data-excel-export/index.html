@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/'>
 
-<link rel="stylesheet" href="/scss/style.min.16bf6e382b554a45649fe2bb6c85fcec681e2372982651dc4db30f28a16b66c0.css"><meta property='og:title' content="Cleaning A Bloomberg Data Excel Export">
+<link rel="stylesheet" href="/scss/style.min.783442c32a9e37cafd1e223d73a4572030f2df38ba44dc0ef4d1d8b3d6f9007d.css"><meta property='og:title' content="Cleaning A Bloomberg Data Excel Export">
 <meta property='og:description' content="A python function to clean and format an excel data export from Bloomberg.">
 <meta property='og:url' content='https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/'>
 <meta property='og:site_name' content='Jared Szajkowski'>
@@ -15,6 +15,9 @@
 <meta name="twitter:description" content="A python function to clean and format an excel data export from Bloomberg."><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/cover.jpg' />
     <link rel="shortcut icon" href="/profile_pic.jpg" />
+
+  
+
 
     </head>
     <body class="
@@ -390,13 +393,9 @@
     <section class="article-content">
     
     
-    <h2 id="introduction">
-    <a href="#introduction">#</a>
-    Introduction
+    <h2 id="introduction">Introduction
 </h2><p>In this tutorial, we will write a python function that imports an excel export from Bloomberg, removes ancillary rows and columns, and leaves the data in a format where it can then be used in time series analysis.</p>
-<h2 id="example-of-a-bloomberg-excel-export">
-    <a href="#example-of-a-bloomberg-excel-export">#</a>
-    Example of a Bloomberg excel export
+<h2 id="example-of-a-bloomberg-excel-export">Example of a Bloomberg excel export
 </h2><p>We will use the SPX index data in this example. Exporting the data from Bloomberg using the excel Bloomberg add-on yields data in the following format:</p>
 <p><img src="/2023/11/cleaning-a-bloomberg-data-excel-export/Format_of_data_in_excel_export_from_Bloomberg.png"
 	width="295"
@@ -412,9 +411,7 @@
 		data-flex-basis="155px"
 	
 ></p>
-<h2 id="data-modifications">
-    <a href="#data-modifications">#</a>
-    Data modifications
+<h2 id="data-modifications">Data modifications
 </h2><p>The above format isn&rsquo;t horrible, but we want to perform the following modifications:</p>
 <ol>
 <li>Remove the first six rows of the data</li>
@@ -423,9 +420,7 @@
 <li>Remove column 3, as we are not concerned about volume</li>
 <li>Export to excel and make the name of the excel worksheet &ldquo;data&rdquo;</li>
 </ol>
-<h2 id="assumptions">
-    <a href="#assumptions">#</a>
-    Assumptions
+<h2 id="assumptions">Assumptions
 </h2><p>The remainder of this tutorial assumes the following:</p>
 <ul>
 <li>Your excel file is named &ldquo;SPX_Index.xlsx&rdquo;</li>
@@ -435,9 +430,7 @@
 <li>You have the <a class="link" href="https://openpyxl.readthedocs.io/en/stable/"  target="_blank" rel="noopener"
     >OpenPyXL</a> library installed</li>
 </ul>
-<h2 id="python-function-to-modify-the-data">
-    <a href="#python-function-to-modify-the-data">#</a>
-    Python function to modify the data
+<h2 id="python-function-to-modify-the-data">Python function to modify the data
 </h2><p>The following function will perform the modifications mentioned above:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -542,9 +535,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Let&rsquo;s break this down line by line.</p>
-<h2 id="imports">
-    <a href="#imports">#</a>
-    Imports
+<h2 id="imports">Imports
 </h2><p>First, we need to import pandas:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -554,9 +545,7 @@
 <pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">import pandas as pd
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="import-excel-data-file">
-    <a href="#import-excel-data-file">#</a>
-    Import excel data file
+</div><h2 id="import-excel-data-file">Import excel data file
 </h2><p>Then import the excel file as a pandas dataframe:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -592,9 +581,7 @@
 		data-flex-basis="291px"
 	
 ></p>
-<h2 id="set-column-headings">
-    <a href="#set-column-headings">#</a>
-    Set column headings
+<h2 id="set-column-headings">Set column headings
 </h2><p>Next, set the column heading:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -624,9 +611,7 @@
 		data-flex-basis="304px"
 	
 ></p>
-<h2 id="remove-index-heading">
-    <a href="#remove-index-heading">#</a>
-    Remove index heading
+<h2 id="remove-index-heading">Remove index heading
 </h2><p>Next, remove the column heading from the index column:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -657,9 +642,7 @@
 		data-flex-basis="299px"
 	
 ></p>
-<h2 id="drop-rows">
-    <a href="#drop-rows">#</a>
-    Drop rows
+<h2 id="drop-rows">Drop rows
 </h2><p>Next, we want to remove the first 6 rows that have unneeded data:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -690,9 +673,7 @@
 		data-flex-basis="260px"
 	
 ></p>
-<h2 id="set-index">
-    <a href="#set-index">#</a>
-    Set index
+<h2 id="set-index">Set index
 </h2><p>Next, we want to set the date column as the index:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -722,9 +703,7 @@
 		data-flex-basis="184px"
 	
 ></p>
-<h2 id="drop-the-px_volume-column">
-    <a href="#drop-the-px_volume-column">#</a>
-    Drop the &ldquo;PX_VOLUME&rdquo; column
+<h2 id="drop-the-px_volume-column">Drop the &ldquo;PX_VOLUME&rdquo; column
 </h2><p>Next, we want to drop the volume column:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -761,9 +740,7 @@
 		data-flex-basis="122px"
 	
 ></p>
-<h2 id="rename-the-px_last-column">
-    <a href="#rename-the-px_last-column">#</a>
-    Rename the &ldquo;PX_LAST&rdquo; column
+<h2 id="rename-the-px_last-column">Rename the &ldquo;PX_LAST&rdquo; column
 </h2><p>Next, we want to rename the &ldquo;PX_LAST&rdquo; column as &ldquo;Close&rdquo;:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -793,9 +770,7 @@
 		data-flex-basis="117px"
 	
 ></p>
-<h2 id="sort-data">
-    <a href="#sort-data">#</a>
-    Sort data
+<h2 id="sort-data">Sort data
 </h2><p>Next, we want to sort the data starting with the oldest date:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -825,9 +800,7 @@
 		data-flex-basis="102px"
 	
 ></p>
-<h2 id="export-data">
-    <a href="#export-data">#</a>
-    Export data
+<h2 id="export-data">Export data
 </h2><p>Next, we want to export the data to an excel file, for easy viewing and reference later:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -856,9 +829,7 @@
 		data-flex-basis="175px"
 	
 ></p>
-<h2 id="output-confirmation">
-    <a href="#output-confirmation">#</a>
-    Output confirmation
+<h2 id="output-confirmation">Output confirmation
 </h2><p>Finally, we want to print a confirmation that the process succeeded along withe last date we have for data:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -891,9 +862,7 @@
 		data-flex-basis="862px"
 	
 ></p>
-<h2 id="references">
-    <a href="#references">#</a>
-    References
+<h2 id="references">References
 </h2><p><a class="link" href="https://www.bloomberg.com/professional/support/software-updates/"  target="_blank" rel="noopener"
     >https://www.bloomberg.com/professional/support/software-updates/</a></p>
 
@@ -1158,7 +1127,7 @@
     
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.25.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.26.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
     </section>
 </footer>
 

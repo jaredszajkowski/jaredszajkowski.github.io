@@ -12,13 +12,9 @@
         <pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/cover.jpg" alt="Featured image of post Cleaning A Bloomberg Data Excel Export" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;
-    &lt;a href=&#34;#introduction&#34;&gt;#&lt;/a&gt;
-    Introduction
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/cover.jpg" alt="Featured image of post Cleaning A Bloomberg Data Excel Export" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;In this tutorial, we will write a python function that imports an excel export from Bloomberg, removes ancillary rows and columns, and leaves the data in a format where it can then be used in time series analysis.&lt;/p&gt;
-&lt;h2 id=&#34;example-of-a-bloomberg-excel-export&#34;&gt;
-    &lt;a href=&#34;#example-of-a-bloomberg-excel-export&#34;&gt;#&lt;/a&gt;
-    Example of a Bloomberg excel export
+&lt;h2 id=&#34;example-of-a-bloomberg-excel-export&#34;&gt;Example of a Bloomberg excel export
 &lt;/h2&gt;&lt;p&gt;We will use the SPX index data in this example. Exporting the data from Bloomberg using the excel Bloomberg add-on yields data in the following format:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Format_of_data_in_excel_export_from_Bloomberg.png&#34;
 	width=&#34;295&#34;
@@ -34,9 +30,7 @@
 		data-flex-basis=&#34;155px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;data-modifications&#34;&gt;
-    &lt;a href=&#34;#data-modifications&#34;&gt;#&lt;/a&gt;
-    Data modifications
+&lt;h2 id=&#34;data-modifications&#34;&gt;Data modifications
 &lt;/h2&gt;&lt;p&gt;The above format isn&amp;rsquo;t horrible, but we want to perform the following modifications:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Remove the first six rows of the data&lt;/li&gt;
@@ -45,9 +39,7 @@
 &lt;li&gt;Remove column 3, as we are not concerned about volume&lt;/li&gt;
 &lt;li&gt;Export to excel and make the name of the excel worksheet &amp;ldquo;data&amp;rdquo;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;assumptions&#34;&gt;
-    &lt;a href=&#34;#assumptions&#34;&gt;#&lt;/a&gt;
-    Assumptions
+&lt;h2 id=&#34;assumptions&#34;&gt;Assumptions
 &lt;/h2&gt;&lt;p&gt;The remainder of this tutorial assumes the following:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Your excel file is named &amp;ldquo;SPX_Index.xlsx&amp;rdquo;&lt;/li&gt;
@@ -57,9 +49,7 @@
 &lt;li&gt;You have the &lt;a class=&#34;link&#34; href=&#34;https://openpyxl.readthedocs.io/en/stable/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;OpenPyXL&lt;/a&gt; library installed&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;python-function-to-modify-the-data&#34;&gt;
-    &lt;a href=&#34;#python-function-to-modify-the-data&#34;&gt;#&lt;/a&gt;
-    Python function to modify the data
+&lt;h2 id=&#34;python-function-to-modify-the-data&#34;&gt;Python function to modify the data
 &lt;/h2&gt;&lt;p&gt;The following function will perform the modifications mentioned above:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -164,9 +154,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Let&amp;rsquo;s break this down line by line.&lt;/p&gt;
-&lt;h2 id=&#34;imports&#34;&gt;
-    &lt;a href=&#34;#imports&#34;&gt;#&lt;/a&gt;
-    Imports
+&lt;h2 id=&#34;imports&#34;&gt;Imports
 &lt;/h2&gt;&lt;p&gt;First, we need to import pandas:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -176,9 +164,7 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;import pandas as pd
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;import-excel-data-file&#34;&gt;
-    &lt;a href=&#34;#import-excel-data-file&#34;&gt;#&lt;/a&gt;
-    Import excel data file
+&lt;/div&gt;&lt;h2 id=&#34;import-excel-data-file&#34;&gt;Import excel data file
 &lt;/h2&gt;&lt;p&gt;Then import the excel file as a pandas dataframe:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -214,9 +200,7 @@
 		data-flex-basis=&#34;291px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;set-column-headings&#34;&gt;
-    &lt;a href=&#34;#set-column-headings&#34;&gt;#&lt;/a&gt;
-    Set column headings
+&lt;h2 id=&#34;set-column-headings&#34;&gt;Set column headings
 &lt;/h2&gt;&lt;p&gt;Next, set the column heading:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -246,9 +230,7 @@
 		data-flex-basis=&#34;304px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;remove-index-heading&#34;&gt;
-    &lt;a href=&#34;#remove-index-heading&#34;&gt;#&lt;/a&gt;
-    Remove index heading
+&lt;h2 id=&#34;remove-index-heading&#34;&gt;Remove index heading
 &lt;/h2&gt;&lt;p&gt;Next, remove the column heading from the index column:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -279,9 +261,7 @@
 		data-flex-basis=&#34;299px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;drop-rows&#34;&gt;
-    &lt;a href=&#34;#drop-rows&#34;&gt;#&lt;/a&gt;
-    Drop rows
+&lt;h2 id=&#34;drop-rows&#34;&gt;Drop rows
 &lt;/h2&gt;&lt;p&gt;Next, we want to remove the first 6 rows that have unneeded data:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -312,9 +292,7 @@
 		data-flex-basis=&#34;260px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;set-index&#34;&gt;
-    &lt;a href=&#34;#set-index&#34;&gt;#&lt;/a&gt;
-    Set index
+&lt;h2 id=&#34;set-index&#34;&gt;Set index
 &lt;/h2&gt;&lt;p&gt;Next, we want to set the date column as the index:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -344,9 +322,7 @@
 		data-flex-basis=&#34;184px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;drop-the-px_volume-column&#34;&gt;
-    &lt;a href=&#34;#drop-the-px_volume-column&#34;&gt;#&lt;/a&gt;
-    Drop the &amp;ldquo;PX_VOLUME&amp;rdquo; column
+&lt;h2 id=&#34;drop-the-px_volume-column&#34;&gt;Drop the &amp;ldquo;PX_VOLUME&amp;rdquo; column
 &lt;/h2&gt;&lt;p&gt;Next, we want to drop the volume column:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -383,9 +359,7 @@
 		data-flex-basis=&#34;122px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;rename-the-px_last-column&#34;&gt;
-    &lt;a href=&#34;#rename-the-px_last-column&#34;&gt;#&lt;/a&gt;
-    Rename the &amp;ldquo;PX_LAST&amp;rdquo; column
+&lt;h2 id=&#34;rename-the-px_last-column&#34;&gt;Rename the &amp;ldquo;PX_LAST&amp;rdquo; column
 &lt;/h2&gt;&lt;p&gt;Next, we want to rename the &amp;ldquo;PX_LAST&amp;rdquo; column as &amp;ldquo;Close&amp;rdquo;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -415,9 +389,7 @@
 		data-flex-basis=&#34;117px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;sort-data&#34;&gt;
-    &lt;a href=&#34;#sort-data&#34;&gt;#&lt;/a&gt;
-    Sort data
+&lt;h2 id=&#34;sort-data&#34;&gt;Sort data
 &lt;/h2&gt;&lt;p&gt;Next, we want to sort the data starting with the oldest date:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -447,9 +419,7 @@
 		data-flex-basis=&#34;102px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;export-data&#34;&gt;
-    &lt;a href=&#34;#export-data&#34;&gt;#&lt;/a&gt;
-    Export data
+&lt;h2 id=&#34;export-data&#34;&gt;Export data
 &lt;/h2&gt;&lt;p&gt;Next, we want to export the data to an excel file, for easy viewing and reference later:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -478,9 +448,7 @@
 		data-flex-basis=&#34;175px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;output-confirmation&#34;&gt;
-    &lt;a href=&#34;#output-confirmation&#34;&gt;#&lt;/a&gt;
-    Output confirmation
+&lt;h2 id=&#34;output-confirmation&#34;&gt;Output confirmation
 &lt;/h2&gt;&lt;p&gt;Finally, we want to print a confirmation that the process succeeded along withe last date we have for data:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -513,9 +481,7 @@
 		data-flex-basis=&#34;862px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;references&#34;&gt;
-    &lt;a href=&#34;#references&#34;&gt;#&lt;/a&gt;
-    References
+&lt;h2 id=&#34;references&#34;&gt;References
 &lt;/h2&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.bloomberg.com/professional/support/software-updates/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://www.bloomberg.com/professional/support/software-updates/&lt;/a&gt;&lt;/p&gt;
 </description>

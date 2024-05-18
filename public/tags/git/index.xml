@@ -12,13 +12,9 @@
         <pubDate>Mon, 16 Oct 2023 00:00:00 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/2023/10/git-quick-start-guide/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/10/git-quick-start-guide/cover.jpg" alt="Featured image of post Git Quick Start Guide" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;
-    &lt;a href=&#34;#introduction&#34;&gt;#&lt;/a&gt;
-    Introduction
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/10/git-quick-start-guide/cover.jpg" alt="Featured image of post Git Quick Start Guide" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;Here are my notes for some of the more commonly used git commands along with initial setup for git in Linux.&lt;/p&gt;
-&lt;h2 id=&#34;installation&#34;&gt;
-    &lt;a href=&#34;#installation&#34;&gt;#&lt;/a&gt;
-    Installation
+&lt;h2 id=&#34;installation&#34;&gt;Installation
 &lt;/h2&gt;&lt;p&gt;To begin, install as follows for Arch Linux:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# pacman -Syu git
 &lt;/code&gt;&lt;/pre&gt;
@@ -26,9 +22,7 @@
 &lt;pre&gt;&lt;code&gt;$ yay git
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Pacman will include all required depencies.&lt;/p&gt;
-&lt;h2 id=&#34;initial-configuration&#34;&gt;
-    &lt;a href=&#34;#initial-configuration&#34;&gt;#&lt;/a&gt;
-    Initial configuration
+&lt;h2 id=&#34;initial-configuration&#34;&gt;Initial configuration
 &lt;/h2&gt;&lt;p&gt;First, set your name and email address:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git config --global user.name &amp;quot;Firstname Lastname&amp;quot;
 $ git config --global user.email &amp;quot;email@address.com&amp;quot;
@@ -42,30 +36,22 @@ $ git config --global user.email &amp;quot;email@address.com&amp;quot;
 &lt;p&gt;Alternatively, you can edit the git configuration directly with:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git config --global --edit
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;store-credentials&#34;&gt;
-    &lt;a href=&#34;#store-credentials&#34;&gt;#&lt;/a&gt;
-    Store credentials
+&lt;h2 id=&#34;store-credentials&#34;&gt;Store credentials
 &lt;/h2&gt;&lt;p&gt;In 2021, GitHub disabled authentication via password and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in &lt;code&gt;~/.git-credentials&lt;/code&gt;:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git config --global credential.helper store
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;After you log in during a &lt;code&gt;git push&lt;/code&gt; with your username and token, the username or email address and token will be stored in the above location.&lt;/p&gt;
 &lt;p&gt;Note: The token is stored in plain text, so use caution if that is a concern.&lt;/p&gt;
-&lt;h2 id=&#34;cloning-repositories&#34;&gt;
-    &lt;a href=&#34;#cloning-repositories&#34;&gt;#&lt;/a&gt;
-    Cloning repositories
+&lt;h2 id=&#34;cloning-repositories&#34;&gt;Cloning repositories
 &lt;/h2&gt;&lt;p&gt;Repositories can be cloned with the following:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git clone https://github.com/&amp;lt;username&amp;gt;/&amp;lt;repository&amp;gt;.git
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;updating-repositories&#34;&gt;
-    &lt;a href=&#34;#updating-repositories&#34;&gt;#&lt;/a&gt;
-    Updating repositories
+&lt;h2 id=&#34;updating-repositories&#34;&gt;Updating repositories
 &lt;/h2&gt;&lt;p&gt;The local record of a repository can be updated with the following command:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ cd &amp;lt;repository&amp;gt;/
 $ git pull
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;adding-committing-and-pushing&#34;&gt;
-    &lt;a href=&#34;#adding-committing-and-pushing&#34;&gt;#&lt;/a&gt;
-    Adding, committing, and pushing
+&lt;h2 id=&#34;adding-committing-and-pushing&#34;&gt;Adding, committing, and pushing
 &lt;/h2&gt;&lt;p&gt;Any files or directories that have been added, modified, or removed can be add to the list of changes to be pushed with the following command:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git add .
 &lt;/code&gt;&lt;/pre&gt;
@@ -82,9 +68,7 @@ $ git pull
 &lt;p&gt;These commands can be chained together with the AND operator:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git add . &amp;amp;&amp;amp; git commit -am &amp;quot;Add your commit message here&amp;quot; &amp;amp;&amp;amp; git push
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;stashing-changes&#34;&gt;
-    &lt;a href=&#34;#stashing-changes&#34;&gt;#&lt;/a&gt;
-    Stashing changes
+&lt;h2 id=&#34;stashing-changes&#34;&gt;Stashing changes
 &lt;/h2&gt;&lt;p&gt;If you forget to update a repository before making changes, you can &amp;ldquo;stash&amp;rdquo; those changes and then re-apply them after running &lt;code&gt;git pull&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;First, stash the changes:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git stash
@@ -96,9 +80,7 @@ $ git pull
 &lt;pre&gt;&lt;code&gt;$ git stash apply
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This has proven to be very useful for me when I forget to update a repository before making edits to the code.&lt;/p&gt;
-&lt;h2 id=&#34;references&#34;&gt;
-    &lt;a href=&#34;#references&#34;&gt;#&lt;/a&gt;
-    References
+&lt;h2 id=&#34;references&#34;&gt;References
 &lt;/h2&gt;&lt;p&gt;References for git (and used for above):&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens&lt;/a&gt;&lt;/br&gt;

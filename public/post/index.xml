@@ -12,16 +12,12 @@
         <pubDate>Fri, 12 Jan 2024 00:00:01 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/2024/01/simple-incremental-bash-backup-script/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2024/01/simple-incremental-bash-backup-script/cover.jpg" alt="Featured image of post Simple Incremental Bash Backup Script" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;
-    &lt;a href=&#34;#introduction&#34;&gt;#&lt;/a&gt;
-    Introduction
+        <description>&lt;img src="https://www.jaredszajkowski.com/2024/01/simple-incremental-bash-backup-script/cover.jpg" alt="Featured image of post Simple Incremental Bash Backup Script" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;While there are &lt;a class=&#34;link&#34; href=&#34;https://wiki.archlinux.org/title/Synchronization_and_backup_programs&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;numerous backup solutions available for Linux&lt;/a&gt;, many require extensive configuration and maintenance, and restoring from the backup is not always simple. Incremental backups are ideal because they maintain snapshots of the files and allow for access to previous versions of files.&lt;/p&gt;
 &lt;p&gt;Linux Journal recently &lt;a class=&#34;link&#34; href=&#34;https://www.linuxjournal.com/content/exploring-rsync-tar-and-other-backup-solutions&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;published an article on various backup solutions&lt;/a&gt;, and I thought I&amp;rsquo;d provide my incremental backup script that uses &lt;code&gt;rsync&lt;/code&gt; and &lt;code&gt;cp&lt;/code&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;incremental-backup-script&#34;&gt;
-    &lt;a href=&#34;#incremental-backup-script&#34;&gt;#&lt;/a&gt;
-    Incremental backup script
+&lt;h2 id=&#34;incremental-backup-script&#34;&gt;Incremental backup script
 &lt;/h2&gt;&lt;p&gt;This script provides an incremental backup solution and only requires &lt;code&gt;rsync&lt;/code&gt; and &lt;code&gt;cp&lt;/code&gt; to be installed on the system.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -124,9 +120,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Let&amp;rsquo;s break this down line by line.&lt;/p&gt;
-&lt;h2 id=&#34;source-and-backup-directories&#34;&gt;
-    &lt;a href=&#34;#source-and-backup-directories&#34;&gt;#&lt;/a&gt;
-    Source and backup directories
+&lt;h2 id=&#34;source-and-backup-directories&#34;&gt;Source and backup directories
 &lt;/h2&gt;&lt;p&gt;First, we need to define the source and backup directories, and any directories from the source that are to be excluded from the backup:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -155,9 +149,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;You can add as many directories as you want here.&lt;/p&gt;
-&lt;h2 id=&#34;backup-function&#34;&gt;
-    &lt;a href=&#34;#backup-function&#34;&gt;#&lt;/a&gt;
-    Backup function
+&lt;h2 id=&#34;backup-function&#34;&gt;Backup function
 &lt;/h2&gt;&lt;p&gt;Then we have the backup function. This performs the following:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Takes an input of the source and backup directories (defined above)&lt;/li&gt;
@@ -229,9 +221,7 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;&lt;code&gt;rsync&lt;/code&gt; is used to compare the files in the source to the &lt;code&gt;Monthly&lt;/code&gt; backup directory and then update or delete files accordingly.&lt;/p&gt;
 &lt;p&gt;Once the files are copied over via &lt;code&gt;rsync&lt;/code&gt;, then the &lt;code&gt;cp&lt;/code&gt; command is used to link the files in the &lt;code&gt;Monthly&lt;/code&gt; directory to the &lt;code&gt;year/date/&lt;/code&gt; diorectory. As the files change in the &lt;code&gt;Monthly&lt;/code&gt; directory, then the link also changes. This method saves disk space because files are not copied over and over again. Any files that do not change are simply linked within the filesystem. The links take up a trivial amount of disk space, and the filesystem handles all of the heavy lifting associated with tracking which files are linked and where on the filesystem. There is no database, log, etc. required to track the individual files and/or their versions.&lt;/p&gt;
-&lt;h2 id=&#34;running-backups&#34;&gt;
-    &lt;a href=&#34;#running-backups&#34;&gt;#&lt;/a&gt;
-    Running backups
+&lt;h2 id=&#34;running-backups&#34;&gt;Running backups
 &lt;/h2&gt;&lt;p&gt;Finally, run the backups and confirm complete:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -251,9 +241,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;echo &amp;#34;Backup complete&amp;#34;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;results&#34;&gt;
-    &lt;a href=&#34;#results&#34;&gt;#&lt;/a&gt;
-    Results
+&lt;/div&gt;&lt;h2 id=&#34;results&#34;&gt;Results
 &lt;/h2&gt;&lt;p&gt;This script provides an incremental backup record organized by year and date:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/01/simple-incremental-bash-backup-script/01_Backup_directory.png&#34;
 	width=&#34;1038&#34;
@@ -284,13 +272,9 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;Accessing older backups is straightforward - simply navigate to the desired directory within the filesystem.&lt;/p&gt;
-&lt;h2 id=&#34;deleting-old-backups&#34;&gt;
-    &lt;a href=&#34;#deleting-old-backups&#34;&gt;#&lt;/a&gt;
-    Deleting old backups
+&lt;h2 id=&#34;deleting-old-backups&#34;&gt;Deleting old backups
 &lt;/h2&gt;&lt;p&gt;Deleting or removing old and out-of-date backups is as simple as deleting the directories. The filesystem links and files that are not linked elsewhere are removed from the filesystem, freeing up the disk space.&lt;/p&gt;
-&lt;h2 id=&#34;references&#34;&gt;
-    &lt;a href=&#34;#references&#34;&gt;#&lt;/a&gt;
-    References
+&lt;h2 id=&#34;references&#34;&gt;References
 &lt;/h2&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://rsync.samba.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://rsync.samba.org/&lt;/a&gt;&lt;/br&gt;
 &lt;a class=&#34;link&#34; href=&#34;https://github.com/WayneD/rsync&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -307,17 +291,13 @@
         <pubDate>Sun, 24 Dec 2023 00:00:01 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/cover.jpg" alt="Featured image of post Nasdaq Data Link Tables API Data Retrieval" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;
-    &lt;a href=&#34;#introduction&#34;&gt;#&lt;/a&gt;
-    Introduction
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/cover.jpg" alt="Featured image of post Nasdaq Data Link Tables API Data Retrieval" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;In this tutorial, we will write a python function that pulls data from Nasdaq Data Link through the tables API, adds relevant columns that are not present in the raw data, updates columns to allow for ease of use, and leaves the data in a format where it can then be used in time series analysis.&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.nasdaq.com/nasdaq-data-link&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Nasdaq Data Link&lt;/a&gt; is a provider of numerous different types of financial data from many different asset classes. It provides API&amp;rsquo;s that allow access from Python, R, Excel, and other methods. It is available to &lt;a class=&#34;link&#34; href=&#34;https://data.nasdaq.com/institutional-investors&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;institutional investors&lt;/a&gt; as well as &lt;a class=&#34;link&#34; href=&#34;https://data.nasdaq.com/individual-users&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;individual retail investors&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;nasdaq-data-link-initial-data-retrieval&#34;&gt;
-    &lt;a href=&#34;#nasdaq-data-link-initial-data-retrieval&#34;&gt;#&lt;/a&gt;
-    Nasdaq Data Link Initial Data Retrieval
+&lt;h2 id=&#34;nasdaq-data-link-initial-data-retrieval&#34;&gt;Nasdaq Data Link Initial Data Retrieval
 &lt;/h2&gt;&lt;p&gt;We will use the data for AAPL for this example. This will give us a data set that requires some thought as to how the splits need to be handled as well as the dividends.&lt;/p&gt;
 &lt;p&gt;We&amp;rsquo;ll start with pulling the initial data set, with the first 10 rows shown as follows from the pandas dataframe:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows.png&#34;
@@ -367,9 +347,7 @@
 &lt;li&gt;Adjusted Close: Daily close price adusted for all splits and dividends&lt;/li&gt;
 &lt;li&gt;Adjusted Volume: Daily volume price adusted for all splits&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;data-questions&#34;&gt;
-    &lt;a href=&#34;#data-questions&#34;&gt;#&lt;/a&gt;
-    Data questions
+&lt;h2 id=&#34;data-questions&#34;&gt;Data questions
 &lt;/h2&gt;&lt;p&gt;The above information is a good starting point, but what if we are looking for the following answers?&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;The data shows a split value for every day, but we know the stock didn&amp;rsquo;t split every day. What does this represent?&lt;/li&gt;
@@ -380,9 +358,7 @@
 &lt;li&gt;What would the share price be if the stock hadn&amp;rsquo;t split?&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;We&amp;rsquo;ll add columns and modify as necessary to answer the above questions and more.&lt;/p&gt;
-&lt;h2 id=&#34;assumptions&#34;&gt;
-    &lt;a href=&#34;#assumptions&#34;&gt;#&lt;/a&gt;
-    Assumptions
+&lt;h2 id=&#34;assumptions&#34;&gt;Assumptions
 &lt;/h2&gt;&lt;p&gt;The remainder of this tutorial assumes the following:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;You have the &lt;a class=&#34;link&#34; href=&#34;https://github.com/Nasdaq/data-link-python&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -392,9 +368,7 @@
 &lt;li&gt;You have the &lt;a class=&#34;link&#34; href=&#34;https://openpyxl.readthedocs.io/en/stable/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;OpenPyXL&lt;/a&gt; library installed&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;python-function-to-modify-the-data&#34;&gt;
-    &lt;a href=&#34;#python-function-to-modify-the-data&#34;&gt;#&lt;/a&gt;
-    Python function to modify the data
+&lt;h2 id=&#34;python-function-to-modify-the-data&#34;&gt;Python function to modify the data
 &lt;/h2&gt;&lt;p&gt;The following function will perform the desired modifications:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -553,9 +527,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Let&amp;rsquo;s break this down line by line.&lt;/p&gt;
-&lt;h2 id=&#34;imports&#34;&gt;
-    &lt;a href=&#34;#imports&#34;&gt;#&lt;/a&gt;
-    Imports
+&lt;h2 id=&#34;imports&#34;&gt;Imports
 &lt;/h2&gt;&lt;p&gt;First, we need to import the required libraries:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -571,9 +543,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;import numpy as np
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;ndl-api-key&#34;&gt;
-    &lt;a href=&#34;#ndl-api-key&#34;&gt;#&lt;/a&gt;
-    NDL API Key
+&lt;/div&gt;&lt;h2 id=&#34;ndl-api-key&#34;&gt;NDL API Key
 &lt;/h2&gt;&lt;p&gt;To gain access to anything beyond the free tier, you will need to provide your access key:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -585,9 +555,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nasdaqdatalink.ApiConfig.api_key = &amp;#39;your_key&amp;#39;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;download-data-as-a-dataframe&#34;&gt;
-    &lt;a href=&#34;#download-data-as-a-dataframe&#34;&gt;#&lt;/a&gt;
-    Download data as a dataframe
+&lt;/div&gt;&lt;h2 id=&#34;download-data-as-a-dataframe&#34;&gt;Download data as a dataframe
 &lt;/h2&gt;&lt;p&gt;Moving on to the function definition, we have the command to pull data from NDL. There are two separate APIs - the &lt;a class=&#34;link&#34; href=&#34;https://docs.data.nasdaq.com/docs/time-series&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;time series&lt;/a&gt; and the &lt;a class=&#34;link&#34; href=&#34;https://docs.data.nasdaq.com/docs/tables-1&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;tables&lt;/a&gt;. The syntax is different, and some data sets are only available as one or the other. We will use the tables API for this tutorial.&lt;/p&gt;
@@ -626,9 +594,7 @@
 		data-flex-basis=&#34;800px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;sort-columns-by-date&#34;&gt;
-    &lt;a href=&#34;#sort-columns-by-date&#34;&gt;#&lt;/a&gt;
-    Sort columns by date
+&lt;h2 id=&#34;sort-columns-by-date&#34;&gt;Sort columns by date
 &lt;/h2&gt;&lt;p&gt;Next, we will sort the columns by date ascending. By default, the dataframe is created with the data sorted by descending date, and we want to change that:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -659,9 +625,7 @@
 		data-flex-basis=&#34;776px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;setting-the-date-as-the-index&#34;&gt;
-    &lt;a href=&#34;#setting-the-date-as-the-index&#34;&gt;#&lt;/a&gt;
-    Setting the date as the index
+&lt;h2 id=&#34;setting-the-date-as-the-index&#34;&gt;Setting the date as the index
 &lt;/h2&gt;&lt;p&gt;Next, we will rename the &lt;code&gt;date&lt;/code&gt; column from &amp;lsquo;date&amp;rsquo; to &amp;lsquo;Date&amp;rsquo;, and set the index to be the &lt;code&gt;Date&lt;/code&gt; column:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -697,9 +661,7 @@
 		data-flex-basis=&#34;737px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;calculating-splits&#34;&gt;
-    &lt;a href=&#34;#calculating-splits&#34;&gt;#&lt;/a&gt;
-    Calculating splits
+&lt;h2 id=&#34;calculating-splits&#34;&gt;Calculating splits
 &lt;/h2&gt;&lt;p&gt;The next sections deal with the split column. So far we have only seen a split value of 1.0 in the data, but we&amp;rsquo;ve only looked at the first 10 and last 10 rows. Are there any other values? Let&amp;rsquo;s check by running:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -835,9 +797,7 @@
 		data-flex-basis=&#34;241px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;combining-dataframes&#34;&gt;
-    &lt;a href=&#34;#combining-dataframes&#34;&gt;#&lt;/a&gt;
-    Combining dataframes
+&lt;h2 id=&#34;combining-dataframes&#34;&gt;Combining dataframes
 &lt;/h2&gt;&lt;p&gt;Now we will merge the &lt;code&gt;df_split&lt;/code&gt; dataframe with the original &lt;code&gt;df&lt;/code&gt; dataframe so that the cumulative split column is part of the original dataframe. We will call this data frame &lt;code&gt;df_comp&lt;/code&gt;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -868,9 +828,7 @@
 		data-flex-basis=&#34;802px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;forward-filling-cumulative-split-values&#34;&gt;
-    &lt;a href=&#34;#forward-filling-cumulative-split-values&#34;&gt;#&lt;/a&gt;
-    Forward filling cumulative split values
+&lt;h2 id=&#34;forward-filling-cumulative-split-values&#34;&gt;Forward filling cumulative split values
 &lt;/h2&gt;&lt;p&gt;From here, we want to fill in the rest of the &lt;code&gt;split&lt;/code&gt; and &lt;code&gt;Cum_Split&lt;/code&gt; values. This is done using the forward fill function, which for all cells that have a value of &lt;code&gt;NaN&lt;/code&gt; will fill in the previous valid value until another value is encountered. Here&amp;rsquo;s the code:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -954,9 +912,7 @@
 &lt;li&gt;If the stock split on that day&lt;/li&gt;
 &lt;li&gt;What the total split ratio is up to and including that day&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;calculating-adjusted-and-non-adjusted-prices&#34;&gt;
-    &lt;a href=&#34;#calculating-adjusted-and-non-adjusted-prices&#34;&gt;#&lt;/a&gt;
-    Calculating adjusted and non-adjusted prices
+&lt;h2 id=&#34;calculating-adjusted-and-non-adjusted-prices&#34;&gt;Calculating adjusted and non-adjusted prices
 &lt;/h2&gt;&lt;p&gt;From here, we can complete our dataset by calculating the adjusted and non-adjusted prices using the cumulative split ratios from above:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -995,9 +951,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Included above is the adjusted dividends values. For any time series analysis, not only are the adjusted prices needed, but so are the adusted dividends. Remember, we already have the adjusted total return prices - those come directly from NDL.&lt;/p&gt;
-&lt;h2 id=&#34;export-data&#34;&gt;
-    &lt;a href=&#34;#export-data&#34;&gt;#&lt;/a&gt;
-    Export data
+&lt;h2 id=&#34;export-data&#34;&gt;Export data
 &lt;/h2&gt;&lt;p&gt;Next, we want to export the data to an excel file, for easy viewing and reference later:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -1026,9 +980,7 @@
 		data-flex-basis=&#34;3808px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;output-confirmation&#34;&gt;
-    &lt;a href=&#34;#output-confirmation&#34;&gt;#&lt;/a&gt;
-    Output confirmation
+&lt;h2 id=&#34;output-confirmation&#34;&gt;Output confirmation
 &lt;/h2&gt;&lt;p&gt;Finally, we want to print a confirmation that the process succeeded along withe last date we have for data:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -1061,9 +1013,7 @@
 		data-flex-basis=&#34;328px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;references&#34;&gt;
-    &lt;a href=&#34;#references&#34;&gt;#&lt;/a&gt;
-    References
+&lt;h2 id=&#34;references&#34;&gt;References
 &lt;/h2&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://docs.data.nasdaq.com/docs&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://docs.data.nasdaq.com/docs&lt;/a&gt;&lt;/br&gt;
 &lt;a class=&#34;link&#34; href=&#34;https://docs.data.nasdaq.com/docs/tables-1&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -1080,21 +1030,15 @@
         <pubDate>Sun, 10 Dec 2023 00:00:00 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/2023/12/using-yt-dlp-with-panopto/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/12/using-yt-dlp-with-panopto/banner_1.svg" alt="Featured image of post Using yt-dlp With Panopto" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;
-    &lt;a href=&#34;#introduction&#34;&gt;#&lt;/a&gt;
-    Introduction
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/12/using-yt-dlp-with-panopto/banner_1.svg" alt="Featured image of post Using yt-dlp With Panopto" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;As a follow up to &lt;a class=&#34;link&#34; href=&#34;https://www.jaredszajkowski.com/p/using-yt-dlp-with-zoom/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;this post about using yt-dlp with Zoom&lt;/a&gt;, I found the need to also download videos hosted by Panopto for offline viewing.&lt;/p&gt;
 &lt;p&gt;Similar to the Zoom tutorial, this also requires you to have a &amp;ldquo;cookies&amp;rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Panopto hosting site after logging in.&lt;/p&gt;
 &lt;p&gt;Here&amp;rsquo;s the steps to setting this up:&lt;/p&gt;
-&lt;h2 id=&#34;install-cookie-editor&#34;&gt;
-    &lt;a href=&#34;#install-cookie-editor&#34;&gt;#&lt;/a&gt;
-    Install cookie editor
+&lt;h2 id=&#34;install-cookie-editor&#34;&gt;Install cookie editor
 &lt;/h2&gt;&lt;p&gt;Install the &lt;a class=&#34;link&#34; href=&#34;https://microsoftedge.microsoft.com/addons/detail/cookie-editor/ajfboaconbpkglpfanbmlfgojgndmhmc&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;cookie editor&lt;/a&gt; extension. I personnally use it with Microsoft Edge, but there are similar extensions for Chrome, Firefox, etc.&lt;/p&gt;
-&lt;h2 id=&#34;modify-export-format&#34;&gt;
-    &lt;a href=&#34;#modify-export-format&#34;&gt;#&lt;/a&gt;
-    Modify export format
+&lt;h2 id=&#34;modify-export-format&#34;&gt;Modify export format
 &lt;/h2&gt;&lt;p&gt;Change the preferred cookie export format to &lt;code&gt;Netscape HTTP Cookie File&lt;/code&gt; in the extension options. It is necessary to export in this format, otherwise yt-dlp will not be able to read the cookies.txt file correctly.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/using-yt-dlp-with-panopto/Modify_preferred_export_format.png&#34;
 	width=&#34;865&#34;
@@ -1110,13 +1054,9 @@
 		data-flex-basis=&#34;411px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;log-in-to-panopto&#34;&gt;
-    &lt;a href=&#34;#log-in-to-panopto&#34;&gt;#&lt;/a&gt;
-    Log in to Panopto
+&lt;h2 id=&#34;log-in-to-panopto&#34;&gt;Log in to Panopto
 &lt;/h2&gt;&lt;p&gt;Log in to Panopto in your browser. Be sure to remain logged in while exporting the cookies under step 4.&lt;/p&gt;
-&lt;h2 id=&#34;export-cookies&#34;&gt;
-    &lt;a href=&#34;#export-cookies&#34;&gt;#&lt;/a&gt;
-    Export cookies
+&lt;h2 id=&#34;export-cookies&#34;&gt;Export cookies
 &lt;/h2&gt;&lt;p&gt;The export button is at the top fo the window. It copies the cookies to your clipboard, which then need to be pasted into a text file (I have my saved as cookies.txt), which yt-dlp will then read when it executes.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/using-yt-dlp-with-panopto/Export_cookies.png&#34;
 	width=&#34;579&#34;
@@ -1132,9 +1072,7 @@
 		data-flex-basis=&#34;226px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;create-bash-script&#34;&gt;
-    &lt;a href=&#34;#create-bash-script&#34;&gt;#&lt;/a&gt;
-    Create bash script
+&lt;h2 id=&#34;create-bash-script&#34;&gt;Create bash script
 &lt;/h2&gt;&lt;p&gt;Save the following code to a text file (my bash script file name is &lt;code&gt;yt-dlp-panopto.sh&lt;/code&gt;):&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -1154,19 +1092,13 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;yt-dlp --cookies /path/to/cookies/file/cookies.txt -o &amp;#34;%(title)s-%(id)s.%(ext)s&amp;#34; --write-subs $link
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;change-permissions&#34;&gt;
-    &lt;a href=&#34;#change-permissions&#34;&gt;#&lt;/a&gt;
-    Change permissions
+&lt;/div&gt;&lt;h2 id=&#34;change-permissions&#34;&gt;Change permissions
 &lt;/h2&gt;&lt;p&gt;Modify the permissions of the bash script to allow execution:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ chmod +x yt-dlp-panopto.sh
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;execute-the-script&#34;&gt;
-    &lt;a href=&#34;#execute-the-script&#34;&gt;#&lt;/a&gt;
-    Execute the script
+&lt;h2 id=&#34;execute-the-script&#34;&gt;Execute the script
 &lt;/h2&gt;&lt;p&gt;Execute the bash script with ./yt-dlp-panopto.sh, copy and paste the link to the video that you would like to save, and it should download the video and the subtitles. If there are not any subtitles present in the stream, then it will notify you and only download the video stream.&lt;/p&gt;
-&lt;h2 id=&#34;references&#34;&gt;
-    &lt;a href=&#34;#references&#34;&gt;#&lt;/a&gt;
-    References
+&lt;h2 id=&#34;references&#34;&gt;References
 &lt;/h2&gt;&lt;p&gt;References for yt-dlp (and used for above):&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://ostechnix.com/yt-dlp-tutorial/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://ostechnix.com/yt-dlp-tutorial/&lt;/a&gt;&lt;/p&gt;
@@ -1178,13 +1110,9 @@
         <pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/cover.jpg" alt="Featured image of post Cleaning A Bloomberg Data Excel Export" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;
-    &lt;a href=&#34;#introduction&#34;&gt;#&lt;/a&gt;
-    Introduction
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/cover.jpg" alt="Featured image of post Cleaning A Bloomberg Data Excel Export" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;In this tutorial, we will write a python function that imports an excel export from Bloomberg, removes ancillary rows and columns, and leaves the data in a format where it can then be used in time series analysis.&lt;/p&gt;
-&lt;h2 id=&#34;example-of-a-bloomberg-excel-export&#34;&gt;
-    &lt;a href=&#34;#example-of-a-bloomberg-excel-export&#34;&gt;#&lt;/a&gt;
-    Example of a Bloomberg excel export
+&lt;h2 id=&#34;example-of-a-bloomberg-excel-export&#34;&gt;Example of a Bloomberg excel export
 &lt;/h2&gt;&lt;p&gt;We will use the SPX index data in this example. Exporting the data from Bloomberg using the excel Bloomberg add-on yields data in the following format:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Format_of_data_in_excel_export_from_Bloomberg.png&#34;
 	width=&#34;295&#34;
@@ -1200,9 +1128,7 @@
 		data-flex-basis=&#34;155px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;data-modifications&#34;&gt;
-    &lt;a href=&#34;#data-modifications&#34;&gt;#&lt;/a&gt;
-    Data modifications
+&lt;h2 id=&#34;data-modifications&#34;&gt;Data modifications
 &lt;/h2&gt;&lt;p&gt;The above format isn&amp;rsquo;t horrible, but we want to perform the following modifications:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Remove the first six rows of the data&lt;/li&gt;
@@ -1211,9 +1137,7 @@
 &lt;li&gt;Remove column 3, as we are not concerned about volume&lt;/li&gt;
 &lt;li&gt;Export to excel and make the name of the excel worksheet &amp;ldquo;data&amp;rdquo;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;assumptions&#34;&gt;
-    &lt;a href=&#34;#assumptions&#34;&gt;#&lt;/a&gt;
-    Assumptions
+&lt;h2 id=&#34;assumptions&#34;&gt;Assumptions
 &lt;/h2&gt;&lt;p&gt;The remainder of this tutorial assumes the following:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Your excel file is named &amp;ldquo;SPX_Index.xlsx&amp;rdquo;&lt;/li&gt;
@@ -1223,9 +1147,7 @@
 &lt;li&gt;You have the &lt;a class=&#34;link&#34; href=&#34;https://openpyxl.readthedocs.io/en/stable/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;OpenPyXL&lt;/a&gt; library installed&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;python-function-to-modify-the-data&#34;&gt;
-    &lt;a href=&#34;#python-function-to-modify-the-data&#34;&gt;#&lt;/a&gt;
-    Python function to modify the data
+&lt;h2 id=&#34;python-function-to-modify-the-data&#34;&gt;Python function to modify the data
 &lt;/h2&gt;&lt;p&gt;The following function will perform the modifications mentioned above:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -1330,9 +1252,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Let&amp;rsquo;s break this down line by line.&lt;/p&gt;
-&lt;h2 id=&#34;imports&#34;&gt;
-    &lt;a href=&#34;#imports&#34;&gt;#&lt;/a&gt;
-    Imports
+&lt;h2 id=&#34;imports&#34;&gt;Imports
 &lt;/h2&gt;&lt;p&gt;First, we need to import pandas:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -1342,9 +1262,7 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;import pandas as pd
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;import-excel-data-file&#34;&gt;
-    &lt;a href=&#34;#import-excel-data-file&#34;&gt;#&lt;/a&gt;
-    Import excel data file
+&lt;/div&gt;&lt;h2 id=&#34;import-excel-data-file&#34;&gt;Import excel data file
 &lt;/h2&gt;&lt;p&gt;Then import the excel file as a pandas dataframe:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -1380,9 +1298,7 @@
 		data-flex-basis=&#34;291px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;set-column-headings&#34;&gt;
-    &lt;a href=&#34;#set-column-headings&#34;&gt;#&lt;/a&gt;
-    Set column headings
+&lt;h2 id=&#34;set-column-headings&#34;&gt;Set column headings
 &lt;/h2&gt;&lt;p&gt;Next, set the column heading:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -1412,9 +1328,7 @@
 		data-flex-basis=&#34;304px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;remove-index-heading&#34;&gt;
-    &lt;a href=&#34;#remove-index-heading&#34;&gt;#&lt;/a&gt;
-    Remove index heading
+&lt;h2 id=&#34;remove-index-heading&#34;&gt;Remove index heading
 &lt;/h2&gt;&lt;p&gt;Next, remove the column heading from the index column:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -1445,9 +1359,7 @@
 		data-flex-basis=&#34;299px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;drop-rows&#34;&gt;
-    &lt;a href=&#34;#drop-rows&#34;&gt;#&lt;/a&gt;
-    Drop rows
+&lt;h2 id=&#34;drop-rows&#34;&gt;Drop rows
 &lt;/h2&gt;&lt;p&gt;Next, we want to remove the first 6 rows that have unneeded data:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -1478,9 +1390,7 @@
 		data-flex-basis=&#34;260px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;set-index&#34;&gt;
-    &lt;a href=&#34;#set-index&#34;&gt;#&lt;/a&gt;
-    Set index
+&lt;h2 id=&#34;set-index&#34;&gt;Set index
 &lt;/h2&gt;&lt;p&gt;Next, we want to set the date column as the index:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -1510,9 +1420,7 @@
 		data-flex-basis=&#34;184px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;drop-the-px_volume-column&#34;&gt;
-    &lt;a href=&#34;#drop-the-px_volume-column&#34;&gt;#&lt;/a&gt;
-    Drop the &amp;ldquo;PX_VOLUME&amp;rdquo; column
+&lt;h2 id=&#34;drop-the-px_volume-column&#34;&gt;Drop the &amp;ldquo;PX_VOLUME&amp;rdquo; column
 &lt;/h2&gt;&lt;p&gt;Next, we want to drop the volume column:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -1549,9 +1457,7 @@
 		data-flex-basis=&#34;122px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;rename-the-px_last-column&#34;&gt;
-    &lt;a href=&#34;#rename-the-px_last-column&#34;&gt;#&lt;/a&gt;
-    Rename the &amp;ldquo;PX_LAST&amp;rdquo; column
+&lt;h2 id=&#34;rename-the-px_last-column&#34;&gt;Rename the &amp;ldquo;PX_LAST&amp;rdquo; column
 &lt;/h2&gt;&lt;p&gt;Next, we want to rename the &amp;ldquo;PX_LAST&amp;rdquo; column as &amp;ldquo;Close&amp;rdquo;:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -1581,9 +1487,7 @@
 		data-flex-basis=&#34;117px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;sort-data&#34;&gt;
-    &lt;a href=&#34;#sort-data&#34;&gt;#&lt;/a&gt;
-    Sort data
+&lt;h2 id=&#34;sort-data&#34;&gt;Sort data
 &lt;/h2&gt;&lt;p&gt;Next, we want to sort the data starting with the oldest date:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -1613,9 +1517,7 @@
 		data-flex-basis=&#34;102px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;export-data&#34;&gt;
-    &lt;a href=&#34;#export-data&#34;&gt;#&lt;/a&gt;
-    Export data
+&lt;h2 id=&#34;export-data&#34;&gt;Export data
 &lt;/h2&gt;&lt;p&gt;Next, we want to export the data to an excel file, for easy viewing and reference later:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -1644,9 +1546,7 @@
 		data-flex-basis=&#34;175px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;output-confirmation&#34;&gt;
-    &lt;a href=&#34;#output-confirmation&#34;&gt;#&lt;/a&gt;
-    Output confirmation
+&lt;h2 id=&#34;output-confirmation&#34;&gt;Output confirmation
 &lt;/h2&gt;&lt;p&gt;Finally, we want to print a confirmation that the process succeeded along withe last date we have for data:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -1679,9 +1579,7 @@
 		data-flex-basis=&#34;862px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;references&#34;&gt;
-    &lt;a href=&#34;#references&#34;&gt;#&lt;/a&gt;
-    References
+&lt;h2 id=&#34;references&#34;&gt;References
 &lt;/h2&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.bloomberg.com/professional/support/software-updates/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://www.bloomberg.com/professional/support/software-updates/&lt;/a&gt;&lt;/p&gt;
 </description>
@@ -1692,13 +1590,9 @@
         <pubDate>Mon, 16 Oct 2023 00:00:00 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/2023/10/git-quick-start-guide/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/10/git-quick-start-guide/cover.jpg" alt="Featured image of post Git Quick Start Guide" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;
-    &lt;a href=&#34;#introduction&#34;&gt;#&lt;/a&gt;
-    Introduction
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/10/git-quick-start-guide/cover.jpg" alt="Featured image of post Git Quick Start Guide" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;Here are my notes for some of the more commonly used git commands along with initial setup for git in Linux.&lt;/p&gt;
-&lt;h2 id=&#34;installation&#34;&gt;
-    &lt;a href=&#34;#installation&#34;&gt;#&lt;/a&gt;
-    Installation
+&lt;h2 id=&#34;installation&#34;&gt;Installation
 &lt;/h2&gt;&lt;p&gt;To begin, install as follows for Arch Linux:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# pacman -Syu git
 &lt;/code&gt;&lt;/pre&gt;
@@ -1706,9 +1600,7 @@
 &lt;pre&gt;&lt;code&gt;$ yay git
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Pacman will include all required depencies.&lt;/p&gt;
-&lt;h2 id=&#34;initial-configuration&#34;&gt;
-    &lt;a href=&#34;#initial-configuration&#34;&gt;#&lt;/a&gt;
-    Initial configuration
+&lt;h2 id=&#34;initial-configuration&#34;&gt;Initial configuration
 &lt;/h2&gt;&lt;p&gt;First, set your name and email address:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git config --global user.name &amp;quot;Firstname Lastname&amp;quot;
 $ git config --global user.email &amp;quot;email@address.com&amp;quot;
@@ -1722,30 +1614,22 @@ $ git config --global user.email &amp;quot;email@address.com&amp;quot;
 &lt;p&gt;Alternatively, you can edit the git configuration directly with:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git config --global --edit
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;store-credentials&#34;&gt;
-    &lt;a href=&#34;#store-credentials&#34;&gt;#&lt;/a&gt;
-    Store credentials
+&lt;h2 id=&#34;store-credentials&#34;&gt;Store credentials
 &lt;/h2&gt;&lt;p&gt;In 2021, GitHub disabled authentication via password and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in &lt;code&gt;~/.git-credentials&lt;/code&gt;:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git config --global credential.helper store
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;After you log in during a &lt;code&gt;git push&lt;/code&gt; with your username and token, the username or email address and token will be stored in the above location.&lt;/p&gt;
 &lt;p&gt;Note: The token is stored in plain text, so use caution if that is a concern.&lt;/p&gt;
-&lt;h2 id=&#34;cloning-repositories&#34;&gt;
-    &lt;a href=&#34;#cloning-repositories&#34;&gt;#&lt;/a&gt;
-    Cloning repositories
+&lt;h2 id=&#34;cloning-repositories&#34;&gt;Cloning repositories
 &lt;/h2&gt;&lt;p&gt;Repositories can be cloned with the following:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git clone https://github.com/&amp;lt;username&amp;gt;/&amp;lt;repository&amp;gt;.git
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;updating-repositories&#34;&gt;
-    &lt;a href=&#34;#updating-repositories&#34;&gt;#&lt;/a&gt;
-    Updating repositories
+&lt;h2 id=&#34;updating-repositories&#34;&gt;Updating repositories
 &lt;/h2&gt;&lt;p&gt;The local record of a repository can be updated with the following command:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ cd &amp;lt;repository&amp;gt;/
 $ git pull
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;adding-committing-and-pushing&#34;&gt;
-    &lt;a href=&#34;#adding-committing-and-pushing&#34;&gt;#&lt;/a&gt;
-    Adding, committing, and pushing
+&lt;h2 id=&#34;adding-committing-and-pushing&#34;&gt;Adding, committing, and pushing
 &lt;/h2&gt;&lt;p&gt;Any files or directories that have been added, modified, or removed can be add to the list of changes to be pushed with the following command:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git add .
 &lt;/code&gt;&lt;/pre&gt;
@@ -1762,9 +1646,7 @@ $ git pull
 &lt;p&gt;These commands can be chained together with the AND operator:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git add . &amp;amp;&amp;amp; git commit -am &amp;quot;Add your commit message here&amp;quot; &amp;amp;&amp;amp; git push
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;stashing-changes&#34;&gt;
-    &lt;a href=&#34;#stashing-changes&#34;&gt;#&lt;/a&gt;
-    Stashing changes
+&lt;h2 id=&#34;stashing-changes&#34;&gt;Stashing changes
 &lt;/h2&gt;&lt;p&gt;If you forget to update a repository before making changes, you can &amp;ldquo;stash&amp;rdquo; those changes and then re-apply them after running &lt;code&gt;git pull&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;First, stash the changes:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git stash
@@ -1776,9 +1658,7 @@ $ git pull
 &lt;pre&gt;&lt;code&gt;$ git stash apply
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This has proven to be very useful for me when I forget to update a repository before making edits to the code.&lt;/p&gt;
-&lt;h2 id=&#34;references&#34;&gt;
-    &lt;a href=&#34;#references&#34;&gt;#&lt;/a&gt;
-    References
+&lt;h2 id=&#34;references&#34;&gt;References
 &lt;/h2&gt;&lt;p&gt;References for git (and used for above):&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens&lt;/a&gt;&lt;/br&gt;
@@ -1800,21 +1680,15 @@ $ git pull
         <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/2023/10/using-yt-dlp-with-zoom/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/10/using-yt-dlp-with-zoom/banner_1.svg" alt="Featured image of post Using yt-dlp With Zoom" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;
-    &lt;a href=&#34;#introduction&#34;&gt;#&lt;/a&gt;
-    Introduction
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/10/using-yt-dlp-with-zoom/banner_1.svg" alt="Featured image of post Using yt-dlp With Zoom" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;If anyone uses Zoom to record and later wants to access recordings of video calls, here&amp;rsquo;s a simple linux bash script to download the video file and acompanying subtitles. For a long time I used &lt;a class=&#34;link&#34; href=&#34;https://github.com/Battleman/zoomdl&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;zoomdl&lt;/a&gt;, but it is no longer under active development, and I began running into various issues about a year ago.&lt;/p&gt;
 &lt;p&gt;This tutorial requires you to have a &amp;ldquo;cookies&amp;rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Zoom cookies after logging in.&lt;/p&gt;
 &lt;p&gt;Here&amp;rsquo;s the steps to setting this up:&lt;/p&gt;
-&lt;h2 id=&#34;install-cookie-editor&#34;&gt;
-    &lt;a href=&#34;#install-cookie-editor&#34;&gt;#&lt;/a&gt;
-    Install cookie editor
+&lt;h2 id=&#34;install-cookie-editor&#34;&gt;Install cookie editor
 &lt;/h2&gt;&lt;p&gt;Install the &lt;a class=&#34;link&#34; href=&#34;https://microsoftedge.microsoft.com/addons/detail/cookie-editor/ajfboaconbpkglpfanbmlfgojgndmhmc&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;cookie editor&lt;/a&gt; extension. I personnally use it with Microsoft Edge, but there are similar extensions for Chrome, Firefox, etc.&lt;/p&gt;
-&lt;h2 id=&#34;modify-export-format&#34;&gt;
-    &lt;a href=&#34;#modify-export-format&#34;&gt;#&lt;/a&gt;
-    Modify export format
+&lt;h2 id=&#34;modify-export-format&#34;&gt;Modify export format
 &lt;/h2&gt;&lt;p&gt;Change the preferred cookie export format to &lt;code&gt;Netscape HTTP Cookie File&lt;/code&gt; in the extension options. It is necessary to export in this format, otherwise yt-dlp will not be able to read the cookies.txt file correctly.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/10/using-yt-dlp-with-zoom/Modify_preferred_export_format.png&#34;
 	width=&#34;865&#34;
@@ -1830,13 +1704,9 @@ $ git pull
 		data-flex-basis=&#34;411px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;log-in-to-zoom&#34;&gt;
-    &lt;a href=&#34;#log-in-to-zoom&#34;&gt;#&lt;/a&gt;
-    Log in to Zoom
+&lt;h2 id=&#34;log-in-to-zoom&#34;&gt;Log in to Zoom
 &lt;/h2&gt;&lt;p&gt;Log in to Zoom in your browser. Be sure to remain logged in while exporting the cookies under step 4.&lt;/p&gt;
-&lt;h2 id=&#34;export-cookies&#34;&gt;
-    &lt;a href=&#34;#export-cookies&#34;&gt;#&lt;/a&gt;
-    Export cookies
+&lt;h2 id=&#34;export-cookies&#34;&gt;Export cookies
 &lt;/h2&gt;&lt;p&gt;The export button is at the top fo the window. It copies the cookies to your clipboard, which then need to be pasted into a text file (I have my saved as cookies.txt), which yt-dlp will then read when it executes.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/10/using-yt-dlp-with-zoom/Export_cookies.png&#34;
 	width=&#34;579&#34;
@@ -1852,9 +1722,7 @@ $ git pull
 		data-flex-basis=&#34;226px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;create-bash-script&#34;&gt;
-    &lt;a href=&#34;#create-bash-script&#34;&gt;#&lt;/a&gt;
-    Create bash script
+&lt;h2 id=&#34;create-bash-script&#34;&gt;Create bash script
 &lt;/h2&gt;&lt;p&gt;Save the following code to a text file (my bash script file name is &lt;code&gt;yt-dlp-zoom.sh&lt;/code&gt;):&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -1874,19 +1742,13 @@ $ git pull
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;yt-dlp --referer &amp;#34;https://zoom.us/&amp;#34; --cookies /path/to/cookies/file/cookies.txt -o &amp;#34;%(title)s-%(id)s.%(ext)s&amp;#34; --write-subs $link
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;change-permissions&#34;&gt;
-    &lt;a href=&#34;#change-permissions&#34;&gt;#&lt;/a&gt;
-    Change permissions
+&lt;/div&gt;&lt;h2 id=&#34;change-permissions&#34;&gt;Change permissions
 &lt;/h2&gt;&lt;p&gt;Modify the permissions of the bash script to allow execution:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ chmod +x yt-dlp-zoom.sh
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;execute-the-script&#34;&gt;
-    &lt;a href=&#34;#execute-the-script&#34;&gt;#&lt;/a&gt;
-    Execute the script
+&lt;h2 id=&#34;execute-the-script&#34;&gt;Execute the script
 &lt;/h2&gt;&lt;p&gt;Execute the bash script with ./yt-dlp-zoom.sh, copy and paste the link to the video that you would like to save, and it should download the video and the subtitles.&lt;/p&gt;
-&lt;h2 id=&#34;references&#34;&gt;
-    &lt;a href=&#34;#references&#34;&gt;#&lt;/a&gt;
-    References
+&lt;h2 id=&#34;references&#34;&gt;References
 &lt;/h2&gt;&lt;p&gt;References for yt-dlp (and used for above):&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://ostechnix.com/yt-dlp-tutorial/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://ostechnix.com/yt-dlp-tutorial/&lt;/a&gt;&lt;/p&gt;
@@ -1898,28 +1760,20 @@ $ git pull
         <pubDate>Fri, 29 Sep 2023 00:00:01 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/2023/09/arch-linux-install/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/09/arch-linux-install/cover.jpg" alt="Featured image of post Arch Linux Install" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;
-    &lt;a href=&#34;#introduction&#34;&gt;#&lt;/a&gt;
-    Introduction
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/09/arch-linux-install/cover.jpg" alt="Featured image of post Arch Linux Install" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;This is the basic framework that I use to install Arch Linux, with a few changes catered to the Lenovo ThinkPad E15 Gen 2. I have found that this is a decent mid range laptop, excellent linux compatibility, great keyboard, and overall provides a good value.&lt;/p&gt;
-&lt;h2 id=&#34;getting-started&#34;&gt;
-    &lt;a href=&#34;#getting-started&#34;&gt;#&lt;/a&gt;
-    Getting started
+&lt;h2 id=&#34;getting-started&#34;&gt;Getting started
 &lt;/h2&gt;&lt;p&gt;This tutorial assumes the following:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;You are booting from a USB drive with the Arch install ISO.&lt;/li&gt;
 &lt;li&gt;Wireless or wired network is detected and drivers are configured automatically.&lt;/li&gt;
 &lt;li&gt;You want drive encrytion on your root partition, but not on your boot/efi/swap partitions.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;verify-uefi-boot-mode&#34;&gt;
-    &lt;a href=&#34;#verify-uefi-boot-mode&#34;&gt;#&lt;/a&gt;
-    Verify UEFI boot mode
+&lt;h3 id=&#34;verify-uefi-boot-mode&#34;&gt;Verify UEFI boot mode
 &lt;/h3&gt;&lt;p&gt;The following command should show directory without error:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# ls /sys/firmware/efi/efivars
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;configure-wireless-network&#34;&gt;
-    &lt;a href=&#34;#configure-wireless-network&#34;&gt;#&lt;/a&gt;
-    Configure wireless network
+&lt;h3 id=&#34;configure-wireless-network&#34;&gt;Configure wireless network
 &lt;/h3&gt;&lt;p&gt;The following command will drop you into the iwd daemon:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# iwctl
 &lt;/code&gt;&lt;/pre&gt;
@@ -1929,58 +1783,42 @@ $ git pull
 # station *device* get-networks
 # station *device* connect *SSID*
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;verify-internet-connectivity&#34;&gt;
-    &lt;a href=&#34;#verify-internet-connectivity&#34;&gt;#&lt;/a&gt;
-    Verify internet connectivity
+&lt;h3 id=&#34;verify-internet-connectivity&#34;&gt;Verify internet connectivity
 &lt;/h3&gt;&lt;pre&gt;&lt;code&gt;# ping archlinux.org
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;update-system-clock&#34;&gt;
-    &lt;a href=&#34;#update-system-clock&#34;&gt;#&lt;/a&gt;
-    Update system clock
+&lt;h3 id=&#34;update-system-clock&#34;&gt;Update system clock
 &lt;/h3&gt;&lt;pre&gt;&lt;code&gt;# timedatectl set-ntp true
 # timedatectl status
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;disks-partition-table--partitions&#34;&gt;
-    &lt;a href=&#34;#disks-partition-table--partitions&#34;&gt;#&lt;/a&gt;
-    Disks, partition table &amp;amp; partitions
+&lt;h2 id=&#34;disks-partition-table--partitions&#34;&gt;Disks, partition table &amp;amp; partitions
 &lt;/h2&gt;&lt;p&gt;The following assumes that your NVME drive is found as /dev/nvme0n1. Partitions will then be /dev/nvme0n1p1 and so on.&lt;/p&gt;
-&lt;h3 id=&#34;wipe-disk&#34;&gt;
-    &lt;a href=&#34;#wipe-disk&#34;&gt;#&lt;/a&gt;
-    Wipe disk
+&lt;h3 id=&#34;wipe-disk&#34;&gt;Wipe disk
 &lt;/h3&gt;&lt;p&gt;List disks:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# fdisk -l
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Wipe all file system records:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# wipefs -a /dev/nvme0n1
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;create-new-partition-table&#34;&gt;
-    &lt;a href=&#34;#create-new-partition-table&#34;&gt;#&lt;/a&gt;
-    Create new partition table
+&lt;h3 id=&#34;create-new-partition-table&#34;&gt;Create new partition table
 &lt;/h3&gt;&lt;p&gt;Open nvme0n1 with gdisk:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# gdisk /dev/nvme0n1
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Create GPT partition table with option &amp;ldquo;o&amp;rdquo;.&lt;/p&gt;
-&lt;h3 id=&#34;create-efi-partition&#34;&gt;
-    &lt;a href=&#34;#create-efi-partition&#34;&gt;#&lt;/a&gt;
-    Create EFI partition
+&lt;h3 id=&#34;create-efi-partition&#34;&gt;Create EFI partition
 &lt;/h3&gt;&lt;p&gt;Create new EFI partition w/ 550mb with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Partition #1
 Default starting sector
 +550M
 Change partition type to EFI System (ef00)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;create-boot-partition&#34;&gt;
-    &lt;a href=&#34;#create-boot-partition&#34;&gt;#&lt;/a&gt;
-    Create boot partition
+&lt;h3 id=&#34;create-boot-partition&#34;&gt;Create boot partition
 &lt;/h3&gt;&lt;p&gt;Create new boot partition w/ 550mb with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Partition #2
 Default starting sector
 +550M
 Leave default type of 8300
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;create-swap-partition&#34;&gt;
-    &lt;a href=&#34;#create-swap-partition&#34;&gt;#&lt;/a&gt;
-    Create swap partition
+&lt;h3 id=&#34;create-swap-partition&#34;&gt;Create swap partition
 &lt;/h3&gt;&lt;p&gt;The old rule of thumb used to be that a swap partition should be the same size as the amount of memory in the system, but given the typical amount of memory in modern systems this is obviously no longer necessary. For my system with 16 or 32 GB of memory, a swap of 8 GB is rarely even used.&lt;/br&gt;&lt;/p&gt;
 &lt;p&gt;Create new Swap partition w/ 8GB with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Partition #3
@@ -1988,9 +1826,7 @@ Default starting sector
 +8G
 Change to linux swap (8200)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;create-root-partition&#34;&gt;
-    &lt;a href=&#34;#create-root-partition&#34;&gt;#&lt;/a&gt;
-    Create root partition
+&lt;h3 id=&#34;create-root-partition&#34;&gt;Create root partition
 &lt;/h3&gt;&lt;p&gt;Create new root partition w/ remaining disk space with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Partition #4
 Default starting sector
@@ -1998,26 +1834,18 @@ Remaining space
 Linux LUKS type 8309
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;And then exit gdisk.&lt;/p&gt;
-&lt;h2 id=&#34;write-file-systems&#34;&gt;
-    &lt;a href=&#34;#write-file-systems&#34;&gt;#&lt;/a&gt;
-    Write file systems
-&lt;/h2&gt;&lt;h3 id=&#34;efi-partition&#34;&gt;
-    &lt;a href=&#34;#efi-partition&#34;&gt;#&lt;/a&gt;
-    EFI partition
+&lt;h2 id=&#34;write-file-systems&#34;&gt;Write file systems
+&lt;/h2&gt;&lt;h3 id=&#34;efi-partition&#34;&gt;EFI partition
 &lt;/h3&gt;&lt;p&gt;Write file system to new EFI System partition:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# cat /dev/zero &amp;gt; /dev/nvme0n1p1 
 # mkfs.fat -F32 /dev/nvme0n1p1 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;boot-partition&#34;&gt;
-    &lt;a href=&#34;#boot-partition&#34;&gt;#&lt;/a&gt;
-    Boot partition
+&lt;h3 id=&#34;boot-partition&#34;&gt;Boot partition
 &lt;/h3&gt;&lt;p&gt;Then boot partition:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# cat /dev/zero &amp;gt; /dev/nvme0n1p2 
 # mkfs.ext2 /dev/nvme0n1p2
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;root-partition&#34;&gt;
-    &lt;a href=&#34;#root-partition&#34;&gt;#&lt;/a&gt;
-    Root partition
+&lt;h3 id=&#34;root-partition&#34;&gt;Root partition
 &lt;/h3&gt;&lt;p&gt;Prepare root partition w/ LUKS:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# cryptsetup -y -v luksFormat --type luks2 /dev/nvme0n1p4
 # cryptsetup luksDump /dev/nvme0n1p4
@@ -2026,57 +1854,39 @@ Linux LUKS type 8309
 # mount /dev/mapper/archcryptroot /mnt
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;I use &lt;em&gt;archcryptroot&lt;/em&gt; for the name of my encrypted volume, but change as necessary.&lt;/p&gt;
-&lt;h3 id=&#34;swap-partition&#34;&gt;
-    &lt;a href=&#34;#swap-partition&#34;&gt;#&lt;/a&gt;
-    Swap partition
+&lt;h3 id=&#34;swap-partition&#34;&gt;Swap partition
 &lt;/h3&gt;&lt;p&gt;Then swap:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# mkswap /dev/nvme0n1p3
 # swapon /dev/nvme0n1p3
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;create-mount-points&#34;&gt;
-    &lt;a href=&#34;#create-mount-points&#34;&gt;#&lt;/a&gt;
-    Create mount points
+&lt;h3 id=&#34;create-mount-points&#34;&gt;Create mount points
 &lt;/h3&gt;&lt;pre&gt;&lt;code&gt;# mkdir /mnt/boot
 # mount /dev/nvme0n1p2 /mnt/boot
 # mkdir /mnt/boot/efi
 # mount /dev/nvme0n1p1 /mnt/boot/efi
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;system-install&#34;&gt;
-    &lt;a href=&#34;#system-install&#34;&gt;#&lt;/a&gt;
-    System install
-&lt;/h2&gt;&lt;h3 id=&#34;install-base-packages&#34;&gt;
-    &lt;a href=&#34;#install-base-packages&#34;&gt;#&lt;/a&gt;
-    Install base packages
+&lt;h2 id=&#34;system-install&#34;&gt;System install
+&lt;/h2&gt;&lt;h3 id=&#34;install-base-packages&#34;&gt;Install base packages
 &lt;/h3&gt;&lt;pre&gt;&lt;code&gt;# pacstrap /mnt base base-devel linux linux-firmware grub-efi-x86_64 efibootmgr
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;generate-fstab&#34;&gt;
-    &lt;a href=&#34;#generate-fstab&#34;&gt;#&lt;/a&gt;
-    Generate fstab
+&lt;h3 id=&#34;generate-fstab&#34;&gt;Generate fstab
 &lt;/h3&gt;&lt;pre&gt;&lt;code&gt;# genfstab -U /mnt &amp;gt;&amp;gt; /mnt/etc/fstab
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;enter-new-system&#34;&gt;
-    &lt;a href=&#34;#enter-new-system&#34;&gt;#&lt;/a&gt;
-    Enter new system
+&lt;h3 id=&#34;enter-new-system&#34;&gt;Enter new system
 &lt;/h3&gt;&lt;pre&gt;&lt;code&gt;# arch-chroot /mnt /bin/bash
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;set-clock&#34;&gt;
-    &lt;a href=&#34;#set-clock&#34;&gt;#&lt;/a&gt;
-    Set clock
+&lt;h3 id=&#34;set-clock&#34;&gt;Set clock
 &lt;/h3&gt;&lt;pre&gt;&lt;code&gt;# ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime
 # hwclock –systohc
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;generate-locale&#34;&gt;
-    &lt;a href=&#34;#generate-locale&#34;&gt;#&lt;/a&gt;
-    Generate locale
+&lt;h3 id=&#34;generate-locale&#34;&gt;Generate locale
 &lt;/h3&gt;&lt;p&gt;In /etc/locale.gen &lt;strong&gt;uncomment only&lt;/strong&gt;: en_US.UTF-8 UTF-8&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# locale-gen
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;In /etc/locale.conf, you should &lt;strong&gt;only&lt;/strong&gt; have this line: LANG=en_US.UTF-8&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# nano /etc/locale.conf
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;set-hostname--update-hosts&#34;&gt;
-    &lt;a href=&#34;#set-hostname--update-hosts&#34;&gt;#&lt;/a&gt;
-    Set hostname &amp;amp; update hosts
+&lt;h3 id=&#34;set-hostname--update-hosts&#34;&gt;Set hostname &amp;amp; update hosts
 &lt;/h3&gt;&lt;pre&gt;&lt;code&gt;# echo linuxmachine &amp;gt; /etc/hostname
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Update /etc/hosts with the following:&lt;/p&gt;
@@ -2084,23 +1894,17 @@ Linux LUKS type 8309
 ::1         localhost
 127.0.1.1   linuxmachine.localdomain    linuxmachine
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;set-root-password&#34;&gt;
-    &lt;a href=&#34;#set-root-password&#34;&gt;#&lt;/a&gt;
-    Set root password
+&lt;h3 id=&#34;set-root-password&#34;&gt;Set root password
 &lt;/h3&gt;&lt;pre&gt;&lt;code&gt;# passwd
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;update-etcmkinitcpioconf--generate-initrd-image&#34;&gt;
-    &lt;a href=&#34;#update-etcmkinitcpioconf--generate-initrd-image&#34;&gt;#&lt;/a&gt;
-    Update /etc/mkinitcpio.conf &amp;amp; generate initrd image
+&lt;h3 id=&#34;update-etcmkinitcpioconf--generate-initrd-image&#34;&gt;Update /etc/mkinitcpio.conf &amp;amp; generate initrd image
 &lt;/h3&gt;&lt;p&gt;Edit /etc/mkinitcpio.conf with the following:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;HOOKS=(base udev autodetect modconf block keymap encrypt resume filesystems keyboard fsck)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Then run:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# mkinitcpio -p linux
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;install-grub&#34;&gt;
-    &lt;a href=&#34;#install-grub&#34;&gt;#&lt;/a&gt;
-    Install grub
+&lt;h3 id=&#34;install-grub&#34;&gt;Install grub
 &lt;/h3&gt;&lt;pre&gt;&lt;code&gt;# grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ArchLinux
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Edit /etc/default/grub so it includes a statement like this:&lt;/p&gt;
@@ -2109,9 +1913,7 @@ Linux LUKS type 8309
 &lt;p&gt;Generate final grub configuration:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# grub-mkconfig -o /boot/grub/grub.cfg
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;exit--reboot&#34;&gt;
-    &lt;a href=&#34;#exit--reboot&#34;&gt;#&lt;/a&gt;
-    Exit &amp;amp; reboot
+&lt;h3 id=&#34;exit--reboot&#34;&gt;Exit &amp;amp; reboot
 &lt;/h3&gt;&lt;pre&gt;&lt;code&gt;# exit
 # umount -R /mnt
 # swapoff -a
@@ -2126,9 +1928,7 @@ Linux LUKS type 8309
         <pubDate>Tue, 26 Sep 2023 00:00:00 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/2023/09/hello-world/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/09/hello-world/cover.jpg" alt="Featured image of post Hello World" /&gt;&lt;h2 id=&#34;hello-world&#34;&gt;
-    &lt;a href=&#34;#hello-world&#34;&gt;#&lt;/a&gt;
-    Hello World
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/09/hello-world/cover.jpg" alt="Featured image of post Hello World" /&gt;&lt;h2 id=&#34;hello-world&#34;&gt;Hello World
 &lt;/h2&gt;&lt;p&gt;Welcome to my website. This is meant to serve as a place for me to publish various posts from my explorations into Arch Linux, data science, quant finance, and other topics.&lt;/p&gt;
 &lt;p&gt;The theme has been adopted from the &lt;a class=&#34;link&#34; href=&#34;https://github.com/CaiJimmy/hugo-theme-stack&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Hugo Theme Stack&lt;/a&gt; produced by Jimmy Cai.&lt;/p&gt;
@@ -2149,9 +1949,7 @@ Linux LUKS type 8309
 &lt;li&gt;Make sure to remove the public directory from the .gitignore file. Otherwise GitHub will ignore the public directory and your site will show the README.md instead of the Hugo site.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;The site can be updated either through codespace, or locally as long as Hugo and it&amp;rsquo;s required dependencies have been installed.&lt;/p&gt;
-&lt;h2 id=&#34;updating-and-pushing-changes&#34;&gt;
-    &lt;a href=&#34;#updating-and-pushing-changes&#34;&gt;#&lt;/a&gt;
-    Updating and pushing changes
+&lt;h2 id=&#34;updating-and-pushing-changes&#34;&gt;Updating and pushing changes
 &lt;/h2&gt;&lt;p&gt;The simple command after making any changes and to push those updates is as follows:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ hugo &amp;amp;&amp;amp; git add . &amp;amp;&amp;amp; git commit -am &amp;quot;Updating site&amp;quot; &amp;amp;&amp;amp; git push
 &lt;/code&gt;&lt;/pre&gt;
@@ -2180,9 +1978,7 @@ Linux LUKS type 8309
 &lt;p&gt;And then execute:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ ./git-update.sh
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;references&#34;&gt;
-    &lt;a href=&#34;#references&#34;&gt;#&lt;/a&gt;
-    References
+&lt;h2 id=&#34;references&#34;&gt;References
 &lt;/h2&gt;&lt;p&gt;Here&amp;rsquo;s the full list of resources I referenced for deploying Hugo with GitHub pages:&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.o11ycloud.com/posts/gh_hugo/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://www.o11ycloud.com/posts/gh_hugo/&lt;/a&gt;&lt;/br&gt;
