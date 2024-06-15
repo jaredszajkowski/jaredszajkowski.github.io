@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Git on Jared Szajkowski</title><link>https://www.jaredszajkowski.com/tags/git/</link><description>Recent content in Git on Jared Szajkowski</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 16 Oct 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/tags/git/index.xml" rel="self" type="application/rss+xml"/><item><title>Git Quick Start Guide</title><link>https://www.jaredszajkowski.com/2023/10/git-quick-start-guide/</link><pubDate>Mon, 16 Oct 2023 00:00:00 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/10/git-quick-start-guide/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2023/10/git-quick-start-guide/cover.jpg" alt="Featured image of post Git Quick Start Guide" />&lt;h2 id="introduction">Introduction
+&lt;/h2>&lt;p>Here are my notes for some of the more commonly used git commands along with initial setup for git in Linux.&lt;/p>
+&lt;h2 id="installation">Installation
+&lt;/h2>&lt;p>To begin, install as follows for Arch Linux:&lt;/p>
+&lt;pre>&lt;code># pacman -Syu git
+&lt;/code>&lt;/pre>
+&lt;p>Or&lt;/p>
+&lt;pre>&lt;code>$ yay git
+&lt;/code>&lt;/pre>
+&lt;p>Pacman will include all required depencies.&lt;/p>
+&lt;h2 id="initial-configuration">Initial configuration
+&lt;/h2>&lt;p>First, set your name and email address:&lt;/p>
+&lt;pre>&lt;code>$ git config --global user.name &amp;quot;Firstname Lastname&amp;quot;
+$ git config --global user.email &amp;quot;email@address.com&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>Then, set your preferred text editor (if you have one). I use nano:&lt;/p>
+&lt;pre>&lt;code>$ git config --global core.editor &amp;quot;nano&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>You can verify the updates with:&lt;/p>
+&lt;pre>&lt;code>$ git config --global core.editor
+&lt;/code>&lt;/pre>
+&lt;p>Alternatively, you can edit the git configuration directly with:&lt;/p>
+&lt;pre>&lt;code>$ git config --global --edit
+&lt;/code>&lt;/pre>
+&lt;h2 id="store-credentials">Store credentials
+&lt;/h2>&lt;p>In 2021, GitHub disabled authentication via password and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in &lt;code>~/.git-credentials&lt;/code>:&lt;/p>
+&lt;pre>&lt;code>$ git config --global credential.helper store
+&lt;/code>&lt;/pre>
+&lt;p>After you log in during a &lt;code>git push&lt;/code> with your username and token, the username or email address and token will be stored in the above location.&lt;/p>
+&lt;p>Note: The token is stored in plain text, so use caution if that is a concern.&lt;/p>
+&lt;h2 id="cloning-repositories">Cloning repositories
+&lt;/h2>&lt;p>Repositories can be cloned with the following:&lt;/p>
+&lt;pre>&lt;code>$ git clone https://github.com/&amp;lt;username&amp;gt;/&amp;lt;repository&amp;gt;.git
+&lt;/code>&lt;/pre>
+&lt;h2 id="updating-repositories">Updating repositories
+&lt;/h2>&lt;p>The local record of a repository can be updated with the following command:&lt;/p>
+&lt;pre>&lt;code>$ cd &amp;lt;repository&amp;gt;/
+$ git pull
+&lt;/code>&lt;/pre>
+&lt;h2 id="adding-committing-and-pushing">Adding, committing, and pushing
+&lt;/h2>&lt;p>Any files or directories that have been added, modified, or removed can be add to the list of changes to be pushed with the following command:&lt;/p>
+&lt;pre>&lt;code>$ git add .
+&lt;/code>&lt;/pre>
+&lt;p>Then committed (staged in preparation to push) with the following command:&lt;/p>
+&lt;pre>&lt;code>$ git commit -am &amp;quot;Add your commit message here&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>Note: Without &lt;code>add&lt;/code>, &lt;code>commit&lt;/code> will handle any changes to files that have been modified or deleted, but will not incorporate any files that have been created.&lt;/p>
+&lt;p>Then finally pushed:&lt;/p>
+&lt;pre>&lt;code>$ git push
+&lt;/code>&lt;/pre>
+&lt;p>If, for some reason, you would like to reset a commit:&lt;/p>
+&lt;pre>&lt;code>$ git reset
+&lt;/code>&lt;/pre>
+&lt;p>These commands can be chained together with the AND operator:&lt;/p>
+&lt;pre>&lt;code>$ git add . &amp;amp;&amp;amp; git commit -am &amp;quot;Add your commit message here&amp;quot; &amp;amp;&amp;amp; git push
+&lt;/code>&lt;/pre>
+&lt;h2 id="stashing-changes">Stashing changes
+&lt;/h2>&lt;p>If you forget to update a repository before making changes, you can &amp;ldquo;stash&amp;rdquo; those changes and then re-apply them after running &lt;code>git pull&lt;/code>.&lt;/p>
+&lt;p>First, stash the changes:&lt;/p>
+&lt;pre>&lt;code>$ git stash
+&lt;/code>&lt;/pre>
+&lt;p>Then, update the local record of the repository:&lt;/p>
+&lt;pre>&lt;code>$ git pull
+&lt;/code>&lt;/pre>
+&lt;p>Finally, re-apply the changes you previously made:&lt;/p>
+&lt;pre>&lt;code>$ git stash apply
+&lt;/code>&lt;/pre>
+&lt;p>This has proven to be very useful for me when I forget to update a repository before making edits to the code.&lt;/p>
+&lt;h2 id="references">References
+&lt;/h2>&lt;p>References for git (and used for above):&lt;/p>
+&lt;p>&lt;a class="link" href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" target="_blank" rel="noopener"
+>https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens&lt;/a>&lt;/br>
+&lt;a class="link" href="https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup#_first_time" target="_blank" rel="noopener"
+>https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup#_first_time&lt;/a>&lt;/br>
+&lt;a class="link" href="https://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Setup-and-Config" target="_blank" rel="noopener"
+>https://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Setup-and-Config&lt;/a>&lt;/br>
+&lt;a class="link" href="https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage#_credential_caching" target="_blank" rel="noopener"
+>https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage#_credential_caching&lt;/a>&lt;/br>
+&lt;a class="link" href="https://git-scm.com/book/en/v2/Git-Tools-Stashing-and-Cleaning" target="_blank" rel="noopener"
+>https://git-scm.com/book/en/v2/Git-Tools-Stashing-and-Cleaning&lt;/a>&lt;/br>
+&lt;a class="link" href="https://www.geeksforgeeks.org/difference-between-chaining-operators-in-linux/" target="_blank" rel="noopener"
+>https://www.geeksforgeeks.org/difference-between-chaining-operators-in-linux/&lt;/a>&lt;/p></description></item></channel></rss>
