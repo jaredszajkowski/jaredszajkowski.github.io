@@ -3,7 +3,7 @@ title: Simple Incremental Bash Backup Script
 description: A bash script to incrementally backup multiple different directories.
 # slug: hello-world
 date: 2024-01-12 00:00:01+0000
-lastmod: 2024-01-12 00:00:00+0000
+lastmod: 2024-09-23 00:00:00+0000
 image: cover.jpg
 draft: false
 categories:
@@ -38,6 +38,7 @@ backup_dir2="/backup2/"
 # Define excluded directories
 excluded_dir1="leave/out/"
 excluded_dir2="dont/want/"
+excluded_dir3="exclude/this/"
 
 # Function to run a backup
 run_backup() {
@@ -50,16 +51,16 @@ run_backup() {
     exit 1
   fi
 
+  # Input year and date
   echo "What is today's year:"
   read backup_year
   echo "What is today's date:"
   read backup_date
-  echo "Backing up $source_dir"
 
   # Check if the backup directory exists and run backup
   if [ -d "$backup_dir" ]; then
-    echo "Backing up $source_dir"
-    rsync -av --delete --exclude "$excluded_dir1" --exclude "$excluded_dir2" $source_dir $backup_dir/Monthly/
+    echo "Backup directory found, backing up $source_dir"
+    rsync -av --delete --exclude "$excluded_dir1" --exclude "$excluded_dir2" --exclude "$excluded_dir3" $source_dir $backup_dir/Monthly/
     cp -al $backup_dir/Monthly/ $backup_dir/$backup_year/$backup_date/
   else
     echo "Error: Backup directory not found"
