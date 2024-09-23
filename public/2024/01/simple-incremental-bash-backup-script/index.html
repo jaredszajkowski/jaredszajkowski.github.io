@@ -505,6 +505,7 @@
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
+</span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># Define the directories to backup and their destination directories
@@ -517,6 +518,7 @@
 </span></span><span class="line"><span class="cl"># Define excluded directories
 </span></span><span class="line"><span class="cl">excluded_dir1=&#34;leave/out/&#34;
 </span></span><span class="line"><span class="cl">excluded_dir2=&#34;dont/want/&#34;
+</span></span><span class="line"><span class="cl">excluded_dir3=&#34;exclude/this/&#34;
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>You can add as many directories as you want here.</p>
@@ -572,16 +574,16 @@
 </span></span><span class="line"><span class="cl">    exit 1
 </span></span><span class="line"><span class="cl">  fi
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  # Input year and date
 </span></span><span class="line"><span class="cl">  echo &#34;What is today&#39;s year:&#34;
 </span></span><span class="line"><span class="cl">  read backup_year
 </span></span><span class="line"><span class="cl">  echo &#34;What is today&#39;s date:&#34;
 </span></span><span class="line"><span class="cl">  read backup_date
-</span></span><span class="line"><span class="cl">  echo &#34;Backing up $source_dir&#34;
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  # Check if the backup directory exists and run backup
 </span></span><span class="line"><span class="cl">  if [ -d &#34;$backup_dir&#34; ]; then
-</span></span><span class="line"><span class="cl">    echo &#34;Backing up $source_dir&#34;
-</span></span><span class="line"><span class="cl">    rsync -av --delete --exclude &#34;$excluded_dir1&#34; --exclude &#34;$excluded_dir2&#34; $source_dir $backup_dir/Monthly/
+</span></span><span class="line"><span class="cl">    echo &#34;Backup directory found, backing up $source_dir&#34;
+</span></span><span class="line"><span class="cl">    rsync -av --delete --exclude &#34;$excluded_dir1&#34; --exclude &#34;$excluded_dir2&#34; --exclude &#34;$excluded_dir3&#34; $source_dir $backup_dir/Monthly/
 </span></span><span class="line"><span class="cl">    cp -al $backup_dir/Monthly/ $backup_dir/$backup_year/$backup_date/
 </span></span><span class="line"><span class="cl">  else
 </span></span><span class="line"><span class="cl">    echo &#34;Error: Backup directory not found&#34;
