@@ -5,7 +5,7 @@ description: A look a Harry Browne's Permanent Portfolio and performance over fo
 date: 2024-10-03 00:00:01+0000
 # lastmod: 2023-12-26 00:00:00+0000
 # image: cover.jpg
-draft: false
+draft: true
 categories:
     - Financial Data
     - Investing
