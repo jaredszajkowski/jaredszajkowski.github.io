@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blog on Jared Szajkowski</title><link>https://www.jaredszajkowski.com/categories/blog/</link><description>Recent content in Blog on Jared Szajkowski</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 10 Dec 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/categories/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Hello World</title><link>https://www.jaredszajkowski.com/2023/09/hello-world/</link><pubDate>Tue, 26 Sep 2023 00:00:00 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/09/hello-world/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2023/09/hello-world/cover.jpg" alt="Featured image of post Hello World" />&lt;h2 id="hello-world">Hello World
+&lt;/h2>&lt;p>Welcome to my website. This is meant to serve as a place for me to publish various posts from my explorations into Arch Linux, data science, quant finance, and other topics.&lt;/p>
+&lt;p>The theme has been adopted from the &lt;a class="link" href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener"
+>Hugo Theme Stack&lt;/a> produced by Jimmy Cai.&lt;/p>
+&lt;p>This is the only theme that I have found that checks all of the following boxes:&lt;/p>
+&lt;ul>
+&lt;li>Theme for the static site generator Hugo&lt;/li>
+&lt;li>Includes modules for archives&lt;/li>
+&lt;li>Includes tags and topics/categories&lt;/li>
+&lt;li>Includes built-in search functionality&lt;/li>
+&lt;li>Simple interface that is easily navigable&lt;/li>
+&lt;li>Highly extensible including modules for image galleries, posts, comment capabilities, etc.&lt;/li>
+&lt;/ul>
+&lt;p>It is hosted on &lt;a class="link" href="https://pages.github.com/" target="_blank" rel="noopener"
+>GitHub pages&lt;/a>. I followed the install instructions that the theme author provided, including using GitHub codespace for editing in the cloud. There are only a few details that I ran into that he did not mention.&lt;/p>
+&lt;ol>
+&lt;li>Don&amp;rsquo;t forget to run Hugo to build the site. This creates the public directory, which is where the static site files are located.&lt;/li>
+&lt;li>Make sure to update the branch to be gh-pages under Settings -&amp;gt; Pages -&amp;gt; Build and deployment -&amp;gt; Branch in GitHub.&lt;/li>
+&lt;li>Make sure to remove the public directory from the .gitignore file. Otherwise GitHub will ignore the public directory and your site will show the README.md instead of the Hugo site.&lt;/li>
+&lt;/ol>
+&lt;p>The site can be updated either through codespace, or locally as long as Hugo and it&amp;rsquo;s required dependencies have been installed.&lt;/p>
+&lt;h2 id="updating-and-pushing-changes">Updating and pushing changes
+&lt;/h2>&lt;p>The simple command after making any changes and to push those updates is as follows:&lt;/p>
+&lt;pre>&lt;code>$ hugo &amp;amp;&amp;amp; git add . &amp;amp;&amp;amp; git commit -am &amp;quot;Updating site&amp;quot; &amp;amp;&amp;amp; git push
+&lt;/code>&lt;/pre>
+&lt;p>This can be put in a bash script to make it easier. Save the following as &lt;code>git-update.sh&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">#!/bin/bash
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">echo What is the commit message?
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">read message
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">hugo &lt;span class="err">&amp;amp;&amp;amp;&lt;/span> git add . &lt;span class="err">&amp;amp;&amp;amp;&lt;/span> git commit -am &amp;#34;$message&amp;#34; &lt;span class="err">&amp;amp;&amp;amp;&lt;/span> git push
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Change permissions:&lt;/p>
+&lt;pre>&lt;code>$ chmod +x git-update.sh
+&lt;/code>&lt;/pre>
+&lt;p>And then execute:&lt;/p>
+&lt;pre>&lt;code>$ ./git-update.sh
+&lt;/code>&lt;/pre>
+&lt;h2 id="references">References
+&lt;/h2>&lt;p>Here&amp;rsquo;s the full list of resources I referenced for deploying Hugo with GitHub pages:&lt;/p>
+&lt;p>&lt;a class="link" href="https://www.o11ycloud.com/posts/gh_hugo/" target="_blank" rel="noopener"
+>https://www.o11ycloud.com/posts/gh_hugo/&lt;/a>&lt;/br>
+&lt;a class="link" href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener"
+>https://github.com/CaiJimmy/hugo-theme-stack&lt;/a>&lt;/br>
+&lt;a class="link" href="https://medium.com/@magstherdev/github-pages-hugo-86ae6bcbadd" target="_blank" rel="noopener"
+>https://medium.com/@magstherdev/github-pages-hugo-86ae6bcbadd&lt;/a>&lt;/p></description></item></channel></rss>
