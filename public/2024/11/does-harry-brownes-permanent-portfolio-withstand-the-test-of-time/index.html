@@ -1,0 +1,2234 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="A look a Harry Browne's Permanent Portfolio and performance over nearly four decades.">
+<title>Does Harry Browne&#39;s permanent portfolio withstand the test of time?</title>
+
+<link rel='canonical' href='https://www.jaredszajkowski.com/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/'>
+
+<link rel="stylesheet" href="/scss/style.min.900ea5f7890cce14ae7761fef2e019e4f409d2a7e3c06b97d3fe4853d829c12e.css"><meta property='og:title' content="Does Harry Browne's permanent portfolio withstand the test of time?">
+<meta property='og:description' content="A look a Harry Browne's Permanent Portfolio and performance over nearly four decades.">
+<meta property='og:url' content='https://www.jaredszajkowski.com/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/'>
+<meta property='og:site_name' content='Jared Szajkowski'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Python' /><meta property='article:tag' content='Bloomberg' /><meta property='article:tag' content='pandas' /><meta property='article:published_time' content='2024-11-04T00:00:01&#43;00:00'/><meta property='article:modified_time' content='2024-11-04T00:00:01&#43;00:00'/><meta property='og:image' content='https://www.jaredszajkowski.com/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/cover.jpg' />
+<meta name="twitter:title" content="Does Harry Browne's permanent portfolio withstand the test of time?">
+<meta name="twitter:description" content="A look a Harry Browne's Permanent Portfolio and performance over nearly four decades."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://www.jaredszajkowski.com/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/cover.jpg' />
+    <link rel="shortcut icon" href="/profile_pic.jpg" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/profile_pic_hu16687316019011354821.jpg" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Jared Szajkowski</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='mailto:jared.szajkowski@gmail.com'
+                        target="_blank"
+                        title="Email"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/jaredszajkowski'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.linkedin.com/in/jaredszajkowski/'
+                        target="_blank"
+                        title="LinkedIn"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-linkedin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M8 11l0 5" /><path d="M8 8l0 .01" /><path d="M12 16l0 -5" /><path d="M16 16v-3a2 2 0 0 0 -4 0" /></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about-me/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About Me</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#brownes-portfolio-requirements">Browne&rsquo;s Portfolio Requirements</a></li>
+    <li><a href="#the-permanent-portfolio">The Permanent Portfolio</a></li>
+    <li><a href="#data">Data</a></li>
+    <li><a href="#python-functions">Python Functions</a>
+      <ol>
+        <li><a href="#clean-bloomberg-data-export">Clean Bloomberg Data Export</a></li>
+        <li><a href="#set-number-of-decimal-places">Set Number Of Decimal Places</a></li>
+        <li><a href="#return-information-about-a-dataframe">Return Information About A Dataframe</a></li>
+        <li><a href="#import-data-from-csv--xlsx">Import Data From CSV / XLSX</a></li>
+        <li><a href="#portfolio-strategy">Portfolio Strategy</a></li>
+        <li><a href="#summary-stats">Summary Stats</a></li>
+        <li><a href="#plot-cumulative-return">Plot Cumulative Return</a></li>
+        <li><a href="#plot-portfolio-values">Plot Portfolio Values</a></li>
+        <li><a href="#plot-portfolio-drawdown">Plot Portfolio Drawdown</a></li>
+        <li><a href="#plot-portfolio-asset-weights">Plot Portfolio Asset Weights</a></li>
+      </ol>
+    </li>
+    <li><a href="#data-overview">Data Overview</a>
+      <ol>
+        <li><a href="#import-data">Import Data</a></li>
+        <li><a href="#combine-data">Combine Data</a></li>
+        <li><a href="#dataframe-info">DataFrame Info</a></li>
+      </ol>
+    </li>
+    <li><a href="#execute-strategy">Execute Strategy</a>
+      <ol>
+        <li><a href="#plots">Plots</a></li>
+      </ol>
+    </li>
+    <li><a href="#summary">Summary</a></li>
+    <li><a href="#references">References</a></li>
+    <li><a href="#code">Code</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/">
+                <img src="/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/cover.jpg"
+                        
+                        width="1792" 
+                        height="1024" 
+                        loading="lazy"
+                        alt="Featured image of post Does Harry Browne&#39;s permanent portfolio withstand the test of time?" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/financial-data/" >
+                Financial Data
+            </a>
+        
+            <a href="/categories/investing/" >
+                Investing
+            </a>
+        
+            <a href="/categories/permanent-portfolio/" >
+                Permanent Portfolio
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/">Does Harry Browne&#39;s permanent portfolio withstand the test of time?</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            A look a Harry Browne&#39;s Permanent Portfolio and performance over nearly four decades.
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">November 4, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    19 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="introduction">Introduction
+</h2><p>Harry Browne was an influencial politician, financial advisor, and author who lived from 1933 to 2006 and published 12 books. Wikipedia has <a class="link" href="https://en.wikipedia.org/wiki/Harry_Browne"  target="_blank" rel="noopener"
+    >an in-depth biography</a> on him.</p>
+<p>Within the world of finance and investing, one of his best known works is <em>Fail-Safe Investing: Lifelong Financial Security in 30 Minutes</em>. In it, he introduces the idea of the &ldquo;Permanent Portfolio&rdquo;, an investment strategy that uses only four assets and is very simple to implement.</p>
+<p>In this post, we will investigate Browne&rsquo;s suggested portfolio, including performance across various market cycles and economic regimes.</p>
+<h2 id="brownes-portfolio-requirements">Browne&rsquo;s Portfolio Requirements
+</h2><p>In <em>Fail-Safe Investing</em>, under rule #11, Browne lays out the requirements for a &ldquo;bulletproof portfolio&rdquo; that will &ldquo;assure that your wealth will survive any event - including events that would be devastating to any one investment. In other words, this portfolio should protect you <em>no matter what the future brings.</em>&rdquo;</p>
+<p>His requirements for the portfolio consist of the followng:</p>
+<ol>
+<li>Safety: Protection again any economic future, including &ldquo;inflation, recession, or even depression&rdquo;</li>
+<li>Stability: Performance should be consistent so that you will not need to make any changes and will not experience significant drawdowns</li>
+<li>Simplicity: Easy to implement and take very little time to maintain</li>
+</ol>
+<p>He then describes the four &ldquo;broad movements&rdquo; of the economy:</p>
+<ol>
+<li>Prosperity: The economy is growing, business is doing well, interest rates are usually low</li>
+<li>Inflation: The cost of goods and services is rising</li>
+<li>Tight money or recession: The money supply is shrinking, economic activity is slowing</li>
+<li>Deflation: Prices are declining and the value of money is increasing</li>
+</ol>
+<h2 id="the-permanent-portfolio">The Permanent Portfolio
+</h2><p>Browne then matches an asset class to each of the economic conditions above:</p>
+<ol>
+<li>Prosperity -&gt; Stocks (due to prosperity) and long term bonds (when interest rates fall)</li>
+<li>Inflation -&gt; Gold</li>
+<li>Deflation -&gt; Long term bonds (when interest rates fall)</li>
+<li>Tight money -&gt; Cash</li>
+</ol>
+<p>He completes the Permanent Portfolio by stipulating the following:</p>
+<ul>
+<li>Start with a base allocation of 25% to each of the asset classes (stocks, bonds, gold, cash)</li>
+<li>Rebalance back to the base allocation annually, or when &ldquo;any of the four investments has become worth less than 15%, or more than 35%, of the portfolio&rsquo;s overall value&rdquo;</br><strong>Note:</strong> Browne does not specify when the portfolio should be rebalanced; therefore, we will make an assumption of a January 1st rebalance.</li>
+</ul>
+<h2 id="data">Data
+</h2><p>For this exercise, we will use the following asset classes:</p>
+<ol>
+<li>Stocks: S&amp;P 500 (SPXT_S&amp;P 500 Total Return Index)</li>
+<li>Bonds: 10 Year US Treasuries (SPBDU10T_S&amp;P US Treasury Bond 7-10 Year Total Return Index)</li>
+<li>Gold: Gold Spot Price (XAU_Gold USD Spot)</li>
+<li>Cash: USD</li>
+</ol>
+<p>With the exception of cash, all data is sourced from Bloomberg.</p>
+<p>We could use ETFs, but the available price history for the ETFs is much shorter than the indices above. If we wanted to use ETFs, the following would work:</p>
+<ol>
+<li>Stocks: IVV - iShares Core S&amp;P 500 ETF</li>
+<li>Bonds: IEF - iShares 7-10 Year Treasury Bond ETF</li>
+<li>Gold: GLD - SPDR Gold Shares ETF</li>
+<li>Cash: USD</li>
+</ol>
+<h2 id="python-functions">Python Functions
+</h2><p>First, a couple of useful python functions to help with the analysis.</p>
+<h3 id="clean-bloomberg-data-export">Clean Bloomberg Data Export
+</h3><p>This is discussed <a class="link" href="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/"  target="_blank" rel="noopener"
+    >here</a>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"># This function takes an excel export from Bloomberg and 
+</span></span><span class="line"><span class="cl"># removes all excess data leaving date and close columns
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Imports
+</span></span><span class="line"><span class="cl">import pandas as pd
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Function definition
+</span></span><span class="line"><span class="cl">def bb_data_updater(fund):
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # File name variable
+</span></span><span class="line"><span class="cl">    file = fund + &#34;.xlsx&#34;
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # Import data from file as a pandas dataframe
+</span></span><span class="line"><span class="cl">    df = pd.read_excel(file, sheet_name = &#39;Worksheet&#39;, engine=&#39;openpyxl&#39;)
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # Set the column headings from row 5 (which is physically row 6)
+</span></span><span class="line"><span class="cl">    df.columns = df.iloc[5]
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # Set the column heading for the index to be &#34;None&#34;
+</span></span><span class="line"><span class="cl">    df.rename_axis(None, axis=1, inplace = True)
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # Drop the first 6 rows, 0 - 5
+</span></span><span class="line"><span class="cl">    df.drop(df.index[0:6], inplace=True)
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # Set the date column as the index
+</span></span><span class="line"><span class="cl">    df.set_index(&#39;Date&#39;, inplace = True)
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # Drop the volume column
+</span></span><span class="line"><span class="cl">    try:
+</span></span><span class="line"><span class="cl">        df.drop(columns = {&#39;PX_VOLUME&#39;}, inplace = True)
+</span></span><span class="line"><span class="cl">    except KeyError:
+</span></span><span class="line"><span class="cl">        pass
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    # Rename column
+</span></span><span class="line"><span class="cl">    df.rename(columns = {&#39;PX_LAST&#39;:&#39;Close&#39;}, inplace = True)
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # Sort by date
+</span></span><span class="line"><span class="cl">    df.sort_values(by=[&#39;Date&#39;], inplace = True)
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # Export data to excel
+</span></span><span class="line"><span class="cl">    file = fund + &#34;_Clean.xlsx&#34;
+</span></span><span class="line"><span class="cl">    df.to_excel(file, sheet_name=&#39;data&#39;)
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # Output confirmation
+</span></span><span class="line"><span class="cl">    print(f&#34;The last date of data for {fund} is: &#34;)
+</span></span><span class="line"><span class="cl">    print(df[-1:])
+</span></span><span class="line"><span class="cl">    print(f&#34;Bloomberg data conversion complete for {fund} data&#34;)
+</span></span><span class="line"><span class="cl">    return print(f&#34;--------------------&#34;)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="set-number-of-decimal-places">Set Number Of Decimal Places
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"># Set number of decimal places in pandas
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">def dp(decimal_places):
+</span></span><span class="line"><span class="cl">    pd.set_option(&#39;display.float_format&#39;, lambda x: f&#39;%.{decimal_places}f&#39; % x)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="return-information-about-a-dataframe">Return Information About A Dataframe
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"># The `df_info` function returns some useful information about
+</span></span><span class="line"><span class="cl"># a dataframe, such as the columns, data types, and size.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">def df_info(df):
+</span></span><span class="line"><span class="cl">    print(&#39;There are &#39;, df.shape[0], &#39; rows and &#39;, df.shape[1], &#39; columns&#39;)
+</span></span><span class="line"><span class="cl">    print(&#39;The columns and data types are:&#39;)
+</span></span><span class="line"><span class="cl">    print(df.dtypes)
+</span></span><span class="line"><span class="cl">    print(&#39;The first 4 rows are:&#39;)
+</span></span><span class="line"><span class="cl">    display(df.head(4))
+</span></span><span class="line"><span class="cl">    print(&#39;The last 4 rows are:&#39;)
+</span></span><span class="line"><span class="cl">    display(df.tail(4))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="import-data-from-csv--xlsx">Import Data From CSV / XLSX
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">def load_data(file):
+</span></span><span class="line"><span class="cl">    # Import CSV
+</span></span><span class="line"><span class="cl">    try:
+</span></span><span class="line"><span class="cl">        df = pd.read_csv(file)
+</span></span><span class="line"><span class="cl">    except:
+</span></span><span class="line"><span class="cl">        pass
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Import excel
+</span></span><span class="line"><span class="cl">    try:
+</span></span><span class="line"><span class="cl">        df = pd.read_excel(file, sheet_name=&#39;data&#39;, engine=&#39;openpyxl&#39;)
+</span></span><span class="line"><span class="cl">    except:
+</span></span><span class="line"><span class="cl">        pass
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    return df
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="portfolio-strategy">Portfolio Strategy
+</h3><p>This is the function that executes the strategy. That is, takes in the following variables and produces a dataframe with the results:</p>
+<ul>
+<li>fund_list: This is a list of the funds (in this case asset classes) to be used</li>
+<li>starting_cash: Starting capital amount for the strategy</li>
+<li>cash_contrib: Daily cash contribution</li>
+<li>close_prices_df; Dataframe with close prices for each asset class</li>
+<li>rebal_month: Month that the annual rebalancing should take place</li>
+<li>rebal_day: Day of the month that the annual rebalancing should take place</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">def strategy(fund_list, starting_cash, cash_contrib, close_prices_df, rebal_month, rebal_day, rebal_per_high, rebal_per_low):
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    num_funds = len(fund_list)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    df = close_prices_df.copy()
+</span></span><span class="line"><span class="cl">    df.reset_index(inplace = True)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Date to be used for annual rebalance
+</span></span><span class="line"><span class="cl">    target_month = rebal_month
+</span></span><span class="line"><span class="cl">    target_day = rebal_day
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Create a dataframe with dates from the specific month
+</span></span><span class="line"><span class="cl">    rebal_date = df[df[&#39;Date&#39;].dt.month == target_month]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Specify the date or the next closest
+</span></span><span class="line"><span class="cl">    rebal_date = rebal_date[rebal_date[&#39;Date&#39;].dt.day &gt;= target_day]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Group by year and take the first entry for each year
+</span></span><span class="line"><span class="cl">    rebal_dates_by_year = rebal_date.groupby(rebal_date[&#39;Date&#39;].dt.year).first().reset_index(drop=True)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    &#39;&#39;&#39;
+</span></span><span class="line"><span class="cl">    Column order for the dataframe:
+</span></span><span class="line"><span class="cl">    df[fund + &#34;_BA_Shares&#34;]
+</span></span><span class="line"><span class="cl">    df[fund + &#34;_BA_$_Invested&#34;]
+</span></span><span class="line"><span class="cl">    df[fund + &#34;_BA_Port_%&#34;]
+</span></span><span class="line"><span class="cl">    df[&#39;Total_BA_$_Invested&#39;]
+</span></span><span class="line"><span class="cl">    df[&#39;Contribution&#39;]
+</span></span><span class="line"><span class="cl">    df[&#39;Rebalance&#39;]
+</span></span><span class="line"><span class="cl">    df[fund + &#34;_AA_Shares&#34;]
+</span></span><span class="line"><span class="cl">    df[fund + &#34;_AA_$_Invested&#34;]
+</span></span><span class="line"><span class="cl">    df[fund + &#34;_AA_Port_%&#34;]
+</span></span><span class="line"><span class="cl">    df[&#39;Total_AA_$_Invested&#39;]
+</span></span><span class="line"><span class="cl">    &#39;&#39;&#39;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Calculate the columns and initial values for before action (BA) shares, $ invested, and port %
+</span></span><span class="line"><span class="cl">    for fund in fund_list:
+</span></span><span class="line"><span class="cl">        df[fund + &#34;_BA_Shares&#34;] = starting_cash / num_funds / df[fund + &#34;_Close&#34;]
+</span></span><span class="line"><span class="cl">        df[fund + &#34;_BA_$_Invested&#34;] = df[fund + &#34;_BA_Shares&#34;] * df[fund + &#34;_Close&#34;]
+</span></span><span class="line"><span class="cl">        df[fund + &#34;_BA_Port_%&#34;] = 0.25
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Set column values initially
+</span></span><span class="line"><span class="cl">    df[&#39;Total_BA_$_Invested&#39;] = starting_cash
+</span></span><span class="line"><span class="cl">    df[&#39;Contribution&#39;] = 0
+</span></span><span class="line"><span class="cl">    # df[&#39;Contribution&#39;] = cash_contrib
+</span></span><span class="line"><span class="cl">    df[&#39;Rebalance&#39;] = &#34;No&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Set columns and values initially for after action (AA) shares, $ invested, and port %
+</span></span><span class="line"><span class="cl">    for fund in fund_list:
+</span></span><span class="line"><span class="cl">        df[fund + &#34;_AA_Shares&#34;] = starting_cash / num_funds / df[fund + &#34;_Close&#34;]
+</span></span><span class="line"><span class="cl">        df[fund + &#34;_AA_$_Invested&#34;] = df[fund + &#34;_AA_Shares&#34;] * df[fund + &#34;_Close&#34;]
+</span></span><span class="line"><span class="cl">        df[fund + &#34;_AA_Port_%&#34;] = 0.25
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    # Set column value for after action (AA) total $ invested
+</span></span><span class="line"><span class="cl">    df[&#39;Total_AA_$_Invested&#39;] = starting_cash
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Iterate through the dataframe and execute the strategy
+</span></span><span class="line"><span class="cl">    for index, row in df.iterrows():
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        # Ensure there&#39;s a previous row to reference by checking the index value
+</span></span><span class="line"><span class="cl">        if index &gt; 0:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            # Initialize variable
+</span></span><span class="line"><span class="cl">            Total_BA_Invested = 0
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            # Calculate before action (BA) shares and $ invested values
+</span></span><span class="line"><span class="cl">            for fund in fund_list:
+</span></span><span class="line"><span class="cl">                df.at[index, fund + &#34;_BA_Shares&#34;] = df.at[index - 1, fund + &#34;_AA_Shares&#34;]
+</span></span><span class="line"><span class="cl">                df.at[index, fund + &#34;_BA_$_Invested&#34;] = df.at[index, fund + &#34;_BA_Shares&#34;] * row[fund + &#34;_Close&#34;]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                # Sum the asset values to find the total
+</span></span><span class="line"><span class="cl">                Total_BA_Invested = Total_BA_Invested + df.at[index, fund + &#34;_BA_$_Invested&#34;]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            # Calculate before action (BA) port % values
+</span></span><span class="line"><span class="cl">            for fund in fund_list:
+</span></span><span class="line"><span class="cl">                df.at[index, fund + &#34;_BA_Port_%&#34;] = df.at[index, fund + &#34;_BA_$_Invested&#34;] / Total_BA_Invested
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            # Set column for before action (BA) total $ invested
+</span></span><span class="line"><span class="cl">            df.at[index, &#39;Total_BA_$_Invested&#39;] = Total_BA_Invested
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            # Initialize variables
+</span></span><span class="line"><span class="cl">            rebalance = &#34;No&#34;
+</span></span><span class="line"><span class="cl">            date = row[&#39;Date&#39;]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            # Check for a specific date annually
+</span></span><span class="line"><span class="cl">            # Simple if statement to check if date_to_check is in jan_28_or_after_each_year
+</span></span><span class="line"><span class="cl">            if date in rebal_dates_by_year[&#39;Date&#39;].values:
+</span></span><span class="line"><span class="cl">                rebalance = &#34;Yes&#34;
+</span></span><span class="line"><span class="cl">            else:
+</span></span><span class="line"><span class="cl">                pass
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            # Check to see if any asset has portfolio percentage of greater than 35% or less than 15% and if so set variable
+</span></span><span class="line"><span class="cl">            for fund in fund_list:
+</span></span><span class="line"><span class="cl">                if df.at[index, fund + &#34;_BA_Port_%&#34;] &gt; rebal_per_high or df.at[index, fund + &#34;_BA_Port_%&#34;] &lt; rebal_per_low:
+</span></span><span class="line"><span class="cl">                    rebalance = &#34;Yes&#34;
+</span></span><span class="line"><span class="cl">                else:
+</span></span><span class="line"><span class="cl">                    pass
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            # If rebalance is required, rebalance back to 25% for each asset, else just divide contribution evenly across assets
+</span></span><span class="line"><span class="cl">            if rebalance == &#34;Yes&#34;:
+</span></span><span class="line"><span class="cl">                df.at[index, &#39;Rebalance&#39;] = rebalance
+</span></span><span class="line"><span class="cl">                for fund in fund_list:
+</span></span><span class="line"><span class="cl">                        df.at[index, fund + &#34;_AA_$_Invested&#34;] = (Total_BA_Invested + df.at[index, &#39;Contribution&#39;]) * 0.25
+</span></span><span class="line"><span class="cl">            else:
+</span></span><span class="line"><span class="cl">                df.at[index, &#39;Rebalance&#39;] = rebalance
+</span></span><span class="line"><span class="cl">                for fund in fund_list:
+</span></span><span class="line"><span class="cl">                        df.at[index, fund + &#34;_AA_$_Invested&#34;] = df.at[index, fund + &#34;_BA_$_Invested&#34;] + df.at[index, &#39;Contribution&#39;] * 0.25
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            # Initialize variable
+</span></span><span class="line"><span class="cl">            Total_AA_Invested = 0
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            # Set column values for after action (AA) shares and port %
+</span></span><span class="line"><span class="cl">            for fund in fund_list:
+</span></span><span class="line"><span class="cl">                df.at[index, fund + &#34;_AA_Shares&#34;] = df.at[index, fund + &#34;_AA_$_Invested&#34;] / row[fund + &#34;_Close&#34;]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                # Sum the asset values to find the total
+</span></span><span class="line"><span class="cl">                Total_AA_Invested = Total_AA_Invested + df.at[index, fund + &#34;_AA_$_Invested&#34;]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            # Calculate after action (AA) port % values
+</span></span><span class="line"><span class="cl">            for fund in fund_list:
+</span></span><span class="line"><span class="cl">                df.at[index, fund + &#34;_AA_Port_%&#34;] = df.at[index, fund + &#34;_AA_$_Invested&#34;] / Total_AA_Invested
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            # Set column for after action (AA) total $ invested
+</span></span><span class="line"><span class="cl">            df.at[index, &#39;Total_AA_$_Invested&#39;] = Total_AA_Invested
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        # If this is the first row
+</span></span><span class="line"><span class="cl">        else:
+</span></span><span class="line"><span class="cl">            pass
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    df[&#39;Return&#39;] = df[&#39;Total_AA_$_Invested&#39;].pct_change()
+</span></span><span class="line"><span class="cl">    df[&#39;Cumulative_Return&#39;] = (1 + df[&#39;Return&#39;]).cumprod()
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    plan_name = &#39;_&#39;.join(fund_list)
+</span></span><span class="line"><span class="cl">    file = plan_name + &#34;_Strategy.xlsx&#34;
+</span></span><span class="line"><span class="cl">    location = file
+</span></span><span class="line"><span class="cl">    df.to_excel(location, sheet_name=&#39;data&#39;)
+</span></span><span class="line"><span class="cl">    print(f&#34;Strategy complete for {plan_name}.&#34;)
+</span></span><span class="line"><span class="cl">    return df
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="summary-stats">Summary Stats
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"># stats for entire data set
+</span></span><span class="line"><span class="cl">def summary_stats(fund_list, df, period):
+</span></span><span class="line"><span class="cl">    if period == &#39;Monthly&#39;:
+</span></span><span class="line"><span class="cl">        timeframe = 12 # months
+</span></span><span class="line"><span class="cl">        df_stats = pd.DataFrame(df.mean(axis=0) * timeframe) # annualized
+</span></span><span class="line"><span class="cl">        df_stats.columns = [&#39;Annualized Mean&#39;]
+</span></span><span class="line"><span class="cl">        df_stats[&#39;Annualized Volatility&#39;] = df.std() * np.sqrt(timeframe) # annualized
+</span></span><span class="line"><span class="cl">        df_stats[&#39;Annualized Sharpe Ratio&#39;] = df_stats[&#39;Annualized Mean&#39;] / df_stats[&#39;Annualized Volatility&#39;]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        df_cagr = (1 + df[&#39;Return&#39;]).cumprod()
+</span></span><span class="line"><span class="cl">        cagr = (df_cagr[-1] / 1) ** (1/(len(df_cagr) / timeframe)) - 1
+</span></span><span class="line"><span class="cl">        df_stats[&#39;CAGR&#39;] = cagr
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        df_stats[period + &#39; Max Return&#39;] = df.max()
+</span></span><span class="line"><span class="cl">        df_stats[period + &#39; Max Return (Date)&#39;] = df.idxmax().values[0]
+</span></span><span class="line"><span class="cl">        df_stats[period + &#39; Min Return&#39;] = df.min()
+</span></span><span class="line"><span class="cl">        df_stats[period + &#39; Min Return (Date)&#39;] = df.idxmin().values[0]
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        wealth_index = 1000*(1+df).cumprod()
+</span></span><span class="line"><span class="cl">        previous_peaks = wealth_index.cummax()
+</span></span><span class="line"><span class="cl">        drawdowns = (wealth_index - previous_peaks)/previous_peaks
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        df_stats[&#39;Max Drawdown&#39;] = drawdowns.min()
+</span></span><span class="line"><span class="cl">        df_stats[&#39;Peak&#39;] = [previous_peaks[col][:drawdowns[col].idxmin()].idxmax() for col in previous_peaks.columns]
+</span></span><span class="line"><span class="cl">        df_stats[&#39;Bottom&#39;] = drawdowns.idxmin()
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">        recovery_date = []
+</span></span><span class="line"><span class="cl">        for col in wealth_index.columns:
+</span></span><span class="line"><span class="cl">            prev_max = previous_peaks[col][:drawdowns[col].idxmin()].max()
+</span></span><span class="line"><span class="cl">            recovery_wealth = pd.DataFrame([wealth_index[col][drawdowns[col].idxmin():]]).T
+</span></span><span class="line"><span class="cl">            recovery_date.append(recovery_wealth[recovery_wealth[col] &gt;= prev_max].index.min())
+</span></span><span class="line"><span class="cl">        df_stats[&#39;Recovery Date&#39;] = recovery_date
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        plan_name = &#39;_&#39;.join(fund_list)
+</span></span><span class="line"><span class="cl">        file = plan_name + &#34;_Summary_Stats.xlsx&#34;
+</span></span><span class="line"><span class="cl">        location = file
+</span></span><span class="line"><span class="cl">        df_stats.to_excel(location, sheet_name=&#39;data&#39;)
+</span></span><span class="line"><span class="cl">        print(f&#34;Summary stats complete for {plan_name}.&#34;)
+</span></span><span class="line"><span class="cl">        return df_stats
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    elif period == &#39;Weekly&#39;:
+</span></span><span class="line"><span class="cl">        timeframe = 52 # weeks
+</span></span><span class="line"><span class="cl">        df_stats = pd.DataFrame(df.mean(axis=0) * timeframe) # annualized
+</span></span><span class="line"><span class="cl">        df_stats.columns = [&#39;Annualized Mean&#39;]
+</span></span><span class="line"><span class="cl">        df_stats[&#39;Annualized Volatility&#39;] = df.std() * np.sqrt(timeframe) # annualized
+</span></span><span class="line"><span class="cl">        df_stats[&#39;Annualized Sharpe Ratio&#39;] = df_stats[&#39;Annualized Mean&#39;] / df_stats[&#39;Annualized Volatility&#39;]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        df_cagr = (1 + df[&#39;Return&#39;]).cumprod()
+</span></span><span class="line"><span class="cl">        cagr = (df_cagr[-1] / 1) ** (1/(len(df_cagr) / timeframe)) - 1
+</span></span><span class="line"><span class="cl">        df_stats[&#39;CAGR&#39;] = cagr
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        df_stats[period + &#39; Max Return&#39;] = df.max()
+</span></span><span class="line"><span class="cl">        df_stats[period + &#39; Max Return (Date)&#39;] = df.idxmax().values[0]
+</span></span><span class="line"><span class="cl">        df_stats[period + &#39; Min Return&#39;] = df.min()
+</span></span><span class="line"><span class="cl">        df_stats[period + &#39; Min Return (Date)&#39;] = df.idxmin().values[0]
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        wealth_index = 1000*(1+df).cumprod()
+</span></span><span class="line"><span class="cl">        previous_peaks = wealth_index.cummax()
+</span></span><span class="line"><span class="cl">        drawdowns = (wealth_index - previous_peaks)/previous_peaks
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        df_stats[&#39;Max Drawdown&#39;] = drawdowns.min()
+</span></span><span class="line"><span class="cl">        df_stats[&#39;Peak&#39;] = [previous_peaks[col][:drawdowns[col].idxmin()].idxmax() for col in previous_peaks.columns]
+</span></span><span class="line"><span class="cl">        df_stats[&#39;Bottom&#39;] = drawdowns.idxmin()
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">        recovery_date = []
+</span></span><span class="line"><span class="cl">        for col in wealth_index.columns:
+</span></span><span class="line"><span class="cl">            prev_max = previous_peaks[col][:drawdowns[col].idxmin()].max()
+</span></span><span class="line"><span class="cl">            recovery_wealth = pd.DataFrame([wealth_index[col][drawdowns[col].idxmin():]]).T
+</span></span><span class="line"><span class="cl">            recovery_date.append(recovery_wealth[recovery_wealth[col] &gt;= prev_max].index.min())
+</span></span><span class="line"><span class="cl">        df_stats[&#39;Recovery Date&#39;] = recovery_date
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        plan_name = &#39;_&#39;.join(fund_list)
+</span></span><span class="line"><span class="cl">        file = plan_name + &#34;_Summary_Stats.xlsx&#34;
+</span></span><span class="line"><span class="cl">        location = file
+</span></span><span class="line"><span class="cl">        df_stats.to_excel(location, sheet_name=&#39;data&#39;)
+</span></span><span class="line"><span class="cl">        print(f&#34;Summary stats complete for {plan_name}.&#34;)
+</span></span><span class="line"><span class="cl">        return df_stats
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    elif period == &#39;Daily&#39;:
+</span></span><span class="line"><span class="cl">        timeframe = 365 # days
+</span></span><span class="line"><span class="cl">        df_stats = pd.DataFrame(df.mean(axis=0) * timeframe) # annualized
+</span></span><span class="line"><span class="cl">        df_stats.columns = [&#39;Annualized Mean&#39;]
+</span></span><span class="line"><span class="cl">        df_stats[&#39;Annualized Volatility&#39;] = df.std() * np.sqrt(timeframe) # annualized
+</span></span><span class="line"><span class="cl">        df_stats[&#39;Annualized Sharpe Ratio&#39;] = df_stats[&#39;Annualized Mean&#39;] / df_stats[&#39;Annualized Volatility&#39;]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        df_cagr = (1 + df[&#39;Return&#39;]).cumprod()
+</span></span><span class="line"><span class="cl">        cagr = (df_cagr[-1] / 1) ** (1/(len(df_cagr) / timeframe)) - 1
+</span></span><span class="line"><span class="cl">        df_stats[&#39;CAGR&#39;] = cagr
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        df_stats[period + &#39; Max Return&#39;] = df.max()
+</span></span><span class="line"><span class="cl">        df_stats[period + &#39; Max Return (Date)&#39;] = df.idxmax().values[0]
+</span></span><span class="line"><span class="cl">        df_stats[period + &#39; Min Return&#39;] = df.min()
+</span></span><span class="line"><span class="cl">        df_stats[period + &#39; Min Return (Date)&#39;] = df.idxmin().values[0]
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        wealth_index = 1000*(1+df).cumprod()
+</span></span><span class="line"><span class="cl">        previous_peaks = wealth_index.cummax()
+</span></span><span class="line"><span class="cl">        drawdowns = (wealth_index - previous_peaks)/previous_peaks
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        df_stats[&#39;Max Drawdown&#39;] = drawdowns.min()
+</span></span><span class="line"><span class="cl">        df_stats[&#39;Peak&#39;] = [previous_peaks[col][:drawdowns[col].idxmin()].idxmax() for col in previous_peaks.columns]
+</span></span><span class="line"><span class="cl">        df_stats[&#39;Bottom&#39;] = drawdowns.idxmin()
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">        recovery_date = []
+</span></span><span class="line"><span class="cl">        for col in wealth_index.columns:
+</span></span><span class="line"><span class="cl">            prev_max = previous_peaks[col][:drawdowns[col].idxmin()].max()
+</span></span><span class="line"><span class="cl">            recovery_wealth = pd.DataFrame([wealth_index[col][drawdowns[col].idxmin():]]).T
+</span></span><span class="line"><span class="cl">            recovery_date.append(recovery_wealth[recovery_wealth[col] &gt;= prev_max].index.min())
+</span></span><span class="line"><span class="cl">        df_stats[&#39;Recovery Date&#39;] = recovery_date
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        plan_name = &#39;_&#39;.join(fund_list)
+</span></span><span class="line"><span class="cl">        file = plan_name + &#34;_Summary_Stats.xlsx&#34;
+</span></span><span class="line"><span class="cl">        location = file
+</span></span><span class="line"><span class="cl">        df_stats.to_excel(location, sheet_name=&#39;data&#39;)
+</span></span><span class="line"><span class="cl">        print(f&#34;Summary stats complete for {plan_name}.&#34;)
+</span></span><span class="line"><span class="cl">        return df_stats
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">    else:
+</span></span><span class="line"><span class="cl">        return print(&#34;Error, check inputs&#34;)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="plot-cumulative-return">Plot Cumulative Return
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">def plot_cumulative_return(strat_df):
+</span></span><span class="line"><span class="cl">    # Generate plot
+</span></span><span class="line"><span class="cl">    plt.figure(figsize=(10, 5), facecolor = &#39;#F5F5F5&#39;)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Plotting data
+</span></span><span class="line"><span class="cl">    plt.plot(strat_df.index, strat_df[&#39;Cumulative_Return&#39;], label = &#39;Strategy Cumulative Return&#39;, linestyle=&#39;-&#39;, color=&#39;green&#39;, linewidth=1)
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # Set X axis
+</span></span><span class="line"><span class="cl">    # x_tick_spacing = 5  # Specify the interval for x-axis ticks
+</span></span><span class="line"><span class="cl">    # plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
+</span></span><span class="line"><span class="cl">    plt.gca().xaxis.set_major_locator(mdates.YearLocator())
+</span></span><span class="line"><span class="cl">    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter(&#39;%Y&#39;))
+</span></span><span class="line"><span class="cl">    plt.xlabel(&#39;Year&#39;, fontsize = 9)
+</span></span><span class="line"><span class="cl">    plt.xticks(rotation = 45, fontsize = 7)
+</span></span><span class="line"><span class="cl">    # plt.xlim(, )
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Set Y axis
+</span></span><span class="line"><span class="cl">    y_tick_spacing = 0.5  # Specify the interval for y-axis ticks
+</span></span><span class="line"><span class="cl">    plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
+</span></span><span class="line"><span class="cl">    plt.ylabel(&#39;Cumulative Return&#39;, fontsize = 9)
+</span></span><span class="line"><span class="cl">    plt.yticks(fontsize = 7)
+</span></span><span class="line"><span class="cl">    plt.ylim(0, 7.5)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Set title, etc.
+</span></span><span class="line"><span class="cl">    plt.title(&#39;Cumulative Return&#39;, fontsize = 12)
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # Set the grid &amp; legend
+</span></span><span class="line"><span class="cl">    plt.tight_layout()
+</span></span><span class="line"><span class="cl">    plt.grid(True)
+</span></span><span class="line"><span class="cl">    plt.legend(fontsize=8)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Save the figure
+</span></span><span class="line"><span class="cl">    plt.savefig(&#39;03_Cumulative_Return.png&#39;, dpi=300, bbox_inches=&#39;tight&#39;)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Display the plot
+</span></span><span class="line"><span class="cl">    return plt.show()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="plot-portfolio-values">Plot Portfolio Values
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">def plot_values(strat_df):   
+</span></span><span class="line"><span class="cl">    # Generate plot   
+</span></span><span class="line"><span class="cl">    plt.figure(figsize=(10, 5), facecolor = &#39;#F5F5F5&#39;)
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # Plotting data
+</span></span><span class="line"><span class="cl">    plt.plot(strat_df.index, strat_df[&#39;Total_AA_$_Invested&#39;], label=&#39;Total Portfolio Value&#39;, linestyle=&#39;-&#39;, color=&#39;black&#39;, linewidth=1)
+</span></span><span class="line"><span class="cl">    plt.plot(strat_df.index, strat_df[&#39;Stocks_AA_$_Invested&#39;], label=&#39;Stocks Position Value&#39;, linestyle=&#39;-&#39;, color=&#39;orange&#39;, linewidth=1)
+</span></span><span class="line"><span class="cl">    plt.plot(strat_df.index, strat_df[&#39;Bonds_AA_$_Invested&#39;], label=&#39;Bond Position Value&#39;, linestyle=&#39;-&#39;, color=&#39;yellow&#39;, linewidth=1)
+</span></span><span class="line"><span class="cl">    plt.plot(strat_df.index, strat_df[&#39;Gold_AA_$_Invested&#39;], label=&#39;Gold Position Value&#39;, linestyle=&#39;-&#39;, color=&#39;blue&#39;, linewidth=1)
+</span></span><span class="line"><span class="cl">    plt.plot(strat_df.index, strat_df[&#39;Cash_AA_$_Invested&#39;], label=&#39;Cash Position Value&#39;, linestyle=&#39;-&#39;, color=&#39;brown&#39;, linewidth=1)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Set X axis
+</span></span><span class="line"><span class="cl">    # x_tick_spacing = 5  # Specify the interval for x-axis ticks
+</span></span><span class="line"><span class="cl">    # plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
+</span></span><span class="line"><span class="cl">    plt.gca().xaxis.set_major_locator(mdates.YearLocator())
+</span></span><span class="line"><span class="cl">    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter(&#39;%Y&#39;))
+</span></span><span class="line"><span class="cl">    plt.xlabel(&#39;Year&#39;, fontsize = 9)
+</span></span><span class="line"><span class="cl">    plt.xticks(rotation = 45, fontsize = 7)
+</span></span><span class="line"><span class="cl">    # plt.xlim(, )
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Set Y axis
+</span></span><span class="line"><span class="cl">    y_tick_spacing = 5000  # Specify the interval for y-axis ticks
+</span></span><span class="line"><span class="cl">    plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
+</span></span><span class="line"><span class="cl">    plt.gca().yaxis.set_major_formatter(mtick.FuncFormatter(lambda x, pos: &#39;{:,.0f}&#39;.format(x))) # Adding commas to y-axis labels
+</span></span><span class="line"><span class="cl">    plt.ylabel(&#39;Total Value ($)&#39;, fontsize = 9)
+</span></span><span class="line"><span class="cl">    plt.yticks(fontsize = 7)
+</span></span><span class="line"><span class="cl">    plt.ylim(0, 75000)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Set title, etc.
+</span></span><span class="line"><span class="cl">    plt.title(&#39;Total Values For Stocks, Bonds, Gold, and Cash Positions and Portfolio&#39;, fontsize = 12)
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # Set the grid &amp; legend
+</span></span><span class="line"><span class="cl">    plt.tight_layout()
+</span></span><span class="line"><span class="cl">    plt.grid(True)
+</span></span><span class="line"><span class="cl">    plt.legend(fontsize=8)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Save the figure
+</span></span><span class="line"><span class="cl">    plt.savefig(&#39;04_Portfolio_Values.png&#39;, dpi=300, bbox_inches=&#39;tight&#39;)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Display the plot
+</span></span><span class="line"><span class="cl">    return plt.show()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="plot-portfolio-drawdown">Plot Portfolio Drawdown
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">def plot_drawdown(strat_df):
+</span></span><span class="line"><span class="cl">    rolling_max = strat_df[&#39;Total_AA_$_Invested&#39;].cummax()
+</span></span><span class="line"><span class="cl">    drawdown = (strat_df[&#39;Total_AA_$_Invested&#39;] - rolling_max) / rolling_max * 100
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Generate plot   
+</span></span><span class="line"><span class="cl">    plt.figure(figsize=(10, 5), facecolor = &#39;#F5F5F5&#39;)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Plotting data
+</span></span><span class="line"><span class="cl">    plt.plot(strat_df.index, drawdown, label=&#39;Drawdown&#39;, linestyle=&#39;-&#39;, color=&#39;red&#39;, linewidth=1)
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # Set X axis
+</span></span><span class="line"><span class="cl">    # x_tick_spacing = 5  # Specify the interval for x-axis ticks
+</span></span><span class="line"><span class="cl">    # plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
+</span></span><span class="line"><span class="cl">    plt.gca().xaxis.set_major_locator(mdates.YearLocator())
+</span></span><span class="line"><span class="cl">    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter(&#39;%Y&#39;))
+</span></span><span class="line"><span class="cl">    plt.xlabel(&#39;Year&#39;, fontsize = 9)
+</span></span><span class="line"><span class="cl">    plt.xticks(rotation = 45, fontsize = 7)
+</span></span><span class="line"><span class="cl">    # plt.xlim(, )
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Set Y axis
+</span></span><span class="line"><span class="cl">    y_tick_spacing = 1  # Specify the interval for y-axis ticks
+</span></span><span class="line"><span class="cl">    plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
+</span></span><span class="line"><span class="cl">    # plt.gca().yaxis.set_major_formatter(mtick.FuncFormatter(lambda x, pos: &#39;{:,.0f}&#39;.format(x))) # Adding commas to y-axis labels
+</span></span><span class="line"><span class="cl">    plt.gca().yaxis.set_major_formatter(mtick.FuncFormatter(lambda x, pos: &#39;{:.0f}&#39;.format(x))) # Adding 0 decimal places to y-axis labels
+</span></span><span class="line"><span class="cl">    plt.ylabel(&#39;Drawdown (%)&#39;, fontsize = 9)
+</span></span><span class="line"><span class="cl">    plt.yticks(fontsize = 7)
+</span></span><span class="line"><span class="cl">    plt.ylim(-20, 0)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Set title, etc.
+</span></span><span class="line"><span class="cl">    plt.title(&#39;Portfolio Drawdown&#39;, fontsize = 12)
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # Set the grid &amp; legend
+</span></span><span class="line"><span class="cl">    plt.tight_layout()
+</span></span><span class="line"><span class="cl">    plt.grid(True)
+</span></span><span class="line"><span class="cl">    plt.legend(fontsize=8)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Save the figure
+</span></span><span class="line"><span class="cl">    plt.savefig(&#39;05_Portfolio_Drawdown.png&#39;, dpi=300, bbox_inches=&#39;tight&#39;)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Display the plot
+</span></span><span class="line"><span class="cl">    return plt.show()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="plot-portfolio-asset-weights">Plot Portfolio Asset Weights
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">def plot_asset_weights(strat_df):
+</span></span><span class="line"><span class="cl">    # Generate plot   
+</span></span><span class="line"><span class="cl">    plt.figure(figsize=(10, 5), facecolor = &#39;#F5F5F5&#39;)
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # Plotting data
+</span></span><span class="line"><span class="cl">    plt.plot(strat_df.index, strat_df[&#39;Stocks_AA_Port_%&#39;] * 100, label=&#39;Stocks Portfolio Weight&#39;, linestyle=&#39;-&#39;, color=&#39;orange&#39;, linewidth=1)
+</span></span><span class="line"><span class="cl">    plt.plot(strat_df.index, strat_df[&#39;Bonds_AA_Port_%&#39;] * 100, label=&#39;Bonds Portfolio Weight&#39;, linestyle=&#39;-&#39;, color=&#39;yellow&#39;, linewidth=1)
+</span></span><span class="line"><span class="cl">    plt.plot(strat_df.index, strat_df[&#39;Gold_AA_Port_%&#39;] * 100, label=&#39;Gold Portfolio Weight&#39;, linestyle=&#39;-&#39;, color=&#39;blue&#39;, linewidth=1)
+</span></span><span class="line"><span class="cl">    plt.plot(strat_df.index, strat_df[&#39;Cash_AA_Port_%&#39;] * 100, label=&#39;Cash Portfolio Weight&#39;, linestyle=&#39;-&#39;, color=&#39;brown&#39;, linewidth=1)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Set X axis
+</span></span><span class="line"><span class="cl">    # x_tick_spacing = 5  # Specify the interval for x-axis ticks
+</span></span><span class="line"><span class="cl">    # plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
+</span></span><span class="line"><span class="cl">    plt.gca().xaxis.set_major_locator(mdates.YearLocator())
+</span></span><span class="line"><span class="cl">    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter(&#39;%Y&#39;))
+</span></span><span class="line"><span class="cl">    plt.xlabel(&#39;Year&#39;, fontsize = 9)
+</span></span><span class="line"><span class="cl">    plt.xticks(rotation = 45, fontsize = 7)
+</span></span><span class="line"><span class="cl">    # plt.xlim(, )
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Set Y axis
+</span></span><span class="line"><span class="cl">    y_tick_spacing = 2  # Specify the interval for y-axis ticks
+</span></span><span class="line"><span class="cl">    plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
+</span></span><span class="line"><span class="cl">    # plt.gca().yaxis.set_major_formatter(mtick.FuncFormatter(lambda x, pos: &#39;{:,.0f}&#39;.format(x))) # Adding commas to y-axis labels
+</span></span><span class="line"><span class="cl">    plt.ylabel(&#39;Asset Weight (%)&#39;, fontsize = 9)
+</span></span><span class="line"><span class="cl">    plt.yticks(fontsize = 7)
+</span></span><span class="line"><span class="cl">    plt.ylim(14, 36)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Set title, etc.
+</span></span><span class="line"><span class="cl">    plt.title(&#39;Portfolio Asset Weights For Stocks, Bonds, Gold, and Cash Positions&#39;, fontsize = 12)
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    # Set the grid &amp; legend
+</span></span><span class="line"><span class="cl">    plt.tight_layout()
+</span></span><span class="line"><span class="cl">    plt.grid(True)
+</span></span><span class="line"><span class="cl">    plt.legend(fontsize=8)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Save the figure
+</span></span><span class="line"><span class="cl">    plt.savefig(&#39;07_Portfolio_Weights.png&#39;, dpi=300, bbox_inches=&#39;tight&#39;)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    # Display the plot
+</span></span><span class="line"><span class="cl">    return plt.show()
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="data-overview">Data Overview
+</h2><h3 id="import-data">Import Data
+</h3><p>As previously mentioned, the data for this exercise comes primarily from Bloomberg. We&rsquo;ll start with loading the data first for bonds:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"># Bonds dataframe
+</span></span><span class="line"><span class="cl">bb_data_updater(&#39;SPBDU10T_S&amp;P US Treasury Bond 7-10 Year Total Return Index&#39;)
+</span></span><span class="line"><span class="cl">bonds_data = load_data(&#39;SPBDU10T_S&amp;P US Treasury Bond 7-10 Year Total Return Index_Clean.xlsx&#39;)
+</span></span><span class="line"><span class="cl">bonds_data[&#39;Date&#39;] = pd.to_datetime(bonds_data[&#39;Date&#39;])
+</span></span><span class="line"><span class="cl">bonds_data.set_index(&#39;Date&#39;, inplace = True)
+</span></span><span class="line"><span class="cl">bonds_data = bonds_data[(bonds_data.index &gt;= &#39;1990-01-01&#39;) &amp; (bonds_data.index &lt;= &#39;2023-12-31&#39;)]
+</span></span><span class="line"><span class="cl">bonds_data.rename(columns={&#39;Close&#39;:&#39;Bonds_Close&#39;}, inplace=True)
+</span></span><span class="line"><span class="cl">bonds_data[&#39;Bonds_Daily_Return&#39;] = bonds_data[&#39;Bonds_Close&#39;].pct_change()
+</span></span><span class="line"><span class="cl">bonds_data[&#39;Bonds_Total_Return&#39;] = (1 + bonds_data[&#39;Bonds_Daily_Return&#39;]).cumprod()
+</span></span><span class="line"><span class="cl">bonds_data
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The following is the output:</p>
+<p><img src="/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/01_Bonds_Data.png"
+	width="888"
+	height="506"
+	
+	loading="lazy"
+	
+		alt="Bonds Data"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="421px"
+	
+></p>
+<p>Then for stocks:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"># Stocks dataframe
+</span></span><span class="line"><span class="cl">bb_data_updater(&#39;SPXT_S&amp;P 500 Total Return Index&#39;)
+</span></span><span class="line"><span class="cl">stocks_data = load_data(&#39;SPXT_S&amp;P 500 Total Return Index_Clean.xlsx&#39;)
+</span></span><span class="line"><span class="cl">stocks_data[&#39;Date&#39;] = pd.to_datetime(stocks_data[&#39;Date&#39;])
+</span></span><span class="line"><span class="cl">stocks_data.set_index(&#39;Date&#39;, inplace = True)
+</span></span><span class="line"><span class="cl">stocks_data = stocks_data[(stocks_data.index &gt;= &#39;1990-01-01&#39;) &amp; (stocks_data.index &lt;= &#39;2023-12-31&#39;)]
+</span></span><span class="line"><span class="cl">stocks_data.rename(columns={&#39;Close&#39;:&#39;Stocks_Close&#39;}, inplace=True)
+</span></span><span class="line"><span class="cl">stocks_data[&#39;Stocks_Daily_Return&#39;] = stocks_data[&#39;Stocks_Close&#39;].pct_change()
+</span></span><span class="line"><span class="cl">stocks_data[&#39;Stocks_Total_Return&#39;] = (1 + stocks_data[&#39;Stocks_Daily_Return&#39;]).cumprod()
+</span></span><span class="line"><span class="cl">stocks_data
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>And finally, gold:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"># Gold dataframe
+</span></span><span class="line"><span class="cl">bb_data_updater(&#39;XAU_Gold USD Spot&#39;)
+</span></span><span class="line"><span class="cl">gold_data = load_data(&#39;XAU_Gold USD Spot_Clean.xlsx&#39;)
+</span></span><span class="line"><span class="cl">gold_data[&#39;Date&#39;] = pd.to_datetime(gold_data[&#39;Date&#39;])
+</span></span><span class="line"><span class="cl">gold_data.set_index(&#39;Date&#39;, inplace = True)
+</span></span><span class="line"><span class="cl">gold_data = gold_data[(gold_data.index &gt;= &#39;1990-01-01&#39;) &amp; (gold_data.index &lt;= &#39;2023-12-31&#39;)]
+</span></span><span class="line"><span class="cl">gold_data.rename(columns={&#39;Close&#39;:&#39;Gold_Close&#39;}, inplace=True)
+</span></span><span class="line"><span class="cl">gold_data[&#39;Gold_Daily_Return&#39;] = gold_data[&#39;Gold_Close&#39;].pct_change()
+</span></span><span class="line"><span class="cl">gold_data[&#39;Gold_Total_Return&#39;] = (1 + gold_data[&#39;Gold_Daily_Return&#39;]).cumprod()
+</span></span><span class="line"><span class="cl">gold_data
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="combine-data">Combine Data
+</h3><p>We&rsquo;ll now combine the dataframes for the timeseries data from each of the asset classes, as follows:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">perm_port = pd.merge(stocks_data[&#39;Stocks_Close&#39;], bonds_data[&#39;Bonds_Close&#39;], left_index=True, right_index=True)
+</span></span><span class="line"><span class="cl">perm_port = pd.merge(perm_port, gold_data[&#39;Gold_Close&#39;], left_index=True, right_index=True)
+</span></span><span class="line"><span class="cl">perm_port[&#39;Cash_Close&#39;] = 1
+</span></span><span class="line"><span class="cl">perm_port.dropna(inplace=True)
+</span></span><span class="line"><span class="cl">perm_port
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="dataframe-info">DataFrame Info
+</h3><p>Now, running:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">df_info(perm_port)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Gives us the following:</p>
+<p><img src="/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/02_Perm_Port_Data.png"
+	width="498"
+	height="546"
+	
+	loading="lazy"
+	
+		alt="DataFrame Info"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="91"
+		data-flex-basis="218px"
+	
+></p>
+<p>We can see that we have close data for all 4 asset classes from the beginning of 1990 to the end of 2023.</p>
+<h2 id="execute-strategy">Execute Strategy
+</h2><p>Using an annual rebalance date of January 1, we&rsquo;ll now execute the strategy with the following code:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"># List of funds to be used
+</span></span><span class="line"><span class="cl">fund_list = [&#39;Stocks&#39;, &#39;Bonds&#39;, &#39;Gold&#39;, &#39;Cash&#39;]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Starting cash contribution
+</span></span><span class="line"><span class="cl">starting_cash = 10000
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Monthly cash contribution
+</span></span><span class="line"><span class="cl">cash_contrib = 0
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">strat = strategy(fund_list, starting_cash, cash_contrib, perm_port, 1, 1, 0.35, 0.15).set_index(&#39;Date&#39;)
+</span></span><span class="line"><span class="cl">sum_stats = summary_stats(fund_list, strat[[&#39;Return&#39;]], &#39;Daily&#39;)
+</span></span><span class="line"><span class="cl">display(sum_stats)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">strat_pre_1999 = strat[strat.index &lt; &#39;2000-01-01&#39;]
+</span></span><span class="line"><span class="cl">sum_stats_pre_1999 = summary_stats(fund_list, strat_pre_1999[[&#39;Return&#39;]], &#39;Daily&#39;)
+</span></span><span class="line"><span class="cl">display(sum_stats_pre_1999)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">strat_post_1999 = strat[strat.index &gt;= &#39;2000-01-01&#39;]
+</span></span><span class="line"><span class="cl">sum_stats_post_1999 = summary_stats(fund_list, strat_post_1999[[&#39;Return&#39;]], &#39;Daily&#39;)
+</span></span><span class="line"><span class="cl">display(sum_stats_post_1999)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">plot_cumulative_return(strat)
+</span></span><span class="line"><span class="cl">plot_values(strat)
+</span></span><span class="line"><span class="cl">plot_drawdown(strat)
+</span></span><span class="line"><span class="cl">plot_asset_weights(strat)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">strat_annual_returns = strat[&#39;Cumulative_Return&#39;].resample(&#39;Y&#39;).last().pct_change().dropna()
+</span></span><span class="line"><span class="cl">strat_annual_returns_df = strat_annual_returns.to_frame()
+</span></span><span class="line"><span class="cl">strat_annual_returns_df[&#39;Year&#39;] = strat_annual_returns_df.index.year  # Add a &#39;Year&#39; column with just the year
+</span></span><span class="line"><span class="cl">strat_annual_returns_df.reset_index(drop=True, inplace=True)  # Reset the index to remove the datetime index
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Now, the DataFrame will have &#39;Year&#39; and &#39;Cumulative_Return&#39; columns
+</span></span><span class="line"><span class="cl">strat_annual_returns_df = strat_annual_returns_df[[&#39;Year&#39;, &#39;Cumulative_Return&#39;]]  # Keep only &#39;Year&#39; and &#39;Cumulative_Return&#39; columns
+</span></span><span class="line"><span class="cl">strat_annual_returns_df.rename(columns = {&#39;Cumulative_Return&#39;:&#39;Return&#39;}, inplace=True)
+</span></span><span class="line"><span class="cl">strat_annual_returns_df.set_index(&#39;Year&#39;, inplace=True)
+</span></span><span class="line"><span class="cl">strat_annual_returns_df
+</span></span><span class="line"><span class="cl"># display(strat_annual_returns_df)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">plan_name = &#39;_&#39;.join(fund_list)
+</span></span><span class="line"><span class="cl">file = plan_name + &#34;_Annual_Returns.xlsx&#34;
+</span></span><span class="line"><span class="cl">location = file
+</span></span><span class="line"><span class="cl">strat_annual_returns_df.to_excel(location, sheet_name=&#39;data&#39;)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">plot_annual_returns(strat_annual_returns_df)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Since the strategy, summary statistics, and annual returns are all exported as excel files, they can be found at the following locations:</p>
+<p><a class="link" href="Stocks_Bonds_Gold_Cash_Strategy.xlsx" >Stocks_Bonds_Gold_Cash_Strategy.xlsx</a></br>
+<a class="link" href="Stocks_Bonds_Gold_Cash_Summary_Stats.xlsx" >Stocks_Bonds_Gold_Cash_Summary_Stats.xlsx</a></br>
+<a class="link" href="Stocks_Bonds_Gold_Cash_Annual_Returns.xlsx" >Stocks_Bonds_Gold_Cash_Annual_Returns.xlsx</a></br></p>
+<p>Here&rsquo;s the summary stats for the example above:</p>
+<p><img src="/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/06_Summary_Stats.png"
+	width="1561"
+	height="70"
+	
+	loading="lazy"
+	
+		alt="Summary Stats"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="2230"
+		data-flex-basis="5352px"
+	
+></p>
+<p>Here we have a mean annualized return of 8.3%, volatility of 7.2%, a CAGR of 8.4% and a Sharpe ratio of 1.15. And this with a max drawdown of just over 15%. Not bad, Mr. Browne!</p>
+<p>Since the book was published in 1999, let&rsquo;s take a look at the summary stats for below and after 1999.</p>
+<p><img src="/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/10_Summary_Stats_Pre_1999.png"
+	width="1561"
+	height="70"
+	
+	loading="lazy"
+	
+		alt="Summary Stats Pre 1999"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="2230"
+		data-flex-basis="5352px"
+	
+></p>
+<p><img src="/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/11_Summary_Stats_Post_1999.png"
+	width="1561"
+	height="70"
+	
+	loading="lazy"
+	
+		alt="Summary Stats Post 1999"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="2230"
+		data-flex-basis="5352px"
+	
+></p>
+<p>The mean annualized return is approximately 0.7% lower for the pre 1999 vs post 1999 data, as is the CAGR. The volatility is higher for the post 1999 data which leads to a difference in the Sharpe ratio.</p>
+<p>Here&rsquo;s the annual returns:</p>
+<p><img src="/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/09_Portfolio_Annual_Returns_Table.png"
+	width="115"
+	height="680"
+	
+	loading="lazy"
+	
+		alt="Portfolio Annual Returns"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="16"
+		data-flex-basis="40px"
+	
+></p>
+<h3 id="plots">Plots
+</h3><p>Here are several relevant plots:</p>
+<ol>
+<li>Cumulative Return</li>
+</ol>
+<p><img src="/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/03_Cumulative_Return.png"
+	width="2966"
+	height="1461"
+	
+	loading="lazy"
+	
+		alt="Cumulative Return"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="203"
+		data-flex-basis="487px"
+	
+></p>
+<ol start="2">
+<li>Portfolio Values (Total, Stocks, Bonds, Gold, and Cash)</li>
+</ol>
+<p><img src="/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/04_Portfolio_Values.png"
+	width="2966"
+	height="1461"
+	
+	loading="lazy"
+	
+		alt="Portfolio Values"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="203"
+		data-flex-basis="487px"
+	
+></p>
+<p>Here we can see the annual rebalancing taking effect with the values of the different asset classes. This can also be seen more clearly below.</p>
+<ol start="3">
+<li>Portfolio Drawdown</li>
+</ol>
+<p><img src="/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/05_Portfolio_Drawdown.png"
+	width="2967"
+	height="1461"
+	
+	loading="lazy"
+	
+		alt="Portfolio Drawdown"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="203"
+		data-flex-basis="487px"
+	
+></p>
+<p>From this plot, we can see that the maximum drawdown came during the GFC; the drawdown during COVID was (interestingly) less than 10%.</p>
+<ol start="4">
+<li>Portfolio Asset Weights</li>
+</ol>
+<p><img src="/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/07_Portfolio_Weights.png"
+	width="2966"
+	height="1461"
+	
+	loading="lazy"
+	
+		alt="Portfolio Weights"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="203"
+		data-flex-basis="487px"
+	
+></p>
+<p>The annual rebalancing appears to work effectively by selling assets that have increased in value and buying assets that have decreased in value over the previous year. Also note that there is only one instance when the weight of an asset fell to 15%. This occured for stocks during the GFC.</p>
+<ol start="5">
+<li>Portfolio Annual Returns</li>
+</ol>
+<p><img src="/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/08_Portfolio_Annual_Returns.png"
+	width="2966"
+	height="1461"
+	
+	loading="lazy"
+	
+		alt="Portfolio Annual Returns"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="203"
+		data-flex-basis="487px"
+	
+></p>
+<p>It&rsquo;s interesting to see that there really aren&rsquo;t any significant up or down years. Instead, it&rsquo;s a steady climb without much volatility.</p>
+<h2 id="summary">Summary
+</h2><p>Overall, this is an interesting case study and Browne&rsquo;s idea behind the Permanent Portfolio is certainly compelling. There might be more investigation to be done with respect to the following:</p>
+<ul>
+<li>Investigate the extent to which the rebalancing date effects the portfolio performance</li>
+<li>Vary the weights of the asset classes to see if there is a meanful change in the results</li>
+<li>Experiment with leverage (i.e., simulating 1.2x leverage with a portfolio with weights of 30, 30, 30, 10 for stocks, bonds, gold, cash respectively.)</li>
+</ul>
+<h2 id="references">References
+</h2><p>Fail-Safe Investing: Lifelong Financial Security in 30 Minutes, by Harry Browne</p>
+<h2 id="code">Code
+</h2><p>The jupyter notebook with the functions and all other code is available <a class="link" href="harry-browne-permanent-portfolio.ipynb" >here</a>.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/python/">Python</a>
+        
+            <a href="/tags/bloomberg/">Bloomberg</a>
+        
+            <a href="/tags/pandas/">Pandas</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on November 4, 2024
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/2023/11/cleaning-a-bloomberg-data-excel-export/">
+        
+        
+            <div class="article-image">
+                <img src="/2023/11/cleaning-a-bloomberg-data-excel-export/cover.fbb99754d0fad3b1522686e2cd554489.jpg" 
+                        width="1792" 
+                        height="1024" 
+                        loading="lazy"
+                        alt="Featured image of post Cleaning A Bloomberg Data Excel Export"
+                        
+                        data-hash="md5-&#43;7mXVND607FSJobizVVEiQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Cleaning A Bloomberg Data Excel Export</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/2023/12/nasdaq-data-link-tables-api-data-retrieval/">
+        
+        
+            <div class="article-image">
+                <img src="/2023/12/nasdaq-data-link-tables-api-data-retrieval/cover.faace7bae0694be011b4df97baf5f416.jpg" 
+                        width="1792" 
+                        height="1024" 
+                        loading="lazy"
+                        alt="Featured image of post Nasdaq Data Link Tables API Data Retrieval"
+                        
+                        data-hash="md5-&#43;qznuuBpS&#43;ARtN&#43;XuvX0Fg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Nasdaq Data Link Tables API Data Retrieval</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="jaredszajkowski/jaredszajkowski.github.io"
+    data-repo-id="R_kgDOKZLn5w"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOKZLn584CaJwO"
+    data-mapping="title"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="light"
+    data-lang="en-us"
+    data-loading=""
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('dark');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2023 - 
+        
+        2024 Jared Szajkowski
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.29.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
