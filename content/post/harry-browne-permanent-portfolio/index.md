@@ -9,7 +9,6 @@ draft: False
 categories:
     - Financial Data
     - Investing
-    - Permanent Portfolio
 tags:
     - Python
     - Bloomberg
