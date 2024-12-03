@@ -8,11 +8,11 @@
         <language>en-us</language>
         <lastBuildDate>Mon, 04 Nov 2024 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/categories/financial-data/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Does Harry Browne&#39;s permanent portfolio withstand the test of time?</title>
-        <link>https://www.jaredszajkowski.com/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/</link>
+        <link>https://www.jaredszajkowski.com/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/</link>
         <pubDate>Mon, 04 Nov 2024 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/cover.jpg" alt="Featured image of post Does Harry Browne&#39;s permanent portfolio withstand the test of time?" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+        <guid>https://www.jaredszajkowski.com/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/cover.jpg" alt="Featured image of post Does Harry Browne&#39;s permanent portfolio withstand the test of time?" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;Harry Browne was an influencial politician, financial advisor, and author who lived from 1933 to 2006 and published 12 books. Wikipedia has &lt;a class=&#34;link&#34; href=&#34;https://en.wikipedia.org/wiki/Harry_Browne&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;an in-depth biography&lt;/a&gt; on him.&lt;/p&gt;
 &lt;p&gt;Within the world of finance and investing, one of his best known works is &lt;em&gt;Fail-Safe Investing: Lifelong Financial Security in 30 Minutes&lt;/em&gt;. In it, he introduces the idea of the &amp;ldquo;Permanent Portfolio&amp;rdquo;, an investment strategy that uses only four assets and is very simple to implement.&lt;/p&gt;
@@ -1156,7 +1156,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;The following is the output:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/01_Bonds_Data.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/01_Bonds_Data.png&#34;
 	width=&#34;888&#34;
 	height=&#34;506&#34;
 	
@@ -1253,7 +1253,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Gives us the following:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/02_Perm_Port_Data.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/02_Perm_Port_Data.png&#34;
 	width=&#34;498&#34;
 	height=&#34;546&#34;
 	
@@ -1369,7 +1369,7 @@
 &lt;a class=&#34;link&#34; href=&#34;Stocks_Bonds_Gold_Cash_Summary_Stats.xlsx&#34; &gt;Stocks_Bonds_Gold_Cash_Summary_Stats.xlsx&lt;/a&gt;&lt;/br&gt;
 &lt;a class=&#34;link&#34; href=&#34;Stocks_Bonds_Gold_Cash_Annual_Returns.xlsx&#34; &gt;Stocks_Bonds_Gold_Cash_Annual_Returns.xlsx&lt;/a&gt;&lt;/br&gt;&lt;/p&gt;
 &lt;p&gt;Here&amp;rsquo;s the summary stats for the example above:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/06_Summary_Stats.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/06_Summary_Stats.png&#34;
 	width=&#34;1561&#34;
 	height=&#34;70&#34;
 	
@@ -1385,7 +1385,7 @@
 &gt;&lt;/p&gt;
 &lt;p&gt;Here we have a mean annualized return of 8.3%, volatility of 7.2%, a CAGR of 8.4% and a Sharpe ratio of 1.15. And this with a max drawdown of just over 15%. Not bad, Mr. Browne!&lt;/p&gt;
 &lt;p&gt;Since the book was published in 1999, let&amp;rsquo;s take a look at the summary stats for below and after 1999.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/10_Summary_Stats_Pre_1999.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/10_Summary_Stats_Pre_1999.png&#34;
 	width=&#34;1561&#34;
 	height=&#34;70&#34;
 	
@@ -1399,7 +1399,7 @@
 		data-flex-basis=&#34;5352px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/11_Summary_Stats_Post_1999.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/11_Summary_Stats_Post_1999.png&#34;
 	width=&#34;1561&#34;
 	height=&#34;70&#34;
 	
@@ -1415,7 +1415,7 @@
 &gt;&lt;/p&gt;
 &lt;p&gt;The mean annualized return is approximately 0.7% lower for the pre 1999 vs post 1999 data, as is the CAGR. The volatility is higher for the post 1999 data which leads to a difference in the Sharpe ratio.&lt;/p&gt;
 &lt;p&gt;Here&amp;rsquo;s the annual returns:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/09_Portfolio_Annual_Returns_Table.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/09_Portfolio_Annual_Returns_Table.png&#34;
 	width=&#34;115&#34;
 	height=&#34;680&#34;
 	
@@ -1434,7 +1434,7 @@
 &lt;ol&gt;
 &lt;li&gt;Cumulative Return&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/03_Cumulative_Return.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/03_Cumulative_Return.png&#34;
 	width=&#34;2966&#34;
 	height=&#34;1461&#34;
 	
@@ -1451,7 +1451,7 @@
 &lt;ol start=&#34;2&#34;&gt;
 &lt;li&gt;Portfolio Values (Total, Stocks, Bonds, Gold, and Cash)&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/04_Portfolio_Values.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/04_Portfolio_Values.png&#34;
 	width=&#34;2966&#34;
 	height=&#34;1461&#34;
 	
@@ -1469,7 +1469,7 @@
 &lt;ol start=&#34;3&#34;&gt;
 &lt;li&gt;Portfolio Drawdown&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/05_Portfolio_Drawdown.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/05_Portfolio_Drawdown.png&#34;
 	width=&#34;2967&#34;
 	height=&#34;1461&#34;
 	
@@ -1487,7 +1487,7 @@
 &lt;ol start=&#34;4&#34;&gt;
 &lt;li&gt;Portfolio Asset Weights&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/07_Portfolio_Weights.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/07_Portfolio_Weights.png&#34;
 	width=&#34;2966&#34;
 	height=&#34;1461&#34;
 	
@@ -1505,7 +1505,7 @@
 &lt;ol start=&#34;5&#34;&gt;
 &lt;li&gt;Portfolio Annual Returns&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/08_Portfolio_Annual_Returns.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/08_Portfolio_Annual_Returns.png&#34;
 	width=&#34;2966&#34;
 	height=&#34;1461&#34;
 	
@@ -1535,11 +1535,11 @@
         </item>
         <item>
         <title>Nasdaq Data Link Tables API Data Retrieval</title>
-        <link>https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/</link>
+        <link>https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/</link>
         <pubDate>Sun, 24 Dec 2023 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/cover.jpg" alt="Featured image of post Nasdaq Data Link Tables API Data Retrieval" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+        <guid>https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/cover.jpg" alt="Featured image of post Nasdaq Data Link Tables API Data Retrieval" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;In this tutorial, we will write a python function that pulls data from Nasdaq Data Link through the tables API, adds relevant columns that are not present in the raw data, updates columns to allow for ease of use, and leaves the data in a format where it can then be used in time series analysis.&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.nasdaq.com/nasdaq-data-link&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Nasdaq Data Link&lt;/a&gt; is a provider of numerous different types of financial data from many different asset classes. It provides API&amp;rsquo;s that allow access from Python, R, Excel, and other methods. It is available to &lt;a class=&#34;link&#34; href=&#34;https://data.nasdaq.com/institutional-investors&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -1548,7 +1548,7 @@
 &lt;h2 id=&#34;nasdaq-data-link-initial-data-retrieval&#34;&gt;Nasdaq Data Link Initial Data Retrieval
 &lt;/h2&gt;&lt;p&gt;We will use the data for AAPL for this example. This will give us a data set that requires some thought as to how the splits need to be handled as well as the dividends.&lt;/p&gt;
 &lt;p&gt;We&amp;rsquo;ll start with pulling the initial data set, with the first 10 rows shown as follows from the pandas dataframe:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows.png&#34;
 	width=&#34;1067&#34;
 	height=&#34;320&#34;
 	
@@ -1563,7 +1563,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;And the last 10 rows:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/02_AAPL_data_last_10_rows.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/02_AAPL_data_last_10_rows.png&#34;
 	width=&#34;1038&#34;
 	height=&#34;317&#34;
 	
@@ -1828,7 +1828,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows.png&#34;
 	width=&#34;1067&#34;
 	height=&#34;320&#34;
 	
@@ -1859,7 +1859,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/03_Sorted_by_date_ascending.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/03_Sorted_by_date_ascending.png&#34;
 	width=&#34;1039&#34;
 	height=&#34;321&#34;
 	
@@ -1895,7 +1895,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/04_Date_as_the_index.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/04_Date_as_the_index.png&#34;
 	width=&#34;986&#34;
 	height=&#34;321&#34;
 	
@@ -1923,7 +1923,7 @@
 &lt;pre&gt;&lt;code&gt;df_not_1_split.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/05_Actual_splits.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/05_Actual_splits.png&#34;
 	width=&#34;1059&#34;
 	height=&#34;192&#34;
 	
@@ -1949,7 +1949,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;This gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/06_Splits_replaced.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/06_Splits_replaced.png&#34;
 	width=&#34;988&#34;
 	height=&#34;316&#34;
 	
@@ -1979,7 +1979,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Which gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/07_Dataframe_with_split_values_only.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/07_Dataframe_with_split_values_only.png&#34;
 	width=&#34;156&#34;
 	height=&#34;195&#34;
 	
@@ -2005,7 +2005,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Which gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/08_Dataframe_with_cumulative_split_column.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/08_Dataframe_with_cumulative_split_column.png&#34;
 	width=&#34;234&#34;
 	height=&#34;195&#34;
 	
@@ -2031,7 +2031,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Which gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/09_Dataframe_with_only_cumulative_split_column.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/09_Dataframe_with_only_cumulative_split_column.png&#34;
 	width=&#34;194&#34;
 	height=&#34;193&#34;
 	
@@ -2062,7 +2062,7 @@
 &lt;pre&gt;&lt;code&gt;df_comp.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/10_Complete_dataframe_including_cumulative_split.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/10_Complete_dataframe_including_cumulative_split.png&#34;
 	width=&#34;1060&#34;
 	height=&#34;317&#34;
 	
@@ -2092,7 +2092,7 @@
 &lt;pre&gt;&lt;code&gt;df_comp.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/11_Complete_dataframe_ffill_split_values_first_10_rows.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/11_Complete_dataframe_ffill_split_values_first_10_rows.png&#34;
 	width=&#34;1029&#34;
 	height=&#34;344&#34;
 	
@@ -2110,7 +2110,7 @@
 &lt;pre&gt;&lt;code&gt;df_comp.tail(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/12_Complete_dataframe_ffill_split_values_last_10_rows.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/12_Complete_dataframe_ffill_split_values_last_10_rows.png&#34;
 	width=&#34;1086&#34;
 	height=&#34;341&#34;
 	
@@ -2141,7 +2141,7 @@
 &lt;pre&gt;&lt;code&gt;df_comp.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/13_Complete_dataframe_ffill_split_values_first_10_rows.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/13_Complete_dataframe_ffill_split_values_first_10_rows.png&#34;
 	width=&#34;1068&#34;
 	height=&#34;317&#34;
 	
@@ -2214,7 +2214,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;And verify the output is as expected:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/14_Excel_export.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/14_Excel_export.png&#34;
 	width=&#34;3491&#34;
 	height=&#34;220&#34;
 	
@@ -2247,7 +2247,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;And confirming the output:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/15_Output_confirmation.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/15_Output_confirmation.png&#34;
 	width=&#34;643&#34;
 	height=&#34;470&#34;
 	
@@ -2274,15 +2274,15 @@
         </item>
         <item>
         <title>Cleaning A Bloomberg Data Excel Export</title>
-        <link>https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/</link>
+        <link>https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/</link>
         <pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/cover.jpg" alt="Featured image of post Cleaning A Bloomberg Data Excel Export" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+        <guid>https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/cover.jpg" alt="Featured image of post Cleaning A Bloomberg Data Excel Export" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;In this tutorial, we will write a python function that imports an excel export from Bloomberg, removes ancillary rows and columns, and leaves the data in a format where it can then be used in time series analysis.&lt;/p&gt;
 &lt;h2 id=&#34;example-of-a-bloomberg-excel-export&#34;&gt;Example of a Bloomberg excel export
 &lt;/h2&gt;&lt;p&gt;We will use the SPX index data in this example. Exporting the data from Bloomberg using the excel Bloomberg add-on yields data in the following format:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Format_of_data_in_excel_export_from_Bloomberg.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Format_of_data_in_excel_export_from_Bloomberg.png&#34;
 	width=&#34;295&#34;
 	height=&#34;455&#34;
 	
@@ -2452,7 +2452,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Dataframe_excel_import.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Dataframe_excel_import.png&#34;
 	width=&#34;367&#34;
 	height=&#34;302&#34;
 	
@@ -2482,7 +2482,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Set_column_headings.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Set_column_headings.png&#34;
 	width=&#34;376&#34;
 	height=&#34;296&#34;
 	
@@ -2513,7 +2513,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Remove_index_heading.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Remove_index_heading.png&#34;
 	width=&#34;373&#34;
 	height=&#34;299&#34;
 	
@@ -2544,7 +2544,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Remove_rows.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Remove_rows.png&#34;
 	width=&#34;323&#34;
 	height=&#34;298&#34;
 	
@@ -2574,7 +2574,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Set_index.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Set_index.png&#34;
 	width=&#34;244&#34;
 	height=&#34;318&#34;
 	
@@ -2611,7 +2611,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Drop_volume.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Drop_volume.png&#34;
 	width=&#34;163&#34;
 	height=&#34;320&#34;
 	
@@ -2641,7 +2641,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Rename_column.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Rename_column.png&#34;
 	width=&#34;156&#34;
 	height=&#34;319&#34;
 	
@@ -2671,7 +2671,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Sort_by_date.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Sort_by_date.png&#34;
 	width=&#34;136&#34;
 	height=&#34;317&#34;
 	
@@ -2700,7 +2700,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;And verify the output is as expected:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Excel_export.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Excel_export.png&#34;
 	width=&#34;278&#34;
 	height=&#34;380&#34;
 	
@@ -2733,7 +2733,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;And confirming the output:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Output_confirmation.PNG&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Output_confirmation.PNG&#34;
 	width=&#34;417&#34;
 	height=&#34;116&#34;
 	

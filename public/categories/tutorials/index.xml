@@ -8,11 +8,11 @@
         <language>en-us</language>
         <lastBuildDate>Mon, 23 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/categories/tutorials/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Simple Incremental Bash Backup Script</title>
-        <link>https://www.jaredszajkowski.com/2024/01/simple-incremental-bash-backup-script/</link>
+        <link>https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/</link>
         <pubDate>Fri, 12 Jan 2024 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2024/01/simple-incremental-bash-backup-script/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2024/01/simple-incremental-bash-backup-script/cover.jpg" alt="Featured image of post Simple Incremental Bash Backup Script" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+        <guid>https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/cover.jpg" alt="Featured image of post Simple Incremental Bash Backup Script" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;While there are &lt;a class=&#34;link&#34; href=&#34;https://wiki.archlinux.org/title/Synchronization_and_backup_programs&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;numerous backup solutions available for Linux&lt;/a&gt;, many require extensive configuration and maintenance, and restoring from the backup is not always simple. Incremental backups are ideal because they maintain snapshots of the files and allow for access to previous versions of files.&lt;/p&gt;
 &lt;p&gt;Linux Journal recently &lt;a class=&#34;link&#34; href=&#34;https://www.linuxjournal.com/content/exploring-rsync-tar-and-other-backup-solutions&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -247,7 +247,7 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;h2 id=&#34;results&#34;&gt;Results
 &lt;/h2&gt;&lt;p&gt;This script provides an incremental backup record organized by year and date:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/01/simple-incremental-bash-backup-script/01_Backup_directory.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/01_Backup_directory.png&#34;
 	width=&#34;1038&#34;
 	height=&#34;524&#34;
 	
@@ -261,7 +261,7 @@
 		data-flex-basis=&#34;475px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/01/simple-incremental-bash-backup-script/02_Year_directory.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/02_Year_directory.png&#34;
 	width=&#34;1038&#34;
 	height=&#34;524&#34;
 	
@@ -291,11 +291,11 @@
         </item>
         <item>
         <title>Nasdaq Data Link Tables API Data Retrieval</title>
-        <link>https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/</link>
+        <link>https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/</link>
         <pubDate>Sun, 24 Dec 2023 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/cover.jpg" alt="Featured image of post Nasdaq Data Link Tables API Data Retrieval" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+        <guid>https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/cover.jpg" alt="Featured image of post Nasdaq Data Link Tables API Data Retrieval" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;In this tutorial, we will write a python function that pulls data from Nasdaq Data Link through the tables API, adds relevant columns that are not present in the raw data, updates columns to allow for ease of use, and leaves the data in a format where it can then be used in time series analysis.&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.nasdaq.com/nasdaq-data-link&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Nasdaq Data Link&lt;/a&gt; is a provider of numerous different types of financial data from many different asset classes. It provides API&amp;rsquo;s that allow access from Python, R, Excel, and other methods. It is available to &lt;a class=&#34;link&#34; href=&#34;https://data.nasdaq.com/institutional-investors&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -304,7 +304,7 @@
 &lt;h2 id=&#34;nasdaq-data-link-initial-data-retrieval&#34;&gt;Nasdaq Data Link Initial Data Retrieval
 &lt;/h2&gt;&lt;p&gt;We will use the data for AAPL for this example. This will give us a data set that requires some thought as to how the splits need to be handled as well as the dividends.&lt;/p&gt;
 &lt;p&gt;We&amp;rsquo;ll start with pulling the initial data set, with the first 10 rows shown as follows from the pandas dataframe:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows.png&#34;
 	width=&#34;1067&#34;
 	height=&#34;320&#34;
 	
@@ -319,7 +319,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;And the last 10 rows:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/02_AAPL_data_last_10_rows.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/02_AAPL_data_last_10_rows.png&#34;
 	width=&#34;1038&#34;
 	height=&#34;317&#34;
 	
@@ -584,7 +584,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows.png&#34;
 	width=&#34;1067&#34;
 	height=&#34;320&#34;
 	
@@ -615,7 +615,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/03_Sorted_by_date_ascending.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/03_Sorted_by_date_ascending.png&#34;
 	width=&#34;1039&#34;
 	height=&#34;321&#34;
 	
@@ -651,7 +651,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/04_Date_as_the_index.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/04_Date_as_the_index.png&#34;
 	width=&#34;986&#34;
 	height=&#34;321&#34;
 	
@@ -679,7 +679,7 @@
 &lt;pre&gt;&lt;code&gt;df_not_1_split.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/05_Actual_splits.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/05_Actual_splits.png&#34;
 	width=&#34;1059&#34;
 	height=&#34;192&#34;
 	
@@ -705,7 +705,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;This gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/06_Splits_replaced.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/06_Splits_replaced.png&#34;
 	width=&#34;988&#34;
 	height=&#34;316&#34;
 	
@@ -735,7 +735,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Which gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/07_Dataframe_with_split_values_only.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/07_Dataframe_with_split_values_only.png&#34;
 	width=&#34;156&#34;
 	height=&#34;195&#34;
 	
@@ -761,7 +761,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Which gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/08_Dataframe_with_cumulative_split_column.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/08_Dataframe_with_cumulative_split_column.png&#34;
 	width=&#34;234&#34;
 	height=&#34;195&#34;
 	
@@ -787,7 +787,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Which gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/09_Dataframe_with_only_cumulative_split_column.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/09_Dataframe_with_only_cumulative_split_column.png&#34;
 	width=&#34;194&#34;
 	height=&#34;193&#34;
 	
@@ -818,7 +818,7 @@
 &lt;pre&gt;&lt;code&gt;df_comp.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/10_Complete_dataframe_including_cumulative_split.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/10_Complete_dataframe_including_cumulative_split.png&#34;
 	width=&#34;1060&#34;
 	height=&#34;317&#34;
 	
@@ -848,7 +848,7 @@
 &lt;pre&gt;&lt;code&gt;df_comp.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/11_Complete_dataframe_ffill_split_values_first_10_rows.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/11_Complete_dataframe_ffill_split_values_first_10_rows.png&#34;
 	width=&#34;1029&#34;
 	height=&#34;344&#34;
 	
@@ -866,7 +866,7 @@
 &lt;pre&gt;&lt;code&gt;df_comp.tail(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/12_Complete_dataframe_ffill_split_values_last_10_rows.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/12_Complete_dataframe_ffill_split_values_last_10_rows.png&#34;
 	width=&#34;1086&#34;
 	height=&#34;341&#34;
 	
@@ -897,7 +897,7 @@
 &lt;pre&gt;&lt;code&gt;df_comp.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/13_Complete_dataframe_ffill_split_values_first_10_rows.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/13_Complete_dataframe_ffill_split_values_first_10_rows.png&#34;
 	width=&#34;1068&#34;
 	height=&#34;317&#34;
 	
@@ -970,7 +970,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;And verify the output is as expected:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/14_Excel_export.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/14_Excel_export.png&#34;
 	width=&#34;3491&#34;
 	height=&#34;220&#34;
 	
@@ -1003,7 +1003,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;And confirming the output:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/nasdaq-data-link-tables-api-data-retrieval/15_Output_confirmation.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/15_Output_confirmation.png&#34;
 	width=&#34;643&#34;
 	height=&#34;470&#34;
 	
@@ -1030,11 +1030,11 @@
         </item>
         <item>
         <title>Using yt-dlp With Panopto</title>
-        <link>https://www.jaredszajkowski.com/2023/12/using-yt-dlp-with-panopto/</link>
+        <link>https://www.jaredszajkowski.com/2023/12/10/using-yt-dlp-with-panopto/</link>
         <pubDate>Sun, 10 Dec 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2023/12/using-yt-dlp-with-panopto/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/12/using-yt-dlp-with-panopto/banner_1.svg" alt="Featured image of post Using yt-dlp With Panopto" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+        <guid>https://www.jaredszajkowski.com/2023/12/10/using-yt-dlp-with-panopto/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/12/10/using-yt-dlp-with-panopto/banner_1.svg" alt="Featured image of post Using yt-dlp With Panopto" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;As a follow up to &lt;a class=&#34;link&#34; href=&#34;https://www.jaredszajkowski.com/p/using-yt-dlp-with-zoom/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;this post about using yt-dlp with Zoom&lt;/a&gt;, I found the need to also download videos hosted by Panopto for offline viewing.&lt;/p&gt;
 &lt;p&gt;Similar to the Zoom tutorial, this also requires you to have a &amp;ldquo;cookies&amp;rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Panopto hosting site after logging in.&lt;/p&gt;
@@ -1044,7 +1044,7 @@
     &gt;cookie editor&lt;/a&gt; extension. I personnally use it with Microsoft Edge, but there are similar extensions for Chrome, Firefox, etc.&lt;/p&gt;
 &lt;h2 id=&#34;modify-export-format&#34;&gt;Modify export format
 &lt;/h2&gt;&lt;p&gt;Change the preferred cookie export format to &lt;code&gt;Netscape HTTP Cookie File&lt;/code&gt; in the extension options. It is necessary to export in this format, otherwise yt-dlp will not be able to read the cookies.txt file correctly.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/using-yt-dlp-with-panopto/Modify_preferred_export_format.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/10/using-yt-dlp-with-panopto/Modify_preferred_export_format.png&#34;
 	width=&#34;865&#34;
 	height=&#34;505&#34;
 	
@@ -1062,7 +1062,7 @@
 &lt;/h2&gt;&lt;p&gt;Log in to Panopto in your browser. Be sure to remain logged in while exporting the cookies under step 4.&lt;/p&gt;
 &lt;h2 id=&#34;export-cookies&#34;&gt;Export cookies
 &lt;/h2&gt;&lt;p&gt;The export button is at the top fo the window. It copies the cookies to your clipboard, which then need to be pasted into a text file (I have my saved as cookies.txt), which yt-dlp will then read when it executes.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/using-yt-dlp-with-panopto/Export_cookies.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/12/10/using-yt-dlp-with-panopto/Export_cookies.png&#34;
 	width=&#34;579&#34;
 	height=&#34;613&#34;
 	
@@ -1110,15 +1110,15 @@
         </item>
         <item>
         <title>Cleaning A Bloomberg Data Excel Export</title>
-        <link>https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/</link>
+        <link>https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/</link>
         <pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/cover.jpg" alt="Featured image of post Cleaning A Bloomberg Data Excel Export" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+        <guid>https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/cover.jpg" alt="Featured image of post Cleaning A Bloomberg Data Excel Export" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;In this tutorial, we will write a python function that imports an excel export from Bloomberg, removes ancillary rows and columns, and leaves the data in a format where it can then be used in time series analysis.&lt;/p&gt;
 &lt;h2 id=&#34;example-of-a-bloomberg-excel-export&#34;&gt;Example of a Bloomberg excel export
 &lt;/h2&gt;&lt;p&gt;We will use the SPX index data in this example. Exporting the data from Bloomberg using the excel Bloomberg add-on yields data in the following format:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Format_of_data_in_excel_export_from_Bloomberg.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Format_of_data_in_excel_export_from_Bloomberg.png&#34;
 	width=&#34;295&#34;
 	height=&#34;455&#34;
 	
@@ -1288,7 +1288,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Dataframe_excel_import.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Dataframe_excel_import.png&#34;
 	width=&#34;367&#34;
 	height=&#34;302&#34;
 	
@@ -1318,7 +1318,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Set_column_headings.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Set_column_headings.png&#34;
 	width=&#34;376&#34;
 	height=&#34;296&#34;
 	
@@ -1349,7 +1349,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Remove_index_heading.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Remove_index_heading.png&#34;
 	width=&#34;373&#34;
 	height=&#34;299&#34;
 	
@@ -1380,7 +1380,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Remove_rows.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Remove_rows.png&#34;
 	width=&#34;323&#34;
 	height=&#34;298&#34;
 	
@@ -1410,7 +1410,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Set_index.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Set_index.png&#34;
 	width=&#34;244&#34;
 	height=&#34;318&#34;
 	
@@ -1447,7 +1447,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Drop_volume.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Drop_volume.png&#34;
 	width=&#34;163&#34;
 	height=&#34;320&#34;
 	
@@ -1477,7 +1477,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Rename_column.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Rename_column.png&#34;
 	width=&#34;156&#34;
 	height=&#34;319&#34;
 	
@@ -1507,7 +1507,7 @@
 &lt;pre&gt;&lt;code&gt;df.head(10)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Gives us:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Sort_by_date.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Sort_by_date.png&#34;
 	width=&#34;136&#34;
 	height=&#34;317&#34;
 	
@@ -1536,7 +1536,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;And verify the output is as expected:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Excel_export.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Excel_export.png&#34;
 	width=&#34;278&#34;
 	height=&#34;380&#34;
 	
@@ -1569,7 +1569,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;And confirming the output:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/Output_confirmation.PNG&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Output_confirmation.PNG&#34;
 	width=&#34;417&#34;
 	height=&#34;116&#34;
 	
@@ -1590,11 +1590,11 @@
         </item>
         <item>
         <title>Git Quick Start Guide</title>
-        <link>https://www.jaredszajkowski.com/2023/10/git-quick-start-guide/</link>
+        <link>https://www.jaredszajkowski.com/2023/10/16/git-quick-start-guide/</link>
         <pubDate>Mon, 16 Oct 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2023/10/git-quick-start-guide/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/10/git-quick-start-guide/cover.jpg" alt="Featured image of post Git Quick Start Guide" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+        <guid>https://www.jaredszajkowski.com/2023/10/16/git-quick-start-guide/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/10/16/git-quick-start-guide/cover.jpg" alt="Featured image of post Git Quick Start Guide" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;Here are my notes for some of the more commonly used git commands along with initial setup for git in Linux.&lt;/p&gt;
 &lt;h2 id=&#34;installation&#34;&gt;Installation
 &lt;/h2&gt;&lt;p&gt;To begin, install as follows for Arch Linux:&lt;/p&gt;
@@ -1680,11 +1680,11 @@ $ git pull
         </item>
         <item>
         <title>Using yt-dlp With Zoom</title>
-        <link>https://www.jaredszajkowski.com/2023/10/using-yt-dlp-with-zoom/</link>
+        <link>https://www.jaredszajkowski.com/2023/10/01/using-yt-dlp-with-zoom/</link>
         <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2023/10/using-yt-dlp-with-zoom/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/10/using-yt-dlp-with-zoom/banner_1.svg" alt="Featured image of post Using yt-dlp With Zoom" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+        <guid>https://www.jaredszajkowski.com/2023/10/01/using-yt-dlp-with-zoom/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/10/01/using-yt-dlp-with-zoom/banner_1.svg" alt="Featured image of post Using yt-dlp With Zoom" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;If anyone uses Zoom to record and later wants to access recordings of video calls, here&amp;rsquo;s a simple linux bash script to download the video file and acompanying subtitles. For a long time I used &lt;a class=&#34;link&#34; href=&#34;https://github.com/Battleman/zoomdl&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;zoomdl&lt;/a&gt;, but it is no longer under active development, and I began running into various issues about a year ago.&lt;/p&gt;
 &lt;p&gt;This tutorial requires you to have a &amp;ldquo;cookies&amp;rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Zoom cookies after logging in.&lt;/p&gt;
@@ -1694,7 +1694,7 @@ $ git pull
     &gt;cookie editor&lt;/a&gt; extension. I personnally use it with Microsoft Edge, but there are similar extensions for Chrome, Firefox, etc.&lt;/p&gt;
 &lt;h2 id=&#34;modify-export-format&#34;&gt;Modify export format
 &lt;/h2&gt;&lt;p&gt;Change the preferred cookie export format to &lt;code&gt;Netscape HTTP Cookie File&lt;/code&gt; in the extension options. It is necessary to export in this format, otherwise yt-dlp will not be able to read the cookies.txt file correctly.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/10/using-yt-dlp-with-zoom/Modify_preferred_export_format.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/10/01/using-yt-dlp-with-zoom/Modify_preferred_export_format.png&#34;
 	width=&#34;865&#34;
 	height=&#34;505&#34;
 	
@@ -1712,7 +1712,7 @@ $ git pull
 &lt;/h2&gt;&lt;p&gt;Log in to Zoom in your browser. Be sure to remain logged in while exporting the cookies under step 4.&lt;/p&gt;
 &lt;h2 id=&#34;export-cookies&#34;&gt;Export cookies
 &lt;/h2&gt;&lt;p&gt;The export button is at the top fo the window. It copies the cookies to your clipboard, which then need to be pasted into a text file (I have my saved as cookies.txt), which yt-dlp will then read when it executes.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/10/using-yt-dlp-with-zoom/Export_cookies.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2023/10/01/using-yt-dlp-with-zoom/Export_cookies.png&#34;
 	width=&#34;579&#34;
 	height=&#34;613&#34;
 	
@@ -1760,11 +1760,11 @@ $ git pull
         </item>
         <item>
         <title>Arch Linux Install</title>
-        <link>https://www.jaredszajkowski.com/2023/09/arch-linux-install/</link>
+        <link>https://www.jaredszajkowski.com/2023/09/29/arch-linux-install/</link>
         <pubDate>Fri, 29 Sep 2023 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2023/09/arch-linux-install/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/09/arch-linux-install/cover.jpg" alt="Featured image of post Arch Linux Install" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+        <guid>https://www.jaredszajkowski.com/2023/09/29/arch-linux-install/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/09/29/arch-linux-install/cover.jpg" alt="Featured image of post Arch Linux Install" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;This is the basic framework that I use to install Arch Linux, with a few changes catered to the Lenovo ThinkPad E15 Gen 2. I have found that this is a decent mid range laptop, excellent linux compatibility, great keyboard, and overall provides a good value.&lt;/p&gt;
 &lt;h2 id=&#34;getting-started&#34;&gt;Getting started
 &lt;/h2&gt;&lt;p&gt;This tutorial assumes the following:&lt;/p&gt;

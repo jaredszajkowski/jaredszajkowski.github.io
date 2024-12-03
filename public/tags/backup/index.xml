@@ -8,11 +8,11 @@
         <language>en-us</language>
         <lastBuildDate>Mon, 23 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/tags/backup/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Simple Incremental Bash Backup Script</title>
-        <link>https://www.jaredszajkowski.com/2024/01/simple-incremental-bash-backup-script/</link>
+        <link>https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/</link>
         <pubDate>Fri, 12 Jan 2024 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2024/01/simple-incremental-bash-backup-script/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2024/01/simple-incremental-bash-backup-script/cover.jpg" alt="Featured image of post Simple Incremental Bash Backup Script" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+        <guid>https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/cover.jpg" alt="Featured image of post Simple Incremental Bash Backup Script" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;While there are &lt;a class=&#34;link&#34; href=&#34;https://wiki.archlinux.org/title/Synchronization_and_backup_programs&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;numerous backup solutions available for Linux&lt;/a&gt;, many require extensive configuration and maintenance, and restoring from the backup is not always simple. Incremental backups are ideal because they maintain snapshots of the files and allow for access to previous versions of files.&lt;/p&gt;
 &lt;p&gt;Linux Journal recently &lt;a class=&#34;link&#34; href=&#34;https://www.linuxjournal.com/content/exploring-rsync-tar-and-other-backup-solutions&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -247,7 +247,7 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;h2 id=&#34;results&#34;&gt;Results
 &lt;/h2&gt;&lt;p&gt;This script provides an incremental backup record organized by year and date:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/01/simple-incremental-bash-backup-script/01_Backup_directory.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/01_Backup_directory.png&#34;
 	width=&#34;1038&#34;
 	height=&#34;524&#34;
 	
@@ -261,7 +261,7 @@
 		data-flex-basis=&#34;475px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/01/simple-incremental-bash-backup-script/02_Year_directory.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/02_Year_directory.png&#34;
 	width=&#34;1038&#34;
 	height=&#34;524&#34;
 	

@@ -62,4 +62,5 @@ To avoid having to redundantly install modules on different systems, after I mak
 
 https://docs.python.org/3/library/venv.html</br>
 https://pypi.org/</br>
-https://note.nkmk.me/en/python-pip-usage/
+https://note.nkmk.me/en/python-pip-usage/</br>
+https://wiki.archlinux.org/title/Python
