@@ -6,7 +6,53 @@
         <description>Recent content in Posts on Jared Szajkowski</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Mon, 04 Nov 2024 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 02 Dec 2024 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Using Python Virtual Environments</title>
+        <link>https://www.jaredszajkowski.com/2024/12/using-python-virtual-environments/</link>
+        <pubDate>Mon, 02 Dec 2024 00:00:01 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/2024/12/using-python-virtual-environments/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2024/12/using-python-virtual-environments/cover.jpg" alt="Featured image of post Using Python Virtual Environments" /&gt;&lt;h2 id=&#34;python-module-management&#34;&gt;Python Module Management
+&lt;/h2&gt;&lt;p&gt;As an Arch Linux user, the push is to utilize pacman and related tools to manage dependencies and package updates (including Python modules). In fact, &lt;a class=&#34;link&#34; href=&#34;https://wiki.archlinux.org/title/Python&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;the wiki itself&lt;/a&gt; explicitly states this (see 2.1), and the default Arch installation of Python disables python-pip.&lt;/p&gt;
+&lt;p&gt;Unfortunately, there are limited resources put into maintaining packages for modules and only the most common and popular modules are maintained, and they are updated promptly as is consistent within the Arch ecosystem.&lt;/p&gt;
+&lt;h2 id=&#34;creating-a-virtual-environment&#34;&gt;Creating A Virtual Environment
+&lt;/h2&gt;&lt;p&gt;After recently delving into crypto and the web3 Python module, the Coinbase API, and others, I&amp;rsquo;ve found the need to install Python modules from &lt;a class=&#34;link&#34; href=&#34;https://pypi.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Pypi&lt;/a&gt;, the Python package index. This is the most exhaustive location to find modules, including the latest updates and version history.&lt;/p&gt;
+&lt;p&gt;Using python-pip necessitated the use of virtual environments, which made me reconsider the idea of not maintaining Python modules (or maintaining very few) through pacman at all.&lt;/p&gt;
+&lt;p&gt;I chose to place the virtual environments at &lt;code&gt;~/python-virtual-envs/&lt;/code&gt; and within that directory have one called &lt;code&gt;general&lt;/code&gt; and other called &lt;code&gt;wrds&lt;/code&gt;. The &lt;code&gt;wrds&lt;/code&gt; environment is specific to the &lt;a class=&#34;link&#34; href=&#34;https://wrds-www.wharton.upenn.edu/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Wharton Research Data Services&lt;/a&gt; which requires (for some reason) an older package of nympy.&lt;/p&gt;
+&lt;p&gt;The &amp;ldquo;general&amp;rdquo; environment covers everything else. I created it with the usual command:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ python -m venv ~/python-virtual-envs/general
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Once created, it can be activated (either in a terminal or an IDE such as VS Code) by executing the following in the terminal:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ source ~/python-virtual-envs/general/bin/activate
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;using-python-pip&#34;&gt;Using python-pip
+&lt;/h2&gt;&lt;p&gt;After the virtual environment is created and activated, modules can be installed by using python-pip, such as:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ pip install &amp;lt;package-name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you want to view all installed modules, run:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ pip list
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Or the outdated modules:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ pip list --outdated
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And updated at a later point in time with:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ pip install --upgrade &amp;lt;package-name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;maintaining-across-multiple-systems&#34;&gt;Maintaining Across Multiple Systems
+&lt;/h2&gt;&lt;p&gt;To avoid having to redundantly install modules on different systems, after I make a change to the virtual environment I zip the entire &lt;code&gt;~/python-virtual-envs/&lt;/code&gt; directory and upload the zip file to Dropbox. This takes less than a minute, and if I am working on a different system can simply extract the archive and have a completely up-to-date and current virtual environment to work in.&lt;/p&gt;
+&lt;h2 id=&#34;references&#34;&gt;References
+&lt;/h2&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://docs.python.org/3/library/venv.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://docs.python.org/3/library/venv.html&lt;/a&gt;&lt;/br&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://pypi.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://pypi.org/&lt;/a&gt;&lt;/br&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://note.nkmk.me/en/python-pip-usage/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://note.nkmk.me/en/python-pip-usage/&lt;/a&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Does Harry Browne&#39;s permanent portfolio withstand the test of time?</title>
         <link>https://www.jaredszajkowski.com/2024/11/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/</link>
         <pubDate>Mon, 04 Nov 2024 00:00:01 +0000</pubDate>

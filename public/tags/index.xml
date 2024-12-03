@@ -6,7 +6,23 @@
         <description>Recent content in Tags on Jared Szajkowski</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Mon, 04 Nov 2024 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 02 Dec 2024 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Arch Linux</title>
+        <link>https://www.jaredszajkowski.com/tags/arch-linux/</link>
+        <pubDate>Mon, 02 Dec 2024 00:00:01 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/tags/arch-linux/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Python</title>
+        <link>https://www.jaredszajkowski.com/tags/python/</link>
+        <pubDate>Mon, 02 Dec 2024 00:00:01 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/tags/python/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Bloomberg</title>
         <link>https://www.jaredszajkowski.com/tags/bloomberg/</link>
         <pubDate>Mon, 04 Nov 2024 00:00:01 +0000</pubDate>
@@ -20,14 +36,6 @@
         <pubDate>Mon, 04 Nov 2024 00:00:01 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/tags/pandas/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Python</title>
-        <link>https://www.jaredszajkowski.com/tags/python/</link>
-        <pubDate>Mon, 04 Nov 2024 00:00:01 +0000</pubDate>
-        
-        <guid>https://www.jaredszajkowski.com/tags/python/</guid>
         <description></description>
         </item>
         <item>
@@ -100,14 +108,6 @@
         <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/tags/zoom/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Arch Linux</title>
-        <link>https://www.jaredszajkowski.com/tags/arch-linux/</link>
-        <pubDate>Fri, 29 Sep 2023 00:00:01 +0000</pubDate>
-        
-        <guid>https://www.jaredszajkowski.com/tags/arch-linux/</guid>
         <description></description>
         </item>
         <item>
