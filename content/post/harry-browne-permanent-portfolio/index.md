@@ -3,7 +3,7 @@ title: Does Harry Browne's permanent portfolio withstand the test of time?
 description: A look a Harry Browne's Permanent Portfolio and performance over nearly four decades.
 # slug: hello-world
 date: 2024-11-04 00:00:01+0000
-lastmod: 2024-11-04 00:00:01+0000
+lastmod: 2024-12-05 00:00:01+0000
 image: cover.jpg
 draft: False
 categories:
@@ -15,6 +15,10 @@ tags:
     - pandas
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
+
+## Post Updates
+
+Update 12/5/2024: Updated code for summary stats function, various code comments, and corrected grammatical errors.
 
 ## Introduction
 
@@ -178,7 +182,7 @@ def load_data(file):
 
 ### Portfolio Strategy
 
-This is the function that executes the strategy. That is, takes in the following variables and produces a dataframe with the results:
+This is the function that executes the strategy. The function takes in the following variables and produces a dataframe with the results:
 
 * fund_list: This is a list of the funds (in this case asset classes) to be used
 * starting_cash: Starting capital amount for the strategy
@@ -330,124 +334,55 @@ def strategy(fund_list, starting_cash, cash_contrib, close_prices_df, rebal_mont
 ### Summary Stats
 
 ```text
-# stats for entire data set
+# Stats for entire data set
 def summary_stats(fund_list, df, period):
     if period == 'Monthly':
         timeframe = 12 # months
-        df_stats = pd.DataFrame(df.mean(axis=0) * timeframe) # annualized
-        df_stats.columns = ['Annualized Mean']
-        df_stats['Annualized Volatility'] = df.std() * np.sqrt(timeframe) # annualized
-        df_stats['Annualized Sharpe Ratio'] = df_stats['Annualized Mean'] / df_stats['Annualized Volatility']
-
-        df_cagr = (1 + df['Return']).cumprod()
-        cagr = (df_cagr[-1] / 1) ** (1/(len(df_cagr) / timeframe)) - 1
-        df_stats['CAGR'] = cagr
-
-        df_stats[period + ' Max Return'] = df.max()
-        df_stats[period + ' Max Return (Date)'] = df.idxmax().values[0]
-        df_stats[period + ' Min Return'] = df.min()
-        df_stats[period + ' Min Return (Date)'] = df.idxmin().values[0]
-        
-        wealth_index = 1000*(1+df).cumprod()
-        previous_peaks = wealth_index.cummax()
-        drawdowns = (wealth_index - previous_peaks)/previous_peaks
-
-        df_stats['Max Drawdown'] = drawdowns.min()
-        df_stats['Peak'] = [previous_peaks[col][:drawdowns[col].idxmin()].idxmax() for col in previous_peaks.columns]
-        df_stats['Bottom'] = drawdowns.idxmin()
-    
-        recovery_date = []
-        for col in wealth_index.columns:
-            prev_max = previous_peaks[col][:drawdowns[col].idxmin()].max()
-            recovery_wealth = pd.DataFrame([wealth_index[col][drawdowns[col].idxmin():]]).T
-            recovery_date.append(recovery_wealth[recovery_wealth[col] >= prev_max].index.min())
-        df_stats['Recovery Date'] = recovery_date
-
-        plan_name = '_'.join(fund_list)
-        file = plan_name + "_Summary_Stats.xlsx"
-        location = file
-        df_stats.to_excel(location, sheet_name='data')
-        print(f"Summary stats complete for {plan_name}.")
-        return df_stats
-    
     elif period == 'Weekly':
         timeframe = 52 # weeks
-        df_stats = pd.DataFrame(df.mean(axis=0) * timeframe) # annualized
-        df_stats.columns = ['Annualized Mean']
-        df_stats['Annualized Volatility'] = df.std() * np.sqrt(timeframe) # annualized
-        df_stats['Annualized Sharpe Ratio'] = df_stats['Annualized Mean'] / df_stats['Annualized Volatility']
-
-        df_cagr = (1 + df['Return']).cumprod()
-        cagr = (df_cagr[-1] / 1) ** (1/(len(df_cagr) / timeframe)) - 1
-        df_stats['CAGR'] = cagr
-
-        df_stats[period + ' Max Return'] = df.max()
-        df_stats[period + ' Max Return (Date)'] = df.idxmax().values[0]
-        df_stats[period + ' Min Return'] = df.min()
-        df_stats[period + ' Min Return (Date)'] = df.idxmin().values[0]
-        
-        wealth_index = 1000*(1+df).cumprod()
-        previous_peaks = wealth_index.cummax()
-        drawdowns = (wealth_index - previous_peaks)/previous_peaks
-
-        df_stats['Max Drawdown'] = drawdowns.min()
-        df_stats['Peak'] = [previous_peaks[col][:drawdowns[col].idxmin()].idxmax() for col in previous_peaks.columns]
-        df_stats['Bottom'] = drawdowns.idxmin()
-    
-        recovery_date = []
-        for col in wealth_index.columns:
-            prev_max = previous_peaks[col][:drawdowns[col].idxmin()].max()
-            recovery_wealth = pd.DataFrame([wealth_index[col][drawdowns[col].idxmin():]]).T
-            recovery_date.append(recovery_wealth[recovery_wealth[col] >= prev_max].index.min())
-        df_stats['Recovery Date'] = recovery_date
-
-        plan_name = '_'.join(fund_list)
-        file = plan_name + "_Summary_Stats.xlsx"
-        location = file
-        df_stats.to_excel(location, sheet_name='data')
-        print(f"Summary stats complete for {plan_name}.")
-        return df_stats
-        
     elif period == 'Daily':
         timeframe = 365 # days
-        df_stats = pd.DataFrame(df.mean(axis=0) * timeframe) # annualized
-        df_stats.columns = ['Annualized Mean']
-        df_stats['Annualized Volatility'] = df.std() * np.sqrt(timeframe) # annualized
-        df_stats['Annualized Sharpe Ratio'] = df_stats['Annualized Mean'] / df_stats['Annualized Volatility']
-
-        df_cagr = (1 + df['Return']).cumprod()
-        cagr = (df_cagr[-1] / 1) ** (1/(len(df_cagr) / timeframe)) - 1
-        df_stats['CAGR'] = cagr
-        
-        df_stats[period + ' Max Return'] = df.max()
-        df_stats[period + ' Max Return (Date)'] = df.idxmax().values[0]
-        df_stats[period + ' Min Return'] = df.min()
-        df_stats[period + ' Min Return (Date)'] = df.idxmin().values[0]
-        
-        wealth_index = 1000*(1+df).cumprod()
-        previous_peaks = wealth_index.cummax()
-        drawdowns = (wealth_index - previous_peaks)/previous_peaks
-
-        df_stats['Max Drawdown'] = drawdowns.min()
-        df_stats['Peak'] = [previous_peaks[col][:drawdowns[col].idxmin()].idxmax() for col in previous_peaks.columns]
-        df_stats['Bottom'] = drawdowns.idxmin()
-    
-        recovery_date = []
-        for col in wealth_index.columns:
-            prev_max = previous_peaks[col][:drawdowns[col].idxmin()].max()
-            recovery_wealth = pd.DataFrame([wealth_index[col][drawdowns[col].idxmin():]]).T
-            recovery_date.append(recovery_wealth[recovery_wealth[col] >= prev_max].index.min())
-        df_stats['Recovery Date'] = recovery_date
-
-        plan_name = '_'.join(fund_list)
-        file = plan_name + "_Summary_Stats.xlsx"
-        location = file
-        df_stats.to_excel(location, sheet_name='data')
-        print(f"Summary stats complete for {plan_name}.")
-        return df_stats
-            
+    elif period == 'Hourly':
+        timeframe = 8760 # hours
     else:
         return print("Error, check inputs")
+
+    df_stats = pd.DataFrame(df.mean(axis=0) * timeframe) # annualized
+    # df_stats = pd.DataFrame((1 + df.mean(axis=0)) ** timeframe - 1) # annualized, this is this true annualized return but we will simply use the mean
+    df_stats.columns = ['Annualized Mean']
+    df_stats['Annualized Volatility'] = df.std() * np.sqrt(timeframe) # annualized
+    df_stats['Annualized Sharpe Ratio'] = df_stats['Annualized Mean'] / df_stats['Annualized Volatility']
+
+    df_cagr = (1 + df['Return']).cumprod()
+    cagr = (df_cagr[-1] / 1) ** (1/(len(df_cagr) / timeframe)) - 1
+    df_stats['CAGR'] = cagr
+
+    df_stats[period + ' Max Return'] = df.max()
+    df_stats[period + ' Max Return (Date)'] = df.idxmax().values[0]
+    df_stats[period + ' Min Return'] = df.min()
+    df_stats[period + ' Min Return (Date)'] = df.idxmin().values[0]
+    
+    wealth_index = 1000*(1+df).cumprod()
+    previous_peaks = wealth_index.cummax()
+    drawdowns = (wealth_index - previous_peaks)/previous_peaks
+
+    df_stats['Max Drawdown'] = drawdowns.min()
+    df_stats['Peak'] = [previous_peaks[col][:drawdowns[col].idxmin()].idxmax() for col in previous_peaks.columns]
+    df_stats['Bottom'] = drawdowns.idxmin()
+
+    recovery_date = []
+    for col in wealth_index.columns:
+        prev_max = previous_peaks[col][:drawdowns[col].idxmin()].max()
+        recovery_wealth = pd.DataFrame([wealth_index[col][drawdowns[col].idxmin():]]).T
+        recovery_date.append(recovery_wealth[recovery_wealth[col] >= prev_max].index.min())
+    df_stats['Recovery Date'] = recovery_date
+
+    plan_name = '_'.join(fund_list)
+    file = plan_name + "_Summary_Stats.xlsx"
+    location = file
+    df_stats.to_excel(location, sheet_name='data')
+    print(f"Summary stats complete for {plan_name}.")
+    return df_stats
 ```
 
 ### Plot Cumulative Return
@@ -687,10 +622,19 @@ gold_data
 We'll now combine the dataframes for the timeseries data from each of the asset classes, as follows:
 
 ```text
+# Merge the stock data and bond data into a single DataFrame using their indices (dates)
 perm_port = pd.merge(stocks_data['Stocks_Close'], bonds_data['Bonds_Close'], left_index=True, right_index=True)
+
+# Add gold data to the portfolio DataFrame by merging it with the existing data on indices (dates)
 perm_port = pd.merge(perm_port, gold_data['Gold_Close'], left_index=True, right_index=True)
+
+# Add a column for cash with a constant value of 1 (assumes the value of cash remains constant at $1 over time)
 perm_port['Cash_Close'] = 1
+
+# Remove any rows with missing values (NaN) to ensure clean data for further analysis
 perm_port.dropna(inplace=True)
+
+# Display the finalized portfolio DataFrame
 perm_port
 ```
 
@@ -724,39 +668,29 @@ cash_contrib = 0
 
 strat = strategy(fund_list, starting_cash, cash_contrib, perm_port, 1, 1, 0.35, 0.15).set_index('Date')
 sum_stats = summary_stats(fund_list, strat[['Return']], 'Daily')
-display(sum_stats)
 
 strat_pre_1999 = strat[strat.index < '2000-01-01']
 sum_stats_pre_1999 = summary_stats(fund_list, strat_pre_1999[['Return']], 'Daily')
-display(sum_stats_pre_1999)
 
 strat_post_1999 = strat[strat.index >= '2000-01-01']
 sum_stats_post_1999 = summary_stats(fund_list, strat_post_1999[['Return']], 'Daily')
-display(sum_stats_post_1999)
 
-plot_cumulative_return(strat)
-plot_values(strat)
-plot_drawdown(strat)
-plot_asset_weights(strat)
+strat_post_2009 = strat[strat.index >= '2010-01-01']
+sum_stats_post_2009 = summary_stats(fund_list, strat_post_2009[['Return']], 'Daily')
+```
 
-strat_annual_returns = strat['Cumulative_Return'].resample('Y').last().pct_change().dropna()
-strat_annual_returns_df = strat_annual_returns.to_frame()
-strat_annual_returns_df['Year'] = strat_annual_returns_df.index.year  # Add a 'Year' column with just the year
-strat_annual_returns_df.reset_index(drop=True, inplace=True)  # Reset the index to remove the datetime index
+## Strategy Statistics
 
-# Now, the DataFrame will have 'Year' and 'Cumulative_Return' columns
-strat_annual_returns_df = strat_annual_returns_df[['Year', 'Cumulative_Return']]  # Keep only 'Year' and 'Cumulative_Return' columns
-strat_annual_returns_df.rename(columns = {'Cumulative_Return':'Return'}, inplace=True)
-strat_annual_returns_df.set_index('Year', inplace=True)
-strat_annual_returns_df
-# display(strat_annual_returns_df)
-
-plan_name = '_'.join(fund_list)
-file = plan_name + "_Annual_Returns.xlsx"
-location = file
-strat_annual_returns_df.to_excel(location, sheet_name='data')
-
-plot_annual_returns(strat_annual_returns_df)
+```text
+all_sum_stats = pd.concat([sum_stats])
+all_sum_stats = all_sum_stats.rename(index={'Return': '1990 - 2023'})
+all_sum_stats = pd.concat([all_sum_stats, sum_stats_pre_1999])
+all_sum_stats = all_sum_stats.rename(index={'Return': 'Pre 1999'})
+all_sum_stats = pd.concat([all_sum_stats, sum_stats_post_1999])
+all_sum_stats = all_sum_stats.rename(index={'Return': 'Post 1999'})
+all_sum_stats = pd.concat([all_sum_stats, sum_stats_post_2009])
+all_sum_stats = all_sum_stats.rename(index={'Return': 'Post 2009'})
+all_sum_stats
 ```
 
 Since the strategy, summary statistics, and annual returns are all exported as excel files, they can be found at the following locations:
@@ -765,17 +699,13 @@ Since the strategy, summary statistics, and annual returns are all exported as e
 [Stocks_Bonds_Gold_Cash_Summary_Stats.xlsx](Stocks_Bonds_Gold_Cash_Summary_Stats.xlsx)</br>
 [Stocks_Bonds_Gold_Cash_Annual_Returns.xlsx](Stocks_Bonds_Gold_Cash_Annual_Returns.xlsx)</br>
 
-Here's the summary stats for the example above:
+Here's the summary stats for the example above including the various timeframes:
 
 ![Summary Stats](06_Summary_Stats.png)
 
 Here we have a mean annualized return of 8.3%, volatility of 7.2%, a CAGR of 8.4% and a Sharpe ratio of 1.15. And this with a max drawdown of just over 15%. Not bad, Mr. Browne!
 
-Since the book was published in 1999, let's take a look at the summary stats for below and after 1999.
-
-![Summary Stats Pre 1999](10_Summary_Stats_Pre_1999.png)
-
-![Summary Stats Post 1999](11_Summary_Stats_Post_1999.png)
+Since the book was published in 1999, let's look specifically at the summary stats for below and after 1999.
 
 The mean annualized return is approximately 0.7% lower for the pre 1999 vs post 1999 data, as is the CAGR. The volatility is higher for the post 1999 data which leads to a difference in the Sharpe ratio.
 
@@ -783,7 +713,33 @@ Here's the annual returns:
 
 ![Portfolio Annual Returns](09_Portfolio_Annual_Returns_Table.png)
 
-### Plots
+## Generate Plots
+
+```text
+plot_cumulative_return(strat)
+plot_values(strat)
+plot_drawdown(strat)
+plot_asset_weights(strat)
+
+# Create dataframe for the annual returns
+strat_annual_returns = strat['Cumulative_Return'].resample('Y').last().pct_change().dropna()
+strat_annual_returns_df = strat_annual_returns.to_frame()
+strat_annual_returns_df['Year'] = strat_annual_returns_df.index.year  # Add a 'Year' column with just the year
+strat_annual_returns_df.reset_index(drop=True, inplace=True)  # Reset the index to remove the datetime index
+
+# Now the DataFrame will have 'Year' and 'Cumulative_Return' columns
+strat_annual_returns_df = strat_annual_returns_df[['Year', 'Cumulative_Return']]  # Keep only 'Year' and 'Cumulative_Return' columns
+strat_annual_returns_df.rename(columns = {'Cumulative_Return':'Return'}, inplace=True)
+strat_annual_returns_df.set_index('Year', inplace=True)
+display(strat_annual_returns_df)
+
+plan_name = '_'.join(fund_list)
+file = plan_name + "_Annual_Returns.xlsx"
+location = file
+strat_annual_returns_df.to_excel(location, sheet_name='data')
+
+plot_annual_returns(strat_annual_returns_df)
+```
 
 Here are several relevant plots:
 
