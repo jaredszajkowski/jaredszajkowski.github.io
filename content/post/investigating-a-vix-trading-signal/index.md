@@ -2,10 +2,10 @@
 title: Investigating A VIX Trading Signal
 description: A brief look at finding a trading signal based on moving averages of the VIX.
 # slug: hello-world
-date: 2024-09-10 00:00:01+0000
-# lastmod: 2023-12-26 00:00:00+0000
+date: 2025-01-07 00:00:01+0000
+lastmod: 2025-01-07 00:00:01+0000
 image: cover.jpg
-draft: true
+draft: false
 categories:
     - Financial Data
     - Trading
@@ -41,33 +41,38 @@ Here's the code for the function to pull the data and dump to Excel:
 
 ```html
 # This function pulls data from Yahoo finance
-import pandas as pd
-import numpy as np
-import yfinance as yf
-
 def yf_data_updater(fund):
+    
     # Download data from YF
     df_comp = yf.download(fund)
-    
+
+    # Drop the column level with the ticker symbol
+    df_comp.columns = df_comp.columns.droplevel(1)
+
     # Reset index
-    df_comp.reset_index(inplace = True)
-    
-    # Drop data from last day because it's not accrate until end of day
-    df_comp.drop(df_comp.index[-1], inplace=True)
-    
+    df_comp = df_comp.reset_index()
+
+    # Remove the "Price" header from the index
+    df_comp.columns.name = None
+
     # Reset date column
     df_comp['Date'] = df_comp['Date'].dt.tz_localize(None)
-    
-    # Set index to date
-    df_comp.set_index('Date', inplace = True)
+
+    # Set 'Date' column as index
+    df_comp = df_comp.set_index('Date', drop=True)
+
+    # Drop data from last day because it's not accrate until end of day
+    df_comp = df_comp.drop(df_comp.index[-1])
     
     # Export data to excel
     file = fund + ".xlsx"
     df_comp.to_excel(file, sheet_name='data')
 
-    print(f"The last date of data for {fund} is: ")
+    print(f"The first and last date of data for {fund} is: ")
+    print(df_comp[:1])
     print(df_comp[-1:])
     print(f"Data updater complete for {fund} data")
+    
     return print(f"--------------------")
 ```
 
@@ -77,20 +82,6 @@ def yf_data_updater(fund):
 # Set number of decimal places in pandas
 def dp(decimal_places):
     pd.set_option('display.float_format', lambda x: f'%.{decimal_places}f' % x)
-```
-
-### Return Information About A Dataframe
-
-```html
-# The `df_info` function returns some useful information about a dataframe, such as the columns, data types, and size.
-def df_info(df):
-    print('There are ', df.shape[0], ' rows and ', df.shape[1], ' columns')
-    print('The columns and data types are:')
-    print(df.dtypes)
-    print('The first 4 rows are:')
-    display(df.head(4))
-    print('The last 4 rows are:')
-    display(df.tail(4))
 ```
 
 ### Import Data From CSV / XLSX
@@ -112,6 +103,20 @@ def load_data(file):
     return df
 ```
 
+### Return Information About A Dataframe
+
+```html
+# The `df_info` function returns some useful information about a dataframe, such as the columns, data types, and size.
+def df_info(df):
+    print('There are ', df.shape[0], ' rows and ', df.shape[1], ' columns')
+    print('The columns and data types are:')
+    print(df.dtypes)
+    print('The first 4 rows are:')
+    display(df.head(4))
+    print('The last 4 rows are:')
+    display(df.tail(4))
+```
+
 ## Data Overview
 
 ### Acquire Data
@@ -124,7 +129,7 @@ yf_data_updater('^VIX')
 
 ### Load Data
 
-Set our decimal places to something reasonable (like 2):
+Then set our decimal places to something reasonable (like 2):
 
 ```html
 dp(2)
@@ -139,21 +144,21 @@ vix = load_data('^VIX.xlsx')
 # Set 'Date' column as datetime
 vix['Date'] = pd.to_datetime(vix['Date'])
 
-# Drop 'Volume' and 'Adj Close'
-vix.drop(columns = {'Adj Close', 'Volume'}, inplace = True)
+# Drop 'Volume'
+vix.drop(columns = {'Volume'}, inplace = True)
 
 # Set Date as index
 vix.set_index('Date', inplace = True)
 ```
 
-### Check For Missing Values & Forward Fill
+### Check For Missing Values & Forward Fill Any Missing Values
 
 ```html
 # Check to see if there are any NaN values
 vix[vix['High'].isna()]
 
 # Forward fill to clean up missing data
-vix['High'].ffill(inplace = True)
+vix['High'] = vix['High'].ffill()
 ```
 
 ### DataFrame Info
