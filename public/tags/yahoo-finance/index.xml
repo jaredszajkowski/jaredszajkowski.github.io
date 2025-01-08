@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Yahoo Finance on Jared Szajkowski</title>
-        <link>https://www.jaredszajkowski.com/tags/yahoo-finance/</link>
+        <link>http://localhost:1313/tags/yahoo-finance/</link>
         <description>Recent content in Yahoo Finance on Jared Szajkowski</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Tue, 07 Jan 2025 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/tags/yahoo-finance/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 07 Jan 2025 00:00:01 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/yahoo-finance/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Investigating A VIX Trading Signal</title>
-        <link>https://www.jaredszajkowski.com/2025/01/07/investigating-a-vix-trading-signal/</link>
+        <link>http://localhost:1313/2025/01/07/investigating-a-vix-trading-signal/</link>
         <pubDate>Tue, 07 Jan 2025 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2025/01/07/investigating-a-vix-trading-signal/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2025/01/07/investigating-a-vix-trading-signal/cover.jpg" alt="Featured image of post Investigating A VIX Trading Signal" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+        <guid>http://localhost:1313/2025/01/07/investigating-a-vix-trading-signal/</guid>
+        <description>&lt;img src="http://localhost:1313/2025/01/07/investigating-a-vix-trading-signal/cover.jpg" alt="Featured image of post Investigating A VIX Trading Signal" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;From the &lt;a class=&#34;link&#34; href=&#34;https://www.cboe.com/tradable_products/vix/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;CBOE VIX website&lt;/a&gt;:&lt;/p&gt;
 &lt;p&gt;&amp;ldquo;Cboe Global Markets revolutionized investing with the creation of the Cboe Volatility Index® (VIX® Index), the first benchmark index to measure the market’s expectation of future volatility. The VIX Index is based on options of the S&amp;amp;P 500® Index, considered the leading indicator of the broad U.S. stock market. The VIX Index is recognized as the world’s premier gauge of U.S. equity market volatility.&amp;rdquo;&lt;/p&gt;
@@ -250,7 +250,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;Gives us the following:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2025/01/07/investigating-a-vix-trading-signal/01_DF_Info.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/2025/01/07/investigating-a-vix-trading-signal/01_DF_Info.png&#34;
 	width=&#34;344&#34;
 	height=&#34;612&#34;
 	
@@ -298,7 +298,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                                 &amp;#39;Close&amp;#39;: vix_stats.loc[&amp;#39;mean&amp;#39;][&amp;#39;Close&amp;#39;] - vix_stats.loc[&amp;#39;std&amp;#39;][&amp;#39;Close&amp;#39;]}
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2025/01/07/investigating-a-vix-trading-signal/02_DF_Stats.png&#34;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/2025/01/07/investigating-a-vix-trading-signal/02_DF_Stats.png&#34;
 	width=&#34;408&#34;
 	height=&#34;387&#34;
 	
@@ -323,7 +323,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;display(deciles)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2025/01/07/investigating-a-vix-trading-signal/03_DF_Deciles.png&#34;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/2025/01/07/investigating-a-vix-trading-signal/03_DF_Deciles.png&#34;
 	width=&#34;475&#34;
 	height=&#34;402&#34;
 	
@@ -338,7 +338,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;A quick histogram gives us the distribution for the entire dataset:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2025/01/07/investigating-a-vix-trading-signal/04_Histogram.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/2025/01/07/investigating-a-vix-trading-signal/04_Histogram.png&#34;
 	width=&#34;3570&#34;
 	height=&#34;1769&#34;
 	
@@ -353,7 +353,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;Now, let&amp;rsquo;s add the levels for the mean, mean + 1 standard deviation, mean - 1 standard deviation, and mean + 2 standard deviations:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2025/01/07/investigating-a-vix-trading-signal/05_Histogram&amp;#43;Mean.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/2025/01/07/investigating-a-vix-trading-signal/05_Histogram&amp;#43;Mean.png&#34;
 	width=&#34;3570&#34;
 	height=&#34;1769&#34;
 	
@@ -369,7 +369,7 @@
 &gt;&lt;/p&gt;
 &lt;h3 id=&#34;historical-vix-plot&#34;&gt;Historical VIX Plot
 &lt;/h3&gt;&lt;p&gt;Here&amp;rsquo;s two plots for the dataset. The first covers 1990 - 2009, and the second 2010 - 2024. This is the daily high level.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2025/01/07/investigating-a-vix-trading-signal/06_Plot_1990-2009.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/2025/01/07/investigating-a-vix-trading-signal/06_Plot_1990-2009.png&#34;
 	width=&#34;3570&#34;
 	height=&#34;1768&#34;
 	
@@ -383,7 +383,7 @@
 		data-flex-basis=&#34;484px&#34;
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2025/01/07/investigating-a-vix-trading-signal/07_Plot_2010-2024.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/2025/01/07/investigating-a-vix-trading-signal/07_Plot_2010-2024.png&#34;
 	width=&#34;3570&#34;
 	height=&#34;1768&#34;
 	

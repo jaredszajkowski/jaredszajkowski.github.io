@@ -5,7 +5,7 @@ description: A brief look at finding a trading signal based on moving averages o
 date: 2025-01-07 00:00:01+0000
 lastmod: 2025-01-07 00:00:01+0000
 image: cover.jpg
-draft: false
+draft: true
 categories:
     - Financial Data
     - Trading
@@ -39,7 +39,7 @@ First, a couple of useful functions:
 
 Here's the code for the function to pull the data and dump to Excel:
 
-```html
+```text
 # This function pulls data from Yahoo finance
 def yf_data_updater(fund):
     
@@ -78,7 +78,7 @@ def yf_data_updater(fund):
 
 ### Set Number Of Decimal Places
 
-``` html
+```text
 # Set number of decimal places in pandas
 def dp(decimal_places):
     pd.set_option('display.float_format', lambda x: f'%.{decimal_places}f' % x)
@@ -86,7 +86,7 @@ def dp(decimal_places):
 
 ### Import Data From CSV / XLSX
 
-``` html
+```text
 def load_data(file):
     # Import CSV
     try:
@@ -105,7 +105,7 @@ def load_data(file):
 
 ### Return Information About A Dataframe
 
-```html
+```text
 # The `df_info` function returns some useful information about a dataframe, such as the columns, data types, and size.
 def df_info(df):
     print('There are ', df.shape[0], ' rows and ', df.shape[1], ' columns')
@@ -123,7 +123,7 @@ def df_info(df):
 
 First, let's get the data:
 
-``` html
+```text
 yf_data_updater('^VIX')
 ```
 
@@ -131,13 +131,13 @@ yf_data_updater('^VIX')
 
 Then set our decimal places to something reasonable (like 2):
 
-```html
+```text
 dp(2)
 ```
 
 Now that we have the data, let's load it up and take a look.
 
-```html
+```text
 # VIX
 vix = load_data('^VIX.xlsx')
 
@@ -153,7 +153,7 @@ vix.set_index('Date', inplace = True)
 
 ### Check For Missing Values & Forward Fill Any Missing Values
 
-```html
+```text
 # Check to see if there are any NaN values
 vix[vix['High'].isna()]
 
@@ -165,7 +165,7 @@ vix['High'] = vix['High'].ffill()
 
 Now, running:
 
-``` html
+```text
 df_info(vix)
 ```
 
@@ -177,7 +177,7 @@ Gives us the following:
 
 Some interesting statistics jump out at use when we look at the mean, standard deviation, min, and max values:
 
-```html
+```text
 vix_stats = vix.describe()
 vix_stats.loc['mean + 1 std'] = {'Open': vix_stats.loc['mean']['Open'] + vix_stats.loc['std']['Open'],
                                  'High': vix_stats.loc['mean']['High'] + vix_stats.loc['std']['High'],
@@ -197,7 +197,7 @@ vix_stats.loc['mean - 1 std'] = {'Open': vix_stats.loc['mean']['Open'] - vix_sta
 
 And the levels for each decile:
 
-```html
+```text
 deciles = vix.quantile(np.arange(0, 1.1, 0.1))
 display(deciles)
 ```
@@ -208,7 +208,7 @@ A quick histogram gives us the distribution for the entire dataset:
 
 ![Histogram](04_Histogram.png)
 
-Now, let's add the levels for the mean, mean + 1 standard deviation, mean - 1 standard deviation, and mean + 2 standard deviations:
+Now, let's add the levels for the mean, mean plus 1 standard deviation, mean minus 1 standard deviation, and mean plus 2 standard deviations:
 
 ![Histogram, Mean, And Standard Deviations](05_Histogram+Mean.png)
 
@@ -234,20 +234,59 @@ Next, we will consider the idea of a spike level in the VIX and how we might use
 
 We will start the 10 day simple moving average (SMA) of the daily high level to get an idea of what is happening recently with the VIX. We'll then pick an arbitrary spike level (25% above the 10 day SMA), and our signal is generated if the VIX hits a level that is above the spike threshold.
 
-The idea is that the 10 day SMA will smooth out the recent short term volatility in the VIX, and any gradual increases in the VIX are not interpreted as spike events.
+The idea is that the 10 day SMA will smooth out the recent short term volatility in the VIX, and therefore any gradual increases in the VIX are not interpreted as spike events.
 
 We also will generate the 20 and 50 day SMAs for reference, and again to see what is happening with the level of the VIX over slightly longer timeframes.
 
 Here's the code for the above:
 
-```html
+```text
+# Define the spike multiplier for detecting significant spikes
 spike_level = 1.25
-vix['SMA_10'] = vix['High'].rolling(10).mean()
-vix['SMA_10_Shift'] = vix['SMA_10'].shift(1)
-vix['Spike_Level'] = vix['SMA_10_Shift'] * spike_level
-vix['Spike'] = vix['High'] >= vix['Spike_Level']
-vix['SMA_20'] = vix['High'].rolling(20).mean()
-vix['SMA_50'] = vix['High'].rolling(50).mean()
+
+# =========================
+# Simple Moving Averages (SMA)
+# =========================
+
+# Calculate 10-period SMA of 'High'
+vix['High_SMA_10'] = vix['High'].rolling(window=10).mean()
+
+# Shift the 10-period SMA by 1 to compare with current 'High'
+vix['High_SMA_10_Shift'] = vix['High_SMA_10'].shift(1)
+
+# Calculate the spike level based on shifted SMA and spike multiplier
+vix['Spike_Level_SMA'] = vix['High_SMA_10_Shift'] * spike_level
+
+# Calculate 20-period SMA of 'High'
+vix['High_SMA_20'] = vix['High'].rolling(window=20).mean()
+
+# Determine if 'High' exceeds the spike level (indicates a spike)
+vix['Spike_SMA'] = vix['High'] >= vix['Spike_Level_SMA']
+
+# Calculate 50-period SMA of 'High' for trend analysis
+vix['High_SMA_50'] = vix['High'].rolling(window=50).mean()
+
+# =========================
+# Exponential Moving Averages (EMA)
+# =========================
+
+# Calculate 10-period EMA of 'High'
+vix['High_EMA_10'] = vix['High'].ewm(span=10, adjust=False).mean()
+
+# Shift the 10-period EMA by 1 to compare with current 'High'
+vix['High_EMA_10_Shift'] = vix['High_EMA_10'].shift(1)
+
+# Calculate the spike level based on shifted EMA and spike multiplier
+vix['Spike_Level_EMA'] = vix['High_EMA_10_Shift'] * spike_level
+
+# Calculate 20-period EMA of 'High'
+vix['High_EMA_20'] = vix['High'].ewm(span=20, adjust=False).mean()
+
+# Determine if 'High' exceeds the spike level (indicates a spike)
+vix['Spike_EMA'] = vix['High'] >= vix['Spike_Level_EMA']
+
+# Calculate 50-period EMA of 'High' for trend analysis
+vix['High_EMA_50'] = vix['High'].ewm(span=50, adjust=False).mean()
 ```
 
 Now, let's look at the first 

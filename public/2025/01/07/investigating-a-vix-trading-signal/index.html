@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-    <head><meta charset='utf-8'>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="A brief look at finding a trading signal based on moving averages of the VIX.">
 <title>Investigating A VIX Trading Signal</title>
 
-<link rel='canonical' href='https://www.jaredszajkowski.com/2025/01/07/investigating-a-vix-trading-signal/'>
+<link rel='canonical' href='http://localhost:1313/2025/01/07/investigating-a-vix-trading-signal/'>
 
 <link rel="stylesheet" href="/scss/style.min.900ea5f7890cce14ae7761fef2e019e4f409d2a7e3c06b97d3fe4853d829c12e.css"><meta property='og:title' content="Investigating A VIX Trading Signal">
 <meta property='og:description' content="A brief look at finding a trading signal based on moving averages of the VIX.">
-<meta property='og:url' content='https://www.jaredszajkowski.com/2025/01/07/investigating-a-vix-trading-signal/'>
+<meta property='og:url' content='http://localhost:1313/2025/01/07/investigating-a-vix-trading-signal/'>
 <meta property='og:site_name' content='Jared Szajkowski'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Python' /><meta property='article:tag' content='Yahoo Finance' /><meta property='article:tag' content='pandas' /><meta property='article:tag' content='VIX' /><meta property='article:published_time' content='2025-01-07T00:00:01&#43;00:00'/><meta property='article:modified_time' content='2025-01-07T00:00:01&#43;00:00'/><meta property='og:image' content='https://www.jaredszajkowski.com/2025/01/07/investigating-a-vix-trading-signal/cover.jpg' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Python' /><meta property='article:tag' content='Yahoo Finance' /><meta property='article:tag' content='pandas' /><meta property='article:tag' content='VIX' /><meta property='article:published_time' content='2025-01-07T00:00:01&#43;00:00'/><meta property='article:modified_time' content='2025-01-07T00:00:01&#43;00:00'/><meta property='og:image' content='http://localhost:1313/2025/01/07/investigating-a-vix-trading-signal/cover.jpg' />
 <meta name="twitter:title" content="Investigating A VIX Trading Signal">
 <meta name="twitter:description" content="A brief look at finding a trading signal based on moving averages of the VIX."><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='https://www.jaredszajkowski.com/2025/01/07/investigating-a-vix-trading-signal/cover.jpg' />
+    <meta name="twitter:image" content='http://localhost:1313/2025/01/07/investigating-a-vix-trading-signal/cover.jpg' />
     <link rel="shortcut icon" href="/profile_pic.jpg" />
 
     </head>
@@ -385,7 +385,7 @@
 
 
                 <time class="article-time--reading">
-                    5 minute read
+                    6 minute read
                 </time>
             </div>
         
@@ -451,7 +451,7 @@
 </span><span class="lnt">34
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># This function pulls data from Yahoo finance
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"># This function pulls data from Yahoo finance
 </span></span><span class="line"><span class="cl">def yf_data_updater(fund):
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    # Download data from YF
@@ -495,7 +495,7 @@
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># Set number of decimal places in pandas
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"># Set number of decimal places in pandas
 </span></span><span class="line"><span class="cl">def dp(decimal_places):
 </span></span><span class="line"><span class="cl">    pd.set_option(&#39;display.float_format&#39;, lambda x: f&#39;%.{decimal_places}f&#39; % x)
 </span></span></code></pre></td></tr></table>
@@ -519,7 +519,7 @@
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">def load_data(file):
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">def load_data(file):
 </span></span><span class="line"><span class="cl">    # Import CSV
 </span></span><span class="line"><span class="cl">    try:
 </span></span><span class="line"><span class="cl">        df = pd.read_csv(file)
@@ -549,7 +549,7 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># The `df_info` function returns some useful information about a dataframe, such as the columns, data types, and size.
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"># The `df_info` function returns some useful information about a dataframe, such as the columns, data types, and size.
 </span></span><span class="line"><span class="cl">def df_info(df):
 </span></span><span class="line"><span class="cl">    print(&#39;There are &#39;, df.shape[0], &#39; rows and &#39;, df.shape[1], &#39; columns&#39;)
 </span></span><span class="line"><span class="cl">    print(&#39;The columns and data types are:&#39;)
@@ -568,7 +568,7 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">yf_data_updater(&#39;^VIX&#39;)
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">yf_data_updater(&#39;^VIX&#39;)
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="load-data">Load Data
@@ -578,7 +578,7 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">dp(2)
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">dp(2)
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Now that we have the data, let&rsquo;s load it up and take a look.</p>
@@ -597,7 +597,7 @@
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># VIX
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"># VIX
 </span></span><span class="line"><span class="cl">vix = load_data(&#39;^VIX.xlsx&#39;)
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"># Set &#39;Date&#39; column as datetime
@@ -620,7 +620,7 @@
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># Check to see if there are any NaN values
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"># Check to see if there are any NaN values
 </span></span><span class="line"><span class="cl">vix[vix[&#39;High&#39;].isna()]
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"># Forward fill to clean up missing data
@@ -634,7 +634,7 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">df_info(vix)
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">df_info(vix)
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Gives us the following:</p>
@@ -671,7 +671,7 @@
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">vix_stats = vix.describe()
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">vix_stats = vix.describe()
 </span></span><span class="line"><span class="cl">vix_stats.loc[&#39;mean + 1 std&#39;] = {&#39;Open&#39;: vix_stats.loc[&#39;mean&#39;][&#39;Open&#39;] + vix_stats.loc[&#39;std&#39;][&#39;Open&#39;],
 </span></span><span class="line"><span class="cl">                                 &#39;High&#39;: vix_stats.loc[&#39;mean&#39;][&#39;High&#39;] + vix_stats.loc[&#39;std&#39;][&#39;High&#39;],
 </span></span><span class="line"><span class="cl">                                 &#39;Low&#39;: vix_stats.loc[&#39;mean&#39;][&#39;Low&#39;] + vix_stats.loc[&#39;std&#39;][&#39;Low&#39;],
@@ -707,7 +707,7 @@
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">deciles = vix.quantile(np.arange(0, 1.1, 0.1))
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">deciles = vix.quantile(np.arange(0, 1.1, 0.1))
 </span></span><span class="line"><span class="cl">display(deciles)
 </span></span></code></pre></td></tr></table>
 </div>
@@ -740,7 +740,7 @@
 		data-flex-basis="484px"
 	
 ></p>
-<p>Now, let&rsquo;s add the levels for the mean, mean + 1 standard deviation, mean - 1 standard deviation, and mean + 2 standard deviations:</p>
+<p>Now, let&rsquo;s add the levels for the mean, mean plus 1 standard deviation, mean minus 1 standard deviation, and mean plus 2 standard deviations:</p>
 <p><img src="/2025/01/07/investigating-a-vix-trading-signal/05_Histogram&#43;Mean.png"
 	width="3570"
 	height="1769"
@@ -795,27 +795,105 @@
 </h2><p>Next, we will consider the idea of a spike level in the VIX and how we might use a spike level to generate a signal. These elevated levels usually occur during market sell-off events or longer term drawdowns in the S&amp;P 500. Sometimes the VIX reverts to recent levels after a spike, but other times levels remain elevated for weeks or even months.</p>
 <h3 id="spike-level">Spike Level
 </h3><p>We will start the 10 day simple moving average (SMA) of the daily high level to get an idea of what is happening recently with the VIX. We&rsquo;ll then pick an arbitrary spike level (25% above the 10 day SMA), and our signal is generated if the VIX hits a level that is above the spike threshold.</p>
-<p>The idea is that the 10 day SMA will smooth out the recent short term volatility in the VIX, and any gradual increases in the VIX are not interpreted as spike events.</p>
+<p>The idea is that the 10 day SMA will smooth out the recent short term volatility in the VIX, and therefore any gradual increases in the VIX are not interpreted as spike events.</p>
 <p>We also will generate the 20 and 50 day SMAs for reference, and again to see what is happening with the level of the VIX over slightly longer timeframes.</p>
 <p>Here&rsquo;s the code for the above:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">spike_level = 1.25
-</span></span><span class="line"><span class="cl">vix[&#39;SMA_10&#39;] = vix[&#39;High&#39;].rolling(10).mean()
-</span></span><span class="line"><span class="cl">vix[&#39;SMA_10_Shift&#39;] = vix[&#39;SMA_10&#39;].shift(1)
-</span></span><span class="line"><span class="cl">vix[&#39;Spike_Level&#39;] = vix[&#39;SMA_10_Shift&#39;] * spike_level
-</span></span><span class="line"><span class="cl">vix[&#39;Spike&#39;] = vix[&#39;High&#39;] &gt;= vix[&#39;Spike_Level&#39;]
-</span></span><span class="line"><span class="cl">vix[&#39;SMA_20&#39;] = vix[&#39;High&#39;].rolling(20).mean()
-</span></span><span class="line"><span class="cl">vix[&#39;SMA_50&#39;] = vix[&#39;High&#39;].rolling(50).mean()
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"># Define the spike multiplier for detecting significant spikes
+</span></span><span class="line"><span class="cl">spike_level = 1.25
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># =========================
+</span></span><span class="line"><span class="cl"># Simple Moving Averages (SMA)
+</span></span><span class="line"><span class="cl"># =========================
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Calculate 10-period SMA of &#39;High&#39;
+</span></span><span class="line"><span class="cl">vix[&#39;High_SMA_10&#39;] = vix[&#39;High&#39;].rolling(window=10).mean()
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Shift the 10-period SMA by 1 to compare with current &#39;High&#39;
+</span></span><span class="line"><span class="cl">vix[&#39;High_SMA_10_Shift&#39;] = vix[&#39;High_SMA_10&#39;].shift(1)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Calculate the spike level based on shifted SMA and spike multiplier
+</span></span><span class="line"><span class="cl">vix[&#39;Spike_Level_SMA&#39;] = vix[&#39;High_SMA_10_Shift&#39;] * spike_level
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Calculate 20-period SMA of &#39;High&#39;
+</span></span><span class="line"><span class="cl">vix[&#39;High_SMA_20&#39;] = vix[&#39;High&#39;].rolling(window=20).mean()
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Determine if &#39;High&#39; exceeds the spike level (indicates a spike)
+</span></span><span class="line"><span class="cl">vix[&#39;Spike_SMA&#39;] = vix[&#39;High&#39;] &gt;= vix[&#39;Spike_Level_SMA&#39;]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Calculate 50-period SMA of &#39;High&#39; for trend analysis
+</span></span><span class="line"><span class="cl">vix[&#39;High_SMA_50&#39;] = vix[&#39;High&#39;].rolling(window=50).mean()
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># =========================
+</span></span><span class="line"><span class="cl"># Exponential Moving Averages (EMA)
+</span></span><span class="line"><span class="cl"># =========================
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Calculate 10-period EMA of &#39;High&#39;
+</span></span><span class="line"><span class="cl">vix[&#39;High_EMA_10&#39;] = vix[&#39;High&#39;].ewm(span=10, adjust=False).mean()
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Shift the 10-period EMA by 1 to compare with current &#39;High&#39;
+</span></span><span class="line"><span class="cl">vix[&#39;High_EMA_10_Shift&#39;] = vix[&#39;High_EMA_10&#39;].shift(1)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Calculate the spike level based on shifted EMA and spike multiplier
+</span></span><span class="line"><span class="cl">vix[&#39;Spike_Level_EMA&#39;] = vix[&#39;High_EMA_10_Shift&#39;] * spike_level
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Calculate 20-period EMA of &#39;High&#39;
+</span></span><span class="line"><span class="cl">vix[&#39;High_EMA_20&#39;] = vix[&#39;High&#39;].ewm(span=20, adjust=False).mean()
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Determine if &#39;High&#39; exceeds the spike level (indicates a spike)
+</span></span><span class="line"><span class="cl">vix[&#39;Spike_EMA&#39;] = vix[&#39;High&#39;] &gt;= vix[&#39;Spike_Level_EMA&#39;]
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># Calculate 50-period EMA of &#39;High&#39; for trend analysis
+</span></span><span class="line"><span class="cl">vix[&#39;High_EMA_50&#39;] = vix[&#39;High&#39;].ewm(span=50, adjust=False).mean()
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Now, let&rsquo;s look at the first</p>
@@ -902,7 +980,7 @@
         
         
             <div class="article-image">
-                <img src="/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/cover.ed06096f80b0b50529892cc225da5f8e.jpg" 
+                <img src="/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/cover.ed06096f80b0b50529892cc225da5f8e.ed06096f80b0b50529892cc225da5f8e.jpg" 
                         width="1792" 
                         height="1024" 
                         loading="lazy"
@@ -1077,7 +1155,7 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.c3c13d8c5aa897d57da1513686c919a03f6870dfd49766870e617cb4a1ecfc4e.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');
