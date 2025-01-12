@@ -14,6 +14,10 @@ tags:
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 
+## Post Updates
+
+Update 1/12/2025: Updated section for use of requirements.txt file for dependency management.
+
 ## Python Module Management
 
 As an Arch Linux user, the push is to utilize pacman and related tools to manage dependencies and package updates (including Python modules). In fact, [the wiki itself](https://wiki.archlinux.org/title/Python) explicitly states this (see 2.1), and the default Arch installation of Python disables python-pip.
@@ -53,6 +57,18 @@ Or the outdated modules:
 And updated at a later point in time with:
 
     $ pip install --upgrade <package-name>
+
+## Using A requirements.txt File
+
+If you have a requirements.txt file present in a git repository/directory, such as:
+
+![Requirements.txt Example](01_Requirements.txt_Example.png)
+
+You can install the required dependencies with the following command:
+
+    $ pip install -r requirements.txt
+
+pip will then install all the required package and module versions based on the requirements file.
 
 ## Maintaining Across Multiple Systems
 

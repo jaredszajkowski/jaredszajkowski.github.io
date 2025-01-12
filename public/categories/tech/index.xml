@@ -12,7 +12,9 @@
         <pubDate>Mon, 02 Dec 2024 00:00:01 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/2024/12/02/using-python-virtual-environments/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2024/12/02/using-python-virtual-environments/cover.jpg" alt="Featured image of post Using Python Virtual Environments" /&gt;&lt;h2 id=&#34;python-module-management&#34;&gt;Python Module Management
+        <description>&lt;img src="https://www.jaredszajkowski.com/2024/12/02/using-python-virtual-environments/cover.jpg" alt="Featured image of post Using Python Virtual Environments" /&gt;&lt;h2 id=&#34;post-updates&#34;&gt;Post Updates
+&lt;/h2&gt;&lt;p&gt;Update 1/12/2025: Updated section for use of requirements.txt file for dependency management.&lt;/p&gt;
+&lt;h2 id=&#34;python-module-management&#34;&gt;Python Module Management
 &lt;/h2&gt;&lt;p&gt;As an Arch Linux user, the push is to utilize pacman and related tools to manage dependencies and package updates (including Python modules). In fact, &lt;a class=&#34;link&#34; href=&#34;https://wiki.archlinux.org/title/Python&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;the wiki itself&lt;/a&gt; explicitly states this (see 2.1), and the default Arch installation of Python disables python-pip.&lt;/p&gt;
 &lt;p&gt;Unfortunately, there are limited resources put into maintaining packages for modules and only the most common and popular modules are maintained, and they are updated promptly as is consistent within the Arch ecosystem.&lt;/p&gt;
@@ -41,6 +43,26 @@
 &lt;p&gt;And updated at a later point in time with:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ pip install --upgrade &amp;lt;package-name&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;using-a-requirementstxt-file&#34;&gt;Using A requirements.txt File
+&lt;/h2&gt;&lt;p&gt;If you have a requirements.txt file present in a git repository/directory, such as:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.jaredszajkowski.com/2024/12/02/using-python-virtual-environments/01_Requirements.txt_Example.png&#34;
+	width=&#34;317&#34;
+	height=&#34;560&#34;
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Requirements.txt Example&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;56&#34;
+		data-flex-basis=&#34;135px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;You can install the required dependencies with the following command:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ pip install -r requirements.txt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;pip will then install all the required package and module versions based on the requirements file.&lt;/p&gt;
 &lt;h2 id=&#34;maintaining-across-multiple-systems&#34;&gt;Maintaining Across Multiple Systems
 &lt;/h2&gt;&lt;p&gt;To avoid having to redundantly install modules on different systems, after I make a change to the virtual environment I zip the entire &lt;code&gt;~/python-virtual-envs/&lt;/code&gt; directory and upload the zip file to Dropbox. This takes less than a minute, and if I am working on a different system can simply extract the archive and have a completely up-to-date and current virtual environment to work in.&lt;/p&gt;
 &lt;h2 id=&#34;references&#34;&gt;References

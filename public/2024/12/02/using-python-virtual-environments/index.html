@@ -274,9 +274,11 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
+    <li><a href="#post-updates">Post Updates</a></li>
     <li><a href="#python-module-management">Python Module Management</a></li>
     <li><a href="#creating-a-virtual-environment">Creating A Virtual Environment</a></li>
     <li><a href="#using-python-pip">Using python-pip</a></li>
+    <li><a href="#using-a-requirementstxt-file">Using A requirements.txt File</a></li>
     <li><a href="#maintaining-across-multiple-systems">Maintaining Across Multiple Systems</a></li>
     <li><a href="#references">References</a></li>
   </ol>
@@ -359,7 +361,7 @@
 
 
                 <time class="article-time--reading">
-                    2 minute read
+                    3 minute read
                 </time>
             </div>
         
@@ -374,7 +376,9 @@
     <section class="article-content">
     
     
-    <h2 id="python-module-management">Python Module Management
+    <h2 id="post-updates">Post Updates
+</h2><p>Update 1/12/2025: Updated section for use of requirements.txt file for dependency management.</p>
+<h2 id="python-module-management">Python Module Management
 </h2><p>As an Arch Linux user, the push is to utilize pacman and related tools to manage dependencies and package updates (including Python modules). In fact, <a class="link" href="https://wiki.archlinux.org/title/Python"  target="_blank" rel="noopener"
     >the wiki itself</a> explicitly states this (see 2.1), and the default Arch installation of Python disables python-pip.</p>
 <p>Unfortunately, there are limited resources put into maintaining packages for modules and only the most common and popular modules are maintained, and they are updated promptly as is consistent within the Arch ecosystem.</p>
@@ -403,6 +407,26 @@
 <p>And updated at a later point in time with:</p>
 <pre><code>$ pip install --upgrade &lt;package-name&gt;
 </code></pre>
+<h2 id="using-a-requirementstxt-file">Using A requirements.txt File
+</h2><p>If you have a requirements.txt file present in a git repository/directory, such as:</p>
+<p><img src="/2024/12/02/using-python-virtual-environments/01_Requirements.txt_Example.png"
+	width="317"
+	height="560"
+	
+	loading="lazy"
+	
+		alt="Requirements.txt Example"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="56"
+		data-flex-basis="135px"
+	
+></p>
+<p>You can install the required dependencies with the following command:</p>
+<pre><code>$ pip install -r requirements.txt
+</code></pre>
+<p>pip will then install all the required package and module versions based on the requirements file.</p>
 <h2 id="maintaining-across-multiple-systems">Maintaining Across Multiple Systems
 </h2><p>To avoid having to redundantly install modules on different systems, after I make a change to the virtual environment I zip the entire <code>~/python-virtual-envs/</code> directory and upload the zip file to Dropbox. This takes less than a minute, and if I am working on a different system can simply extract the archive and have a completely up-to-date and current virtual environment to work in.</p>
 <h2 id="references">References
