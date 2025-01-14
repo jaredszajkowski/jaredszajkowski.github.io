@@ -1,0 +1,2423 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Financial Data on Jared Szajkowski</title><link>https://www.jaredszajkowski.com/categories/financial-data/</link><description>Recent content in Financial Data on Jared Szajkowski</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 05 Dec 2024 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/categories/financial-data/index.xml" rel="self" type="application/rss+xml"/><item><title>Does Harry Browne's permanent portfolio withstand the test of time?</title><link>https://www.jaredszajkowski.com/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/</link><pubDate>Mon, 04 Nov 2024 00:00:01 +0000</pubDate><guid>https://www.jaredszajkowski.com/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/cover.jpg" alt="Featured image of post Does Harry Browne's permanent portfolio withstand the test of time?" />&lt;h2 id="post-updates">Post Updates
+&lt;/h2>&lt;p>Update 12/5/2024: Updated code for summary stats function, various code comments, and corrected grammatical errors.&lt;/p>
+&lt;h2 id="introduction">Introduction
+&lt;/h2>&lt;p>Harry Browne was an influencial politician, financial advisor, and author who lived from 1933 to 2006 and published 12 books. Wikipedia has &lt;a class="link" href="https://en.wikipedia.org/wiki/Harry_Browne" target="_blank" rel="noopener"
+>an in-depth biography&lt;/a> on him.&lt;/p>
+&lt;p>Within the world of finance and investing, one of his best known works is &lt;em>Fail-Safe Investing: Lifelong Financial Security in 30 Minutes&lt;/em>. In it, he introduces the idea of the &amp;ldquo;Permanent Portfolio&amp;rdquo;, an investment strategy that uses only four assets and is very simple to implement.&lt;/p>
+&lt;p>In this post, we will investigate Browne&amp;rsquo;s suggested portfolio, including performance across various market cycles and economic regimes.&lt;/p>
+&lt;h2 id="brownes-portfolio-requirements">Browne&amp;rsquo;s Portfolio Requirements
+&lt;/h2>&lt;p>In &lt;em>Fail-Safe Investing&lt;/em>, under rule #11, Browne lays out the requirements for a &amp;ldquo;bulletproof portfolio&amp;rdquo; that will &amp;ldquo;assure that your wealth will survive any event - including events that would be devastating to any one investment. In other words, this portfolio should protect you &lt;em>no matter what the future brings.&lt;/em>&amp;rdquo;&lt;/p>
+&lt;p>His requirements for the portfolio consist of the followng:&lt;/p>
+&lt;ol>
+&lt;li>Safety: Protection again any economic future, including &amp;ldquo;inflation, recession, or even depression&amp;rdquo;&lt;/li>
+&lt;li>Stability: Performance should be consistent so that you will not need to make any changes and will not experience significant drawdowns&lt;/li>
+&lt;li>Simplicity: Easy to implement and take very little time to maintain&lt;/li>
+&lt;/ol>
+&lt;p>He then describes the four &amp;ldquo;broad movements&amp;rdquo; of the economy:&lt;/p>
+&lt;ol>
+&lt;li>Prosperity: The economy is growing, business is doing well, interest rates are usually low&lt;/li>
+&lt;li>Inflation: The cost of goods and services is rising&lt;/li>
+&lt;li>Tight money or recession: The money supply is shrinking, economic activity is slowing&lt;/li>
+&lt;li>Deflation: Prices are declining and the value of money is increasing&lt;/li>
+&lt;/ol>
+&lt;h2 id="the-permanent-portfolio">The Permanent Portfolio
+&lt;/h2>&lt;p>Browne then matches an asset class to each of the economic conditions above:&lt;/p>
+&lt;ol>
+&lt;li>Prosperity -&amp;gt; Stocks (due to prosperity) and long term bonds (when interest rates fall)&lt;/li>
+&lt;li>Inflation -&amp;gt; Gold&lt;/li>
+&lt;li>Deflation -&amp;gt; Long term bonds (when interest rates fall)&lt;/li>
+&lt;li>Tight money -&amp;gt; Cash&lt;/li>
+&lt;/ol>
+&lt;p>He completes the Permanent Portfolio by stipulating the following:&lt;/p>
+&lt;ul>
+&lt;li>Start with a base allocation of 25% to each of the asset classes (stocks, bonds, gold, cash)&lt;/li>
+&lt;li>Rebalance back to the base allocation annually, or when &amp;ldquo;any of the four investments has become worth less than 15%, or more than 35%, of the portfolio&amp;rsquo;s overall value&amp;rdquo;&lt;/br>&lt;strong>Note:&lt;/strong> Browne does not specify when the portfolio should be rebalanced; therefore, we will make an assumption of a January 1st rebalance.&lt;/li>
+&lt;/ul>
+&lt;h2 id="data">Data
+&lt;/h2>&lt;p>For this exercise, we will use the following asset classes:&lt;/p>
+&lt;ol>
+&lt;li>Stocks: S&amp;amp;P 500 (SPXT_S&amp;amp;P 500 Total Return Index)&lt;/li>
+&lt;li>Bonds: 10 Year US Treasuries (SPBDU10T_S&amp;amp;P US Treasury Bond 7-10 Year Total Return Index)&lt;/li>
+&lt;li>Gold: Gold Spot Price (XAU_Gold USD Spot)&lt;/li>
+&lt;li>Cash: USD&lt;/li>
+&lt;/ol>
+&lt;p>With the exception of cash, all data is sourced from Bloomberg.&lt;/p>
+&lt;p>We could use ETFs, but the available price history for the ETFs is much shorter than the indices above. If we wanted to use ETFs, the following would work:&lt;/p>
+&lt;ol>
+&lt;li>Stocks: IVV - iShares Core S&amp;amp;P 500 ETF&lt;/li>
+&lt;li>Bonds: IEF - iShares 7-10 Year Treasury Bond ETF&lt;/li>
+&lt;li>Gold: GLD - SPDR Gold Shares ETF&lt;/li>
+&lt;li>Cash: USD&lt;/li>
+&lt;/ol>
+&lt;h2 id="python-functions">Python Functions
+&lt;/h2>&lt;p>First, a couple of useful python functions to help with the analysis.&lt;/p>
+&lt;h3 id="clean-bloomberg-data-export">Clean Bloomberg Data Export
+&lt;/h3>&lt;p>This is discussed &lt;a class="link" href="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/" target="_blank" rel="noopener"
+>here&lt;/a>.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl"># This function takes an excel export from Bloomberg and
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># removes all excess data leaving date and close columns
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Imports
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">import pandas as pd
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Function definition
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">def bb_data_updater(fund):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # File name variable
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> file = fund + &amp;#34;.xlsx&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Import data from file as a pandas dataframe
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df = pd.read_excel(file, sheet_name = &amp;#39;Worksheet&amp;#39;, engine=&amp;#39;openpyxl&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set the column headings from row 5 (which is physically row 6)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.columns = df.iloc[5]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set the column heading for the index to be &amp;#34;None&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.rename_axis(None, axis=1, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Drop the first 6 rows, 0 - 5
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.drop(df.index[0:6], inplace=True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set the date column as the index
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.set_index(&amp;#39;Date&amp;#39;, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Drop the volume column
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> try:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.drop(columns = {&amp;#39;PX_VOLUME&amp;#39;}, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> except KeyError:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> pass
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Rename column
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.rename(columns = {&amp;#39;PX_LAST&amp;#39;:&amp;#39;Close&amp;#39;}, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Sort by date
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.sort_values(by=[&amp;#39;Date&amp;#39;], inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Export data to excel
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> file = fund + &amp;#34;_Clean.xlsx&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.to_excel(file, sheet_name=&amp;#39;data&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Output confirmation
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> print(f&amp;#34;The last date of data for {fund} is: &amp;#34;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> print(df[-1:])
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> print(f&amp;#34;Bloomberg data conversion complete for {fund} data&amp;#34;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> return print(f&amp;#34;--------------------&amp;#34;)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="set-number-of-decimal-places">Set Number Of Decimal Places
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl"># Set number of decimal places in pandas
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">def dp(decimal_places):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> pd.set_option(&amp;#39;display.float_format&amp;#39;, lambda x: f&amp;#39;%.{decimal_places}f&amp;#39; % x)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="return-information-about-a-dataframe">Return Information About A Dataframe
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl"># The `df_info` function returns some useful information about
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># a dataframe, such as the columns, data types, and size.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">def df_info(df):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> print(&amp;#39;There are &amp;#39;, df.shape[0], &amp;#39; rows and &amp;#39;, df.shape[1], &amp;#39; columns&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> print(&amp;#39;The columns and data types are:&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> print(df.dtypes)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> print(&amp;#39;The first 4 rows are:&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> display(df.head(4))
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> print(&amp;#39;The last 4 rows are:&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> display(df.tail(4))
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="import-data-from-csv--xlsx">Import Data From CSV / XLSX
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl">def load_data(file):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Import CSV
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> try:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df = pd.read_csv(file)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> except:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> pass
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Import excel
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> try:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df = pd.read_excel(file, sheet_name=&amp;#39;data&amp;#39;, engine=&amp;#39;openpyxl&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> except:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> pass
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> return df
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="portfolio-strategy">Portfolio Strategy
+&lt;/h3>&lt;p>This is the function that executes the strategy. The function takes in the following variables and produces a dataframe with the results:&lt;/p>
+&lt;ul>
+&lt;li>fund_list: This is a list of the funds (in this case asset classes) to be used&lt;/li>
+&lt;li>starting_cash: Starting capital amount for the strategy&lt;/li>
+&lt;li>cash_contrib: Daily cash contribution&lt;/li>
+&lt;li>close_prices_df; Dataframe with close prices for each asset class&lt;/li>
+&lt;li>rebal_month: Month that the annual rebalancing should take place&lt;/li>
+&lt;li>rebal_day: Day of the month that the annual rebalancing should take place&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt"> 10
+&lt;/span>&lt;span class="lnt"> 11
+&lt;/span>&lt;span class="lnt"> 12
+&lt;/span>&lt;span class="lnt"> 13
+&lt;/span>&lt;span class="lnt"> 14
+&lt;/span>&lt;span class="lnt"> 15
+&lt;/span>&lt;span class="lnt"> 16
+&lt;/span>&lt;span class="lnt"> 17
+&lt;/span>&lt;span class="lnt"> 18
+&lt;/span>&lt;span class="lnt"> 19
+&lt;/span>&lt;span class="lnt"> 20
+&lt;/span>&lt;span class="lnt"> 21
+&lt;/span>&lt;span class="lnt"> 22
+&lt;/span>&lt;span class="lnt"> 23
+&lt;/span>&lt;span class="lnt"> 24
+&lt;/span>&lt;span class="lnt"> 25
+&lt;/span>&lt;span class="lnt"> 26
+&lt;/span>&lt;span class="lnt"> 27
+&lt;/span>&lt;span class="lnt"> 28
+&lt;/span>&lt;span class="lnt"> 29
+&lt;/span>&lt;span class="lnt"> 30
+&lt;/span>&lt;span class="lnt"> 31
+&lt;/span>&lt;span class="lnt"> 32
+&lt;/span>&lt;span class="lnt"> 33
+&lt;/span>&lt;span class="lnt"> 34
+&lt;/span>&lt;span class="lnt"> 35
+&lt;/span>&lt;span class="lnt"> 36
+&lt;/span>&lt;span class="lnt"> 37
+&lt;/span>&lt;span class="lnt"> 38
+&lt;/span>&lt;span class="lnt"> 39
+&lt;/span>&lt;span class="lnt"> 40
+&lt;/span>&lt;span class="lnt"> 41
+&lt;/span>&lt;span class="lnt"> 42
+&lt;/span>&lt;span class="lnt"> 43
+&lt;/span>&lt;span class="lnt"> 44
+&lt;/span>&lt;span class="lnt"> 45
+&lt;/span>&lt;span class="lnt"> 46
+&lt;/span>&lt;span class="lnt"> 47
+&lt;/span>&lt;span class="lnt"> 48
+&lt;/span>&lt;span class="lnt"> 49
+&lt;/span>&lt;span class="lnt"> 50
+&lt;/span>&lt;span class="lnt"> 51
+&lt;/span>&lt;span class="lnt"> 52
+&lt;/span>&lt;span class="lnt"> 53
+&lt;/span>&lt;span class="lnt"> 54
+&lt;/span>&lt;span class="lnt"> 55
+&lt;/span>&lt;span class="lnt"> 56
+&lt;/span>&lt;span class="lnt"> 57
+&lt;/span>&lt;span class="lnt"> 58
+&lt;/span>&lt;span class="lnt"> 59
+&lt;/span>&lt;span class="lnt"> 60
+&lt;/span>&lt;span class="lnt"> 61
+&lt;/span>&lt;span class="lnt"> 62
+&lt;/span>&lt;span class="lnt"> 63
+&lt;/span>&lt;span class="lnt"> 64
+&lt;/span>&lt;span class="lnt"> 65
+&lt;/span>&lt;span class="lnt"> 66
+&lt;/span>&lt;span class="lnt"> 67
+&lt;/span>&lt;span class="lnt"> 68
+&lt;/span>&lt;span class="lnt"> 69
+&lt;/span>&lt;span class="lnt"> 70
+&lt;/span>&lt;span class="lnt"> 71
+&lt;/span>&lt;span class="lnt"> 72
+&lt;/span>&lt;span class="lnt"> 73
+&lt;/span>&lt;span class="lnt"> 74
+&lt;/span>&lt;span class="lnt"> 75
+&lt;/span>&lt;span class="lnt"> 76
+&lt;/span>&lt;span class="lnt"> 77
+&lt;/span>&lt;span class="lnt"> 78
+&lt;/span>&lt;span class="lnt"> 79
+&lt;/span>&lt;span class="lnt"> 80
+&lt;/span>&lt;span class="lnt"> 81
+&lt;/span>&lt;span class="lnt"> 82
+&lt;/span>&lt;span class="lnt"> 83
+&lt;/span>&lt;span class="lnt"> 84
+&lt;/span>&lt;span class="lnt"> 85
+&lt;/span>&lt;span class="lnt"> 86
+&lt;/span>&lt;span class="lnt"> 87
+&lt;/span>&lt;span class="lnt"> 88
+&lt;/span>&lt;span class="lnt"> 89
+&lt;/span>&lt;span class="lnt"> 90
+&lt;/span>&lt;span class="lnt"> 91
+&lt;/span>&lt;span class="lnt"> 92
+&lt;/span>&lt;span class="lnt"> 93
+&lt;/span>&lt;span class="lnt"> 94
+&lt;/span>&lt;span class="lnt"> 95
+&lt;/span>&lt;span class="lnt"> 96
+&lt;/span>&lt;span class="lnt"> 97
+&lt;/span>&lt;span class="lnt"> 98
+&lt;/span>&lt;span class="lnt"> 99
+&lt;/span>&lt;span class="lnt">100
+&lt;/span>&lt;span class="lnt">101
+&lt;/span>&lt;span class="lnt">102
+&lt;/span>&lt;span class="lnt">103
+&lt;/span>&lt;span class="lnt">104
+&lt;/span>&lt;span class="lnt">105
+&lt;/span>&lt;span class="lnt">106
+&lt;/span>&lt;span class="lnt">107
+&lt;/span>&lt;span class="lnt">108
+&lt;/span>&lt;span class="lnt">109
+&lt;/span>&lt;span class="lnt">110
+&lt;/span>&lt;span class="lnt">111
+&lt;/span>&lt;span class="lnt">112
+&lt;/span>&lt;span class="lnt">113
+&lt;/span>&lt;span class="lnt">114
+&lt;/span>&lt;span class="lnt">115
+&lt;/span>&lt;span class="lnt">116
+&lt;/span>&lt;span class="lnt">117
+&lt;/span>&lt;span class="lnt">118
+&lt;/span>&lt;span class="lnt">119
+&lt;/span>&lt;span class="lnt">120
+&lt;/span>&lt;span class="lnt">121
+&lt;/span>&lt;span class="lnt">122
+&lt;/span>&lt;span class="lnt">123
+&lt;/span>&lt;span class="lnt">124
+&lt;/span>&lt;span class="lnt">125
+&lt;/span>&lt;span class="lnt">126
+&lt;/span>&lt;span class="lnt">127
+&lt;/span>&lt;span class="lnt">128
+&lt;/span>&lt;span class="lnt">129
+&lt;/span>&lt;span class="lnt">130
+&lt;/span>&lt;span class="lnt">131
+&lt;/span>&lt;span class="lnt">132
+&lt;/span>&lt;span class="lnt">133
+&lt;/span>&lt;span class="lnt">134
+&lt;/span>&lt;span class="lnt">135
+&lt;/span>&lt;span class="lnt">136
+&lt;/span>&lt;span class="lnt">137
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl">def strategy(fund_list, starting_cash, cash_contrib, close_prices_df, rebal_month, rebal_day, rebal_per_high, rebal_per_low):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> num_funds = len(fund_list)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df = close_prices_df.copy()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.reset_index(inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Date to be used for annual rebalance
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> target_month = rebal_month
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> target_day = rebal_day
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Create a dataframe with dates from the specific month
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> rebal_date = df[df[&amp;#39;Date&amp;#39;].dt.month == target_month]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Specify the date or the next closest
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> rebal_date = rebal_date[rebal_date[&amp;#39;Date&amp;#39;].dt.day &amp;gt;= target_day]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Group by year and take the first entry for each year
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> rebal_dates_by_year = rebal_date.groupby(rebal_date[&amp;#39;Date&amp;#39;].dt.year).first().reset_index(drop=True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#39;&amp;#39;&amp;#39;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Column order for the dataframe:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df[fund + &amp;#34;_BA_Shares&amp;#34;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df[fund + &amp;#34;_BA_$_Invested&amp;#34;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df[fund + &amp;#34;_BA_Port_%&amp;#34;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df[&amp;#39;Total_BA_$_Invested&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df[&amp;#39;Contribution&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df[&amp;#39;Rebalance&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df[fund + &amp;#34;_AA_Shares&amp;#34;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df[fund + &amp;#34;_AA_$_Invested&amp;#34;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df[fund + &amp;#34;_AA_Port_%&amp;#34;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df[&amp;#39;Total_AA_$_Invested&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#39;&amp;#39;&amp;#39;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Calculate the columns and initial values for before action (BA) shares, $ invested, and port %
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> for fund in fund_list:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df[fund + &amp;#34;_BA_Shares&amp;#34;] = starting_cash / num_funds / df[fund + &amp;#34;_Close&amp;#34;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df[fund + &amp;#34;_BA_$_Invested&amp;#34;] = df[fund + &amp;#34;_BA_Shares&amp;#34;] * df[fund + &amp;#34;_Close&amp;#34;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df[fund + &amp;#34;_BA_Port_%&amp;#34;] = 0.25
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set column values initially
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df[&amp;#39;Total_BA_$_Invested&amp;#39;] = starting_cash
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df[&amp;#39;Contribution&amp;#39;] = 0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # df[&amp;#39;Contribution&amp;#39;] = cash_contrib
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df[&amp;#39;Rebalance&amp;#39;] = &amp;#34;No&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set columns and values initially for after action (AA) shares, $ invested, and port %
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> for fund in fund_list:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df[fund + &amp;#34;_AA_Shares&amp;#34;] = starting_cash / num_funds / df[fund + &amp;#34;_Close&amp;#34;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df[fund + &amp;#34;_AA_$_Invested&amp;#34;] = df[fund + &amp;#34;_AA_Shares&amp;#34;] * df[fund + &amp;#34;_Close&amp;#34;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df[fund + &amp;#34;_AA_Port_%&amp;#34;] = 0.25
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set column value for after action (AA) total $ invested
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df[&amp;#39;Total_AA_$_Invested&amp;#39;] = starting_cash
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Iterate through the dataframe and execute the strategy
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> for index, row in df.iterrows():
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Ensure there&amp;#39;s a previous row to reference by checking the index value
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> if index &amp;gt; 0:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Initialize variable
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Total_BA_Invested = 0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Calculate before action (BA) shares and $ invested values
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> for fund in fund_list:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.at[index, fund + &amp;#34;_BA_Shares&amp;#34;] = df.at[index - 1, fund + &amp;#34;_AA_Shares&amp;#34;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.at[index, fund + &amp;#34;_BA_$_Invested&amp;#34;] = df.at[index, fund + &amp;#34;_BA_Shares&amp;#34;] * row[fund + &amp;#34;_Close&amp;#34;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Sum the asset values to find the total
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Total_BA_Invested = Total_BA_Invested + df.at[index, fund + &amp;#34;_BA_$_Invested&amp;#34;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Calculate before action (BA) port % values
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> for fund in fund_list:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.at[index, fund + &amp;#34;_BA_Port_%&amp;#34;] = df.at[index, fund + &amp;#34;_BA_$_Invested&amp;#34;] / Total_BA_Invested
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set column for before action (BA) total $ invested
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.at[index, &amp;#39;Total_BA_$_Invested&amp;#39;] = Total_BA_Invested
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Initialize variables
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> rebalance = &amp;#34;No&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> date = row[&amp;#39;Date&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Check for a specific date annually
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Simple if statement to check if date_to_check is in jan_28_or_after_each_year
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> if date in rebal_dates_by_year[&amp;#39;Date&amp;#39;].values:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> rebalance = &amp;#34;Yes&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> else:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> pass
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Check to see if any asset has portfolio percentage of greater than 35% or less than 15% and if so set variable
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> for fund in fund_list:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> if df.at[index, fund + &amp;#34;_BA_Port_%&amp;#34;] &amp;gt; rebal_per_high or df.at[index, fund + &amp;#34;_BA_Port_%&amp;#34;] &amp;lt; rebal_per_low:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> rebalance = &amp;#34;Yes&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> else:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> pass
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # If rebalance is required, rebalance back to 25% for each asset, else just divide contribution evenly across assets
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> if rebalance == &amp;#34;Yes&amp;#34;:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.at[index, &amp;#39;Rebalance&amp;#39;] = rebalance
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> for fund in fund_list:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.at[index, fund + &amp;#34;_AA_$_Invested&amp;#34;] = (Total_BA_Invested + df.at[index, &amp;#39;Contribution&amp;#39;]) * 0.25
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> else:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.at[index, &amp;#39;Rebalance&amp;#39;] = rebalance
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> for fund in fund_list:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.at[index, fund + &amp;#34;_AA_$_Invested&amp;#34;] = df.at[index, fund + &amp;#34;_BA_$_Invested&amp;#34;] + df.at[index, &amp;#39;Contribution&amp;#39;] * 0.25
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Initialize variable
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Total_AA_Invested = 0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set column values for after action (AA) shares and port %
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> for fund in fund_list:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.at[index, fund + &amp;#34;_AA_Shares&amp;#34;] = df.at[index, fund + &amp;#34;_AA_$_Invested&amp;#34;] / row[fund + &amp;#34;_Close&amp;#34;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Sum the asset values to find the total
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> Total_AA_Invested = Total_AA_Invested + df.at[index, fund + &amp;#34;_AA_$_Invested&amp;#34;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Calculate after action (AA) port % values
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> for fund in fund_list:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.at[index, fund + &amp;#34;_AA_Port_%&amp;#34;] = df.at[index, fund + &amp;#34;_AA_$_Invested&amp;#34;] / Total_AA_Invested
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set column for after action (AA) total $ invested
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.at[index, &amp;#39;Total_AA_$_Invested&amp;#39;] = Total_AA_Invested
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # If this is the first row
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> else:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> pass
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df[&amp;#39;Return&amp;#39;] = df[&amp;#39;Total_AA_$_Invested&amp;#39;].pct_change()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df[&amp;#39;Cumulative_Return&amp;#39;] = (1 + df[&amp;#39;Return&amp;#39;]).cumprod()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plan_name = &amp;#39;_&amp;#39;.join(fund_list)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> file = plan_name + &amp;#34;_Strategy.xlsx&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> location = file
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.to_excel(location, sheet_name=&amp;#39;data&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> print(f&amp;#34;Strategy complete for {plan_name}.&amp;#34;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> return df
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="summary-stats">Summary Stats
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl"># Stats for entire data set
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">def summary_stats(fund_list, df, period):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> if period == &amp;#39;Monthly&amp;#39;:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> timeframe = 12 # months
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> elif period == &amp;#39;Weekly&amp;#39;:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> timeframe = 52 # weeks
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> elif period == &amp;#39;Daily&amp;#39;:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> timeframe = 365 # days
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> elif period == &amp;#39;Hourly&amp;#39;:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> timeframe = 8760 # hours
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> else:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> return print(&amp;#34;Error, check inputs&amp;#34;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_stats = pd.DataFrame(df.mean(axis=0) * timeframe) # annualized
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # df_stats = pd.DataFrame((1 + df.mean(axis=0)) ** timeframe - 1) # annualized, this is this true annualized return but we will simply use the mean
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_stats.columns = [&amp;#39;Annualized Mean&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_stats[&amp;#39;Annualized Volatility&amp;#39;] = df.std() * np.sqrt(timeframe) # annualized
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_stats[&amp;#39;Annualized Sharpe Ratio&amp;#39;] = df_stats[&amp;#39;Annualized Mean&amp;#39;] / df_stats[&amp;#39;Annualized Volatility&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_cagr = (1 + df[&amp;#39;Return&amp;#39;]).cumprod()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> cagr = (df_cagr[-1] / 1) ** (1/(len(df_cagr) / timeframe)) - 1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_stats[&amp;#39;CAGR&amp;#39;] = cagr
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_stats[period + &amp;#39; Max Return&amp;#39;] = df.max()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_stats[period + &amp;#39; Max Return (Date)&amp;#39;] = df.idxmax().values[0]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_stats[period + &amp;#39; Min Return&amp;#39;] = df.min()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_stats[period + &amp;#39; Min Return (Date)&amp;#39;] = df.idxmin().values[0]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> wealth_index = 1000*(1+df).cumprod()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> previous_peaks = wealth_index.cummax()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> drawdowns = (wealth_index - previous_peaks)/previous_peaks
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_stats[&amp;#39;Max Drawdown&amp;#39;] = drawdowns.min()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_stats[&amp;#39;Peak&amp;#39;] = [previous_peaks[col][:drawdowns[col].idxmin()].idxmax() for col in previous_peaks.columns]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_stats[&amp;#39;Bottom&amp;#39;] = drawdowns.idxmin()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> recovery_date = []
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> for col in wealth_index.columns:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> prev_max = previous_peaks[col][:drawdowns[col].idxmin()].max()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> recovery_wealth = pd.DataFrame([wealth_index[col][drawdowns[col].idxmin():]]).T
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> recovery_date.append(recovery_wealth[recovery_wealth[col] &amp;gt;= prev_max].index.min())
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_stats[&amp;#39;Recovery Date&amp;#39;] = recovery_date
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plan_name = &amp;#39;_&amp;#39;.join(fund_list)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> file = plan_name + &amp;#34;_Summary_Stats.xlsx&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> location = file
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_stats.to_excel(location, sheet_name=&amp;#39;data&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> print(f&amp;#34;Summary stats complete for {plan_name}.&amp;#34;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> return df_stats
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="plot-cumulative-return">Plot Cumulative Return
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl">def plot_cumulative_return(strat_df):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Generate plot
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.figure(figsize=(10, 5), facecolor = &amp;#39;#F5F5F5&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Plotting data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.plot(strat_df.index, strat_df[&amp;#39;Cumulative_Return&amp;#39;], label = &amp;#39;Strategy Cumulative Return&amp;#39;, linestyle=&amp;#39;-&amp;#39;, color=&amp;#39;green&amp;#39;, linewidth=1)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set X axis
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # x_tick_spacing = 5 # Specify the interval for x-axis ticks
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.gca().xaxis.set_major_locator(mdates.YearLocator())
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.gca().xaxis.set_major_formatter(mdates.DateFormatter(&amp;#39;%Y&amp;#39;))
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.xlabel(&amp;#39;Year&amp;#39;, fontsize = 9)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.xticks(rotation = 45, fontsize = 7)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # plt.xlim(, )
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set Y axis
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> y_tick_spacing = 0.5 # Specify the interval for y-axis ticks
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.ylabel(&amp;#39;Cumulative Return&amp;#39;, fontsize = 9)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.yticks(fontsize = 7)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.ylim(0, 7.5)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set title, etc.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.title(&amp;#39;Cumulative Return&amp;#39;, fontsize = 12)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set the grid &amp;amp; legend
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.tight_layout()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.grid(True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.legend(fontsize=8)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Save the figure
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.savefig(&amp;#39;03_Cumulative_Return.png&amp;#39;, dpi=300, bbox_inches=&amp;#39;tight&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Display the plot
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> return plt.show()
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="plot-portfolio-values">Plot Portfolio Values
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl">def plot_values(strat_df):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Generate plot
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.figure(figsize=(10, 5), facecolor = &amp;#39;#F5F5F5&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Plotting data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.plot(strat_df.index, strat_df[&amp;#39;Total_AA_$_Invested&amp;#39;], label=&amp;#39;Total Portfolio Value&amp;#39;, linestyle=&amp;#39;-&amp;#39;, color=&amp;#39;black&amp;#39;, linewidth=1)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.plot(strat_df.index, strat_df[&amp;#39;Stocks_AA_$_Invested&amp;#39;], label=&amp;#39;Stocks Position Value&amp;#39;, linestyle=&amp;#39;-&amp;#39;, color=&amp;#39;orange&amp;#39;, linewidth=1)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.plot(strat_df.index, strat_df[&amp;#39;Bonds_AA_$_Invested&amp;#39;], label=&amp;#39;Bond Position Value&amp;#39;, linestyle=&amp;#39;-&amp;#39;, color=&amp;#39;yellow&amp;#39;, linewidth=1)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.plot(strat_df.index, strat_df[&amp;#39;Gold_AA_$_Invested&amp;#39;], label=&amp;#39;Gold Position Value&amp;#39;, linestyle=&amp;#39;-&amp;#39;, color=&amp;#39;blue&amp;#39;, linewidth=1)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.plot(strat_df.index, strat_df[&amp;#39;Cash_AA_$_Invested&amp;#39;], label=&amp;#39;Cash Position Value&amp;#39;, linestyle=&amp;#39;-&amp;#39;, color=&amp;#39;brown&amp;#39;, linewidth=1)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set X axis
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # x_tick_spacing = 5 # Specify the interval for x-axis ticks
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.gca().xaxis.set_major_locator(mdates.YearLocator())
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.gca().xaxis.set_major_formatter(mdates.DateFormatter(&amp;#39;%Y&amp;#39;))
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.xlabel(&amp;#39;Year&amp;#39;, fontsize = 9)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.xticks(rotation = 45, fontsize = 7)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # plt.xlim(, )
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set Y axis
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> y_tick_spacing = 5000 # Specify the interval for y-axis ticks
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.gca().yaxis.set_major_formatter(mtick.FuncFormatter(lambda x, pos: &amp;#39;{:,.0f}&amp;#39;.format(x))) # Adding commas to y-axis labels
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.ylabel(&amp;#39;Total Value ($)&amp;#39;, fontsize = 9)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.yticks(fontsize = 7)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.ylim(0, 75000)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set title, etc.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.title(&amp;#39;Total Values For Stocks, Bonds, Gold, and Cash Positions and Portfolio&amp;#39;, fontsize = 12)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set the grid &amp;amp; legend
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.tight_layout()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.grid(True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.legend(fontsize=8)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Save the figure
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.savefig(&amp;#39;04_Portfolio_Values.png&amp;#39;, dpi=300, bbox_inches=&amp;#39;tight&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Display the plot
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> return plt.show()
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="plot-portfolio-drawdown">Plot Portfolio Drawdown
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl">def plot_drawdown(strat_df):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> rolling_max = strat_df[&amp;#39;Total_AA_$_Invested&amp;#39;].cummax()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> drawdown = (strat_df[&amp;#39;Total_AA_$_Invested&amp;#39;] - rolling_max) / rolling_max * 100
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Generate plot
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.figure(figsize=(10, 5), facecolor = &amp;#39;#F5F5F5&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Plotting data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.plot(strat_df.index, drawdown, label=&amp;#39;Drawdown&amp;#39;, linestyle=&amp;#39;-&amp;#39;, color=&amp;#39;red&amp;#39;, linewidth=1)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set X axis
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # x_tick_spacing = 5 # Specify the interval for x-axis ticks
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.gca().xaxis.set_major_locator(mdates.YearLocator())
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.gca().xaxis.set_major_formatter(mdates.DateFormatter(&amp;#39;%Y&amp;#39;))
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.xlabel(&amp;#39;Year&amp;#39;, fontsize = 9)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.xticks(rotation = 45, fontsize = 7)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # plt.xlim(, )
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set Y axis
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> y_tick_spacing = 1 # Specify the interval for y-axis ticks
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # plt.gca().yaxis.set_major_formatter(mtick.FuncFormatter(lambda x, pos: &amp;#39;{:,.0f}&amp;#39;.format(x))) # Adding commas to y-axis labels
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.gca().yaxis.set_major_formatter(mtick.FuncFormatter(lambda x, pos: &amp;#39;{:.0f}&amp;#39;.format(x))) # Adding 0 decimal places to y-axis labels
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.ylabel(&amp;#39;Drawdown (%)&amp;#39;, fontsize = 9)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.yticks(fontsize = 7)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.ylim(-20, 0)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set title, etc.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.title(&amp;#39;Portfolio Drawdown&amp;#39;, fontsize = 12)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set the grid &amp;amp; legend
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.tight_layout()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.grid(True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.legend(fontsize=8)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Save the figure
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.savefig(&amp;#39;05_Portfolio_Drawdown.png&amp;#39;, dpi=300, bbox_inches=&amp;#39;tight&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Display the plot
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> return plt.show()
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="plot-portfolio-asset-weights">Plot Portfolio Asset Weights
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl">def plot_asset_weights(strat_df):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Generate plot
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.figure(figsize=(10, 5), facecolor = &amp;#39;#F5F5F5&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Plotting data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.plot(strat_df.index, strat_df[&amp;#39;Stocks_AA_Port_%&amp;#39;] * 100, label=&amp;#39;Stocks Portfolio Weight&amp;#39;, linestyle=&amp;#39;-&amp;#39;, color=&amp;#39;orange&amp;#39;, linewidth=1)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.plot(strat_df.index, strat_df[&amp;#39;Bonds_AA_Port_%&amp;#39;] * 100, label=&amp;#39;Bonds Portfolio Weight&amp;#39;, linestyle=&amp;#39;-&amp;#39;, color=&amp;#39;yellow&amp;#39;, linewidth=1)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.plot(strat_df.index, strat_df[&amp;#39;Gold_AA_Port_%&amp;#39;] * 100, label=&amp;#39;Gold Portfolio Weight&amp;#39;, linestyle=&amp;#39;-&amp;#39;, color=&amp;#39;blue&amp;#39;, linewidth=1)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.plot(strat_df.index, strat_df[&amp;#39;Cash_AA_Port_%&amp;#39;] * 100, label=&amp;#39;Cash Portfolio Weight&amp;#39;, linestyle=&amp;#39;-&amp;#39;, color=&amp;#39;brown&amp;#39;, linewidth=1)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set X axis
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # x_tick_spacing = 5 # Specify the interval for x-axis ticks
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.gca().xaxis.set_major_locator(mdates.YearLocator())
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.gca().xaxis.set_major_formatter(mdates.DateFormatter(&amp;#39;%Y&amp;#39;))
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.xlabel(&amp;#39;Year&amp;#39;, fontsize = 9)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.xticks(rotation = 45, fontsize = 7)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # plt.xlim(, )
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set Y axis
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> y_tick_spacing = 2 # Specify the interval for y-axis ticks
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # plt.gca().yaxis.set_major_formatter(mtick.FuncFormatter(lambda x, pos: &amp;#39;{:,.0f}&amp;#39;.format(x))) # Adding commas to y-axis labels
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.ylabel(&amp;#39;Asset Weight (%)&amp;#39;, fontsize = 9)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.yticks(fontsize = 7)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.ylim(14, 36)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set title, etc.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.title(&amp;#39;Portfolio Asset Weights For Stocks, Bonds, Gold, and Cash Positions&amp;#39;, fontsize = 12)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set the grid &amp;amp; legend
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.tight_layout()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.grid(True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.legend(fontsize=8)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Save the figure
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> plt.savefig(&amp;#39;07_Portfolio_Weights.png&amp;#39;, dpi=300, bbox_inches=&amp;#39;tight&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Display the plot
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> return plt.show()
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="data-overview">Data Overview
+&lt;/h2>&lt;h3 id="import-data">Import Data
+&lt;/h3>&lt;p>As previously mentioned, the data for this exercise comes primarily from Bloomberg. We&amp;rsquo;ll start with loading the data first for bonds:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl"># Bonds dataframe
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">bb_data_updater(&amp;#39;SPBDU10T_S&amp;amp;P US Treasury Bond 7-10 Year Total Return Index&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">bonds_data = load_data(&amp;#39;SPBDU10T_S&amp;amp;P US Treasury Bond 7-10 Year Total Return Index_Clean.xlsx&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">bonds_data[&amp;#39;Date&amp;#39;] = pd.to_datetime(bonds_data[&amp;#39;Date&amp;#39;])
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">bonds_data.set_index(&amp;#39;Date&amp;#39;, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">bonds_data = bonds_data[(bonds_data.index &amp;gt;= &amp;#39;1990-01-01&amp;#39;) &amp;amp; (bonds_data.index &amp;lt;= &amp;#39;2023-12-31&amp;#39;)]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">bonds_data.rename(columns={&amp;#39;Close&amp;#39;:&amp;#39;Bonds_Close&amp;#39;}, inplace=True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">bonds_data[&amp;#39;Bonds_Daily_Return&amp;#39;] = bonds_data[&amp;#39;Bonds_Close&amp;#39;].pct_change()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">bonds_data[&amp;#39;Bonds_Total_Return&amp;#39;] = (1 + bonds_data[&amp;#39;Bonds_Daily_Return&amp;#39;]).cumprod()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">bonds_data
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>The following is the output:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/01_Bonds_Data.png"
+width="888"
+height="506"
+loading="lazy"
+alt="Bonds Data"
+class="gallery-image"
+data-flex-grow="175"
+data-flex-basis="421px"
+>&lt;/p>
+&lt;p>Then for stocks:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl"># Stocks dataframe
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">bb_data_updater(&amp;#39;SPXT_S&amp;amp;P 500 Total Return Index&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">stocks_data = load_data(&amp;#39;SPXT_S&amp;amp;P 500 Total Return Index_Clean.xlsx&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">stocks_data[&amp;#39;Date&amp;#39;] = pd.to_datetime(stocks_data[&amp;#39;Date&amp;#39;])
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">stocks_data.set_index(&amp;#39;Date&amp;#39;, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">stocks_data = stocks_data[(stocks_data.index &amp;gt;= &amp;#39;1990-01-01&amp;#39;) &amp;amp; (stocks_data.index &amp;lt;= &amp;#39;2023-12-31&amp;#39;)]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">stocks_data.rename(columns={&amp;#39;Close&amp;#39;:&amp;#39;Stocks_Close&amp;#39;}, inplace=True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">stocks_data[&amp;#39;Stocks_Daily_Return&amp;#39;] = stocks_data[&amp;#39;Stocks_Close&amp;#39;].pct_change()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">stocks_data[&amp;#39;Stocks_Total_Return&amp;#39;] = (1 + stocks_data[&amp;#39;Stocks_Daily_Return&amp;#39;]).cumprod()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">stocks_data
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>And finally, gold:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl"># Gold dataframe
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">bb_data_updater(&amp;#39;XAU_Gold USD Spot&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gold_data = load_data(&amp;#39;XAU_Gold USD Spot_Clean.xlsx&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gold_data[&amp;#39;Date&amp;#39;] = pd.to_datetime(gold_data[&amp;#39;Date&amp;#39;])
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gold_data.set_index(&amp;#39;Date&amp;#39;, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gold_data = gold_data[(gold_data.index &amp;gt;= &amp;#39;1990-01-01&amp;#39;) &amp;amp; (gold_data.index &amp;lt;= &amp;#39;2023-12-31&amp;#39;)]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gold_data.rename(columns={&amp;#39;Close&amp;#39;:&amp;#39;Gold_Close&amp;#39;}, inplace=True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gold_data[&amp;#39;Gold_Daily_Return&amp;#39;] = gold_data[&amp;#39;Gold_Close&amp;#39;].pct_change()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gold_data[&amp;#39;Gold_Total_Return&amp;#39;] = (1 + gold_data[&amp;#39;Gold_Daily_Return&amp;#39;]).cumprod()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">gold_data
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="combine-data">Combine Data
+&lt;/h3>&lt;p>We&amp;rsquo;ll now combine the dataframes for the timeseries data from each of the asset classes, as follows:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl"># Merge the stock data and bond data into a single DataFrame using their indices (dates)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">perm_port = pd.merge(stocks_data[&amp;#39;Stocks_Close&amp;#39;], bonds_data[&amp;#39;Bonds_Close&amp;#39;], left_index=True, right_index=True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Add gold data to the portfolio DataFrame by merging it with the existing data on indices (dates)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">perm_port = pd.merge(perm_port, gold_data[&amp;#39;Gold_Close&amp;#39;], left_index=True, right_index=True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Add a column for cash with a constant value of 1 (assumes the value of cash remains constant at $1 over time)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">perm_port[&amp;#39;Cash_Close&amp;#39;] = 1
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Remove any rows with missing values (NaN) to ensure clean data for further analysis
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">perm_port.dropna(inplace=True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Display the finalized portfolio DataFrame
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">perm_port
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="dataframe-info">DataFrame Info
+&lt;/h3>&lt;p>Now, running:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl">df_info(perm_port)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Gives us the following:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/02_Perm_Port_Data.png"
+width="498"
+height="546"
+loading="lazy"
+alt="DataFrame Info"
+class="gallery-image"
+data-flex-grow="91"
+data-flex-basis="218px"
+>&lt;/p>
+&lt;p>We can see that we have close data for all 4 asset classes from the beginning of 1990 to the end of 2023.&lt;/p>
+&lt;h2 id="execute-strategy">Execute Strategy
+&lt;/h2>&lt;p>Using an annual rebalance date of January 1, we&amp;rsquo;ll now execute the strategy with the following code:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl"># List of funds to be used
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">fund_list = [&amp;#39;Stocks&amp;#39;, &amp;#39;Bonds&amp;#39;, &amp;#39;Gold&amp;#39;, &amp;#39;Cash&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Starting cash contribution
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">starting_cash = 10000
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Monthly cash contribution
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cash_contrib = 0
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">strat = strategy(fund_list, starting_cash, cash_contrib, perm_port, 1, 1, 0.35, 0.15).set_index(&amp;#39;Date&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sum_stats = summary_stats(fund_list, strat[[&amp;#39;Return&amp;#39;]], &amp;#39;Daily&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">strat_pre_1999 = strat[strat.index &amp;lt; &amp;#39;2000-01-01&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sum_stats_pre_1999 = summary_stats(fund_list, strat_pre_1999[[&amp;#39;Return&amp;#39;]], &amp;#39;Daily&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">strat_post_1999 = strat[strat.index &amp;gt;= &amp;#39;2000-01-01&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sum_stats_post_1999 = summary_stats(fund_list, strat_post_1999[[&amp;#39;Return&amp;#39;]], &amp;#39;Daily&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">strat_post_2009 = strat[strat.index &amp;gt;= &amp;#39;2010-01-01&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sum_stats_post_2009 = summary_stats(fund_list, strat_post_2009[[&amp;#39;Return&amp;#39;]], &amp;#39;Daily&amp;#39;)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="strategy-statistics">Strategy Statistics
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl">all_sum_stats = pd.concat([sum_stats])
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">all_sum_stats = all_sum_stats.rename(index={&amp;#39;Return&amp;#39;: &amp;#39;1990 - 2023&amp;#39;})
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">all_sum_stats = pd.concat([all_sum_stats, sum_stats_pre_1999])
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">all_sum_stats = all_sum_stats.rename(index={&amp;#39;Return&amp;#39;: &amp;#39;Pre 1999&amp;#39;})
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">all_sum_stats = pd.concat([all_sum_stats, sum_stats_post_1999])
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">all_sum_stats = all_sum_stats.rename(index={&amp;#39;Return&amp;#39;: &amp;#39;Post 1999&amp;#39;})
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">all_sum_stats = pd.concat([all_sum_stats, sum_stats_post_2009])
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">all_sum_stats = all_sum_stats.rename(index={&amp;#39;Return&amp;#39;: &amp;#39;Post 2009&amp;#39;})
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">all_sum_stats
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Since the strategy, summary statistics, and annual returns are all exported as excel files, they can be found at the following locations:&lt;/p>
+&lt;p>&lt;a class="link" href="Stocks_Bonds_Gold_Cash_Strategy.xlsx" >Stocks_Bonds_Gold_Cash_Strategy.xlsx&lt;/a>&lt;/br>
+&lt;a class="link" href="Stocks_Bonds_Gold_Cash_Summary_Stats.xlsx" >Stocks_Bonds_Gold_Cash_Summary_Stats.xlsx&lt;/a>&lt;/br>
+&lt;a class="link" href="Stocks_Bonds_Gold_Cash_Annual_Returns.xlsx" >Stocks_Bonds_Gold_Cash_Annual_Returns.xlsx&lt;/a>&lt;/br>&lt;/p>
+&lt;p>Here&amp;rsquo;s the summary stats for the example above including the various timeframes:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/06_Summary_Stats.png"
+width="1473"
+height="224"
+loading="lazy"
+alt="Summary Stats"
+class="gallery-image"
+data-flex-grow="657"
+data-flex-basis="1578px"
+>&lt;/p>
+&lt;p>Here we have a mean annualized return of 8.3%, volatility of 7.2%, a CAGR of 8.4% and a Sharpe ratio of 1.15. And this with a max drawdown of just over 15%. Not bad, Mr. Browne!&lt;/p>
+&lt;p>Since the book was published in 1999, let&amp;rsquo;s look specifically at the summary stats for below and after 1999.&lt;/p>
+&lt;p>The mean annualized return is approximately 0.7% lower for the pre 1999 vs post 1999 data, as is the CAGR. The volatility is higher for the post 1999 data which leads to a difference in the Sharpe ratio.&lt;/p>
+&lt;p>Here&amp;rsquo;s the annual returns:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/09_Portfolio_Annual_Returns_Table.png"
+width="115"
+height="680"
+loading="lazy"
+alt="Portfolio Annual Returns"
+class="gallery-image"
+data-flex-grow="16"
+data-flex-basis="40px"
+>&lt;/p>
+&lt;h2 id="generate-plots">Generate Plots
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl">plot_cumulative_return(strat)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">plot_values(strat)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">plot_drawdown(strat)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">plot_asset_weights(strat)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Create dataframe for the annual returns
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">strat_annual_returns = strat[&amp;#39;Cumulative_Return&amp;#39;].resample(&amp;#39;Y&amp;#39;).last().pct_change().dropna()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">strat_annual_returns_df = strat_annual_returns.to_frame()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">strat_annual_returns_df[&amp;#39;Year&amp;#39;] = strat_annual_returns_df.index.year # Add a &amp;#39;Year&amp;#39; column with just the year
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">strat_annual_returns_df.reset_index(drop=True, inplace=True) # Reset the index to remove the datetime index
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Now the DataFrame will have &amp;#39;Year&amp;#39; and &amp;#39;Cumulative_Return&amp;#39; columns
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">strat_annual_returns_df = strat_annual_returns_df[[&amp;#39;Year&amp;#39;, &amp;#39;Cumulative_Return&amp;#39;]] # Keep only &amp;#39;Year&amp;#39; and &amp;#39;Cumulative_Return&amp;#39; columns
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">strat_annual_returns_df.rename(columns = {&amp;#39;Cumulative_Return&amp;#39;:&amp;#39;Return&amp;#39;}, inplace=True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">strat_annual_returns_df.set_index(&amp;#39;Year&amp;#39;, inplace=True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">display(strat_annual_returns_df)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">plan_name = &amp;#39;_&amp;#39;.join(fund_list)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">file = plan_name + &amp;#34;_Annual_Returns.xlsx&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">location = file
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">strat_annual_returns_df.to_excel(location, sheet_name=&amp;#39;data&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">plot_annual_returns(strat_annual_returns_df)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Here are several relevant plots:&lt;/p>
+&lt;ol>
+&lt;li>Cumulative Return&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/03_Cumulative_Return.png"
+width="2966"
+height="1461"
+loading="lazy"
+alt="Cumulative Return"
+class="gallery-image"
+data-flex-grow="203"
+data-flex-basis="487px"
+>&lt;/p>
+&lt;ol start="2">
+&lt;li>Portfolio Values (Total, Stocks, Bonds, Gold, and Cash)&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/04_Portfolio_Values.png"
+width="2966"
+height="1461"
+loading="lazy"
+alt="Portfolio Values"
+class="gallery-image"
+data-flex-grow="203"
+data-flex-basis="487px"
+>&lt;/p>
+&lt;p>Here we can see the annual rebalancing taking effect with the values of the different asset classes. This can also be seen more clearly below.&lt;/p>
+&lt;ol start="3">
+&lt;li>Portfolio Drawdown&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/05_Portfolio_Drawdown.png"
+width="2967"
+height="1461"
+loading="lazy"
+alt="Portfolio Drawdown"
+class="gallery-image"
+data-flex-grow="203"
+data-flex-basis="487px"
+>&lt;/p>
+&lt;p>From this plot, we can see that the maximum drawdown came during the GFC; the drawdown during COVID was (interestingly) less than 10%.&lt;/p>
+&lt;ol start="4">
+&lt;li>Portfolio Asset Weights&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/07_Portfolio_Weights.png"
+width="2966"
+height="1461"
+loading="lazy"
+alt="Portfolio Weights"
+class="gallery-image"
+data-flex-grow="203"
+data-flex-basis="487px"
+>&lt;/p>
+&lt;p>The annual rebalancing appears to work effectively by selling assets that have increased in value and buying assets that have decreased in value over the previous year. Also note that there is only one instance when the weight of an asset fell to 15%. This occured for stocks during the GFC.&lt;/p>
+&lt;ol start="5">
+&lt;li>Portfolio Annual Returns&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/08_Portfolio_Annual_Returns.png"
+width="2966"
+height="1461"
+loading="lazy"
+alt="Portfolio Annual Returns"
+class="gallery-image"
+data-flex-grow="203"
+data-flex-basis="487px"
+>&lt;/p>
+&lt;p>It&amp;rsquo;s interesting to see that there really aren&amp;rsquo;t any significant up or down years. Instead, it&amp;rsquo;s a steady climb without much volatility.&lt;/p>
+&lt;h2 id="summary">Summary
+&lt;/h2>&lt;p>Overall, this is an interesting case study and Browne&amp;rsquo;s idea behind the Permanent Portfolio is certainly compelling. There might be more investigation to be done with respect to the following:&lt;/p>
+&lt;ul>
+&lt;li>Investigate the extent to which the rebalancing date effects the portfolio performance&lt;/li>
+&lt;li>Vary the weights of the asset classes to see if there is a meanful change in the results&lt;/li>
+&lt;li>Experiment with leverage (i.e., simulating 1.2x leverage with a portfolio with weights of 30, 30, 30, 10 for stocks, bonds, gold, cash respectively.)&lt;/li>
+&lt;/ul>
+&lt;h2 id="references">References
+&lt;/h2>&lt;p>Fail-Safe Investing: Lifelong Financial Security in 30 Minutes, by Harry Browne&lt;/p>
+&lt;h2 id="code">Code
+&lt;/h2>&lt;p>The jupyter notebook with the functions and all other code is available &lt;a class="link" href="harry-browne-permanent-portfolio.ipynb" >here&lt;/a>.&lt;/p></description></item><item><title>Nasdaq Data Link Tables API Data Retrieval</title><link>https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/</link><pubDate>Sun, 24 Dec 2023 00:00:01 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/cover.jpg" alt="Featured image of post Nasdaq Data Link Tables API Data Retrieval" />&lt;h2 id="introduction">Introduction
+&lt;/h2>&lt;p>In this tutorial, we will write a python function that pulls data from Nasdaq Data Link through the tables API, adds relevant columns that are not present in the raw data, updates columns to allow for ease of use, and leaves the data in a format where it can then be used in time series analysis.&lt;/p>
+&lt;p>&lt;a class="link" href="https://www.nasdaq.com/nasdaq-data-link" target="_blank" rel="noopener"
+>Nasdaq Data Link&lt;/a> is a provider of numerous different types of financial data from many different asset classes. It provides API&amp;rsquo;s that allow access from Python, R, Excel, and other methods. It is available to &lt;a class="link" href="https://data.nasdaq.com/institutional-investors" target="_blank" rel="noopener"
+>institutional investors&lt;/a> as well as &lt;a class="link" href="https://data.nasdaq.com/individual-users" target="_blank" rel="noopener"
+>individual retail investors&lt;/a>.&lt;/p>
+&lt;h2 id="nasdaq-data-link-initial-data-retrieval">Nasdaq Data Link Initial Data Retrieval
+&lt;/h2>&lt;p>We will use the data for AAPL for this example. This will give us a data set that requires some thought as to how the splits need to be handled as well as the dividends.&lt;/p>
+&lt;p>We&amp;rsquo;ll start with pulling the initial data set, with the first 10 rows shown as follows from the pandas dataframe:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows.png"
+width="1067"
+height="320"
+loading="lazy"
+alt="AAPL Data - First 10 Rows"
+class="gallery-image"
+data-flex-grow="333"
+data-flex-basis="800px"
+>&lt;/p>
+&lt;p>And the last 10 rows:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/02_AAPL_data_last_10_rows.png"
+width="1038"
+height="317"
+loading="lazy"
+alt="AAPL Data - Last 10 Rows"
+class="gallery-image"
+data-flex-grow="327"
+data-flex-basis="785px"
+>&lt;/p>
+&lt;p>From left to right, we have the following columns:&lt;/p>
+&lt;ol>
+&lt;li>Row number: 0 indexed, gives us the total number of rows/dates of data&lt;/li>
+&lt;li>Ticker: The ticker symbol for our data&lt;/li>
+&lt;li>Date: In the format YYYY-MM-DD&lt;/li>
+&lt;li>Open: Daily open&lt;/li>
+&lt;li>High: Daily high&lt;/li>
+&lt;li>Low: Daily low&lt;/li>
+&lt;li>Close: Daily close&lt;/li>
+&lt;li>Volume: Volume of shares traded&lt;/li>
+&lt;li>Dividend: Dividend paid on that date&lt;/li>
+&lt;li>Split: Split executed on that date&lt;/li>
+&lt;li>Adjusted Open: Daily open price adusted for all splits and dividends&lt;/li>
+&lt;li>Adjusted High: Daily high price adusted for all splits and dividends&lt;/li>
+&lt;li>Adjusted Low: Daily low price adusted for all splits and dividends&lt;/li>
+&lt;li>Adjusted Close: Daily close price adusted for all splits and dividends&lt;/li>
+&lt;li>Adjusted Volume: Daily volume price adusted for all splits&lt;/li>
+&lt;/ol>
+&lt;h2 id="data-questions">Data questions
+&lt;/h2>&lt;p>The above information is a good starting point, but what if we are looking for the following answers?&lt;/p>
+&lt;ol>
+&lt;li>The data shows a split value for every day, but we know the stock didn&amp;rsquo;t split every day. What does this represent?&lt;/li>
+&lt;li>What is the total cumulative split ratio?&lt;/li>
+&lt;li>What is the split ratio at different points in time?&lt;/li>
+&lt;li>What is the adjusted share price without including the dividends? This would be needed for any time series analysis.&lt;/li>
+&lt;li>What is the dividend dollar value based on an adjusted share price?&lt;/li>
+&lt;li>What would the share price be if the stock hadn&amp;rsquo;t split?&lt;/li>
+&lt;/ol>
+&lt;p>We&amp;rsquo;ll add columns and modify as necessary to answer the above questions and more.&lt;/p>
+&lt;h2 id="assumptions">Assumptions
+&lt;/h2>&lt;p>The remainder of this tutorial assumes the following:&lt;/p>
+&lt;ul>
+&lt;li>You have the &lt;a class="link" href="https://github.com/Nasdaq/data-link-python" target="_blank" rel="noopener"
+>Nasdaq Data Link&lt;/a> library installed&lt;/li>
+&lt;li>You have the &lt;a class="link" href="https://pandas.pydata.org/" target="_blank" rel="noopener"
+>pandas&lt;/a> library installed&lt;/li>
+&lt;li>You have the &lt;a class="link" href="https://openpyxl.readthedocs.io/en/stable/" target="_blank" rel="noopener"
+>OpenPyXL&lt;/a> library installed&lt;/li>
+&lt;/ul>
+&lt;h2 id="python-function-to-modify-the-data">Python function to modify the data
+&lt;/h2>&lt;p>The following function will perform the desired modifications:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;span class="lnt">51
+&lt;/span>&lt;span class="lnt">52
+&lt;/span>&lt;span class="lnt">53
+&lt;/span>&lt;span class="lnt">54
+&lt;/span>&lt;span class="lnt">55
+&lt;/span>&lt;span class="lnt">56
+&lt;/span>&lt;span class="lnt">57
+&lt;/span>&lt;span class="lnt">58
+&lt;/span>&lt;span class="lnt">59
+&lt;/span>&lt;span class="lnt">60
+&lt;/span>&lt;span class="lnt">61
+&lt;/span>&lt;span class="lnt">62
+&lt;/span>&lt;span class="lnt">63
+&lt;/span>&lt;span class="lnt">64
+&lt;/span>&lt;span class="lnt">65
+&lt;/span>&lt;span class="lnt">66
+&lt;/span>&lt;span class="lnt">67
+&lt;/span>&lt;span class="lnt">68
+&lt;/span>&lt;span class="lnt">69
+&lt;/span>&lt;span class="lnt">70
+&lt;/span>&lt;span class="lnt">71
+&lt;/span>&lt;span class="lnt">72
+&lt;/span>&lt;span class="lnt">73
+&lt;/span>&lt;span class="lnt">74
+&lt;/span>&lt;span class="lnt">75
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># This function pulls the data for the specific fund from from Nasdaq Data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Link and adds many missing columns
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Imports
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">import nasdaqdatalink
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">import pandas as pd
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">import numpy as np
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Add API key for reference to allow access to unrestricted data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">nasdaqdatalink.ApiConfig.api_key = &amp;#39;your_key&amp;#39;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Function definition
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">def ndl_data_updater(fund):
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Command to pull data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # If start date and end date are not specified the entire data set is included
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df = nasdaqdatalink.get_table(&amp;#39;QUOTEMEDIA/PRICES&amp;#39;, ticker = fund, paginate=True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Sort columns by date ascending
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.sort_values(&amp;#39;date&amp;#39;, ascending = True, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Rename date column
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.rename(columns = {&amp;#39;date&amp;#39;:&amp;#39;Date&amp;#39;}, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Set index to date column
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df.set_index(&amp;#39;Date&amp;#39;, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Replace all split values of 1.0 with NaN
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df[&amp;#39;split&amp;#39;] = df[&amp;#39;split&amp;#39;].replace(1.0, np.nan)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Create a new data frame with split values only
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_splits = df.drop(columns = {&amp;#39;ticker&amp;#39;, &amp;#39;open&amp;#39;, &amp;#39;high&amp;#39;, &amp;#39;low&amp;#39;, &amp;#39;close&amp;#39;, &amp;#39;volume&amp;#39;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#39;dividend&amp;#39;, &amp;#39;adj_open&amp;#39;, &amp;#39;adj_high&amp;#39;, &amp;#39;adj_low&amp;#39;, &amp;#39;adj_close&amp;#39;, &amp;#39;adj_volume&amp;#39;}).dropna()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Create a new column for cumulative split
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_splits[&amp;#39;Cum_Split&amp;#39;] = df_splits[&amp;#39;split&amp;#39;].cumprod()
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Drop original split column before combining dataframes
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_splits.drop(columns = {&amp;#39;split&amp;#39;}, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Merge df and df_split dataframes
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp = pd.merge(df, df_splits, on=&amp;#39;Date&amp;#39;, how=&amp;#39;outer&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Forward fill for all cumulative split values
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;Cum_Split&amp;#39;].fillna(method = &amp;#39;ffill&amp;#39;, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Replace all split and cumulative split values of NaN with 1.0 to have complete split values
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;split&amp;#39;] = df_comp[&amp;#39;split&amp;#39;].replace(np.nan, 1.0)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;Cum_Split&amp;#39;] = df_comp[&amp;#39;Cum_Split&amp;#39;].replace(np.nan, 1.0)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Calculate the non adjusted prices based on the splits only
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;non_adj_open_split_only&amp;#39;] = df_comp[&amp;#39;open&amp;#39;] * df_comp[&amp;#39;Cum_Split&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;non_adj_high_split_only&amp;#39;] = df_comp[&amp;#39;high&amp;#39;] * df_comp[&amp;#39;Cum_Split&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;non_adj_low_split_only&amp;#39;] = df_comp[&amp;#39;low&amp;#39;] * df_comp[&amp;#39;Cum_Split&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;non_adj_close_split_only&amp;#39;] = df_comp[&amp;#39;close&amp;#39;] * df_comp[&amp;#39;Cum_Split&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;non_adj_dividend_split_only&amp;#39;] = df_comp[&amp;#39;dividend&amp;#39;] * df_comp[&amp;#39;Cum_Split&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Calculate the adjusted prices based on the splits
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;Open&amp;#39;] = df_comp[&amp;#39;non_adj_open_split_only&amp;#39;] / df_comp[&amp;#39;Cum_Split&amp;#39;][-1]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;High&amp;#39;] = df_comp[&amp;#39;non_adj_high_split_only&amp;#39;] / df_comp[&amp;#39;Cum_Split&amp;#39;][-1]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;Low&amp;#39;] = df_comp[&amp;#39;non_adj_low_split_only&amp;#39;] / df_comp[&amp;#39;Cum_Split&amp;#39;][-1]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;Close&amp;#39;] = df_comp[&amp;#39;non_adj_close_split_only&amp;#39;] / df_comp[&amp;#39;Cum_Split&amp;#39;][-1]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;Dividend&amp;#39;] = df_comp[&amp;#39;non_adj_dividend_split_only&amp;#39;] / df_comp[&amp;#39;Cum_Split&amp;#39;][-1]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;Dividend_Pct_Orig&amp;#39;] = df_comp[&amp;#39;dividend&amp;#39;] / df_comp[&amp;#39;close&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp[&amp;#39;Dividend_Pct_Adj&amp;#39;] = df_comp[&amp;#39;Dividend&amp;#39;] / df_comp[&amp;#39;Close&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Export data to excel
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> file = fund + &amp;#34;_NDL.xlsx&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> df_comp.to_excel(file, sheet_name=&amp;#39;data&amp;#39;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> # Output confirmation
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> print(f&amp;#34;The last date of data for {fund} is: &amp;#34;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> print(df_comp[-1:])
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> print(f&amp;#34;NDL data updater complete for {fund} data&amp;#34;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> return print(f&amp;#34;--------------------&amp;#34;)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Let&amp;rsquo;s break this down line by line.&lt;/p>
+&lt;h2 id="imports">Imports
+&lt;/h2>&lt;p>First, we need to import the required libraries:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Imports
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">import nasdaqdatalink
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">import pandas as pd
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">import numpy as np
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="ndl-api-key">NDL API Key
+&lt;/h2>&lt;p>To gain access to anything beyond the free tier, you will need to provide your access key:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Add API key for reference to allow access to unrestricted data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">nasdaqdatalink.ApiConfig.api_key = &amp;#39;your_key&amp;#39;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="download-data-as-a-dataframe">Download data as a dataframe
+&lt;/h2>&lt;p>Moving on to the function definition, we have the command to pull data from NDL. There are two separate APIs - the &lt;a class="link" href="https://docs.data.nasdaq.com/docs/time-series" target="_blank" rel="noopener"
+>time series&lt;/a> and the &lt;a class="link" href="https://docs.data.nasdaq.com/docs/tables-1" target="_blank" rel="noopener"
+>tables&lt;/a>. The syntax is different, and some data sets are only available as one or the other. We will use the tables API for this tutorial.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Command to pull data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># If start date and end date are not specified the entire data set is included
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df = nasdaqdatalink.get_table(&amp;#39;QUOTEMEDIA/PRICES&amp;#39;, ticker = fund, paginate=True)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>In the example above, the &lt;code>fund&lt;/code> is an input parameter to the function.&lt;/p>
+&lt;p>The &lt;code>'QUOTEMEDIA/PRICES'&lt;/code> is the data source that we are accessing.&lt;/p>
+&lt;p>There are many other arguments that we could pass in the above, including specifying columns, period start date, period end date, and others. Nasdaq as a few examples to get you started:&lt;/p>
+&lt;p>&lt;a class="link" href="https://docs.data.nasdaq.com/docs/python-tables" target="_blank" rel="noopener"
+>https://docs.data.nasdaq.com/docs/python-tables&lt;/a>&lt;/p>
+&lt;p>Running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows.png"
+width="1067"
+height="320"
+loading="lazy"
+alt="AAPL Data - First 10 Rows"
+class="gallery-image"
+data-flex-grow="333"
+data-flex-basis="800px"
+>&lt;/p>
+&lt;h2 id="sort-columns-by-date">Sort columns by date
+&lt;/h2>&lt;p>Next, we will sort the columns by date ascending. By default, the dataframe is created with the data sorted by descending date, and we want to change that:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Sort columns by date ascending
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df.sort_values(&amp;#39;date&amp;#39;, ascending = True, inplace = True)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>The &lt;code>inplace = True&lt;/code> argument specifies that the sort function should take effect on the existing dataframe.&lt;/p>
+&lt;p>Now, running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/03_Sorted_by_date_ascending.png"
+width="1039"
+height="321"
+loading="lazy"
+alt="Data sorted by ascending date"
+class="gallery-image"
+data-flex-grow="323"
+data-flex-basis="776px"
+>&lt;/p>
+&lt;h2 id="setting-the-date-as-the-index">Setting the date as the index
+&lt;/h2>&lt;p>Next, we will rename the &lt;code>date&lt;/code> column from &amp;lsquo;date&amp;rsquo; to &amp;lsquo;Date&amp;rsquo;, and set the index to be the &lt;code>Date&lt;/code> column:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Rename date column
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df.rename(columns = {&amp;#39;date&amp;#39;:&amp;#39;Date&amp;#39;}, inplace = True)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Set index to date column
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df.set_index(&amp;#39;Date&amp;#39;, inplace = True)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now, running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/04_Date_as_the_index.png"
+width="986"
+height="321"
+loading="lazy"
+alt="Indexed by the Date column"
+class="gallery-image"
+data-flex-grow="307"
+data-flex-basis="737px"
+>&lt;/p>
+&lt;h2 id="calculating-splits">Calculating splits
+&lt;/h2>&lt;p>The next sections deal with the split column. So far we have only seen a split value of 1.0 in the data, but we&amp;rsquo;ve only looked at the first 10 and last 10 rows. Are there any other values? Let&amp;rsquo;s check by running:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">df_not_1_split = df[df[&amp;#39;split&amp;#39;] != 1.0]
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>And checking the first 10 rows:&lt;/p>
+&lt;pre>&lt;code>df_not_1_split.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/05_Actual_splits.png"
+width="1059"
+height="192"
+loading="lazy"
+alt="Split values"
+class="gallery-image"
+data-flex-grow="551"
+data-flex-basis="1323px"
+>&lt;/p>
+&lt;p>So we now know that the stock did in fact split several times. Next, we will replace all of the &lt;code>1.0&lt;/code> split values - because they are really meaningless - and then create a new dataframe to deal with the splits.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Replace all split values of 1.0 with NaN
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df[&amp;#39;split&amp;#39;] = df[&amp;#39;split&amp;#39;].replace(1.0, np.nan)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>This gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/06_Splits_replaced.png"
+width="988"
+height="316"
+loading="lazy"
+alt="Split values replaced with NaN"
+class="gallery-image"
+data-flex-grow="312"
+data-flex-basis="750px"
+>&lt;/p>
+&lt;p>We will now create a dataframe with only the split values:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Create a new data frame with split values only
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_splits = df.drop(columns = {&amp;#39;ticker&amp;#39;, &amp;#39;open&amp;#39;, &amp;#39;high&amp;#39;, &amp;#39;low&amp;#39;, &amp;#39;close&amp;#39;, &amp;#39;volume&amp;#39;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#39;dividend&amp;#39;, &amp;#39;adj_open&amp;#39;, &amp;#39;adj_high&amp;#39;, &amp;#39;adj_low&amp;#39;,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;#39;adj_close&amp;#39;, &amp;#39;adj_volume&amp;#39;}).dropna()
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Which gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/07_Dataframe_with_split_values_only.png"
+width="156"
+height="195"
+loading="lazy"
+alt="Dataframe with split values only"
+class="gallery-image"
+data-flex-grow="80"
+data-flex-basis="192px"
+>&lt;/p>
+&lt;p>Creating a column for the cumulative split will provide an accurate perspective on the stock price. We can do that with the following:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Create a new column for cumulative split
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_splits[&amp;#39;Cum_Split&amp;#39;] = df_splits[&amp;#39;split&amp;#39;].cumprod()
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Which gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/08_Dataframe_with_cumulative_split_column.png"
+width="234"
+height="195"
+loading="lazy"
+alt="Dataframe with split and cumulative split values"
+class="gallery-image"
+data-flex-grow="120"
+data-flex-basis="288px"
+>&lt;/p>
+&lt;p>We will then drop the original &lt;code>split&lt;/code> column before combining the split data frame with the original data frame, as follows:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Drop original split column before combining dataframes
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_splits.drop(columns = {&amp;#39;split&amp;#39;}, inplace = True)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Which gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/09_Dataframe_with_only_cumulative_split_column.png"
+width="194"
+height="193"
+loading="lazy"
+alt="Dataframe with only cumulative split values"
+class="gallery-image"
+data-flex-grow="100"
+data-flex-basis="241px"
+>&lt;/p>
+&lt;h2 id="combining-dataframes">Combining dataframes
+&lt;/h2>&lt;p>Now we will merge the &lt;code>df_split&lt;/code> dataframe with the original &lt;code>df&lt;/code> dataframe so that the cumulative split column is part of the original dataframe. We will call this data frame &lt;code>df_comp&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Merge df and df_split dataframes
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp = pd.merge(df, df_splits, on=&amp;#39;Date&amp;#39;, how=&amp;#39;outer&amp;#39;)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>We are using the merge function of pandas, which includes arguments for the names of both dataframes to be merged, the column to match between the dataframes, and the parameter for the type of merge to be performed. The &lt;code>outer&lt;/code> argument specifies that all rows from both dataframes will be included, and any missing values will be filled in with &lt;code>NaN&lt;/code> if there is no matching data. This ensures that all data from both dataframes is retained.&lt;/p>
+&lt;p>Running:&lt;/p>
+&lt;pre>&lt;code>df_comp.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/10_Complete_dataframe_including_cumulative_split.png"
+width="1060"
+height="317"
+loading="lazy"
+alt="Complete dataframe incluidng the cumulative split values"
+class="gallery-image"
+data-flex-grow="334"
+data-flex-basis="802px"
+>&lt;/p>
+&lt;h2 id="forward-filling-cumulative-split-values">Forward filling cumulative split values
+&lt;/h2>&lt;p>From here, we want to fill in the rest of the &lt;code>split&lt;/code> and &lt;code>Cum_Split&lt;/code> values. This is done using the forward fill function, which for all cells that have a value of &lt;code>NaN&lt;/code> will fill in the previous valid value until another value is encountered. Here&amp;rsquo;s the code:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Forward fill for all cumulative split values
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;Cum_Split&amp;#39;].fillna(method = &amp;#39;ffill&amp;#39;, inplace = True)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Running:&lt;/p>
+&lt;pre>&lt;code>df_comp.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/11_Complete_dataframe_ffill_split_values_first_10_rows.png"
+width="1029"
+height="344"
+loading="lazy"
+alt="First 10 rows of complete dataframe with split values"
+class="gallery-image"
+data-flex-grow="299"
+data-flex-basis="717px"
+>&lt;/p>
+&lt;p>At first glance, it doesn&amp;rsquo;t look like anything changed. That&amp;rsquo;s because there wasn&amp;rsquo;t any ffill action taken on the initial values until pandas encountered a valid value to then forward fill. However, checking the last 10 rows:&lt;/p>
+&lt;pre>&lt;code>df_comp.tail(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/12_Complete_dataframe_ffill_split_values_last_10_rows.png"
+width="1086"
+height="341"
+loading="lazy"
+alt="Last 10 rows of complete dataframe with split values"
+class="gallery-image"
+data-flex-grow="318"
+data-flex-basis="764px"
+>&lt;/p>
+&lt;p>Which is the result that we were expecting. But, what about the first rows from 12/12/1980 to 6/15/1987? We can fill those &lt;code>split&lt;/code> and &lt;code>Cum_Split&lt;/code> values with the following code:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Replace all split and cumulative split values of NaN with 1.0 to have complete split values
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;split&amp;#39;] = df_comp[&amp;#39;split&amp;#39;].replace(np.nan, 1.0)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;Cum_Split&amp;#39;] = df_comp[&amp;#39;Cum_Split&amp;#39;].replace(np.nan, 1.0)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now, checking the first 10 rows:&lt;/p>
+&lt;pre>&lt;code>df_comp.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/13_Complete_dataframe_ffill_split_values_first_10_rows.png"
+width="1068"
+height="317"
+loading="lazy"
+alt="First 10 rows of complete dataframe with split values"
+class="gallery-image"
+data-flex-grow="336"
+data-flex-basis="808px"
+>&lt;/p>
+&lt;p>With this data, we now know for every day in the data set the following pieces of information:&lt;/p>
+&lt;ol>
+&lt;li>If the stock split on that day&lt;/li>
+&lt;li>What the total split ratio is up to and including that day&lt;/li>
+&lt;/ol>
+&lt;h2 id="calculating-adjusted-and-non-adjusted-prices">Calculating adjusted and non-adjusted prices
+&lt;/h2>&lt;p>From here, we can complete our dataset by calculating the adjusted and non-adjusted prices using the cumulative split ratios from above:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Calculate the non adjusted prices based on the splits only
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;non_adj_open_split_only&amp;#39;] = df_comp[&amp;#39;open&amp;#39;] * df_comp[&amp;#39;Cum_Split&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;non_adj_high_split_only&amp;#39;] = df_comp[&amp;#39;high&amp;#39;] * df_comp[&amp;#39;Cum_Split&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;non_adj_low_split_only&amp;#39;] = df_comp[&amp;#39;low&amp;#39;] * df_comp[&amp;#39;Cum_Split&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;non_adj_close_split_only&amp;#39;] = df_comp[&amp;#39;close&amp;#39;] * df_comp[&amp;#39;Cum_Split&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;non_adj_dividend_split_only&amp;#39;] = df_comp[&amp;#39;dividend&amp;#39;] * df_comp[&amp;#39;Cum_Split&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># Calculate the adjusted prices based on the splits
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;Open&amp;#39;] = df_comp[&amp;#39;non_adj_open_split_only&amp;#39;] / df_comp[&amp;#39;Cum_Split&amp;#39;][-1]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;High&amp;#39;] = df_comp[&amp;#39;non_adj_high_split_only&amp;#39;] / df_comp[&amp;#39;Cum_Split&amp;#39;][-1]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;Low&amp;#39;] = df_comp[&amp;#39;non_adj_low_split_only&amp;#39;] / df_comp[&amp;#39;Cum_Split&amp;#39;][-1]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;Close&amp;#39;] = df_comp[&amp;#39;non_adj_close_split_only&amp;#39;] / df_comp[&amp;#39;Cum_Split&amp;#39;][-1]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;Dividend&amp;#39;] = df_comp[&amp;#39;non_adj_dividend_split_only&amp;#39;] / df_comp[&amp;#39;Cum_Split&amp;#39;][-1]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;Dividend_Pct_Orig&amp;#39;] = df_comp[&amp;#39;dividend&amp;#39;] / df_comp[&amp;#39;close&amp;#39;]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp[&amp;#39;Dividend_Pct_Adj&amp;#39;] = df_comp[&amp;#39;Dividend&amp;#39;] / df_comp[&amp;#39;Close&amp;#39;]
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Included above is the adjusted dividends values. For any time series analysis, not only are the adjusted prices needed, but so are the adusted dividends. Remember, we already have the adjusted total return prices - those come directly from NDL.&lt;/p>
+&lt;h2 id="export-data">Export data
+&lt;/h2>&lt;p>Next, we want to export the data to an excel file, for easy viewing and reference later:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Export data to excel
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">file = fund + &amp;#34;_NDL.xlsx&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">df_comp.to_excel(file, sheet_name=&amp;#39;data&amp;#39;)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>And verify the output is as expected:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/14_Excel_export.png"
+width="3491"
+height="220"
+loading="lazy"
+alt="Excel export"
+class="gallery-image"
+data-flex-grow="1586"
+data-flex-basis="3808px"
+>&lt;/p>
+&lt;h2 id="output-confirmation">Output confirmation
+&lt;/h2>&lt;p>Finally, we want to print a confirmation that the process succeeded along withe last date we have for data:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl"># Output confirmation
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">print(f&amp;#34;The last date of data for {fund} is: &amp;#34;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">print(df_comp[-1:])
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">print(f&amp;#34;NDL data updater complete for {fund} data&amp;#34;)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">print(f&amp;#34;--------------------&amp;#34;)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>And confirming the output:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/15_Output_confirmation.png"
+width="643"
+height="470"
+loading="lazy"
+alt="Output confirmation"
+class="gallery-image"
+data-flex-grow="136"
+data-flex-basis="328px"
+>&lt;/p>
+&lt;h2 id="references">References
+&lt;/h2>&lt;p>&lt;a class="link" href="https://docs.data.nasdaq.com/docs" target="_blank" rel="noopener"
+>https://docs.data.nasdaq.com/docs&lt;/a>&lt;/br>
+&lt;a class="link" href="https://docs.data.nasdaq.com/docs/tables-1" target="_blank" rel="noopener"
+>https://docs.data.nasdaq.com/docs/tables-1&lt;/a>&lt;/br>
+&lt;a class="link" href="https://docs.data.nasdaq.com/docs/time-series" target="_blank" rel="noopener"
+>https://docs.data.nasdaq.com/docs/time-series&lt;/a>&lt;/br>
+&lt;a class="link" href="https://docs.data.nasdaq.com/docs/python" target="_blank" rel="noopener"
+>https://docs.data.nasdaq.com/docs/python&lt;/a>&lt;/p></description></item><item><title>Cleaning A Bloomberg Data Excel Export</title><link>https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/</link><pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/cover.jpg" alt="Featured image of post Cleaning A Bloomberg Data Excel Export" />&lt;h2 id="introduction">Introduction
+&lt;/h2>&lt;p>In this tutorial, we will write a python function that imports an excel export from Bloomberg, removes ancillary rows and columns, and leaves the data in a format where it can then be used in time series analysis.&lt;/p>
+&lt;h2 id="example-of-a-bloomberg-excel-export">Example of a Bloomberg excel export
+&lt;/h2>&lt;p>We will use the SPX index data in this example. Exporting the data from Bloomberg using the excel Bloomberg add-on yields data in the following format:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Format_of_data_in_excel_export_from_Bloomberg.png"
+width="295"
+height="455"
+loading="lazy"
+alt="Format of data in excel export from Bloomberg"
+class="gallery-image"
+data-flex-grow="64"
+data-flex-basis="155px"
+>&lt;/p>
+&lt;h2 id="data-modifications">Data modifications
+&lt;/h2>&lt;p>The above format isn&amp;rsquo;t horrible, but we want to perform the following modifications:&lt;/p>
+&lt;ol>
+&lt;li>Remove the first six rows of the data&lt;/li>
+&lt;li>Convert the 7th row to become column headings&lt;/li>
+&lt;li>Rename column 2 to &amp;ldquo;Close&amp;rdquo; to represent the closing price&lt;/li>
+&lt;li>Remove column 3, as we are not concerned about volume&lt;/li>
+&lt;li>Export to excel and make the name of the excel worksheet &amp;ldquo;data&amp;rdquo;&lt;/li>
+&lt;/ol>
+&lt;h2 id="assumptions">Assumptions
+&lt;/h2>&lt;p>The remainder of this tutorial assumes the following:&lt;/p>
+&lt;ul>
+&lt;li>Your excel file is named &amp;ldquo;SPX_Index.xlsx&amp;rdquo;&lt;/li>
+&lt;li>The worksheet in the excel file is named &amp;ldquo;Worksheet&amp;rdquo;&lt;/li>
+&lt;li>You have the &lt;a class="link" href="https://pandas.pydata.org/" target="_blank" rel="noopener"
+>pandas&lt;/a> library installed&lt;/li>
+&lt;li>You have the &lt;a class="link" href="https://openpyxl.readthedocs.io/en/stable/" target="_blank" rel="noopener"
+>OpenPyXL&lt;/a> library installed&lt;/li>
+&lt;/ul>
+&lt;h2 id="python-function-to-modify-the-data">Python function to modify the data
+&lt;/h2>&lt;p>The following function will perform the modifications mentioned above:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># This function takes an excel export from Bloomberg and &lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># removes all excess data leaving date and close columns&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Imports&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">pandas&lt;/span> &lt;span class="k">as&lt;/span> &lt;span class="nn">pd&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Function definition&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">bb_data_updater&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">fund&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># File name variable&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">file&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">fund&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s2">&amp;#34;_Index.xlsx&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Import data from file as a pandas dataframe&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">df&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">pd&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">read_excel&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">file&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">sheet_name&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;Worksheet&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">engine&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;openpyxl&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Set the column headings from row 5 (which is physically row 6)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">df&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">columns&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">df&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">iloc&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">5&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Set the column heading for the index to be &amp;#34;None&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">df&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">rename_axis&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kc">None&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">axis&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">inplace&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Drop the first 6 rows, 0 - 5&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">df&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">drop&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">df&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">index&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">6&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="n">inplace&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Set the date column as the index&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">df&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">set_index&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Date&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">inplace&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Drop the volume column&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">try&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">df&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">drop&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">columns&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="s1">&amp;#39;PX_VOLUME&amp;#39;&lt;/span>&lt;span class="p">},&lt;/span> &lt;span class="n">inplace&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">except&lt;/span> &lt;span class="ne">KeyError&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">pass&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Rename column&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">df&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">rename&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">columns&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="s1">&amp;#39;PX_LAST&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="s1">&amp;#39;Close&amp;#39;&lt;/span>&lt;span class="p">},&lt;/span> &lt;span class="n">inplace&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Sort by date&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">df&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sort_values&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">by&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;Date&amp;#39;&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="n">inplace&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Export data to excel&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">file&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">fund&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s2">&amp;#34;.xlsx&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">df&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">to_excel&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">file&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">sheet_name&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;data&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Output confirmation&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sa">f&lt;/span>&lt;span class="s2">&amp;#34;The last date of data for &lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">fund&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2"> is: &amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">df&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">:])&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sa">f&lt;/span>&lt;span class="s2">&amp;#34;Bloomberg data conversion complete for &lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">fund&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2"> data&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sa">f&lt;/span>&lt;span class="s2">&amp;#34;--------------------&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Let&amp;rsquo;s break this down line by line.&lt;/p>
+&lt;h2 id="imports">Imports
+&lt;/h2>&lt;p>First, we need to import pandas:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">pandas&lt;/span> &lt;span class="k">as&lt;/span> &lt;span class="nn">pd&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="import-excel-data-file">Import excel data file
+&lt;/h2>&lt;p>Then import the excel file as a pandas dataframe:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># File name variable&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">file&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">fund&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s2">&amp;#34;_Index.xlsx&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Import data from file as a pandas dataframe&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">df&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">pd&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">read_excel&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">file&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">sheet_name&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;Worksheet&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">engine&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;openpyxl&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Dataframe_excel_import.png"
+width="367"
+height="302"
+loading="lazy"
+alt="Dataframe excel import"
+class="gallery-image"
+data-flex-grow="121"
+data-flex-basis="291px"
+>&lt;/p>
+&lt;h2 id="set-column-headings">Set column headings
+&lt;/h2>&lt;p>Next, set the column heading:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Set the column headings from row 5 (which is physically row 6)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">df&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">columns&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">df&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">iloc&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">5&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now, running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Set_column_headings.png"
+width="376"
+height="296"
+loading="lazy"
+alt="Set column headings"
+class="gallery-image"
+data-flex-grow="127"
+data-flex-basis="304px"
+>&lt;/p>
+&lt;h2 id="remove-index-heading">Remove index heading
+&lt;/h2>&lt;p>Next, remove the column heading from the index column:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Set the column heading for the index to be &amp;#34;None&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">df&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">rename_axis&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kc">None&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">axis&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">inplace&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Note: The &lt;code>axis=1&lt;/code> argument here specifies the column index.&lt;/p>
+&lt;p>Now, running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Remove_index_heading.png"
+width="373"
+height="299"
+loading="lazy"
+alt="Remove index heading"
+class="gallery-image"
+data-flex-grow="124"
+data-flex-basis="299px"
+>&lt;/p>
+&lt;h2 id="drop-rows">Drop rows
+&lt;/h2>&lt;p>Next, we want to remove the first 6 rows that have unneeded data:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Drop the first 6 rows, 0 - 5&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">df&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">drop&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">df&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">index&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">6&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="n">inplace&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Note: When dropping rows, the range to drop begins with row 0 and continues up to - but not including - row 6.&lt;/p>
+&lt;p>Now, running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Remove_rows.png"
+width="323"
+height="298"
+loading="lazy"
+alt="Remove rows"
+class="gallery-image"
+data-flex-grow="108"
+data-flex-basis="260px"
+>&lt;/p>
+&lt;h2 id="set-index">Set index
+&lt;/h2>&lt;p>Next, we want to set the date column as the index:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Set the date column as the index&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">df&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">set_index&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Date&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">inplace&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now, running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Set_index.png"
+width="244"
+height="318"
+loading="lazy"
+alt="Set index"
+class="gallery-image"
+data-flex-grow="76"
+data-flex-basis="184px"
+>&lt;/p>
+&lt;h2 id="drop-the-px_volume-column">Drop the &amp;ldquo;PX_VOLUME&amp;rdquo; column
+&lt;/h2>&lt;p>Next, we want to drop the volume column:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Drop the volume column&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">try&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">df&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">drop&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">columns&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="s1">&amp;#39;PX_VOLUME&amp;#39;&lt;/span>&lt;span class="p">},&lt;/span> &lt;span class="n">inplace&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">except&lt;/span> &lt;span class="ne">KeyError&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">pass&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>For some data records, the volume column does not exist. Therefore, we &lt;code>try&lt;/code>, and if it fails with a &lt;code>KeyError&lt;/code>, then we assume the &amp;ldquo;PX_VOLUME&amp;rdquo; column does not exist, and just &lt;code>pass&lt;/code> to move on.&lt;/p>
+&lt;p>Now, running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Drop_volume.png"
+width="163"
+height="320"
+loading="lazy"
+alt="Drop volume"
+class="gallery-image"
+data-flex-grow="50"
+data-flex-basis="122px"
+>&lt;/p>
+&lt;h2 id="rename-the-px_last-column">Rename the &amp;ldquo;PX_LAST&amp;rdquo; column
+&lt;/h2>&lt;p>Next, we want to rename the &amp;ldquo;PX_LAST&amp;rdquo; column as &amp;ldquo;Close&amp;rdquo;:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Rename column&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">df&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">rename&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">columns&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="s1">&amp;#39;PX_LAST&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="s1">&amp;#39;Close&amp;#39;&lt;/span>&lt;span class="p">},&lt;/span> &lt;span class="n">inplace&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now, running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Rename_column.png"
+width="156"
+height="319"
+loading="lazy"
+alt="Rename column"
+class="gallery-image"
+data-flex-grow="48"
+data-flex-basis="117px"
+>&lt;/p>
+&lt;h2 id="sort-data">Sort data
+&lt;/h2>&lt;p>Next, we want to sort the data starting with the oldest date:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Sort by date&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">df&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sort_values&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">by&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;Date&amp;#39;&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="n">inplace&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Now, running:&lt;/p>
+&lt;pre>&lt;code>df.head(10)
+&lt;/code>&lt;/pre>
+&lt;p>Gives us:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Sort_by_date.png"
+width="136"
+height="317"
+loading="lazy"
+alt="Sort by date"
+class="gallery-image"
+data-flex-grow="42"
+data-flex-basis="102px"
+>&lt;/p>
+&lt;h2 id="export-data">Export data
+&lt;/h2>&lt;p>Next, we want to export the data to an excel file, for easy viewing and reference later:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Export data to excel&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">file&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">fund&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s2">&amp;#34;.xlsx&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">df&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">to_excel&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">file&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">sheet_name&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;data&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>And verify the output is as expected:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Excel_export.png"
+width="278"
+height="380"
+loading="lazy"
+alt="Excel export"
+class="gallery-image"
+data-flex-grow="73"
+data-flex-basis="175px"
+>&lt;/p>
+&lt;h2 id="output-confirmation">Output confirmation
+&lt;/h2>&lt;p>Finally, we want to print a confirmation that the process succeeded along withe last date we have for data:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Output confirmation&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sa">f&lt;/span>&lt;span class="s2">&amp;#34;The last date of data for &lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">fund&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2"> is: &amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">df&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">:])&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sa">f&lt;/span>&lt;span class="s2">&amp;#34;Bloomberg data conversion complete for &lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">fund&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2"> data&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sa">f&lt;/span>&lt;span class="s2">&amp;#34;--------------------&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>And confirming the output:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/Output_confirmation.PNG"
+width="417"
+height="116"
+loading="lazy"
+alt="Output confirmation"
+class="gallery-image"
+data-flex-grow="359"
+data-flex-basis="862px"
+>&lt;/p>
+&lt;h2 id="references">References
+&lt;/h2>&lt;p>&lt;a class="link" href="https://www.bloomberg.com/professional/support/software-updates/" target="_blank" rel="noopener"
+>https://www.bloomberg.com/professional/support/software-updates/&lt;/a>&lt;/p></description></item></channel></rss>
