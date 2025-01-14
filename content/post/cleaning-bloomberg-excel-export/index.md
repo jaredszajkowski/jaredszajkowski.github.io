@@ -50,7 +50,7 @@ The remainder of this tutorial assumes the following:
 
 The following function will perform the modifications mentioned above:
 
-```html
+```python
 # This function takes an excel export from Bloomberg and 
 # removes all excess data leaving date and close columns
 
@@ -107,7 +107,7 @@ Let's break this down line by line.
 
 First, we need to import pandas:
 
-```html
+```python
 import pandas as pd
 ```
 
@@ -115,7 +115,7 @@ import pandas as pd
 
 Then import the excel file as a pandas dataframe:
 
-```html
+```python
 # File name variable
 file = fund + "_Index.xlsx"
 
@@ -135,7 +135,7 @@ Gives us:
 
 Next, set the column heading:
 
-```html
+```python
 # Set the column headings from row 5 (which is physically row 6)
 df.columns = df.iloc[5]
 ```
@@ -152,7 +152,7 @@ Gives us:
 
 Next, remove the column heading from the index column:
 
-```html
+```python
 # Set the column heading for the index to be "None"
 df.rename_axis(None, axis=1, inplace = True)
 ```
@@ -171,7 +171,7 @@ Gives us:
 
 Next, we want to remove the first 6 rows that have unneeded data:
 
-```html
+```python
 # Drop the first 6 rows, 0 - 5
 df.drop(df.index[0:6], inplace=True)
 ```
@@ -190,7 +190,7 @@ Gives us:
 
 Next, we want to set the date column as the index:
 
-```html
+```python
 # Set the date column as the index
 df.set_index('Date', inplace = True)
 ```
@@ -207,7 +207,7 @@ Gives us:
 
 Next, we want to drop the volume column:
 
-```html
+```python
 # Drop the volume column
 try:
     df.drop(columns = {'PX_VOLUME'}, inplace = True)
@@ -229,7 +229,7 @@ Gives us:
 
 Next, we want to rename the "PX_LAST" column as "Close":
 
-```html
+```python
 # Rename column
 df.rename(columns = {'PX_LAST':'Close'}, inplace = True)
 ```
@@ -246,7 +246,7 @@ Gives us:
 
 Next, we want to sort the data starting with the oldest date:
 
-```html
+```python
 # Sort by date
 df.sort_values(by=['Date'], inplace = True)
 ```
@@ -263,7 +263,7 @@ Gives us:
 
 Next, we want to export the data to an excel file, for easy viewing and reference later:
 
-```html
+```python
 # Export data to excel
 file = fund + ".xlsx"
 df.to_excel(file, sheet_name='data')
@@ -277,7 +277,7 @@ And verify the output is as expected:
 
 Finally, we want to print a confirmation that the process succeeded along withe last date we have for data:
 
-```html
+```python
 # Output confirmation
 print(f"The last date of data for {fund} is: ")
 print(df[-1:])
