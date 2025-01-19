@@ -78,7 +78,7 @@ The remainder of this tutorial assumes the following:
 
 The following function will perform the desired modifications:
 
-```html
+```python
 # This function pulls the data for the specific fund from from Nasdaq Data
 # Link and adds many missing columns
 
@@ -162,7 +162,7 @@ Let's break this down line by line.
 
 First, we need to import the required libraries:
 
-```html
+```python
 # Imports
 import nasdaqdatalink
 import pandas as pd
@@ -173,7 +173,7 @@ import numpy as np
 
 To gain access to anything beyond the free tier, you will need to provide your access key:
 
-```html
+```python
 # Add API key for reference to allow access to unrestricted data
 nasdaqdatalink.ApiConfig.api_key = 'your_key'
 ```
@@ -182,7 +182,7 @@ nasdaqdatalink.ApiConfig.api_key = 'your_key'
 
 Moving on to the function definition, we have the command to pull data from NDL. There are two separate APIs - the [time series](https://docs.data.nasdaq.com/docs/time-series) and the [tables](https://docs.data.nasdaq.com/docs/tables-1). The syntax is different, and some data sets are only available as one or the other. We will use the tables API for this tutorial.
 
-```html
+```python
 # Command to pull data
 # If start date and end date are not specified the entire data set is included
 df = nasdaqdatalink.get_table('QUOTEMEDIA/PRICES', ticker = fund, paginate=True)
@@ -208,7 +208,7 @@ Gives us:
 
 Next, we will sort the columns by date ascending. By default, the dataframe is created with the data sorted by descending date, and we want to change that:
 
-```html
+```python
 # Sort columns by date ascending
 df.sort_values('date', ascending = True, inplace = True)
 ```
@@ -227,7 +227,7 @@ Gives us:
 
 Next, we will rename the `date` column from 'date' to 'Date', and set the index to be the `Date` column:
 
-```html
+```python
 # Rename date column
 df.rename(columns = {'date':'Date'}, inplace = True)
     
@@ -247,7 +247,7 @@ Gives us:
 
 The next sections deal with the split column. So far we have only seen a split value of 1.0 in the data, but we've only looked at the first 10 and last 10 rows. Are there any other values? Let's check by running:
 
-```html
+```python
 df_not_1_split = df[df['split'] != 1.0]
 ```
 
@@ -261,7 +261,7 @@ Gives us:
 
 So we now know that the stock did in fact split several times. Next, we will replace all of the `1.0` split values - because they are really meaningless - and then create a new dataframe to deal with the splits.
 
-```html
+```python
 # Replace all split values of 1.0 with NaN
 df['split'] = df['split'].replace(1.0, np.nan)
 ```
@@ -272,7 +272,7 @@ This gives us:
 
 We will now create a dataframe with only the split values:
 
-```html
+```python
 # Create a new data frame with split values only
 df_splits = df.drop(columns = {'ticker', 'open', 'high', 'low', 'close', 'volume', 
                                'dividend', 'adj_open', 'adj_high', 'adj_low', 
@@ -285,7 +285,7 @@ Which gives us:
 
 Creating a column for the cumulative split will provide an accurate perspective on the stock price. We can do that with the following:
 
-```html
+```python
 # Create a new column for cumulative split
 df_splits['Cum_Split'] = df_splits['split'].cumprod()
 ```
@@ -296,7 +296,7 @@ Which gives us:
 
 We will then drop the original `split` column before combining the split data frame with the original data frame, as follows:
 
-```html
+```python
 # Drop original split column before combining dataframes
 df_splits.drop(columns = {'split'}, inplace = True)
 ``` 
@@ -309,7 +309,7 @@ Which gives us:
 
 Now we will merge the `df_split` dataframe with the original `df` dataframe so that the cumulative split column is part of the original dataframe. We will call this data frame `df_comp`:
 
-```html
+```python
 # Merge df and df_split dataframes
 df_comp = pd.merge(df, df_splits, on='Date', how='outer')
 ```
@@ -328,7 +328,7 @@ Gives us:
 
 From here, we want to fill in the rest of the `split` and `Cum_Split` values. This is done using the forward fill function, which for all cells that have a value of `NaN` will fill in the previous valid value until another value is encountered. Here's the code:
 
-```html
+```python
 # Forward fill for all cumulative split values
 df_comp['Cum_Split'].fillna(method = 'ffill', inplace = True)
 ```
@@ -351,7 +351,7 @@ Gives us:
 
 Which is the result that we were expecting. But, what about the first rows from 12/12/1980 to 6/15/1987? We can fill those `split` and `Cum_Split` values with the following code:
 
-```html
+```python
 # Replace all split and cumulative split values of NaN with 1.0 to have complete split values
 df_comp['split'] = df_comp['split'].replace(np.nan, 1.0)
 df_comp['Cum_Split'] = df_comp['Cum_Split'].replace(np.nan, 1.0)
@@ -374,7 +374,7 @@ With this data, we now know for every day in the data set the following pieces o
 
 From here, we can complete our dataset by calculating the adjusted and non-adjusted prices using the cumulative split ratios from above:
 
-```html
+```python
 # Calculate the non adjusted prices based on the splits only
 df_comp['non_adj_open_split_only'] = df_comp['open'] * df_comp['Cum_Split'] 
 df_comp['non_adj_high_split_only'] = df_comp['high'] * df_comp['Cum_Split']    
@@ -398,7 +398,7 @@ Included above is the adjusted dividends values. For any time series analysis, n
 
 Next, we want to export the data to an excel file, for easy viewing and reference later:
 
-```html
+```python
 # Export data to excel
 file = fund + "_NDL.xlsx"
 df_comp.to_excel(file, sheet_name='data')
@@ -412,7 +412,7 @@ And verify the output is as expected:
 
 Finally, we want to print a confirmation that the process succeeded along withe last date we have for data:
 
-```html
+```python
 # Output confirmation
 print(f"The last date of data for {fund} is: ")
 print(df_comp[-1:])

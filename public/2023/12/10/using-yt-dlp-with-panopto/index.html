@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://www.jaredszajkowski.com/2023/12/10/using-yt-dlp-with-panopto/'>
 
-<link rel="stylesheet" href="/scss/style.min.900ea5f7890cce14ae7761fef2e019e4f409d2a7e3c06b97d3fe4853d829c12e.css"><meta property='og:title' content="Using yt-dlp With Panopto">
+<link rel="stylesheet" href="/scss/style.min.e3f9ad247a9e239de649afdb9d4ec7ac3ba906f02edb8fa43cf1da1cf8e67cc4.css"><meta property='og:title' content="Using yt-dlp With Panopto">
 <meta property='og:description' content="Bash script for usage of yt-dlp with Panopto.">
 <meta property='og:url' content='https://www.jaredszajkowski.com/2023/12/10/using-yt-dlp-with-panopto/'>
 <meta property='og:site_name' content='Jared Szajkowski'>
@@ -432,12 +432,12 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">#!/bin/bash
-</span></span><span class="line"><span class="cl">echo What is the link?
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nb">echo</span> What is the link?
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">read link
+</span></span><span class="line"><span class="cl"><span class="nb">read</span> link
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">yt-dlp --cookies /path/to/cookies/file/cookies.txt -o &#34;%(title)s-%(id)s.%(ext)s&#34; --write-subs $link
+</span></span><span class="line"><span class="cl">yt-dlp --cookies /path/to/cookies/file/cookies.txt -o <span class="s2">&#34;%(title)s-%(id)s.%(ext)s&#34;</span> --write-subs <span class="nv">$link</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="change-permissions">Change permissions

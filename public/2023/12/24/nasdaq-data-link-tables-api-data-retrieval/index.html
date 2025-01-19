@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/'>
 
-<link rel="stylesheet" href="/scss/style.min.900ea5f7890cce14ae7761fef2e019e4f409d2a7e3c06b97d3fe4853d829c12e.css"><meta property='og:title' content="Nasdaq Data Link Tables API Data Retrieval">
+<link rel="stylesheet" href="/scss/style.min.e3f9ad247a9e239de649afdb9d4ec7ac3ba906f02edb8fa43cf1da1cf8e67cc4.css"><meta property='og:title' content="Nasdaq Data Link Tables API Data Retrieval">
 <meta property='og:description' content="A python function to pull data from Nasdaq Data Link using the tables API and then complete the data for ease of use.">
 <meta property='og:url' content='https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/'>
 <meta property='og:site_name' content='Jared Szajkowski'>
@@ -548,81 +548,81 @@
 </span><span class="lnt">75
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># This function pulls the data for the specific fund from from Nasdaq Data
-</span></span><span class="line"><span class="cl"># Link and adds many missing columns
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># This function pulls the data for the specific fund from from Nasdaq Data</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Link and adds many missing columns</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"># Imports
-</span></span><span class="line"><span class="cl">import nasdaqdatalink
-</span></span><span class="line"><span class="cl">import pandas as pd
-</span></span><span class="line"><span class="cl">import numpy as np
+</span></span><span class="line"><span class="cl"><span class="c1"># Imports</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">nasdaqdatalink</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"># Add API key for reference to allow access to unrestricted data
-</span></span><span class="line"><span class="cl">nasdaqdatalink.ApiConfig.api_key = &#39;your_key&#39;
+</span></span><span class="line"><span class="cl"><span class="c1"># Add API key for reference to allow access to unrestricted data</span>
+</span></span><span class="line"><span class="cl"><span class="n">nasdaqdatalink</span><span class="o">.</span><span class="n">ApiConfig</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="s1">&#39;your_key&#39;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"># Function definition
-</span></span><span class="line"><span class="cl">def ndl_data_updater(fund):
+</span></span><span class="line"><span class="cl"><span class="c1"># Function definition</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">ndl_data_updater</span><span class="p">(</span><span class="n">fund</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    # Command to pull data
-</span></span><span class="line"><span class="cl">    # If start date and end date are not specified the entire data set is included
-</span></span><span class="line"><span class="cl">    df = nasdaqdatalink.get_table(&#39;QUOTEMEDIA/PRICES&#39;, ticker = fund, paginate=True)
+</span></span><span class="line"><span class="cl">    <span class="c1"># Command to pull data</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># If start date and end date are not specified the entire data set is included</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span> <span class="o">=</span> <span class="n">nasdaqdatalink</span><span class="o">.</span><span class="n">get_table</span><span class="p">(</span><span class="s1">&#39;QUOTEMEDIA/PRICES&#39;</span><span class="p">,</span> <span class="n">ticker</span> <span class="o">=</span> <span class="n">fund</span><span class="p">,</span> <span class="n">paginate</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    # Sort columns by date ascending
-</span></span><span class="line"><span class="cl">    df.sort_values(&#39;date&#39;, ascending = True, inplace = True)
+</span></span><span class="line"><span class="cl">    <span class="c1"># Sort columns by date ascending</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    # Rename date column
-</span></span><span class="line"><span class="cl">    df.rename(columns = {&#39;date&#39;:&#39;Date&#39;}, inplace = True)
+</span></span><span class="line"><span class="cl">    <span class="c1"># Rename date column</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;date&#39;</span><span class="p">:</span><span class="s1">&#39;Date&#39;</span><span class="p">},</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    # Set index to date column
-</span></span><span class="line"><span class="cl">    df.set_index(&#39;Date&#39;, inplace = True)
+</span></span><span class="line"><span class="cl">    <span class="c1"># Set index to date column</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    # Replace all split values of 1.0 with NaN
-</span></span><span class="line"><span class="cl">    df[&#39;split&#39;] = df[&#39;split&#39;].replace(1.0, np.nan)
+</span></span><span class="line"><span class="cl">    <span class="c1"># Replace all split values of 1.0 with NaN</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    # Create a new data frame with split values only
-</span></span><span class="line"><span class="cl">    df_splits = df.drop(columns = {&#39;ticker&#39;, &#39;open&#39;, &#39;high&#39;, &#39;low&#39;, &#39;close&#39;, &#39;volume&#39;, 
-</span></span><span class="line"><span class="cl">                                   &#39;dividend&#39;, &#39;adj_open&#39;, &#39;adj_high&#39;, &#39;adj_low&#39;, &#39;adj_close&#39;, &#39;adj_volume&#39;}).dropna()
+</span></span><span class="line"><span class="cl">    <span class="c1"># Create a new data frame with split values only</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_splits</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;ticker&#39;</span><span class="p">,</span> <span class="s1">&#39;open&#39;</span><span class="p">,</span> <span class="s1">&#39;high&#39;</span><span class="p">,</span> <span class="s1">&#39;low&#39;</span><span class="p">,</span> <span class="s1">&#39;close&#39;</span><span class="p">,</span> <span class="s1">&#39;volume&#39;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                                   <span class="s1">&#39;dividend&#39;</span><span class="p">,</span> <span class="s1">&#39;adj_open&#39;</span><span class="p">,</span> <span class="s1">&#39;adj_high&#39;</span><span class="p">,</span> <span class="s1">&#39;adj_low&#39;</span><span class="p">,</span> <span class="s1">&#39;adj_close&#39;</span><span class="p">,</span> <span class="s1">&#39;adj_volume&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    # Create a new column for cumulative split
-</span></span><span class="line"><span class="cl">    df_splits[&#39;Cum_Split&#39;] = df_splits[&#39;split&#39;].cumprod()
+</span></span><span class="line"><span class="cl">    <span class="c1"># Create a new column for cumulative split</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_splits</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_splits</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cumprod</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    # Drop original split column before combining dataframes
-</span></span><span class="line"><span class="cl">    df_splits.drop(columns = {&#39;split&#39;}, inplace = True)
+</span></span><span class="line"><span class="cl">    <span class="c1"># Drop original split column before combining dataframes</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_splits</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;split&#39;</span><span class="p">},</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    # Merge df and df_split dataframes
-</span></span><span class="line"><span class="cl">    df_comp = pd.merge(df, df_splits, on=&#39;Date&#39;, how=&#39;outer&#39;)
+</span></span><span class="line"><span class="cl">    <span class="c1"># Merge df and df_split dataframes</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_comp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">df_splits</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    # Forward fill for all cumulative split values
-</span></span><span class="line"><span class="cl">    df_comp[&#39;Cum_Split&#39;].fillna(method = &#39;ffill&#39;, inplace = True)
+</span></span><span class="line"><span class="cl">    <span class="c1"># Forward fill for all cumulative split values</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;ffill&#39;</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    # Replace all split and cumulative split values of NaN with 1.0 to have complete split values
-</span></span><span class="line"><span class="cl">    df_comp[&#39;split&#39;] = df_comp[&#39;split&#39;].replace(np.nan, 1.0)
-</span></span><span class="line"><span class="cl">    df_comp[&#39;Cum_Split&#39;] = df_comp[&#39;Cum_Split&#39;].replace(np.nan, 1.0)
+</span></span><span class="line"><span class="cl">    <span class="c1"># Replace all split and cumulative split values of NaN with 1.0 to have complete split values</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    # Calculate the non adjusted prices based on the splits only
-</span></span><span class="line"><span class="cl">    df_comp[&#39;non_adj_open_split_only&#39;] = df_comp[&#39;open&#39;] * df_comp[&#39;Cum_Split&#39;] 
-</span></span><span class="line"><span class="cl">    df_comp[&#39;non_adj_high_split_only&#39;] = df_comp[&#39;high&#39;] * df_comp[&#39;Cum_Split&#39;]    
-</span></span><span class="line"><span class="cl">    df_comp[&#39;non_adj_low_split_only&#39;] = df_comp[&#39;low&#39;] * df_comp[&#39;Cum_Split&#39;]    
-</span></span><span class="line"><span class="cl">    df_comp[&#39;non_adj_close_split_only&#39;] = df_comp[&#39;close&#39;] * df_comp[&#39;Cum_Split&#39;]
-</span></span><span class="line"><span class="cl">    df_comp[&#39;non_adj_dividend_split_only&#39;] = df_comp[&#39;dividend&#39;] * df_comp[&#39;Cum_Split&#39;]
+</span></span><span class="line"><span class="cl">    <span class="c1"># Calculate the non adjusted prices based on the splits only</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;non_adj_open_split_only&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;open&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">]</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;non_adj_high_split_only&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;high&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">]</span>    
+</span></span><span class="line"><span class="cl">    <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;non_adj_low_split_only&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;low&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">]</span>    
+</span></span><span class="line"><span class="cl">    <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;non_adj_close_split_only&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;non_adj_dividend_split_only&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;dividend&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    # Calculate the adjusted prices based on the splits
-</span></span><span class="line"><span class="cl">    df_comp[&#39;Open&#39;] = df_comp[&#39;non_adj_open_split_only&#39;] / df_comp[&#39;Cum_Split&#39;][-1]
-</span></span><span class="line"><span class="cl">    df_comp[&#39;High&#39;] = df_comp[&#39;non_adj_high_split_only&#39;] / df_comp[&#39;Cum_Split&#39;][-1]
-</span></span><span class="line"><span class="cl">    df_comp[&#39;Low&#39;] = df_comp[&#39;non_adj_low_split_only&#39;] / df_comp[&#39;Cum_Split&#39;][-1]
-</span></span><span class="line"><span class="cl">    df_comp[&#39;Close&#39;] = df_comp[&#39;non_adj_close_split_only&#39;] / df_comp[&#39;Cum_Split&#39;][-1]
-</span></span><span class="line"><span class="cl">    df_comp[&#39;Dividend&#39;] = df_comp[&#39;non_adj_dividend_split_only&#39;] / df_comp[&#39;Cum_Split&#39;][-1]
-</span></span><span class="line"><span class="cl">    df_comp[&#39;Dividend_Pct_Orig&#39;] = df_comp[&#39;dividend&#39;] / df_comp[&#39;close&#39;]
-</span></span><span class="line"><span class="cl">    df_comp[&#39;Dividend_Pct_Adj&#39;] = df_comp[&#39;Dividend&#39;] / df_comp[&#39;Close&#39;]
+</span></span><span class="line"><span class="cl">    <span class="c1"># Calculate the adjusted prices based on the splits</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Open&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;non_adj_open_split_only&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;High&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;non_adj_high_split_only&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Low&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;non_adj_low_split_only&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;non_adj_close_split_only&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Dividend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;non_adj_dividend_split_only&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Dividend_Pct_Orig&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;dividend&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Dividend_Pct_Adj&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Dividend&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    # Export data to excel
-</span></span><span class="line"><span class="cl">    file = fund + &#34;_NDL.xlsx&#34;
-</span></span><span class="line"><span class="cl">    df_comp.to_excel(file, sheet_name=&#39;data&#39;)
+</span></span><span class="line"><span class="cl">    <span class="c1"># Export data to excel</span>
+</span></span><span class="line"><span class="cl">    <span class="n">file</span> <span class="o">=</span> <span class="n">fund</span> <span class="o">+</span> <span class="s2">&#34;_NDL.xlsx&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df_comp</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    # Output confirmation
-</span></span><span class="line"><span class="cl">    print(f&#34;The last date of data for {fund} is: &#34;)
-</span></span><span class="line"><span class="cl">    print(df_comp[-1:])
-</span></span><span class="line"><span class="cl">    print(f&#34;NDL data updater complete for {fund} data&#34;)
-</span></span><span class="line"><span class="cl">    return print(f&#34;--------------------&#34;)
+</span></span><span class="line"><span class="cl">    <span class="c1"># Output confirmation</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;The last date of data for </span><span class="si">{</span><span class="n">fund</span><span class="si">}</span><span class="s2"> is: &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">df_comp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:])</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;NDL data updater complete for </span><span class="si">{</span><span class="n">fund</span><span class="si">}</span><span class="s2"> data&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;--------------------&#34;</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Let&rsquo;s break this down line by line.</p>
@@ -636,10 +636,10 @@
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># Imports
-</span></span><span class="line"><span class="cl">import nasdaqdatalink
-</span></span><span class="line"><span class="cl">import pandas as pd
-</span></span><span class="line"><span class="cl">import numpy as np
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Imports</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">nasdaqdatalink</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="ndl-api-key">NDL API Key
@@ -650,8 +650,8 @@
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># Add API key for reference to allow access to unrestricted data
-</span></span><span class="line"><span class="cl">nasdaqdatalink.ApiConfig.api_key = &#39;your_key&#39;
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Add API key for reference to allow access to unrestricted data</span>
+</span></span><span class="line"><span class="cl"><span class="n">nasdaqdatalink</span><span class="o">.</span><span class="n">ApiConfig</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="s1">&#39;your_key&#39;</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="download-data-as-a-dataframe">Download data as a dataframe
@@ -665,9 +665,9 @@
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># Command to pull data
-</span></span><span class="line"><span class="cl"># If start date and end date are not specified the entire data set is included
-</span></span><span class="line"><span class="cl">df = nasdaqdatalink.get_table(&#39;QUOTEMEDIA/PRICES&#39;, ticker = fund, paginate=True)
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Command to pull data</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># If start date and end date are not specified the entire data set is included</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span> <span class="o">=</span> <span class="n">nasdaqdatalink</span><span class="o">.</span><span class="n">get_table</span><span class="p">(</span><span class="s1">&#39;QUOTEMEDIA/PRICES&#39;</span><span class="p">,</span> <span class="n">ticker</span> <span class="o">=</span> <span class="n">fund</span><span class="p">,</span> <span class="n">paginate</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>In the example above, the <code>fund</code> is an input parameter to the function.</p>
@@ -701,8 +701,8 @@
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># Sort columns by date ascending
-</span></span><span class="line"><span class="cl">df.sort_values(&#39;date&#39;, ascending = True, inplace = True)
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Sort columns by date ascending</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>The <code>inplace = True</code> argument specifies that the sort function should take effect on the existing dataframe.</p>
@@ -735,11 +735,11 @@
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># Rename date column
-</span></span><span class="line"><span class="cl">df.rename(columns = {&#39;date&#39;:&#39;Date&#39;}, inplace = True)
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Rename date column</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;date&#39;</span><span class="p">:</span><span class="s1">&#39;Date&#39;</span><span class="p">},</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl"># Set index to date column
-</span></span><span class="line"><span class="cl">df.set_index(&#39;Date&#39;, inplace = True)
+</span></span><span class="line"><span class="cl"><span class="c1"># Set index to date column</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Now, running:</p>
@@ -767,7 +767,7 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">df_not_1_split = df[df[&#39;split&#39;] != 1.0]
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df_not_1_split</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="mf">1.0</span><span class="p">]</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>And checking the first 10 rows:</p>
@@ -795,8 +795,8 @@
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># Replace all split values of 1.0 with NaN
-</span></span><span class="line"><span class="cl">df[&#39;split&#39;] = df[&#39;split&#39;].replace(1.0, np.nan)
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Replace all split values of 1.0 with NaN</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>This gives us:</p>
@@ -823,10 +823,10 @@
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># Create a new data frame with split values only
-</span></span><span class="line"><span class="cl">df_splits = df.drop(columns = {&#39;ticker&#39;, &#39;open&#39;, &#39;high&#39;, &#39;low&#39;, &#39;close&#39;, &#39;volume&#39;, 
-</span></span><span class="line"><span class="cl">                               &#39;dividend&#39;, &#39;adj_open&#39;, &#39;adj_high&#39;, &#39;adj_low&#39;, 
-</span></span><span class="line"><span class="cl">                               &#39;adj_close&#39;, &#39;adj_volume&#39;}).dropna()
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Create a new data frame with split values only</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_splits</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;ticker&#39;</span><span class="p">,</span> <span class="s1">&#39;open&#39;</span><span class="p">,</span> <span class="s1">&#39;high&#39;</span><span class="p">,</span> <span class="s1">&#39;low&#39;</span><span class="p">,</span> <span class="s1">&#39;close&#39;</span><span class="p">,</span> <span class="s1">&#39;volume&#39;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                               <span class="s1">&#39;dividend&#39;</span><span class="p">,</span> <span class="s1">&#39;adj_open&#39;</span><span class="p">,</span> <span class="s1">&#39;adj_high&#39;</span><span class="p">,</span> <span class="s1">&#39;adj_low&#39;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                               <span class="s1">&#39;adj_close&#39;</span><span class="p">,</span> <span class="s1">&#39;adj_volume&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Which gives us:</p>
@@ -851,8 +851,8 @@
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># Create a new column for cumulative split
-</span></span><span class="line"><span class="cl">df_splits[&#39;Cum_Split&#39;] = df_splits[&#39;split&#39;].cumprod()
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Create a new column for cumulative split</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_splits</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_splits</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cumprod</span><span class="p">()</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Which gives us:</p>
@@ -877,8 +877,8 @@
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># Drop original split column before combining dataframes
-</span></span><span class="line"><span class="cl">df_splits.drop(columns = {&#39;split&#39;}, inplace = True)
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Drop original split column before combining dataframes</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_splits</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;split&#39;</span><span class="p">},</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Which gives us:</p>
@@ -904,8 +904,8 @@
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># Merge df and df_split dataframes
-</span></span><span class="line"><span class="cl">df_comp = pd.merge(df, df_splits, on=&#39;Date&#39;, how=&#39;outer&#39;)
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Merge df and df_split dataframes</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_comp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">df_splits</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>We are using the merge function of pandas, which includes arguments for the names of both dataframes to be merged, the column to match between the dataframes, and the parameter for the type of merge to be performed. The <code>outer</code> argument specifies that all rows from both dataframes will be included, and any missing values will be filled in with <code>NaN</code> if there is no matching data. This ensures that all data from both dataframes is retained.</p>
@@ -935,8 +935,8 @@
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># Forward fill for all cumulative split values
-</span></span><span class="line"><span class="cl">df_comp[&#39;Cum_Split&#39;].fillna(method = &#39;ffill&#39;, inplace = True)
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Forward fill for all cumulative split values</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;ffill&#39;</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Running:</p>
@@ -983,9 +983,9 @@
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># Replace all split and cumulative split values of NaN with 1.0 to have complete split values
-</span></span><span class="line"><span class="cl">df_comp[&#39;split&#39;] = df_comp[&#39;split&#39;].replace(np.nan, 1.0)
-</span></span><span class="line"><span class="cl">df_comp[&#39;Cum_Split&#39;] = df_comp[&#39;Cum_Split&#39;].replace(np.nan, 1.0)
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Replace all split and cumulative split values of NaN with 1.0 to have complete split values</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Now, checking the first 10 rows:</p>
@@ -1032,21 +1032,21 @@
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># Calculate the non adjusted prices based on the splits only
-</span></span><span class="line"><span class="cl">df_comp[&#39;non_adj_open_split_only&#39;] = df_comp[&#39;open&#39;] * df_comp[&#39;Cum_Split&#39;] 
-</span></span><span class="line"><span class="cl">df_comp[&#39;non_adj_high_split_only&#39;] = df_comp[&#39;high&#39;] * df_comp[&#39;Cum_Split&#39;]    
-</span></span><span class="line"><span class="cl">df_comp[&#39;non_adj_low_split_only&#39;] = df_comp[&#39;low&#39;] * df_comp[&#39;Cum_Split&#39;]    
-</span></span><span class="line"><span class="cl">df_comp[&#39;non_adj_close_split_only&#39;] = df_comp[&#39;close&#39;] * df_comp[&#39;Cum_Split&#39;]
-</span></span><span class="line"><span class="cl">df_comp[&#39;non_adj_dividend_split_only&#39;] = df_comp[&#39;dividend&#39;] * df_comp[&#39;Cum_Split&#39;]
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Calculate the non adjusted prices based on the splits only</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;non_adj_open_split_only&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;open&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">]</span> 
+</span></span><span class="line"><span class="cl"><span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;non_adj_high_split_only&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;high&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">]</span>    
+</span></span><span class="line"><span class="cl"><span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;non_adj_low_split_only&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;low&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">]</span>    
+</span></span><span class="line"><span class="cl"><span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;non_adj_close_split_only&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;non_adj_dividend_split_only&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;dividend&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"># Calculate the adjusted prices based on the splits
-</span></span><span class="line"><span class="cl">df_comp[&#39;Open&#39;] = df_comp[&#39;non_adj_open_split_only&#39;] / df_comp[&#39;Cum_Split&#39;][-1]
-</span></span><span class="line"><span class="cl">df_comp[&#39;High&#39;] = df_comp[&#39;non_adj_high_split_only&#39;] / df_comp[&#39;Cum_Split&#39;][-1]
-</span></span><span class="line"><span class="cl">df_comp[&#39;Low&#39;] = df_comp[&#39;non_adj_low_split_only&#39;] / df_comp[&#39;Cum_Split&#39;][-1]
-</span></span><span class="line"><span class="cl">df_comp[&#39;Close&#39;] = df_comp[&#39;non_adj_close_split_only&#39;] / df_comp[&#39;Cum_Split&#39;][-1]
-</span></span><span class="line"><span class="cl">df_comp[&#39;Dividend&#39;] = df_comp[&#39;non_adj_dividend_split_only&#39;] / df_comp[&#39;Cum_Split&#39;][-1]
-</span></span><span class="line"><span class="cl">df_comp[&#39;Dividend_Pct_Orig&#39;] = df_comp[&#39;dividend&#39;] / df_comp[&#39;close&#39;]
-</span></span><span class="line"><span class="cl">df_comp[&#39;Dividend_Pct_Adj&#39;] = df_comp[&#39;Dividend&#39;] / df_comp[&#39;Close&#39;]
+</span></span><span class="line"><span class="cl"><span class="c1"># Calculate the adjusted prices based on the splits</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Open&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;non_adj_open_split_only&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;High&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;non_adj_high_split_only&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Low&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;non_adj_low_split_only&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;non_adj_close_split_only&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Dividend&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;non_adj_dividend_split_only&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Dividend_Pct_Orig&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;dividend&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Dividend_Pct_Adj&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Dividend&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_comp</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">]</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Included above is the adjusted dividends values. For any time series analysis, not only are the adjusted prices needed, but so are the adusted dividends. Remember, we already have the adjusted total return prices - those come directly from NDL.</p>
@@ -1059,9 +1059,9 @@
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># Export data to excel
-</span></span><span class="line"><span class="cl">file = fund + &#34;_NDL.xlsx&#34;
-</span></span><span class="line"><span class="cl">df_comp.to_excel(file, sheet_name=&#39;data&#39;)
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Export data to excel</span>
+</span></span><span class="line"><span class="cl"><span class="n">file</span> <span class="o">=</span> <span class="n">fund</span> <span class="o">+</span> <span class="s2">&#34;_NDL.xlsx&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">df_comp</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>And verify the output is as expected:</p>
@@ -1090,11 +1090,11 @@
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"># Output confirmation
-</span></span><span class="line"><span class="cl">print(f&#34;The last date of data for {fund} is: &#34;)
-</span></span><span class="line"><span class="cl">print(df_comp[-1:])
-</span></span><span class="line"><span class="cl">print(f&#34;NDL data updater complete for {fund} data&#34;)
-</span></span><span class="line"><span class="cl">print(f&#34;--------------------&#34;)
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Output confirmation</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;The last date of data for </span><span class="si">{</span><span class="n">fund</span><span class="si">}</span><span class="s2"> is: &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">df_comp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:])</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;NDL data updater complete for </span><span class="si">{</span><span class="n">fund</span><span class="si">}</span><span class="s2"> data&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;--------------------&#34;</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>And confirming the output:</p>

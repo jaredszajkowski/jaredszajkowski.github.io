@@ -25,7 +25,7 @@ Linux Journal recently [published an article on various backup solutions](https:
 
 This script provides an incremental backup solution and only requires `rsync` and `cp` to be installed on the system.
 
-```html
+```bash
 #!/bin/bash
 
 # Define the directories to backup and their destination directories
@@ -82,7 +82,7 @@ Let's break this down line by line.
 
 First, we need to define the source and backup directories, and any directories from the source that are to be excluded from the backup:
 
-```html
+```bash
 # Define the directories to backup and their destination directories
 source_dir1="/source1"
 backup_dir1="/backup1/"
@@ -109,7 +109,7 @@ Then we have the backup function. This performs the following:
 5. Checks to make sure the backup destination directory exists
 6. Executes the backup
 
-```html
+```bash
 # Function to run a backup
 run_backup() {
   source_dir=$1
@@ -147,7 +147,7 @@ Once the files are copied over via `rsync`, then the `cp` command is used to lin
 
 Finally, run the backups and confirm complete:
 
-```html
+```bash
 # Run backups
 run_backup $source_dir1 $backup_dir1
 run_backup $source_dir2 $backup_dir2

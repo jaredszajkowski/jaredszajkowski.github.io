@@ -39,7 +39,7 @@ First, a couple of useful functions:
 
 Here's the code for the function to pull the data and dump to Excel:
 
-```text
+```python
 # This function pulls data from Yahoo finance
 def yf_data_updater(fund):
     
@@ -78,7 +78,7 @@ def yf_data_updater(fund):
 
 ### Set Number Of Decimal Places
 
-```text
+```python
 # Set number of decimal places in pandas
 def dp(decimal_places):
     pd.set_option('display.float_format', lambda x: f'%.{decimal_places}f' % x)
@@ -86,7 +86,7 @@ def dp(decimal_places):
 
 ### Import Data From CSV / XLSX
 
-```text
+```python
 def load_data(file):
     # Import CSV
     try:
@@ -105,7 +105,7 @@ def load_data(file):
 
 ### Return Information About A Dataframe
 
-```text
+```python
 # The `df_info` function returns some useful information about a dataframe, such as the columns, data types, and size.
 def df_info(df):
     print('There are ', df.shape[0], ' rows and ', df.shape[1], ' columns')
@@ -123,7 +123,7 @@ def df_info(df):
 
 First, let's get the data:
 
-```text
+```python
 yf_data_updater('^VIX')
 ```
 
@@ -131,13 +131,13 @@ yf_data_updater('^VIX')
 
 Then set our decimal places to something reasonable (like 2):
 
-```text
+```python
 dp(2)
 ```
 
 Now that we have the data, let's load it up and take a look.
 
-```text
+```python
 # VIX
 vix = load_data('^VIX.xlsx')
 
@@ -153,7 +153,7 @@ vix.set_index('Date', inplace = True)
 
 ### Check For Missing Values & Forward Fill Any Missing Values
 
-```text
+```python
 # Check to see if there are any NaN values
 vix[vix['High'].isna()]
 
@@ -165,7 +165,7 @@ vix['High'] = vix['High'].ffill()
 
 Now, running:
 
-```text
+```python
 df_info(vix)
 ```
 
@@ -177,7 +177,7 @@ Gives us the following:
 
 Some interesting statistics jump out at use when we look at the mean, standard deviation, min, and max values:
 
-```text
+```python
 vix_stats = vix.describe()
 vix_stats.loc['mean + 1 std'] = {'Open': vix_stats.loc['mean']['Open'] + vix_stats.loc['std']['Open'],
                                  'High': vix_stats.loc['mean']['High'] + vix_stats.loc['std']['High'],
@@ -197,7 +197,7 @@ vix_stats.loc['mean - 1 std'] = {'Open': vix_stats.loc['mean']['Open'] - vix_sta
 
 And the levels for each decile:
 
-```text
+```python
 deciles = vix.quantile(np.arange(0, 1.1, 0.1))
 display(deciles)
 ```
@@ -240,7 +240,7 @@ We also will generate the 20 and 50 day SMAs for reference, and again to see wha
 
 Here's the code for the above:
 
-```text
+```python
 # Define the spike multiplier for detecting significant spikes
 spike_level = 1.25
 

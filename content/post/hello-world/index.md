@@ -45,7 +45,7 @@ The simple command after making any changes and to push those updates is as foll
 
 This can be put in a bash script to make it easier. Save the following as `git-update.sh`:
 
-```html
+```bash
 #!/bin/bash
 echo What is the commit message?
 

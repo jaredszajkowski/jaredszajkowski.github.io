@@ -114,7 +114,31 @@ rev = "11f52b8c72fc3a568e8bb4a4cd1f3eb025ac2e13"
 <p>A paragraph</p>
 ```
 
+### Python code block
+
+```python
+
+```
+
+### Bash code block
+
+```bash
+
+```
+
+### Javascript code block
+
+``` javascript
+var myVar = "Hello, world!";
+```
+
 ## List Types
+
+### Check Boxes
+
+- [x] List syntax is required
+- [x] This item is complete
+- [ ] This item is not complete
 
 ### Ordered List
 

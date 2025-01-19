@@ -48,7 +48,7 @@ The export button is at the top fo the window. It copies the cookies to your cli
 
 Save the following code to a text file (my bash script file name is `yt-dlp-panopto.sh`):
 
-```html
+```bash
 #!/bin/bash
 echo What is the link?
 

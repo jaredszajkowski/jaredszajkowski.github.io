@@ -85,7 +85,7 @@ First, a couple of useful python functions to help with the analysis.
 
 This is discussed [here](https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/).
 
-```text
+```python
 # This function takes an excel export from Bloomberg and 
 # removes all excess data leaving date and close columns
 
@@ -138,7 +138,7 @@ def bb_data_updater(fund):
 
 ### Set Number Of Decimal Places
 
-``` text
+``` python
 # Set number of decimal places in pandas
 
 def dp(decimal_places):
@@ -147,7 +147,7 @@ def dp(decimal_places):
 
 ### Return Information About A Dataframe
 
-```text
+```python
 # The `df_info` function returns some useful information about
 # a dataframe, such as the columns, data types, and size.
 
@@ -163,7 +163,7 @@ def df_info(df):
 
 ### Import Data From CSV / XLSX
 
-```text
+```python
 def load_data(file):
     # Import CSV
     try:
@@ -191,7 +191,7 @@ This is the function that executes the strategy. The function takes in the follo
 * rebal_month: Month that the annual rebalancing should take place
 * rebal_day: Day of the month that the annual rebalancing should take place
 
-```text
+```python
 def strategy(fund_list, starting_cash, cash_contrib, close_prices_df, rebal_month, rebal_day, rebal_per_high, rebal_per_low):
 
     num_funds = len(fund_list)
@@ -333,7 +333,7 @@ def strategy(fund_list, starting_cash, cash_contrib, close_prices_df, rebal_mont
 
 ### Summary Stats
 
-```text
+```python
 # Stats for entire data set
 def summary_stats(fund_list, df, period):
     if period == 'Monthly':
@@ -387,7 +387,7 @@ def summary_stats(fund_list, df, period):
 
 ### Plot Cumulative Return
 
-```text
+```python
 def plot_cumulative_return(strat_df):
     # Generate plot
     plt.figure(figsize=(10, 5), facecolor = '#F5F5F5')
@@ -428,7 +428,7 @@ def plot_cumulative_return(strat_df):
 
 ### Plot Portfolio Values
 
-```text
+```python
 def plot_values(strat_df):   
     # Generate plot   
     plt.figure(figsize=(10, 5), facecolor = '#F5F5F5')
@@ -475,7 +475,7 @@ def plot_values(strat_df):
 
 ### Plot Portfolio Drawdown
 
-```text
+```python
 def plot_drawdown(strat_df):
     rolling_max = strat_df['Total_AA_$_Invested'].cummax()
     drawdown = (strat_df['Total_AA_$_Invested'] - rolling_max) / rolling_max * 100
@@ -521,7 +521,7 @@ def plot_drawdown(strat_df):
 
 ### Plot Portfolio Asset Weights
 
-```text
+```python
 def plot_asset_weights(strat_df):
     # Generate plot   
     plt.figure(figsize=(10, 5), facecolor = '#F5F5F5')
@@ -570,7 +570,7 @@ def plot_asset_weights(strat_df):
 
 As previously mentioned, the data for this exercise comes primarily from Bloomberg. We'll start with loading the data first for bonds:
 
-``` text
+``` python
 # Bonds dataframe
 bb_data_updater('SPBDU10T_S&P US Treasury Bond 7-10 Year Total Return Index')
 bonds_data = load_data('SPBDU10T_S&P US Treasury Bond 7-10 Year Total Return Index_Clean.xlsx')
@@ -589,7 +589,7 @@ The following is the output:
 
 Then for stocks:
 
-```text
+```python
 # Stocks dataframe
 bb_data_updater('SPXT_S&P 500 Total Return Index')
 stocks_data = load_data('SPXT_S&P 500 Total Return Index_Clean.xlsx')
@@ -604,7 +604,7 @@ stocks_data
 
 And finally, gold:
 
-```text
+```python
 # Gold dataframe
 bb_data_updater('XAU_Gold USD Spot')
 gold_data = load_data('XAU_Gold USD Spot_Clean.xlsx')
@@ -621,7 +621,7 @@ gold_data
 
 We'll now combine the dataframes for the timeseries data from each of the asset classes, as follows:
 
-```text
+```python
 # Merge the stock data and bond data into a single DataFrame using their indices (dates)
 perm_port = pd.merge(stocks_data['Stocks_Close'], bonds_data['Bonds_Close'], left_index=True, right_index=True)
 
@@ -642,7 +642,7 @@ perm_port
 
 Now, running:
 
-``` text
+``` python
 df_info(perm_port)
 ```
 
@@ -656,7 +656,7 @@ We can see that we have close data for all 4 asset classes from the beginning of
 
 Using an annual rebalance date of January 1, we'll now execute the strategy with the following code:
 
-```text
+```python
 # List of funds to be used
 fund_list = ['Stocks', 'Bonds', 'Gold', 'Cash']
 
@@ -681,7 +681,7 @@ sum_stats_post_2009 = summary_stats(fund_list, strat_post_2009[['Return']], 'Dai
 
 ## Strategy Statistics
 
-```text
+```python
 all_sum_stats = pd.concat([sum_stats])
 all_sum_stats = all_sum_stats.rename(index={'Return': '1990 - 2023'})
 all_sum_stats = pd.concat([all_sum_stats, sum_stats_pre_1999])
@@ -715,7 +715,7 @@ Here's the annual returns:
 
 ## Generate Plots
 
-```text
+```python
 plot_cumulative_return(strat)
 plot_values(strat)
 plot_drawdown(strat)
