@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Yt-Dlp on Jared Szajkowski</title><link>https://www.jaredszajkowski.com/tags/yt-dlp/</link><description>Recent content in Yt-Dlp on Jared Szajkowski</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 10 Dec 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/tags/yt-dlp/index.xml" rel="self" type="application/rss+xml"/><item><title>Using yt-dlp With Panopto</title><link>https://www.jaredszajkowski.com/2023/12/10/using-yt-dlp-with-panopto/</link><pubDate>Sun, 10 Dec 2023 00:00:00 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/12/10/using-yt-dlp-with-panopto/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2023/12/10/using-yt-dlp-with-panopto/banner_1.svg" alt="Featured image of post Using yt-dlp With Panopto" />&lt;h2 id="introduction">Introduction
+&lt;/h2>&lt;p>As a follow up to &lt;a class="link" href="https://www.jaredszajkowski.com/p/using-yt-dlp-with-zoom/" target="_blank" rel="noopener"
+>this post about using yt-dlp with Zoom&lt;/a>, I found the need to also download videos hosted by Panopto for offline viewing.&lt;/p>
+&lt;p>Similar to the Zoom tutorial, this also requires you to have a &amp;ldquo;cookies&amp;rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Panopto hosting site after logging in.&lt;/p>
+&lt;p>Here&amp;rsquo;s the steps to setting this up:&lt;/p>
+&lt;h2 id="install-cookie-editor">Install cookie editor
+&lt;/h2>&lt;p>Install the &lt;a class="link" href="https://microsoftedge.microsoft.com/addons/detail/cookie-editor/ajfboaconbpkglpfanbmlfgojgndmhmc" target="_blank" rel="noopener"
+>cookie editor&lt;/a> extension. I personnally use it with Microsoft Edge, but there are similar extensions for Chrome, Firefox, etc.&lt;/p>
+&lt;h2 id="modify-export-format">Modify export format
+&lt;/h2>&lt;p>Change the preferred cookie export format to &lt;code>Netscape HTTP Cookie File&lt;/code> in the extension options. It is necessary to export in this format, otherwise yt-dlp will not be able to read the cookies.txt file correctly.&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/10/using-yt-dlp-with-panopto/Modify_preferred_export_format.png"
+width="865"
+height="505"
+loading="lazy"
+alt="Modify preferred export format"
+class="gallery-image"
+data-flex-grow="171"
+data-flex-basis="411px"
+>&lt;/p>
+&lt;h2 id="log-in-to-panopto">Log in to Panopto
+&lt;/h2>&lt;p>Log in to Panopto in your browser. Be sure to remain logged in while exporting the cookies under step 4.&lt;/p>
+&lt;h2 id="export-cookies">Export cookies
+&lt;/h2>&lt;p>The export button is at the top fo the window. It copies the cookies to your clipboard, which then need to be pasted into a text file (I have my saved as cookies.txt), which yt-dlp will then read when it executes.&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/12/10/using-yt-dlp-with-panopto/Export_cookies.png"
+width="579"
+height="613"
+loading="lazy"
+alt="Export cookies"
+class="gallery-image"
+data-flex-grow="94"
+data-flex-basis="226px"
+>&lt;/p>
+&lt;h2 id="create-bash-script">Create bash script
+&lt;/h2>&lt;p>Save the following code to a text file (my bash script file name is &lt;code>yt-dlp-panopto.sh&lt;/code>):&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/bin/bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">echo&lt;/span> What is the link?
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">read&lt;/span> link
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">yt-dlp --cookies /path/to/cookies/file/cookies.txt -o &lt;span class="s2">&amp;#34;%(title)s-%(id)s.%(ext)s&amp;#34;&lt;/span> --write-subs &lt;span class="nv">$link&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="change-permissions">Change permissions
+&lt;/h2>&lt;p>Modify the permissions of the bash script to allow execution:&lt;/p>
+&lt;pre>&lt;code>$ chmod +x yt-dlp-panopto.sh
+&lt;/code>&lt;/pre>
+&lt;h2 id="execute-the-script">Execute the script
+&lt;/h2>&lt;p>Execute the bash script with ./yt-dlp-panopto.sh, copy and paste the link to the video that you would like to save, and it should download the video and the subtitles. If there are not any subtitles present in the stream, then it will notify you and only download the video stream.&lt;/p>
+&lt;h2 id="references">References
+&lt;/h2>&lt;p>References for yt-dlp (and used for above):&lt;/p>
+&lt;p>&lt;a class="link" href="https://ostechnix.com/yt-dlp-tutorial/" target="_blank" rel="noopener"
+>https://ostechnix.com/yt-dlp-tutorial/&lt;/a>&lt;/p></description></item><item><title>Using yt-dlp With Zoom</title><link>https://www.jaredszajkowski.com/2023/10/01/using-yt-dlp-with-zoom/</link><pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/10/01/using-yt-dlp-with-zoom/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2023/10/01/using-yt-dlp-with-zoom/banner_1.svg" alt="Featured image of post Using yt-dlp With Zoom" />&lt;h2 id="introduction">Introduction
+&lt;/h2>&lt;p>If anyone uses Zoom to record and later wants to access recordings of video calls, here&amp;rsquo;s a simple linux bash script to download the video file and acompanying subtitles. For a long time I used &lt;a class="link" href="https://github.com/Battleman/zoomdl" target="_blank" rel="noopener"
+>zoomdl&lt;/a>, but it is no longer under active development, and I began running into various issues about a year ago.&lt;/p>
+&lt;p>This tutorial requires you to have a &amp;ldquo;cookies&amp;rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Zoom cookies after logging in.&lt;/p>
+&lt;p>Here&amp;rsquo;s the steps to setting this up:&lt;/p>
+&lt;h2 id="install-cookie-editor">Install cookie editor
+&lt;/h2>&lt;p>Install the &lt;a class="link" href="https://microsoftedge.microsoft.com/addons/detail/cookie-editor/ajfboaconbpkglpfanbmlfgojgndmhmc" target="_blank" rel="noopener"
+>cookie editor&lt;/a> extension. I personnally use it with Microsoft Edge, but there are similar extensions for Chrome, Firefox, etc.&lt;/p>
+&lt;h2 id="modify-export-format">Modify export format
+&lt;/h2>&lt;p>Change the preferred cookie export format to &lt;code>Netscape HTTP Cookie File&lt;/code> in the extension options. It is necessary to export in this format, otherwise yt-dlp will not be able to read the cookies.txt file correctly.&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/10/01/using-yt-dlp-with-zoom/Modify_preferred_export_format.png"
+width="865"
+height="505"
+loading="lazy"
+alt="Modify preferred export format"
+class="gallery-image"
+data-flex-grow="171"
+data-flex-basis="411px"
+>&lt;/p>
+&lt;h2 id="log-in-to-zoom">Log in to Zoom
+&lt;/h2>&lt;p>Log in to Zoom in your browser. Be sure to remain logged in while exporting the cookies under step 4.&lt;/p>
+&lt;h2 id="export-cookies">Export cookies
+&lt;/h2>&lt;p>The export button is at the top fo the window. It copies the cookies to your clipboard, which then need to be pasted into a text file (I have my saved as cookies.txt), which yt-dlp will then read when it executes.&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2023/10/01/using-yt-dlp-with-zoom/Export_cookies.png"
+width="579"
+height="613"
+loading="lazy"
+alt="Export cookies"
+class="gallery-image"
+data-flex-grow="94"
+data-flex-basis="226px"
+>&lt;/p>
+&lt;h2 id="create-bash-script">Create bash script
+&lt;/h2>&lt;p>Save the following code to a text file (my bash script file name is &lt;code>yt-dlp-zoom.sh&lt;/code>):&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/bin/bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">echo&lt;/span> What is the link?
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">read&lt;/span> link
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">yt-dlp --referer &lt;span class="s2">&amp;#34;https://zoom.us/&amp;#34;&lt;/span> --cookies /path/to/cookies/file/cookies.txt -o &lt;span class="s2">&amp;#34;%(title)s-%(id)s.%(ext)s&amp;#34;&lt;/span> --write-subs &lt;span class="nv">$link&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="change-permissions">Change permissions
+&lt;/h2>&lt;p>Modify the permissions of the bash script to allow execution:&lt;/p>
+&lt;pre>&lt;code>$ chmod +x yt-dlp-zoom.sh
+&lt;/code>&lt;/pre>
+&lt;h2 id="execute-the-script">Execute the script
+&lt;/h2>&lt;p>Execute the bash script with ./yt-dlp-zoom.sh, copy and paste the link to the video that you would like to save, and it should download the video and the subtitles.&lt;/p>
+&lt;h2 id="references">References
+&lt;/h2>&lt;p>References for yt-dlp (and used for above):&lt;/p>
+&lt;p>&lt;a class="link" href="https://ostechnix.com/yt-dlp-tutorial/" target="_blank" rel="noopener"
+>https://ostechnix.com/yt-dlp-tutorial/&lt;/a>&lt;/p></description></item></channel></rss>
