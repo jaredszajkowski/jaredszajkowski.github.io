@@ -3,7 +3,7 @@ title: Using Python Virtual Environments
 description: Managing virtual environments across multiple systems within Arch Linux.
 # slug: hello-world
 date: 2024-12-02 00:00:01+0000
-lastmod: 2025-01-12 00:00:01+0000
+lastmod: 2025-01-30 00:00:01+0000
 image: cover.jpg
 draft: false
 categories:
@@ -17,7 +17,8 @@ tags:
 
 ## Post Updates
 
-Update 1/12/2025: Updated section for use of requirements.txt file for dependency management.
+Update 1/12/2025: Updated section for use of requirements.txt file for dependency management.</br>
+Update 1/30/2025: Added section for version specific python virtual environments.
 
 ## Python Module Management
 
@@ -40,6 +41,22 @@ The "general" environment covers everything else. I created it with the usual co
 Once created, it can be activated (either in a terminal or an IDE such as VS Code) by executing the following in the terminal:
 
     $ source ~/python-virtual-envs/general/bin/activate
+
+## Creating Version Specific Python Virtual Environments
+
+If a specific version of python is required (vs the version installed on the base Arch system), it can be installed as follows:
+
+    $ sudo yay python312
+
+And then follow the requisite prompts to install. Note that I am using [yay](https://github.com/Jguer/yay), with the binary build [yay-bin](https://aur.archlinux.org/yay-bin.git).
+
+Once that completes, the virtual environment can be installed as follows:
+
+    $ python3.12 -m venv ~/python-virtual-envs/general_312
+
+The virtual environment can then be activated in a similar manner as any other:
+
+    $ source ~/python-virtual-envs/general_312/bin/activate
 
 ## Using python-pip
 
@@ -73,11 +90,12 @@ pip will then install all the required package and module versions based on the 
 
 ## Maintaining Across Multiple Systems
 
-To avoid having to redundantly install modules on different systems, after I make a change to the virtual environment I zip the entire `~/python-virtual-envs/` directory and upload the zip file to Dropbox. This takes less than a minute, and if I am working on a different system can simply extract the archive and have a completely up-to-date and current virtual environment to work in.
+To avoid having to redundantly install modules on different systems, after I make a change to the virtual environment I can zip the entire `~/python-virtual-envs/` directory (or any of the individual directories of the virtual environments) and upload the zip file to Dropbox. This takes only a few minutes, and if I am working on a different system can simply extract the archive and have a completely up-to-date and current virtual environment to work in.
 
 ## References
 
 https://docs.python.org/3/library/venv.html</br>
 https://pypi.org/</br>
 https://note.nkmk.me/en/python-pip-usage/</br>
-https://wiki.archlinux.org/title/Python
+https://wiki.archlinux.org/title/Python</br>
+https://github.com/Jguer/yay
