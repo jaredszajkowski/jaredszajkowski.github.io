@@ -18,7 +18,8 @@ tags:
 
 ## Post Updates
 
-Update 12/5/2024: Updated code for summary stats function, various code comments, and corrected grammatical errors.
+Update 12/5/2024: Updated code for summary stats function, various code comments, and corrected grammatical errors.</br>
+Update 2/19/2025: Various code updates, commented and documented functions.
 
 ## Introduction
 
@@ -83,7 +84,7 @@ First, a couple of useful python functions to help with the analysis.
 
 ### Clean Bloomberg Data Export
 
-This is discussed [here](https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/).
+This is discussed [here](https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/).
 
 ```python
 # This function takes an excel export from Bloomberg and 
@@ -152,13 +153,12 @@ def dp(decimal_places):
 # a dataframe, such as the columns, data types, and size.
 
 def df_info(df):
-    print('There are ', df.shape[0], ' rows and ', df.shape[1], ' columns')
-    print('The columns and data types are:')
-    print(df.dtypes)
-    print('The first 4 rows are:')
-    display(df.head(4))
-    print('The last 4 rows are:')
-    display(df.tail(4))
+    print('The columns, shape, and data types are:')
+    print(df.info())
+    print('The first 5 rows are:')
+    display(df.head())
+    print('The last 5 rows are:')
+    display(df.tail())
 ```
 
 ### Import Data From CSV / XLSX
@@ -192,8 +192,34 @@ This is the function that executes the strategy. The function takes in the follo
 * rebal_day: Day of the month that the annual rebalancing should take place
 
 ```python
-def strategy(fund_list, starting_cash, cash_contrib, close_prices_df, rebal_month, rebal_day, rebal_per_high, rebal_per_low):
+def strategy(
+    fund_list, 
+    starting_cash, 
+    cash_contrib, 
+    close_prices_df, 
+    rebal_month, 
+    rebal_day, 
+    rebal_per_high, 
+    rebal_per_low
+):
 
+    """
+    Execute the rebalance strategy based on specified criteria.
+
+    Args:
+        fund_list (str): List of funds for data to be combined from. Funds are strings in the form "BTC-USD".
+        starting_cash (int): Starting investment balance.
+        cash_contrib (int): Cash contribution to be made daily.
+        close_prices_df (pd.DataFrame): DataFrame containing date and close prices for all funds to be included.
+        rebal_month (int): Month for annual rebalance.
+        rebal_day (int): Day for annual rebalance.
+        rebal_per_high (float): High percentage for rebalance.
+        rebal_per_low (float): Low percentage for rebalance.
+
+    Returns:
+        pd.DataFrame: DataFrame containing strategy data for all funds to be included. Also dumps the df to excel for reference later.
+    """
+    
     num_funds = len(fund_list)
 
     df = close_prices_df.copy()
@@ -326,7 +352,7 @@ def strategy(fund_list, starting_cash, cash_contrib, close_prices_df, rebal_mont
     plan_name = '_'.join(fund_list)
     file = plan_name + "_Strategy.xlsx"
     location = file
-    df.to_excel(location, sheet_name='data')
+    df.to_excel(location, sheet_name="data")
     print(f"Strategy complete for {plan_name}.")
     return df
 ```
@@ -335,14 +361,33 @@ def strategy(fund_list, starting_cash, cash_contrib, close_prices_df, rebal_mont
 
 ```python
 # Stats for entire data set
-def summary_stats(fund_list, df, period):
-    if period == 'Monthly':
+def summary_stats(
+    fund_list, 
+    df, 
+    period,
+    excel_export
+):
+    
+    """
+    Calculate summary statistics for the given fund list and return data.
+
+    Args:
+        fund_list (str): List of funds for data to be combined from. Funds are strings in the form "BTC-USD".
+        df (df): Dataframe with return data.
+        period (str): Period for which to calculate statistics. Options are "Monthly", "Weekly", "Daily", "Hourly".
+        excel_export (bool): If True, export to excel file.
+
+    Returns:
+        pd.DataFrame: DataFrame containing various portfolio statistics.
+    """
+
+    if period == "Monthly":
         timeframe = 12 # months
-    elif period == 'Weekly':
+    elif period == "Weekly":
         timeframe = 52 # weeks
-    elif period == 'Daily':
+    elif period == "Daily":
         timeframe = 365 # days
-    elif period == 'Hourly':
+    elif period == "Hourly":
         timeframe = 8760 # hours
     else:
         return print("Error, check inputs")
@@ -354,7 +399,7 @@ def summary_stats(fund_list, df, period):
     df_stats['Annualized Sharpe Ratio'] = df_stats['Annualized Mean'] / df_stats['Annualized Volatility']
 
     df_cagr = (1 + df['Return']).cumprod()
-    cagr = (df_cagr[-1] / 1) ** (1/(len(df_cagr) / timeframe)) - 1
+    cagr = (df_cagr.iloc[-1] / 1) ** (1/(len(df_cagr) / timeframe)) - 1
     df_stats['CAGR'] = cagr
 
     df_stats[period + ' Max Return'] = df.max()
@@ -378,9 +423,17 @@ def summary_stats(fund_list, df, period):
     df_stats['Recovery Date'] = recovery_date
 
     plan_name = '_'.join(fund_list)
-    file = plan_name + "_Summary_Stats.xlsx"
-    location = file
-    df_stats.to_excel(location, sheet_name='data')
+
+    # Export to excel
+    if excel_export == True:
+        
+        file = plan_name + "_Summary_Stats.xlsx"
+        location = file
+        # location = f"{base_directory}/{strategy_name}/{file_name}.xlsx"
+        df_stats.to_excel(location, sheet_name="data")
+    else:
+        pass
+
     print(f"Summary stats complete for {plan_name}.")
     return df_stats
 ```
@@ -585,7 +638,7 @@ bonds_data
 
 The following is the output:
 
-![Bonds Data](01_Bonds_Data.png)
+![Bonds Data](01_0_Bonds_Data.png)
 
 Then for stocks:
 
@@ -602,6 +655,10 @@ stocks_data['Stocks_Total_Return'] = (1 + stocks_data['Stocks_Daily_Return']).cu
 stocks_data
 ```
 
+The following is the output:
+
+![Stocks Data](01_1_Stocks_Data.png)
+
 And finally, gold:
 
 ```python
@@ -616,6 +673,10 @@ gold_data['Gold_Daily_Return'] = gold_data['Gold_Close'].pct_change()
 gold_data['Gold_Total_Return'] = (1 + gold_data['Gold_Daily_Return']).cumprod()
 gold_data
 ```
+
+The following is the output:
+
+![Gold Data](01_2_Gold_Data.png)
 
 ### Combine Data
 
@@ -666,17 +727,44 @@ starting_cash = 10000
 # Monthly cash contribution
 cash_contrib = 0
 
-strat = strategy(fund_list, starting_cash, cash_contrib, perm_port, 1, 1, 0.35, 0.15).set_index('Date')
-sum_stats = summary_stats(fund_list, strat[['Return']], 'Daily')
+strat = strategy(
+    fund_list=fund_list, 
+    starting_cash=starting_cash, 
+    cash_contrib=cash_contrib, 
+    close_prices_df=perm_port, 
+    rebal_month=1, 
+    rebal_day=1, 
+    rebal_per_high=0.35, 
+    rebal_per_low=0.15)
+
+strat = strat.set_index('Date')
+
+sum_stats = summary_stats(
+    fund_list=fund_list,
+    df=strat[['Return']],
+    period="Daily",
+    excel_export=False)
 
 strat_pre_1999 = strat[strat.index < '2000-01-01']
-sum_stats_pre_1999 = summary_stats(fund_list, strat_pre_1999[['Return']], 'Daily')
+sum_stats_pre_1999 = summary_stats(
+    fund_list=fund_list, 
+    df=strat_pre_1999[['Return']], 
+    period="Daily",
+    excel_export=False)
 
 strat_post_1999 = strat[strat.index >= '2000-01-01']
-sum_stats_post_1999 = summary_stats(fund_list, strat_post_1999[['Return']], 'Daily')
+sum_stats_post_1999 = summary_stats(
+    fund_list=fund_list, 
+    df=strat_post_1999[['Return']], 
+    period="Daily",
+    excel_export=False)
 
 strat_post_2009 = strat[strat.index >= '2010-01-01']
-sum_stats_post_2009 = summary_stats(fund_list, strat_post_2009[['Return']], 'Daily')
+sum_stats_post_2009 = summary_stats(
+    fund_list=fund_list, 
+    df=strat_post_2009[['Return']], 
+    period="Daily",
+    excel_export=False)
 ```
 
 ## Strategy Statistics
@@ -711,7 +799,8 @@ The mean annualized return is approximately 0.7% lower for the pre 1999 vs post 
 
 Here's the annual returns:
 
-![Portfolio Annual Returns](09_Portfolio_Annual_Returns_Table.png)
+![Portfolio Annual Returns](09_Portfolio_Annual_Returns_Table_1.png)
+![Portfolio Annual Returns](09_Portfolio_Annual_Returns_Table_2.png)
 
 ## Generate Plots
 

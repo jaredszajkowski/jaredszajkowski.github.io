@@ -59,7 +59,7 @@
                     
                     
                         
-                        <img src="/img/profile_pic_hu16687316019011354821.jpg" width="300"
+                        <img src="/img/profile_pic_hu_35859dcdcf246484.jpg" width="300"
                             height="300" class="site-logo" loading="lazy" alt="Avatar">
                     
                 
@@ -390,7 +390,7 @@
 
 
                 <time class="article-time--reading">
-                    18 minute read
+                    20 minute read
                 </time>
             </div>
         
@@ -406,7 +406,8 @@
     
     
     <h2 id="post-updates">Post Updates
-</h2><p>Update 12/5/2024: Updated code for summary stats function, various code comments, and corrected grammatical errors.</p>
+</h2><p>Update 12/5/2024: Updated code for summary stats function, various code comments, and corrected grammatical errors.</br>
+Update 2/19/2025: Various code updates, commented and documented functions.</p>
 <h2 id="introduction">Introduction
 </h2><p>Harry Browne was an influencial politician, financial advisor, and author who lived from 1933 to 2006 and published 12 books. Wikipedia has <a class="link" href="https://en.wikipedia.org/wiki/Harry_Browne"  target="_blank" rel="noopener"
     >an in-depth biography</a> on him.</p>
@@ -459,7 +460,7 @@
 <h2 id="python-functions">Python Functions
 </h2><p>First, a couple of useful python functions to help with the analysis.</p>
 <h3 id="clean-bloomberg-data-export">Clean Bloomberg Data Export
-</h3><p>This is discussed <a class="link" href="https://www.jaredszajkowski.com/2023/11/cleaning-a-bloomberg-data-excel-export/"  target="_blank" rel="noopener"
+</h3><p>This is discussed <a class="link" href="https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/"  target="_blank" rel="noopener"
     >here</a>.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -591,20 +592,18 @@
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
-</span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># The `df_info` function returns some useful information about</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># a dataframe, such as the columns, data types, and size.</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">df_info</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;There are &#39;</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39; rows and &#39;</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39; columns&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The columns and data types are:&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The first 4 rows are:&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The last 4 rows are:&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The columns, shape, and data types are:&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The first 5 rows are:&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The last 5 rows are:&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">())</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="import-data-from-csv--xlsx">Import Data From CSV / XLSX
@@ -791,10 +790,62 @@
 </span><span class="lnt">135
 </span><span class="lnt">136
 </span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">strategy</span><span class="p">(</span><span class="n">fund_list</span><span class="p">,</span> <span class="n">starting_cash</span><span class="p">,</span> <span class="n">cash_contrib</span><span class="p">,</span> <span class="n">close_prices_df</span><span class="p">,</span> <span class="n">rebal_month</span><span class="p">,</span> <span class="n">rebal_day</span><span class="p">,</span> <span class="n">rebal_per_high</span><span class="p">,</span> <span class="n">rebal_per_low</span><span class="p">):</span>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">strategy</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">fund_list</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">starting_cash</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">cash_contrib</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">close_prices_df</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">rebal_month</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">rebal_day</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">rebal_per_high</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">rebal_per_low</span>
+</span></span><span class="line"><span class="cl"><span class="p">):</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Execute the rebalance strategy based on specified criteria.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Args:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        fund_list (str): List of funds for data to be combined from. Funds are strings in the form &#34;BTC-USD&#34;.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        starting_cash (int): Starting investment balance.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        cash_contrib (int): Cash contribution to be made daily.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        close_prices_df (pd.DataFrame): DataFrame containing date and close prices for all funds to be included.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        rebal_month (int): Month for annual rebalance.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        rebal_day (int): Day for annual rebalance.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        rebal_per_high (float): High percentage for rebalance.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        rebal_per_low (float): Low percentage for rebalance.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        pd.DataFrame: DataFrame containing strategy data for all funds to be included. Also dumps the df to excel for reference later.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="n">num_funds</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fund_list</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="n">df</span> <span class="o">=</span> <span class="n">close_prices_df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -927,7 +978,7 @@
 </span></span><span class="line"><span class="cl">    <span class="n">plan_name</span> <span class="o">=</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fund_list</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">file</span> <span class="o">=</span> <span class="n">plan_name</span> <span class="o">+</span> <span class="s2">&#34;_Strategy.xlsx&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">location</span> <span class="o">=</span> <span class="n">file</span>
-</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&#34;data&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Strategy complete for </span><span class="si">{</span><span class="n">plan_name</span><span class="si">}</span><span class="s2">.&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">df</span>
 </span></span></code></pre></td></tr></table>
@@ -984,17 +1035,63 @@
 </span><span class="lnt">47
 </span><span class="lnt">48
 </span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Stats for entire data set</span>
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">summary_stats</span><span class="p">(</span><span class="n">fund_list</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">period</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">period</span> <span class="o">==</span> <span class="s1">&#39;Monthly&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">summary_stats</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">fund_list</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">period</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">excel_export</span>
+</span></span><span class="line"><span class="cl"><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Calculate summary statistics for the given fund list and return data.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Args:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        fund_list (str): List of funds for data to be combined from. Funds are strings in the form &#34;BTC-USD&#34;.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        df (df): Dataframe with return data.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        period (str): Period for which to calculate statistics. Options are &#34;Monthly&#34;, &#34;Weekly&#34;, &#34;Daily&#34;, &#34;Hourly&#34;.
+</span></span></span><span class="line"><span class="cl"><span class="s2">        excel_export (bool): If True, export to excel file.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">        pd.DataFrame: DataFrame containing various portfolio statistics.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">period</span> <span class="o">==</span> <span class="s2">&#34;Monthly&#34;</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="n">timeframe</span> <span class="o">=</span> <span class="mi">12</span> <span class="c1"># months</span>
-</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">period</span> <span class="o">==</span> <span class="s1">&#39;Weekly&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">period</span> <span class="o">==</span> <span class="s2">&#34;Weekly&#34;</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="n">timeframe</span> <span class="o">=</span> <span class="mi">52</span> <span class="c1"># weeks</span>
-</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">period</span> <span class="o">==</span> <span class="s1">&#39;Daily&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">period</span> <span class="o">==</span> <span class="s2">&#34;Daily&#34;</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="n">timeframe</span> <span class="o">=</span> <span class="mi">365</span> <span class="c1"># days</span>
-</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">period</span> <span class="o">==</span> <span class="s1">&#39;Hourly&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">period</span> <span class="o">==</span> <span class="s2">&#34;Hourly&#34;</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="n">timeframe</span> <span class="o">=</span> <span class="mi">8760</span> <span class="c1"># hours</span>
 </span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Error, check inputs&#34;</span><span class="p">)</span>
@@ -1006,7 +1103,7 @@
 </span></span><span class="line"><span class="cl">    <span class="n">df_stats</span><span class="p">[</span><span class="s1">&#39;Annualized Sharpe Ratio&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_stats</span><span class="p">[</span><span class="s1">&#39;Annualized Mean&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_stats</span><span class="p">[</span><span class="s1">&#39;Annualized Volatility&#39;</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="n">df_cagr</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Return&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">cumprod</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="n">cagr</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_cagr</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_cagr</span><span class="p">)</span> <span class="o">/</span> <span class="n">timeframe</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cagr</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_cagr</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df_cagr</span><span class="p">)</span> <span class="o">/</span> <span class="n">timeframe</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
 </span></span><span class="line"><span class="cl">    <span class="n">df_stats</span><span class="p">[</span><span class="s1">&#39;CAGR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cagr</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="n">df_stats</span><span class="p">[</span><span class="n">period</span> <span class="o">+</span> <span class="s1">&#39; Max Return&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
@@ -1030,9 +1127,17 @@
 </span></span><span class="line"><span class="cl">    <span class="n">df_stats</span><span class="p">[</span><span class="s1">&#39;Recovery Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">recovery_date</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="n">plan_name</span> <span class="o">=</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fund_list</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">file</span> <span class="o">=</span> <span class="n">plan_name</span> <span class="o">+</span> <span class="s2">&#34;_Summary_Stats.xlsx&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">location</span> <span class="o">=</span> <span class="n">file</span>
-</span></span><span class="line"><span class="cl">    <span class="n">df_stats</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Export to excel</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">excel_export</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">file</span> <span class="o">=</span> <span class="n">plan_name</span> <span class="o">+</span> <span class="s2">&#34;_Summary_Stats.xlsx&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">location</span> <span class="o">=</span> <span class="n">file</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># location = f&#34;{base_directory}/{strategy_name}/{file_name}.xlsx&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">df_stats</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&#34;data&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Summary stats complete for </span><span class="si">{</span><span class="n">plan_name</span><span class="si">}</span><span class="s2">.&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">df_stats</span>
 </span></span></code></pre></td></tr></table>
@@ -1413,9 +1518,9 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>The following is the output:</p>
-<p><img src="/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/01_Bonds_Data.png"
-	width="888"
-	height="506"
+<p><img src="/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/01_0_Bonds_Data.png"
+	width="882"
+	height="509"
 	
 	loading="lazy"
 	
@@ -1423,8 +1528,8 @@
 	
 	
 		class="gallery-image" 
-		data-flex-grow="175"
-		data-flex-basis="421px"
+		data-flex-grow="173"
+		data-flex-basis="415px"
 	
 ></p>
 <p>Then for stocks:</p>
@@ -1454,7 +1559,22 @@
 </span></span><span class="line"><span class="cl"><span class="n">stocks_data</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>And finally, gold:</p>
+</div><p>The following is the output:</p>
+<p><img src="/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/01_1_Stocks_Data.png"
+	width="882"
+	height="505"
+	
+	loading="lazy"
+	
+		alt="Stocks Data"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="174"
+		data-flex-basis="419px"
+	
+></p>
+<p>And finally, gold:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1481,7 +1601,22 @@
 </span></span><span class="line"><span class="cl"><span class="n">gold_data</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="combine-data">Combine Data
+</div><p>The following is the output:</p>
+<p><img src="/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/01_2_Gold_Data.png"
+	width="882"
+	height="504"
+	
+	loading="lazy"
+	
+		alt="Gold Data"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="175"
+		data-flex-basis="420px"
+	
+></p>
+<h3 id="combine-data">Combine Data
 </h3><p>We&rsquo;ll now combine the dataframes for the timeseries data from each of the asset classes, as follows:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1529,8 +1664,8 @@
 </div>
 </div><p>Gives us the following:</p>
 <p><img src="/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/02_Perm_Port_Data.png"
-	width="498"
-	height="546"
+	width="489"
+	height="697"
 	
 	loading="lazy"
 	
@@ -1538,8 +1673,8 @@
 	
 	
 		class="gallery-image" 
-		data-flex-grow="91"
-		data-flex-basis="218px"
+		data-flex-grow="70"
+		data-flex-basis="168px"
 	
 ></p>
 <p>We can see that we have close data for all 4 asset classes from the beginning of 1990 to the end of 2023.</p>
@@ -1567,6 +1702,33 @@
 </span><span class="lnt">18
 </span><span class="lnt">19
 </span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># List of funds to be used</span>
@@ -1578,17 +1740,44 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># Monthly cash contribution</span>
 </span></span><span class="line"><span class="cl"><span class="n">cash_contrib</span> <span class="o">=</span> <span class="mi">0</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">strat</span> <span class="o">=</span> <span class="n">strategy</span><span class="p">(</span><span class="n">fund_list</span><span class="p">,</span> <span class="n">starting_cash</span><span class="p">,</span> <span class="n">cash_contrib</span><span class="p">,</span> <span class="n">perm_port</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.35</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">sum_stats</span> <span class="o">=</span> <span class="n">summary_stats</span><span class="p">(</span><span class="n">fund_list</span><span class="p">,</span> <span class="n">strat</span><span class="p">[[</span><span class="s1">&#39;Return&#39;</span><span class="p">]],</span> <span class="s1">&#39;Daily&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">strat</span> <span class="o">=</span> <span class="n">strategy</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">fund_list</span><span class="o">=</span><span class="n">fund_list</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">starting_cash</span><span class="o">=</span><span class="n">starting_cash</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">cash_contrib</span><span class="o">=</span><span class="n">cash_contrib</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">close_prices_df</span><span class="o">=</span><span class="n">perm_port</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">rebal_month</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">rebal_day</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">rebal_per_high</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">rebal_per_low</span><span class="o">=</span><span class="mf">0.15</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">strat</span> <span class="o">=</span> <span class="n">strat</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">sum_stats</span> <span class="o">=</span> <span class="n">summary_stats</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">fund_list</span><span class="o">=</span><span class="n">fund_list</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="o">=</span><span class="n">strat</span><span class="p">[[</span><span class="s1">&#39;Return&#39;</span><span class="p">]],</span>
+</span></span><span class="line"><span class="cl">    <span class="n">period</span><span class="o">=</span><span class="s2">&#34;Daily&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">excel_export</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">strat_pre_1999</span> <span class="o">=</span> <span class="n">strat</span><span class="p">[</span><span class="n">strat</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;</span> <span class="s1">&#39;2000-01-01&#39;</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl"><span class="n">sum_stats_pre_1999</span> <span class="o">=</span> <span class="n">summary_stats</span><span class="p">(</span><span class="n">fund_list</span><span class="p">,</span> <span class="n">strat_pre_1999</span><span class="p">[[</span><span class="s1">&#39;Return&#39;</span><span class="p">]],</span> <span class="s1">&#39;Daily&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">sum_stats_pre_1999</span> <span class="o">=</span> <span class="n">summary_stats</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">fund_list</span><span class="o">=</span><span class="n">fund_list</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="o">=</span><span class="n">strat_pre_1999</span><span class="p">[[</span><span class="s1">&#39;Return&#39;</span><span class="p">]],</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">period</span><span class="o">=</span><span class="s2">&#34;Daily&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">excel_export</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">strat_post_1999</span> <span class="o">=</span> <span class="n">strat</span><span class="p">[</span><span class="n">strat</span><span class="o">.</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="s1">&#39;2000-01-01&#39;</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl"><span class="n">sum_stats_post_1999</span> <span class="o">=</span> <span class="n">summary_stats</span><span class="p">(</span><span class="n">fund_list</span><span class="p">,</span> <span class="n">strat_post_1999</span><span class="p">[[</span><span class="s1">&#39;Return&#39;</span><span class="p">]],</span> <span class="s1">&#39;Daily&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">sum_stats_post_1999</span> <span class="o">=</span> <span class="n">summary_stats</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">fund_list</span><span class="o">=</span><span class="n">fund_list</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="o">=</span><span class="n">strat_post_1999</span><span class="p">[[</span><span class="s1">&#39;Return&#39;</span><span class="p">]],</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">period</span><span class="o">=</span><span class="s2">&#34;Daily&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">excel_export</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">strat_post_2009</span> <span class="o">=</span> <span class="n">strat</span><span class="p">[</span><span class="n">strat</span><span class="o">.</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="s1">&#39;2010-01-01&#39;</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl"><span class="n">sum_stats_post_2009</span> <span class="o">=</span> <span class="n">summary_stats</span><span class="p">(</span><span class="n">fund_list</span><span class="p">,</span> <span class="n">strat_post_2009</span><span class="p">[[</span><span class="s1">&#39;Return&#39;</span><span class="p">]],</span> <span class="s1">&#39;Daily&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">sum_stats_post_2009</span> <span class="o">=</span> <span class="n">summary_stats</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">fund_list</span><span class="o">=</span><span class="n">fund_list</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="o">=</span><span class="n">strat_post_2009</span><span class="p">[[</span><span class="s1">&#39;Return&#39;</span><span class="p">]],</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">period</span><span class="o">=</span><span class="s2">&#34;Daily&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">excel_export</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="strategy-statistics">Strategy Statistics
@@ -1622,8 +1811,8 @@
 <a class="link" href="Stocks_Bonds_Gold_Cash_Annual_Returns.xlsx" >Stocks_Bonds_Gold_Cash_Annual_Returns.xlsx</a></br></p>
 <p>Here&rsquo;s the summary stats for the example above including the various timeframes:</p>
 <p><img src="/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/06_Summary_Stats.png"
-	width="1473"
-	height="224"
+	width="1404"
+	height="228"
 	
 	loading="lazy"
 	
@@ -1631,17 +1820,17 @@
 	
 	
 		class="gallery-image" 
-		data-flex-grow="657"
-		data-flex-basis="1578px"
+		data-flex-grow="615"
+		data-flex-basis="1477px"
 	
 ></p>
 <p>Here we have a mean annualized return of 8.3%, volatility of 7.2%, a CAGR of 8.4% and a Sharpe ratio of 1.15. And this with a max drawdown of just over 15%. Not bad, Mr. Browne!</p>
 <p>Since the book was published in 1999, let&rsquo;s look specifically at the summary stats for below and after 1999.</p>
 <p>The mean annualized return is approximately 0.7% lower for the pre 1999 vs post 1999 data, as is the CAGR. The volatility is higher for the post 1999 data which leads to a difference in the Sharpe ratio.</p>
 <p>Here&rsquo;s the annual returns:</p>
-<p><img src="/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/09_Portfolio_Annual_Returns_Table.png"
-	width="115"
-	height="680"
+<p><img src="/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/09_Portfolio_Annual_Returns_Table_1.png"
+	width="127"
+	height="536"
 	
 	loading="lazy"
 	
@@ -1649,8 +1838,22 @@
 	
 	
 		class="gallery-image" 
-		data-flex-grow="16"
-		data-flex-basis="40px"
+		data-flex-grow="23"
+		data-flex-basis="56px"
+	
+>
+<img src="/2024/11/04/does-harry-brownes-permanent-portfolio-withstand-the-test-of-time/09_Portfolio_Annual_Returns_Table_2.png"
+	width="127"
+	height="352"
+	
+	loading="lazy"
+	
+		alt="Portfolio Annual Returns"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="36"
+		data-flex-basis="86px"
 	
 ></p>
 <h2 id="generate-plots">Generate Plots
