@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Arch Linux on Jared Szajkowski</title><link>https://www.jaredszajkowski.com/tags/arch-linux/</link><description>Recent content in Arch Linux on Jared Szajkowski</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 30 Jan 2025 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/tags/arch-linux/index.xml" rel="self" type="application/rss+xml"/><item><title>Using Python Virtual Environments</title><link>https://www.jaredszajkowski.com/2024/12/02/using-python-virtual-environments/</link><pubDate>Mon, 02 Dec 2024 00:00:01 +0000</pubDate><guid>https://www.jaredszajkowski.com/2024/12/02/using-python-virtual-environments/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2024/12/02/using-python-virtual-environments/cover.jpg" alt="Featured image of post Using Python Virtual Environments" />&lt;h2 id="post-updates">Post Updates
+&lt;/h2>&lt;p>Update 1/12/2025: Updated section for use of requirements.txt file for dependency management.&lt;/br>
+Update 1/30/2025: Added section for version specific python virtual environments.&lt;/p>
+&lt;h2 id="python-module-management">Python Module Management
+&lt;/h2>&lt;p>As an Arch Linux user, the push is to utilize pacman and related tools to manage dependencies and package updates (including Python modules). In fact, &lt;a class="link" href="https://wiki.archlinux.org/title/Python" target="_blank" rel="noopener"
+>the wiki itself&lt;/a> explicitly states this (see 2.1), and the default Arch installation of Python disables python-pip.&lt;/p>
+&lt;p>Unfortunately, there are limited resources put into maintaining packages for modules and only the most common and popular modules are maintained, and they are updated promptly as is consistent within the Arch ecosystem.&lt;/p>
+&lt;h2 id="creating-a-virtual-environment">Creating A Virtual Environment
+&lt;/h2>&lt;p>After recently delving into crypto and the web3 Python module, the Coinbase API, and others, I&amp;rsquo;ve found the need to install Python modules from &lt;a class="link" href="https://pypi.org/" target="_blank" rel="noopener"
+>Pypi&lt;/a>, the Python package index. This is the most exhaustive location to find modules, including the latest updates and version history.&lt;/p>
+&lt;p>Using python-pip necessitated the use of virtual environments, which made me reconsider the idea of not maintaining Python modules (or maintaining very few) through pacman at all.&lt;/p>
+&lt;p>I chose to place the virtual environments at &lt;code>~/python-virtual-envs/&lt;/code> and within that directory have one called &lt;code>general&lt;/code> and other called &lt;code>wrds&lt;/code>. The &lt;code>wrds&lt;/code> environment is specific to the &lt;a class="link" href="https://wrds-www.wharton.upenn.edu/" target="_blank" rel="noopener"
+>Wharton Research Data Services&lt;/a> which requires (for some reason) an older package of nympy.&lt;/p>
+&lt;p>The &amp;ldquo;general&amp;rdquo; environment covers everything else. I created it with the usual command:&lt;/p>
+&lt;pre>&lt;code>$ python -m venv ~/python-virtual-envs/general
+&lt;/code>&lt;/pre>
+&lt;p>Once created, it can be activated (either in a terminal or an IDE such as VS Code) by executing the following in the terminal:&lt;/p>
+&lt;pre>&lt;code>$ source ~/python-virtual-envs/general/bin/activate
+&lt;/code>&lt;/pre>
+&lt;h2 id="creating-version-specific-python-virtual-environments">Creating Version Specific Python Virtual Environments
+&lt;/h2>&lt;p>If a specific version of python is required (vs the version installed on the base Arch system), it can be installed as follows:&lt;/p>
+&lt;pre>&lt;code>$ sudo yay python312
+&lt;/code>&lt;/pre>
+&lt;p>And then follow the requisite prompts to install. Note that I am using &lt;a class="link" href="https://github.com/Jguer/yay" target="_blank" rel="noopener"
+>yay&lt;/a>, with the binary build &lt;a class="link" href="https://aur.archlinux.org/yay-bin.git" target="_blank" rel="noopener"
+>yay-bin&lt;/a>.&lt;/p>
+&lt;p>Once that completes, the virtual environment can be installed as follows:&lt;/p>
+&lt;pre>&lt;code>$ python3.12 -m venv ~/python-virtual-envs/general_312
+&lt;/code>&lt;/pre>
+&lt;p>The virtual environment can then be activated in a similar manner as any other:&lt;/p>
+&lt;pre>&lt;code>$ source ~/python-virtual-envs/general_312/bin/activate
+&lt;/code>&lt;/pre>
+&lt;h2 id="using-python-pip">Using python-pip
+&lt;/h2>&lt;p>After the virtual environment is created and activated, modules can be installed by using python-pip, such as:&lt;/p>
+&lt;pre>&lt;code>$ pip install &amp;lt;package-name&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;p>If you want to view all installed modules, run:&lt;/p>
+&lt;pre>&lt;code>$ pip list
+&lt;/code>&lt;/pre>
+&lt;p>Or the outdated modules:&lt;/p>
+&lt;pre>&lt;code>$ pip list --outdated
+&lt;/code>&lt;/pre>
+&lt;p>And updated at a later point in time with:&lt;/p>
+&lt;pre>&lt;code>$ pip install --upgrade &amp;lt;package-name&amp;gt;
+&lt;/code>&lt;/pre>
+&lt;h2 id="using-a-requirementstxt-file">Using A requirements.txt File
+&lt;/h2>&lt;p>If you have a requirements.txt file present in a git repository/directory, such as:&lt;/p>
+&lt;p>&lt;img src="https://www.jaredszajkowski.com/2024/12/02/using-python-virtual-environments/01_Requirements.txt_Example.png"
+width="317"
+height="560"
+loading="lazy"
+alt="Requirements.txt Example"
+class="gallery-image"
+data-flex-grow="56"
+data-flex-basis="135px"
+>&lt;/p>
+&lt;p>You can install the required dependencies with the following command:&lt;/p>
+&lt;pre>&lt;code>$ pip install -r requirements.txt
+&lt;/code>&lt;/pre>
+&lt;p>pip will then install all the required package and module versions based on the requirements file.&lt;/p>
+&lt;h2 id="maintaining-across-multiple-systems">Maintaining Across Multiple Systems
+&lt;/h2>&lt;p>To avoid having to redundantly install modules on different systems, after I make a change to the virtual environment I can zip the entire &lt;code>~/python-virtual-envs/&lt;/code> directory (or any of the individual directories of the virtual environments) and upload the zip file to Dropbox. This takes only a few minutes, and if I am working on a different system can simply extract the archive and have a completely up-to-date and current virtual environment to work in.&lt;/p>
+&lt;h2 id="references">References
+&lt;/h2>&lt;p>&lt;a class="link" href="https://docs.python.org/3/library/venv.html" target="_blank" rel="noopener"
+>https://docs.python.org/3/library/venv.html&lt;/a>&lt;/br>
+&lt;a class="link" href="https://pypi.org/" target="_blank" rel="noopener"
+>https://pypi.org/&lt;/a>&lt;/br>
+&lt;a class="link" href="https://note.nkmk.me/en/python-pip-usage/" target="_blank" rel="noopener"
+>https://note.nkmk.me/en/python-pip-usage/&lt;/a>&lt;/br>
+&lt;a class="link" href="https://wiki.archlinux.org/title/Python" target="_blank" rel="noopener"
+>https://wiki.archlinux.org/title/Python&lt;/a>&lt;/br>
+&lt;a class="link" href="https://github.com/Jguer/yay" target="_blank" rel="noopener"
+>https://github.com/Jguer/yay&lt;/a>&lt;/p></description></item><item><title>Arch Linux Install</title><link>https://www.jaredszajkowski.com/2023/09/29/arch-linux-install/</link><pubDate>Fri, 29 Sep 2023 00:00:01 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/09/29/arch-linux-install/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2023/09/29/arch-linux-install/cover.jpg" alt="Featured image of post Arch Linux Install" />&lt;h2 id="introduction">Introduction
+&lt;/h2>&lt;p>This is the basic framework that I use to install Arch Linux, with a few changes catered to the Lenovo ThinkPad E15 Gen 2. I have found that this is a decent mid range laptop, excellent linux compatibility, great keyboard, and overall provides a good value.&lt;/p>
+&lt;h2 id="getting-started">Getting started
+&lt;/h2>&lt;p>This tutorial assumes the following:&lt;/p>
+&lt;ul>
+&lt;li>You are booting from a USB drive with the Arch install ISO.&lt;/li>
+&lt;li>Wireless or wired network is detected and drivers are configured automatically.&lt;/li>
+&lt;li>You want drive encrytion on your root partition, but not on your boot/efi/swap partitions.&lt;/li>
+&lt;/ul>
+&lt;h3 id="verify-uefi-boot-mode">Verify UEFI boot mode
+&lt;/h3>&lt;p>The following command should show directory without error:&lt;/p>
+&lt;pre>&lt;code># ls /sys/firmware/efi/efivars
+&lt;/code>&lt;/pre>
+&lt;h3 id="configure-wireless-network">Configure wireless network
+&lt;/h3>&lt;p>The following command will drop you into the iwd daemon:&lt;/p>
+&lt;pre>&lt;code># iwctl
+&lt;/code>&lt;/pre>
+&lt;p>From there:&lt;/p>
+&lt;pre>&lt;code># device list
+# station *device* scan
+# station *device* get-networks
+# station *device* connect *SSID*
+&lt;/code>&lt;/pre>
+&lt;h3 id="verify-internet-connectivity">Verify internet connectivity
+&lt;/h3>&lt;pre>&lt;code># ping archlinux.org
+&lt;/code>&lt;/pre>
+&lt;h3 id="update-system-clock">Update system clock
+&lt;/h3>&lt;pre>&lt;code># timedatectl set-ntp true
+# timedatectl status
+&lt;/code>&lt;/pre>
+&lt;h2 id="disks-partition-table--partitions">Disks, partition table &amp;amp; partitions
+&lt;/h2>&lt;p>The following assumes that your NVME drive is found as /dev/nvme0n1. Partitions will then be /dev/nvme0n1p1 and so on.&lt;/p>
+&lt;h3 id="wipe-disk">Wipe disk
+&lt;/h3>&lt;p>List disks:&lt;/p>
+&lt;pre>&lt;code># fdisk -l
+&lt;/code>&lt;/pre>
+&lt;p>Wipe all file system records:&lt;/p>
+&lt;pre>&lt;code># wipefs -a /dev/nvme0n1
+&lt;/code>&lt;/pre>
+&lt;h3 id="create-new-partition-table">Create new partition table
+&lt;/h3>&lt;p>Open nvme0n1 with gdisk:&lt;/p>
+&lt;pre>&lt;code># gdisk /dev/nvme0n1
+&lt;/code>&lt;/pre>
+&lt;p>Create GPT partition table with option &amp;ldquo;o&amp;rdquo;.&lt;/p>
+&lt;h3 id="create-efi-partition">Create EFI partition
+&lt;/h3>&lt;p>Create new EFI partition w/ 550mb with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/p>
+&lt;pre>&lt;code>Partition #1
+Default starting sector
++550M
+Change partition type to EFI System (ef00)
+&lt;/code>&lt;/pre>
+&lt;h3 id="create-boot-partition">Create boot partition
+&lt;/h3>&lt;p>Create new boot partition w/ 550mb with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/p>
+&lt;pre>&lt;code>Partition #2
+Default starting sector
++550M
+Leave default type of 8300
+&lt;/code>&lt;/pre>
+&lt;h3 id="create-swap-partition">Create swap partition
+&lt;/h3>&lt;p>The old rule of thumb used to be that a swap partition should be the same size as the amount of memory in the system, but given the typical amount of memory in modern systems this is obviously no longer necessary. For my system with 16 or 32 GB of memory, a swap of 8 GB is rarely even used.&lt;/br>&lt;/p>
+&lt;p>Create new Swap partition w/ 8GB with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/p>
+&lt;pre>&lt;code>Partition #3
+Default starting sector
++8G
+Change to linux swap (8200)
+&lt;/code>&lt;/pre>
+&lt;h3 id="create-root-partition">Create root partition
+&lt;/h3>&lt;p>Create new root partition w/ remaining disk space with option &amp;ldquo;n&amp;rdquo;, using the following parameters:&lt;/p>
+&lt;pre>&lt;code>Partition #4
+Default starting sector
+Remaining space
+Linux LUKS type 8309
+&lt;/code>&lt;/pre>
+&lt;p>And then exit gdisk.&lt;/p>
+&lt;h2 id="write-file-systems">Write file systems
+&lt;/h2>&lt;h3 id="efi-partition">EFI partition
+&lt;/h3>&lt;p>Write file system to new EFI System partition:&lt;/p>
+&lt;pre>&lt;code># cat /dev/zero &amp;gt; /dev/nvme0n1p1
+# mkfs.fat -F32 /dev/nvme0n1p1
+&lt;/code>&lt;/pre>
+&lt;h3 id="boot-partition">Boot partition
+&lt;/h3>&lt;p>Then boot partition:&lt;/p>
+&lt;pre>&lt;code># cat /dev/zero &amp;gt; /dev/nvme0n1p2
+# mkfs.ext2 /dev/nvme0n1p2
+&lt;/code>&lt;/pre>
+&lt;h3 id="root-partition">Root partition
+&lt;/h3>&lt;p>Prepare root partition w/ LUKS:&lt;/p>
+&lt;pre>&lt;code># cryptsetup -y -v luksFormat --type luks2 /dev/nvme0n1p4
+# cryptsetup luksDump /dev/nvme0n1p4
+# cryptsetup open /dev/nvme0n1p4 archcryptroot
+# mkfs.ext4 /dev/mapper/archcryptroot
+# mount /dev/mapper/archcryptroot /mnt
+&lt;/code>&lt;/pre>
+&lt;p>I use &lt;em>archcryptroot&lt;/em> for the name of my encrypted volume, but change as necessary.&lt;/p>
+&lt;h3 id="swap-partition">Swap partition
+&lt;/h3>&lt;p>Then swap:&lt;/p>
+&lt;pre>&lt;code># mkswap /dev/nvme0n1p3
+# swapon /dev/nvme0n1p3
+&lt;/code>&lt;/pre>
+&lt;h3 id="create-mount-points">Create mount points
+&lt;/h3>&lt;pre>&lt;code># mkdir /mnt/boot
+# mount /dev/nvme0n1p2 /mnt/boot
+# mkdir /mnt/boot/efi
+# mount /dev/nvme0n1p1 /mnt/boot/efi
+&lt;/code>&lt;/pre>
+&lt;h2 id="system-install">System install
+&lt;/h2>&lt;h3 id="install-base-packages">Install base packages
+&lt;/h3>&lt;pre>&lt;code># pacstrap /mnt base base-devel linux linux-firmware grub-efi-x86_64 efibootmgr
+&lt;/code>&lt;/pre>
+&lt;h3 id="generate-fstab">Generate fstab
+&lt;/h3>&lt;pre>&lt;code># genfstab -U /mnt &amp;gt;&amp;gt; /mnt/etc/fstab
+&lt;/code>&lt;/pre>
+&lt;h3 id="enter-new-system">Enter new system
+&lt;/h3>&lt;pre>&lt;code># arch-chroot /mnt /bin/bash
+&lt;/code>&lt;/pre>
+&lt;h3 id="set-clock">Set clock
+&lt;/h3>&lt;pre>&lt;code># ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime
+# hwclock –systohc
+&lt;/code>&lt;/pre>
+&lt;h3 id="generate-locale">Generate locale
+&lt;/h3>&lt;p>In /etc/locale.gen &lt;strong>uncomment only&lt;/strong>: en_US.UTF-8 UTF-8&lt;/p>
+&lt;pre>&lt;code># locale-gen
+&lt;/code>&lt;/pre>
+&lt;p>In /etc/locale.conf, you should &lt;strong>only&lt;/strong> have this line: LANG=en_US.UTF-8&lt;/p>
+&lt;pre>&lt;code># nano /etc/locale.conf
+&lt;/code>&lt;/pre>
+&lt;h3 id="set-hostname--update-hosts">Set hostname &amp;amp; update hosts
+&lt;/h3>&lt;pre>&lt;code># echo linuxmachine &amp;gt; /etc/hostname
+&lt;/code>&lt;/pre>
+&lt;p>Update /etc/hosts with the following:&lt;/p>
+&lt;pre>&lt;code>127.0.0.1 localhost
+::1 localhost
+127.0.1.1 linuxmachine.localdomain linuxmachine
+&lt;/code>&lt;/pre>
+&lt;h3 id="set-root-password">Set root password
+&lt;/h3>&lt;pre>&lt;code># passwd
+&lt;/code>&lt;/pre>
+&lt;h3 id="update-etcmkinitcpioconf--generate-initrd-image">Update /etc/mkinitcpio.conf &amp;amp; generate initrd image
+&lt;/h3>&lt;p>Edit /etc/mkinitcpio.conf with the following:&lt;/p>
+&lt;pre>&lt;code>HOOKS=(base udev autodetect modconf block keymap encrypt resume filesystems keyboard fsck)
+&lt;/code>&lt;/pre>
+&lt;p>Then run:&lt;/p>
+&lt;pre>&lt;code># mkinitcpio -p linux
+&lt;/code>&lt;/pre>
+&lt;h3 id="install-grub">Install grub
+&lt;/h3>&lt;pre>&lt;code># grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ArchLinux
+&lt;/code>&lt;/pre>
+&lt;p>Edit /etc/default/grub so it includes a statement like this:&lt;/p>
+&lt;pre>&lt;code>GRUB_CMDLINE_LINUX=&amp;quot;cryptdevice=/dev/nvme0n1p4:archcryptroot resume=/dev/nvme0n1p3&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>Generate final grub configuration:&lt;/p>
+&lt;pre>&lt;code># grub-mkconfig -o /boot/grub/grub.cfg
+&lt;/code>&lt;/pre>
+&lt;h3 id="exit--reboot">Exit &amp;amp; reboot
+&lt;/h3>&lt;pre>&lt;code># exit
+# umount -R /mnt
+# swapoff -a
+# reboot
+&lt;/code>&lt;/pre>
+&lt;p>To be continued.&lt;/p></description></item></channel></rss>
