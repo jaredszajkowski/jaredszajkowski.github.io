@@ -79,7 +79,15 @@ Any files or directories that have been added, modified, or removed can be add t
 
     $ git add .
 
-Then committed (staged in preparation to push) with the following command:
+This function stages files that have been modified and deleted but new files that you have not added are not affected:
+
+    $ git commit -a
+
+This function commits any staged changes:
+
+    $ git commit -m "message"
+
+These arguments can be stacked as follows:
 
     $ git commit -am "Add your commit message here"
 

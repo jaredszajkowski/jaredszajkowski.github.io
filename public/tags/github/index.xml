@@ -55,7 +55,13 @@ $ git pull
 &lt;/h2&gt;&lt;p&gt;Any files or directories that have been added, modified, or removed can be add to the list of changes to be pushed with the following command:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git add .
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Then committed (staged in preparation to push) with the following command:&lt;/p&gt;
+&lt;p&gt;This function stages files that have been modified and deleted but new files that you have not added are not affected:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ git commit -a
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This function commits any staged changes:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ git commit -m &amp;quot;message&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;These arguments can be stacked as follows:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git commit -am &amp;quot;Add your commit message here&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Note: Without &lt;code&gt;add&lt;/code&gt;, &lt;code&gt;commit&lt;/code&gt; will handle any changes to files that have been modified or deleted, but will not incorporate any files that have been created.&lt;/p&gt;
