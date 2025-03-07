@@ -2,10 +2,10 @@
 title: Investigating A VIX Trading Signal
 description: A brief look at finding a trading signal based on moving averages of the VIX.
 # slug: hello-world
-date: 2025-01-07 00:00:01+0000
-lastmod: 2025-01-07 00:00:01+0000
+date: 2025-03-01 00:00:01+0000
+lastmod: 2025-03-07 00:00:01+0000
 image: cover.jpg
-draft: true
+draft: false
 categories:
     - Financial Data
     - Trading
@@ -106,15 +106,16 @@ def load_data(file):
 ### Return Information About A Dataframe
 
 ```python
-# The `df_info` function returns some useful information about a dataframe, such as the columns, data types, and size.
+# The `df_info` function returns some useful information about
+# a dataframe, such as the columns, data types, and size.
+
 def df_info(df):
-    print('There are ', df.shape[0], ' rows and ', df.shape[1], ' columns')
-    print('The columns and data types are:')
-    print(df.dtypes)
-    print('The first 4 rows are:')
-    display(df.head(4))
-    print('The last 4 rows are:')
-    display(df.tail(4))
+    print('The columns, shape, and data types are:')
+    print(df.info())
+    print('The first 5 rows are:')
+    display(df.head())
+    print('The last 5 rows are:')
+    display(df.tail())
 ```
 
 ## Data Overview
@@ -289,7 +290,50 @@ vix['Spike_EMA'] = vix['High'] >= vix['Spike_Level_EMA']
 vix['High_EMA_50'] = vix['High'].ewm(span=50, adjust=False).mean()
 ```
 
-Now, let's look at the first 
+For this exercise, we will use simple moving averages.
+
+### Spike Totals By Year
+
+To investigate the number of spike events (or signals) that we receive on a yearly basis, we can run the following:
+
+```python
+# Ensure the index is a DatetimeIndex
+vix.index = pd.to_datetime(vix.index)
+
+# Create a new column for the year extracted from the date index
+vix['Year'] = vix.index.year
+
+# Group by year and the "Spike_SMA" and "Spike_EMA" columns, then count occurrences
+spike_count_SMA = vix.groupby(['Year', 'Spike_SMA']).size().unstack(fill_value=0)
+
+spike_count_SMA
+```
+
+Which gives us the following:
+
+![Spike Counts](08_Spike_Counts.png)
+
+### Spike Counts (Signals) By Year
+
+Here's the plots for the spikes/signals generated over the past 3 decades:
+
+![Spike/Signals, 1990 - 1994](09_VIX_SMA_Spike_1990_1994.png)
+
+![Spike/Signals, 1995 - 1999](09_VIX_SMA_Spike_1995_1999.png)
+
+![Spike/Signals, 2000 - 2004](09_VIX_SMA_Spike_2000_2004.png)
+
+![Spike/Signals, 2005 - 2009](09_VIX_SMA_Spike_2005_2009.png)
+
+![Spike/Signals, 2010 - 2014](09_VIX_SMA_Spike_2010_2014.png)
+
+![Spike/Signals, 2015 - 2019](09_VIX_SMA_Spike_2015_2019.png)
+
+![Spike/Signals, 2020 - 2024](09_VIX_SMA_Spike_2020_2024.png)
+
+![Spike/Signals, 2025 - Present](09_VIX_SMA_Spike_2025_2025.png)
+
+More discussion to follow.
 
 ## References
 
@@ -298,4 +342,7 @@ https://github.com/ranaroussi/yfinance
 
 ## Code
 
-The jupyter notebook with the functions and all other code is available [here](YF_Data_Updater.ipynb).
+The jupyter notebook with the functions and all other code is available [here](investigating-a-vix-trading-signal.ipynb).
+The html export of the jupyter notebook is available [here](investigating-a-vix-trading-signal.html).
+The pdf export of the jupyter notebook is available [here](investigating-a-vix-trading-signal.pdf).
+
