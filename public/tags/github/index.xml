@@ -27,80 +27,7 @@
 &lt;pre&gt;&lt;code&gt;$ git config --global user.name &amp;quot;Firstname Lastname&amp;quot;
 $ git config --global user.email &amp;quot;email@address.com&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Then, set your preferred text editor (if you have one). I use nano:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ git config --global core.editor &amp;quot;nano&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;You can verify the updates with:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ git config --global core.editor
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Alternatively, you can edit the git configuration directly with:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ git config --global --edit
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;store-credentials&#34;&gt;Store credentials
-&lt;/h2&gt;&lt;p&gt;In 2021, GitHub disabled authentication via password and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in &lt;code&gt;~/.git-credentials&lt;/code&gt;:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ git config --global credential.helper store
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;After you log in during a &lt;code&gt;git push&lt;/code&gt; with your username and token, the username or email address and token will be stored in the above location.&lt;/p&gt;
-&lt;p&gt;Note: The token is stored in plain text, so use caution if that is a concern.&lt;/p&gt;
-&lt;h2 id=&#34;cloning-repositories&#34;&gt;Cloning repositories
-&lt;/h2&gt;&lt;p&gt;Repositories can be cloned with the following:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ git clone https://github.com/&amp;lt;username&amp;gt;/&amp;lt;repository&amp;gt;.git
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;updating-repositories&#34;&gt;Updating repositories
-&lt;/h2&gt;&lt;p&gt;The local record of a repository can be updated with the following command:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ cd &amp;lt;repository&amp;gt;/
-$ git pull
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;adding-committing-and-pushing&#34;&gt;Adding, committing, and pushing
-&lt;/h2&gt;&lt;p&gt;Any files or directories that have been added, modified, or removed can be add to the list of changes to be pushed with the following command:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ git add .
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This function stages files that have been modified and deleted but new files that you have not added are not affected:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ git commit -a
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This function commits any staged changes:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ git commit -m &amp;quot;message&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;These arguments can be stacked as follows:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ git commit -am &amp;quot;Add your commit message here&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Note: Without &lt;code&gt;add&lt;/code&gt;, &lt;code&gt;commit&lt;/code&gt; will handle any changes to files that have been modified or deleted, but will not incorporate any files that have been created.&lt;/p&gt;
-&lt;p&gt;Then finally pushed:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ git push
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;If, for some reason, you would like to reset a commit:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ git reset
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;These commands can be chained together with the AND operator:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ git add . &amp;amp;&amp;amp; git commit -am &amp;quot;Add your commit message here&amp;quot; &amp;amp;&amp;amp; git push
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;stashing-changes&#34;&gt;Stashing changes
-&lt;/h2&gt;&lt;p&gt;If you forget to update a repository before making changes, you can &amp;ldquo;stash&amp;rdquo; those changes and then re-apply them after running &lt;code&gt;git pull&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;First, stash the changes:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ git stash
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Then, update the local record of the repository:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ git pull
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Finally, re-apply the changes you previously made:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ git stash apply
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This has proven to be very useful for me when I forget to update a repository before making edits to the code.&lt;/p&gt;
-&lt;h2 id=&#34;references&#34;&gt;References
-&lt;/h2&gt;&lt;p&gt;References for git (and used for above):&lt;/p&gt;
-&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens&lt;/a&gt;&lt;/br&gt;
-&lt;a class=&#34;link&#34; href=&#34;https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup#_first_time&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup#_first_time&lt;/a&gt;&lt;/br&gt;
-&lt;a class=&#34;link&#34; href=&#34;https://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Setup-and-Config&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Setup-and-Config&lt;/a&gt;&lt;/br&gt;
-&lt;a class=&#34;link&#34; href=&#34;https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage#_credential_caching&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage#_credential_caching&lt;/a&gt;&lt;/br&gt;
-&lt;a class=&#34;link&#34; href=&#34;https://git-scm.com/book/en/v2/Git-Tools-Stashing-and-Cleaning&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://git-scm.com/book/en/v2/Git-Tools-Stashing-and-Cleaning&lt;/a&gt;&lt;/br&gt;
-&lt;a class=&#34;link&#34; href=&#34;https://www.geeksforgeeks.org/difference-between-chaining-operators-in-linux/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://www.geeksforgeeks.org/difference-between-chaining-operators-in-linux/&lt;/a&gt;&lt;/p&gt;
-</description>
+&lt;p&gt;Then, set your preferred text editor (if you have one). I use nano:&lt;/p&gt;</description>
         </item>
         <item>
         <title>Hello World</title>
@@ -122,51 +49,7 @@ $ git pull
 &lt;li&gt;Highly extensible including modules for image galleries, posts, comment capabilities, etc.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;It is hosted on &lt;a class=&#34;link&#34; href=&#34;https://pages.github.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;GitHub pages&lt;/a&gt;. I followed the install instructions that the theme author provided, including using GitHub codespace for editing in the cloud. There are only a few details that I ran into that he did not mention.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Don&amp;rsquo;t forget to run Hugo to build the site. This creates the public directory, which is where the static site files are located.&lt;/li&gt;
-&lt;li&gt;Make sure to update the branch to be gh-pages under Settings -&amp;gt; Pages -&amp;gt; Build and deployment -&amp;gt; Branch in GitHub.&lt;/li&gt;
-&lt;li&gt;Make sure to remove the public directory from the .gitignore file. Otherwise GitHub will ignore the public directory and your site will show the README.md instead of the Hugo site.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;The site can be updated either through codespace, or locally as long as Hugo and it&amp;rsquo;s required dependencies have been installed.&lt;/p&gt;
-&lt;h2 id=&#34;updating-and-pushing-changes&#34;&gt;Updating and pushing changes
-&lt;/h2&gt;&lt;p&gt;The simple command after making any changes and to push those updates is as follows:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ hugo &amp;amp;&amp;amp; git add . &amp;amp;&amp;amp; git commit -am &amp;quot;Updating site&amp;quot; &amp;amp;&amp;amp; git push
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This can be put in a bash script to make it easier. Save the following as &lt;code&gt;git-update.sh&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#!/bin/bash
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; What is the commit message?
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;read&lt;/span&gt; message
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;hugo &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; git add . &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; git commit -am &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$message&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; git push
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;Change permissions:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ chmod +x git-update.sh
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;And then execute:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ ./git-update.sh
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h2 id=&#34;references&#34;&gt;References
-&lt;/h2&gt;&lt;p&gt;Here&amp;rsquo;s the full list of resources I referenced for deploying Hugo with GitHub pages:&lt;/p&gt;
-&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.o11ycloud.com/posts/gh_hugo/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://www.o11ycloud.com/posts/gh_hugo/&lt;/a&gt;&lt;/br&gt;
-&lt;a class=&#34;link&#34; href=&#34;https://github.com/CaiJimmy/hugo-theme-stack&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://github.com/CaiJimmy/hugo-theme-stack&lt;/a&gt;&lt;/br&gt;
-&lt;a class=&#34;link&#34; href=&#34;https://medium.com/@magstherdev/github-pages-hugo-86ae6bcbadd&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://medium.com/@magstherdev/github-pages-hugo-86ae6bcbadd&lt;/a&gt;&lt;/p&gt;
-</description>
+    &gt;GitHub pages&lt;/a&gt;. I followed the install instructions that the theme author provided, including using GitHub codespace for editing in the cloud. There are only a few details that I ran into that he did not mention.&lt;/p&gt;</description>
         </item>
         
     </channel>
