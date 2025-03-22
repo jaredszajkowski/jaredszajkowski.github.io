@@ -11,6 +11,7 @@ args = parser.parse_args()
 
 notebook = args.notebook
 
+# Paths
 script_directory = Path(__file__).parent
 print("Script Directory:", script_directory)
 
