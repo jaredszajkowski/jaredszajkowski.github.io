@@ -343,5 +343,5 @@ https://github.com/ranaroussi/yfinance
 ## Code
 
 The jupyter notebook with the functions and all other code is available [here](investigating-a-vix-trading-signal.ipynb).</br>
-The html export of the jupyter notebook is available [here](../../../investigating-a-vix-trading-signal.html).</br>
+The html export of the jupyter notebook is available [here](../../../../investigating-a-vix-trading-signal/investigating-a-vix-trading-signal.html).</br>
 The pdf export of the jupyter notebook is available [here](investigating-a-vix-trading-signal.pdf).
