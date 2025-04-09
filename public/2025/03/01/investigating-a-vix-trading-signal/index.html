@@ -274,6 +274,7 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
+    <li><a href="#post-updates">Post Updates</a></li>
     <li><a href="#introduction">Introduction</a></li>
     <li><a href="#vix-data">VIX Data</a></li>
     <li><a href="#python-functions">Python Functions</a>
@@ -297,8 +298,8 @@
     <li><a href="#investigating-a-signal">Investigating A Signal</a>
       <ol>
         <li><a href="#spike-level">Spike Level</a></li>
-        <li><a href="#spike-totals-by-year">Spike Totals By Year</a></li>
         <li><a href="#spike-counts-signals-by-year">Spike Counts (Signals) By Year</a></li>
+        <li><a href="#spike-count-signal-plots-by-year">Spike Count (Signal) Plots By Year</a></li>
       </ol>
     </li>
     <li><a href="#references">References</a></li>
@@ -402,7 +403,9 @@
     <section class="article-content">
     
     
-    <h2 id="introduction">Introduction
+    <h2 id="post-updates">Post Updates
+</h2><p>Update 4/8/2025: Added plot for signals for each year. VIX data through 4/7/25.</p>
+<h2 id="introduction">Introduction
 </h2><p>From the <a class="link" href="https://www.cboe.com/tradable_products/vix/"  target="_blank" rel="noopener"
     >CBOE VIX website</a>:</p>
 <p>&ldquo;Cboe Global Markets revolutionized investing with the creation of the Cboe Volatility Index® (VIX® Index), the first benchmark index to measure the market’s expectation of future volatility. The VIX Index is based on options of the S&amp;P 500® Index, considered the leading indicator of the broad U.S. stock market. The VIX Index is recognized as the world’s premier gauge of U.S. equity market volatility.&rdquo;</p>
@@ -775,13 +778,13 @@
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/07_Plot_2010-2024.png"
-	width="3571"
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/07_Plot_2010-Present.png"
+	width="3570"
 	height="1768"
 	
 	loading="lazy"
 	
-		alt="VIX Daily High, 2010 - 2024"
+		alt="VIX Daily High, 2010 - Present"
 	
 	
 		class="gallery-image" 
@@ -901,7 +904,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>For this exercise, we will use simple moving averages.</p>
-<h3 id="spike-totals-by-year">Spike Totals By Year
+<h3 id="spike-counts-signals-by-year">Spike Counts (Signals) By Year
 </h3><p>To investigate the number of spike events (or signals) that we receive on a yearly basis, we can run the following:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -944,8 +947,513 @@
 		data-flex-basis="484px"
 	
 ></p>
-<h3 id="spike-counts-signals-by-year">Spike Counts (Signals) By Year
-</h3><p>Here&rsquo;s the plots for the spikes/signals generated over the past 3 decades:</p>
+<h3 id="spike-count-signal-plots-by-year">Spike Count (Signal) Plots By Year
+</h3><p>Here are the yearly plots for when signals are generated:</p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1990_1990.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 1990"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1991_1991.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 1991"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1992_1992.png"
+	width="3570"
+	height="1767"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 1992"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="202"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1993_1993.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 1993"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1994_1994.png"
+	width="3570"
+	height="1767"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 1994"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="202"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1995_1995.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 1995"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1996_1996.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 1996"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1997_1997.png"
+	width="3570"
+	height="1767"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 1997"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="202"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1998_1998.png"
+	width="3570"
+	height="1767"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 1998"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="202"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1999_1999.png"
+	width="3570"
+	height="1767"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 1999"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="202"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2000_2000.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2000"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2001_2001.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2001"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2002_2002.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2002"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2003_2003.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2003"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2004_2004.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2004"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2005_2005.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2005"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2006_2006.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2006"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2007_2007.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2007"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2008_2008.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2008"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2009_2009.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2009"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2010_2010.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2010"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2011_2011.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2011"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2012_2012.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2012"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2013_2013.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2013"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2014_2014.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2014"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2015_2015.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2015"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2016_2016.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2016"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2017_2017.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2017"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2018_2018.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2018"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2019_2019.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2019"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2020_2020.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2020"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2021_2021.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2021"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2022_2022.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2022"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2023_2023.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2023"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2024_2024.png"
+	width="3570"
+	height="1767"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2024"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="202"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2025_2025.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2025"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p>And here are the plots for the signals generated over the past 3 decades:</p>
 <p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1990_1994.png"
 	width="3562"
 	height="1767"

@@ -17,6 +17,10 @@ tags:
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 
+## Post Updates
+
+Update 4/8/2025: Added plot for signals for each year. VIX data through 4/7/25.
+
 ## Introduction
 
 From the [CBOE VIX website](https://www.cboe.com/tradable_products/vix/):
@@ -219,7 +223,7 @@ Here's two plots for the dataset. The first covers 1990 - 2009, and the second 2
 
 ![VIX Daily High, 1990 - 2009](06_Plot_1990-2009.png)
 
-![VIX Daily High, 2010 - 2024](07_Plot_2010-2024.png)
+![VIX Daily High, 2010 - Present](07_Plot_2010-Present.png)
 
 From this plot, we can see the following:
 
@@ -292,7 +296,7 @@ vix['High_EMA_50'] = vix['High'].ewm(span=50, adjust=False).mean()
 
 For this exercise, we will use simple moving averages.
 
-### Spike Totals By Year
+### Spike Counts (Signals) By Year
 
 To investigate the number of spike events (or signals) that we receive on a yearly basis, we can run the following:
 
@@ -313,9 +317,83 @@ Which gives us the following:
 
 ![Spike Counts](08_Spike_Counts.png)
 
-### Spike Counts (Signals) By Year
+### Spike Count (Signal) Plots By Year
 
-Here's the plots for the spikes/signals generated over the past 3 decades:
+Here are the yearly plots for when signals are generated:
+
+![Spike/Signals, 1990](09_VIX_SMA_Spike_1990_1990.png)
+
+![Spike/Signals, 1991](09_VIX_SMA_Spike_1991_1991.png)
+
+![Spike/Signals, 1992](09_VIX_SMA_Spike_1992_1992.png)
+
+![Spike/Signals, 1993](09_VIX_SMA_Spike_1993_1993.png)
+
+![Spike/Signals, 1994](09_VIX_SMA_Spike_1994_1994.png)
+
+![Spike/Signals, 1995](09_VIX_SMA_Spike_1995_1995.png)
+
+![Spike/Signals, 1996](09_VIX_SMA_Spike_1996_1996.png)
+
+![Spike/Signals, 1997](09_VIX_SMA_Spike_1997_1997.png)
+
+![Spike/Signals, 1998](09_VIX_SMA_Spike_1998_1998.png)
+
+![Spike/Signals, 1999](09_VIX_SMA_Spike_1999_1999.png)
+
+![Spike/Signals, 2000](09_VIX_SMA_Spike_2000_2000.png)
+
+![Spike/Signals, 2001](09_VIX_SMA_Spike_2001_2001.png)
+
+![Spike/Signals, 2002](09_VIX_SMA_Spike_2002_2002.png)
+
+![Spike/Signals, 2003](09_VIX_SMA_Spike_2003_2003.png)
+
+![Spike/Signals, 2004](09_VIX_SMA_Spike_2004_2004.png)
+
+![Spike/Signals, 2005](09_VIX_SMA_Spike_2005_2005.png)
+
+![Spike/Signals, 2006](09_VIX_SMA_Spike_2006_2006.png)
+
+![Spike/Signals, 2007](09_VIX_SMA_Spike_2007_2007.png)
+
+![Spike/Signals, 2008](09_VIX_SMA_Spike_2008_2008.png)
+
+![Spike/Signals, 2009](09_VIX_SMA_Spike_2009_2009.png)
+
+![Spike/Signals, 2010](09_VIX_SMA_Spike_2010_2010.png)
+
+![Spike/Signals, 2011](09_VIX_SMA_Spike_2011_2011.png)
+
+![Spike/Signals, 2012](09_VIX_SMA_Spike_2012_2012.png)
+
+![Spike/Signals, 2013](09_VIX_SMA_Spike_2013_2013.png)
+
+![Spike/Signals, 2014](09_VIX_SMA_Spike_2014_2014.png)
+
+![Spike/Signals, 2015](09_VIX_SMA_Spike_2015_2015.png)
+
+![Spike/Signals, 2016](09_VIX_SMA_Spike_2016_2016.png)
+
+![Spike/Signals, 2017](09_VIX_SMA_Spike_2017_2017.png)
+
+![Spike/Signals, 2018](09_VIX_SMA_Spike_2018_2018.png)
+
+![Spike/Signals, 2019](09_VIX_SMA_Spike_2019_2019.png)
+
+![Spike/Signals, 2020](09_VIX_SMA_Spike_2020_2020.png)
+
+![Spike/Signals, 2021](09_VIX_SMA_Spike_2021_2021.png)
+
+![Spike/Signals, 2022](09_VIX_SMA_Spike_2022_2022.png)
+
+![Spike/Signals, 2023](09_VIX_SMA_Spike_2023_2023.png)
+
+![Spike/Signals, 2024](09_VIX_SMA_Spike_2024_2024.png)
+
+![Spike/Signals, 2025](09_VIX_SMA_Spike_2025_2025.png)
+
+And here are the plots for the signals generated over the past 3 decades:
 
 ![Spike/Signals, 1990 - 1994](09_VIX_SMA_Spike_1990_1994.png)
 
