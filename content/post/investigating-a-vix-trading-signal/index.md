@@ -3,7 +3,7 @@ title: Investigating A VIX Trading Signal
 description: A brief look at finding a trading signal based on moving averages of the VIX.
 # slug: hello-world
 date: 2025-03-01 00:00:01+0000
-lastmod: 2025-03-07 00:00:01+0000
+lastmod: 2025-04-09 00:00:01+0000
 image: cover.jpg
 draft: false
 categories:
@@ -20,6 +20,7 @@ tags:
 ## Post Updates
 
 Update 4/8/2025: Added plot for signals for each year. VIX data through 4/7/25.
+Update 4/9/2025: VIX data through 4/8/25.
 
 ## Introduction
 
@@ -176,6 +177,42 @@ df_info(vix)
 
 Gives us the following:
 
+```
+The columns, shape, and data types are:
+
+<class 'pandas.core.frame.DataFrame'>
+DatetimeIndex: 8883 entries, 1990-01-02 to 2025-04-08
+Data columns (total 4 columns):
+ #   Column  Non-Null Count  Dtype  
+---  ------  --------------  -----  
+ 0   Close   8883 non-null   float64
+ 1   High    8883 non-null   float64
+ 2   Low     8883 non-null   float64
+ 3   Open    8883 non-null   float64
+dtypes: float64(4)
+memory usage: 347.0 KB
+
+The first 5 rows are:
+
+| Date                |   Close |   High |   Low |   Open |
+|:--------------------|--------:|-------:|------:|-------:|
+| 1990-01-02 00:00:00 |   17.24 |  17.24 | 17.24 |  17.24 |
+| 1990-01-03 00:00:00 |   18.19 |  18.19 | 18.19 |  18.19 |
+| 1990-01-04 00:00:00 |   19.22 |  19.22 | 19.22 |  19.22 |
+| 1990-01-05 00:00:00 |   20.11 |  20.11 | 20.11 |  20.11 |
+| 1990-01-08 00:00:00 |   20.26 |  20.26 | 20.26 |  20.26 |
+
+The last 5 rows are:
+
+| Date                |   Close |   High |   Low |   Open |
+|:--------------------|--------:|-------:|------:|-------:|
+| 2025-04-02 00:00:00 |   21.51 |  23.66 | 20.68 |  22.3  |
+| 2025-04-03 00:00:00 |   30.02 |  30.02 | 24.93 |  26.38 |
+| 2025-04-04 00:00:00 |   45.31 |  45.61 | 29.99 |  30.12 |
+| 2025-04-07 00:00:00 |   46.98 |  60.13 | 38.58 |  60.13 |
+| 2025-04-08 00:00:00 |   52.33 |  57.52 | 36.48 |  44.04 |
+```
+
 ![DataFrame Info](01_DF_Info.png)
 
 ### Interesting Statistics
@@ -197,6 +234,20 @@ vix_stats.loc['mean - 1 std'] = {'Open': vix_stats.loc['mean']['Open'] - vix_sta
                                  'Low': vix_stats.loc['mean']['Low'] - vix_stats.loc['std']['Low'],
                                  'Close': vix_stats.loc['mean']['Close'] - vix_stats.loc['std']['Close']}
 ```
+
+|              |      Close |       High |       Low |      Open |
+|:-------------|-----------:|-----------:|----------:|----------:|
+| count        | 8883       | 8883       | 8883      | 8883      |
+| mean         |   19.4754  |   20.3784  |   18.8031 |   19.5651 |
+| std          |    7.83772 |    8.38141 |    7.3931 |    7.9074 |
+| min          |    9.14    |    9.31    |    8.56   |    9.01   |
+| 25%          |   13.85    |   14.515   |   13.395  |   13.93   |
+| 50%          |   17.63    |   18.33    |   17.04   |   17.67   |
+| 75%          |   22.81    |   23.81    |   22.13   |   22.96   |
+| max          |   82.69    |   89.53    |   72.76   |   82.69   |
+| mean + 1 std |   27.3131  |   28.7598  |   26.1962 |   27.4725 |
+| mean + 2 std |   35.1508  |   37.1412  |   33.5893 |   35.3799 |
+| mean - 1 std |   11.6376  |   11.997   |   11.41   |   11.6577 |
 
 ![Data Stats](02_DF_Stats.png)
 
