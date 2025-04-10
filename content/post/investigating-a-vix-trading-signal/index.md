@@ -189,7 +189,7 @@ df_info(vix)
 
 Gives us the following:
 
-```
+```text
 The columns, shape, and data types are:
 
 <class 'pandas.core.frame.DataFrame'>
