@@ -83,6 +83,8 @@ def yf_data_updater(fund):
 
 ### Set Number Of Decimal Places
 
+This is a quick function to set the number of decimal places that pandas displays. Useful for when using different data sets in a jupyter notebook when you want to change the number of decimal places displayed throughout the notebook:
+
 ```python
 # Set number of decimal places in pandas
 def dp(decimal_places):
@@ -90,6 +92,8 @@ def dp(decimal_places):
 ```
 
 ### Import Data From CSV / XLSX
+
+This function loads data from either a CSV file or excel file into a pandas dataframe:
 
 ```python
 def load_data(file):
@@ -121,6 +125,14 @@ def df_info(df):
     display(df.head())
     print('The last 5 rows are:')
     display(df.tail())
+```
+
+Although the above function is useful, sometimes it is simpler to run:
+
+```python
+df.info()
+df.head()
+df.tail()
 ```
 
 ## Data Overview
@@ -181,16 +193,17 @@ Gives us the following:
 The columns, shape, and data types are:
 
 <class 'pandas.core.frame.DataFrame'>
-DatetimeIndex: 8883 entries, 1990-01-02 to 2025-04-08
+DatetimeIndex: 8884 entries, 1990-01-02 to 2025-04-09
 Data columns (total 4 columns):
  #   Column  Non-Null Count  Dtype  
 ---  ------  --------------  -----  
- 0   Close   8883 non-null   float64
- 1   High    8883 non-null   float64
- 2   Low     8883 non-null   float64
- 3   Open    8883 non-null   float64
+ 0   Close   8884 non-null   float64
+ 1   High    8884 non-null   float64
+ 2   Low     8884 non-null   float64
+ 3   Open    8884 non-null   float64
 dtypes: float64(4)
 memory usage: 347.0 KB
+```
 
 The first 5 rows are:
 
@@ -206,59 +219,69 @@ The last 5 rows are:
 
 | Date                |   Close |   High |   Low |   Open |
 |:--------------------|--------:|-------:|------:|-------:|
-| 2025-04-02 00:00:00 |   21.51 |  23.66 | 20.68 |  22.3  |
 | 2025-04-03 00:00:00 |   30.02 |  30.02 | 24.93 |  26.38 |
 | 2025-04-04 00:00:00 |   45.31 |  45.61 | 29.99 |  30.12 |
 | 2025-04-07 00:00:00 |   46.98 |  60.13 | 38.58 |  60.13 |
 | 2025-04-08 00:00:00 |   52.33 |  57.52 | 36.48 |  44.04 |
-```
+| 2025-04-09 00:00:00 |   33.62 |  57.96 | 31.9  |  50.98 |
 
-![DataFrame Info](01_DF_Info.png)
 
-### Interesting Statistics
+### Statistics
 
-Some interesting statistics jump out at use when we look at the mean, standard deviation, min, and max values:
+Some interesting statistics jump out at us when we look at the mean, standard deviation, minimum, and maximum values:
 
 ```python
 vix_stats = vix.describe()
-vix_stats.loc['mean + 1 std'] = {'Open': vix_stats.loc['mean']['Open'] + vix_stats.loc['std']['Open'],
-                                 'High': vix_stats.loc['mean']['High'] + vix_stats.loc['std']['High'],
-                                 'Low': vix_stats.loc['mean']['Low'] + vix_stats.loc['std']['Low'],
-                                 'Close': vix_stats.loc['mean']['Close'] + vix_stats.loc['std']['Close']}
-vix_stats.loc['mean + 2 std'] = {'Open': vix_stats.loc['mean']['Open'] + 2 * vix_stats.loc['std']['Open'],
-                                 'High': vix_stats.loc['mean']['High'] + 2 * vix_stats.loc['std']['High'],
-                                 'Low': vix_stats.loc['mean']['Low'] + 2 * vix_stats.loc['std']['Low'],
-                                 'Close': vix_stats.loc['mean']['Close'] + 2 * vix_stats.loc['std']['Close']}
-vix_stats.loc['mean - 1 std'] = {'Open': vix_stats.loc['mean']['Open'] - vix_stats.loc['std']['Open'],
-                                 'High': vix_stats.loc['mean']['High'] - vix_stats.loc['std']['High'],
-                                 'Low': vix_stats.loc['mean']['Low'] - vix_stats.loc['std']['Low'],
-                                 'Close': vix_stats.loc['mean']['Close'] - vix_stats.loc['std']['Close']}
+num_std = [-1, 0, 1, 2, 3, 4, 5]
+for num in num_std:
+    vix_stats.loc[f"mean + {num} std"] = {'Open': vix_stats.loc['mean']['Open'] + num * vix_stats.loc['std']['Open'],
+                                    'High': vix_stats.loc['mean']['High'] + num * vix_stats.loc['std']['High'],
+                                    'Low': vix_stats.loc['mean']['Low'] + num * vix_stats.loc['std']['Low'],
+                                    'Close': vix_stats.loc['mean']['Close'] + num * vix_stats.loc['std']['Close']}
 ```
 
-|              |      Close |       High |       Low |      Open |
-|:-------------|-----------:|-----------:|----------:|----------:|
-| count        | 8883       | 8883       | 8883      | 8883      |
-| mean         |   19.4754  |   20.3784  |   18.8031 |   19.5651 |
-| std          |    7.83772 |    8.38141 |    7.3931 |    7.9074 |
-| min          |    9.14    |    9.31    |    8.56   |    9.01   |
-| 25%          |   13.85    |   14.515   |   13.395  |   13.93   |
-| 50%          |   17.63    |   18.33    |   17.04   |   17.67   |
-| 75%          |   22.81    |   23.81    |   22.13   |   22.96   |
-| max          |   82.69    |   89.53    |   72.76   |   82.69   |
-| mean + 1 std |   27.3131  |   28.7598  |   26.1962 |   27.4725 |
-| mean + 2 std |   35.1508  |   37.1412  |   33.5893 |   35.3799 |
-| mean - 1 std |   11.6376  |   11.997   |   11.41   |   11.6577 |
+|               |      Close |       High |        Low |       Open |
+|:--------------|-----------:|-----------:|-----------:|-----------:|
+| count         | 8884       | 8884       | 8884       | 8884       |
+| mean          |   19.4769  |   20.3827  |   18.8045  |   19.5686  |
+| std           |    7.83872 |    8.39042 |    7.39399 |    7.91398 |
+| min           |    9.14    |    9.31    |    8.56    |    9.01    |
+| 25%           |   13.85    |   14.5175  |   13.3975  |   13.93    |
+| 50%           |   17.63    |   18.335   |   17.045   |   17.67    |
+| 75%           |   22.81    |   23.81    |   22.13    |   22.96    |
+| max           |   82.69    |   89.53    |   72.76    |   82.69    |
+| mean + -1 std |   11.6382  |   11.9922  |   11.4106  |   11.6547  |
+| mean + 0 std  |   19.4769  |   20.3827  |   18.8045  |   19.5686  |
+| mean + 1 std  |   27.3157  |   28.7731  |   26.1985  |   27.4826  |
+| mean + 2 std  |   35.1544  |   37.1635  |   33.5925  |   35.3966  |
+| mean + 3 std  |   42.9931  |   45.5539  |   40.9865  |   43.3106  |
+| mean + 4 std  |   50.8318  |   53.9443  |   48.3805  |   51.2246  |
+| mean + 5 std  |   58.6705  |   62.3347  |   55.7745  |   59.1385  |
 
-![Data Stats](02_DF_Stats.png)
+### Deciles
 
 And the levels for each decile:
 
 ```python
-deciles = vix.quantile(np.arange(0, 1.1, 0.1))
-display(deciles)
+vix_deciles = vix.quantile(np.arange(0, 1.1, 0.1))
+display(vix_deciles)
 ```
 
-![Data Deciles](03_DF_Deciles.png)
+|     |   Close |   High |    Low |   Open |
+|----:|--------:|-------:|-------:|-------:|
+| 0   |    9.14 |  9.31  |  8.56  |   9.01 |
+| 0.1 |   12.12 | 12.62  | 11.72  |  12.13 |
+| 0.2 |   13.24 | 13.866 | 12.84  |  13.3  |
+| 0.3 |   14.59 | 15.27  | 14.069 |  14.66 |
+| 0.4 |   16.08 | 16.74  | 15.54  |  16.11 |
+| 0.5 |   17.63 | 18.335 | 17.045 |  17.67 |
+| 0.6 |   19.54 | 20.37  | 18.99  |  19.66 |
+| 0.7 |   21.62 | 22.611 | 20.98  |  21.76 |
+| 0.8 |   24.29 | 25.3   | 23.454 |  24.37 |
+| 0.9 |   28.67 | 29.96  | 27.76  |  28.83 |
+| 1   |   82.69 | 89.53  | 72.76  |  82.69 |
+
+### Histogram Distribution
 
 A quick histogram gives us the distribution for the entire dataset:
 

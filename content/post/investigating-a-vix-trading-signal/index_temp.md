@@ -83,6 +83,8 @@ def yf_data_updater(fund):
 
 ### Set Number Of Decimal Places
 
+This is a quick function to set the number of decimal places that pandas displays. Useful for when using different data sets in a jupyter notebook when you want to change the number of decimal places displayed throughout the notebook:
+
 ```python
 # Set number of decimal places in pandas
 def dp(decimal_places):
@@ -90,6 +92,8 @@ def dp(decimal_places):
 ```
 
 ### Import Data From CSV / XLSX
+
+This function loads data from either a CSV file or excel file into a pandas dataframe:
 
 ```python
 def load_data(file):
@@ -121,6 +125,14 @@ def df_info(df):
     display(df.head())
     print('The last 5 rows are:')
     display(df.tail())
+```
+
+Although the above function is useful, sometimes it is simpler to run:
+
+```python
+df.info()
+df.head()
+df.tail()
 ```
 
 ## Data Overview
@@ -179,40 +191,34 @@ Gives us the following:
 
 <!-- INSERT_DF_INFO_HERE -->
 
-![DataFrame Info](01_DF_Info.png)
+### Statistics
 
-### Interesting Statistics
-
-Some interesting statistics jump out at use when we look at the mean, standard deviation, min, and max values:
+Some interesting statistics jump out at us when we look at the mean, standard deviation, minimum, and maximum values:
 
 ```python
 vix_stats = vix.describe()
-vix_stats.loc['mean + 1 std'] = {'Open': vix_stats.loc['mean']['Open'] + vix_stats.loc['std']['Open'],
-                                 'High': vix_stats.loc['mean']['High'] + vix_stats.loc['std']['High'],
-                                 'Low': vix_stats.loc['mean']['Low'] + vix_stats.loc['std']['Low'],
-                                 'Close': vix_stats.loc['mean']['Close'] + vix_stats.loc['std']['Close']}
-vix_stats.loc['mean + 2 std'] = {'Open': vix_stats.loc['mean']['Open'] + 2 * vix_stats.loc['std']['Open'],
-                                 'High': vix_stats.loc['mean']['High'] + 2 * vix_stats.loc['std']['High'],
-                                 'Low': vix_stats.loc['mean']['Low'] + 2 * vix_stats.loc['std']['Low'],
-                                 'Close': vix_stats.loc['mean']['Close'] + 2 * vix_stats.loc['std']['Close']}
-vix_stats.loc['mean - 1 std'] = {'Open': vix_stats.loc['mean']['Open'] - vix_stats.loc['std']['Open'],
-                                 'High': vix_stats.loc['mean']['High'] - vix_stats.loc['std']['High'],
-                                 'Low': vix_stats.loc['mean']['Low'] - vix_stats.loc['std']['Low'],
-                                 'Close': vix_stats.loc['mean']['Close'] - vix_stats.loc['std']['Close']}
+num_std = [-1, 0, 1, 2, 3, 4, 5]
+for num in num_std:
+    vix_stats.loc[f"mean + {num} std"] = {'Open': vix_stats.loc['mean']['Open'] + num * vix_stats.loc['std']['Open'],
+                                    'High': vix_stats.loc['mean']['High'] + num * vix_stats.loc['std']['High'],
+                                    'Low': vix_stats.loc['mean']['Low'] + num * vix_stats.loc['std']['Low'],
+                                    'Close': vix_stats.loc['mean']['Close'] + num * vix_stats.loc['std']['Close']}
 ```
 
-<!-- INSERT_DF_STATS_HERE -->
+<!-- INSERT_VIX_STATS_HERE -->
 
-![Data Stats](02_DF_Stats.png)
+### Deciles
 
 And the levels for each decile:
 
 ```python
-deciles = vix.quantile(np.arange(0, 1.1, 0.1))
-display(deciles)
+vix_deciles = vix.quantile(np.arange(0, 1.1, 0.1))
+display(vix_deciles)
 ```
 
-![Data Deciles](03_DF_Deciles.png)
+<!-- INSERT_VIX_DECILES_HERE -->
+
+### Histogram Distribution
 
 A quick histogram gives us the distribution for the entire dataset:
 

@@ -291,7 +291,9 @@
         <li><a href="#load-data">Load Data</a></li>
         <li><a href="#check-for-missing-values--forward-fill-any-missing-values">Check For Missing Values &amp; Forward Fill Any Missing Values</a></li>
         <li><a href="#dataframe-info">DataFrame Info</a></li>
-        <li><a href="#interesting-statistics">Interesting Statistics</a></li>
+        <li><a href="#statistics">Statistics</a></li>
+        <li><a href="#deciles">Deciles</a></li>
+        <li><a href="#histogram-distribution">Histogram Distribution</a></li>
         <li><a href="#historical-vix-plot">Historical VIX Plot</a></li>
       </ol>
     </li>
@@ -494,7 +496,8 @@ Update 4/9/2025: VIX data through 4/8/25.</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="set-number-of-decimal-places">Set Number Of Decimal Places
-</h3><div class="highlight"><div class="chroma">
+</h3><p>This is a quick function to set the number of decimal places that pandas displays. Useful for when using different data sets in a jupyter notebook when you want to change the number of decimal places displayed throughout the notebook:</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -507,7 +510,8 @@ Update 4/9/2025: VIX data through 4/8/25.</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="import-data-from-csv--xlsx">Import Data From CSV / XLSX
-</h3><div class="highlight"><div class="chroma">
+</h3><p>This function loads data from either a CSV file or excel file into a pandas dataframe:</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -566,6 +570,19 @@ Update 4/9/2025: VIX data through 4/8/25.</p>
 </span></span><span class="line"><span class="cl">    <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The last 5 rows are:&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">())</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Although the above function is useful, sometimes it is simpler to run:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="data-overview">Data Overview
@@ -661,109 +678,141 @@ Update 4/9/2025: VIX data through 4/8/25.</p>
 </span><span class="lnt">11
 </span><span class="lnt">12
 </span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">The columns, shape, and data types are:
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-</span></span><span class="line"><span class="cl">DatetimeIndex: 8883 entries, 1990-01-02 to 2025-04-08
+</span></span><span class="line"><span class="cl">DatetimeIndex: 8884 entries, 1990-01-02 to 2025-04-09
 </span></span><span class="line"><span class="cl">Data columns (total 4 columns):
 </span></span><span class="line"><span class="cl"> #   Column  Non-Null Count  Dtype  
 </span></span><span class="line"><span class="cl">---  ------  --------------  -----  
-</span></span><span class="line"><span class="cl"> 0   Close   8883 non-null   float64
-</span></span><span class="line"><span class="cl"> 1   High    8883 non-null   float64
-</span></span><span class="line"><span class="cl"> 2   Low     8883 non-null   float64
-</span></span><span class="line"><span class="cl"> 3   Open    8883 non-null   float64
+</span></span><span class="line"><span class="cl"> 0   Close   8884 non-null   float64
+</span></span><span class="line"><span class="cl"> 1   High    8884 non-null   float64
+</span></span><span class="line"><span class="cl"> 2   Low     8884 non-null   float64
+</span></span><span class="line"><span class="cl"> 3   Open    8884 non-null   float64
 </span></span><span class="line"><span class="cl">dtypes: float64(4)
 </span></span><span class="line"><span class="cl">memory usage: 347.0 KB
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">The first 5 rows are:
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">| Date                |   Close |   High |   Low |   Open |
-</span></span><span class="line"><span class="cl">|:--------------------|--------:|-------:|------:|-------:|
-</span></span><span class="line"><span class="cl">| 1990-01-02 00:00:00 |   17.24 |  17.24 | 17.24 |  17.24 |
-</span></span><span class="line"><span class="cl">| 1990-01-03 00:00:00 |   18.19 |  18.19 | 18.19 |  18.19 |
-</span></span><span class="line"><span class="cl">| 1990-01-04 00:00:00 |   19.22 |  19.22 | 19.22 |  19.22 |
-</span></span><span class="line"><span class="cl">| 1990-01-05 00:00:00 |   20.11 |  20.11 | 20.11 |  20.11 |
-</span></span><span class="line"><span class="cl">| 1990-01-08 00:00:00 |   20.26 |  20.26 | 20.26 |  20.26 |
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">The last 5 rows are:
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">| Date                |   Close |   High |   Low |   Open |
-</span></span><span class="line"><span class="cl">|:--------------------|--------:|-------:|------:|-------:|
-</span></span><span class="line"><span class="cl">| 2025-04-02 00:00:00 |   21.51 |  23.66 | 20.68 |  22.3  |
-</span></span><span class="line"><span class="cl">| 2025-04-03 00:00:00 |   30.02 |  30.02 | 24.93 |  26.38 |
-</span></span><span class="line"><span class="cl">| 2025-04-04 00:00:00 |   45.31 |  45.61 | 29.99 |  30.12 |
-</span></span><span class="line"><span class="cl">| 2025-04-07 00:00:00 |   46.98 |  60.13 | 38.58 |  60.13 |
-</span></span><span class="line"><span class="cl">| 2025-04-08 00:00:00 |   52.33 |  57.52 | 36.48 |  44.04 |
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img src="/2025/03/01/investigating-a-vix-trading-signal/01_DF_Info.png"
-	width="509"
-	height="778"
-	
-	loading="lazy"
-	
-		alt="DataFrame Info"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="65"
-		data-flex-basis="157px"
-	
-></p>
-<h3 id="interesting-statistics">Interesting Statistics
-</h3><p>Some interesting statistics jump out at use when we look at the mean, standard deviation, min, and max values:</p>
+</div><p>The first 5 rows are:</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Date</th>
+          <th style="text-align: right">Close</th>
+          <th style="text-align: right">High</th>
+          <th style="text-align: right">Low</th>
+          <th style="text-align: right">Open</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">1990-01-02 00:00:00</td>
+          <td style="text-align: right">17.24</td>
+          <td style="text-align: right">17.24</td>
+          <td style="text-align: right">17.24</td>
+          <td style="text-align: right">17.24</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">1990-01-03 00:00:00</td>
+          <td style="text-align: right">18.19</td>
+          <td style="text-align: right">18.19</td>
+          <td style="text-align: right">18.19</td>
+          <td style="text-align: right">18.19</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">1990-01-04 00:00:00</td>
+          <td style="text-align: right">19.22</td>
+          <td style="text-align: right">19.22</td>
+          <td style="text-align: right">19.22</td>
+          <td style="text-align: right">19.22</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">1990-01-05 00:00:00</td>
+          <td style="text-align: right">20.11</td>
+          <td style="text-align: right">20.11</td>
+          <td style="text-align: right">20.11</td>
+          <td style="text-align: right">20.11</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">1990-01-08 00:00:00</td>
+          <td style="text-align: right">20.26</td>
+          <td style="text-align: right">20.26</td>
+          <td style="text-align: right">20.26</td>
+          <td style="text-align: right">20.26</td>
+      </tr>
+  </tbody>
+</table></div>
+<p>The last 5 rows are:</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Date</th>
+          <th style="text-align: right">Close</th>
+          <th style="text-align: right">High</th>
+          <th style="text-align: right">Low</th>
+          <th style="text-align: right">Open</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">2025-04-03 00:00:00</td>
+          <td style="text-align: right">30.02</td>
+          <td style="text-align: right">30.02</td>
+          <td style="text-align: right">24.93</td>
+          <td style="text-align: right">26.38</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-04-04 00:00:00</td>
+          <td style="text-align: right">45.31</td>
+          <td style="text-align: right">45.61</td>
+          <td style="text-align: right">29.99</td>
+          <td style="text-align: right">30.12</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-04-07 00:00:00</td>
+          <td style="text-align: right">46.98</td>
+          <td style="text-align: right">60.13</td>
+          <td style="text-align: right">38.58</td>
+          <td style="text-align: right">60.13</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-04-08 00:00:00</td>
+          <td style="text-align: right">52.33</td>
+          <td style="text-align: right">57.52</td>
+          <td style="text-align: right">36.48</td>
+          <td style="text-align: right">44.04</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-04-09 00:00:00</td>
+          <td style="text-align: right">33.62</td>
+          <td style="text-align: right">57.96</td>
+          <td style="text-align: right">31.9</td>
+          <td style="text-align: right">50.98</td>
+      </tr>
+  </tbody>
+</table></div>
+<h3 id="statistics">Statistics
+</h3><p>Some interesting statistics jump out at us when we look at the mean, standard deviation, minimum, and maximum values:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">vix_stats</span> <span class="o">=</span> <span class="n">vix</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean + 1 std&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Open&#39;</span><span class="p">:</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">][</span><span class="s1">&#39;Open&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">][</span><span class="s1">&#39;Open&#39;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">                                 <span class="s1">&#39;High&#39;</span><span class="p">:</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">][</span><span class="s1">&#39;High&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">][</span><span class="s1">&#39;High&#39;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">                                 <span class="s1">&#39;Low&#39;</span><span class="p">:</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">][</span><span class="s1">&#39;Low&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">][</span><span class="s1">&#39;Low&#39;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">                                 <span class="s1">&#39;Close&#39;</span><span class="p">:</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">][</span><span class="s1">&#39;Close&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">][</span><span class="s1">&#39;Close&#39;</span><span class="p">]}</span>
-</span></span><span class="line"><span class="cl"><span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean + 2 std&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Open&#39;</span><span class="p">:</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">][</span><span class="s1">&#39;Open&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">][</span><span class="s1">&#39;Open&#39;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">                                 <span class="s1">&#39;High&#39;</span><span class="p">:</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">][</span><span class="s1">&#39;High&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">][</span><span class="s1">&#39;High&#39;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">                                 <span class="s1">&#39;Low&#39;</span><span class="p">:</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">][</span><span class="s1">&#39;Low&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">][</span><span class="s1">&#39;Low&#39;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">                                 <span class="s1">&#39;Close&#39;</span><span class="p">:</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">][</span><span class="s1">&#39;Close&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">][</span><span class="s1">&#39;Close&#39;</span><span class="p">]}</span>
-</span></span><span class="line"><span class="cl"><span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean - 1 std&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Open&#39;</span><span class="p">:</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">][</span><span class="s1">&#39;Open&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">][</span><span class="s1">&#39;Open&#39;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">                                 <span class="s1">&#39;High&#39;</span><span class="p">:</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">][</span><span class="s1">&#39;High&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">][</span><span class="s1">&#39;High&#39;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">                                 <span class="s1">&#39;Low&#39;</span><span class="p">:</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">][</span><span class="s1">&#39;Low&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">][</span><span class="s1">&#39;Low&#39;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">                                 <span class="s1">&#39;Close&#39;</span><span class="p">:</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">][</span><span class="s1">&#39;Close&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">][</span><span class="s1">&#39;Close&#39;</span><span class="p">]}</span>
+</span></span><span class="line"><span class="cl"><span class="n">num_std</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">num_std</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="sa">f</span><span class="s2">&#34;mean + </span><span class="si">{</span><span class="n">num</span><span class="si">}</span><span class="s2"> std&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Open&#39;</span><span class="p">:</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">][</span><span class="s1">&#39;Open&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">num</span> <span class="o">*</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">][</span><span class="s1">&#39;Open&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                                    <span class="s1">&#39;High&#39;</span><span class="p">:</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">][</span><span class="s1">&#39;High&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">num</span> <span class="o">*</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">][</span><span class="s1">&#39;High&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                                    <span class="s1">&#39;Low&#39;</span><span class="p">:</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">][</span><span class="s1">&#39;Low&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">num</span> <span class="o">*</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">][</span><span class="s1">&#39;Low&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                                    <span class="s1">&#39;Close&#39;</span><span class="p">:</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">][</span><span class="s1">&#39;Close&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">num</span> <span class="o">*</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">][</span><span class="s1">&#39;Close&#39;</span><span class="p">]}</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><div class="table-wrapper"><table>
@@ -779,24 +828,24 @@ Update 4/9/2025: VIX data through 4/8/25.</p>
   <tbody>
       <tr>
           <td style="text-align: left">count</td>
-          <td style="text-align: right">8883</td>
-          <td style="text-align: right">8883</td>
-          <td style="text-align: right">8883</td>
-          <td style="text-align: right">8883</td>
+          <td style="text-align: right">8884</td>
+          <td style="text-align: right">8884</td>
+          <td style="text-align: right">8884</td>
+          <td style="text-align: right">8884</td>
       </tr>
       <tr>
           <td style="text-align: left">mean</td>
-          <td style="text-align: right">19.4754</td>
-          <td style="text-align: right">20.3784</td>
-          <td style="text-align: right">18.8031</td>
-          <td style="text-align: right">19.5651</td>
+          <td style="text-align: right">19.4769</td>
+          <td style="text-align: right">20.3827</td>
+          <td style="text-align: right">18.8045</td>
+          <td style="text-align: right">19.5686</td>
       </tr>
       <tr>
           <td style="text-align: left">std</td>
-          <td style="text-align: right">7.83772</td>
-          <td style="text-align: right">8.38141</td>
-          <td style="text-align: right">7.3931</td>
-          <td style="text-align: right">7.9074</td>
+          <td style="text-align: right">7.83872</td>
+          <td style="text-align: right">8.39042</td>
+          <td style="text-align: right">7.39399</td>
+          <td style="text-align: right">7.91398</td>
       </tr>
       <tr>
           <td style="text-align: left">min</td>
@@ -808,15 +857,15 @@ Update 4/9/2025: VIX data through 4/8/25.</p>
       <tr>
           <td style="text-align: left">25%</td>
           <td style="text-align: right">13.85</td>
-          <td style="text-align: right">14.515</td>
-          <td style="text-align: right">13.395</td>
+          <td style="text-align: right">14.5175</td>
+          <td style="text-align: right">13.3975</td>
           <td style="text-align: right">13.93</td>
       </tr>
       <tr>
           <td style="text-align: left">50%</td>
           <td style="text-align: right">17.63</td>
-          <td style="text-align: right">18.33</td>
-          <td style="text-align: right">17.04</td>
+          <td style="text-align: right">18.335</td>
+          <td style="text-align: right">17.045</td>
           <td style="text-align: right">17.67</td>
       </tr>
       <tr>
@@ -834,68 +883,160 @@ Update 4/9/2025: VIX data through 4/8/25.</p>
           <td style="text-align: right">82.69</td>
       </tr>
       <tr>
+          <td style="text-align: left">mean + -1 std</td>
+          <td style="text-align: right">11.6382</td>
+          <td style="text-align: right">11.9922</td>
+          <td style="text-align: right">11.4106</td>
+          <td style="text-align: right">11.6547</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">mean + 0 std</td>
+          <td style="text-align: right">19.4769</td>
+          <td style="text-align: right">20.3827</td>
+          <td style="text-align: right">18.8045</td>
+          <td style="text-align: right">19.5686</td>
+      </tr>
+      <tr>
           <td style="text-align: left">mean + 1 std</td>
-          <td style="text-align: right">27.3131</td>
-          <td style="text-align: right">28.7598</td>
-          <td style="text-align: right">26.1962</td>
-          <td style="text-align: right">27.4725</td>
+          <td style="text-align: right">27.3157</td>
+          <td style="text-align: right">28.7731</td>
+          <td style="text-align: right">26.1985</td>
+          <td style="text-align: right">27.4826</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 2 std</td>
-          <td style="text-align: right">35.1508</td>
-          <td style="text-align: right">37.1412</td>
-          <td style="text-align: right">33.5893</td>
-          <td style="text-align: right">35.3799</td>
+          <td style="text-align: right">35.1544</td>
+          <td style="text-align: right">37.1635</td>
+          <td style="text-align: right">33.5925</td>
+          <td style="text-align: right">35.3966</td>
       </tr>
       <tr>
-          <td style="text-align: left">mean - 1 std</td>
-          <td style="text-align: right">11.6376</td>
-          <td style="text-align: right">11.997</td>
-          <td style="text-align: right">11.41</td>
-          <td style="text-align: right">11.6577</td>
+          <td style="text-align: left">mean + 3 std</td>
+          <td style="text-align: right">42.9931</td>
+          <td style="text-align: right">45.5539</td>
+          <td style="text-align: right">40.9865</td>
+          <td style="text-align: right">43.3106</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">mean + 4 std</td>
+          <td style="text-align: right">50.8318</td>
+          <td style="text-align: right">53.9443</td>
+          <td style="text-align: right">48.3805</td>
+          <td style="text-align: right">51.2246</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">mean + 5 std</td>
+          <td style="text-align: right">58.6705</td>
+          <td style="text-align: right">62.3347</td>
+          <td style="text-align: right">55.7745</td>
+          <td style="text-align: right">59.1385</td>
       </tr>
   </tbody>
 </table></div>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/02_DF_Stats.png"
-	width="509"
-	height="394"
-	
-	loading="lazy"
-	
-		alt="Data Stats"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="129"
-		data-flex-basis="310px"
-	
-></p>
-<p>And the levels for each decile:</p>
+<h3 id="deciles">Deciles
+</h3><p>And the levels for each decile:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">deciles</span> <span class="o">=</span> <span class="n">vix</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl"><span class="n">display</span><span class="p">(</span><span class="n">deciles</span><span class="p">)</span>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">vix_deciles</span> <span class="o">=</span> <span class="n">vix</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">display</span><span class="p">(</span><span class="n">vix_deciles</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img src="/2025/03/01/investigating-a-vix-trading-signal/03_DF_Deciles.png"
-	width="509"
-	height="402"
-	
-	loading="lazy"
-	
-		alt="Data Deciles"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="126"
-		data-flex-basis="303px"
-	
-></p>
-<p>A quick histogram gives us the distribution for the entire dataset:</p>
+</div><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: right"></th>
+          <th style="text-align: right">Close</th>
+          <th style="text-align: right">High</th>
+          <th style="text-align: right">Low</th>
+          <th style="text-align: right">Open</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: right">0</td>
+          <td style="text-align: right">9.14</td>
+          <td style="text-align: right">9.31</td>
+          <td style="text-align: right">8.56</td>
+          <td style="text-align: right">9.01</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">0.1</td>
+          <td style="text-align: right">12.12</td>
+          <td style="text-align: right">12.62</td>
+          <td style="text-align: right">11.72</td>
+          <td style="text-align: right">12.13</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">0.2</td>
+          <td style="text-align: right">13.24</td>
+          <td style="text-align: right">13.866</td>
+          <td style="text-align: right">12.84</td>
+          <td style="text-align: right">13.3</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">0.3</td>
+          <td style="text-align: right">14.59</td>
+          <td style="text-align: right">15.27</td>
+          <td style="text-align: right">14.069</td>
+          <td style="text-align: right">14.66</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">0.4</td>
+          <td style="text-align: right">16.08</td>
+          <td style="text-align: right">16.74</td>
+          <td style="text-align: right">15.54</td>
+          <td style="text-align: right">16.11</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">0.5</td>
+          <td style="text-align: right">17.63</td>
+          <td style="text-align: right">18.335</td>
+          <td style="text-align: right">17.045</td>
+          <td style="text-align: right">17.67</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">0.6</td>
+          <td style="text-align: right">19.54</td>
+          <td style="text-align: right">20.37</td>
+          <td style="text-align: right">18.99</td>
+          <td style="text-align: right">19.66</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">0.7</td>
+          <td style="text-align: right">21.62</td>
+          <td style="text-align: right">22.611</td>
+          <td style="text-align: right">20.98</td>
+          <td style="text-align: right">21.76</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">0.8</td>
+          <td style="text-align: right">24.29</td>
+          <td style="text-align: right">25.3</td>
+          <td style="text-align: right">23.454</td>
+          <td style="text-align: right">24.37</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">0.9</td>
+          <td style="text-align: right">28.67</td>
+          <td style="text-align: right">29.96</td>
+          <td style="text-align: right">27.76</td>
+          <td style="text-align: right">28.83</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">82.69</td>
+          <td style="text-align: right">89.53</td>
+          <td style="text-align: right">72.76</td>
+          <td style="text-align: right">82.69</td>
+      </tr>
+  </tbody>
+</table></div>
+<h3 id="histogram-distribution">Histogram Distribution
+</h3><p>A quick histogram gives us the distribution for the entire dataset:</p>
 <p><img src="/2025/03/01/investigating-a-vix-trading-signal/04_Histogram.png"
 	width="3570"
 	height="1769"
