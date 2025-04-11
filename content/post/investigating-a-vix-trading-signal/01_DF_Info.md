@@ -1,4 +1,4 @@
-```
+```text
 The columns, shape, and data types are:
 
 <class 'pandas.core.frame.DataFrame'>

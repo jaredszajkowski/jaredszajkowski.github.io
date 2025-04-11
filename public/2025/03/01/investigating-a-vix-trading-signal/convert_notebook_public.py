@@ -51,4 +51,4 @@ def convert_notebook(notebook: str, to_format: str):
 
 # Run conversions
 convert_notebook(notebook, "html")
-# convert_notebook(notebook, "pdf")
+convert_notebook(notebook, "pdf")

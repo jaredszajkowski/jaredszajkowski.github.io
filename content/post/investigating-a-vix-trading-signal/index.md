@@ -19,7 +19,7 @@ tags:
 
 ## Post Updates
 
-Update 4/8/2025: Added plot for signals for each year. VIX data through 4/7/25.
+Update 4/8/2025: Added plot for signals for each year. VIX data through 4/7/25.</br>
 Update 4/9/2025: VIX data through 4/8/25.
 
 ## Introduction
