@@ -27,16 +27,16 @@ from decouple import config as _config
 from pandas import to_datetime
 
 
-def get_os():
-    os_name = system()
-    if os_name == "Windows":
-        return "windows"
-    elif os_name == "Darwin":
-        return "nix"
-    elif os_name == "Linux":
-        return "nix"
-    else:
-        return "unknown"
+# def get_os():
+#     os_name = system()
+#     if os_name == "Windows":
+#         return "windows"
+#     elif os_name == "Darwin":
+#         return "nix"
+#     elif os_name == "Linux":
+#         return "nix"
+#     else:
+#         return "unknown"
 
 
 def if_relative_make_abs(path):
@@ -60,39 +60,45 @@ def if_relative_make_abs(path):
         abs_path = (d["BASE_DIR"] / path).resolve()
     return abs_path
 
-
+# Initialize the dictionary to hold all the settings
 d = {}
 
-d["OS_TYPE"] = get_os()
+# Get the OS type
+# d["OS_TYPE"] = get_os()
 
 # Absolute path to root directory of the project
 d["BASE_DIR"] = Path(__file__).absolute().parent.parent
 
 # fmt: off
 ## Other .env variables
-d["START_DATE"] = _config("START_DATE", default="1930-01-01", cast=to_datetime)
-d["END_DATE"] = _config("END_DATE", default="2024-01-01", cast=to_datetime)
-d["PIPELINE_DEV_MODE"] = _config("PIPELINE_DEV_MODE", default=True, cast=bool)
-d["PIPELINE_THEME"] = _config("PIPELINE_THEME", default="pipeline")
+# d["START_DATE"] = _config("START_DATE", default="1930-01-01", cast=to_datetime)
+# d["END_DATE"] = _config("END_DATE", default="2024-01-01", cast=to_datetime)
+# d["PIPELINE_DEV_MODE"] = _config("PIPELINE_DEV_MODE", default=True, cast=bool)
+# d["PIPELINE_THEME"] = _config("PIPELINE_THEME", default="pipeline")
 
 ## Paths
-d["DATA_DIR"] = if_relative_make_abs(_config('DATA_DIR', default=Path('_data'), cast=Path))
-d["MANUAL_DATA_DIR"] = if_relative_make_abs(_config('MANUAL_DATA_DIR', default=Path('data_manual'), cast=Path))
-d["OUTPUT_DIR"] = if_relative_make_abs(_config('OUTPUT_DIR', default=Path('_output'), cast=Path))
-d["PUBLISH_DIR"] = if_relative_make_abs(_config('PUBLISH_DIR', default=Path('_output/publish'), cast=Path))
-d["PLOTS_DIR"] = if_relative_make_abs(_config('PLOTS_DIR', default=Path('reports/plots'), cast=Path))
-d["TABLES_DIR"] = if_relative_make_abs(_config('TABLES_DIR', default=Path('reports/tables'), cast=Path))
+d["CONTENT_DIR"] = if_relative_make_abs(_config('CONTENT_DIR', default=Path('content'), cast=Path))
+d["POSTS_DIR"] = if_relative_make_abs(_config('POSTS_DIR', default=Path('content/post'), cast=Path))
+d["PAGES_DIR"] = if_relative_make_abs(_config('PAGES_DIR', default=Path('content/page'), cast=Path))
+d["PUBLIC_DIR"] = if_relative_make_abs(_config('PUBLIC_DIR', default=Path('public'), cast=Path))
+
+
+# d["MANUAL_DATA_DIR"] = if_relative_make_abs(_config('MANUAL_DATA_DIR', default=Path('data_manual'), cast=Path))
+# d["OUTPUT_DIR"] = if_relative_make_abs(_config('OUTPUT_DIR', default=Path('_output'), cast=Path))
+# d["PUBLISH_DIR"] = if_relative_make_abs(_config('PUBLISH_DIR', default=Path('_output/publish'), cast=Path))
+# d["PLOTS_DIR"] = if_relative_make_abs(_config('PLOTS_DIR', default=Path('reports/plots'), cast=Path))
+# d["TABLES_DIR"] = if_relative_make_abs(_config('TABLES_DIR', default=Path('reports/tables'), cast=Path))
 
 # fmt: on
 
 
-## Name of Stata Executable in path
-if d["OS_TYPE"] == "windows":
-    d["STATA_EXE"] = _config("STATA_EXE", default="StataMP-64.exe")
-elif d["OS_TYPE"] == "nix":
-    d["STATA_EXE"] = _config("STATA_EXE", default="stata-mp")
-else:
-    raise ValueError("Unknown OS type")
+# ## Name of Stata Executable in path
+# if d["OS_TYPE"] == "windows":
+#     d["STATA_EXE"] = _config("STATA_EXE", default="StataMP-64.exe")
+# elif d["OS_TYPE"] == "nix":
+#     d["STATA_EXE"] = _config("STATA_EXE", default="stata-mp")
+# else:
+#     raise ValueError("Unknown OS type")
 
 
 def config(*args, **kwargs):
@@ -122,8 +128,8 @@ def config(*args, **kwargs):
 
 def create_dirs():
     ## If they don't exist, create the _data and _output directories
-    d["DATA_DIR"].mkdir(parents=True, exist_ok=True)
-    d["OUTPUT_DIR"].mkdir(parents=True, exist_ok=True)
+    d["PUBLIC_DIR"].mkdir(parents=True, exist_ok=True)
+    d["CONTENT_DIR"].mkdir(parents=True, exist_ok=True)
     # (d["BASE_DIR"] / "_docs").mkdir(parents=True, exist_ok=True)
 
 
