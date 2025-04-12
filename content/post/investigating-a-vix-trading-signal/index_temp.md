@@ -189,11 +189,11 @@ df_info(vix)
 
 Gives us the following:
 
-<!-- INSERT_DF_INFO_HERE -->
+<!-- INSERT_01_DF_Info_HERE -->
 
 ### Statistics
 
-Some interesting statistics jump out at us when we look at the mean, standard deviation, minimum, and maximum values:
+Some interesting statistics jump out at us when we look at the mean, standard deviation, minimum, and maximum values. The following code:
 
 ```python
 vix_stats = vix.describe()
@@ -205,7 +205,9 @@ for num in num_std:
                                     'Close': vix_stats.loc['mean']['Close'] + num * vix_stats.loc['std']['Close']}
 ```
 
-<!-- INSERT_VIX_STATS_HERE -->
+Gives us:
+
+<!-- INSERT_02_VIX_Stats_HERE -->
 
 ### Deciles
 
@@ -216,7 +218,9 @@ vix_deciles = vix.quantile(np.arange(0, 1.1, 0.1))
 display(vix_deciles)
 ```
 
-<!-- INSERT_VIX_DECILES_HERE -->
+Gives us:
+
+<!-- INSERT_03_VIX_Deciles_HERE -->
 
 ### Histogram Distribution
 

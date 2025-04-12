@@ -81,6 +81,7 @@ d["CONTENT_DIR"] = if_relative_make_abs(_config('CONTENT_DIR', default=Path('con
 d["POSTS_DIR"] = if_relative_make_abs(_config('POSTS_DIR', default=Path('content/post'), cast=Path))
 d["PAGES_DIR"] = if_relative_make_abs(_config('PAGES_DIR', default=Path('content/page'), cast=Path))
 d["PUBLIC_DIR"] = if_relative_make_abs(_config('PUBLIC_DIR', default=Path('public'), cast=Path))
+d["SOURCE_DIR"] = if_relative_make_abs(_config('SOURCE_DIR', default=Path('src'), cast=Path))
 
 
 # d["MANUAL_DATA_DIR"] = if_relative_make_abs(_config('MANUAL_DATA_DIR', default=Path('data_manual'), cast=Path))
@@ -128,8 +129,11 @@ def config(*args, **kwargs):
 
 def create_dirs():
     ## If they don't exist, create the _data and _output directories
-    d["PUBLIC_DIR"].mkdir(parents=True, exist_ok=True)
     d["CONTENT_DIR"].mkdir(parents=True, exist_ok=True)
+    d["PAGES_DIR"].mkdir(parents=True, exist_ok=True)
+    d["POSTS_DIR"].mkdir(parents=True, exist_ok=True)
+    d["PUBLIC_DIR"].mkdir(parents=True, exist_ok=True)
+    d["SOURCE_DIR"].mkdir(parents=True, exist_ok=True)
     # (d["BASE_DIR"] / "_docs").mkdir(parents=True, exist_ok=True)
 
 

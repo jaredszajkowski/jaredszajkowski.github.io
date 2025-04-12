@@ -13,6 +13,8 @@ import sys
 sys.path.insert(1, "./src/")
 
 import shutil
+import os
+import subprocess
 from os import environ, getcwd, path
 from pathlib import Path
 from colorama import Fore, Style, init
@@ -76,6 +78,7 @@ CONTENT_DIR = config("CONTENT_DIR")
 POSTS_DIR = config("POSTS_DIR")
 PAGES_DIR = config("PAGES_DIR")
 PUBLIC_DIR = config("PUBLIC_DIR")
+SOURCE_DIR = config("SOURCE_DIR")
 
 
 
@@ -131,10 +134,140 @@ def task_config():
     """Create empty directories for content, page, post, and public if they don't exist"""
     return {
         "actions": ["ipython ./src/settings.py"],
-        "targets": [CONTENT_DIR, PAGES_DIR, POSTS_DIR, PUBLIC_DIR],
         "file_dep": ["./src/settings.py"],
+        "targets": [CONTENT_DIR, PAGES_DIR, POSTS_DIR, PUBLIC_DIR],
+        "verbosity": 2,
         "clean": [],  # Don't clean these files by default.
     }
+
+def task_list_posts_subdirs():
+    """Create a list of the subdirectories of the posts directory"""
+    return {
+        "actions": ["python ./src/list_posts_subdirs.py"],
+        "file_dep": ["./src/settings.py"],
+        # "targets": [POSTS_DIR],
+        "verbosity": 2,
+        "clean": [],  # Don't clean these files by default.
+    }
+
+def task_run_post_notebooks():
+    """Execute notebooks that match their subdirectory names"""
+    for subdir in POSTS_DIR.iterdir():
+        if subdir.is_dir():
+            notebook_path = subdir / f"{subdir.name}.ipynb"
+
+            if notebook_path.exists():
+                yield {
+                    "name": subdir.name,
+                    "actions": [f"jupyter nbconvert --execute --to notebook --inplace --log-level=ERROR {notebook_path}"],
+                    "file_dep": [notebook_path],
+                    # "targets": [notebook_path],  # optional if you want doit to track it
+                    "verbosity": 2,
+                }
+
+def task_export_post_notebooks():
+    """Export executed notebooks to HTML and PDF"""
+    for subdir in POSTS_DIR.iterdir():
+        if subdir.is_dir():
+            notebook_path = subdir / f"{subdir.name}.ipynb"
+            html_output = subdir / f"{subdir.name}.html"
+            pdf_output = subdir / f"{subdir.name}.pdf"
+
+            if notebook_path.exists():
+                yield {
+                    "name": subdir.name,
+                    "actions": [
+                        f"jupyter nbconvert --to=html --log-level=WARN --output={html_output} {notebook_path}",
+                        f"jupyter nbconvert --to=pdf --log-level=WARN --output={pdf_output} {notebook_path}"
+                    ],
+                    "file_dep": [notebook_path],
+                    "targets": [html_output, pdf_output],
+                    "verbosity": 2,
+                    "clean": [],  # Don't clean these files by default.
+                }
+
+def task_build_post_indexes():
+    """Run build_index.py in each post subdirectory to generate index.md"""
+    script_path = SOURCE_DIR / "build_index.py"
+
+    for subdir in POSTS_DIR.iterdir():
+        if subdir.is_dir() and (subdir / "index_temp.md").exists():
+            def run_script(subdir=subdir):
+                subprocess.run(
+                    ["python", str(script_path)],
+                    cwd=subdir,
+                    check=True
+                )
+
+            yield {
+                "name": subdir.name,
+                "actions": [run_script],
+                "file_dep": [
+                    subdir / "index_temp.md",
+                    subdir / "index_dep.txt",
+                    script_path,
+                ],
+                "targets": [subdir / "index.md"],
+                "verbosity": 2,
+                "clean": [],  # Don't clean these files by default.
+            }
+
+def task_build_site():
+    """Build the Hugo static site"""
+    return {
+        "actions": ["hugo"],
+        "verbosity": 2,
+        "clean": [],  # Don't clean these files by default.
+    }
+
+# def task_push_repo():
+#     """Push the full repo to GitHub after site build"""
+#     return {
+#         "actions": [
+#             "git add .",
+#             'git commit -am "🚀 Rebuild site"',
+#             "git push"
+#         ],
+#         "task_dep": ["build_site"],
+#         "verbosity": 2,
+#         "clean": False
+#     }
+
+def task_deploy_site():
+    """Prompt for a commit message and push to GitHub"""
+    def commit_and_push():
+        message = input("What is the commit message? ")
+        if not message.strip():
+            print("❌ Commit message cannot be empty.")
+            return 1  # signal failure
+        import subprocess
+        subprocess.run(["git", "add", "."], check=True)
+        subprocess.run(["git", "commit", "-am", message], check=True)
+        subprocess.run(["git", "push"], check=True)
+        print("✅ Pushed to GitHub.")
+
+    return {
+        "actions": [commit_and_push],
+        "task_dep": ["build_site"],
+        "verbosity": 2,
+        "clean": [],  # Don't clean these files by default.
+    }
+
+
+# def task_build_all():
+#     return {
+#         "actions": None,
+#         "task_dep": [
+#             "run_named_notebooks",
+#             "export_post_notebooks",
+#             "build_post_indexes",
+#             "build_site",
+#             "deploy_site",
+#         ]
+#     }
+
+
+
 
 
 ##################################
