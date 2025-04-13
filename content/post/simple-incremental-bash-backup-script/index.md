@@ -3,7 +3,7 @@ title: Simple Incremental Bash Backup Script
 description: A bash script to incrementally backup multiple different directories.
 # slug: hello-world
 date: 2024-01-12 00:00:01+0000
-lastmod: 2024-09-23 00:00:00+0000
+lastmod: 2025-04-12 00:00:00+0000
 image: cover.jpg
 draft: false
 categories:
@@ -14,6 +14,9 @@ tags:
     - Backup
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
+## Post Updates
+
+Update 4/12/2025: [Revised script](https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/#revised-incremental-backup-script) to accomodate a list of excluded directories.
 
 ## Introduction
 
@@ -76,6 +79,80 @@ run_backup $source_dir2 $backup_dir2
 echo "Backup complete"
 ```
 
+## Updated Incremental Backup Script
+
+Here's the updated script, which now accomodates a list of excluded directories, along with a few other checks for the year and backup date.
+
+```bash
+#!/bin/bash
+
+# Define the directories to backup and their destination directories
+source_dir1="/source1"
+backup_dir1="/backup1/"
+
+source_dir2="/source2"
+backup_dir2="/backup2/"
+
+# Define excluded directories
+excluded_dirs=(
+  "/leave/out/"
+  "/dont/want/"
+)
+
+# Function to run a backup
+run_backup() {
+  local source_dir="$1"
+  local backup_dir="$2"
+
+  # Check if the source directory exists
+  if [ ! -d "$source_dir" ]; then
+    echo "Error: Source directory '$source_dir' not found."
+    exit 2
+  fi
+
+  # Input year and date
+  echo "What is today's year (YYYY):"
+  read -r backup_year
+  if [[ ! "$backup_year" =~ ^[0-9]{4}$ ]]; then
+    echo "Error: Invalid year entered."
+    exit 3
+  fi
+  
+  echo "What is today's date (YYYY-MM-DD):"
+  read backup_date
+  if [[ ! "$backup_date" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
+    echo "Error: Invalid date format. Use YYYY-MM-DD."
+    exit 4
+  fi
+
+  # Check if the backup directory exists and run backup
+  if [ -d "$backup_dir" ]; then
+    echo "Backup directory '$backup_dir' found, backing up '$source_dir'..."
+    
+    # Build rsync exclude arguments
+    exclude_args=()
+    for dir in "${excluded_dirs[@]}"; do
+      exclude_args+=(--exclude "$dir")
+    done
+    
+    rsync -av --delete "${exclude_args[@]}" "$source_dir" "$backup_dir/Monthly/"
+
+    cp -al "$backup_dir/Monthly/" "$backup_dir/$backup_year/$backup_date/"
+
+  else
+    echo "Error: Backup directory '$backup_dir' not found."
+    exit 5
+  fi
+}
+
+# Run backups
+run_backup "$source_dir1" "$backup_dir1"
+run_backup "$source_dir2" "$backup_dir2"
+
+# Output confirmation
+echo "All backups completed successfully."
+```
+
 Let's break this down line by line.
 
 ## Source and backup directories
@@ -91,12 +168,13 @@ source_dir2="/source2"
 backup_dir2="/backup2/"
 
 # Define excluded directories
-excluded_dir1="leave/out/"
-excluded_dir2="dont/want/"
-excluded_dir3="exclude/this/"
+excluded_dirs=(
+  "/leave/out/"
+  "/dont/want/"
+)
 ```
 
-You can add as many directories as you want here.
+You can add as many directories as you want here. The script compiles them before executing the rsync command.
 
 ## Backup function
 
@@ -112,29 +190,47 @@ Then we have the backup function. This performs the following:
 ```bash
 # Function to run a backup
 run_backup() {
-  source_dir=$1
-  backup_dir=$2
+  local source_dir="$1"
+  local backup_dir="$2"
 
   # Check if the source directory exists
   if [ ! -d "$source_dir" ]; then
-    echo "Error: Source directory not found"
-    exit 1
+    echo "Error: Source directory '$source_dir' not found."
+    exit 2
   fi
 
   # Input year and date
-  echo "What is today's year:"
-  read backup_year
-  echo "What is today's date:"
+  echo "What is today's year (YYYY):"
+  read -r backup_year
+  if [[ ! "$backup_year" =~ ^[0-9]{4}$ ]]; then
+    echo "Error: Invalid year entered."
+    exit 3
+  fi
+  
+  echo "What is today's date (YYYY-MM-DD):"
   read backup_date
+  if [[ ! "$backup_date" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
+    echo "Error: Invalid date format. Use YYYY-MM-DD."
+    exit 4
+  fi
 
   # Check if the backup directory exists and run backup
   if [ -d "$backup_dir" ]; then
-    echo "Backup directory found, backing up $source_dir"
-    rsync -av --delete --exclude "$excluded_dir1" --exclude "$excluded_dir2" --exclude "$excluded_dir3" $source_dir $backup_dir/Monthly/
-    cp -al $backup_dir/Monthly/ $backup_dir/$backup_year/$backup_date/
+    echo "Backup directory '$backup_dir' found, backing up '$source_dir'..."
+    
+    # Build rsync exclude arguments
+    exclude_args=()
+    for dir in "${excluded_dirs[@]}"; do
+      exclude_args+=(--exclude "$dir")
+    done
+    
+    rsync -av --delete "${exclude_args[@]}" "$source_dir" "$backup_dir/Monthly/"
+
+    cp -al "$backup_dir/Monthly/" "$backup_dir/$backup_year/$backup_date/"
+
   else
-    echo "Error: Backup directory not found"
-    exit 1
+    echo "Error: Backup directory '$backup_dir' not found."
+    exit 5
   fi
 }
 ```
@@ -149,11 +245,11 @@ Finally, run the backups and confirm complete:
 
 ```bash
 # Run backups
-run_backup $source_dir1 $backup_dir1
-run_backup $source_dir2 $backup_dir2
+run_backup "$source_dir1" "$backup_dir1"
+run_backup "$source_dir2" "$backup_dir2"
 
 # Output confirmation
-echo "Backup complete"
+echo "All backups completed successfully."
 ```
 
 ## Results

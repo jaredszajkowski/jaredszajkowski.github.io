@@ -6,7 +6,7 @@
         <description>Recent content in Posts on Jared Szajkowski</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Wed, 09 Apr 2025 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 12 Apr 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/post/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Investigating A VIX Trading Signal</title>
         <link>https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/</link>
         <pubDate>Sat, 01 Mar 2025 00:00:01 +0000</pubDate>
@@ -55,13 +55,14 @@ Update 2/19/2025: Various code updates, commented and documented functions.&lt;/
         <pubDate>Fri, 12 Jan 2024 00:00:01 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/cover.jpg" alt="Featured image of post Simple Incremental Bash Backup Script" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+        <description>&lt;img src="https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/cover.jpg" alt="Featured image of post Simple Incremental Bash Backup Script" /&gt;&lt;h2 id=&#34;post-updates&#34;&gt;Post Updates
+&lt;/h2&gt;&lt;p&gt;Update 4/12/2025: &lt;a class=&#34;link&#34; href=&#34;https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/#revised-incremental-backup-script&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Revised script&lt;/a&gt; to accomodate a list of excluded directories.&lt;/p&gt;
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;While there are &lt;a class=&#34;link&#34; href=&#34;https://wiki.archlinux.org/title/Synchronization_and_backup_programs&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;numerous backup solutions available for Linux&lt;/a&gt;, many require extensive configuration and maintenance, and restoring from the backup is not always simple. Incremental backups are ideal because they maintain snapshots of the files and allow for access to previous versions of files.&lt;/p&gt;
 &lt;p&gt;Linux Journal recently &lt;a class=&#34;link&#34; href=&#34;https://www.linuxjournal.com/content/exploring-rsync-tar-and-other-backup-solutions&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;published an article on various backup solutions&lt;/a&gt;, and I thought I&amp;rsquo;d provide my incremental backup script that uses &lt;code&gt;rsync&lt;/code&gt; and &lt;code&gt;cp&lt;/code&gt;.&lt;/p&gt;
-&lt;h2 id=&#34;incremental-backup-script&#34;&gt;Incremental backup script
-&lt;/h2&gt;&lt;p&gt;This script provides an incremental backup solution and only requires &lt;code&gt;rsync&lt;/code&gt; and &lt;code&gt;cp&lt;/code&gt; to be installed on the system.&lt;/p&gt;</description>
+    &gt;published an article on various backup solutions&lt;/a&gt;, and I thought I&amp;rsquo;d provide my incremental backup script that uses &lt;code&gt;rsync&lt;/code&gt; and &lt;code&gt;cp&lt;/code&gt;.&lt;/p&gt;</description>
         </item>
         <item>
         <title>Nasdaq Data Link Tables API Data Retrieval</title>
