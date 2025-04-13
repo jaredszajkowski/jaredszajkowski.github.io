@@ -16,7 +16,7 @@ tags:
 ---
 ## Post Updates
 
-Update 4/12/2025: [Revised script](https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/#revised-incremental-backup-script) to accomodate a list of excluded directories.
+Update 4/12/2025: [Revised script](https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/#updated-incremental-backup-script) to accomodate a list of excluded directories.
 
 ## Introduction
 
