@@ -13,7 +13,9 @@ import sys
 sys.path.insert(1, "./src/")
 
 import shutil
-import os
+import re
+import yaml
+from datetime import datetime
 import subprocess
 from os import environ, getcwd, path
 from pathlib import Path
@@ -233,6 +235,51 @@ def task_build_site():
 #         "clean": False
 #     }
 
+# Helper function to extract front matter
+def extract_front_matter(index_path):
+    """Extract front matter as a dict from a Hugo index.md file"""
+    text = index_path.read_text()
+    match = re.search(r"(?s)^---(.*?)---", text)
+    if match:
+        return yaml.safe_load(match.group(1))
+    return {}
+
+def task_copy_notebook_exports():
+    """Copy notebook HTML exports into the correct Hugo public/ date-based folders"""
+    for subdir in POSTS_DIR.iterdir():
+        if subdir.is_dir():
+            html_file = subdir / f"{subdir.name}.html"
+            index_md = subdir / "index.md"
+
+            if not html_file.exists() or not index_md.exists():
+                continue
+
+            # Extract slug and date from front matter
+            front_matter = extract_front_matter(index_md)
+            slug = front_matter.get("slug", subdir.name)
+            date_str = front_matter.get("date")
+            if not date_str:
+                continue
+
+            # Format path like: public/YYYY/MM/DD/slug/
+            date_obj = datetime.fromisoformat(date_str)
+            public_path = PUBLIC_DIR / f"{date_obj:%Y/%m/%d}" / slug
+            target_path = public_path / f"{slug}.html"
+
+            def copy_html(src=html_file, dest=target_path):
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(src, dest)
+                print(f"✅ Copied {src} → {dest}")
+
+            yield {
+                "name": subdir.name,
+                "actions": [copy_html],
+                "file_dep": [html_file, index_md],
+                "targets": [target_path],
+                "task_dep": ["build_site"],
+                "verbosity": 2,
+            }
+
 def task_deploy_site():
     """Prompt for a commit message and push to GitHub"""
     def commit_and_push():
@@ -254,17 +301,18 @@ def task_deploy_site():
     }
 
 
-# def task_build_all():
-#     return {
-#         "actions": None,
-#         "task_dep": [
-#             "run_named_notebooks",
-#             "export_post_notebooks",
-#             "build_post_indexes",
-#             "build_site",
-#             "deploy_site",
-#         ]
-#     }
+def task_build_all():
+    return {
+        "actions": None,
+        "task_dep": [
+            "run_post_notebooks",
+            "export_post_notebooks",
+            "build_post_indexes",
+            "build_site",
+            "copy_notebook_exports",
+            "deploy_site",
+        ]
+    }
 
 
 

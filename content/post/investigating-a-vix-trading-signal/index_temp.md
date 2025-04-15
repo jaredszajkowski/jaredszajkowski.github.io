@@ -1,7 +1,7 @@
 ---
 title: Investigating A VIX Trading Signal
 description: A brief look at finding a trading signal based on moving averages of the VIX.
-# slug: hello-world
+slug: investigating-a-vix-trading-signal
 date: 2025-03-01 00:00:01+0000
 lastmod: 2025-04-09 00:00:01+0000
 image: cover.jpg

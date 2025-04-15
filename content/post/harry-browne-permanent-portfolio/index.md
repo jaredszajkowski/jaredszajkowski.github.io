@@ -1,7 +1,7 @@
 ---
 title: Does Harry Browne's permanent portfolio withstand the test of time?
 description: A look a Harry Browne's Permanent Portfolio and performance over nearly four decades.
-# slug: hello-world
+slug: harry-browne-permanent-portfolio
 date: 2024-11-04 00:00:01+0000
 lastmod: 2024-12-05 00:00:01+0000
 image: cover.jpg
