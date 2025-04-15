@@ -1,7 +1,7 @@
 ---
 title: Simple Incremental Bash Backup Script
 description: A bash script to incrementally backup multiple different directories.
-# slug: hello-world
+slug: simple-incremental-bash-backup-script
 date: 2024-01-12 00:00:01+0000
 lastmod: 2025-04-12 00:00:00+0000
 image: cover.jpg

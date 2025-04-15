@@ -79,11 +79,11 @@ Update 2/19/2025: Various code updates, commented and documented functions.&lt;/
         </item>
         <item>
         <title>Using yt-dlp With Panopto</title>
-        <link>https://www.jaredszajkowski.com/2023/12/10/using-yt-dlp-with-panopto/</link>
+        <link>https://www.jaredszajkowski.com/2023/12/10/yt-dlp-with-panopto/</link>
         <pubDate>Sun, 10 Dec 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2023/12/10/using-yt-dlp-with-panopto/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/12/10/using-yt-dlp-with-panopto/banner_1.svg" alt="Featured image of post Using yt-dlp With Panopto" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+        <guid>https://www.jaredszajkowski.com/2023/12/10/yt-dlp-with-panopto/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/12/10/yt-dlp-with-panopto/banner_1.svg" alt="Featured image of post Using yt-dlp With Panopto" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;As a follow up to &lt;a class=&#34;link&#34; href=&#34;https://www.jaredszajkowski.com/p/using-yt-dlp-with-zoom/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;this post about using yt-dlp with Zoom&lt;/a&gt;, I found the need to also download videos hosted by Panopto for offline viewing.&lt;/p&gt;
 &lt;p&gt;Similar to the Zoom tutorial, this also requires you to have a &amp;ldquo;cookies&amp;rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Panopto hosting site after logging in.&lt;/p&gt;
@@ -94,11 +94,11 @@ Update 2/19/2025: Various code updates, commented and documented functions.&lt;/
         </item>
         <item>
         <title>Cleaning A Bloomberg Data Excel Export</title>
-        <link>https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/</link>
+        <link>https://www.jaredszajkowski.com/2023/11/15/cleaning-bloomberg-excel-export/</link>
         <pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/cover.jpg" alt="Featured image of post Cleaning A Bloomberg Data Excel Export" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+        <guid>https://www.jaredszajkowski.com/2023/11/15/cleaning-bloomberg-excel-export/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/11/15/cleaning-bloomberg-excel-export/cover.jpg" alt="Featured image of post Cleaning A Bloomberg Data Excel Export" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;In this tutorial, we will write a python function that imports an excel export from Bloomberg, removes ancillary rows and columns, and leaves the data in a format where it can then be used in time series analysis.&lt;/p&gt;
 &lt;h2 id=&#34;example-of-a-bloomberg-excel-export&#34;&gt;Example of a Bloomberg excel export
 &lt;/h2&gt;&lt;p&gt;We will use the SPX index data in this example. Exporting the data from Bloomberg using the excel Bloomberg add-on yields data in the following format:&lt;/p&gt;</description>
@@ -136,11 +136,11 @@ $ git config --global user.email &amp;quot;email@address.com&amp;quot;
         </item>
         <item>
         <title>Using yt-dlp With Zoom</title>
-        <link>https://www.jaredszajkowski.com/2023/10/01/using-yt-dlp-with-zoom/</link>
+        <link>https://www.jaredszajkowski.com/2023/10/01/yt-dlp-with-zoom/</link>
         <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2023/10/01/using-yt-dlp-with-zoom/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/10/01/using-yt-dlp-with-zoom/banner_1.svg" alt="Featured image of post Using yt-dlp With Zoom" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+        <guid>https://www.jaredszajkowski.com/2023/10/01/yt-dlp-with-zoom/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/10/01/yt-dlp-with-zoom/banner_1.svg" alt="Featured image of post Using yt-dlp With Zoom" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;If anyone uses Zoom to record and later wants to access recordings of video calls, here&amp;rsquo;s a simple linux bash script to download the video file and acompanying subtitles. For a long time I used &lt;a class=&#34;link&#34; href=&#34;https://github.com/Battleman/zoomdl&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;zoomdl&lt;/a&gt;, but it is no longer under active development, and I began running into various issues about a year ago.&lt;/p&gt;
 &lt;p&gt;This tutorial requires you to have a &amp;ldquo;cookies&amp;rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Zoom cookies after logging in.&lt;/p&gt;</description>

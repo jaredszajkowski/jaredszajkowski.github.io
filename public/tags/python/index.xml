@@ -64,11 +64,11 @@ Update 2/19/2025: Various code updates, commented and documented functions.&lt;/
         </item>
         <item>
         <title>Cleaning A Bloomberg Data Excel Export</title>
-        <link>https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/</link>
+        <link>https://www.jaredszajkowski.com/2023/11/15/cleaning-bloomberg-excel-export/</link>
         <pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/11/15/cleaning-a-bloomberg-data-excel-export/cover.jpg" alt="Featured image of post Cleaning A Bloomberg Data Excel Export" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+        <guid>https://www.jaredszajkowski.com/2023/11/15/cleaning-bloomberg-excel-export/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/11/15/cleaning-bloomberg-excel-export/cover.jpg" alt="Featured image of post Cleaning A Bloomberg Data Excel Export" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;In this tutorial, we will write a python function that imports an excel export from Bloomberg, removes ancillary rows and columns, and leaves the data in a format where it can then be used in time series analysis.&lt;/p&gt;
 &lt;h2 id=&#34;example-of-a-bloomberg-excel-export&#34;&gt;Example of a Bloomberg excel export
 &lt;/h2&gt;&lt;p&gt;We will use the SPX index data in this example. Exporting the data from Bloomberg using the excel Bloomberg add-on yields data in the following format:&lt;/p&gt;</description>

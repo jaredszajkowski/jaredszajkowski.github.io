@@ -1,7 +1,7 @@
 ---
 title: Nasdaq Data Link Tables API Data Retrieval
 description: A python function to pull data from Nasdaq Data Link using the tables API and then complete the data for ease of use.
-# slug: hello-world
+slug: nasdaq-data-link-tables-api-data-retrieval
 date: 2023-12-24 00:00:01+0000
 lastmod: 2023-12-26 00:00:00+0000
 image: cover.jpg

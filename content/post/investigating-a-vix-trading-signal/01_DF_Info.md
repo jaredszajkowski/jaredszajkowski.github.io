@@ -2,14 +2,14 @@
 The columns, shape, and data types are:
 
 <class 'pandas.core.frame.DataFrame'>
-DatetimeIndex: 8885 entries, 1990-01-02 to 2025-04-10
+DatetimeIndex: 8887 entries, 1990-01-02 to 2025-04-14
 Data columns (total 4 columns):
  #   Column  Non-Null Count  Dtype  
 ---  ------  --------------  -----  
- 0   Close   8885 non-null   float64
- 1   High    8885 non-null   float64
- 2   Low     8885 non-null   float64
- 3   Open    8885 non-null   float64
+ 0   Close   8887 non-null   float64
+ 1   High    8887 non-null   float64
+ 2   Low     8887 non-null   float64
+ 3   Open    8887 non-null   float64
 dtypes: float64(4)
 memory usage: 347.1 KB
 
@@ -29,8 +29,8 @@ The last 5 rows are:
 
 | Date                |   Close |   High |   Low |   Open |
 |:--------------------|--------:|-------:|------:|-------:|
-| 2025-04-04 00:00:00 |   45.31 |  45.61 | 29.99 |  30.12 |
-| 2025-04-07 00:00:00 |   46.98 |  60.13 | 38.58 |  60.13 |
 | 2025-04-08 00:00:00 |   52.33 |  57.52 | 36.48 |  44.04 |
 | 2025-04-09 00:00:00 |   33.62 |  57.96 | 31.9  |  50.98 |
 | 2025-04-10 00:00:00 |   40.72 |  54.87 | 34.44 |  34.44 |
+| 2025-04-11 00:00:00 |   37.56 |  46.12 | 36.85 |  40.8  |
+| 2025-04-14 00:00:00 |   30.89 |  35.17 | 29.75 |  34.76 |

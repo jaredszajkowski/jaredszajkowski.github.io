@@ -1,7 +1,7 @@
 ---
 title: Using yt-dlp With Panopto
 description: Bash script for usage of yt-dlp with Panopto.
-#slug: hello-world-2
+slug: yt-dlp-with-panopto
 date: 2023-12-10 00:00:00+0000
 #lastmod: 2023-10-17 00:00:00+0000
 image: banner_1.svg

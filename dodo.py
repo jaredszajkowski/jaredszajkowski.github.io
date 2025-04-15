@@ -301,18 +301,18 @@ def task_deploy_site():
     }
 
 
-def task_build_all():
-    return {
-        "actions": None,
-        "task_dep": [
-            "run_post_notebooks",
-            "export_post_notebooks",
-            "build_post_indexes",
-            "build_site",
-            "copy_notebook_exports",
-            "deploy_site",
-        ]
-    }
+# def task_build_all():
+#     return {
+#         "actions": None,
+#         "task_dep": [
+#             "run_post_notebooks",
+#             "export_post_notebooks",
+#             "build_post_indexes",
+#             "build_site",
+#             "copy_notebook_exports",
+#             "deploy_site",
+#         ]
+#     }
 
 
 

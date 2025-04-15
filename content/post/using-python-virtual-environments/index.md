@@ -1,7 +1,7 @@
 ---
 title: Using Python Virtual Environments
 description: Managing virtual environments across multiple systems within Arch Linux.
-# slug: hello-world
+slug: using-python-virtual-environments
 date: 2024-12-02 00:00:01+0000
 lastmod: 2025-01-30 00:00:01+0000
 image: cover.jpg
