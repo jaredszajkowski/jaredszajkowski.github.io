@@ -170,56 +170,58 @@ def task_list_posts_subdirs():
         "clean": [],  # Don't clean these files by default.
     }
 
-def task_run_post_notebooks():
-    """Execute notebooks that match their subdirectory names"""
-    for subdir in POSTS_DIR.iterdir():
-        if subdir.is_dir():
-            notebook_path = subdir / f"{subdir.name}.ipynb"
-
-            if notebook_path.exists():
-                yield {
-                    "name": subdir.name,
-                    "actions": [f"jupyter nbconvert --execute --to notebook --inplace --log-level=ERROR {notebook_path}"],
-                    "file_dep": [notebook_path],
-                    # "targets": [notebook_path],  # optional if you want doit to track it
-                    "verbosity": 2,
-                }
-
 # def task_run_post_notebooks():
-#     """Execute notebooks only when code or markdown content has changed"""
+#     """Execute notebooks that match their subdirectory names"""
 #     for subdir in POSTS_DIR.iterdir():
 #         if subdir.is_dir():
 #             notebook_path = subdir / f"{subdir.name}.ipynb"
 
 #             if notebook_path.exists():
-#                 hash_file = subdir / ".last_source_hash"
-
-#                 def source_has_changed():
-#                     current_hash = notebook_source_hash(notebook_path)
-#                     if hash_file.exists():
-#                         old_hash = hash_file.read_text().strip()
-#                         if current_hash != old_hash:
-#                             print(f"🔁 Change detected in {notebook_path.name}")
-#                             return False  # Not up-to-date → needs re-run
-#                         return True  # No change
-#                     print(f"🆕 No previous hash found for {notebook_path.name}")
-#                     return False
-
-#                 def save_new_hash():
-#                     new_hash = notebook_source_hash(notebook_path)
-#                     hash_file.write_text(new_hash)
-#                     print(f"✅ Saved new hash for {notebook_path.name}")
-
 #                 yield {
 #                     "name": subdir.name,
-#                     "actions": [
-#                         f"jupyter nbconvert --execute --to notebook --inplace --log-level=ERROR {notebook_path}",
-#                         save_new_hash,
-#                     ],
+#                     "actions": [f"jupyter nbconvert --execute --to notebook --inplace --log-level=ERROR {notebook_path}"],
 #                     "file_dep": [notebook_path],
-#                     "uptodate": [source_has_changed],
+#                     # "targets": [notebook_path],  # optional if you want doit to track it
 #                     "verbosity": 2,
 #                 }
+
+def task_run_post_notebooks():
+    """Execute notebooks that match their subdirectory names and only when code or markdown content has changed"""
+    for subdir in POSTS_DIR.iterdir():
+        if subdir.is_dir():
+            notebook_path = subdir / f"{subdir.name}.ipynb"
+
+            if not notebook_path.exists():
+                continue  # ✅ Skip subdirs with no matching notebook
+
+            hash_file = subdir / f"{subdir.name}.last_source_hash"
+
+            def source_has_changed(path=notebook_path, hash_file=hash_file):
+                current_hash = notebook_source_hash(path)
+                if hash_file.exists():
+                    old_hash = hash_file.read_text().strip()
+                    if current_hash != old_hash:
+                        print(f"🔁 Change detected in {path.name}")
+                        return False
+                    return True
+                print(f"🆕 No previous hash found for {path.name}")
+                return False
+
+            def save_new_hash(path=notebook_path, hash_file=hash_file):
+                new_hash = notebook_source_hash(path)
+                hash_file.write_text(new_hash)
+                print(f"✅ Saved new hash for {path.name}")
+
+            yield {
+                "name": subdir.name,
+                "actions": [
+                    f"jupyter nbconvert --execute --to notebook --inplace --log-level=ERROR {notebook_path}",
+                    save_new_hash,
+                ],
+                "file_dep": [notebook_path],
+                "uptodate": [source_has_changed],
+                "verbosity": 2,
+            }
 
 def task_export_post_notebooks():
     """Export executed notebooks to HTML and PDF"""
