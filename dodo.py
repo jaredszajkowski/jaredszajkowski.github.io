@@ -1,6 +1,5 @@
 """Run or update the project. This file uses the `doit` Python package. It works
-like a Makefile, but is Python-based
-
+like a Makefile, but is Python-based.
 """
 
 #######################################
@@ -33,10 +32,8 @@ from doit.reporter import ConsoleReporter
 from settings import config
 
 #######################################
-## Configuration and Helpers for PyDoit
+## Slurm Configuration
 #######################################
-
-
 
 try:
     in_slurm = environ["SLURM_JOB_ID"] is not None
@@ -71,9 +68,9 @@ else:
     }
 init(autoreset=True)
 
-##################################
+#######################################
 ## Set directory variables
-##################################
+#######################################
 
 BASE_DIR = config("BASE_DIR")
 CONTENT_DIR = config("CONTENT_DIR")
@@ -82,37 +79,33 @@ PAGES_DIR = config("PAGES_DIR")
 PUBLIC_DIR = config("PUBLIC_DIR")
 SOURCE_DIR = config("SOURCE_DIR")
 
+#######################################
+## Clean this up later
+#######################################
 
+# ## Helpers for handling Jupyter Notebook tasks
+# # fmt: off
+# ## Helper functions for automatic execution of Jupyter notebooks
+# environ["PYDEVD_DISABLE_FILE_VALIDATION"] = "1"
+# def jupyter_execute_notebook(notebook):
+#     return f"jupyter nbconvert --execute --to notebook --ClearMetadataPreprocessor.enabled=True --log-level WARN --inplace ./src/{notebook}.ipynb"
+# # def jupyter_to_html(notebook, output_dir=OUTPUT_DIR):
+# def jupyter_to_html(notebook, output_dir):
+#     return f"jupyter nbconvert --to html --log-level WARN --output-dir='{output_dir}' ./src/{notebook}.ipynb"
+# # def jupyter_to_md(notebook, output_dir=OUTPUT_DIR):
+# def jupyter_to_md(notebook, output_dir):
+#     """Requires jupytext"""
+#     return f"jupytext --to markdown --log-level WARN --output-dir='{output_dir}' ./src/{notebook}.ipynb"
+# def jupyter_to_python(notebook, build_dir):
+#     """Convert a notebook to a python script"""
+#     return f"jupyter nbconvert --log-level WARN --to python ./src/{notebook}.ipynb --output _{notebook}.py --output-dir '{build_dir}'"
+# def jupyter_clear_output(notebook):
+#     return f"jupyter nbconvert --log-level WARN --ClearOutputPreprocessor.enabled=True --ClearMetadataPreprocessor.enabled=True --inplace ./src/{notebook}.ipynb"
+# # fmt: on
 
-# DATA_DIR = config("DATA_DIR")
-# MANUAL_DATA_DIR = config("MANUAL_DATA_DIR")
-# OUTPUT_DIR = config("OUTPUT_DIR")
-# OS_TYPE = config("OS_TYPE")
-# PUBLISH_DIR = config("PUBLISH_DIR")
-# USER = config("USER")
-# PLOTS_DIR = config("PLOTS_DIR")
-# TABLES_DIR = config("TABLES_DIR")
-
-## Helpers for handling Jupyter Notebook tasks
-# fmt: off
-## Helper functions for automatic execution of Jupyter notebooks
-environ["PYDEVD_DISABLE_FILE_VALIDATION"] = "1"
-def jupyter_execute_notebook(notebook):
-    return f"jupyter nbconvert --execute --to notebook --ClearMetadataPreprocessor.enabled=True --log-level WARN --inplace ./src/{notebook}.ipynb"
-# def jupyter_to_html(notebook, output_dir=OUTPUT_DIR):
-def jupyter_to_html(notebook, output_dir):
-    return f"jupyter nbconvert --to html --log-level WARN --output-dir='{output_dir}' ./src/{notebook}.ipynb"
-# def jupyter_to_md(notebook, output_dir=OUTPUT_DIR):
-def jupyter_to_md(notebook, output_dir):
-    """Requires jupytext"""
-    return f"jupytext --to markdown --log-level WARN --output-dir='{output_dir}' ./src/{notebook}.ipynb"
-def jupyter_to_python(notebook, build_dir):
-    """Convert a notebook to a python script"""
-    return f"jupyter nbconvert --log-level WARN --to python ./src/{notebook}.ipynb --output _{notebook}.py --output-dir '{build_dir}'"
-def jupyter_clear_output(notebook):
-    return f"jupyter nbconvert --log-level WARN --ClearOutputPreprocessor.enabled=True --ClearMetadataPreprocessor.enabled=True --inplace ./src/{notebook}.ipynb"
-# fmt: on
-
+#######################################
+## Helper functions
+#######################################
 
 def copy_file(origin_path, destination_path, mkdir=True):
     """Create a Python action for copying a file."""
@@ -126,11 +119,36 @@ def copy_file(origin_path, destination_path, mkdir=True):
 
     return _copy_file
 
+def extract_front_matter(index_path):
+    """Extract front matter as a dict from a Hugo index.md file"""
+    text = index_path.read_text()
+    match = re.search(r"(?s)^---(.*?)---", text)
+    if match:
+        return yaml.safe_load(match.group(1))
+    return {}
 
-##################################
-## Begin rest of PyDoit tasks here
-##################################
+def notebook_source_hash(notebook_path):
+    """
+    Compute a SHA-256 hash of the notebook's code and markdown cells.
+    This includes all whitespace and comments.
+    """
+    import nbformat
+    import hashlib
 
+    with open(notebook_path, "r", encoding="utf-8") as f:
+        nb = nbformat.read(f, as_version=4)
+
+    relevant_cells = [
+        cell["source"]
+        for cell in nb.cells
+        if cell.cell_type in {"code", "markdown"}
+    ]
+    full_content = "\n".join(relevant_cells)
+    return hashlib.sha256(full_content.encode("utf-8")).hexdigest()
+
+#######################################
+## PyDoit tasks
+#######################################
 
 def task_config():
     """Create empty directories for content, page, post, and public if they don't exist"""
@@ -166,6 +184,42 @@ def task_run_post_notebooks():
                     # "targets": [notebook_path],  # optional if you want doit to track it
                     "verbosity": 2,
                 }
+
+# def task_run_post_notebooks():
+#     """Execute notebooks only when code or markdown content has changed"""
+#     for subdir in POSTS_DIR.iterdir():
+#         if subdir.is_dir():
+#             notebook_path = subdir / f"{subdir.name}.ipynb"
+
+#             if notebook_path.exists():
+#                 hash_file = subdir / ".last_source_hash"
+
+#                 def source_has_changed():
+#                     current_hash = notebook_source_hash(notebook_path)
+#                     if hash_file.exists():
+#                         old_hash = hash_file.read_text().strip()
+#                         if current_hash != old_hash:
+#                             print(f"🔁 Change detected in {notebook_path.name}")
+#                             return False  # Not up-to-date → needs re-run
+#                         return True  # No change
+#                     print(f"🆕 No previous hash found for {notebook_path.name}")
+#                     return False
+
+#                 def save_new_hash():
+#                     new_hash = notebook_source_hash(notebook_path)
+#                     hash_file.write_text(new_hash)
+#                     print(f"✅ Saved new hash for {notebook_path.name}")
+
+#                 yield {
+#                     "name": subdir.name,
+#                     "actions": [
+#                         f"jupyter nbconvert --execute --to notebook --inplace --log-level=ERROR {notebook_path}",
+#                         save_new_hash,
+#                     ],
+#                     "file_dep": [notebook_path],
+#                     "uptodate": [source_has_changed],
+#                     "verbosity": 2,
+#                 }
 
 def task_export_post_notebooks():
     """Export executed notebooks to HTML and PDF"""
@@ -221,28 +275,6 @@ def task_build_site():
         "verbosity": 2,
         "clean": [],  # Don't clean these files by default.
     }
-
-# def task_push_repo():
-#     """Push the full repo to GitHub after site build"""
-#     return {
-#         "actions": [
-#             "git add .",
-#             'git commit -am "🚀 Rebuild site"',
-#             "git push"
-#         ],
-#         "task_dep": ["build_site"],
-#         "verbosity": 2,
-#         "clean": False
-#     }
-
-# Helper function to extract front matter
-def extract_front_matter(index_path):
-    """Extract front matter as a dict from a Hugo index.md file"""
-    text = index_path.read_text()
-    match = re.search(r"(?s)^---(.*?)---", text)
-    if match:
-        return yaml.safe_load(match.group(1))
-    return {}
 
 def task_copy_notebook_exports():
     """Copy notebook HTML exports into the correct Hugo public/ date-based folders"""
@@ -318,9 +350,9 @@ def task_deploy_site():
 
 
 
-##################################
+#######################################
 ## Pull Data
-##################################
+#######################################
 
 # # This is needed for F-F BE/ME portfolios
 # def task_pull_ken_french_data():
@@ -361,9 +393,9 @@ def task_deploy_site():
 #         "clean": [],  # Don't clean these files by default.
 #     }
 
-##############################$
+#######################################
 ## Notebook Tasks
-##############################$
+#######################################
 
 # notebook_tasks = {
 #     "01_Market_Expectations_In_The_Cross-Section_Of_Present_Values_Final.ipynb": {
