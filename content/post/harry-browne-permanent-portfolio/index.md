@@ -874,4 +874,6 @@ Fail-Safe Investing: Lifelong Financial Security in 30 Minutes, by Harry Browne
 
 ## Code
 
-The jupyter notebook with the functions and all other code is available [here](harry-browne-permanent-portfolio.ipynb).
+The jupyter notebook with the functions and all other code is available [here](harry-browne-permanent-portfolio.ipynb).</br>
+The html export of the jupyter notebook is available [here](harry-browne-permanent-portfolio.html).</br>
+The pdf export of the jupyter notebook is available [here](harry-browne-permanent-portfolio.pdf).
