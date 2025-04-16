@@ -202,7 +202,7 @@ def task_run_post_notebooks():
                     old_hash = hash_file.read_text().strip()
                     if current_hash != old_hash:
                         print(f"🔁 Change detected in {path.name}")
-                        return False 
+                        return False
                     print(f"⏩ No change in hash for {path.name}")
                     return True
                 print(f"🆕 No previous hash found for {path.name}")
