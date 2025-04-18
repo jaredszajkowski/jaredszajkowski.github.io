@@ -227,23 +227,27 @@ def task_run_post_notebooks():
 def task_export_post_notebooks():
     """Export executed notebooks to HTML and PDF"""
     for subdir in POSTS_DIR.iterdir():
-        if subdir.is_dir():
-            notebook_path = subdir / f"{subdir.name}.ipynb"
-            html_output = subdir / f"{subdir.name}.html"
-            pdf_output = subdir / f"{subdir.name}.pdf"
+        if not subdir.is_dir():
+            continue
 
-            if notebook_path.exists():
-                yield {
-                    "name": subdir.name,
-                    "actions": [
-                        f"jupyter nbconvert --to=html --log-level=WARN --output={html_output} {notebook_path}",
-                        f"jupyter nbconvert --to=pdf --log-level=WARN --output={pdf_output} {notebook_path}"
-                    ],
-                    "file_dep": [notebook_path],
-                    "targets": [html_output, pdf_output],
-                    "verbosity": 2,
-                    "clean": [],  # Don't clean these files by default.
-                }
+        notebook_path = subdir / f"{subdir.name}.ipynb"
+        html_output = subdir / f"{subdir.name}.html"
+        pdf_output = subdir / f"{subdir.name}.pdf"
+
+        if not notebook_path.exists():
+            continue
+
+        yield {
+            "name": subdir.name,
+            "actions": [
+                f"jupyter nbconvert --to=html --log-level=WARN --output={html_output} {notebook_path}",
+                f"jupyter nbconvert --to=pdf --log-level=WARN --output={pdf_output} {notebook_path}"
+            ],
+            "file_dep": [notebook_path],
+            "targets": [html_output, pdf_output],
+            "verbosity": 2,
+            "clean": [],  # Don't clean these files by default.
+        }
 
 def task_build_post_indexes():
     """Run build_index.py in each post subdirectory to generate index.md"""
