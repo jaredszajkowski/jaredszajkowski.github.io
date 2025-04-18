@@ -1,4 +1,5 @@
-"""Load project configurations from .env files.
+"""
+Load project configurations from .env files.
 Provides easy access to paths and credentials used in the project.
 Meant to be used as an imported module.
 
@@ -15,31 +16,26 @@ You can have different sets of variables for difference instances,
 such as `.env.development` or `.env.production`. You would only
 need to copy over the settings from one into `.env` to switch
 over to the other configuration, for example.
-
 """
 
 from pathlib import Path
-
-## Helper for determining OS
 from platform import system
-
 from decouple import config as _config
 from pandas import to_datetime
 
+def get_os():
+    os_name = system()
+    if os_name == "Windows":
+        return "windows"
+    elif os_name == "Darwin":
+        return "nix"
+    elif os_name == "Linux":
+        return "nix"
+    else:
+        return "unknown"
 
-# def get_os():
-#     os_name = system()
-#     if os_name == "Windows":
-#         return "windows"
-#     elif os_name == "Darwin":
-#         return "nix"
-#     elif os_name == "Linux":
-#         return "nix"
-#     else:
-#         return "unknown"
-
-
-def if_relative_make_abs(path):
+# def if_relative_make_abs(path):
+def if_relative_make_abs(base_dir, path):
     """If a relative path is given, make it absolute, assuming
     that it is relative to the project root directory (BASE_DIR)
 
@@ -57,14 +53,15 @@ def if_relative_make_abs(path):
     if path.is_absolute():
         abs_path = path.resolve()
     else:
-        abs_path = (d["BASE_DIR"] / path).resolve()
+        # abs_path = (d["BASE_DIR"] / path).resolve()
+        abs_path = (base_dir / path).resolve()
     return abs_path
 
 # Initialize the dictionary to hold all the settings
 d = {}
 
 # Get the OS type
-# d["OS_TYPE"] = get_os()
+d["OS_TYPE"] = get_os()
 
 # Absolute path to root directory of the project
 d["BASE_DIR"] = Path(__file__).absolute().parent.parent
@@ -77,18 +74,20 @@ d["BASE_DIR"] = Path(__file__).absolute().parent.parent
 # d["PIPELINE_THEME"] = _config("PIPELINE_THEME", default="pipeline")
 
 ## Paths
-d["CONTENT_DIR"] = if_relative_make_abs(_config('CONTENT_DIR', default=Path('content'), cast=Path))
-d["POSTS_DIR"] = if_relative_make_abs(_config('POSTS_DIR', default=Path('content/post'), cast=Path))
-d["PAGES_DIR"] = if_relative_make_abs(_config('PAGES_DIR', default=Path('content/page'), cast=Path))
-d["PUBLIC_DIR"] = if_relative_make_abs(_config('PUBLIC_DIR', default=Path('public'), cast=Path))
-d["SOURCE_DIR"] = if_relative_make_abs(_config('SOURCE_DIR', default=Path('src'), cast=Path))
+d["CONTENT_DIR"] = if_relative_make_abs(d["BASE_DIR"], _config('CONTENT_DIR', default=Path('content'), cast=Path))
+d["POSTS_DIR"] = if_relative_make_abs(d["BASE_DIR"], _config('POSTS_DIR', default=Path('content/post'), cast=Path))
+d["PAGES_DIR"] = if_relative_make_abs(d["BASE_DIR"], _config('PAGES_DIR', default=Path('content/page'), cast=Path))
+d["PUBLIC_DIR"] = if_relative_make_abs(d["BASE_DIR"], _config('PUBLIC_DIR', default=Path('public'), cast=Path))
+d["SOURCE_DIR"] = if_relative_make_abs(d["BASE_DIR"], _config('SOURCE_DIR', default=Path('src'), cast=Path))
 
+# External Paths
+quant_finance_research_base_directory = "/home/jared/Cloud_Storage/Dropbox/Quant_Finance_Research"
+d["QUANT_FINANCE_RESEARCH_BASE_DIR"] = Path(str(quant_finance_research_base_directory)).absolute()
+d["QUANT_FINANCE_RESEARCH_SOURCE_DIR"] = if_relative_make_abs(d["QUANT_FINANCE_RESEARCH_BASE_DIR"], _config('QUANT_FINANCE_RESEARCH_SOURCE_DIR', default=Path('src'), cast=Path))
 
-# d["MANUAL_DATA_DIR"] = if_relative_make_abs(_config('MANUAL_DATA_DIR', default=Path('data_manual'), cast=Path))
-# d["OUTPUT_DIR"] = if_relative_make_abs(_config('OUTPUT_DIR', default=Path('_output'), cast=Path))
-# d["PUBLISH_DIR"] = if_relative_make_abs(_config('PUBLISH_DIR', default=Path('_output/publish'), cast=Path))
-# d["PLOTS_DIR"] = if_relative_make_abs(_config('PLOTS_DIR', default=Path('reports/plots'), cast=Path))
-# d["TABLES_DIR"] = if_relative_make_abs(_config('TABLES_DIR', default=Path('reports/tables'), cast=Path))
+# # Print the dictionary to check the values
+# for key, value in d.items():
+#     print(f"{key}: {value}")
 
 # fmt: on
 
