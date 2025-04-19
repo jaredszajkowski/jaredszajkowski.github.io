@@ -7543,6 +7543,7 @@ a.anchor-link {
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Standard Library</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">io</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
@@ -7584,11 +7585,11 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Set-Base-Directory">Set Base Directory<a class="anchor-link" href="#Set-Base-Directory">¶</a></h2>
+<h2 id="Add-Directories-To-Path">Add Directories To Path<a class="anchor-link" href="#Add-Directories-To-Path">¶</a></h2>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=e4b789eb">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=e4b789eb">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7596,9 +7597,76 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Add the base directory to the system path</span>
-<span class="n">base_directory</span> <span class="o">=</span> <span class="s2">"/home/jared/Cloud_Storage/Dropbox/Quant_Finance_Research"</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">base_directory</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Add the source subdirectory to the system path to allow import config from settings.py</span>
+<span class="n">current_directory</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+<span class="n">website_base_directory</span> <span class="o">=</span> <span class="n">current_directory</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+<span class="n">src_directory</span> <span class="o">=</span> <span class="n">website_base_directory</span> <span class="o">/</span> <span class="s2">"src"</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">src_directory</span><span class="p">))</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">src_directory</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span> <span class="k">else</span> <span class="kc">None</span>
+
+<span class="c1"># Now you can import settings.py</span>
+<span class="kn">from</span> <span class="nn">settings</span> <span class="kn">import</span> <span class="n">config</span>
+
+<span class="c1"># Get configured directories and add to path</span>
+<span class="n">SOURCE_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">"SOURCE_DIR"</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span><span class="p">)))</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span><span class="p">))</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span> <span class="k">else</span> <span class="kc">None</span>
+
+<span class="n">QUANT_FINANCE_RESEARCH_BASE_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">"QUANT_FINANCE_RESEARCH_BASE_DIR"</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">QUANT_FINANCE_RESEARCH_BASE_DIR</span><span class="p">)))</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">QUANT_FINANCE_RESEARCH_BASE_DIR</span><span class="p">))</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span> <span class="k">else</span> <span class="kc">None</span>
+
+<span class="n">QUANT_FINANCE_RESEARCH_SOURCE_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">"QUANT_FINANCE_RESEARCH_SOURCE_DIR"</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">QUANT_FINANCE_RESEARCH_SOURCE_DIR</span><span class="p">)))</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">QUANT_FINANCE_RESEARCH_SOURCE_DIR</span><span class="p">))</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span> <span class="k">else</span> <span class="kc">None</span>
+
+<span class="c1"># Print system path</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>0: /usr/lib/python313.zip
+1: /usr/lib/python3.13
+2: /usr/lib/python3.13/lib-dynload
+3: 
+4: /home/jared/python-virtual-envs/general_313/lib/python3.13/site-packages
+5: /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/src
+6: /home/jared/Cloud_Storage/Dropbox/Quant_Finance_Research
+7: /home/jared/Cloud_Storage/Dropbox/Quant_Finance_Research/src
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=600316bb">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Import-Functions">Import Functions<a class="anchor-link" href="#Import-Functions">¶</a></h2>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=5feae482">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Import a function or module from the research codebase</span>
+<span class="kn">from</span> <span class="nn">export_track_md_deps</span> <span class="kn">import</span> <span class="n">export_track_md_deps</span>
+<span class="kn">from</span> <span class="nn">df_info_markdown</span> <span class="kn">import</span> <span class="n">df_info_markdown</span>
+<span class="kn">from</span> <span class="nn">pandas_set_decimal_places</span> <span class="kn">import</span> <span class="n">pandas_set_decimal_places</span>
 </pre></div>
 </div>
 </div>
@@ -7615,25 +7683,30 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=2975e08b">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=2975e08b">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Define the dependency tracker</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Create file to track markdown dependencies</span>
 <span class="n">dep_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"index_dep.txt"</span><span class="p">)</span>
-<span class="n">Path</span><span class="p">(</span><span class="s2">"index_dep.txt"</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s2">""</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">export_and_track</span><span class="p">(</span><span class="n">md_filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Export markdown and append to index_dependencies.txt"""</span>
-    <span class="n">Path</span><span class="p">(</span><span class="n">md_filename</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-    <span class="k">with</span> <span class="n">dep_file</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"a"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">md_filename</span> <span class="o">+</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✅ Exported and tracked: </span><span class="si">{</span><span class="n">md_filename</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">dep_file</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s2">""</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
+<pre>0</pre>
 </div>
 </div>
 </div>
@@ -7646,31 +7719,6 @@ a.anchor-link {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h1 id="Begin-Index.md-Here">Begin Index.md Here<a class="anchor-link" href="#Begin-Index.md-Here">¶</a></h1>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b5552d90">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Import-Functions">Import Functions<a class="anchor-link" href="#Import-Functions">¶</a></h2>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=29eb911b">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># TBD</span>
-</pre></div>
-</div>
 </div>
 </div>
 </div>
@@ -7758,38 +7806,6 @@ a.anchor-link {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=97339131">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="dp">dp<a class="anchor-link" href="#dp">¶</a></h3>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=94fa45f6">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Need to update</span>
-
-<span class="c1"># Set number of decimal places in pandas</span>
-
-<span class="k">def</span> <span class="nf">dp</span><span class="p">(</span><span class="n">decimal_places</span><span class="p">):</span>
-    <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">'display.float_format'</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="sa">f</span><span class="s1">'%.</span><span class="si">{</span><span class="n">decimal_places</span><span class="si">}</span><span class="s1">f'</span> <span class="o">%</span> <span class="n">x</span><span class="p">)</span>
-
-<span class="n">dp</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=515df39a">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -7805,7 +7821,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Need to update</span>
@@ -7841,7 +7857,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
@@ -7879,7 +7895,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">strategy</span><span class="p">(</span>
@@ -8066,7 +8082,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Stats for entire data set</span>
@@ -8166,7 +8182,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">plot_cumulative_return</span><span class="p">(</span><span class="n">strat_df</span><span class="p">):</span>
@@ -8226,7 +8242,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">plot_values</span><span class="p">(</span><span class="n">strat_df</span><span class="p">):</span>   
@@ -8291,7 +8307,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">plot_drawdown</span><span class="p">(</span><span class="n">strat_df</span><span class="p">):</span>
@@ -8356,7 +8372,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">plot_asset_weights</span><span class="p">(</span><span class="n">strat_df</span><span class="p">):</span>
@@ -8420,7 +8436,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">plot_annual_returns</span><span class="p">(</span><span class="n">return_df</span><span class="p">):</span>
@@ -8481,7 +8497,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Bonds dataframe</span>
@@ -8515,16 +8531,16 @@ a.anchor-link {
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>The last date of data for SPBDU10T_S&amp;P US Treasury Bond 7-10 Year Total Return Index is: 
-             Close
-Date              
-2024-04-30 579.024
+              Close
+Date               
+2024-04-30  579.024
 Bloomberg data conversion complete for SPBDU10T_S&amp;P US Treasury Bond 7-10 Year Total Return Index data
 --------------------
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[16]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[15]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8565,26 +8581,26 @@ Bloomberg data conversion complete for SPBDU10T_S&amp;P US Treasury Bond 7-10 Ye
 <tr>
 <th>1990-01-03</th>
 <td>99.733</td>
-<td>-0.002</td>
-<td>0.998</td>
+<td>-0.002391</td>
+<td>0.997609</td>
 </tr>
 <tr>
 <th>1990-01-04</th>
 <td>99.813</td>
-<td>0.001</td>
-<td>0.998</td>
+<td>0.000802</td>
+<td>0.998410</td>
 </tr>
 <tr>
 <th>1990-01-05</th>
 <td>99.769</td>
-<td>-0.000</td>
-<td>0.998</td>
+<td>-0.000441</td>
+<td>0.997969</td>
 </tr>
 <tr>
 <th>1990-01-08</th>
 <td>99.681</td>
-<td>-0.001</td>
-<td>0.997</td>
+<td>-0.000882</td>
+<td>0.997089</td>
 </tr>
 <tr>
 <th>...</th>
@@ -8595,32 +8611,32 @@ Bloomberg data conversion complete for SPBDU10T_S&amp;P US Treasury Bond 7-10 Ye
 <tr>
 <th>2023-12-22</th>
 <td>604.166</td>
-<td>-0.001</td>
-<td>6.043</td>
+<td>-0.000681</td>
+<td>6.043352</td>
 </tr>
 <tr>
 <th>2023-12-26</th>
 <td>604.555</td>
-<td>0.001</td>
-<td>6.047</td>
+<td>0.000644</td>
+<td>6.047243</td>
 </tr>
 <tr>
 <th>2023-12-27</th>
 <td>609.355</td>
-<td>0.008</td>
-<td>6.095</td>
+<td>0.007940</td>
+<td>6.095257</td>
 </tr>
 <tr>
 <th>2023-12-28</th>
 <td>606.828</td>
-<td>-0.004</td>
-<td>6.070</td>
+<td>-0.004147</td>
+<td>6.069980</td>
 </tr>
 <tr>
 <th>2023-12-29</th>
 <td>606.185</td>
-<td>-0.001</td>
-<td>6.064</td>
+<td>-0.001060</td>
+<td>6.063548</td>
 </tr>
 </tbody>
 </table>
@@ -8635,7 +8651,7 @@ Bloomberg data conversion complete for SPBDU10T_S&amp;P US Treasury Bond 7-10 Ye
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Stocks dataframe</span>
@@ -8671,7 +8687,7 @@ Bloomberg data conversion complete for SPBDU10T_S&amp;P US Treasury Bond 7-10 Ye
 <pre>The last date of data for SPXT_S&amp;P 500 Total Return Index is: 
                Close
 Date                
-2024-04-30 10951.660
+2024-04-30  10951.66
 Bloomberg data conversion complete for SPXT_S&amp;P 500 Total Return Index data
 --------------------
 </pre>
@@ -8680,13 +8696,13 @@ Bloomberg data conversion complete for SPXT_S&amp;P 500 Total Return Index data
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>/tmp/ipykernel_20380/1682549453.py:8: FutureWarning: The default fill_method='pad' in Series.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+<pre>/tmp/ipykernel_6063/1682549453.py:8: FutureWarning: The default fill_method='pad' in Series.pct_change is deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
   stocks_data['Stocks_Daily_Return'] = stocks_data['Stocks_Close'].pct_change()
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[17]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[16]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8726,27 +8742,27 @@ Bloomberg data conversion complete for SPXT_S&amp;P 500 Total Return Index data
 </tr>
 <tr>
 <th>1990-01-02</th>
-<td>386.160</td>
+<td>386.16</td>
 <td>NaN</td>
 <td>NaN</td>
 </tr>
 <tr>
 <th>1990-01-03</th>
-<td>385.170</td>
-<td>-0.003</td>
-<td>0.997</td>
+<td>385.17</td>
+<td>-0.002564</td>
+<td>0.997436</td>
 </tr>
 <tr>
 <th>1990-01-04</th>
-<td>382.020</td>
-<td>-0.008</td>
-<td>0.989</td>
+<td>382.02</td>
+<td>-0.008178</td>
+<td>0.989279</td>
 </tr>
 <tr>
 <th>1990-01-05</th>
-<td>378.300</td>
-<td>-0.010</td>
-<td>0.980</td>
+<td>378.30</td>
+<td>-0.009738</td>
+<td>0.979646</td>
 </tr>
 <tr>
 <th>...</th>
@@ -8756,33 +8772,33 @@ Bloomberg data conversion complete for SPXT_S&amp;P 500 Total Return Index data
 </tr>
 <tr>
 <th>2023-12-22</th>
-<td>10292.370</td>
-<td>0.002</td>
-<td>26.653</td>
+<td>10292.37</td>
+<td>0.001661</td>
+<td>26.653123</td>
 </tr>
 <tr>
 <th>2023-12-26</th>
-<td>10335.980</td>
-<td>0.004</td>
-<td>26.766</td>
+<td>10335.98</td>
+<td>0.004237</td>
+<td>26.766056</td>
 </tr>
 <tr>
 <th>2023-12-27</th>
-<td>10351.600</td>
-<td>0.002</td>
-<td>26.807</td>
+<td>10351.60</td>
+<td>0.001511</td>
+<td>26.806505</td>
 </tr>
 <tr>
 <th>2023-12-28</th>
-<td>10356.590</td>
-<td>0.000</td>
-<td>26.819</td>
+<td>10356.59</td>
+<td>0.000482</td>
+<td>26.819427</td>
 </tr>
 <tr>
 <th>2023-12-29</th>
-<td>10327.830</td>
-<td>-0.003</td>
-<td>26.745</td>
+<td>10327.83</td>
+<td>-0.002777</td>
+<td>26.744950</td>
 </tr>
 </tbody>
 </table>
@@ -8797,7 +8813,7 @@ Bloomberg data conversion complete for SPXT_S&amp;P 500 Total Return Index data
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Gold dataframe</span>
@@ -8833,14 +8849,14 @@ Bloomberg data conversion complete for SPXT_S&amp;P 500 Total Return Index data
 <pre>The last date of data for XAU_Gold USD Spot is: 
               Close
 Date               
-2024-05-01 2299.310
+2024-05-01  2299.31
 Bloomberg data conversion complete for XAU_Gold USD Spot data
 --------------------
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[18]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[17]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8874,33 +8890,33 @@ Bloomberg data conversion complete for XAU_Gold USD Spot data
 <tbody>
 <tr>
 <th>1990-01-02</th>
-<td>399.000</td>
+<td>399.00</td>
 <td>NaN</td>
 <td>NaN</td>
 </tr>
 <tr>
 <th>1990-01-03</th>
-<td>395.000</td>
-<td>-0.010</td>
-<td>0.990</td>
+<td>395.00</td>
+<td>-0.010025</td>
+<td>0.989975</td>
 </tr>
 <tr>
 <th>1990-01-04</th>
-<td>396.500</td>
-<td>0.004</td>
-<td>0.994</td>
+<td>396.50</td>
+<td>0.003797</td>
+<td>0.993734</td>
 </tr>
 <tr>
 <th>1990-01-05</th>
-<td>405.000</td>
-<td>0.021</td>
-<td>1.015</td>
+<td>405.00</td>
+<td>0.021438</td>
+<td>1.015038</td>
 </tr>
 <tr>
 <th>1990-01-08</th>
-<td>404.600</td>
-<td>-0.001</td>
-<td>1.014</td>
+<td>404.60</td>
+<td>-0.000988</td>
+<td>1.014035</td>
 </tr>
 <tr>
 <th>...</th>
@@ -8910,33 +8926,33 @@ Bloomberg data conversion complete for XAU_Gold USD Spot data
 </tr>
 <tr>
 <th>2023-12-22</th>
-<td>2053.080</td>
-<td>0.003</td>
-<td>5.146</td>
+<td>2053.08</td>
+<td>0.003485</td>
+<td>5.145564</td>
 </tr>
 <tr>
 <th>2023-12-26</th>
-<td>2067.810</td>
-<td>0.007</td>
-<td>5.182</td>
+<td>2067.81</td>
+<td>0.007175</td>
+<td>5.182481</td>
 </tr>
 <tr>
 <th>2023-12-27</th>
-<td>2077.490</td>
-<td>0.005</td>
-<td>5.207</td>
+<td>2077.49</td>
+<td>0.004681</td>
+<td>5.206742</td>
 </tr>
 <tr>
 <th>2023-12-28</th>
-<td>2065.610</td>
-<td>-0.006</td>
-<td>5.177</td>
+<td>2065.61</td>
+<td>-0.005718</td>
+<td>5.176967</td>
 </tr>
 <tr>
 <th>2023-12-29</th>
-<td>2062.980</td>
-<td>-0.001</td>
-<td>5.170</td>
+<td>2062.98</td>
+<td>-0.001273</td>
+<td>5.170376</td>
 </tr>
 </tbody>
 </table>
@@ -8951,7 +8967,7 @@ Bloomberg data conversion complete for XAU_Gold USD Spot data
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Merge the stock data and bond data into a single DataFrame using their indices (dates)</span>
@@ -8978,7 +8994,7 @@ Bloomberg data conversion complete for XAU_Gold USD Spot data
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[19]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[18]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -9014,37 +9030,37 @@ Bloomberg data conversion complete for XAU_Gold USD Spot data
 <tbody>
 <tr>
 <th>1990-01-02</th>
-<td>386.160</td>
+<td>386.16</td>
 <td>99.972</td>
-<td>399.000</td>
+<td>399.00</td>
 <td>1</td>
 </tr>
 <tr>
 <th>1990-01-03</th>
-<td>385.170</td>
+<td>385.17</td>
 <td>99.733</td>
-<td>395.000</td>
+<td>395.00</td>
 <td>1</td>
 </tr>
 <tr>
 <th>1990-01-04</th>
-<td>382.020</td>
+<td>382.02</td>
 <td>99.813</td>
-<td>396.500</td>
+<td>396.50</td>
 <td>1</td>
 </tr>
 <tr>
 <th>1990-01-05</th>
-<td>378.300</td>
+<td>378.30</td>
 <td>99.769</td>
-<td>405.000</td>
+<td>405.00</td>
 <td>1</td>
 </tr>
 <tr>
 <th>1990-01-08</th>
-<td>380.040</td>
+<td>380.04</td>
 <td>99.681</td>
-<td>404.600</td>
+<td>404.60</td>
 <td>1</td>
 </tr>
 <tr>
@@ -9056,37 +9072,37 @@ Bloomberg data conversion complete for XAU_Gold USD Spot data
 </tr>
 <tr>
 <th>2023-12-22</th>
-<td>10292.370</td>
+<td>10292.37</td>
 <td>604.166</td>
-<td>2053.080</td>
+<td>2053.08</td>
 <td>1</td>
 </tr>
 <tr>
 <th>2023-12-26</th>
-<td>10335.980</td>
+<td>10335.98</td>
 <td>604.555</td>
-<td>2067.810</td>
+<td>2067.81</td>
 <td>1</td>
 </tr>
 <tr>
 <th>2023-12-27</th>
-<td>10351.600</td>
+<td>10351.60</td>
 <td>609.355</td>
-<td>2077.490</td>
+<td>2077.49</td>
 <td>1</td>
 </tr>
 <tr>
 <th>2023-12-28</th>
-<td>10356.590</td>
+<td>10356.59</td>
 <td>606.828</td>
-<td>2065.610</td>
+<td>2065.61</td>
 <td>1</td>
 </tr>
 <tr>
 <th>2023-12-29</th>
-<td>10327.830</td>
+<td>10327.83</td>
 <td>606.185</td>
-<td>2062.980</td>
+<td>2062.98</td>
 <td>1</td>
 </tr>
 </tbody>
@@ -9102,7 +9118,7 @@ Bloomberg data conversion complete for XAU_Gold USD Spot data
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Check for any missing values in each column</span>
@@ -9137,7 +9153,7 @@ dtype: bool
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">df_info</span><span class="p">(</span><span class="n">perm_port</span><span class="p">)</span>
@@ -9207,37 +9223,37 @@ The first 5 rows are:
 <tbody>
 <tr>
 <th>1990-01-02</th>
-<td>386.160</td>
+<td>386.16</td>
 <td>99.972</td>
-<td>399.000</td>
+<td>399.0</td>
 <td>1</td>
 </tr>
 <tr>
 <th>1990-01-03</th>
-<td>385.170</td>
+<td>385.17</td>
 <td>99.733</td>
-<td>395.000</td>
+<td>395.0</td>
 <td>1</td>
 </tr>
 <tr>
 <th>1990-01-04</th>
-<td>382.020</td>
+<td>382.02</td>
 <td>99.813</td>
-<td>396.500</td>
+<td>396.5</td>
 <td>1</td>
 </tr>
 <tr>
 <th>1990-01-05</th>
-<td>378.300</td>
+<td>378.30</td>
 <td>99.769</td>
-<td>405.000</td>
+<td>405.0</td>
 <td>1</td>
 </tr>
 <tr>
 <th>1990-01-08</th>
-<td>380.040</td>
+<td>380.04</td>
 <td>99.681</td>
-<td>404.600</td>
+<td>404.6</td>
 <td>1</td>
 </tr>
 </tbody>
@@ -9289,37 +9305,37 @@ The first 5 rows are:
 <tbody>
 <tr>
 <th>2023-12-22</th>
-<td>10292.370</td>
+<td>10292.37</td>
 <td>604.166</td>
-<td>2053.080</td>
+<td>2053.08</td>
 <td>1</td>
 </tr>
 <tr>
 <th>2023-12-26</th>
-<td>10335.980</td>
+<td>10335.98</td>
 <td>604.555</td>
-<td>2067.810</td>
+<td>2067.81</td>
 <td>1</td>
 </tr>
 <tr>
 <th>2023-12-27</th>
-<td>10351.600</td>
+<td>10351.60</td>
 <td>609.355</td>
-<td>2077.490</td>
+<td>2077.49</td>
 <td>1</td>
 </tr>
 <tr>
 <th>2023-12-28</th>
-<td>10356.590</td>
+<td>10356.59</td>
 <td>606.828</td>
-<td>2065.610</td>
+<td>2065.61</td>
 <td>1</td>
 </tr>
 <tr>
 <th>2023-12-29</th>
-<td>10327.830</td>
+<td>10327.83</td>
 <td>606.185</td>
-<td>2062.980</td>
+<td>2062.98</td>
 <td>1</td>
 </tr>
 </tbody>
@@ -9345,7 +9361,7 @@ The first 5 rows are:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># List of funds to be used</span>
@@ -9407,9 +9423,9 @@ The first 5 rows are:
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>/tmp/ipykernel_20380/15022227.py:104: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value '9962.55140947963' has dtype incompatible with int64, please explicitly cast to a compatible dtype first.
+<pre>/tmp/ipykernel_6063/15022227.py:104: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value '9962.55140947963' has dtype incompatible with int64, please explicitly cast to a compatible dtype first.
   df.at[index, 'Total_BA_$_Invested'] = Total_BA_Invested
-/tmp/ipykernel_20380/15022227.py:149: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value '9962.55140947963' has dtype incompatible with int64, please explicitly cast to a compatible dtype first.
+/tmp/ipykernel_6063/15022227.py:149: FutureWarning: Setting an item of incompatible dtype is deprecated and will raise an error in a future version of pandas. Value '9962.55140947963' has dtype incompatible with int64, please explicitly cast to a compatible dtype first.
   df.at[index, 'Total_AA_$_Invested'] = Total_AA_Invested
 </pre>
 </div>
@@ -9432,7 +9448,7 @@ Summary stats complete for Stocks_Bonds_Gold_Cash.
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [23]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">all_sum_stats</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">sum_stats</span><span class="p">])</span>
@@ -9454,7 +9470,7 @@ Summary stats complete for Stocks_Bonds_Gold_Cash.
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[23]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[22]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -9491,60 +9507,60 @@ Summary stats complete for Stocks_Bonds_Gold_Cash.
 <tbody>
 <tr>
 <th>1990 - 2023</th>
-<td>0.083</td>
-<td>0.072</td>
-<td>1.152</td>
-<td>0.084</td>
-<td>0.029</td>
+<td>0.083244</td>
+<td>0.072251</td>
+<td>1.152142</td>
+<td>0.083953</td>
+<td>0.028794</td>
 <td>2020-03-24</td>
-<td>-0.030</td>
+<td>-0.029852</td>
 <td>2020-03-12</td>
-<td>-0.154</td>
+<td>-0.153821</td>
 <td>2008-03-18</td>
 <td>2008-11-12</td>
 <td>2009-10-06</td>
 </tr>
 <tr>
 <th>Pre 1999</th>
-<td>0.088</td>
-<td>0.060</td>
-<td>1.453</td>
-<td>0.089</td>
-<td>0.022</td>
+<td>0.087544</td>
+<td>0.060262</td>
+<td>1.452712</td>
+<td>0.089462</td>
+<td>0.021781</td>
 <td>1999-09-28</td>
-<td>-0.018</td>
+<td>-0.017880</td>
 <td>1993-08-05</td>
-<td>-0.062</td>
+<td>-0.062084</td>
 <td>1998-07-20</td>
 <td>1998-08-31</td>
 <td>1998-11-05</td>
 </tr>
 <tr>
 <th>Post 1999</th>
-<td>0.081</td>
-<td>0.077</td>
-<td>1.063</td>
-<td>0.082</td>
-<td>0.029</td>
+<td>0.081473</td>
+<td>0.076650</td>
+<td>1.062923</td>
+<td>0.081691</td>
+<td>0.028794</td>
 <td>2020-03-24</td>
-<td>-0.030</td>
+<td>-0.029852</td>
 <td>2020-03-12</td>
-<td>-0.154</td>
+<td>-0.153821</td>
 <td>2008-03-18</td>
 <td>2008-11-12</td>
 <td>2009-10-06</td>
 </tr>
 <tr>
 <th>Post 2009</th>
-<td>0.081</td>
-<td>0.073</td>
-<td>1.115</td>
-<td>0.082</td>
-<td>0.029</td>
+<td>0.080996</td>
+<td>0.072618</td>
+<td>1.115373</td>
+<td>0.081501</td>
+<td>0.028794</td>
 <td>2020-03-24</td>
-<td>-0.030</td>
+<td>-0.029852</td>
 <td>2020-03-12</td>
-<td>-0.127</td>
+<td>-0.127055</td>
 <td>2021-12-27</td>
 <td>2022-10-20</td>
 <td>2023-12-01</td>
@@ -9561,7 +9577,7 @@ Summary stats complete for Stocks_Bonds_Gold_Cash.
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [24]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [23]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">plot_cumulative_return</span><span class="p">(</span><span class="n">strat</span><span class="p">)</span>
@@ -9623,7 +9639,7 @@ Summary stats complete for Stocks_Bonds_Gold_Cash.
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>/tmp/ipykernel_20380/2757918626.py:7: FutureWarning: 'Y' is deprecated and will be removed in a future version, please use 'YE' instead.
+<pre>/tmp/ipykernel_6063/2757918626.py:7: FutureWarning: 'Y' is deprecated and will be removed in a future version, please use 'YE' instead.
   strat_annual_returns = strat['Cumulative_Return'].resample('Y').last().pct_change().dropna()
 </pre>
 </div>
@@ -9659,135 +9675,135 @@ Summary stats complete for Stocks_Bonds_Gold_Cash.
 <tbody>
 <tr>
 <th>1991</th>
-<td>0.102</td>
+<td>0.102105</td>
 </tr>
 <tr>
 <th>1992</th>
-<td>0.030</td>
+<td>0.030323</td>
 </tr>
 <tr>
 <th>1993</th>
-<td>0.099</td>
+<td>0.098695</td>
 </tr>
 <tr>
 <th>1994</th>
-<td>-0.017</td>
+<td>-0.017222</td>
 </tr>
 <tr>
 <th>1995</th>
-<td>0.153</td>
+<td>0.153473</td>
 </tr>
 <tr>
 <th>1996</th>
-<td>0.049</td>
+<td>0.048529</td>
 </tr>
 <tr>
 <th>1997</th>
-<td>0.056</td>
+<td>0.056127</td>
 </tr>
 <tr>
 <th>1998</th>
-<td>0.102</td>
+<td>0.102107</td>
 </tr>
 <tr>
 <th>1999</th>
-<td>0.039</td>
+<td>0.039196</td>
 </tr>
 <tr>
 <th>2000</th>
-<td>0.000</td>
+<td>0.000025</td>
 </tr>
 <tr>
 <th>2001</th>
-<td>-0.005</td>
+<td>-0.005315</td>
 </tr>
 <tr>
 <th>2002</th>
-<td>0.043</td>
+<td>0.042658</td>
 </tr>
 <tr>
 <th>2003</th>
-<td>0.121</td>
+<td>0.120939</td>
 </tr>
 <tr>
 <th>2004</th>
-<td>0.051</td>
+<td>0.051419</td>
 </tr>
 <tr>
 <th>2005</th>
-<td>0.064</td>
+<td>0.064235</td>
 </tr>
 <tr>
 <th>2006</th>
-<td>0.104</td>
+<td>0.104307</td>
 </tr>
 <tr>
 <th>2007</th>
-<td>0.117</td>
+<td>0.117139</td>
 </tr>
 <tr>
 <th>2008</th>
-<td>-0.033</td>
+<td>-0.033383</td>
 </tr>
 <tr>
 <th>2009</th>
-<td>0.107</td>
+<td>0.107354</td>
 </tr>
 <tr>
 <th>2010</th>
-<td>0.137</td>
+<td>0.136550</td>
 </tr>
 <tr>
 <th>2011</th>
-<td>0.070</td>
+<td>0.069683</td>
 </tr>
 <tr>
 <th>2012</th>
-<td>0.068</td>
+<td>0.067507</td>
 </tr>
 <tr>
 <th>2013</th>
-<td>-0.006</td>
+<td>-0.006023</td>
 </tr>
 <tr>
 <th>2014</th>
-<td>0.052</td>
+<td>0.052264</td>
 </tr>
 <tr>
 <th>2015</th>
-<td>-0.018</td>
+<td>-0.018332</td>
 </tr>
 <tr>
 <th>2016</th>
-<td>0.052</td>
+<td>0.052463</td>
 </tr>
 <tr>
 <th>2017</th>
-<td>0.095</td>
+<td>0.094968</td>
 </tr>
 <tr>
 <th>2018</th>
-<td>-0.012</td>
+<td>-0.011949</td>
 </tr>
 <tr>
 <th>2019</th>
-<td>0.145</td>
+<td>0.145397</td>
 </tr>
 <tr>
 <th>2020</th>
-<td>0.134</td>
+<td>0.133985</td>
 </tr>
 <tr>
 <th>2021</th>
-<td>0.057</td>
+<td>0.056786</td>
 </tr>
 <tr>
 <th>2022</th>
-<td>-0.082</td>
+<td>-0.082424</td>
 </tr>
 <tr>
 <th>2023</th>
-<td>0.109</td>
+<td>0.108761</td>
 </tr>
 </tbody>
 </table>
@@ -9818,7 +9834,7 @@ Summary stats complete for Stocks_Bonds_Gold_Cash.
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [25]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [24]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># # List of funds to be used</span>
