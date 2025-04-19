@@ -684,16 +684,16 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 <pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">The columns, shape, and data types are:
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-</span></span><span class="line"><span class="cl">DatetimeIndex: 8887 entries, 1990-01-02 to 2025-04-14
+</span></span><span class="line"><span class="cl">DatetimeIndex: 8889 entries, 1990-01-02 to 2025-04-16
 </span></span><span class="line"><span class="cl">Data columns (total 4 columns):
 </span></span><span class="line"><span class="cl"> #   Column  Non-Null Count  Dtype  
 </span></span><span class="line"><span class="cl">---  ------  --------------  -----  
-</span></span><span class="line"><span class="cl"> 0   Close   8887 non-null   float64
-</span></span><span class="line"><span class="cl"> 1   High    8887 non-null   float64
-</span></span><span class="line"><span class="cl"> 2   Low     8887 non-null   float64
-</span></span><span class="line"><span class="cl"> 3   Open    8887 non-null   float64
+</span></span><span class="line"><span class="cl"> 0   Close   8889 non-null   float64
+</span></span><span class="line"><span class="cl"> 1   High    8889 non-null   float64
+</span></span><span class="line"><span class="cl"> 2   Low     8889 non-null   float64
+</span></span><span class="line"><span class="cl"> 3   Open    8889 non-null   float64
 </span></span><span class="line"><span class="cl">dtypes: float64(4)
-</span></span><span class="line"><span class="cl">memory usage: 347.1 KB
+</span></span><span class="line"><span class="cl">memory usage: 347.2 KB
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>The first 5 rows are:</p>
@@ -758,20 +758,6 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left">2025-04-08 00:00:00</td>
-          <td style="text-align: right">52.33</td>
-          <td style="text-align: right">57.52</td>
-          <td style="text-align: right">36.48</td>
-          <td style="text-align: right">44.04</td>
-      </tr>
-      <tr>
-          <td style="text-align: left">2025-04-09 00:00:00</td>
-          <td style="text-align: right">33.62</td>
-          <td style="text-align: right">57.96</td>
-          <td style="text-align: right">31.9</td>
-          <td style="text-align: right">50.98</td>
-      </tr>
-      <tr>
           <td style="text-align: left">2025-04-10 00:00:00</td>
           <td style="text-align: right">40.72</td>
           <td style="text-align: right">54.87</td>
@@ -791,6 +777,20 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
           <td style="text-align: right">35.17</td>
           <td style="text-align: right">29.75</td>
           <td style="text-align: right">34.76</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-04-15 00:00:00</td>
+          <td style="text-align: right">30.12</td>
+          <td style="text-align: right">31.45</td>
+          <td style="text-align: right">28.29</td>
+          <td style="text-align: right">30.01</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-04-16 00:00:00</td>
+          <td style="text-align: right">32.64</td>
+          <td style="text-align: right">34.96</td>
+          <td style="text-align: right">29.48</td>
+          <td style="text-align: right">33.24</td>
       </tr>
   </tbody>
 </table></div>
@@ -830,24 +830,24 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
   <tbody>
       <tr>
           <td style="text-align: left">count</td>
-          <td style="text-align: right">8887</td>
-          <td style="text-align: right">8887</td>
-          <td style="text-align: right">8887</td>
-          <td style="text-align: right">8887</td>
+          <td style="text-align: right">8889</td>
+          <td style="text-align: right">8889</td>
+          <td style="text-align: right">8889</td>
+          <td style="text-align: right">8889</td>
       </tr>
       <tr>
           <td style="text-align: left">mean</td>
-          <td style="text-align: right">19.4827</td>
-          <td style="text-align: right">20.3911</td>
-          <td style="text-align: right">18.8096</td>
-          <td style="text-align: right">19.5744</td>
+          <td style="text-align: right">19.4853</td>
+          <td style="text-align: right">20.394</td>
+          <td style="text-align: right">18.8118</td>
+          <td style="text-align: right">19.5771</td>
       </tr>
       <tr>
           <td style="text-align: left">std</td>
-          <td style="text-align: right">7.84391</td>
-          <td style="text-align: right">8.40287</td>
-          <td style="text-align: right">7.39799</td>
-          <td style="text-align: right">7.91906</td>
+          <td style="text-align: right">7.84508</td>
+          <td style="text-align: right">8.40417</td>
+          <td style="text-align: right">7.3987</td>
+          <td style="text-align: right">7.92027</td>
       </tr>
       <tr>
           <td style="text-align: left">min</td>
@@ -868,14 +868,14 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
           <td style="text-align: right">17.63</td>
           <td style="text-align: right">18.34</td>
           <td style="text-align: right">17.06</td>
-          <td style="text-align: right">17.67</td>
+          <td style="text-align: right">17.68</td>
       </tr>
       <tr>
           <td style="text-align: left">75%</td>
-          <td style="text-align: right">22.81</td>
+          <td style="text-align: right">22.82</td>
           <td style="text-align: right">23.81</td>
-          <td style="text-align: right">22.135</td>
-          <td style="text-align: right">22.965</td>
+          <td style="text-align: right">22.14</td>
+          <td style="text-align: right">22.97</td>
       </tr>
       <tr>
           <td style="text-align: left">max</td>
@@ -886,52 +886,52 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
       </tr>
       <tr>
           <td style="text-align: left">mean + -1 std</td>
-          <td style="text-align: right">11.6387</td>
-          <td style="text-align: right">11.9882</td>
-          <td style="text-align: right">11.4116</td>
-          <td style="text-align: right">11.6554</td>
+          <td style="text-align: right">11.6403</td>
+          <td style="text-align: right">11.9898</td>
+          <td style="text-align: right">11.4131</td>
+          <td style="text-align: right">11.6569</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 0 std</td>
-          <td style="text-align: right">19.4827</td>
-          <td style="text-align: right">20.3911</td>
-          <td style="text-align: right">18.8096</td>
-          <td style="text-align: right">19.5744</td>
+          <td style="text-align: right">19.4853</td>
+          <td style="text-align: right">20.394</td>
+          <td style="text-align: right">18.8118</td>
+          <td style="text-align: right">19.5771</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 1 std</td>
-          <td style="text-align: right">27.3266</td>
-          <td style="text-align: right">28.794</td>
-          <td style="text-align: right">26.2076</td>
-          <td style="text-align: right">27.4935</td>
+          <td style="text-align: right">27.3304</td>
+          <td style="text-align: right">28.7981</td>
+          <td style="text-align: right">26.2105</td>
+          <td style="text-align: right">27.4974</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 2 std</td>
-          <td style="text-align: right">35.1705</td>
-          <td style="text-align: right">37.1968</td>
-          <td style="text-align: right">33.6055</td>
-          <td style="text-align: right">35.4125</td>
+          <td style="text-align: right">35.1755</td>
+          <td style="text-align: right">37.2023</td>
+          <td style="text-align: right">33.6092</td>
+          <td style="text-align: right">35.4177</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 3 std</td>
-          <td style="text-align: right">43.0144</td>
-          <td style="text-align: right">45.5997</td>
-          <td style="text-align: right">41.0035</td>
-          <td style="text-align: right">43.3316</td>
+          <td style="text-align: right">43.0206</td>
+          <td style="text-align: right">45.6065</td>
+          <td style="text-align: right">41.0079</td>
+          <td style="text-align: right">43.3379</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 4 std</td>
-          <td style="text-align: right">50.8583</td>
-          <td style="text-align: right">54.0026</td>
-          <td style="text-align: right">48.4015</td>
-          <td style="text-align: right">51.2507</td>
+          <td style="text-align: right">50.8657</td>
+          <td style="text-align: right">54.0106</td>
+          <td style="text-align: right">48.4066</td>
+          <td style="text-align: right">51.2582</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 5 std</td>
-          <td style="text-align: right">58.7022</td>
-          <td style="text-align: right">62.4055</td>
-          <td style="text-align: right">55.7995</td>
-          <td style="text-align: right">59.1697</td>
+          <td style="text-align: right">58.7108</td>
+          <td style="text-align: right">62.4148</td>
+          <td style="text-align: right">55.8054</td>
+          <td style="text-align: right">59.1785</td>
       </tr>
   </tbody>
 </table></div>
@@ -977,20 +977,20 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
           <td style="text-align: right">0.2</td>
           <td style="text-align: right">13.24</td>
           <td style="text-align: right">13.87</td>
-          <td style="text-align: right">12.842</td>
+          <td style="text-align: right">12.846</td>
           <td style="text-align: right">13.3</td>
       </tr>
       <tr>
           <td style="text-align: right">0.3</td>
           <td style="text-align: right">14.59</td>
-          <td style="text-align: right">15.27</td>
+          <td style="text-align: right">15.274</td>
           <td style="text-align: right">14.07</td>
           <td style="text-align: right">14.66</td>
       </tr>
       <tr>
           <td style="text-align: right">0.4</td>
           <td style="text-align: right">16.08</td>
-          <td style="text-align: right">16.74</td>
+          <td style="text-align: right">16.742</td>
           <td style="text-align: right">15.54</td>
           <td style="text-align: right">16.11</td>
       </tr>
@@ -999,35 +999,35 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
           <td style="text-align: right">17.63</td>
           <td style="text-align: right">18.34</td>
           <td style="text-align: right">17.06</td>
-          <td style="text-align: right">17.67</td>
+          <td style="text-align: right">17.68</td>
       </tr>
       <tr>
           <td style="text-align: right">0.6</td>
           <td style="text-align: right">19.54</td>
           <td style="text-align: right">20.38</td>
           <td style="text-align: right">18.99</td>
-          <td style="text-align: right">19.666</td>
+          <td style="text-align: right">19.67</td>
       </tr>
       <tr>
           <td style="text-align: right">0.7</td>
           <td style="text-align: right">21.63</td>
-          <td style="text-align: right">22.62</td>
-          <td style="text-align: right">20.98</td>
-          <td style="text-align: right">21.76</td>
+          <td style="text-align: right">22.626</td>
+          <td style="text-align: right">20.986</td>
+          <td style="text-align: right">21.766</td>
       </tr>
       <tr>
           <td style="text-align: right">0.8</td>
-          <td style="text-align: right">24.298</td>
-          <td style="text-align: right">25.308</td>
-          <td style="text-align: right">23.46</td>
-          <td style="text-align: right">24.37</td>
+          <td style="text-align: right">24.31</td>
+          <td style="text-align: right">25.32</td>
+          <td style="text-align: right">23.474</td>
+          <td style="text-align: right">24.38</td>
       </tr>
       <tr>
           <td style="text-align: right">0.9</td>
-          <td style="text-align: right">28.69</td>
-          <td style="text-align: right">29.974</td>
-          <td style="text-align: right">27.77</td>
-          <td style="text-align: right">28.838</td>
+          <td style="text-align: right">28.702</td>
+          <td style="text-align: right">30</td>
+          <td style="text-align: right">27.782</td>
+          <td style="text-align: right">28.86</td>
       </tr>
       <tr>
           <td style="text-align: right">1</td>

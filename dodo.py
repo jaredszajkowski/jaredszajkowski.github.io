@@ -19,6 +19,11 @@ import subprocess
 from os import environ, getcwd, path
 from pathlib import Path
 from colorama import Fore, Style, init
+import time
+import nbformat
+import hashlib
+from datetime import datetime
+import subprocess
 
 ## Custom reporter: Print PyDoit Text in Green
 # This is helpful because some tasks write to sterr and pollute the output in
@@ -157,6 +162,8 @@ def clean_pdf_export_pngs(subdir, notebook_name):
     if not deleted:
         print(f"✅ No temp PNGs to remove for {notebook_name}")
 
+
+
 #######################################
 ## PyDoit tasks
 #######################################
@@ -181,59 +188,69 @@ def task_list_posts_subdirs():
         "clean": [],  # Don't clean these files by default.
     }
 
-# def task_run_post_notebooks():
-#     """Execute notebooks that match their subdirectory names"""
-#     for subdir in POSTS_DIR.iterdir():
-#         if subdir.is_dir():
-#             notebook_path = subdir / f"{subdir.name}.ipynb"
-
-#             if notebook_path.exists():
-#                 yield {
-#                     "name": subdir.name,
-#                     "actions": [f"jupyter nbconvert --execute --to notebook --inplace --log-level=ERROR {notebook_path}"],
-#                     "file_dep": [notebook_path],
-#                     # "targets": [notebook_path],  # optional if you want doit to track it
-#                     "verbosity": 2,
-#                 }
-
 def task_run_post_notebooks():
     """Execute notebooks that match their subdirectory names and only when code or markdown content has changed"""
     for subdir in POSTS_DIR.iterdir():
-        if subdir.is_dir():
-            notebook_path = subdir / f"{subdir.name}.ipynb"
+        if not subdir.is_dir():
+            continue
 
-            if not notebook_path.exists():
-                continue  # ✅ Skip subdirs with no matching notebook
+        notebook_path = subdir / f"{subdir.name}.ipynb"
+        if not notebook_path.exists():
+            continue  # ✅ Skip subdirs with no matching notebook
 
-            hash_file = subdir / f"{subdir.name}.last_source_hash"
+        hash_file = subdir / f"{subdir.name}.last_source_hash"
+        log_file = subdir / f"{subdir.name}.log"
+        
+        def source_has_changed(path=notebook_path, hash_path=hash_file, log_path=log_file):
+            current_hash = notebook_source_hash(path)
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-            def source_has_changed(path=notebook_path, hash_file=hash_file):
-                current_hash = notebook_source_hash(path)
-                if hash_file.exists():
-                    old_hash = hash_file.read_text().strip()
-                    if current_hash != old_hash:
-                        print(f"🔁 Change detected in {path.name}")
-                        return False
-                    print(f"⏩ No change in hash for {path.name}")
-                    return True
-                print(f"🆕 No previous hash found for {path.name}")
-                return False
+            if hash_path.exists():
+                old_hash = hash_path.read_text().strip()
+                if current_hash != old_hash:
+                    print(f"🔁 Change detected in {path.name}")
+                    return False  # needs re-run
 
-            def save_new_hash(path=notebook_path, hash_file=hash_file):
-                new_hash = notebook_source_hash(path)
-                hash_file.write_text(new_hash)
-                print(f"✅ Saved new hash for {path.name}")
+                # ✅ No change → log as skipped
+                with log_path.open("a") as log:
+                    log.write(f"[{timestamp}] ⏩ Skipped (no changes): {path.name}\n")
+                print(f"⏩ No change in hash for {path.name}")
+                return True
 
-            yield {
-                "name": subdir.name,
-                "actions": [
-                    f"jupyter nbconvert --execute --to notebook --inplace --log-level=ERROR {notebook_path}",
-                    save_new_hash,
-                ],
-                "file_dep": [notebook_path],
-                "uptodate": [source_has_changed],
-                "verbosity": 2,
-            }
+            # 🆕 No previous hash → must run
+            print(f"🆕 No previous hash found for {path.name}")
+            return False
+        
+        def run_and_log(path=notebook_path, hash_path=hash_file, log_path=log_file):
+            start_time = time.time()
+            subprocess.run([
+                "jupyter", "nbconvert",
+                "--execute",
+                "--to", "notebook",
+                "--inplace",
+                "--log-level=ERROR",
+                str(path)
+            ], check=True)
+            elapsed = round(time.time() - start_time, 2)
+
+            new_hash = notebook_source_hash(path)
+            hash_path.write_text(new_hash)
+            print(f"✅ Saved new hash for {path.name}")
+
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            log_msg = f"[{timestamp}] ✅ Executed {path.name} in {elapsed}s\n"
+            with log_path.open("a") as f:
+                f.write(log_msg)
+
+            print(log_msg.strip())
+
+        yield {
+            "name": subdir.name,
+            "actions": [run_and_log],
+            "file_dep": [notebook_path],
+            "uptodate": [source_has_changed],
+            "verbosity": 2,
+        }
 
 def task_export_post_notebooks():
     """Export executed notebooks to HTML and PDF, and clean temp PNGs"""

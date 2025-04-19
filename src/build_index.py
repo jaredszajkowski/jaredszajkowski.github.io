@@ -1,13 +1,36 @@
-"""
-build_index.py
-
-This script combines Markdown fragments into a Hugo-compatible index.md file
-by replacing placeholders in index_temp.md based on index_dependencies.txt.
-"""
-
 from pathlib import Path
 
-def build_index():
+def build_index() -> None:
+    """
+    Build a Hugo-compatible index.md by combining Markdown fragments.
+
+    This function reads a template file (`index_temp.md`) and a list of markdown dependencies 
+    from `index_dep.txt`. For each entry in the dependency list, it replaces a corresponding 
+    placeholder in the template (formatted as <!-- INSERT_<name>_HERE -->) with the content 
+    from the markdown file. If a file is missing, the placeholder is replaced with a warning note.
+
+    Output:
+    -------
+    - Writes the final assembled content to `index.md`.
+
+    Raises:
+    -------
+    FileNotFoundError:
+        If either `index_temp.md` or `index_dep.txt` does not exist.
+
+    Example:
+    --------
+    If `index_dep.txt` contains:
+        01_intro.md
+        02_analysis.md
+
+    And `index_temp.md` contains:
+        <!-- INSERT_01_intro_HERE -->
+        <!-- INSERT_02_analysis_HERE -->
+
+    The resulting `index.md` will include the contents of the respective markdown files in place 
+    of their placeholders.
+    """
     temp_index_path = Path("index_temp.md")
     final_index_path = Path("index.md")
     dependencies_path = Path("index_dep.txt")
@@ -20,7 +43,7 @@ def build_index():
 
     # Read dependency list
     if not dependencies_path.exists():
-        raise FileNotFoundError("Missing index_dependencies.txt")
+        raise FileNotFoundError("Missing index_dep.txt")
 
     with dependencies_path.open("r") as f:
         markdown_files = [line.strip() for line in f if line.strip()]
@@ -28,7 +51,6 @@ def build_index():
     # Replace placeholders for each dependency
     final_index_content = temp_index_content
     for md_file in markdown_files:
-        # placeholder = f"<!-- INSERT_{Path(md_file).stem.upper()}_HERE -->"
         placeholder = f"<!-- INSERT_{Path(md_file).stem}_HERE -->"
         if Path(md_file).exists():
             content = Path(md_file).read_text()
@@ -43,43 +65,3 @@ def build_index():
 
 if __name__ == "__main__":
     build_index()
-
-
-
-# """
-# build_index.py
-
-# This script combines multiple Markdown fragments into a single Hugo-compatible index.md file
-# by replacing predefined placeholders in a template file (index_temp.md).
-# """
-
-# from pathlib import Path
-
-
-
-# def build_index():
-#     # Define paths
-#     temp_index_path = Path("index_temp.md")
-#     final_index_path = Path("index.md")
-#     df_info_path = Path("01_DF_Info.md")
-#     vix_stats_path = Path("02_VIX_Stats.md")
-#     vix_deciles_path = Path("03_VIX_Deciles.md")
-
-#     # Read markdown components
-#     temp_index_content = temp_index_path.read_text()
-#     df_info_content = df_info_path.read_text()
-#     vix_stats_content = vix_stats_path.read_text()
-#     vix_deciles_content = vix_deciles_path.read_text()
-
-#     # Replace placeholders
-#     final_index_content = temp_index_content
-#     final_index_content = final_index_content.replace("<!-- INSERT_DF_INFO_HERE -->", df_info_content)
-#     final_index_content = final_index_content.replace("<!-- INSERT_VIX_STATS_HERE -->", vix_stats_content)
-#     final_index_content = final_index_content.replace("<!-- INSERT_VIX_DECILES_HERE -->", vix_deciles_content)
-
-#     # Write final output
-#     final_index_path.write_text(final_index_content)
-#     print("✅ index.md successfully built!")
-
-# if __name__ == "__main__":
-#     build_index()
