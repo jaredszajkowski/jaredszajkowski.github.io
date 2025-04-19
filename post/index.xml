@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Jared Szajkowski</title><link>https://www.jaredszajkowski.com/post/</link><description>Recent content in Posts on Jared Szajkowski</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 12 Apr 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/post/index.xml" rel="self" type="application/rss+xml"/><item><title>Investigating A VIX Trading Signal</title><link>https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/</link><pubDate>Sat, 01 Mar 2025 00:00:01 +0000</pubDate><guid>https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/cover.jpg" alt="Featured image of post Investigating A VIX Trading Signal" />&lt;h2 id="post-updates">Post Updates
+&lt;/h2>&lt;p>Update 4/8/2025: Added plot for signals for each year. VIX data through 4/7/25.&lt;/br>
+Update 4/9/2025: VIX data through 4/8/25.&lt;/br>
+Update 4/12/2025: VIX data through 4/10/25.&lt;/p>
+&lt;h2 id="introduction">Introduction
+&lt;/h2>&lt;p>From the &lt;a class="link" href="https://www.cboe.com/tradable_products/vix/" target="_blank" rel="noopener"
+>CBOE VIX website&lt;/a>:&lt;/p>
+&lt;p>&amp;ldquo;Cboe Global Markets revolutionized investing with the creation of the Cboe Volatility Index® (VIX® Index), the first benchmark index to measure the market’s expectation of future volatility. The VIX Index is based on options of the S&amp;amp;P 500® Index, considered the leading indicator of the broad U.S. stock market. The VIX Index is recognized as the world’s premier gauge of U.S. equity market volatility.&amp;rdquo;&lt;/p></description></item><item><title>Using Python Virtual Environments</title><link>https://www.jaredszajkowski.com/2024/12/02/using-python-virtual-environments/</link><pubDate>Mon, 02 Dec 2024 00:00:01 +0000</pubDate><guid>https://www.jaredszajkowski.com/2024/12/02/using-python-virtual-environments/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2024/12/02/using-python-virtual-environments/cover.jpg" alt="Featured image of post Using Python Virtual Environments" />&lt;h2 id="post-updates">Post Updates
+&lt;/h2>&lt;p>Update 1/12/2025: Updated section for use of requirements.txt file for dependency management.&lt;/br>
+Update 1/30/2025: Added section for version specific python virtual environments.&lt;/p>
+&lt;h2 id="python-module-management">Python Module Management
+&lt;/h2>&lt;p>As an Arch Linux user, the push is to utilize pacman and related tools to manage dependencies and package updates (including Python modules). In fact, &lt;a class="link" href="https://wiki.archlinux.org/title/Python" target="_blank" rel="noopener"
+>the wiki itself&lt;/a> explicitly states this (see 2.1), and the default Arch installation of Python disables python-pip.&lt;/p>
+&lt;p>Unfortunately, there are limited resources put into maintaining packages for modules and only the most common and popular modules are maintained, and they are updated promptly as is consistent within the Arch ecosystem.&lt;/p></description></item><item><title>Does Harry Browne's permanent portfolio withstand the test of time?</title><link>https://www.jaredszajkowski.com/2024/11/04/harry-browne-permanent-portfolio/</link><pubDate>Mon, 04 Nov 2024 00:00:01 +0000</pubDate><guid>https://www.jaredszajkowski.com/2024/11/04/harry-browne-permanent-portfolio/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2024/11/04/harry-browne-permanent-portfolio/cover.jpg" alt="Featured image of post Does Harry Browne's permanent portfolio withstand the test of time?" />&lt;h2 id="post-updates">Post Updates
+&lt;/h2>&lt;p>Update 12/5/2024: Updated code for summary stats function, various code comments, and corrected grammatical errors.&lt;/br>
+Update 2/19/2025: Various code updates, commented and documented functions.&lt;/p>
+&lt;h2 id="introduction">Introduction
+&lt;/h2>&lt;p>Harry Browne was an influencial politician, financial advisor, and author who lived from 1933 to 2006 and published 12 books. Wikipedia has &lt;a class="link" href="https://en.wikipedia.org/wiki/Harry_Browne" target="_blank" rel="noopener"
+>an in-depth biography&lt;/a> on him.&lt;/p>
+&lt;p>Within the world of finance and investing, one of his best known works is &lt;em>Fail-Safe Investing: Lifelong Financial Security in 30 Minutes&lt;/em>. In it, he introduces the idea of the &amp;ldquo;Permanent Portfolio&amp;rdquo;, an investment strategy that uses only four assets and is very simple to implement.&lt;/p></description></item><item><title>Simple Incremental Bash Backup Script</title><link>https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/</link><pubDate>Fri, 12 Jan 2024 00:00:01 +0000</pubDate><guid>https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/cover.jpg" alt="Featured image of post Simple Incremental Bash Backup Script" />&lt;h2 id="post-updates">Post Updates
+&lt;/h2>&lt;p>Update 4/12/2025: &lt;a class="link" href="https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/#updated-incremental-backup-script" target="_blank" rel="noopener"
+>Revised script&lt;/a> to accomodate a list of excluded directories.&lt;/p>
+&lt;h2 id="introduction">Introduction
+&lt;/h2>&lt;p>While there are &lt;a class="link" href="https://wiki.archlinux.org/title/Synchronization_and_backup_programs" target="_blank" rel="noopener"
+>numerous backup solutions available for Linux&lt;/a>, many require extensive configuration and maintenance, and restoring from the backup is not always simple. Incremental backups are ideal because they maintain snapshots of the files and allow for access to previous versions of files.&lt;/p>
+&lt;p>Linux Journal recently &lt;a class="link" href="https://www.linuxjournal.com/content/exploring-rsync-tar-and-other-backup-solutions" target="_blank" rel="noopener"
+>published an article on various backup solutions&lt;/a>, and I thought I&amp;rsquo;d provide my incremental backup script that uses &lt;code>rsync&lt;/code> and &lt;code>cp&lt;/code>.&lt;/p></description></item><item><title>Nasdaq Data Link Tables API Data Retrieval</title><link>https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/</link><pubDate>Sun, 24 Dec 2023 00:00:01 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/cover.jpg" alt="Featured image of post Nasdaq Data Link Tables API Data Retrieval" />&lt;h2 id="introduction">Introduction
+&lt;/h2>&lt;p>In this tutorial, we will write a python function that pulls data from Nasdaq Data Link through the tables API, adds relevant columns that are not present in the raw data, updates columns to allow for ease of use, and leaves the data in a format where it can then be used in time series analysis.&lt;/p>
+&lt;p>&lt;a class="link" href="https://www.nasdaq.com/nasdaq-data-link" target="_blank" rel="noopener"
+>Nasdaq Data Link&lt;/a> is a provider of numerous different types of financial data from many different asset classes. It provides API&amp;rsquo;s that allow access from Python, R, Excel, and other methods. It is available to &lt;a class="link" href="https://data.nasdaq.com/institutional-investors" target="_blank" rel="noopener"
+>institutional investors&lt;/a> as well as &lt;a class="link" href="https://data.nasdaq.com/individual-users" target="_blank" rel="noopener"
+>individual retail investors&lt;/a>.&lt;/p></description></item><item><title>Using yt-dlp With Panopto</title><link>https://www.jaredszajkowski.com/2023/12/10/yt-dlp-with-panopto/</link><pubDate>Sun, 10 Dec 2023 00:00:00 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/12/10/yt-dlp-with-panopto/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2023/12/10/yt-dlp-with-panopto/banner_1.svg" alt="Featured image of post Using yt-dlp With Panopto" />&lt;h2 id="introduction">Introduction
+&lt;/h2>&lt;p>As a follow up to &lt;a class="link" href="https://www.jaredszajkowski.com/p/using-yt-dlp-with-zoom/" target="_blank" rel="noopener"
+>this post about using yt-dlp with Zoom&lt;/a>, I found the need to also download videos hosted by Panopto for offline viewing.&lt;/p>
+&lt;p>Similar to the Zoom tutorial, this also requires you to have a &amp;ldquo;cookies&amp;rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Panopto hosting site after logging in.&lt;/p>
+&lt;p>Here&amp;rsquo;s the steps to setting this up:&lt;/p>
+&lt;h2 id="install-cookie-editor">Install cookie editor
+&lt;/h2>&lt;p>Install the &lt;a class="link" href="https://microsoftedge.microsoft.com/addons/detail/cookie-editor/ajfboaconbpkglpfanbmlfgojgndmhmc" target="_blank" rel="noopener"
+>cookie editor&lt;/a> extension. I personnally use it with Microsoft Edge, but there are similar extensions for Chrome, Firefox, etc.&lt;/p></description></item><item><title>Cleaning A Bloomberg Data Excel Export</title><link>https://www.jaredszajkowski.com/2023/11/15/cleaning-bloomberg-excel-export/</link><pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/11/15/cleaning-bloomberg-excel-export/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2023/11/15/cleaning-bloomberg-excel-export/cover.jpg" alt="Featured image of post Cleaning A Bloomberg Data Excel Export" />&lt;h2 id="introduction">Introduction
+&lt;/h2>&lt;p>In this tutorial, we will write a python function that imports an excel export from Bloomberg, removes ancillary rows and columns, and leaves the data in a format where it can then be used in time series analysis.&lt;/p>
+&lt;h2 id="example-of-a-bloomberg-excel-export">Example of a Bloomberg excel export
+&lt;/h2>&lt;p>We will use the SPX index data in this example. Exporting the data from Bloomberg using the excel Bloomberg add-on yields data in the following format:&lt;/p></description></item><item><title>Git Quick Start Guide</title><link>https://www.jaredszajkowski.com/2023/10/16/git-quick-start-guide/</link><pubDate>Mon, 16 Oct 2023 00:00:00 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/10/16/git-quick-start-guide/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2023/10/16/git-quick-start-guide/cover.jpg" alt="Featured image of post Git Quick Start Guide" />&lt;h2 id="introduction">Introduction
+&lt;/h2>&lt;p>Here are my notes for some of the more commonly used git commands along with initial setup for git in Linux.&lt;/p>
+&lt;h2 id="installation">Installation
+&lt;/h2>&lt;p>To begin, install as follows for Arch Linux:&lt;/p>
+&lt;pre>&lt;code># pacman -Syu git
+&lt;/code>&lt;/pre>
+&lt;p>Or&lt;/p>
+&lt;pre>&lt;code>$ yay git
+&lt;/code>&lt;/pre>
+&lt;p>Pacman will include all required depencies.&lt;/p>
+&lt;h2 id="initial-configuration">Initial configuration
+&lt;/h2>&lt;p>First, set your name and email address:&lt;/p>
+&lt;pre>&lt;code>$ git config --global user.name &amp;quot;Firstname Lastname&amp;quot;
+$ git config --global user.email &amp;quot;email@address.com&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>Then, set your preferred text editor (if you have one). I use nano:&lt;/p></description></item><item><title>Using yt-dlp With Zoom</title><link>https://www.jaredszajkowski.com/2023/10/01/yt-dlp-with-zoom/</link><pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/10/01/yt-dlp-with-zoom/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2023/10/01/yt-dlp-with-zoom/banner_1.svg" alt="Featured image of post Using yt-dlp With Zoom" />&lt;h2 id="introduction">Introduction
+&lt;/h2>&lt;p>If anyone uses Zoom to record and later wants to access recordings of video calls, here&amp;rsquo;s a simple linux bash script to download the video file and acompanying subtitles. For a long time I used &lt;a class="link" href="https://github.com/Battleman/zoomdl" target="_blank" rel="noopener"
+>zoomdl&lt;/a>, but it is no longer under active development, and I began running into various issues about a year ago.&lt;/p>
+&lt;p>This tutorial requires you to have a &amp;ldquo;cookies&amp;rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Zoom cookies after logging in.&lt;/p></description></item><item><title>Arch Linux Install</title><link>https://www.jaredszajkowski.com/2023/09/29/arch-linux-install/</link><pubDate>Fri, 29 Sep 2023 00:00:01 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/09/29/arch-linux-install/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2023/09/29/arch-linux-install/cover.jpg" alt="Featured image of post Arch Linux Install" />&lt;h2 id="introduction">Introduction
+&lt;/h2>&lt;p>This is the basic framework that I use to install Arch Linux, with a few changes catered to the Lenovo ThinkPad E15 Gen 2. I have found that this is a decent mid range laptop, excellent linux compatibility, great keyboard, and overall provides a good value.&lt;/p>
+&lt;h2 id="getting-started">Getting started
+&lt;/h2>&lt;p>This tutorial assumes the following:&lt;/p>
+&lt;ul>
+&lt;li>You are booting from a USB drive with the Arch install ISO.&lt;/li>
+&lt;li>Wireless or wired network is detected and drivers are configured automatically.&lt;/li>
+&lt;li>You want drive encrytion on your root partition, but not on your boot/efi/swap partitions.&lt;/li>
+&lt;/ul>
+&lt;h3 id="verify-uefi-boot-mode">Verify UEFI boot mode
+&lt;/h3>&lt;p>The following command should show directory without error:&lt;/p></description></item><item><title>Hello World</title><link>https://www.jaredszajkowski.com/2023/09/26/hello-world/</link><pubDate>Tue, 26 Sep 2023 00:00:00 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/09/26/hello-world/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2023/09/26/hello-world/cover.jpg" alt="Featured image of post Hello World" />&lt;h2 id="hello-world">Hello World
+&lt;/h2>&lt;p>Welcome to my website. This is meant to serve as a place for me to publish various posts from my explorations into Arch Linux, data science, quant finance, and other topics.&lt;/p>
+&lt;p>The theme has been adopted from the &lt;a class="link" href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener"
+>Hugo Theme Stack&lt;/a> produced by Jimmy Cai.&lt;/p>
+&lt;p>This is the only theme that I have found that checks all of the following boxes:&lt;/p>
+&lt;ul>
+&lt;li>Theme for the static site generator Hugo&lt;/li>
+&lt;li>Includes modules for archives&lt;/li>
+&lt;li>Includes tags and topics/categories&lt;/li>
+&lt;li>Includes built-in search functionality&lt;/li>
+&lt;li>Simple interface that is easily navigable&lt;/li>
+&lt;li>Highly extensible including modules for image galleries, posts, comment capabilities, etc.&lt;/li>
+&lt;/ul>
+&lt;p>It is hosted on &lt;a class="link" href="https://pages.github.com/" target="_blank" rel="noopener"
+>GitHub pages&lt;/a>. I followed the install instructions that the theme author provided, including using GitHub codespace for editing in the cloud. There are only a few details that I ran into that he did not mention.&lt;/p></description></item></channel></rss>
