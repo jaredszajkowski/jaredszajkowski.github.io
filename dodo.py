@@ -120,7 +120,7 @@ def copy_file(origin_path, destination_path, mkdir=True):
     return _copy_file
 
 def extract_front_matter(index_path):
-    """Extract front matter as a dict from a Hugo index.md file"""
+    """Extract front matter as a dict from a Hugo index.md file."""
     text = index_path.read_text()
     match = re.search(r"(?s)^---(.*?)---", text)
     if match:
@@ -145,6 +145,17 @@ def notebook_source_hash(notebook_path):
     ]
     full_content = "\n".join(relevant_cells)
     return hashlib.sha256(full_content.encode("utf-8")).hexdigest()
+
+def clean_pdf_export_pngs(subdir, notebook_name):
+    """Remove .png files created by nbconvert during PDF export."""
+    pattern = f"{notebook_name}_*_*.png"
+    deleted = False
+    for file in subdir.glob(pattern):
+        print(f"🧹 Removing nbconvert temp image: {file}")
+        file.unlink()
+        deleted = True
+    if not deleted:
+        print(f"✅ No temp PNGs to remove for {notebook_name}")
 
 #######################################
 ## PyDoit tasks
@@ -225,23 +236,25 @@ def task_run_post_notebooks():
             }
 
 def task_export_post_notebooks():
-    """Export executed notebooks to HTML and PDF"""
+    """Export executed notebooks to HTML and PDF, and clean temp PNGs"""
     for subdir in POSTS_DIR.iterdir():
         if not subdir.is_dir():
             continue
 
-        notebook_path = subdir / f"{subdir.name}.ipynb"
-        html_output = subdir / f"{subdir.name}.html"
-        pdf_output = subdir / f"{subdir.name}.pdf"
+        notebook_name = subdir.name
+        notebook_path = subdir / f"{notebook_name}.ipynb"
+        html_output = subdir / f"{notebook_name}.html"
+        pdf_output = subdir / f"{notebook_name}.pdf"
 
         if not notebook_path.exists():
             continue
 
         yield {
-            "name": subdir.name,
+            "name": notebook_name,
             "actions": [
                 f"jupyter nbconvert --to=html --log-level=WARN --output={html_output} {notebook_path}",
-                f"jupyter nbconvert --to=pdf --log-level=WARN --output={pdf_output} {notebook_path}"
+                f"jupyter nbconvert --to=pdf --log-level=WARN --output={pdf_output} {notebook_path}",
+                (clean_pdf_export_pngs, [subdir, notebook_name])
             ],
             "file_dep": [notebook_path],
             "targets": [html_output, pdf_output],
@@ -317,6 +330,7 @@ def task_copy_notebook_exports():
                 "targets": [target_path],
                 "task_dep": ["build_site"],
                 "verbosity": 2,
+                "clean": [],  # Don't clean these files by default.
             }
 
 def task_deploy_site():
