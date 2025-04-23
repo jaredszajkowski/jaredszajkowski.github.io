@@ -81,6 +81,8 @@ def export_track_md_deps(dep_file: Path, md_filename: str, content: str) -> None
     print(f"✅ Exported and tracked: {md_filename}")
 ```
 
+</br>
+
 ```python
 def df_info(df) -> None:
     """
@@ -113,6 +115,8 @@ def df_info(df) -> None:
     print("The last 5 rows are:")
     display(df.tail())
 ```
+
+</br>
 
 ```python
 import io
@@ -176,6 +180,8 @@ def df_info_markdown(df: pd.DataFrame) -> str:
     return "\n".join(markdown)
 ```
 
+</br>
+
 ```python
 import pandas as pd
 
@@ -197,6 +203,8 @@ def pandas_set_decimal_places(decimal_places: int) -> None:
     """
     pd.set_option('display.float_format', lambda x: f'%.{decimal_places}f' % x)
 ```
+
+</br>
 
 ```python
 import pandas as pd
