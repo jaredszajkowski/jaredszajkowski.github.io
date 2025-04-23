@@ -279,29 +279,88 @@
     <li><a href="#vix-data">VIX Data</a></li>
     <li><a href="#python-functions">Python Functions</a>
       <ol>
-        <li><a href="#pull-data-from-yahoo-finance">Pull Data From Yahoo Finance</a></li>
-        <li><a href="#set-number-of-decimal-places">Set Number Of Decimal Places</a></li>
-        <li><a href="#import-data-from-csv--xlsx">Import Data From CSV / XLSX</a></li>
-        <li><a href="#return-information-about-a-dataframe">Return Information About A Dataframe</a></li>
+        <li><a href="#typical-functions">Typical Functions</a></li>
+        <li><a href="#project-specific-functions">Project Specific Functions</a></li>
       </ol>
     </li>
     <li><a href="#data-overview">Data Overview</a>
       <ol>
-        <li><a href="#acquire-data">Acquire Data</a></li>
+        <li><a href="#acquire-cboe-volatility-index-vix-data">Acquire CBOE Volatility Index (VIX) Data</a></li>
+        <li><a href="#set-decimal-places">Set Decimal Places</a></li>
         <li><a href="#load-data">Load Data</a></li>
         <li><a href="#check-for-missing-values--forward-fill-any-missing-values">Check For Missing Values &amp; Forward Fill Any Missing Values</a></li>
-        <li><a href="#dataframe-info">DataFrame Info</a></li>
+        <li><a href="#vix-dataframe-info">VIX DataFrame Info</a></li>
         <li><a href="#statistics">Statistics</a></li>
         <li><a href="#deciles">Deciles</a></li>
         <li><a href="#histogram-distribution">Histogram Distribution</a></li>
-        <li><a href="#historical-vix-plot">Historical VIX Plot</a></li>
+      </ol>
+    </li>
+    <li><a href="#plots">Plots</a>
+      <ol>
+        <li><a href="#historical-vix-data">Historical VIX Data</a>
+          <ol>
+            <li><a href="#1990---2009">1990 - 2009</a></li>
+            <li><a href="#2010---present">2010 - Present</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
     <li><a href="#investigating-a-signal">Investigating A Signal</a>
       <ol>
-        <li><a href="#spike-level">Spike Level</a></li>
+        <li><a href="#determining-a-spike-level">Determining A Spike Level</a></li>
         <li><a href="#spike-counts-signals-by-year">Spike Counts (Signals) By Year</a></li>
-        <li><a href="#spike-count-signal-plots-by-year">Spike Count (Signal) Plots By Year</a></li>
+        <li><a href="#spike-counts-signals-plots-by-year">Spike Counts (Signals) Plots By Year</a>
+          <ol>
+            <li><a href="#1990">1990</a></li>
+            <li><a href="#1991">1991</a></li>
+            <li><a href="#1992">1992</a></li>
+            <li><a href="#1993">1993</a></li>
+            <li><a href="#1994">1994</a></li>
+            <li><a href="#1995">1995</a></li>
+            <li><a href="#1996">1996</a></li>
+            <li><a href="#1997">1997</a></li>
+            <li><a href="#1998">1998</a></li>
+            <li><a href="#1999">1999</a></li>
+            <li><a href="#2000">2000</a></li>
+            <li><a href="#2001">2001</a></li>
+            <li><a href="#2002">2002</a></li>
+            <li><a href="#2003">2003</a></li>
+            <li><a href="#2004">2004</a></li>
+            <li><a href="#2005">2005</a></li>
+            <li><a href="#2006">2006</a></li>
+            <li><a href="#2007">2007</a></li>
+            <li><a href="#2008">2008</a></li>
+            <li><a href="#2009">2009</a></li>
+            <li><a href="#2010">2010</a></li>
+            <li><a href="#2011">2011</a></li>
+            <li><a href="#2012">2012</a></li>
+            <li><a href="#2013">2013</a></li>
+            <li><a href="#2014">2014</a></li>
+            <li><a href="#2015">2015</a></li>
+            <li><a href="#2016">2016</a></li>
+            <li><a href="#2017">2017</a></li>
+            <li><a href="#2018">2018</a></li>
+            <li><a href="#2019">2019</a></li>
+            <li><a href="#2020">2020</a></li>
+            <li><a href="#2021">2021</a></li>
+            <li><a href="#2022">2022</a></li>
+            <li><a href="#2023">2023</a></li>
+            <li><a href="#2024">2024</a></li>
+            <li><a href="#2025">2025</a></li>
+          </ol>
+        </li>
+        <li><a href="#spike-counts-signals-plots-by-decade">Spike Counts (Signals) Plots By Decade</a>
+          <ol>
+            <li><a href="#1990---1994">1990 - 1994</a></li>
+            <li><a href="#1995---1999">1995 - 1999</a></li>
+            <li><a href="#2000---2004">2000 - 2004</a></li>
+            <li><a href="#2005---2009">2005 - 2009</a></li>
+            <li><a href="#2010---2014">2010 - 2014</a></li>
+            <li><a href="#2015---2019">2015 - 2019</a></li>
+            <li><a href="#2020---2024">2020 - 2024</a></li>
+            <li><a href="#2025---present">2025 - Present</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
     <li><a href="#references">References</a></li>
@@ -390,7 +449,7 @@
 
 
                 <time class="article-time--reading">
-                    9 minute read
+                    13 minute read
                 </time>
             </div>
         
@@ -408,7 +467,9 @@
     <h2 id="post-updates">Post Updates
 </h2><p>Update 4/8/2025: Added plot for signals for each year. VIX data through 4/7/25.</br>
 Update 4/9/2025: VIX data through 4/8/25.</br>
-Update 4/12/2025: VIX data through 4/10/25.</p>
+Update 4/12/2025: VIX data through 4/10/25.</br>
+Update 4/22/2025: VIX data through 4/18/25.</br>
+Update 4/23/2025: VIX data through 4/22/25.</p>
 <h2 id="introduction">Introduction
 </h2><p>From the <a class="link" href="https://www.cboe.com/tradable_products/vix/"  target="_blank" rel="noopener"
     >CBOE VIX website</a>:</p>
@@ -419,9 +480,420 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
     >Nasdaq Data Link</a>, but for our purposes Yahoo Finance is sufficient.</p>
 <p>Using the yfinance python module, we can pull what we need and quicky dump it to excel to retain it for future use.</p>
 <h2 id="python-functions">Python Functions
-</h2><p>First, a couple of useful functions:</p>
-<h3 id="pull-data-from-yahoo-finance">Pull Data From Yahoo Finance
-</h3><p>Here&rsquo;s the code for the function to pull the data and dump to Excel:</p>
+</h2><h3 id="typical-functions">Typical Functions
+</h3><p>First, the typical set of functions I use:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">md_filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Export Markdown content to a file and track it as a dependency.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    This function writes the provided content to the specified Markdown file and 
+</span></span></span><span class="line"><span class="cl"><span class="s2">    appends the filename to the given dependency file (typically `index_dep.txt`).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    This is useful in workflows where Markdown fragments are later assembled 
+</span></span></span><span class="line"><span class="cl"><span class="s2">    into a larger document (e.g., a Hugo `index.md`).
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    -----------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    dep_file : Path
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Path to the dependency file that tracks Markdown fragment filenames.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    md_filename : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        The name of the Markdown file to export.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    content : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        The Markdown-formatted content to write to the file.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    None
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Example:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; export_track_md_deps(Path(&#34;index_dep.txt&#34;), &#34;01_intro.md&#34;, &#34;# Introduction</span><span class="se">\n</span><span class="s2">...&#34;)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ✅ Exported and tracked: 01_intro.md
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Path</span><span class="p">(</span><span class="n">md_filename</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">with</span> <span class="n">dep_file</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&#34;a&#34;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">md_filename</span> <span class="o">+</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;✅ Exported and tracked: </span><span class="si">{</span><span class="n">md_filename</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">df_info</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Display summary information about a pandas DataFrame.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    This function prints:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    - The DataFrame&#39;s column names, shape, and data types via `df.info()`
+</span></span></span><span class="line"><span class="cl"><span class="s2">    - The first 5 rows using `df.head()`
+</span></span></span><span class="line"><span class="cl"><span class="s2">    - The last 5 rows using `df.tail()`
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    It uses `display()` for better output formatting in environments like Jupyter notebooks.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    -----------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    df : pd.DataFrame
+</span></span></span><span class="line"><span class="cl"><span class="s2">        The DataFrame to inspect.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    None
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Example:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; df_info(my_dataframe)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;The columns, shape, and data types are:&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;The first 5 rows are:&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;The last 5 rows are:&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">())</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">io</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">df_info_markdown</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Generate a Markdown-formatted summary of a pandas DataFrame.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    This function captures and formats the output of `df.info()`, `df.head()`, 
+</span></span></span><span class="line"><span class="cl"><span class="s2">    and `df.tail()` in Markdown for easy inclusion in reports, documentation, 
+</span></span></span><span class="line"><span class="cl"><span class="s2">    or web-based rendering (e.g., Hugo or Jupyter export workflows).
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    -----------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    df : pd.DataFrame
+</span></span></span><span class="line"><span class="cl"><span class="s2">        The DataFrame to summarize.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        A string containing the DataFrame&#39;s info, head, and tail 
+</span></span></span><span class="line"><span class="cl"><span class="s2">        formatted in Markdown.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Example:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; print(df_info_markdown(df))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ```text
+</span></span></span><span class="line"><span class="cl"><span class="s2">    The columns, shape, and data types are:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &lt;output from df.info()&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ```
+</span></span></span><span class="line"><span class="cl"><span class="s2">    The first 5 rows are:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    |   | col1 | col2 |
+</span></span></span><span class="line"><span class="cl"><span class="s2">    |---|------|------|
+</span></span></span><span class="line"><span class="cl"><span class="s2">    | 0 | ...  | ...  |
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    The last 5 rows are:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ...
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">buffer</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Capture df.info() output</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">buf</span><span class="o">=</span><span class="n">buffer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">info_str</span> <span class="o">=</span> <span class="n">buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Convert head and tail to Markdown</span>
+</span></span><span class="line"><span class="cl">    <span class="n">head_str</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tail_str</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">markdown</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;```text&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;The columns, shape, and data types are:</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">info_str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;```&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">The first 5 rows are:</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">head_str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">The last 5 rows are:</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tail_str</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">markdown</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">pandas_set_decimal_places</span><span class="p">(</span><span class="n">decimal_places</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Set the number of decimal places displayed for floating-point numbers in pandas.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ----------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    decimal_places : int
+</span></span></span><span class="line"><span class="cl"><span class="s2">        The number of decimal places to display for float values in pandas DataFrames and Series.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Example:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; dp(3)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; pd.DataFrame([1.23456789])
+</span></span></span><span class="line"><span class="cl"><span class="s2">           0
+</span></span></span><span class="line"><span class="cl"><span class="s2">    0   1.235
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.float_format&#39;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;%.</span><span class="si">{</span><span class="n">decimal_places</span><span class="si">}</span><span class="s1">f&#39;</span> <span class="o">%</span> <span class="n">x</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Load data from a CSV or Excel file into a pandas DataFrame.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    This function attempts to read a file first as a CSV, then as an Excel file 
+</span></span></span><span class="line"><span class="cl"><span class="s2">    (specifically looking for a sheet named &#39;data&#39; and using the &#39;calamine&#39; engine).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    If both attempts fail, a ValueError is raised.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    -----------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    file : str or Path
+</span></span></span><span class="line"><span class="cl"><span class="s2">        The path to the data file to be loaded.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    pd.DataFrame
+</span></span></span><span class="line"><span class="cl"><span class="s2">        The loaded data.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Raises:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    -------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ValueError
+</span></span></span><span class="line"><span class="cl"><span class="s2">        If the file could not be loaded as either CSV or Excel.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Example:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; df = load_data(&#34;my_data.csv&#34;)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; df = load_data(&#34;my_excel_file.xlsx&#34;)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Try CSV</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">df</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Try Excel</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&#34;data&#34;</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s2">&#34;calamine&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">df</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;❌ Unable to load file: </span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">. Ensure it&#39;s a valid CSV or Excel file with a &#39;data&#39; sheet.&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="project-specific-functions">Project Specific Functions
+</h3><p>Here&rsquo;s the code for the function to pull the VIX data and export to Excel:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -496,98 +968,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;--------------------&#34;</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="set-number-of-decimal-places">Set Number Of Decimal Places
-</h3><p>This is a quick function to set the number of decimal places that pandas displays. Useful for when using different data sets in a jupyter notebook when you want to change the number of decimal places displayed throughout the notebook:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Set number of decimal places in pandas</span>
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">dp</span><span class="p">(</span><span class="n">decimal_places</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.float_format&#39;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;%.</span><span class="si">{</span><span class="n">decimal_places</span><span class="si">}</span><span class="s1">f&#39;</span> <span class="o">%</span> <span class="n">x</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="import-data-from-csv--xlsx">Import Data From CSV / XLSX
-</h3><p>This function loads data from either a CSV file or excel file into a pandas dataframe:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># Import CSV</span>
-</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="k">except</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="k">pass</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># Import excel</span>
-</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;openpyxl&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="k">except</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="k">pass</span>
-</span></span><span class="line"><span class="cl">        
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">df</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="return-information-about-a-dataframe">Return Information About A Dataframe
-</h3><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># The `df_info` function returns some useful information about</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># a dataframe, such as the columns, data types, and size.</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">df_info</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The columns, shape, and data types are:&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The first 5 rows are:&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The last 5 rows are:&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">())</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>Although the above function is useful, sometimes it is simpler to run:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
-</span></span></code></pre></td></tr></table>
-</div>
 </div><h2 id="data-overview">Data Overview
-</h2><h3 id="acquire-data">Acquire Data
+</h2><h3 id="acquire-cboe-volatility-index-vix-data">Acquire CBOE Volatility Index (VIX) Data
 </h3><p>First, let&rsquo;s get the data:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -597,17 +979,18 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">yf_data_updater</span><span class="p">(</span><span class="s1">&#39;^VIX&#39;</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="load-data">Load Data
-</h3><p>Then set our decimal places to something reasonable (like 2):</p>
+</div><h3 id="set-decimal-places">Set Decimal Places
+</h3><p>Let&rsquo;s set the number of decimal places to something sane (like 2):</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">dp</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">pandas_set_decimal_places</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>Now that we have the data, let&rsquo;s load it up and take a look.</p>
+</div><h3 id="load-data">Load Data
+</h3><p>Now that we have the data, let&rsquo;s load it up and take a look:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -653,7 +1036,7 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 </span></span><span class="line"><span class="cl"><span class="n">vix</span><span class="p">[</span><span class="s1">&#39;High&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vix</span><span class="p">[</span><span class="s1">&#39;High&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">ffill</span><span class="p">()</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="dataframe-info">DataFrame Info
+</div><h3 id="vix-dataframe-info">VIX DataFrame Info
 </h3><p>Now, running:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -684,16 +1067,16 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 <pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">The columns, shape, and data types are:
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-</span></span><span class="line"><span class="cl">DatetimeIndex: 8889 entries, 1990-01-02 to 2025-04-16
+</span></span><span class="line"><span class="cl">DatetimeIndex: 8892 entries, 1990-01-02 to 2025-04-22
 </span></span><span class="line"><span class="cl">Data columns (total 4 columns):
 </span></span><span class="line"><span class="cl"> #   Column  Non-Null Count  Dtype  
 </span></span><span class="line"><span class="cl">---  ------  --------------  -----  
-</span></span><span class="line"><span class="cl"> 0   Close   8889 non-null   float64
-</span></span><span class="line"><span class="cl"> 1   High    8889 non-null   float64
-</span></span><span class="line"><span class="cl"> 2   Low     8889 non-null   float64
-</span></span><span class="line"><span class="cl"> 3   Open    8889 non-null   float64
+</span></span><span class="line"><span class="cl"> 0   Close   8892 non-null   float64
+</span></span><span class="line"><span class="cl"> 1   High    8892 non-null   float64
+</span></span><span class="line"><span class="cl"> 2   Low     8892 non-null   float64
+</span></span><span class="line"><span class="cl"> 3   Open    8892 non-null   float64
 </span></span><span class="line"><span class="cl">dtypes: float64(4)
-</span></span><span class="line"><span class="cl">memory usage: 347.2 KB
+</span></span><span class="line"><span class="cl">memory usage: 347.3 KB
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>The first 5 rows are:</p>
@@ -758,27 +1141,6 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left">2025-04-10 00:00:00</td>
-          <td style="text-align: right">40.72</td>
-          <td style="text-align: right">54.87</td>
-          <td style="text-align: right">34.44</td>
-          <td style="text-align: right">34.44</td>
-      </tr>
-      <tr>
-          <td style="text-align: left">2025-04-11 00:00:00</td>
-          <td style="text-align: right">37.56</td>
-          <td style="text-align: right">46.12</td>
-          <td style="text-align: right">36.85</td>
-          <td style="text-align: right">40.8</td>
-      </tr>
-      <tr>
-          <td style="text-align: left">2025-04-14 00:00:00</td>
-          <td style="text-align: right">30.89</td>
-          <td style="text-align: right">35.17</td>
-          <td style="text-align: right">29.75</td>
-          <td style="text-align: right">34.76</td>
-      </tr>
-      <tr>
           <td style="text-align: left">2025-04-15 00:00:00</td>
           <td style="text-align: right">30.12</td>
           <td style="text-align: right">31.45</td>
@@ -791,6 +1153,27 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
           <td style="text-align: right">34.96</td>
           <td style="text-align: right">29.48</td>
           <td style="text-align: right">33.24</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-04-17 00:00:00</td>
+          <td style="text-align: right">29.65</td>
+          <td style="text-align: right">32.55</td>
+          <td style="text-align: right">29.57</td>
+          <td style="text-align: right">30.79</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-04-21 00:00:00</td>
+          <td style="text-align: right">33.82</td>
+          <td style="text-align: right">35.75</td>
+          <td style="text-align: right">31.79</td>
+          <td style="text-align: right">32.75</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-04-22 00:00:00</td>
+          <td style="text-align: right">30.57</td>
+          <td style="text-align: right">32.68</td>
+          <td style="text-align: right">30.08</td>
+          <td style="text-align: right">32.61</td>
       </tr>
   </tbody>
 </table></div>
@@ -830,24 +1213,24 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
   <tbody>
       <tr>
           <td style="text-align: left">count</td>
-          <td style="text-align: right">8889</td>
-          <td style="text-align: right">8889</td>
-          <td style="text-align: right">8889</td>
-          <td style="text-align: right">8889</td>
+          <td style="text-align: right">8892</td>
+          <td style="text-align: right">8892</td>
+          <td style="text-align: right">8892</td>
+          <td style="text-align: right">8892</td>
       </tr>
       <tr>
           <td style="text-align: left">mean</td>
-          <td style="text-align: right">19.4853</td>
-          <td style="text-align: right">20.394</td>
-          <td style="text-align: right">18.8118</td>
-          <td style="text-align: right">19.5771</td>
+          <td style="text-align: right">19.4893</td>
+          <td style="text-align: right">20.3985</td>
+          <td style="text-align: right">18.8158</td>
+          <td style="text-align: right">19.5813</td>
       </tr>
       <tr>
           <td style="text-align: left">std</td>
-          <td style="text-align: right">7.84508</td>
-          <td style="text-align: right">8.40417</td>
-          <td style="text-align: right">7.3987</td>
-          <td style="text-align: right">7.92027</td>
+          <td style="text-align: right">7.84685</td>
+          <td style="text-align: right">8.40632</td>
+          <td style="text-align: right">7.40058</td>
+          <td style="text-align: right">7.92226</td>
       </tr>
       <tr>
           <td style="text-align: left">min</td>
@@ -859,21 +1242,21 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
       <tr>
           <td style="text-align: left">25%</td>
           <td style="text-align: right">13.85</td>
-          <td style="text-align: right">14.52</td>
+          <td style="text-align: right">14.5275</td>
           <td style="text-align: right">13.4</td>
           <td style="text-align: right">13.93</td>
       </tr>
       <tr>
           <td style="text-align: left">50%</td>
           <td style="text-align: right">17.63</td>
-          <td style="text-align: right">18.34</td>
+          <td style="text-align: right">18.345</td>
           <td style="text-align: right">17.06</td>
           <td style="text-align: right">17.68</td>
       </tr>
       <tr>
           <td style="text-align: left">75%</td>
-          <td style="text-align: right">22.82</td>
-          <td style="text-align: right">23.81</td>
+          <td style="text-align: right">22.83</td>
+          <td style="text-align: right">23.8225</td>
           <td style="text-align: right">22.14</td>
           <td style="text-align: right">22.97</td>
       </tr>
@@ -886,52 +1269,52 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
       </tr>
       <tr>
           <td style="text-align: left">mean + -1 std</td>
-          <td style="text-align: right">11.6403</td>
-          <td style="text-align: right">11.9898</td>
-          <td style="text-align: right">11.4131</td>
-          <td style="text-align: right">11.6569</td>
+          <td style="text-align: right">11.6425</td>
+          <td style="text-align: right">11.9921</td>
+          <td style="text-align: right">11.4152</td>
+          <td style="text-align: right">11.6591</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 0 std</td>
-          <td style="text-align: right">19.4853</td>
-          <td style="text-align: right">20.394</td>
-          <td style="text-align: right">18.8118</td>
-          <td style="text-align: right">19.5771</td>
+          <td style="text-align: right">19.4893</td>
+          <td style="text-align: right">20.3985</td>
+          <td style="text-align: right">18.8158</td>
+          <td style="text-align: right">19.5813</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 1 std</td>
-          <td style="text-align: right">27.3304</td>
-          <td style="text-align: right">28.7981</td>
-          <td style="text-align: right">26.2105</td>
-          <td style="text-align: right">27.4974</td>
+          <td style="text-align: right">27.3362</td>
+          <td style="text-align: right">28.8048</td>
+          <td style="text-align: right">26.2163</td>
+          <td style="text-align: right">27.5036</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 2 std</td>
-          <td style="text-align: right">35.1755</td>
-          <td style="text-align: right">37.2023</td>
-          <td style="text-align: right">33.6092</td>
-          <td style="text-align: right">35.4177</td>
+          <td style="text-align: right">35.183</td>
+          <td style="text-align: right">37.2111</td>
+          <td style="text-align: right">33.6169</td>
+          <td style="text-align: right">35.4259</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 3 std</td>
-          <td style="text-align: right">43.0206</td>
-          <td style="text-align: right">45.6065</td>
-          <td style="text-align: right">41.0079</td>
-          <td style="text-align: right">43.3379</td>
+          <td style="text-align: right">43.0299</td>
+          <td style="text-align: right">45.6174</td>
+          <td style="text-align: right">41.0175</td>
+          <td style="text-align: right">43.3481</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 4 std</td>
-          <td style="text-align: right">50.8657</td>
-          <td style="text-align: right">54.0106</td>
-          <td style="text-align: right">48.4066</td>
-          <td style="text-align: right">51.2582</td>
+          <td style="text-align: right">50.8767</td>
+          <td style="text-align: right">54.0238</td>
+          <td style="text-align: right">48.4181</td>
+          <td style="text-align: right">51.2704</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 5 std</td>
-          <td style="text-align: right">58.7108</td>
-          <td style="text-align: right">62.4148</td>
-          <td style="text-align: right">55.8054</td>
-          <td style="text-align: right">59.1785</td>
+          <td style="text-align: right">58.7236</td>
+          <td style="text-align: right">62.4301</td>
+          <td style="text-align: right">55.8187</td>
+          <td style="text-align: right">59.1926</td>
       </tr>
   </tbody>
 </table></div>
@@ -977,27 +1360,27 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
           <td style="text-align: right">0.2</td>
           <td style="text-align: right">13.24</td>
           <td style="text-align: right">13.87</td>
-          <td style="text-align: right">12.846</td>
+          <td style="text-align: right">12.85</td>
           <td style="text-align: right">13.3</td>
       </tr>
       <tr>
           <td style="text-align: right">0.3</td>
           <td style="text-align: right">14.59</td>
-          <td style="text-align: right">15.274</td>
+          <td style="text-align: right">15.28</td>
           <td style="text-align: right">14.07</td>
-          <td style="text-align: right">14.66</td>
+          <td style="text-align: right">14.663</td>
       </tr>
       <tr>
           <td style="text-align: right">0.4</td>
-          <td style="text-align: right">16.08</td>
-          <td style="text-align: right">16.742</td>
-          <td style="text-align: right">15.54</td>
+          <td style="text-align: right">16.084</td>
+          <td style="text-align: right">16.75</td>
+          <td style="text-align: right">15.544</td>
           <td style="text-align: right">16.11</td>
       </tr>
       <tr>
           <td style="text-align: right">0.5</td>
           <td style="text-align: right">17.63</td>
-          <td style="text-align: right">18.34</td>
+          <td style="text-align: right">18.345</td>
           <td style="text-align: right">17.06</td>
           <td style="text-align: right">17.68</td>
       </tr>
@@ -1005,29 +1388,29 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
           <td style="text-align: right">0.6</td>
           <td style="text-align: right">19.54</td>
           <td style="text-align: right">20.38</td>
-          <td style="text-align: right">18.99</td>
-          <td style="text-align: right">19.67</td>
+          <td style="text-align: right">19</td>
+          <td style="text-align: right">19.676</td>
       </tr>
       <tr>
           <td style="text-align: right">0.7</td>
-          <td style="text-align: right">21.63</td>
-          <td style="text-align: right">22.626</td>
-          <td style="text-align: right">20.986</td>
-          <td style="text-align: right">21.766</td>
+          <td style="text-align: right">21.637</td>
+          <td style="text-align: right">22.63</td>
+          <td style="text-align: right">20.99</td>
+          <td style="text-align: right">21.78</td>
       </tr>
       <tr>
           <td style="text-align: right">0.8</td>
           <td style="text-align: right">24.31</td>
-          <td style="text-align: right">25.32</td>
-          <td style="text-align: right">23.474</td>
+          <td style="text-align: right">25.346</td>
+          <td style="text-align: right">23.5</td>
           <td style="text-align: right">24.38</td>
       </tr>
       <tr>
           <td style="text-align: right">0.9</td>
-          <td style="text-align: right">28.702</td>
-          <td style="text-align: right">30</td>
-          <td style="text-align: right">27.782</td>
-          <td style="text-align: right">28.86</td>
+          <td style="text-align: right">28.729</td>
+          <td style="text-align: right">30.009</td>
+          <td style="text-align: right">27.799</td>
+          <td style="text-align: right">28.879</td>
       </tr>
       <tr>
           <td style="text-align: right">1</td>
@@ -1069,9 +1452,11 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<h3 id="historical-vix-plot">Historical VIX Plot
+<h2 id="plots">Plots
+</h2><h3 id="historical-vix-data">Historical VIX Data
 </h3><p>Here&rsquo;s two plots for the dataset. The first covers 1990 - 2009, and the second 2010 - 2024. This is the daily high level.</p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/06_Plot_1990-2009.png"
+<h4 id="1990---2009">1990 - 2009
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/06_Plot_1990-2009.png"
 	width="3570"
 	height="1768"
 	
@@ -1085,7 +1470,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/07_Plot_2010-Present.png"
+<h4 id="2010---present">2010 - Present
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/07_Plot_2010-Present.png"
 	width="3569"
 	height="1768"
 	
@@ -1099,7 +1485,7 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p>From this plot, we can see the following:</p>
+<p>From these plots, we can see the following:</p>
 <ul>
 <li>The VIX has really only jumped above 50 several times (GFC, COVID, recently in August of 2024)</li>
 <li>The highest levels (&gt; 80) occured only during the GFC &amp; COVID</li>
@@ -1107,7 +1493,7 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 </ul>
 <h2 id="investigating-a-signal">Investigating A Signal
 </h2><p>Next, we will consider the idea of a spike level in the VIX and how we might use a spike level to generate a signal. These elevated levels usually occur during market sell-off events or longer term drawdowns in the S&amp;P 500. Sometimes the VIX reverts to recent levels after a spike, but other times levels remain elevated for weeks or even months.</p>
-<h3 id="spike-level">Spike Level
+<h3 id="determining-a-spike-level">Determining A Spike Level
 </h3><p>We will start the 10 day simple moving average (SMA) of the daily high level to get an idea of what is happening recently with the VIX. We&rsquo;ll then pick an arbitrary spike level (25% above the 10 day SMA), and our signal is generated if the VIX hits a level that is above the spike threshold.</p>
 <p>The idea is that the 10 day SMA will smooth out the recent short term volatility in the VIX, and therefore any gradual increases in the VIX are not interpreted as spike events.</p>
 <p>We also will generate the 20 and 50 day SMAs for reference, and again to see what is happening with the level of the VIX over slightly longer timeframes.</p>
@@ -1240,6 +1626,198 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Which gives us the following:</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: right">Year</th>
+          <th style="text-align: right">False</th>
+          <th style="text-align: right">True</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: right">1990</td>
+          <td style="text-align: right">248</td>
+          <td style="text-align: right">5</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1991</td>
+          <td style="text-align: right">249</td>
+          <td style="text-align: right">4</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1992</td>
+          <td style="text-align: right">250</td>
+          <td style="text-align: right">4</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1993</td>
+          <td style="text-align: right">251</td>
+          <td style="text-align: right">2</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1994</td>
+          <td style="text-align: right">243</td>
+          <td style="text-align: right">9</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1995</td>
+          <td style="text-align: right">252</td>
+          <td style="text-align: right">0</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1996</td>
+          <td style="text-align: right">248</td>
+          <td style="text-align: right">6</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1997</td>
+          <td style="text-align: right">247</td>
+          <td style="text-align: right">6</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1998</td>
+          <td style="text-align: right">243</td>
+          <td style="text-align: right">9</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1999</td>
+          <td style="text-align: right">250</td>
+          <td style="text-align: right">2</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2000</td>
+          <td style="text-align: right">248</td>
+          <td style="text-align: right">4</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2001</td>
+          <td style="text-align: right">240</td>
+          <td style="text-align: right">8</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2002</td>
+          <td style="text-align: right">248</td>
+          <td style="text-align: right">4</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2003</td>
+          <td style="text-align: right">251</td>
+          <td style="text-align: right">1</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2004</td>
+          <td style="text-align: right">250</td>
+          <td style="text-align: right">2</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2005</td>
+          <td style="text-align: right">250</td>
+          <td style="text-align: right">2</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2006</td>
+          <td style="text-align: right">242</td>
+          <td style="text-align: right">9</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2007</td>
+          <td style="text-align: right">239</td>
+          <td style="text-align: right">12</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2008</td>
+          <td style="text-align: right">238</td>
+          <td style="text-align: right">15</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2009</td>
+          <td style="text-align: right">249</td>
+          <td style="text-align: right">3</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2010</td>
+          <td style="text-align: right">239</td>
+          <td style="text-align: right">13</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2011</td>
+          <td style="text-align: right">240</td>
+          <td style="text-align: right">12</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2012</td>
+          <td style="text-align: right">248</td>
+          <td style="text-align: right">2</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2013</td>
+          <td style="text-align: right">249</td>
+          <td style="text-align: right">3</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2014</td>
+          <td style="text-align: right">235</td>
+          <td style="text-align: right">17</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2015</td>
+          <td style="text-align: right">240</td>
+          <td style="text-align: right">12</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2016</td>
+          <td style="text-align: right">234</td>
+          <td style="text-align: right">18</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2017</td>
+          <td style="text-align: right">244</td>
+          <td style="text-align: right">7</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2018</td>
+          <td style="text-align: right">228</td>
+          <td style="text-align: right">23</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2019</td>
+          <td style="text-align: right">241</td>
+          <td style="text-align: right">11</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2020</td>
+          <td style="text-align: right">224</td>
+          <td style="text-align: right">29</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2021</td>
+          <td style="text-align: right">235</td>
+          <td style="text-align: right">17</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2022</td>
+          <td style="text-align: right">239</td>
+          <td style="text-align: right">12</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2023</td>
+          <td style="text-align: right">246</td>
+          <td style="text-align: right">4</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2024</td>
+          <td style="text-align: right">237</td>
+          <td style="text-align: right">15</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2025</td>
+          <td style="text-align: right">64</td>
+          <td style="text-align: right">11</td>
+      </tr>
+  </tbody>
+</table></div>
+<p>And the plot to aid with visualization. Based on the plot, it seems as though volatility has increased since the early 2000&rsquo;s:</p>
 <p><img src="/2025/03/01/investigating-a-vix-trading-signal/08_Spike_Counts.png"
 	width="3570"
 	height="1768"
@@ -1254,9 +1832,10 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<h3 id="spike-count-signal-plots-by-year">Spike Count (Signal) Plots By Year
+<h3 id="spike-counts-signals-plots-by-year">Spike Counts (Signals) Plots By Year
 </h3><p>Here are the yearly plots for when signals are generated:</p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1990_1990.png"
+<h4 id="1990">1990
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1990_1990.png"
 	width="3570"
 	height="1768"
 	
@@ -1270,7 +1849,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1991_1991.png"
+<h4 id="1991">1991
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1991_1991.png"
 	width="3570"
 	height="1768"
 	
@@ -1284,7 +1864,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1992_1992.png"
+<h4 id="1992">1992
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1992_1992.png"
 	width="3570"
 	height="1767"
 	
@@ -1298,7 +1879,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1993_1993.png"
+<h4 id="1993">1993
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1993_1993.png"
 	width="3570"
 	height="1768"
 	
@@ -1312,7 +1894,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1994_1994.png"
+<h4 id="1994">1994
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1994_1994.png"
 	width="3570"
 	height="1767"
 	
@@ -1326,7 +1909,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1995_1995.png"
+<h4 id="1995">1995
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1995_1995.png"
 	width="3570"
 	height="1768"
 	
@@ -1340,7 +1924,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1996_1996.png"
+<h4 id="1996">1996
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1996_1996.png"
 	width="3570"
 	height="1768"
 	
@@ -1354,7 +1939,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1997_1997.png"
+<h4 id="1997">1997
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1997_1997.png"
 	width="3570"
 	height="1767"
 	
@@ -1368,7 +1954,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1998_1998.png"
+<h4 id="1998">1998
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1998_1998.png"
 	width="3570"
 	height="1767"
 	
@@ -1382,7 +1969,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1999_1999.png"
+<h4 id="1999">1999
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1999_1999.png"
 	width="3570"
 	height="1767"
 	
@@ -1396,7 +1984,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2000_2000.png"
+<h4 id="2000">2000
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2000_2000.png"
 	width="3570"
 	height="1768"
 	
@@ -1410,7 +1999,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2001_2001.png"
+<h4 id="2001">2001
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2001_2001.png"
 	width="3570"
 	height="1768"
 	
@@ -1424,7 +2014,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2002_2002.png"
+<h4 id="2002">2002
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2002_2002.png"
 	width="3570"
 	height="1768"
 	
@@ -1438,7 +2029,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2003_2003.png"
+<h4 id="2003">2003
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2003_2003.png"
 	width="3570"
 	height="1768"
 	
@@ -1452,7 +2044,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2004_2004.png"
+<h4 id="2004">2004
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2004_2004.png"
 	width="3570"
 	height="1768"
 	
@@ -1466,7 +2059,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2005_2005.png"
+<h4 id="2005">2005
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2005_2005.png"
 	width="3570"
 	height="1768"
 	
@@ -1480,7 +2074,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2006_2006.png"
+<h4 id="2006">2006
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2006_2006.png"
 	width="3570"
 	height="1768"
 	
@@ -1494,7 +2089,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2007_2007.png"
+<h4 id="2007">2007
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2007_2007.png"
 	width="3570"
 	height="1768"
 	
@@ -1508,7 +2104,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2008_2008.png"
+<h4 id="2008">2008
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2008_2008.png"
 	width="3570"
 	height="1768"
 	
@@ -1522,7 +2119,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2009_2009.png"
+<h4 id="2009">2009
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2009_2009.png"
 	width="3570"
 	height="1768"
 	
@@ -1536,7 +2134,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2010_2010.png"
+<h4 id="2010">2010
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2010_2010.png"
 	width="3570"
 	height="1768"
 	
@@ -1550,7 +2149,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2011_2011.png"
+<h4 id="2011">2011
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2011_2011.png"
 	width="3570"
 	height="1768"
 	
@@ -1564,7 +2164,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2012_2012.png"
+<h4 id="2012">2012
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2012_2012.png"
 	width="3570"
 	height="1768"
 	
@@ -1578,7 +2179,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2013_2013.png"
+<h4 id="2013">2013
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2013_2013.png"
 	width="3570"
 	height="1768"
 	
@@ -1592,7 +2194,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2014_2014.png"
+<h4 id="2014">2014
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2014_2014.png"
 	width="3570"
 	height="1768"
 	
@@ -1606,7 +2209,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2015_2015.png"
+<h4 id="2015">2015
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2015_2015.png"
 	width="3570"
 	height="1768"
 	
@@ -1620,7 +2224,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2016_2016.png"
+<h4 id="2016">2016
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2016_2016.png"
 	width="3570"
 	height="1768"
 	
@@ -1634,7 +2239,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2017_2017.png"
+<h4 id="2017">2017
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2017_2017.png"
 	width="3570"
 	height="1768"
 	
@@ -1648,7 +2254,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2018_2018.png"
+<h4 id="2018">2018
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2018_2018.png"
 	width="3570"
 	height="1768"
 	
@@ -1662,7 +2269,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2019_2019.png"
+<h4 id="2019">2019
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2019_2019.png"
 	width="3570"
 	height="1768"
 	
@@ -1676,7 +2284,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2020_2020.png"
+<h4 id="2020">2020
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2020_2020.png"
 	width="3570"
 	height="1768"
 	
@@ -1690,7 +2299,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2021_2021.png"
+<h4 id="2021">2021
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2021_2021.png"
 	width="3570"
 	height="1768"
 	
@@ -1704,7 +2314,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2022_2022.png"
+<h4 id="2022">2022
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2022_2022.png"
 	width="3570"
 	height="1768"
 	
@@ -1718,7 +2329,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2023_2023.png"
+<h4 id="2023">2023
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2023_2023.png"
 	width="3570"
 	height="1768"
 	
@@ -1732,7 +2344,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2024_2024.png"
+<h4 id="2024">2024
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2024_2024.png"
 	width="3570"
 	height="1767"
 	
@@ -1746,7 +2359,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2025_2025.png"
+<h4 id="2025">2025
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2025_2025.png"
 	width="3570"
 	height="1768"
 	
@@ -1760,8 +2374,10 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p>And here are the plots for the signals generated over the past 3 decades:</p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1990_1994.png"
+<h3 id="spike-counts-signals-plots-by-decade">Spike Counts (Signals) Plots By Decade
+</h3><p>And here are the plots for the signals generated over the past 3 decades:</p>
+<h4 id="1990---1994">1990 - 1994
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1990_1994.png"
 	width="3562"
 	height="1767"
 	
@@ -1775,7 +2391,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="483px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1995_1999.png"
+<h4 id="1995---1999">1995 - 1999
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_1995_1999.png"
 	width="3562"
 	height="1767"
 	
@@ -1789,7 +2406,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="483px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2000_2004.png"
+<h4 id="2000---2004">2000 - 2004
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2000_2004.png"
 	width="3571"
 	height="1768"
 	
@@ -1803,7 +2421,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2005_2009.png"
+<h4 id="2005---2009">2005 - 2009
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2005_2009.png"
 	width="3571"
 	height="1768"
 	
@@ -1817,7 +2436,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2010_2014.png"
+<h4 id="2010---2014">2010 - 2014
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2010_2014.png"
 	width="3571"
 	height="1768"
 	
@@ -1831,7 +2451,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2015_2019.png"
+<h4 id="2015---2019">2015 - 2019
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2015_2019.png"
 	width="3562"
 	height="1768"
 	
@@ -1845,7 +2466,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="483px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2020_2024.png"
+<h4 id="2020---2024">2020 - 2024
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2020_2024.png"
 	width="3571"
 	height="1768"
 	
@@ -1859,7 +2481,8 @@ Update 4/12/2025: VIX data through 4/10/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2025_2025.png"
+<h4 id="2025---present">2025 - Present
+</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2025_2029.png"
 	width="3570"
 	height="1768"
 	
