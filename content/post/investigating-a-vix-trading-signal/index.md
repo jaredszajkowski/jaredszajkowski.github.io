@@ -48,7 +48,12 @@ First, the typical set of functions I use:
 ```python
 from pathlib import Path
 
-def export_track_md_deps(dep_file: Path, md_filename: str, content: str) -> None:
+def export_track_md_deps(
+    dep_file: Path, 
+    md_filename: str, 
+    content: str,
+) -> None:
+    
     """
     Export Markdown content to a file and track it as a dependency.
 
@@ -75,6 +80,7 @@ def export_track_md_deps(dep_file: Path, md_filename: str, content: str) -> None
     >>> export_track_md_deps(Path("index_dep.txt"), "01_intro.md", "# Introduction\n...")
     ✅ Exported and tracked: 01_intro.md
     """
+    
     Path(md_filename).write_text(content)
     with dep_file.open("a") as f:
         f.write(md_filename + "\n")
@@ -84,7 +90,10 @@ def export_track_md_deps(dep_file: Path, md_filename: str, content: str) -> None
 </br>
 
 ```python
+from IPython.display import display
+
 def df_info(df) -> None:
+    
     """
     Display summary information about a pandas DataFrame.
 
@@ -108,6 +117,7 @@ def df_info(df) -> None:
     --------
     >>> df_info(my_dataframe)
     """
+    
     print("The columns, shape, and data types are:")
     print(df.info())
     print("The first 5 rows are:")
@@ -123,6 +133,7 @@ import io
 import pandas as pd
 
 def df_info_markdown(df: pd.DataFrame) -> str:
+    
     """
     Generate a Markdown-formatted summary of a pandas DataFrame.
 
@@ -156,6 +167,7 @@ def df_info_markdown(df: pd.DataFrame) -> str:
     The last 5 rows are:
     ...
     """
+    
     buffer = io.StringIO()
 
     # Capture df.info() output
@@ -186,6 +198,7 @@ def df_info_markdown(df: pd.DataFrame) -> str:
 import pandas as pd
 
 def pandas_set_decimal_places(decimal_places: int) -> None:
+    
     """
     Set the number of decimal places displayed for floating-point numbers in pandas.
 
@@ -201,6 +214,7 @@ def pandas_set_decimal_places(decimal_places: int) -> None:
            0
     0   1.235
     """
+    
     pd.set_option('display.float_format', lambda x: f'%.{decimal_places}f' % x)
 ```
 
@@ -210,7 +224,14 @@ def pandas_set_decimal_places(decimal_places: int) -> None:
 import pandas as pd
 from pathlib import Path
 
-def load_data(file: str | Path) -> pd.DataFrame:
+def load_data(
+    base_directory: str,
+    ticker: str,
+    source: str,
+    asset_class: str,
+    timeframe: str,
+) -> pd.DataFrame:
+    
     """
     Load data from a CSV or Excel file into a pandas DataFrame.
 
@@ -220,9 +241,17 @@ def load_data(file: str | Path) -> pd.DataFrame:
 
     Parameters:
     -----------
-    file : str or Path
-        The path to the data file to be loaded.
-
+    base_directory : str
+        Root path to read data file.
+    ticker : str
+        Ticker symbol to read.
+    source : str
+        Name of the data source (e.g., 'Yahoo').
+    asset_class : str
+        Asset class name (e.g., 'Equities').
+    timeframe : str
+        Timeframe for the data (e.g., 'Daily', 'Month_End').
+    
     Returns:
     --------
     pd.DataFrame
@@ -235,27 +264,28 @@ def load_data(file: str | Path) -> pd.DataFrame:
 
     Example:
     --------
-    >>> df = load_data("my_data.csv")
-    >>> df = load_data("my_excel_file.xlsx")
+    >>> df = load_data(DATA_DIR, "^VIX", "Yahoo_Finance", "Indices")
     """
-    file = Path(file)
-    df = None
+
+    # Build file paths using pathlib
+    csv_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.csv"
+    xlsx_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.xlsx"
 
     # Try CSV
     try:
-        df = pd.read_csv(file)
+        df = pd.read_csv(csv_path)
         return df
     except Exception:
         pass
 
     # Try Excel
     try:
-        df = pd.read_excel(file, sheet_name="data", engine="calamine")
+        df = pd.read_excel(xlsx_path)
         return df
     except Exception:
         pass
 
-    raise ValueError(f"❌ Unable to load file: {file}. Ensure it's a valid CSV or Excel file with a 'data' sheet.")
+    raise ValueError(f"❌ Unable to load file: {ticker}. Ensure it's a valid CSV or Excel file with a 'data' sheet.")
 ```
 
 ### Project Specific Functions
@@ -263,39 +293,85 @@ def load_data(file: str | Path) -> pd.DataFrame:
 Here's the code for the function to pull the VIX data and export to Excel:
 
 ```python
-# This function pulls data from Yahoo finance
-def yf_data_updater(fund):
+import yfinance as yf
+import os
+from IPython.display import display
+
+def yf_pull_data(
+    base_directory: str,
+    ticker: str,
+    source: str,
+    asset_class: str,
+    excel_export: bool,
+    pickle_export: bool,
+) -> None:
+    
+    """
+    Download daily price data from Yahoo Finance and export it.
+
+    Parameters:
+    -----------
+    base_directory : str
+        Root path to store downloaded data.
+    ticker : str
+        Ticker symbol to download.
+    source : str
+        Name of the data source (e.g., 'Yahoo').
+    asset_class : str
+        Asset class name (e.g., 'Equities').
+    excel_export : bool
+        If True, export data to Excel format.
+    pickle_export : bool
+        If True, export data to Pickle format.
+
+    Returns:
+    --------
+    None
+    """
     
     # Download data from YF
-    df_comp = yf.download(fund)
+    df = yf.download(ticker)
 
     # Drop the column level with the ticker symbol
-    df_comp.columns = df_comp.columns.droplevel(1)
+    df.columns = df.columns.droplevel(1)
 
     # Reset index
-    df_comp = df_comp.reset_index()
+    df = df.reset_index()
 
     # Remove the "Price" header from the index
-    df_comp.columns.name = None
+    df.columns.name = None
 
     # Reset date column
-    df_comp['Date'] = df_comp['Date'].dt.tz_localize(None)
+    df['Date'] = df['Date'].dt.tz_localize(None)
 
     # Set 'Date' column as index
-    df_comp = df_comp.set_index('Date', drop=True)
+    df = df.set_index('Date', drop=True)
 
     # Drop data from last day because it's not accrate until end of day
-    df_comp = df_comp.drop(df_comp.index[-1])
+    df = df.drop(df.index[-1])
     
-    # Export data to excel
-    file = fund + ".xlsx"
-    df_comp.to_excel(file, sheet_name='data')
+    # Create directory
+    directory = f"{base_directory}/{source}/{asset_class}/Daily"
+    os.makedirs(directory, exist_ok=True)
 
-    print(f"The first and last date of data for {fund} is: ")
-    print(df_comp[:1])
-    print(df_comp[-1:])
-    print(f"Data updater complete for {fund} data")
-    
+    # Export to excel
+    if excel_export == True:
+        df.to_excel(f"{directory}/{ticker}.xlsx", sheet_name="data")
+    else:
+        pass
+
+    # Export to pickle
+    if pickle_export == True:
+        df.to_pickle(f"{directory}/{ticker}.pkl")
+    else:
+        pass
+
+    # Print confirmation and display the first and last date 
+    # of data
+    print(f"The first and last date of data for {ticker} is: ")
+    display(df[:1])
+    display(df[-1:])
+    print(f"Yahoo Finance data complete for {ticker}")
     return print(f"--------------------")
 ```
 
@@ -400,10 +476,12 @@ Some interesting statistics jump out at us when we look at the mean, standard de
 vix_stats = vix.describe()
 num_std = [-1, 0, 1, 2, 3, 4, 5]
 for num in num_std:
-    vix_stats.loc[f"mean + {num} std"] = {'Open': vix_stats.loc['mean']['Open'] + num * vix_stats.loc['std']['Open'],
-                                    'High': vix_stats.loc['mean']['High'] + num * vix_stats.loc['std']['High'],
-                                    'Low': vix_stats.loc['mean']['Low'] + num * vix_stats.loc['std']['Low'],
-                                    'Close': vix_stats.loc['mean']['Close'] + num * vix_stats.loc['std']['Close']}
+    vix_stats.loc[f"mean + {num} std"] = {
+        'Open': vix_stats.loc['mean']['Open'] + num * vix_stats.loc['std']['Open'],
+        'High': vix_stats.loc['mean']['High'] + num * vix_stats.loc['std']['High'],
+        'Low': vix_stats.loc['mean']['Low'] + num * vix_stats.loc['std']['Low'],
+        'Close': vix_stats.loc['mean']['Close'] + num * vix_stats.loc['std']['Close'],
+    }
 ```
 
 Gives us:
@@ -465,7 +543,7 @@ Now, let's add the levels for the mean, mean plus 1 standard deviation, mean min
 
 ### Historical VIX Data
 
-Here's two plots for the dataset. The first covers 1990 - 2009, and the second 2010 - 2024. This is the daily high level.
+Here's two plots for the dataset. The first covers 1990 - 2009, and the second 2010 - 2024. This is the daily high level:
 
 #### 1990 - 2009
 

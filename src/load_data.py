@@ -1,7 +1,14 @@
 import pandas as pd
 from pathlib import Path
 
-def load_data(file: str | Path) -> pd.DataFrame:
+def load_data(
+    base_directory: str,
+    ticker: str,
+    source: str,
+    asset_class: str,
+    timeframe: str,
+) -> pd.DataFrame:
+    
     """
     Load data from a CSV or Excel file into a pandas DataFrame.
 
@@ -11,9 +18,17 @@ def load_data(file: str | Path) -> pd.DataFrame:
 
     Parameters:
     -----------
-    file : str or Path
-        The path to the data file to be loaded.
-
+    base_directory : str
+        Root path to read data file.
+    ticker : str
+        Ticker symbol to read.
+    source : str
+        Name of the data source (e.g., 'Yahoo').
+    asset_class : str
+        Asset class name (e.g., 'Equities').
+    timeframe : str
+        Timeframe for the data (e.g., 'Daily', 'Month_End').
+    
     Returns:
     --------
     pd.DataFrame
@@ -26,24 +41,25 @@ def load_data(file: str | Path) -> pd.DataFrame:
 
     Example:
     --------
-    >>> df = load_data("my_data.csv")
-    >>> df = load_data("my_excel_file.xlsx")
+    >>> df = load_data(DATA_DIR, "^VIX", "Yahoo_Finance", "Indices")
     """
-    file = Path(file)
-    df = None
+
+    # Build file paths using pathlib
+    csv_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.csv"
+    xlsx_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.xlsx"
 
     # Try CSV
     try:
-        df = pd.read_csv(file)
+        df = pd.read_csv(csv_path)
         return df
     except Exception:
         pass
 
     # Try Excel
     try:
-        df = pd.read_excel(file, sheet_name="data", engine="calamine")
+        df = pd.read_excel(xlsx_path)
         return df
     except Exception:
         pass
 
-    raise ValueError(f"❌ Unable to load file: {file}. Ensure it's a valid CSV or Excel file with a 'data' sheet.")
+    raise ValueError(f"❌ Unable to load file: {ticker}. Ensure it's a valid CSV or Excel file with a 'data' sheet.")

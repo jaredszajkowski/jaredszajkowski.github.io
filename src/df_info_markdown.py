@@ -2,6 +2,7 @@ import io
 import pandas as pd
 
 def df_info_markdown(df: pd.DataFrame) -> str:
+    
     """
     Generate a Markdown-formatted summary of a pandas DataFrame.
 
@@ -35,6 +36,7 @@ def df_info_markdown(df: pd.DataFrame) -> str:
     The last 5 rows are:
     ...
     """
+    
     buffer = io.StringIO()
 
     # Capture df.info() output

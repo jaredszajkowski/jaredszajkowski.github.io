@@ -1,6 +1,7 @@
 import pandas as pd
 
 def pandas_set_decimal_places(decimal_places: int) -> None:
+    
     """
     Set the number of decimal places displayed for floating-point numbers in pandas.
 
@@ -16,4 +17,5 @@ def pandas_set_decimal_places(decimal_places: int) -> None:
            0
     0   1.235
     """
+    
     pd.set_option('display.float_format', lambda x: f'%.{decimal_places}f' % x)

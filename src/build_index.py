@@ -1,6 +1,7 @@
 from pathlib import Path
 
 def build_index() -> None:
+    
     """
     Build a Hugo-compatible index.md by combining Markdown fragments.
 
@@ -31,6 +32,7 @@ def build_index() -> None:
     The resulting `index.md` will include the contents of the respective markdown files in place 
     of their placeholders.
     """
+    
     temp_index_path = Path("index_temp.md")
     final_index_path = Path("index.md")
     dependencies_path = Path("index_dep.txt")

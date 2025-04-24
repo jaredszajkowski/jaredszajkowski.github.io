@@ -1,6 +1,11 @@
 from pathlib import Path
 
-def export_track_md_deps(dep_file: Path, md_filename: str, content: str) -> None:
+def export_track_md_deps(
+    dep_file: Path, 
+    md_filename: str, 
+    content: str,
+) -> None:
+    
     """
     Export Markdown content to a file and track it as a dependency.
 
@@ -27,6 +32,7 @@ def export_track_md_deps(dep_file: Path, md_filename: str, content: str) -> None
     >>> export_track_md_deps(Path("index_dep.txt"), "01_intro.md", "# Introduction\n...")
     ✅ Exported and tracked: 01_intro.md
     """
+    
     Path(md_filename).write_text(content)
     with dep_file.open("a") as f:
         f.write(md_filename + "\n")

@@ -79,7 +79,7 @@ d["POSTS_DIR"] = if_relative_make_abs(d["BASE_DIR"], _config('POSTS_DIR', defaul
 d["PAGES_DIR"] = if_relative_make_abs(d["BASE_DIR"], _config('PAGES_DIR', default=Path('content/page'), cast=Path))
 d["PUBLIC_DIR"] = if_relative_make_abs(d["BASE_DIR"], _config('PUBLIC_DIR', default=Path('public'), cast=Path))
 d["SOURCE_DIR"] = if_relative_make_abs(d["BASE_DIR"], _config('SOURCE_DIR', default=Path('src'), cast=Path))
-d["DATA_DIR"] = if_relative_make_abs(d["BASE_DIR"], _config('DATA_DIR', default=Path('data'), cast=Path))
+d["DATA_DIR"] = if_relative_make_abs(d["BASE_DIR"], _config('DATA_DIR', default=Path('Data'), cast=Path))
 
 # External Paths
 quant_finance_research_base_directory = "/home/jared/Cloud_Storage/Dropbox/Quant_Finance_Research"

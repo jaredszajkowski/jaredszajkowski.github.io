@@ -6,6 +6,7 @@ from settings import config
 POSTS_DIR = config("POSTS_DIR")
 
 def list_posts_subdirs() -> None:
+    
     """
     List the names of subdirectories in the configured POSTS_DIR.
 
@@ -25,6 +26,7 @@ def list_posts_subdirs() -> None:
     >>> list_posts_subdirs()
     ['post1', 'post2', 'post3']
     """
+    
     print(list(os.listdir(POSTS_DIR)))
     sys.stdout.flush()  # Ensures output is immediately visible in subprocesses
 
