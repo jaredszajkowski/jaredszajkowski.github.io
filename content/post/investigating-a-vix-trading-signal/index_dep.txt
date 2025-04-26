@@ -4,5 +4,6 @@
 08_Spike_Counts.md
 10_Trades_Executed.md
 11_Closed_Positions.md
+11_Net_Profit_Percent.md
 11_Net_PnL.md
 12_Open_Positions.md

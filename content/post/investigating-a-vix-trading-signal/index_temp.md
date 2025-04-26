@@ -773,19 +773,26 @@ And here are the plots for the signals generated over the past 3 decades:
 
 ## Trading History
 
-I've began trading based on the above ideas, opening positions during the VIX spikes and closing them as volatility comes back down. Here's a recap to date for trades executed, closed positions, and open positions:
+I've begun trading based on the above ideas, opening positions during the VIX spikes and closing them as volatility comes back down. The executed trades, closed positions, and open positions listed below are all automated updates from the transaction history exports from Schwab. The exported CSV files are available in the GitHub repository.
 
 ### Trades Executed
+
+Here are the trades executed to date:
 
 <!-- INSERT_10_Trades_Executed_HERE -->
 
 ### Closed Positions
 
+Here are the closed positions:
+
 <!-- INSERT_11_Closed_Positions_HERE -->
 
+Net profit percent: <!-- INSERT_11_Net_Profit_Percent_HERE -->
 Net profit and loss: <!-- INSERT_11_Net_PnL_HERE -->
 
 ### Open Positions
+
+Here are the open positions:
 
 <!-- INSERT_12_Open_Positions_HERE -->
 

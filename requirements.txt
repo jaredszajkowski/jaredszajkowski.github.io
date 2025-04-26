@@ -13,6 +13,7 @@ numpy
 pandas
 python-calamine
 python-decouple
+python-dotenv
 xgboost
 yfinance
 
@@ -38,8 +39,6 @@ yfinance
 # pyarrow
 # pydata-sphinx-theme==0.15.4
 # pytest==8.3.3
-# python-decouple==3.8
-# python-dotenv==1.0.1
 # pyxlsb==1.0.10
 # requests==2.32.3
 # ruff
