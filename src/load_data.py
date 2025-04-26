@@ -45,8 +45,12 @@ def load_data(
     """
 
     # Build file paths using pathlib
-    csv_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.csv"
-    xlsx_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.xlsx"
+    if source == None and asset_class == None and timeframe == None:
+        csv_path = Path(base_directory) / f"{ticker}.csv"
+        xlsx_path = Path(base_directory) / f"{ticker}.xlsx"
+    else:
+        csv_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.csv"
+        xlsx_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.xlsx"
 
     # Try CSV
     try:

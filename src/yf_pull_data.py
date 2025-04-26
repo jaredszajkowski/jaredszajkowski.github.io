@@ -1,5 +1,6 @@
 import yfinance as yf
 import os
+import pandas as pd
 from IPython.display import display
 
 def yf_pull_data(
@@ -9,7 +10,7 @@ def yf_pull_data(
     asset_class: str,
     excel_export: bool,
     pickle_export: bool,
-) -> None:
+) -> pd.DataFrame:
     
     """
     Download daily price data from Yahoo Finance and export it.
@@ -31,7 +32,8 @@ def yf_pull_data(
 
     Returns:
     --------
-    None
+    df : pd.DataFrame
+        DataFrame containing the downloaded data.
     """
     
     # Download data from YF
@@ -77,4 +79,5 @@ def yf_pull_data(
     display(df[:1])
     display(df[-1:])
     print(f"Yahoo Finance data complete for {ticker}")
-    return print(f"--------------------")
+    print(f"--------------------")
+    return df

@@ -3,7 +3,7 @@ title: Investigating A VIX Trading Signal
 description: A brief look at finding a trading signal based on moving averages of the VIX.
 slug: investigating-a-vix-trading-signal
 date: 2025-03-01 00:00:01+0000
-lastmod: 2025-04-23 00:00:01+0000
+lastmod: 2025-04-25 00:00:01+0000
 image: cover.jpg
 draft: false
 categories:
@@ -770,7 +770,23 @@ And here are the plots for the signals generated over the past 3 decades:
 
 ![Spike/Signals, 2025 - Present](09_VIX_SMA_Spike_2025_2029.png)
 
-More discussion to follow.
+## Trading History
+
+I've began trading based on the above, opening positions during the VIX spikes and closing them as volatility comes back down. Here's a recap so far of trades executed, closed positions, and open positions:
+
+### Trades Executed
+
+<!-- INSERT_10_Trades_Executed_HERE -->
+
+### Closed Positions
+
+<!-- INSERT_11_Closed_Positions_HERE -->
+
+Net profit and loss: <!-- INSERT_11_Net_PnL_HERE -->
+
+### Open Positions
+
+<!-- INSERT_12_Open_Positions_HERE -->
 
 ## References
 
