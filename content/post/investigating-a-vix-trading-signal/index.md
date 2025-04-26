@@ -920,7 +920,7 @@ Here are the closed positions:
 |  4 | VIX 04/16/2025 25.00 P | 2025-04-16 00:00:00 |      2830.4  |              5 |       3494.6  |               5 |         664.2  |         0.234666 |
 |  5 | VIX 05/21/2025 50.00 P | 2025-05-21 00:00:00 |      4232.16 |              2 |       5092.84 |               2 |         860.68 |         0.203367 |
 
-Net profit percent: 0.27
+Net profit percent: 0.27</br>
 Net profit and loss: 3243.08
 
 ### Open Positions
