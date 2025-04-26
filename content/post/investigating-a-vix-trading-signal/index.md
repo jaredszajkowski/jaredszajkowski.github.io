@@ -23,7 +23,8 @@ Update 4/8/2025: Added plot for signals for each year. VIX data through 4/7/25.<
 Update 4/9/2025: VIX data through 4/8/25.</br>
 Update 4/12/2025: VIX data through 4/10/25.</br>
 Update 4/22/2025: VIX data through 4/18/25.</br>
-Update 4/23/2025: VIX data through 4/22/25.
+Update 4/23/2025: VIX data through 4/22/25.</br>
+Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, including open and closed positions.
 
 ## Introduction
 
@@ -872,7 +873,7 @@ And here are the plots for the signals generated over the past 3 decades:
 
 ## Trading History
 
-I've began trading based on the above, opening positions during the VIX spikes and closing them as volatility comes back down. Here's a recap so far of trades executed, closed positions, and open positions:
+I've began trading based on the above ideas, opening positions during the VIX spikes and closing them as volatility comes back down. Here's a recap to date for trades executed, closed positions, and open positions:
 
 ### Trades Executed
 
