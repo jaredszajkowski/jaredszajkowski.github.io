@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Jared Szajkowski</title>
-        <link>https://www.jaredszajkowski.com/</link>
+        <link>http://localhost:1313/</link>
         <description>Recent content on Jared Szajkowski</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Fri, 25 Apr 2025 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 25 Apr 2025 00:00:01 +0000</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Investigating A VIX Trading Signal</title>
-        <link>https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/</link>
+        <link>http://localhost:1313/2025/03/01/investigating-a-vix-trading-signal/</link>
         <pubDate>Sat, 01 Mar 2025 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/cover.jpg" alt="Featured image of post Investigating A VIX Trading Signal" /&gt;&lt;h2 id=&#34;post-updates&#34;&gt;Post Updates
+        <guid>http://localhost:1313/2025/03/01/investigating-a-vix-trading-signal/</guid>
+        <description>&lt;img src="http://localhost:1313/2025/03/01/investigating-a-vix-trading-signal/cover.jpg" alt="Featured image of post Investigating A VIX Trading Signal" /&gt;&lt;h2 id=&#34;post-updates&#34;&gt;Post Updates
 &lt;/h2&gt;&lt;p&gt;Update 4/8/2025: Added plot for signals for each year. VIX data through 4/7/25.&lt;/br&gt;
 Update 4/9/2025: VIX data through 4/8/25.&lt;/br&gt;
 Update 4/12/2025: VIX data through 4/10/25.&lt;/br&gt;
@@ -26,11 +26,11 @@ Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, inc
         </item>
         <item>
         <title>Using Python Virtual Environments</title>
-        <link>https://www.jaredszajkowski.com/2024/12/02/using-python-virtual-environments/</link>
+        <link>http://localhost:1313/2024/12/02/using-python-virtual-environments/</link>
         <pubDate>Mon, 02 Dec 2024 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2024/12/02/using-python-virtual-environments/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2024/12/02/using-python-virtual-environments/cover.jpg" alt="Featured image of post Using Python Virtual Environments" /&gt;&lt;h2 id=&#34;post-updates&#34;&gt;Post Updates
+        <guid>http://localhost:1313/2024/12/02/using-python-virtual-environments/</guid>
+        <description>&lt;img src="http://localhost:1313/2024/12/02/using-python-virtual-environments/cover.jpg" alt="Featured image of post Using Python Virtual Environments" /&gt;&lt;h2 id=&#34;post-updates&#34;&gt;Post Updates
 &lt;/h2&gt;&lt;p&gt;Update 1/12/2025: Updated section for use of requirements.txt file for dependency management.&lt;/br&gt;
 Update 1/30/2025: Added section for version specific python virtual environments.&lt;/p&gt;
 &lt;h2 id=&#34;python-module-management&#34;&gt;Python Module Management
@@ -40,11 +40,11 @@ Update 1/30/2025: Added section for version specific python virtual environments
         </item>
         <item>
         <title>Does Harry Browne&#39;s permanent portfolio withstand the test of time?</title>
-        <link>https://www.jaredszajkowski.com/2024/11/04/harry-browne-permanent-portfolio/</link>
+        <link>http://localhost:1313/2024/11/04/harry-browne-permanent-portfolio/</link>
         <pubDate>Mon, 04 Nov 2024 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2024/11/04/harry-browne-permanent-portfolio/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2024/11/04/harry-browne-permanent-portfolio/cover.jpg" alt="Featured image of post Does Harry Browne&#39;s permanent portfolio withstand the test of time?" /&gt;&lt;h2 id=&#34;post-updates&#34;&gt;Post Updates
+        <guid>http://localhost:1313/2024/11/04/harry-browne-permanent-portfolio/</guid>
+        <description>&lt;img src="http://localhost:1313/2024/11/04/harry-browne-permanent-portfolio/cover.jpg" alt="Featured image of post Does Harry Browne&#39;s permanent portfolio withstand the test of time?" /&gt;&lt;h2 id=&#34;post-updates&#34;&gt;Post Updates
 &lt;/h2&gt;&lt;p&gt;Update 12/5/2024: Updated code for summary stats function, various code comments, and corrected grammatical errors.&lt;/br&gt;
 Update 2/19/2025: Various code updates, commented and documented functions.&lt;/p&gt;
 &lt;h2 id=&#34;introduction&#34;&gt;Introduction
@@ -54,11 +54,11 @@ Update 2/19/2025: Various code updates, commented and documented functions.&lt;/
         </item>
         <item>
         <title>Simple Incremental Bash Backup Script</title>
-        <link>https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/</link>
+        <link>http://localhost:1313/2024/01/12/simple-incremental-bash-backup-script/</link>
         <pubDate>Fri, 12 Jan 2024 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/cover.jpg" alt="Featured image of post Simple Incremental Bash Backup Script" /&gt;&lt;h2 id=&#34;post-updates&#34;&gt;Post Updates
+        <guid>http://localhost:1313/2024/01/12/simple-incremental-bash-backup-script/</guid>
+        <description>&lt;img src="http://localhost:1313/2024/01/12/simple-incremental-bash-backup-script/cover.jpg" alt="Featured image of post Simple Incremental Bash Backup Script" /&gt;&lt;h2 id=&#34;post-updates&#34;&gt;Post Updates
 &lt;/h2&gt;&lt;p&gt;Update 4/12/2025: &lt;a class=&#34;link&#34; href=&#34;https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/#updated-incremental-backup-script&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Revised script&lt;/a&gt; to accomodate a list of excluded directories.&lt;/p&gt;
 &lt;h2 id=&#34;introduction&#34;&gt;Introduction
@@ -69,11 +69,11 @@ Update 2/19/2025: Various code updates, commented and documented functions.&lt;/
         </item>
         <item>
         <title>Nasdaq Data Link Tables API Data Retrieval</title>
-        <link>https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/</link>
+        <link>http://localhost:1313/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/</link>
         <pubDate>Sun, 24 Dec 2023 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/cover.jpg" alt="Featured image of post Nasdaq Data Link Tables API Data Retrieval" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+        <guid>http://localhost:1313/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/</guid>
+        <description>&lt;img src="http://localhost:1313/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/cover.jpg" alt="Featured image of post Nasdaq Data Link Tables API Data Retrieval" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;In this tutorial, we will write a python function that pulls data from Nasdaq Data Link through the tables API, adds relevant columns that are not present in the raw data, updates columns to allow for ease of use, and leaves the data in a format where it can then be used in time series analysis.&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.nasdaq.com/nasdaq-data-link&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Nasdaq Data Link&lt;/a&gt; is a provider of numerous different types of financial data from many different asset classes. It provides API&amp;rsquo;s that allow access from Python, R, Excel, and other methods. It is available to &lt;a class=&#34;link&#34; href=&#34;https://data.nasdaq.com/institutional-investors&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -82,11 +82,11 @@ Update 2/19/2025: Various code updates, commented and documented functions.&lt;/
         </item>
         <item>
         <title>Using yt-dlp With Panopto</title>
-        <link>https://www.jaredszajkowski.com/2023/12/10/yt-dlp-with-panopto/</link>
+        <link>http://localhost:1313/2023/12/10/yt-dlp-with-panopto/</link>
         <pubDate>Sun, 10 Dec 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2023/12/10/yt-dlp-with-panopto/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/12/10/yt-dlp-with-panopto/banner_1.svg" alt="Featured image of post Using yt-dlp With Panopto" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+        <guid>http://localhost:1313/2023/12/10/yt-dlp-with-panopto/</guid>
+        <description>&lt;img src="http://localhost:1313/2023/12/10/yt-dlp-with-panopto/banner_1.svg" alt="Featured image of post Using yt-dlp With Panopto" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;As a follow up to &lt;a class=&#34;link&#34; href=&#34;https://www.jaredszajkowski.com/p/using-yt-dlp-with-zoom/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;this post about using yt-dlp with Zoom&lt;/a&gt;, I found the need to also download videos hosted by Panopto for offline viewing.&lt;/p&gt;
 &lt;p&gt;Similar to the Zoom tutorial, this also requires you to have a &amp;ldquo;cookies&amp;rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Panopto hosting site after logging in.&lt;/p&gt;
@@ -97,22 +97,22 @@ Update 2/19/2025: Various code updates, commented and documented functions.&lt;/
         </item>
         <item>
         <title>Cleaning A Bloomberg Data Excel Export</title>
-        <link>https://www.jaredszajkowski.com/2023/11/15/cleaning-bloomberg-excel-export/</link>
+        <link>http://localhost:1313/2023/11/15/cleaning-bloomberg-excel-export/</link>
         <pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2023/11/15/cleaning-bloomberg-excel-export/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/11/15/cleaning-bloomberg-excel-export/cover.jpg" alt="Featured image of post Cleaning A Bloomberg Data Excel Export" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+        <guid>http://localhost:1313/2023/11/15/cleaning-bloomberg-excel-export/</guid>
+        <description>&lt;img src="http://localhost:1313/2023/11/15/cleaning-bloomberg-excel-export/cover.jpg" alt="Featured image of post Cleaning A Bloomberg Data Excel Export" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;In this tutorial, we will write a python function that imports an excel export from Bloomberg, removes ancillary rows and columns, and leaves the data in a format where it can then be used in time series analysis.&lt;/p&gt;
 &lt;h2 id=&#34;example-of-a-bloomberg-excel-export&#34;&gt;Example of a Bloomberg excel export
 &lt;/h2&gt;&lt;p&gt;We will use the SPX index data in this example. Exporting the data from Bloomberg using the excel Bloomberg add-on yields data in the following format:&lt;/p&gt;</description>
         </item>
         <item>
         <title>Git Quick Start Guide</title>
-        <link>https://www.jaredszajkowski.com/2023/10/16/git-quick-start-guide/</link>
+        <link>http://localhost:1313/2023/10/16/git-quick-start-guide/</link>
         <pubDate>Mon, 16 Oct 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2023/10/16/git-quick-start-guide/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/10/16/git-quick-start-guide/cover.jpg" alt="Featured image of post Git Quick Start Guide" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+        <guid>http://localhost:1313/2023/10/16/git-quick-start-guide/</guid>
+        <description>&lt;img src="http://localhost:1313/2023/10/16/git-quick-start-guide/cover.jpg" alt="Featured image of post Git Quick Start Guide" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;Here are my notes for some of the more commonly used git commands along with initial setup for git in Linux.&lt;/p&gt;
 &lt;h2 id=&#34;installation&#34;&gt;Installation
 &lt;/h2&gt;&lt;p&gt;To begin, install as follows for Arch Linux:&lt;/p&gt;
@@ -131,30 +131,30 @@ $ git config --global user.email &amp;quot;email@address.com&amp;quot;
         </item>
         <item>
         <title>Links</title>
-        <link>https://www.jaredszajkowski.com/links/</link>
+        <link>http://localhost:1313/links/</link>
         <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/links/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/links/cover.jpg" alt="Featured image of post Links" /&gt;&lt;p&gt;Here are some links to software, etc. that I find interesting and use.&lt;/p&gt;</description>
+        <guid>http://localhost:1313/links/</guid>
+        <description>&lt;img src="http://localhost:1313/links/cover.jpg" alt="Featured image of post Links" /&gt;&lt;p&gt;Here are some links to software, etc. that I find interesting and use.&lt;/p&gt;</description>
         </item>
         <item>
         <title>Using yt-dlp With Zoom</title>
-        <link>https://www.jaredszajkowski.com/2023/10/01/yt-dlp-with-zoom/</link>
+        <link>http://localhost:1313/2023/10/01/yt-dlp-with-zoom/</link>
         <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2023/10/01/yt-dlp-with-zoom/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/10/01/yt-dlp-with-zoom/banner_1.svg" alt="Featured image of post Using yt-dlp With Zoom" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+        <guid>http://localhost:1313/2023/10/01/yt-dlp-with-zoom/</guid>
+        <description>&lt;img src="http://localhost:1313/2023/10/01/yt-dlp-with-zoom/banner_1.svg" alt="Featured image of post Using yt-dlp With Zoom" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;If anyone uses Zoom to record and later wants to access recordings of video calls, here&amp;rsquo;s a simple linux bash script to download the video file and acompanying subtitles. For a long time I used &lt;a class=&#34;link&#34; href=&#34;https://github.com/Battleman/zoomdl&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;zoomdl&lt;/a&gt;, but it is no longer under active development, and I began running into various issues about a year ago.&lt;/p&gt;
 &lt;p&gt;This tutorial requires you to have a &amp;ldquo;cookies&amp;rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Zoom cookies after logging in.&lt;/p&gt;</description>
         </item>
         <item>
         <title>Arch Linux Install</title>
-        <link>https://www.jaredszajkowski.com/2023/09/29/arch-linux-install/</link>
+        <link>http://localhost:1313/2023/09/29/arch-linux-install/</link>
         <pubDate>Fri, 29 Sep 2023 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2023/09/29/arch-linux-install/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/09/29/arch-linux-install/cover.jpg" alt="Featured image of post Arch Linux Install" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+        <guid>http://localhost:1313/2023/09/29/arch-linux-install/</guid>
+        <description>&lt;img src="http://localhost:1313/2023/09/29/arch-linux-install/cover.jpg" alt="Featured image of post Arch Linux Install" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;This is the basic framework that I use to install Arch Linux, with a few changes catered to the Lenovo ThinkPad E15 Gen 2. I have found that this is a decent mid range laptop, excellent linux compatibility, great keyboard, and overall provides a good value.&lt;/p&gt;
 &lt;h2 id=&#34;getting-started&#34;&gt;Getting started
 &lt;/h2&gt;&lt;p&gt;This tutorial assumes the following:&lt;/p&gt;
@@ -168,19 +168,19 @@ $ git config --global user.email &amp;quot;email@address.com&amp;quot;
         </item>
         <item>
         <title>About Me</title>
-        <link>https://www.jaredszajkowski.com/about-me/</link>
+        <link>http://localhost:1313/about-me/</link>
         <pubDate>Tue, 26 Sep 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/about-me/</guid>
+        <guid>http://localhost:1313/about-me/</guid>
         <description>&lt;p&gt;Nothing here yet.&lt;/p&gt;</description>
         </item>
         <item>
         <title>Hello World</title>
-        <link>https://www.jaredszajkowski.com/2023/09/26/hello-world/</link>
+        <link>http://localhost:1313/2023/09/26/hello-world/</link>
         <pubDate>Tue, 26 Sep 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2023/09/26/hello-world/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/09/26/hello-world/cover.jpg" alt="Featured image of post Hello World" /&gt;&lt;h2 id=&#34;hello-world&#34;&gt;Hello World
+        <guid>http://localhost:1313/2023/09/26/hello-world/</guid>
+        <description>&lt;img src="http://localhost:1313/2023/09/26/hello-world/cover.jpg" alt="Featured image of post Hello World" /&gt;&lt;h2 id=&#34;hello-world&#34;&gt;Hello World
 &lt;/h2&gt;&lt;p&gt;Welcome to my website. This is meant to serve as a place for me to publish various posts from my explorations into Arch Linux, data science, quant finance, and other topics.&lt;/p&gt;
 &lt;p&gt;The theme has been adopted from the &lt;a class=&#34;link&#34; href=&#34;https://github.com/CaiJimmy/hugo-theme-stack&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Hugo Theme Stack&lt;/a&gt; produced by Jimmy Cai.&lt;/p&gt;
@@ -198,18 +198,18 @@ $ git config --global user.email &amp;quot;email@address.com&amp;quot;
         </item>
         <item>
         <title>Archives</title>
-        <link>https://www.jaredszajkowski.com/archives/</link>
+        <link>http://localhost:1313/archives/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/archives/</guid>
+        <guid>http://localhost:1313/archives/</guid>
         <description></description>
         </item>
         <item>
         <title>Search</title>
-        <link>https://www.jaredszajkowski.com/search/</link>
+        <link>http://localhost:1313/search/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/search/</guid>
+        <guid>http://localhost:1313/search/</guid>
         <description></description>
         </item>
         

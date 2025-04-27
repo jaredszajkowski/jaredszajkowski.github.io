@@ -787,12 +787,12 @@ Here are the closed positions:
 
 <!-- INSERT_11_Closed_Positions_HERE -->
 
-Net profit percent: <!-- INSERT_11_Net_Profit_Percent_HERE --></br>
+Net profit and loss percentage: <!-- INSERT_11_Net_Profit_Percent_HERE --></br>
 Net profit and loss: <!-- INSERT_11_Net_PnL_HERE -->
 
 ### Open Positions
 
-Here are the open positions:
+Here are the positions that are currently open:
 
 <!-- INSERT_12_Open_Positions_HERE -->
 

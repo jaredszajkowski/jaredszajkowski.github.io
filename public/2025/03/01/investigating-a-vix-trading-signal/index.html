@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-    <head><meta charset='utf-8'>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="A brief look at finding a trading signal based on moving averages of the VIX.">
 <title>Investigating A VIX Trading Signal</title>
 
-<link rel='canonical' href='https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/'>
+<link rel='canonical' href='http://localhost:1313/2025/03/01/investigating-a-vix-trading-signal/'>
 
 <link rel="stylesheet" href="/scss/style.min.e3f9ad247a9e239de649afdb9d4ec7ac3ba906f02edb8fa43cf1da1cf8e67cc4.css"><meta property='og:title' content="Investigating A VIX Trading Signal">
 <meta property='og:description' content="A brief look at finding a trading signal based on moving averages of the VIX.">
-<meta property='og:url' content='https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/'>
+<meta property='og:url' content='http://localhost:1313/2025/03/01/investigating-a-vix-trading-signal/'>
 <meta property='og:site_name' content='Jared Szajkowski'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Python' /><meta property='article:tag' content='Yahoo Finance' /><meta property='article:tag' content='pandas' /><meta property='article:tag' content='VIX' /><meta property='article:published_time' content='2025-03-01T00:00:01&#43;00:00'/><meta property='article:modified_time' content='2025-04-25T00:00:01&#43;00:00'/><meta property='og:image' content='https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/cover.jpg' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Python' /><meta property='article:tag' content='Yahoo Finance' /><meta property='article:tag' content='pandas' /><meta property='article:tag' content='VIX' /><meta property='article:published_time' content='2025-03-01T00:00:01&#43;00:00'/><meta property='article:modified_time' content='2025-04-25T00:00:01&#43;00:00'/><meta property='og:image' content='http://localhost:1313/2025/03/01/investigating-a-vix-trading-signal/cover.jpg' />
 <meta name="twitter:title" content="Investigating A VIX Trading Signal">
 <meta name="twitter:description" content="A brief look at finding a trading signal based on moving averages of the VIX."><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/cover.jpg' />
+    <meta name="twitter:image" content='http://localhost:1313/2025/03/01/investigating-a-vix-trading-signal/cover.jpg' />
     <link rel="shortcut icon" href="/profile_pic.jpg" />
 
     </head>
@@ -1381,24 +1381,24 @@ Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, inc
   <tbody>
       <tr>
           <td style="text-align: left">count</td>
-          <td style="text-align: right">8894</td>
-          <td style="text-align: right">8894</td>
-          <td style="text-align: right">8894</td>
-          <td style="text-align: right">8894</td>
+          <td style="text-align: right">8894.00</td>
+          <td style="text-align: right">8894.00</td>
+          <td style="text-align: right">8894.00</td>
+          <td style="text-align: right">8894.00</td>
       </tr>
       <tr>
           <td style="text-align: left">mean</td>
-          <td style="text-align: right">19.4911</td>
-          <td style="text-align: right">20.4006</td>
-          <td style="text-align: right">18.8175</td>
-          <td style="text-align: right">19.5834</td>
+          <td style="text-align: right">19.49</td>
+          <td style="text-align: right">20.40</td>
+          <td style="text-align: right">18.82</td>
+          <td style="text-align: right">19.58</td>
       </tr>
       <tr>
           <td style="text-align: left">std</td>
-          <td style="text-align: right">7.8469</td>
-          <td style="text-align: right">8.40661</td>
-          <td style="text-align: right">7.4007</td>
-          <td style="text-align: right">7.92255</td>
+          <td style="text-align: right">7.85</td>
+          <td style="text-align: right">8.41</td>
+          <td style="text-align: right">7.40</td>
+          <td style="text-align: right">7.92</td>
       </tr>
       <tr>
           <td style="text-align: left">min</td>
@@ -1409,21 +1409,21 @@ Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, inc
       </tr>
       <tr>
           <td style="text-align: left">25%</td>
-          <td style="text-align: right">13.8525</td>
+          <td style="text-align: right">13.85</td>
           <td style="text-align: right">14.53</td>
-          <td style="text-align: right">13.4</td>
+          <td style="text-align: right">13.40</td>
           <td style="text-align: right">13.93</td>
       </tr>
       <tr>
           <td style="text-align: left">50%</td>
-          <td style="text-align: right">17.635</td>
+          <td style="text-align: right">17.63</td>
           <td style="text-align: right">18.35</td>
           <td style="text-align: right">17.06</td>
           <td style="text-align: right">17.68</td>
       </tr>
       <tr>
           <td style="text-align: left">75%</td>
-          <td style="text-align: right">22.8375</td>
+          <td style="text-align: right">22.84</td>
           <td style="text-align: right">23.83</td>
           <td style="text-align: right">22.14</td>
           <td style="text-align: right">22.97</td>
@@ -1437,52 +1437,52 @@ Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, inc
       </tr>
       <tr>
           <td style="text-align: left">mean + -1 std</td>
-          <td style="text-align: right">11.6442</td>
-          <td style="text-align: right">11.994</td>
-          <td style="text-align: right">11.4168</td>
-          <td style="text-align: right">11.6608</td>
+          <td style="text-align: right">11.64</td>
+          <td style="text-align: right">11.99</td>
+          <td style="text-align: right">11.42</td>
+          <td style="text-align: right">11.66</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 0 std</td>
-          <td style="text-align: right">19.4911</td>
-          <td style="text-align: right">20.4006</td>
-          <td style="text-align: right">18.8175</td>
-          <td style="text-align: right">19.5834</td>
+          <td style="text-align: right">19.49</td>
+          <td style="text-align: right">20.40</td>
+          <td style="text-align: right">18.82</td>
+          <td style="text-align: right">19.58</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 1 std</td>
-          <td style="text-align: right">27.338</td>
-          <td style="text-align: right">28.8072</td>
-          <td style="text-align: right">26.2183</td>
-          <td style="text-align: right">27.5059</td>
+          <td style="text-align: right">27.34</td>
+          <td style="text-align: right">28.81</td>
+          <td style="text-align: right">26.22</td>
+          <td style="text-align: right">27.51</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 2 std</td>
-          <td style="text-align: right">35.1849</td>
-          <td style="text-align: right">37.2138</td>
-          <td style="text-align: right">33.619</td>
-          <td style="text-align: right">35.4285</td>
+          <td style="text-align: right">35.18</td>
+          <td style="text-align: right">37.21</td>
+          <td style="text-align: right">33.62</td>
+          <td style="text-align: right">35.43</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 3 std</td>
-          <td style="text-align: right">43.0318</td>
-          <td style="text-align: right">45.6204</td>
-          <td style="text-align: right">41.0197</td>
-          <td style="text-align: right">43.3511</td>
+          <td style="text-align: right">43.03</td>
+          <td style="text-align: right">45.62</td>
+          <td style="text-align: right">41.02</td>
+          <td style="text-align: right">43.35</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 4 std</td>
-          <td style="text-align: right">50.8787</td>
-          <td style="text-align: right">54.027</td>
-          <td style="text-align: right">48.4204</td>
-          <td style="text-align: right">51.2736</td>
+          <td style="text-align: right">50.88</td>
+          <td style="text-align: right">54.03</td>
+          <td style="text-align: right">48.42</td>
+          <td style="text-align: right">51.27</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 5 std</td>
-          <td style="text-align: right">58.7256</td>
-          <td style="text-align: right">62.4336</td>
-          <td style="text-align: right">55.8211</td>
-          <td style="text-align: right">59.1962</td>
+          <td style="text-align: right">58.73</td>
+          <td style="text-align: right">62.43</td>
+          <td style="text-align: right">55.82</td>
+          <td style="text-align: right">59.20</td>
       </tr>
   </tbody>
 </table></div>
@@ -1511,77 +1511,77 @@ Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, inc
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: right">0</td>
+          <td style="text-align: right">0.00</td>
           <td style="text-align: right">9.14</td>
           <td style="text-align: right">9.31</td>
           <td style="text-align: right">8.56</td>
           <td style="text-align: right">9.01</td>
       </tr>
       <tr>
-          <td style="text-align: right">0.1</td>
+          <td style="text-align: right">0.10</td>
           <td style="text-align: right">12.12</td>
           <td style="text-align: right">12.62</td>
           <td style="text-align: right">11.72</td>
           <td style="text-align: right">12.13</td>
       </tr>
       <tr>
-          <td style="text-align: right">0.2</td>
+          <td style="text-align: right">0.20</td>
           <td style="text-align: right">13.24</td>
           <td style="text-align: right">13.87</td>
           <td style="text-align: right">12.85</td>
-          <td style="text-align: right">13.3</td>
+          <td style="text-align: right">13.30</td>
       </tr>
       <tr>
-          <td style="text-align: right">0.3</td>
+          <td style="text-align: right">0.30</td>
           <td style="text-align: right">14.59</td>
           <td style="text-align: right">15.28</td>
           <td style="text-align: right">14.07</td>
-          <td style="text-align: right">14.669</td>
+          <td style="text-align: right">14.67</td>
       </tr>
       <tr>
-          <td style="text-align: right">0.4</td>
+          <td style="text-align: right">0.40</td>
           <td style="text-align: right">16.09</td>
           <td style="text-align: right">16.75</td>
           <td style="text-align: right">15.55</td>
-          <td style="text-align: right">16.112</td>
+          <td style="text-align: right">16.11</td>
       </tr>
       <tr>
-          <td style="text-align: right">0.5</td>
-          <td style="text-align: right">17.635</td>
+          <td style="text-align: right">0.50</td>
+          <td style="text-align: right">17.63</td>
           <td style="text-align: right">18.35</td>
           <td style="text-align: right">17.06</td>
           <td style="text-align: right">17.68</td>
       </tr>
       <tr>
-          <td style="text-align: right">0.6</td>
-          <td style="text-align: right">19.548</td>
+          <td style="text-align: right">0.60</td>
+          <td style="text-align: right">19.55</td>
           <td style="text-align: right">20.38</td>
-          <td style="text-align: right">19</td>
+          <td style="text-align: right">19.00</td>
           <td style="text-align: right">19.68</td>
       </tr>
       <tr>
-          <td style="text-align: right">0.7</td>
+          <td style="text-align: right">0.70</td>
           <td style="text-align: right">21.64</td>
           <td style="text-align: right">22.64</td>
           <td style="text-align: right">20.99</td>
-          <td style="text-align: right">21.781</td>
+          <td style="text-align: right">21.78</td>
       </tr>
       <tr>
-          <td style="text-align: right">0.8</td>
+          <td style="text-align: right">0.80</td>
           <td style="text-align: right">24.32</td>
           <td style="text-align: right">25.36</td>
           <td style="text-align: right">23.51</td>
           <td style="text-align: right">24.39</td>
       </tr>
       <tr>
-          <td style="text-align: right">0.9</td>
-          <td style="text-align: right">28.727</td>
-          <td style="text-align: right">30.017</td>
-          <td style="text-align: right">27.797</td>
-          <td style="text-align: right">28.877</td>
+          <td style="text-align: right">0.90</td>
+          <td style="text-align: right">28.73</td>
+          <td style="text-align: right">30.02</td>
+          <td style="text-align: right">27.80</td>
+          <td style="text-align: right">28.88</td>
       </tr>
       <tr>
-          <td style="text-align: right">1</td>
+          <td style="text-align: right">1.00</td>
           <td style="text-align: right">82.69</td>
           <td style="text-align: right">89.53</td>
           <td style="text-align: right">72.76</td>
@@ -1805,183 +1805,183 @@ Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, inc
   <tbody>
       <tr>
           <td style="text-align: right">1990</td>
-          <td style="text-align: right">248</td>
-          <td style="text-align: right">5</td>
+          <td style="text-align: right">248.00</td>
+          <td style="text-align: right">5.00</td>
       </tr>
       <tr>
           <td style="text-align: right">1991</td>
-          <td style="text-align: right">249</td>
-          <td style="text-align: right">4</td>
+          <td style="text-align: right">249.00</td>
+          <td style="text-align: right">4.00</td>
       </tr>
       <tr>
           <td style="text-align: right">1992</td>
-          <td style="text-align: right">250</td>
-          <td style="text-align: right">4</td>
+          <td style="text-align: right">250.00</td>
+          <td style="text-align: right">4.00</td>
       </tr>
       <tr>
           <td style="text-align: right">1993</td>
-          <td style="text-align: right">251</td>
-          <td style="text-align: right">2</td>
+          <td style="text-align: right">251.00</td>
+          <td style="text-align: right">2.00</td>
       </tr>
       <tr>
           <td style="text-align: right">1994</td>
-          <td style="text-align: right">243</td>
-          <td style="text-align: right">9</td>
+          <td style="text-align: right">243.00</td>
+          <td style="text-align: right">9.00</td>
       </tr>
       <tr>
           <td style="text-align: right">1995</td>
-          <td style="text-align: right">252</td>
-          <td style="text-align: right">0</td>
+          <td style="text-align: right">252.00</td>
+          <td style="text-align: right">0.00</td>
       </tr>
       <tr>
           <td style="text-align: right">1996</td>
-          <td style="text-align: right">248</td>
-          <td style="text-align: right">6</td>
+          <td style="text-align: right">248.00</td>
+          <td style="text-align: right">6.00</td>
       </tr>
       <tr>
           <td style="text-align: right">1997</td>
-          <td style="text-align: right">247</td>
-          <td style="text-align: right">6</td>
+          <td style="text-align: right">247.00</td>
+          <td style="text-align: right">6.00</td>
       </tr>
       <tr>
           <td style="text-align: right">1998</td>
-          <td style="text-align: right">243</td>
-          <td style="text-align: right">9</td>
+          <td style="text-align: right">243.00</td>
+          <td style="text-align: right">9.00</td>
       </tr>
       <tr>
           <td style="text-align: right">1999</td>
-          <td style="text-align: right">250</td>
-          <td style="text-align: right">2</td>
+          <td style="text-align: right">250.00</td>
+          <td style="text-align: right">2.00</td>
       </tr>
       <tr>
           <td style="text-align: right">2000</td>
-          <td style="text-align: right">248</td>
-          <td style="text-align: right">4</td>
+          <td style="text-align: right">248.00</td>
+          <td style="text-align: right">4.00</td>
       </tr>
       <tr>
           <td style="text-align: right">2001</td>
-          <td style="text-align: right">240</td>
-          <td style="text-align: right">8</td>
+          <td style="text-align: right">240.00</td>
+          <td style="text-align: right">8.00</td>
       </tr>
       <tr>
           <td style="text-align: right">2002</td>
-          <td style="text-align: right">248</td>
-          <td style="text-align: right">4</td>
+          <td style="text-align: right">248.00</td>
+          <td style="text-align: right">4.00</td>
       </tr>
       <tr>
           <td style="text-align: right">2003</td>
-          <td style="text-align: right">251</td>
-          <td style="text-align: right">1</td>
+          <td style="text-align: right">251.00</td>
+          <td style="text-align: right">1.00</td>
       </tr>
       <tr>
           <td style="text-align: right">2004</td>
-          <td style="text-align: right">250</td>
-          <td style="text-align: right">2</td>
+          <td style="text-align: right">250.00</td>
+          <td style="text-align: right">2.00</td>
       </tr>
       <tr>
           <td style="text-align: right">2005</td>
-          <td style="text-align: right">250</td>
-          <td style="text-align: right">2</td>
+          <td style="text-align: right">250.00</td>
+          <td style="text-align: right">2.00</td>
       </tr>
       <tr>
           <td style="text-align: right">2006</td>
-          <td style="text-align: right">242</td>
-          <td style="text-align: right">9</td>
+          <td style="text-align: right">242.00</td>
+          <td style="text-align: right">9.00</td>
       </tr>
       <tr>
           <td style="text-align: right">2007</td>
-          <td style="text-align: right">239</td>
-          <td style="text-align: right">12</td>
+          <td style="text-align: right">239.00</td>
+          <td style="text-align: right">12.00</td>
       </tr>
       <tr>
           <td style="text-align: right">2008</td>
-          <td style="text-align: right">238</td>
-          <td style="text-align: right">15</td>
+          <td style="text-align: right">238.00</td>
+          <td style="text-align: right">15.00</td>
       </tr>
       <tr>
           <td style="text-align: right">2009</td>
-          <td style="text-align: right">249</td>
-          <td style="text-align: right">3</td>
+          <td style="text-align: right">249.00</td>
+          <td style="text-align: right">3.00</td>
       </tr>
       <tr>
           <td style="text-align: right">2010</td>
-          <td style="text-align: right">239</td>
-          <td style="text-align: right">13</td>
+          <td style="text-align: right">239.00</td>
+          <td style="text-align: right">13.00</td>
       </tr>
       <tr>
           <td style="text-align: right">2011</td>
-          <td style="text-align: right">240</td>
-          <td style="text-align: right">12</td>
+          <td style="text-align: right">240.00</td>
+          <td style="text-align: right">12.00</td>
       </tr>
       <tr>
           <td style="text-align: right">2012</td>
-          <td style="text-align: right">248</td>
-          <td style="text-align: right">2</td>
+          <td style="text-align: right">248.00</td>
+          <td style="text-align: right">2.00</td>
       </tr>
       <tr>
           <td style="text-align: right">2013</td>
-          <td style="text-align: right">249</td>
-          <td style="text-align: right">3</td>
+          <td style="text-align: right">249.00</td>
+          <td style="text-align: right">3.00</td>
       </tr>
       <tr>
           <td style="text-align: right">2014</td>
-          <td style="text-align: right">235</td>
-          <td style="text-align: right">17</td>
+          <td style="text-align: right">235.00</td>
+          <td style="text-align: right">17.00</td>
       </tr>
       <tr>
           <td style="text-align: right">2015</td>
-          <td style="text-align: right">240</td>
-          <td style="text-align: right">12</td>
+          <td style="text-align: right">240.00</td>
+          <td style="text-align: right">12.00</td>
       </tr>
       <tr>
           <td style="text-align: right">2016</td>
-          <td style="text-align: right">234</td>
-          <td style="text-align: right">18</td>
+          <td style="text-align: right">234.00</td>
+          <td style="text-align: right">18.00</td>
       </tr>
       <tr>
           <td style="text-align: right">2017</td>
-          <td style="text-align: right">244</td>
-          <td style="text-align: right">7</td>
+          <td style="text-align: right">244.00</td>
+          <td style="text-align: right">7.00</td>
       </tr>
       <tr>
           <td style="text-align: right">2018</td>
-          <td style="text-align: right">228</td>
-          <td style="text-align: right">23</td>
+          <td style="text-align: right">228.00</td>
+          <td style="text-align: right">23.00</td>
       </tr>
       <tr>
           <td style="text-align: right">2019</td>
-          <td style="text-align: right">241</td>
-          <td style="text-align: right">11</td>
+          <td style="text-align: right">241.00</td>
+          <td style="text-align: right">11.00</td>
       </tr>
       <tr>
           <td style="text-align: right">2020</td>
-          <td style="text-align: right">224</td>
-          <td style="text-align: right">29</td>
+          <td style="text-align: right">224.00</td>
+          <td style="text-align: right">29.00</td>
       </tr>
       <tr>
           <td style="text-align: right">2021</td>
-          <td style="text-align: right">235</td>
-          <td style="text-align: right">17</td>
+          <td style="text-align: right">235.00</td>
+          <td style="text-align: right">17.00</td>
       </tr>
       <tr>
           <td style="text-align: right">2022</td>
-          <td style="text-align: right">239</td>
-          <td style="text-align: right">12</td>
+          <td style="text-align: right">239.00</td>
+          <td style="text-align: right">12.00</td>
       </tr>
       <tr>
           <td style="text-align: right">2023</td>
-          <td style="text-align: right">246</td>
-          <td style="text-align: right">4</td>
+          <td style="text-align: right">246.00</td>
+          <td style="text-align: right">4.00</td>
       </tr>
       <tr>
           <td style="text-align: right">2024</td>
-          <td style="text-align: right">237</td>
-          <td style="text-align: right">15</td>
+          <td style="text-align: right">237.00</td>
+          <td style="text-align: right">15.00</td>
       </tr>
       <tr>
           <td style="text-align: right">2025</td>
-          <td style="text-align: right">66</td>
-          <td style="text-align: right">11</td>
+          <td style="text-align: right">66.00</td>
+          <td style="text-align: right">11.00</td>
       </tr>
   </tbody>
 </table></div>
@@ -2671,7 +2671,6 @@ Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, inc
 <div class="table-wrapper"><table>
   <thead>
       <tr>
-          <th style="text-align: right"></th>
           <th style="text-align: left">Trade_Date</th>
           <th style="text-align: left">Action</th>
           <th style="text-align: left">Symbol</th>
@@ -2683,7 +2682,6 @@ Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, inc
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: right">0</td>
           <td style="text-align: left">2024-08-05 00:00:00</td>
           <td style="text-align: left">Buy to Open</td>
           <td style="text-align: left">VIX 09/18/2024 34.00 P</td>
@@ -2693,7 +2691,6 @@ Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, inc
           <td style="text-align: right">1096.08</td>
       </tr>
       <tr>
-          <td style="text-align: right">1</td>
           <td style="text-align: left">2024-08-21 00:00:00</td>
           <td style="text-align: left">Sell to Close</td>
           <td style="text-align: left">VIX 09/18/2024 34.00 P</td>
@@ -2703,7 +2700,6 @@ Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, inc
           <td style="text-align: right">1793.92</td>
       </tr>
       <tr>
-          <td style="text-align: right">2</td>
           <td style="text-align: left">2024-08-05 00:00:00</td>
           <td style="text-align: left">Buy to Open</td>
           <td style="text-align: left">VIX 10/16/2024 40.00 P</td>
@@ -2713,7 +2709,6 @@ Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, inc
           <td style="text-align: right">1636.08</td>
       </tr>
       <tr>
-          <td style="text-align: right">3</td>
           <td style="text-align: left">2024-09-18 00:00:00</td>
           <td style="text-align: left">Sell to Close</td>
           <td style="text-align: left">VIX 10/16/2024 40.00 P</td>
@@ -2723,27 +2718,24 @@ Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, inc
           <td style="text-align: right">2152.92</td>
       </tr>
       <tr>
-          <td style="text-align: right">4</td>
           <td style="text-align: left">2024-08-07 00:00:00</td>
           <td style="text-align: left">Buy to Open</td>
           <td style="text-align: left">VIX 11/20/2024 25.00 P</td>
           <td style="text-align: right">2</td>
-          <td style="text-align: right">5.9</td>
+          <td style="text-align: right">5.90</td>
           <td style="text-align: right">2.16</td>
           <td style="text-align: right">1182.16</td>
       </tr>
       <tr>
-          <td style="text-align: right">5</td>
           <td style="text-align: left">2024-11-04 00:00:00</td>
           <td style="text-align: left">Sell to Close</td>
           <td style="text-align: left">VIX 11/20/2024 25.00 P</td>
           <td style="text-align: right">2</td>
-          <td style="text-align: right">6.1</td>
+          <td style="text-align: right">6.10</td>
           <td style="text-align: right">2.16</td>
           <td style="text-align: right">1217.84</td>
       </tr>
       <tr>
-          <td style="text-align: right">6</td>
           <td style="text-align: left">2024-08-06 00:00:00</td>
           <td style="text-align: left">Buy to Open</td>
           <td style="text-align: left">VIX 12/18/2024 30.00 P</td>
@@ -2753,7 +2745,6 @@ Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, inc
           <td style="text-align: right">1026.08</td>
       </tr>
       <tr>
-          <td style="text-align: right">7</td>
           <td style="text-align: left">2024-11-27 00:00:00</td>
           <td style="text-align: left">Sell to Close</td>
           <td style="text-align: left">VIX 12/18/2024 30.00 P</td>
@@ -2763,57 +2754,51 @@ Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, inc
           <td style="text-align: right">1493.92</td>
       </tr>
       <tr>
-          <td style="text-align: right">8</td>
           <td style="text-align: left">2025-03-04 00:00:00</td>
           <td style="text-align: left">Buy to Open</td>
           <td style="text-align: left">VIX 04/16/2025 25.00 P</td>
           <td style="text-align: right">5</td>
           <td style="text-align: right">5.65</td>
-          <td style="text-align: right">5.4</td>
-          <td style="text-align: right">2830.4</td>
+          <td style="text-align: right">5.40</td>
+          <td style="text-align: right">2830.40</td>
       </tr>
       <tr>
-          <td style="text-align: right">9</td>
           <td style="text-align: left">2025-03-24 00:00:00</td>
           <td style="text-align: left">Sell to Close</td>
           <td style="text-align: left">VIX 04/16/2025 25.00 P</td>
           <td style="text-align: right">5</td>
-          <td style="text-align: right">7</td>
-          <td style="text-align: right">5.4</td>
-          <td style="text-align: right">3494.6</td>
+          <td style="text-align: right">7.00</td>
+          <td style="text-align: right">5.40</td>
+          <td style="text-align: right">3494.60</td>
       </tr>
       <tr>
-          <td style="text-align: right">10</td>
           <td style="text-align: left">2025-03-10 00:00:00</td>
           <td style="text-align: left">Buy to Open</td>
           <td style="text-align: left">VIX 05/21/2025 26.00 P</td>
           <td style="text-align: right">5</td>
-          <td style="text-align: right">7.1</td>
-          <td style="text-align: right">5.4</td>
-          <td style="text-align: right">3555.4</td>
+          <td style="text-align: right">7.10</td>
+          <td style="text-align: right">5.40</td>
+          <td style="text-align: right">3555.40</td>
       </tr>
       <tr>
-          <td style="text-align: right">11</td>
           <td style="text-align: left">2025-04-04 00:00:00</td>
           <td style="text-align: left">Buy to Open</td>
           <td style="text-align: left">VIX 05/21/2025 26.00 P</td>
           <td style="text-align: right">10</td>
-          <td style="text-align: right">4.1</td>
+          <td style="text-align: right">4.10</td>
           <td style="text-align: right">10.81</td>
           <td style="text-align: right">4110.81</td>
       </tr>
       <tr>
-          <td style="text-align: right">12</td>
           <td style="text-align: left">2025-04-04 00:00:00</td>
           <td style="text-align: left">Buy to Open</td>
           <td style="text-align: left">VIX 05/21/2025 37.00 P</td>
           <td style="text-align: right">3</td>
-          <td style="text-align: right">13.2</td>
+          <td style="text-align: right">13.20</td>
           <td style="text-align: right">3.24</td>
           <td style="text-align: right">3963.24</td>
       </tr>
       <tr>
-          <td style="text-align: right">13</td>
           <td style="text-align: left">2025-04-08 00:00:00</td>
           <td style="text-align: left">Buy to Open</td>
           <td style="text-align: left">VIX 05/21/2025 50.00 P</td>
@@ -2823,27 +2808,24 @@ Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, inc
           <td style="text-align: right">4232.16</td>
       </tr>
       <tr>
-          <td style="text-align: right">14</td>
           <td style="text-align: left">2025-04-24 00:00:00</td>
           <td style="text-align: left">Sell to Close</td>
           <td style="text-align: left">VIX 05/21/2025 50.00 P</td>
           <td style="text-align: right">1</td>
-          <td style="text-align: right">25.3</td>
+          <td style="text-align: right">25.30</td>
           <td style="text-align: right">1.08</td>
           <td style="text-align: right">2528.92</td>
       </tr>
       <tr>
-          <td style="text-align: right">15</td>
           <td style="text-align: left">2025-04-24 00:00:00</td>
           <td style="text-align: left">Sell to Close</td>
           <td style="text-align: left">VIX 05/21/2025 26.00 P</td>
           <td style="text-align: right">7</td>
-          <td style="text-align: right">3.5</td>
+          <td style="text-align: right">3.50</td>
           <td style="text-align: right">7.57</td>
           <td style="text-align: right">2442.43</td>
       </tr>
       <tr>
-          <td style="text-align: right">16</td>
           <td style="text-align: left">2025-04-25 00:00:00</td>
           <td style="text-align: left">Sell to Close</td>
           <td style="text-align: left">VIX 05/21/2025 50.00 P</td>
@@ -2853,7 +2835,6 @@ Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, inc
           <td style="text-align: right">2563.92</td>
       </tr>
       <tr>
-          <td style="text-align: right">17</td>
           <td style="text-align: left">2025-04-03 00:00:00</td>
           <td style="text-align: left">Buy to Open</td>
           <td style="text-align: left">VIX 06/18/2025 27.00 P</td>
@@ -2863,17 +2844,15 @@ Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, inc
           <td style="text-align: right">5648.65</td>
       </tr>
       <tr>
-          <td style="text-align: right">18</td>
           <td style="text-align: left">2025-04-04 00:00:00</td>
           <td style="text-align: left">Buy to Open</td>
           <td style="text-align: left">VIX 06/18/2025 36.00 P</td>
           <td style="text-align: right">3</td>
-          <td style="text-align: right">13.4</td>
+          <td style="text-align: right">13.40</td>
           <td style="text-align: right">3.24</td>
           <td style="text-align: right">4023.24</td>
       </tr>
       <tr>
-          <td style="text-align: right">19</td>
           <td style="text-align: left">2025-04-07 00:00:00</td>
           <td style="text-align: left">Buy to Open</td>
           <td style="text-align: left">VIX 06/18/2025 45.00 P</td>
@@ -2883,7 +2862,6 @@ Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, inc
           <td style="text-align: right">3772.16</td>
       </tr>
       <tr>
-          <td style="text-align: right">20</td>
           <td style="text-align: left">2025-04-08 00:00:00</td>
           <td style="text-align: left">Buy to Open</td>
           <td style="text-align: left">VIX 06/18/2025 27.00 P</td>
@@ -2893,27 +2871,24 @@ Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, inc
           <td style="text-align: right">1824.32</td>
       </tr>
       <tr>
-          <td style="text-align: right">21</td>
           <td style="text-align: left">2025-04-03 00:00:00</td>
           <td style="text-align: left">Buy to Open</td>
           <td style="text-align: left">VIX 07/16/2025 29.00 P</td>
           <td style="text-align: right">5</td>
           <td style="text-align: right">8.55</td>
-          <td style="text-align: right">5.4</td>
-          <td style="text-align: right">4280.4</td>
+          <td style="text-align: right">5.40</td>
+          <td style="text-align: right">4280.40</td>
       </tr>
       <tr>
-          <td style="text-align: right">22</td>
           <td style="text-align: left">2025-04-04 00:00:00</td>
           <td style="text-align: left">Buy to Open</td>
           <td style="text-align: left">VIX 07/16/2025 36.00 P</td>
           <td style="text-align: right">3</td>
-          <td style="text-align: right">13.8</td>
+          <td style="text-align: right">13.80</td>
           <td style="text-align: right">3.24</td>
           <td style="text-align: right">4143.24</td>
       </tr>
       <tr>
-          <td style="text-align: right">23</td>
           <td style="text-align: left">2025-04-07 00:00:00</td>
           <td style="text-align: left">Buy to Open</td>
           <td style="text-align: left">VIX 07/16/2025 45.00 P</td>
@@ -2923,7 +2898,6 @@ Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, inc
           <td style="text-align: right">4312.16</td>
       </tr>
       <tr>
-          <td style="text-align: right">24</td>
           <td style="text-align: left">2025-04-07 00:00:00</td>
           <td style="text-align: left">Buy to Open</td>
           <td style="text-align: left">VIX 08/20/2025 45.00 P</td>
@@ -2939,9 +2913,7 @@ Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, inc
 <div class="table-wrapper"><table>
   <thead>
       <tr>
-          <th style="text-align: right"></th>
           <th style="text-align: left">Symbol</th>
-          <th style="text-align: left">Exp_Date</th>
           <th style="text-align: right">Amount_Buy</th>
           <th style="text-align: right">Quantity_Buy</th>
           <th style="text-align: right">Amount_Sell</th>
@@ -2952,170 +2924,118 @@ Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, inc
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: right">0</td>
           <td style="text-align: left">VIX 09/18/2024 34.00 P</td>
-          <td style="text-align: left">2024-09-18 00:00:00</td>
           <td style="text-align: right">1096.08</td>
           <td style="text-align: right">1</td>
           <td style="text-align: right">1793.92</td>
           <td style="text-align: right">1</td>
           <td style="text-align: right">697.84</td>
-          <td style="text-align: right">0.636669</td>
+          <td style="text-align: right">0.64</td>
       </tr>
       <tr>
-          <td style="text-align: right">1</td>
           <td style="text-align: left">VIX 10/16/2024 40.00 P</td>
-          <td style="text-align: left">2024-10-16 00:00:00</td>
           <td style="text-align: right">1636.08</td>
           <td style="text-align: right">1</td>
           <td style="text-align: right">2152.92</td>
           <td style="text-align: right">1</td>
           <td style="text-align: right">516.84</td>
-          <td style="text-align: right">0.315901</td>
+          <td style="text-align: right">0.32</td>
       </tr>
       <tr>
-          <td style="text-align: right">2</td>
           <td style="text-align: left">VIX 11/20/2024 25.00 P</td>
-          <td style="text-align: left">2024-11-20 00:00:00</td>
           <td style="text-align: right">1182.16</td>
           <td style="text-align: right">2</td>
           <td style="text-align: right">1217.84</td>
           <td style="text-align: right">2</td>
           <td style="text-align: right">35.68</td>
-          <td style="text-align: right">0.030182</td>
+          <td style="text-align: right">0.03</td>
       </tr>
       <tr>
-          <td style="text-align: right">3</td>
           <td style="text-align: left">VIX 12/18/2024 30.00 P</td>
-          <td style="text-align: left">2024-12-18 00:00:00</td>
           <td style="text-align: right">1026.08</td>
           <td style="text-align: right">1</td>
           <td style="text-align: right">1493.92</td>
           <td style="text-align: right">1</td>
           <td style="text-align: right">467.84</td>
-          <td style="text-align: right">0.455949</td>
+          <td style="text-align: right">0.46</td>
       </tr>
       <tr>
-          <td style="text-align: right">4</td>
           <td style="text-align: left">VIX 04/16/2025 25.00 P</td>
-          <td style="text-align: left">2025-04-16 00:00:00</td>
-          <td style="text-align: right">2830.4</td>
+          <td style="text-align: right">2830.40</td>
           <td style="text-align: right">5</td>
-          <td style="text-align: right">3494.6</td>
+          <td style="text-align: right">3494.60</td>
           <td style="text-align: right">5</td>
-          <td style="text-align: right">664.2</td>
-          <td style="text-align: right">0.234666</td>
+          <td style="text-align: right">664.20</td>
+          <td style="text-align: right">0.23</td>
       </tr>
       <tr>
-          <td style="text-align: right">5</td>
           <td style="text-align: left">VIX 05/21/2025 50.00 P</td>
-          <td style="text-align: left">2025-05-21 00:00:00</td>
           <td style="text-align: right">4232.16</td>
           <td style="text-align: right">2</td>
           <td style="text-align: right">5092.84</td>
           <td style="text-align: right">2</td>
           <td style="text-align: right">860.68</td>
-          <td style="text-align: right">0.203367</td>
+          <td style="text-align: right">0.20</td>
       </tr>
   </tbody>
 </table></div>
-<p>Net profit percent: 0.27</br>
-Net profit and loss: 3243.08</p>
+<p>Net profit and loss percentage: 27.02%</br>
+Net profit and loss: $3,243.08</p>
 <h3 id="open-positions">Open Positions
-</h3><p>Here are the open positions:</p>
+</h3><p>Here are the positions that are currently open:</p>
 <div class="table-wrapper"><table>
   <thead>
       <tr>
-          <th style="text-align: right"></th>
           <th style="text-align: left">Symbol</th>
-          <th style="text-align: left">Exp_Date</th>
           <th style="text-align: right">Amount_Buy</th>
           <th style="text-align: right">Quantity_Buy</th>
-          <th style="text-align: right">Amount_Sell</th>
-          <th style="text-align: right">Quantity_Sell</th>
       </tr>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: right">0</td>
           <td style="text-align: left">VIX 05/21/2025 26.00 P</td>
-          <td style="text-align: left">2025-05-21 00:00:00</td>
           <td style="text-align: right">7666.21</td>
           <td style="text-align: right">15</td>
-          <td style="text-align: right">2442.43</td>
-          <td style="text-align: right">7</td>
       </tr>
       <tr>
-          <td style="text-align: right">1</td>
           <td style="text-align: left">VIX 05/21/2025 37.00 P</td>
-          <td style="text-align: left">2025-05-21 00:00:00</td>
           <td style="text-align: right">3963.24</td>
           <td style="text-align: right">3</td>
-          <td style="text-align: right">nan</td>
-          <td style="text-align: right">nan</td>
       </tr>
       <tr>
-          <td style="text-align: right">2</td>
           <td style="text-align: left">VIX 06/18/2025 27.00 P</td>
-          <td style="text-align: left">2025-06-18 00:00:00</td>
           <td style="text-align: right">7472.97</td>
           <td style="text-align: right">12</td>
-          <td style="text-align: right">nan</td>
-          <td style="text-align: right">nan</td>
       </tr>
       <tr>
-          <td style="text-align: right">3</td>
           <td style="text-align: left">VIX 06/18/2025 36.00 P</td>
-          <td style="text-align: left">2025-06-18 00:00:00</td>
           <td style="text-align: right">4023.24</td>
           <td style="text-align: right">3</td>
-          <td style="text-align: right">nan</td>
-          <td style="text-align: right">nan</td>
       </tr>
       <tr>
-          <td style="text-align: right">4</td>
           <td style="text-align: left">VIX 06/18/2025 45.00 P</td>
-          <td style="text-align: left">2025-06-18 00:00:00</td>
           <td style="text-align: right">3772.16</td>
           <td style="text-align: right">2</td>
-          <td style="text-align: right">nan</td>
-          <td style="text-align: right">nan</td>
       </tr>
       <tr>
-          <td style="text-align: right">5</td>
           <td style="text-align: left">VIX 07/16/2025 29.00 P</td>
-          <td style="text-align: left">2025-07-16 00:00:00</td>
-          <td style="text-align: right">4280.4</td>
+          <td style="text-align: right">4280.40</td>
           <td style="text-align: right">5</td>
-          <td style="text-align: right">nan</td>
-          <td style="text-align: right">nan</td>
       </tr>
       <tr>
-          <td style="text-align: right">6</td>
           <td style="text-align: left">VIX 07/16/2025 36.00 P</td>
-          <td style="text-align: left">2025-07-16 00:00:00</td>
           <td style="text-align: right">4143.24</td>
           <td style="text-align: right">3</td>
-          <td style="text-align: right">nan</td>
-          <td style="text-align: right">nan</td>
       </tr>
       <tr>
-          <td style="text-align: right">7</td>
           <td style="text-align: left">VIX 07/16/2025 45.00 P</td>
-          <td style="text-align: left">2025-07-16 00:00:00</td>
           <td style="text-align: right">4312.16</td>
           <td style="text-align: right">2</td>
-          <td style="text-align: right">nan</td>
-          <td style="text-align: right">nan</td>
       </tr>
       <tr>
-          <td style="text-align: right">8</td>
           <td style="text-align: left">VIX 08/20/2025 45.00 P</td>
-          <td style="text-align: left">2025-08-20 00:00:00</td>
           <td style="text-align: right">4352.16</td>
           <td style="text-align: right">2</td>
-          <td style="text-align: right">nan</td>
-          <td style="text-align: right">nan</td>
       </tr>
   </tbody>
 </table></div>
@@ -3242,7 +3162,7 @@ The pdf export of the jupyter notebook is available <a class="link" href="invest
         
         
             <div class="article-image">
-                <img src="/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/cover.faace7bae0694be011b4df97baf5f416.jpg" 
+                <img src="/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/cover.faace7bae0694be011b4df97baf5f416.faace7bae0694be011b4df97baf5f416.jpg" 
                         width="1792" 
                         height="1024" 
                         loading="lazy"
@@ -3266,7 +3186,7 @@ The pdf export of the jupyter notebook is available <a class="link" href="invest
         
         
             <div class="article-image">
-                <img src="/2023/11/15/cleaning-bloomberg-excel-export/cover.fbb99754d0fad3b1522686e2cd554489.jpg" 
+                <img src="/2023/11/15/cleaning-bloomberg-excel-export/cover.fbb99754d0fad3b1522686e2cd554489.fbb99754d0fad3b1522686e2cd554489.jpg" 
                         width="1792" 
                         height="1024" 
                         loading="lazy"
@@ -3444,7 +3364,7 @@ The pdf export of the jupyter notebook is available <a class="link" href="invest
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.ebe92fee7f65d9116070be29cca41c8dfc7a4fa49af205c2bf7cc8ed6f956d12.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');
