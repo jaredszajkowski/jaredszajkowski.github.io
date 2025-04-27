@@ -44,8 +44,8 @@ def df_info_markdown(df: pd.DataFrame) -> str:
     info_str = buffer.getvalue()
 
     # Convert head and tail to Markdown
-    head_str = df.head().to_markdown()
-    tail_str = df.tail().to_markdown()
+    head_str = df.head().to_markdown(floatfmt=".2f")
+    tail_str = df.tail().to_markdown(floatfmt=".2f")
 
     markdown = [
         "```text",
