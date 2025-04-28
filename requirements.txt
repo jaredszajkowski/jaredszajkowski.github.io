@@ -3,44 +3,24 @@
 # in GitHub Actions. 
 # pip install -r requirements.txt
 
-ABlog
 black
 colorama
 doit
-fabric
-holidays
-ipython
 jupyter
-jupyter-book
-jupyterlab
-linearmodels
 matplotlib
-notebook
+nasdaq-data-link
 numpy
-numpydoc
-openpyxl
+optuna
 pandas
+pip-autoremove
 plotly
-pytest
 python-calamine
 python-decouple
 python-dotenv
 scikit-learn
 scipy
 seaborn
-sphinx
-sphinx-book-theme
-sphinx-design
-sphinx
-sphinxext-opengraph
-sphinxcontrib-applehelp
-sphinxcontrib-htmlhelp
-sphinxext-rediraffe
 statsmodels
 wrds
-xbbg
 xgboost
-xlrd
-xlwings
 yfinance
-zstandard==0.23.0
