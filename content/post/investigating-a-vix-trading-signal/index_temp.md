@@ -3,7 +3,7 @@ title: Investigating A VIX Trading Signal
 description: A brief look at finding a trading signal based on moving averages of the VIX.
 slug: investigating-a-vix-trading-signal
 date: 2025-03-01 00:00:01+0000
-lastmod: 2025-04-25 00:00:01+0000
+lastmod: 2025-04-28 00:00:01+0000
 image: cover.jpg
 draft: false
 categories:
@@ -24,7 +24,8 @@ Update 4/9/2025: VIX data through 4/8/25.</br>
 Update 4/12/2025: VIX data through 4/10/25.</br>
 Update 4/22/2025: VIX data through 4/18/25.</br>
 Update 4/23/2025: VIX data through 4/22/25.</br>
-Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, including open and closed positions.
+Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, including open and closed positions.</br>
+Update 4/28/2025: VIX data through 4/25/25.
 
 ## Introduction
 
