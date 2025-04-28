@@ -10,6 +10,7 @@ jupyter
 matplotlib
 nasdaq-data-link
 numpy
+openpyxl
 optuna
 pandas
 pip-autoremove
@@ -21,6 +22,7 @@ scikit-learn
 scipy
 seaborn
 statsmodels
+tabulate
 wrds
 xgboost
 yfinance
