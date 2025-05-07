@@ -11,6 +11,7 @@ def yf_quarter_end_total_return(
     asset_class: str,
     excel_export: bool,
     pickle_export: bool,
+    output_confirmation: bool,
 ) -> pd.DataFrame:
     
     """
@@ -32,6 +33,8 @@ def yf_quarter_end_total_return(
         If True, export data to Excel format.
     pickle_export : bool
         If True, export data to Pickle format.
+    output_confirmation : bool
+        If True, print confirmation message.
 
     Returns:
     --------
@@ -85,10 +88,11 @@ def yf_quarter_end_total_return(
     else:
         pass
 
-    # Print confirmation and the first and last date of data
-    # print(f"The first and last date of data for {ticker} is: ")
-    # display(df[:1])
-    # display(df[-1:])
-    print(f"Quarter end total return data complete for {ticker}")
-    print(f"--------------------")
+    # Output confirmation
+    if output_confirmation == True:
+        print(f"Quarter end total return data complete for {ticker}")
+        print(f"--------------------")
+    else:
+        pass
+
     return df_quarter_end_total_return

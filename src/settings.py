@@ -67,13 +67,14 @@ d["OS_TYPE"] = get_os()
 d["BASE_DIR"] = Path(__file__).absolute().parent.parent
 
 # fmt: off
-## Other .env variables
+# Other .env variables
+d["ENV_PATH"] = Path.home() / "Cloud_Storage/Dropbox/.env"
 # d["START_DATE"] = _config("START_DATE", default="1930-01-01", cast=to_datetime)
 # d["END_DATE"] = _config("END_DATE", default="2024-01-01", cast=to_datetime)
 # d["PIPELINE_DEV_MODE"] = _config("PIPELINE_DEV_MODE", default=True, cast=bool)
 # d["PIPELINE_THEME"] = _config("PIPELINE_THEME", default="pipeline")
 
-## Paths
+# Paths
 d["CONTENT_DIR"] = if_relative_make_abs(d["BASE_DIR"], _config('CONTENT_DIR', default=Path('content'), cast=Path))
 d["POSTS_DIR"] = if_relative_make_abs(d["BASE_DIR"], _config('POSTS_DIR', default=Path('content/post'), cast=Path))
 d["PAGES_DIR"] = if_relative_make_abs(d["BASE_DIR"], _config('PAGES_DIR', default=Path('content/page'), cast=Path))

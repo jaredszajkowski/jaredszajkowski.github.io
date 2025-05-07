@@ -10,7 +10,7 @@ def load_data(
 ) -> pd.DataFrame:
     
     """
-    Load data from a CSV or Excel file into a pandas DataFrame.
+    Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.
 
     This function attempts to read a file first as a CSV, then as an Excel file 
     (specifically looking for a sheet named 'data' and using the 'calamine' engine).
@@ -48,11 +48,20 @@ def load_data(
     if source == None and asset_class == None and timeframe == None:
         csv_path = Path(base_directory) / f"{ticker}.csv"
         xlsx_path = Path(base_directory) / f"{ticker}.xlsx"
+        pickle_path = Path(base_directory) / f"{ticker}.pkl"
     else:
         csv_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.csv"
         xlsx_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.xlsx"
+        pickle_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.pkl"
 
     # Try CSV
+    try:
+        df = pd.read_csv(csv_path)
+        return df
+    except Exception:
+        pass
+
+    # Try ZIP
     try:
         df = pd.read_csv(csv_path)
         return df
@@ -66,4 +75,11 @@ def load_data(
     except Exception:
         pass
 
-    raise ValueError(f"❌ Unable to load file: {ticker}. Ensure it's a valid CSV or Excel file with a 'data' sheet.")
+    # Try Pickle
+    try:
+        df = pd.read_pickle(pickle_path)
+        return df
+    except Exception:
+        pass
+
+    raise ValueError(f"❌ Unable to load file: {ticker}. Ensure it's a valid CSV, Excel, or Pickle file with a 'data' sheet (if required).")

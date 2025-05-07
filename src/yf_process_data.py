@@ -43,6 +43,7 @@ for currency in cryptocurrencies:
         asset_class="Cryptocurrencies",
         excel_export=True,
         pickle_export=True,
+        output_confirmation=True,
     )
 
     # Resample to month-end data
@@ -53,6 +54,7 @@ for currency in cryptocurrencies:
         asset_class="Cryptocurrencies",
         excel_export=True,
         pickle_export=True,
+        output_confirmation=True,
     )
 
     # Resample to month-end total return data
@@ -63,6 +65,7 @@ for currency in cryptocurrencies:
         asset_class="Cryptocurrencies",
         excel_export=True,
         pickle_export=True,
+        output_confirmation=True,
     )
 
     # Resample to quarter-end data
@@ -73,6 +76,7 @@ for currency in cryptocurrencies:
         asset_class="Cryptocurrencies",
         excel_export=True,
         pickle_export=True,
+        output_confirmation=True,
     )
 
     # Resample to quarter-end total return data
@@ -83,6 +87,7 @@ for currency in cryptocurrencies:
         asset_class="Cryptocurrencies",
         excel_export=True,
         pickle_export=True,
+        output_confirmation=True,
     )
 
 # Stock Data
@@ -98,6 +103,7 @@ for stock in equities:
         asset_class="Equities",
         excel_export=True,
         pickle_export=True,
+        output_confirmation=True,
     )
 
     # Resample to month-end data
@@ -108,6 +114,7 @@ for stock in equities:
         asset_class="Equities",
         excel_export=True,
         pickle_export=True,
+        output_confirmation=True,
     )
 
     # Resample to month-end total return data
@@ -118,6 +125,7 @@ for stock in equities:
         asset_class="Equities",
         excel_export=True,
         pickle_export=True,
+        output_confirmation=True,
     )
 
     # Resample to quarter-end data
@@ -128,6 +136,7 @@ for stock in equities:
         asset_class="Equities",
         excel_export=True,
         pickle_export=True,
+        output_confirmation=True,
     )
 
     # Resample to quarter-end total return data
@@ -138,10 +147,11 @@ for stock in equities:
         asset_class="Equities",
         excel_export=True,
         pickle_export=True,
+        output_confirmation=True,
     )
 
 # Index Data
-indices = ["^GSPC", "^VIX"]
+indices = ["^GSPC", "^VIX", "^VVIX"]
 
 # Iterate through each index
 for index in indices:
@@ -153,6 +163,7 @@ for index in indices:
         asset_class="Indices",
         excel_export=True,
         pickle_export=True,
+        output_confirmation=True,
     )
 
     # Resample to month-end data
@@ -163,6 +174,7 @@ for index in indices:
         asset_class="Indices",
         excel_export=True,
         pickle_export=True,
+        output_confirmation=True,
     )
 
     # Resample to month-end total return data
@@ -173,6 +185,7 @@ for index in indices:
         asset_class="Indices",
         excel_export=True,
         pickle_export=True,
+        output_confirmation=True,
     )
 
     # Resample to quarter-end data
@@ -183,6 +196,7 @@ for index in indices:
         asset_class="Indices",
         excel_export=True,
         pickle_export=True,
+        output_confirmation=True,
     )
 
     # Resample to quarter-end total return data
@@ -193,6 +207,7 @@ for index in indices:
         asset_class="Indices",
         excel_export=True,
         pickle_export=True,
+        output_confirmation=True,
     )
 
 # Exchange Traded Fund Data
@@ -208,6 +223,7 @@ for fund in etfs:
         asset_class="Exchange_Traded_Funds",
         excel_export=True,
         pickle_export=True,
+        output_confirmation=True,
     )
 
     # Resample to month-end data
@@ -218,6 +234,7 @@ for fund in etfs:
         asset_class="Exchange_Traded_Funds",
         excel_export=True,
         pickle_export=True,
+        output_confirmation=True,
     )
 
     # Resample to month-end total return data
@@ -228,6 +245,7 @@ for fund in etfs:
         asset_class="Exchange_Traded_Funds",
         excel_export=True,
         pickle_export=True,
+        output_confirmation=True,
     )
 
     # Resample to quarter-end data
@@ -238,6 +256,7 @@ for fund in etfs:
         asset_class="Exchange_Traded_Funds",
         excel_export=True,
         pickle_export=True,
+        output_confirmation=True,
     )
 
     # Resample to quarter-end total return data
@@ -248,6 +267,7 @@ for fund in etfs:
         asset_class="Exchange_Traded_Funds",
         excel_export=True,
         pickle_export=True,
+        output_confirmation=True,
     )
 
 # Mutual Fund Data
@@ -263,6 +283,7 @@ for fund in mutual_funds:
         asset_class="Mutual_Funds",
         excel_export=True,
         pickle_export=True,
+        output_confirmation=True,
     )
 
     # Resample to month-end data
@@ -273,6 +294,7 @@ for fund in mutual_funds:
         asset_class="Mutual_Funds",
         excel_export=True,
         pickle_export=True,
+        output_confirmation=True,
     )
 
     # Resample to month-end total return data
@@ -283,6 +305,7 @@ for fund in mutual_funds:
         asset_class="Mutual_Funds",
         excel_export=True,
         pickle_export=True,
+        output_confirmation=True,
     )
 
     # Resample to quarter-end data
@@ -293,6 +316,7 @@ for fund in mutual_funds:
         asset_class="Mutual_Funds",
         excel_export=True,
         pickle_export=True,
+        output_confirmation=True,
     )
 
     # Resample to quarter-end total return data
@@ -303,4 +327,5 @@ for fund in mutual_funds:
         asset_class="Mutual_Funds",
         excel_export=True,
         pickle_export=True,
+        output_confirmation=True,
     )

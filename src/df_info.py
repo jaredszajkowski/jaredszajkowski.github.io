@@ -1,6 +1,9 @@
+import pandas as pd
 from IPython.display import display
 
-def df_info(df) -> None:
+def df_info(
+    df: pd.DataFrame,
+) -> None:
     
     """
     Display summary information about a pandas DataFrame.

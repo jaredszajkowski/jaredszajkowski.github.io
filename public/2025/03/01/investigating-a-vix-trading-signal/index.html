@@ -10,7 +10,7 @@
 <meta property='og:description' content="A brief look at finding a trading signal based on moving averages of the VIX.">
 <meta property='og:url' content='https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/'>
 <meta property='og:site_name' content='Jared Szajkowski'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Python' /><meta property='article:tag' content='Yahoo Finance' /><meta property='article:tag' content='pandas' /><meta property='article:tag' content='VIX' /><meta property='article:published_time' content='2025-03-01T00:00:01&#43;00:00'/><meta property='article:modified_time' content='2025-04-28T00:00:01&#43;00:00'/><meta property='og:image' content='https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/cover.jpg' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Python' /><meta property='article:tag' content='Yahoo Finance' /><meta property='article:tag' content='pandas' /><meta property='article:tag' content='VIX' /><meta property='article:published_time' content='2025-03-01T00:00:01&#43;00:00'/><meta property='article:modified_time' content='2025-05-06T00:00:01&#43;00:00'/><meta property='og:image' content='https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/cover.jpg' />
 <meta name="twitter:title" content="Investigating A VIX Trading Signal">
 <meta name="twitter:description" content="A brief look at finding a trading signal based on moving averages of the VIX."><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/cover.jpg' />
@@ -283,26 +283,34 @@
         <li><a href="#project-specific-functions">Project Specific Functions</a></li>
       </ol>
     </li>
-    <li><a href="#data-overview">Data Overview</a>
+    <li><a href="#data-overview-vix">Data Overview (VIX)</a>
       <ol>
         <li><a href="#acquire-cboe-volatility-index-vix-data">Acquire CBOE Volatility Index (VIX) Data</a></li>
-        <li><a href="#set-decimal-places">Set Decimal Places</a></li>
-        <li><a href="#load-data">Load Data</a></li>
-        <li><a href="#check-for-missing-values--forward-fill-any-missing-values">Check For Missing Values &amp; Forward Fill Any Missing Values</a></li>
-        <li><a href="#vix-dataframe-info">VIX DataFrame Info</a></li>
-        <li><a href="#statistics">Statistics</a></li>
-        <li><a href="#deciles">Deciles</a></li>
-        <li><a href="#histogram-distribution">Histogram Distribution</a></li>
+        <li><a href="#load-data---vix">Load Data - VIX</a></li>
+        <li><a href="#dataframe-info---vix">DataFrame Info - VIX</a></li>
+        <li><a href="#statistics---vix">Statistics - VIX</a></li>
+        <li><a href="#deciles---vix">Deciles - VIX</a></li>
       </ol>
     </li>
-    <li><a href="#plots">Plots</a>
+    <li><a href="#plots---vix">Plots - VIX</a>
       <ol>
-        <li><a href="#historical-vix-data">Historical VIX Data</a>
-          <ol>
-            <li><a href="#1990---2009">1990 - 2009</a></li>
-            <li><a href="#2010---present">2010 - Present</a></li>
-          </ol>
-        </li>
+        <li><a href="#histogram-distribution---vix">Histogram Distribution - VIX</a></li>
+        <li><a href="#historical-data---vix">Historical Data - VIX</a></li>
+      </ol>
+    </li>
+    <li><a href="#data-overview-vvix">Data Overview (VVIX)</a>
+      <ol>
+        <li><a href="#acquire-cboe-vvix-data">Acquire CBOE VVIX Data</a></li>
+        <li><a href="#load-data---vvix">Load Data - VVIX</a></li>
+        <li><a href="#dataframe-info---vvix">DataFrame Info - VVIX</a></li>
+        <li><a href="#statistics---vvix">Statistics - VVIX</a></li>
+        <li><a href="#deciles">Deciles</a></li>
+      </ol>
+    </li>
+    <li><a href="#plots---vvix">Plots - VVIX</a>
+      <ol>
+        <li><a href="#histogram-distribution---vvix">Histogram Distribution - VVIX</a></li>
+        <li><a href="#historical-data---vvix">Historical Data - VVIX</a></li>
       </ol>
     </li>
     <li><a href="#investigating-a-signal">Investigating A Signal</a>
@@ -456,7 +464,7 @@
 
 
                 <time class="article-time--reading">
-                    17 minute read
+                    24 minute read
                 </time>
             </div>
         
@@ -478,7 +486,8 @@ Update 4/12/2025: VIX data through 4/10/25.</br>
 Update 4/22/2025: VIX data through 4/18/25.</br>
 Update 4/23/2025: VIX data through 4/22/25.</br>
 Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, including open and closed positions.</br>
-Update 4/28/2025: VIX data through 4/25/25.</p>
+Update 4/28/2025: VIX data through 4/25/25.</br>
+Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
 <h2 id="introduction">Introduction
 </h2><p>From the <a class="link" href="https://www.cboe.com/tradable_products/vix/"  target="_blank" rel="noopener"
     >CBOE VIX website</a>:</p>
@@ -612,11 +621,17 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
 </span><span class="lnt">32
 </span><span class="lnt">33
 </span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">df_info</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">df_info</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
 </span></span></span><span class="line"><span class="cl"><span class="s2">    Display summary information about a pandas DataFrame.
@@ -714,12 +729,16 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
 </span><span class="lnt">59
 </span><span class="lnt">60
 </span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">io</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">df_info_markdown</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">df_info_markdown</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
 </span></span></span><span class="line"><span class="cl"><span class="s2">    Generate a Markdown-formatted summary of a pandas DataFrame.
@@ -762,8 +781,8 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
 </span></span><span class="line"><span class="cl">    <span class="n">info_str</span> <span class="o">=</span> <span class="n">buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="c1"># Convert head and tail to Markdown</span>
-</span></span><span class="line"><span class="cl">    <span class="n">head_str</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="n">tail_str</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">head_str</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">floatfmt</span><span class="o">=</span><span class="s2">&#34;.2f&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tail_str</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">floatfmt</span><span class="o">=</span><span class="s2">&#34;.2f&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="n">markdown</span> <span class="o">=</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">        <span class="s2">&#34;```text&#34;</span><span class="p">,</span>
@@ -803,11 +822,19 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
 </span><span class="lnt">19
 </span><span class="lnt">20
 </span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">pandas_set_decimal_places</span><span class="p">(</span><span class="n">decimal_places</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">pandas_set_decimal_places</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">decimal_places</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
 </span></span></span><span class="line"><span class="cl"><span class="s2">    Set the number of decimal places displayed for floating-point numbers in pandas.
@@ -816,6 +843,10 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
 </span></span></span><span class="line"><span class="cl"><span class="s2">    ----------
 </span></span></span><span class="line"><span class="cl"><span class="s2">    decimal_places : int
 </span></span></span><span class="line"><span class="cl"><span class="s2">        The number of decimal places to display for float values in pandas DataFrames and Series.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    None
 </span></span></span><span class="line"><span class="cl"><span class="s2">
 </span></span></span><span class="line"><span class="cl"><span class="s2">    Example:
 </span></span></span><span class="line"><span class="cl"><span class="s2">    --------
@@ -896,6 +927,26 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
 </span><span class="lnt">63
 </span><span class="lnt">64
 </span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -910,7 +961,7 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
 </span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
-</span></span></span><span class="line"><span class="cl"><span class="s2">    Load data from a CSV or Excel file into a pandas DataFrame.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.
 </span></span></span><span class="line"><span class="cl"><span class="s2">
 </span></span></span><span class="line"><span class="cl"><span class="s2">    This function attempts to read a file first as a CSV, then as an Excel file 
 </span></span></span><span class="line"><span class="cl"><span class="s2">    (specifically looking for a sheet named &#39;data&#39; and using the &#39;calamine&#39; engine).
@@ -945,10 +996,23 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
 </span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="c1"># Build file paths using pathlib</span>
-</span></span><span class="line"><span class="cl">    <span class="n">csv_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_directory</span><span class="p">)</span> <span class="o">/</span> <span class="n">source</span> <span class="o">/</span> <span class="n">asset_class</span> <span class="o">/</span> <span class="n">timeframe</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">.csv&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">xlsx_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_directory</span><span class="p">)</span> <span class="o">/</span> <span class="n">source</span> <span class="o">/</span> <span class="n">asset_class</span> <span class="o">/</span> <span class="n">timeframe</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">.xlsx&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">source</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">asset_class</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">timeframe</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">csv_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_directory</span><span class="p">)</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">.csv&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">xlsx_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_directory</span><span class="p">)</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">.xlsx&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pickle_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_directory</span><span class="p">)</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">.pkl&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">csv_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_directory</span><span class="p">)</span> <span class="o">/</span> <span class="n">source</span> <span class="o">/</span> <span class="n">asset_class</span> <span class="o">/</span> <span class="n">timeframe</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">.csv&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">xlsx_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_directory</span><span class="p">)</span> <span class="o">/</span> <span class="n">source</span> <span class="o">/</span> <span class="n">asset_class</span> <span class="o">/</span> <span class="n">timeframe</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">.xlsx&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pickle_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_directory</span><span class="p">)</span> <span class="o">/</span> <span class="n">source</span> <span class="o">/</span> <span class="n">asset_class</span> <span class="o">/</span> <span class="n">timeframe</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">.pkl&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="c1"># Try CSV</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">df</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Try ZIP</span>
 </span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_path</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">df</span>
@@ -962,7 +1026,14 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
 </span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">pass</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;❌ Unable to load file: </span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">. Ensure it&#39;s a valid CSV or Excel file with a &#39;data&#39; sheet.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Try Pickle</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="n">pickle_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">df</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;❌ Unable to load file: </span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">. Ensure it&#39;s a valid CSV, Excel, or Pickle file with a &#39;data&#39; sheet (if required).&#34;</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="project-specific-functions">Project Specific Functions
@@ -1049,10 +1120,20 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
 </span><span class="lnt">78
 </span><span class="lnt">79
 </span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">yf_pull_data</span><span class="p">(</span>
@@ -1062,7 +1143,8 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
 </span></span><span class="line"><span class="cl">    <span class="n">asset_class</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">excel_export</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">pickle_export</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">output_confirmation</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
 </span></span></span><span class="line"><span class="cl"><span class="s2">    Download daily price data from Yahoo Finance and export it.
@@ -1081,10 +1163,13 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
 </span></span></span><span class="line"><span class="cl"><span class="s2">        If True, export data to Excel format.
 </span></span></span><span class="line"><span class="cl"><span class="s2">    pickle_export : bool
 </span></span></span><span class="line"><span class="cl"><span class="s2">        If True, export data to Pickle format.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    output_confirmation : bool
+</span></span></span><span class="line"><span class="cl"><span class="s2">        If True, print confirmation message.
 </span></span></span><span class="line"><span class="cl"><span class="s2">
 </span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
 </span></span></span><span class="line"><span class="cl"><span class="s2">    --------
-</span></span></span><span class="line"><span class="cl"><span class="s2">    None
+</span></span></span><span class="line"><span class="cl"><span class="s2">    df : pd.DataFrame
+</span></span></span><span class="line"><span class="cl"><span class="s2">        DataFrame containing the downloaded data.
 </span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="c1"># Download data from YF</span>
@@ -1124,37 +1209,47 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
 </span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">pass</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># Print confirmation and display the first and last date </span>
-</span></span><span class="line"><span class="cl">    <span class="c1"># of data</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;The first and last date of data for </span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2"> is: &#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">[:</span><span class="mi">1</span><span class="p">])</span>
-</span></span><span class="line"><span class="cl">    <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:])</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Yahoo Finance data complete for </span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;--------------------&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Output confirmation</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">output_confirmation</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;The first and last date of data for </span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2"> is: &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">[:</span><span class="mi">1</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:])</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Yahoo Finance data complete for </span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;--------------------&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">df</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="data-overview">Data Overview
+</div><h2 id="data-overview-vix">Data Overview (VIX)
 </h2><h3 id="acquire-cboe-volatility-index-vix-data">Acquire CBOE Volatility Index (VIX) Data
 </h3><p>First, let&rsquo;s get the data:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">yf_data_updater</span><span class="p">(</span><span class="s1">&#39;^VIX&#39;</span><span class="p">)</span>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">yf_pull_data</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">base_directory</span><span class="o">=</span><span class="n">DATA_DIR</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ticker</span><span class="o">=</span><span class="s2">&#34;^VIX&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">source</span><span class="o">=</span><span class="s2">&#34;Yahoo_Finance&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">asset_class</span><span class="o">=</span><span class="s2">&#34;Indices&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">excel_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pickle_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">output_confirmation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="set-decimal-places">Set Decimal Places
-</h3><p>Let&rsquo;s set the number of decimal places to something sane (like 2):</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">pandas_set_decimal_places</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="load-data">Load Data
+</div><h3 id="load-data---vix">Load Data - VIX
 </h3><p>Now that we have the data, let&rsquo;s load it up and take a look:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1169,10 +1264,34 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
 </span><span class="lnt"> 9
 </span><span class="lnt">10
 </span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># VIX</span>
-</span></span><span class="line"><span class="cl"><span class="n">vix</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">(</span><span class="s1">&#39;^VIX.xlsx&#39;</span><span class="p">)</span>
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Set decimal places</span>
+</span></span><span class="line"><span class="cl"><span class="n">pandas_set_decimal_places</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># VIX</span>
+</span></span><span class="line"><span class="cl"><span class="n">vix</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">base_directory</span><span class="o">=</span><span class="n">DATA_DIR</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ticker</span><span class="o">=</span><span class="s2">&#34;^VIX&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">source</span><span class="o">=</span><span class="s2">&#34;Yahoo_Finance&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">asset_class</span><span class="o">=</span><span class="s2">&#34;Indices&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">timeframe</span><span class="o">=</span><span class="s2">&#34;Daily&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Set &#39;Date&#39; column as datetime</span>
 </span></span><span class="line"><span class="cl"><span class="n">vix</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">vix</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">])</span>
@@ -1182,26 +1301,15 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Set Date as index</span>
 </span></span><span class="line"><span class="cl"><span class="n">vix</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="check-for-missing-values--forward-fill-any-missing-values">Check For Missing Values &amp; Forward Fill Any Missing Values
-</h3><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Check to see if there are any NaN values</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Check to see if there are any NaN values</span>
 </span></span><span class="line"><span class="cl"><span class="n">vix</span><span class="p">[</span><span class="n">vix</span><span class="p">[</span><span class="s1">&#39;High&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()]</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Forward fill to clean up missing data</span>
 </span></span><span class="line"><span class="cl"><span class="n">vix</span><span class="p">[</span><span class="s1">&#39;High&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vix</span><span class="p">[</span><span class="s1">&#39;High&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">ffill</span><span class="p">()</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="vix-dataframe-info">VIX DataFrame Info
+</div><h3 id="dataframe-info---vix">DataFrame Info - VIX
 </h3><p>Now, running:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1232,16 +1340,16 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
 <pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">The columns, shape, and data types are:
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-</span></span><span class="line"><span class="cl">DatetimeIndex: 8895 entries, 1990-01-02 to 2025-04-25
+</span></span><span class="line"><span class="cl">DatetimeIndex: 8901 entries, 1990-01-02 to 2025-05-05
 </span></span><span class="line"><span class="cl">Data columns (total 4 columns):
 </span></span><span class="line"><span class="cl"> #   Column  Non-Null Count  Dtype  
 </span></span><span class="line"><span class="cl">---  ------  --------------  -----  
-</span></span><span class="line"><span class="cl"> 0   Close   8895 non-null   float64
-</span></span><span class="line"><span class="cl"> 1   High    8895 non-null   float64
-</span></span><span class="line"><span class="cl"> 2   Low     8895 non-null   float64
-</span></span><span class="line"><span class="cl"> 3   Open    8895 non-null   float64
+</span></span><span class="line"><span class="cl"> 0   Close   8901 non-null   float64
+</span></span><span class="line"><span class="cl"> 1   High    8901 non-null   float64
+</span></span><span class="line"><span class="cl"> 2   Low     8901 non-null   float64
+</span></span><span class="line"><span class="cl"> 3   Open    8901 non-null   float64
 </span></span><span class="line"><span class="cl">dtypes: float64(4)
-</span></span><span class="line"><span class="cl">memory usage: 347.5 KB
+</span></span><span class="line"><span class="cl">memory usage: 347.7 KB
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>The first 5 rows are:</p>
@@ -1306,55 +1414,56 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left">2025-04-21 00:00:00</td>
-          <td style="text-align: right">33.82</td>
-          <td style="text-align: right">35.75</td>
-          <td style="text-align: right">31.79</td>
-          <td style="text-align: right">32.75</td>
+          <td style="text-align: left">2025-04-29 00:00:00</td>
+          <td style="text-align: right">24.17</td>
+          <td style="text-align: right">25.99</td>
+          <td style="text-align: right">23.76</td>
+          <td style="text-align: right">24.76</td>
       </tr>
       <tr>
-          <td style="text-align: left">2025-04-22 00:00:00</td>
-          <td style="text-align: right">30.57</td>
-          <td style="text-align: right">32.68</td>
-          <td style="text-align: right">30.08</td>
-          <td style="text-align: right">32.61</td>
+          <td style="text-align: left">2025-04-30 00:00:00</td>
+          <td style="text-align: right">24.70</td>
+          <td style="text-align: right">28.17</td>
+          <td style="text-align: right">24.23</td>
+          <td style="text-align: right">24.35</td>
       </tr>
       <tr>
-          <td style="text-align: left">2025-04-23 00:00:00</td>
-          <td style="text-align: right">28.45</td>
-          <td style="text-align: right">30.29</td>
-          <td style="text-align: right">27.11</td>
-          <td style="text-align: right">28.75</td>
+          <td style="text-align: left">2025-05-01 00:00:00</td>
+          <td style="text-align: right">24.60</td>
+          <td style="text-align: right">25.18</td>
+          <td style="text-align: right">23.30</td>
+          <td style="text-align: right">23.94</td>
       </tr>
       <tr>
-          <td style="text-align: left">2025-04-24 00:00:00</td>
-          <td style="text-align: right">26.47</td>
-          <td style="text-align: right">29.66</td>
-          <td style="text-align: right">26.36</td>
-          <td style="text-align: right">28.69</td>
+          <td style="text-align: left">2025-05-02 00:00:00</td>
+          <td style="text-align: right">22.68</td>
+          <td style="text-align: right">24.32</td>
+          <td style="text-align: right">22.34</td>
+          <td style="text-align: right">23.63</td>
       </tr>
       <tr>
-          <td style="text-align: left">2025-04-25 00:00:00</td>
-          <td style="text-align: right">24.84</td>
-          <td style="text-align: right">27.20</td>
-          <td style="text-align: right">24.84</td>
-          <td style="text-align: right">26.22</td>
+          <td style="text-align: left">2025-05-05 00:00:00</td>
+          <td style="text-align: right">23.64</td>
+          <td style="text-align: right">24.63</td>
+          <td style="text-align: right">22.81</td>
+          <td style="text-align: right">24.25</td>
       </tr>
   </tbody>
 </table></div>
-<h3 id="statistics">Statistics
-</h3><p>Some interesting statistics jump out at us when we look at the mean, standard deviation, minimum, and maximum values. The following code:</p>
+<h3 id="statistics---vix">Statistics - VIX
+</h3><p>Some interesting statistics jump out at us when we look at the mean, standard deviation, minimum, and maximum values for the full dataset. The following code:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">vix_stats</span> <span class="o">=</span> <span class="n">vix</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -1366,6 +1475,7 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
 </span></span><span class="line"><span class="cl">        <span class="s1">&#39;Low&#39;</span><span class="p">:</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">][</span><span class="s1">&#39;Low&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">num</span> <span class="o">*</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">][</span><span class="s1">&#39;Low&#39;</span><span class="p">],</span>
 </span></span><span class="line"><span class="cl">        <span class="s1">&#39;Close&#39;</span><span class="p">:</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">][</span><span class="s1">&#39;Close&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">num</span> <span class="o">*</span> <span class="n">vix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">][</span><span class="s1">&#39;Close&#39;</span><span class="p">],</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">display</span><span class="p">(</span><span class="n">vix_stats</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Gives us:</p>
@@ -1382,22 +1492,22 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
   <tbody>
       <tr>
           <td style="text-align: left">count</td>
-          <td style="text-align: right">8895.00</td>
-          <td style="text-align: right">8895.00</td>
-          <td style="text-align: right">8895.00</td>
-          <td style="text-align: right">8895.00</td>
+          <td style="text-align: right">8901.00</td>
+          <td style="text-align: right">8901.00</td>
+          <td style="text-align: right">8901.00</td>
+          <td style="text-align: right">8901.00</td>
       </tr>
       <tr>
           <td style="text-align: left">mean</td>
           <td style="text-align: right">19.49</td>
-          <td style="text-align: right">20.40</td>
+          <td style="text-align: right">20.41</td>
           <td style="text-align: right">18.82</td>
-          <td style="text-align: right">19.58</td>
+          <td style="text-align: right">19.59</td>
       </tr>
       <tr>
           <td style="text-align: left">std</td>
-          <td style="text-align: right">7.85</td>
-          <td style="text-align: right">8.41</td>
+          <td style="text-align: right">7.84</td>
+          <td style="text-align: right">8.40</td>
           <td style="text-align: right">7.40</td>
           <td style="text-align: right">7.92</td>
       </tr>
@@ -1417,17 +1527,17 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
       </tr>
       <tr>
           <td style="text-align: left">50%</td>
-          <td style="text-align: right">17.64</td>
-          <td style="text-align: right">18.35</td>
-          <td style="text-align: right">17.06</td>
-          <td style="text-align: right">17.68</td>
+          <td style="text-align: right">17.65</td>
+          <td style="text-align: right">18.36</td>
+          <td style="text-align: right">17.07</td>
+          <td style="text-align: right">17.69</td>
       </tr>
       <tr>
           <td style="text-align: left">75%</td>
           <td style="text-align: right">22.84</td>
-          <td style="text-align: right">23.83</td>
-          <td style="text-align: right">22.14</td>
-          <td style="text-align: right">22.97</td>
+          <td style="text-align: right">23.85</td>
+          <td style="text-align: right">22.16</td>
+          <td style="text-align: right">22.99</td>
       </tr>
       <tr>
           <td style="text-align: left">max</td>
@@ -1439,16 +1549,16 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
       <tr>
           <td style="text-align: left">mean + -1 std</td>
           <td style="text-align: right">11.65</td>
-          <td style="text-align: right">11.99</td>
+          <td style="text-align: right">12.00</td>
           <td style="text-align: right">11.42</td>
-          <td style="text-align: right">11.66</td>
+          <td style="text-align: right">11.67</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 0 std</td>
           <td style="text-align: right">19.49</td>
-          <td style="text-align: right">20.40</td>
+          <td style="text-align: right">20.41</td>
           <td style="text-align: right">18.82</td>
-          <td style="text-align: right">19.58</td>
+          <td style="text-align: right">19.59</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 1 std</td>
@@ -1459,7 +1569,7 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
       </tr>
       <tr>
           <td style="text-align: left">mean + 2 std</td>
-          <td style="text-align: right">35.19</td>
+          <td style="text-align: right">35.18</td>
           <td style="text-align: right">37.21</td>
           <td style="text-align: right">33.62</td>
           <td style="text-align: right">35.43</td>
@@ -1473,22 +1583,460 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
       </tr>
       <tr>
           <td style="text-align: left">mean + 4 std</td>
-          <td style="text-align: right">50.88</td>
-          <td style="text-align: right">54.03</td>
+          <td style="text-align: right">50.87</td>
+          <td style="text-align: right">54.02</td>
           <td style="text-align: right">48.42</td>
           <td style="text-align: right">51.27</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 5 std</td>
-          <td style="text-align: right">58.73</td>
+          <td style="text-align: right">58.72</td>
           <td style="text-align: right">62.43</td>
           <td style="text-align: right">55.82</td>
-          <td style="text-align: right">59.20</td>
+          <td style="text-align: right">59.19</td>
       </tr>
   </tbody>
 </table></div>
-<h3 id="deciles">Deciles
-</h3><p>And the levels for each decile:</p>
+<p>We can also run the statistics individually for each year:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Group by year and calculate mean and std for OHLC</span>
+</span></span><span class="line"><span class="cl"><span class="n">vix_stats_by_year</span> <span class="o">=</span> <span class="n">vix</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">vix</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">year</span><span class="p">)[[</span><span class="s2">&#34;Open&#34;</span><span class="p">,</span> <span class="s2">&#34;High&#34;</span><span class="p">,</span> <span class="s2">&#34;Low&#34;</span><span class="p">,</span> <span class="s2">&#34;Close&#34;</span><span class="p">]]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s2">&#34;mean&#34;</span><span class="p">,</span> <span class="s2">&#34;std&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Flatten the column MultiIndex</span>
+</span></span><span class="line"><span class="cl"><span class="n">vix_stats_by_year</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">col</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">vix_stats_by_year</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">vix_stats_by_year</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&#34;Year&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">display</span><span class="p">(</span><span class="n">vix_stats_by_year</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Gives us:</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: right">Year</th>
+          <th style="text-align: right">Open_mean</th>
+          <th style="text-align: right">Open_std</th>
+          <th style="text-align: right">High_mean</th>
+          <th style="text-align: right">High_std</th>
+          <th style="text-align: right">Low_mean</th>
+          <th style="text-align: right">Low_std</th>
+          <th style="text-align: right">Close_mean</th>
+          <th style="text-align: right">Close_std</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: right">1990</td>
+          <td style="text-align: right">23.06</td>
+          <td style="text-align: right">4.74</td>
+          <td style="text-align: right">23.06</td>
+          <td style="text-align: right">4.74</td>
+          <td style="text-align: right">23.06</td>
+          <td style="text-align: right">4.74</td>
+          <td style="text-align: right">23.06</td>
+          <td style="text-align: right">4.74</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1991</td>
+          <td style="text-align: right">18.38</td>
+          <td style="text-align: right">3.68</td>
+          <td style="text-align: right">18.38</td>
+          <td style="text-align: right">3.68</td>
+          <td style="text-align: right">18.38</td>
+          <td style="text-align: right">3.68</td>
+          <td style="text-align: right">18.38</td>
+          <td style="text-align: right">3.68</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1992</td>
+          <td style="text-align: right">15.23</td>
+          <td style="text-align: right">2.26</td>
+          <td style="text-align: right">16.03</td>
+          <td style="text-align: right">2.19</td>
+          <td style="text-align: right">14.85</td>
+          <td style="text-align: right">2.14</td>
+          <td style="text-align: right">15.45</td>
+          <td style="text-align: right">2.12</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1993</td>
+          <td style="text-align: right">12.70</td>
+          <td style="text-align: right">1.37</td>
+          <td style="text-align: right">13.34</td>
+          <td style="text-align: right">1.40</td>
+          <td style="text-align: right">12.25</td>
+          <td style="text-align: right">1.28</td>
+          <td style="text-align: right">12.69</td>
+          <td style="text-align: right">1.33</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1994</td>
+          <td style="text-align: right">13.79</td>
+          <td style="text-align: right">2.06</td>
+          <td style="text-align: right">14.58</td>
+          <td style="text-align: right">2.28</td>
+          <td style="text-align: right">13.38</td>
+          <td style="text-align: right">1.99</td>
+          <td style="text-align: right">13.93</td>
+          <td style="text-align: right">2.07</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1995</td>
+          <td style="text-align: right">12.27</td>
+          <td style="text-align: right">1.03</td>
+          <td style="text-align: right">12.93</td>
+          <td style="text-align: right">1.07</td>
+          <td style="text-align: right">11.96</td>
+          <td style="text-align: right">0.98</td>
+          <td style="text-align: right">12.39</td>
+          <td style="text-align: right">0.97</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1996</td>
+          <td style="text-align: right">16.31</td>
+          <td style="text-align: right">1.92</td>
+          <td style="text-align: right">16.99</td>
+          <td style="text-align: right">2.12</td>
+          <td style="text-align: right">15.94</td>
+          <td style="text-align: right">1.82</td>
+          <td style="text-align: right">16.44</td>
+          <td style="text-align: right">1.94</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1997</td>
+          <td style="text-align: right">22.43</td>
+          <td style="text-align: right">4.33</td>
+          <td style="text-align: right">23.11</td>
+          <td style="text-align: right">4.56</td>
+          <td style="text-align: right">21.85</td>
+          <td style="text-align: right">3.98</td>
+          <td style="text-align: right">22.38</td>
+          <td style="text-align: right">4.14</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1998</td>
+          <td style="text-align: right">25.68</td>
+          <td style="text-align: right">6.96</td>
+          <td style="text-align: right">26.61</td>
+          <td style="text-align: right">7.36</td>
+          <td style="text-align: right">24.89</td>
+          <td style="text-align: right">6.58</td>
+          <td style="text-align: right">25.60</td>
+          <td style="text-align: right">6.86</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1999</td>
+          <td style="text-align: right">24.39</td>
+          <td style="text-align: right">2.90</td>
+          <td style="text-align: right">25.20</td>
+          <td style="text-align: right">3.01</td>
+          <td style="text-align: right">23.75</td>
+          <td style="text-align: right">2.76</td>
+          <td style="text-align: right">24.37</td>
+          <td style="text-align: right">2.88</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2000</td>
+          <td style="text-align: right">23.41</td>
+          <td style="text-align: right">3.43</td>
+          <td style="text-align: right">24.10</td>
+          <td style="text-align: right">3.66</td>
+          <td style="text-align: right">22.75</td>
+          <td style="text-align: right">3.19</td>
+          <td style="text-align: right">23.32</td>
+          <td style="text-align: right">3.41</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2001</td>
+          <td style="text-align: right">26.04</td>
+          <td style="text-align: right">4.98</td>
+          <td style="text-align: right">26.64</td>
+          <td style="text-align: right">5.19</td>
+          <td style="text-align: right">25.22</td>
+          <td style="text-align: right">4.61</td>
+          <td style="text-align: right">25.75</td>
+          <td style="text-align: right">4.78</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2002</td>
+          <td style="text-align: right">27.53</td>
+          <td style="text-align: right">7.03</td>
+          <td style="text-align: right">28.28</td>
+          <td style="text-align: right">7.25</td>
+          <td style="text-align: right">26.60</td>
+          <td style="text-align: right">6.64</td>
+          <td style="text-align: right">27.29</td>
+          <td style="text-align: right">6.91</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2003</td>
+          <td style="text-align: right">22.21</td>
+          <td style="text-align: right">5.31</td>
+          <td style="text-align: right">22.61</td>
+          <td style="text-align: right">5.35</td>
+          <td style="text-align: right">21.64</td>
+          <td style="text-align: right">5.18</td>
+          <td style="text-align: right">21.98</td>
+          <td style="text-align: right">5.24</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2004</td>
+          <td style="text-align: right">15.59</td>
+          <td style="text-align: right">1.93</td>
+          <td style="text-align: right">16.05</td>
+          <td style="text-align: right">2.02</td>
+          <td style="text-align: right">15.05</td>
+          <td style="text-align: right">1.79</td>
+          <td style="text-align: right">15.48</td>
+          <td style="text-align: right">1.92</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2005</td>
+          <td style="text-align: right">12.84</td>
+          <td style="text-align: right">1.44</td>
+          <td style="text-align: right">13.28</td>
+          <td style="text-align: right">1.59</td>
+          <td style="text-align: right">12.39</td>
+          <td style="text-align: right">1.32</td>
+          <td style="text-align: right">12.81</td>
+          <td style="text-align: right">1.47</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2006</td>
+          <td style="text-align: right">12.90</td>
+          <td style="text-align: right">2.18</td>
+          <td style="text-align: right">13.33</td>
+          <td style="text-align: right">2.46</td>
+          <td style="text-align: right">12.38</td>
+          <td style="text-align: right">1.96</td>
+          <td style="text-align: right">12.81</td>
+          <td style="text-align: right">2.25</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2007</td>
+          <td style="text-align: right">17.59</td>
+          <td style="text-align: right">5.36</td>
+          <td style="text-align: right">18.44</td>
+          <td style="text-align: right">5.76</td>
+          <td style="text-align: right">16.75</td>
+          <td style="text-align: right">4.95</td>
+          <td style="text-align: right">17.54</td>
+          <td style="text-align: right">5.36</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2008</td>
+          <td style="text-align: right">32.83</td>
+          <td style="text-align: right">16.41</td>
+          <td style="text-align: right">34.57</td>
+          <td style="text-align: right">17.83</td>
+          <td style="text-align: right">30.96</td>
+          <td style="text-align: right">14.96</td>
+          <td style="text-align: right">32.69</td>
+          <td style="text-align: right">16.38</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2009</td>
+          <td style="text-align: right">31.75</td>
+          <td style="text-align: right">9.20</td>
+          <td style="text-align: right">32.78</td>
+          <td style="text-align: right">9.61</td>
+          <td style="text-align: right">30.50</td>
+          <td style="text-align: right">8.63</td>
+          <td style="text-align: right">31.48</td>
+          <td style="text-align: right">9.08</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2010</td>
+          <td style="text-align: right">22.73</td>
+          <td style="text-align: right">5.29</td>
+          <td style="text-align: right">23.69</td>
+          <td style="text-align: right">5.82</td>
+          <td style="text-align: right">21.69</td>
+          <td style="text-align: right">4.61</td>
+          <td style="text-align: right">22.55</td>
+          <td style="text-align: right">5.27</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2011</td>
+          <td style="text-align: right">24.27</td>
+          <td style="text-align: right">8.17</td>
+          <td style="text-align: right">25.40</td>
+          <td style="text-align: right">8.78</td>
+          <td style="text-align: right">23.15</td>
+          <td style="text-align: right">7.59</td>
+          <td style="text-align: right">24.20</td>
+          <td style="text-align: right">8.14</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2012</td>
+          <td style="text-align: right">17.93</td>
+          <td style="text-align: right">2.60</td>
+          <td style="text-align: right">18.59</td>
+          <td style="text-align: right">2.72</td>
+          <td style="text-align: right">17.21</td>
+          <td style="text-align: right">2.37</td>
+          <td style="text-align: right">17.80</td>
+          <td style="text-align: right">2.54</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2013</td>
+          <td style="text-align: right">14.29</td>
+          <td style="text-align: right">1.67</td>
+          <td style="text-align: right">14.82</td>
+          <td style="text-align: right">1.88</td>
+          <td style="text-align: right">13.80</td>
+          <td style="text-align: right">1.51</td>
+          <td style="text-align: right">14.23</td>
+          <td style="text-align: right">1.74</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2014</td>
+          <td style="text-align: right">14.23</td>
+          <td style="text-align: right">2.65</td>
+          <td style="text-align: right">14.95</td>
+          <td style="text-align: right">3.02</td>
+          <td style="text-align: right">13.61</td>
+          <td style="text-align: right">2.21</td>
+          <td style="text-align: right">14.17</td>
+          <td style="text-align: right">2.62</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2015</td>
+          <td style="text-align: right">16.71</td>
+          <td style="text-align: right">3.99</td>
+          <td style="text-align: right">17.79</td>
+          <td style="text-align: right">5.03</td>
+          <td style="text-align: right">15.85</td>
+          <td style="text-align: right">3.65</td>
+          <td style="text-align: right">16.67</td>
+          <td style="text-align: right">4.34</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2016</td>
+          <td style="text-align: right">16.01</td>
+          <td style="text-align: right">4.05</td>
+          <td style="text-align: right">16.85</td>
+          <td style="text-align: right">4.40</td>
+          <td style="text-align: right">15.16</td>
+          <td style="text-align: right">3.66</td>
+          <td style="text-align: right">15.83</td>
+          <td style="text-align: right">3.97</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2017</td>
+          <td style="text-align: right">11.14</td>
+          <td style="text-align: right">1.34</td>
+          <td style="text-align: right">11.72</td>
+          <td style="text-align: right">1.54</td>
+          <td style="text-align: right">10.64</td>
+          <td style="text-align: right">1.16</td>
+          <td style="text-align: right">11.09</td>
+          <td style="text-align: right">1.36</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2018</td>
+          <td style="text-align: right">16.63</td>
+          <td style="text-align: right">5.01</td>
+          <td style="text-align: right">18.03</td>
+          <td style="text-align: right">6.12</td>
+          <td style="text-align: right">15.53</td>
+          <td style="text-align: right">4.25</td>
+          <td style="text-align: right">16.64</td>
+          <td style="text-align: right">5.09</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2019</td>
+          <td style="text-align: right">15.57</td>
+          <td style="text-align: right">2.74</td>
+          <td style="text-align: right">16.41</td>
+          <td style="text-align: right">3.06</td>
+          <td style="text-align: right">14.76</td>
+          <td style="text-align: right">2.38</td>
+          <td style="text-align: right">15.39</td>
+          <td style="text-align: right">2.61</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2020</td>
+          <td style="text-align: right">29.54</td>
+          <td style="text-align: right">12.45</td>
+          <td style="text-align: right">31.46</td>
+          <td style="text-align: right">13.89</td>
+          <td style="text-align: right">27.51</td>
+          <td style="text-align: right">10.85</td>
+          <td style="text-align: right">29.25</td>
+          <td style="text-align: right">12.34</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2021</td>
+          <td style="text-align: right">19.83</td>
+          <td style="text-align: right">3.47</td>
+          <td style="text-align: right">21.12</td>
+          <td style="text-align: right">4.22</td>
+          <td style="text-align: right">18.65</td>
+          <td style="text-align: right">2.93</td>
+          <td style="text-align: right">19.66</td>
+          <td style="text-align: right">3.62</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2022</td>
+          <td style="text-align: right">25.98</td>
+          <td style="text-align: right">4.30</td>
+          <td style="text-align: right">27.25</td>
+          <td style="text-align: right">4.59</td>
+          <td style="text-align: right">24.69</td>
+          <td style="text-align: right">3.91</td>
+          <td style="text-align: right">25.62</td>
+          <td style="text-align: right">4.22</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2023</td>
+          <td style="text-align: right">17.12</td>
+          <td style="text-align: right">3.17</td>
+          <td style="text-align: right">17.83</td>
+          <td style="text-align: right">3.58</td>
+          <td style="text-align: right">16.36</td>
+          <td style="text-align: right">2.89</td>
+          <td style="text-align: right">16.87</td>
+          <td style="text-align: right">3.14</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2024</td>
+          <td style="text-align: right">15.69</td>
+          <td style="text-align: right">3.14</td>
+          <td style="text-align: right">16.65</td>
+          <td style="text-align: right">4.73</td>
+          <td style="text-align: right">14.92</td>
+          <td style="text-align: right">2.58</td>
+          <td style="text-align: right">15.61</td>
+          <td style="text-align: right">3.36</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2025</td>
+          <td style="text-align: right">22.45</td>
+          <td style="text-align: right">8.06</td>
+          <td style="text-align: right">24.38</td>
+          <td style="text-align: right">9.80</td>
+          <td style="text-align: right">20.73</td>
+          <td style="text-align: right">5.90</td>
+          <td style="text-align: right">22.14</td>
+          <td style="text-align: right">7.61</td>
+      </tr>
+  </tbody>
+</table></div>
+<p>It is interesting to see how much the mean OHLC values vary by year.</p>
+<h3 id="deciles---vix">Deciles - VIX
+</h3><p>Here are the levels for each decile, for the full dataset:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1527,14 +2075,14 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
       </tr>
       <tr>
           <td style="text-align: right">0.20</td>
-          <td style="text-align: right">13.24</td>
+          <td style="text-align: right">13.25</td>
           <td style="text-align: right">13.87</td>
           <td style="text-align: right">12.85</td>
           <td style="text-align: right">13.30</td>
       </tr>
       <tr>
           <td style="text-align: right">0.30</td>
-          <td style="text-align: right">14.59</td>
+          <td style="text-align: right">14.60</td>
           <td style="text-align: right">15.28</td>
           <td style="text-align: right">14.07</td>
           <td style="text-align: right">14.67</td>
@@ -1548,38 +2096,38 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
       </tr>
       <tr>
           <td style="text-align: right">0.50</td>
-          <td style="text-align: right">17.64</td>
-          <td style="text-align: right">18.35</td>
-          <td style="text-align: right">17.06</td>
-          <td style="text-align: right">17.68</td>
+          <td style="text-align: right">17.65</td>
+          <td style="text-align: right">18.36</td>
+          <td style="text-align: right">17.07</td>
+          <td style="text-align: right">17.69</td>
       </tr>
       <tr>
           <td style="text-align: right">0.60</td>
           <td style="text-align: right">19.55</td>
-          <td style="text-align: right">20.38</td>
-          <td style="text-align: right">19.00</td>
-          <td style="text-align: right">19.68</td>
+          <td style="text-align: right">20.39</td>
+          <td style="text-align: right">19.02</td>
+          <td style="text-align: right">19.69</td>
       </tr>
       <tr>
           <td style="text-align: right">0.70</td>
-          <td style="text-align: right">21.64</td>
-          <td style="text-align: right">22.64</td>
-          <td style="text-align: right">20.99</td>
-          <td style="text-align: right">21.79</td>
+          <td style="text-align: right">21.65</td>
+          <td style="text-align: right">22.66</td>
+          <td style="text-align: right">21.00</td>
+          <td style="text-align: right">21.80</td>
       </tr>
       <tr>
           <td style="text-align: right">0.80</td>
           <td style="text-align: right">24.32</td>
           <td style="text-align: right">25.36</td>
-          <td style="text-align: right">23.51</td>
+          <td style="text-align: right">23.53</td>
           <td style="text-align: right">24.39</td>
       </tr>
       <tr>
           <td style="text-align: right">0.90</td>
-          <td style="text-align: right">28.73</td>
-          <td style="text-align: right">30.02</td>
-          <td style="text-align: right">27.80</td>
-          <td style="text-align: right">28.88</td>
+          <td style="text-align: right">28.72</td>
+          <td style="text-align: right">30.01</td>
+          <td style="text-align: right">27.79</td>
+          <td style="text-align: right">28.87</td>
       </tr>
       <tr>
           <td style="text-align: right">1.00</td>
@@ -1590,9 +2138,10 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
       </tr>
   </tbody>
 </table></div>
-<h3 id="histogram-distribution">Histogram Distribution
+<h2 id="plots---vix">Plots - VIX
+</h2><h3 id="histogram-distribution---vix">Histogram Distribution - VIX
 </h3><p>A quick histogram gives us the distribution for the entire dataset:</p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/04_Histogram.png"
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/01_Histogram.png"
 	width="3570"
 	height="1769"
 	
@@ -1606,8 +2155,8 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<p>Now, let&rsquo;s add the levels for the mean, mean plus 1 standard deviation, mean minus 1 standard deviation, and mean plus 2 standard deviations:</p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/05_Histogram&#43;Mean.png"
+<p>Now, let&rsquo;s add the levels for the mean minus 1 standard deviation, mean, mean plus 1 standard deviation, mean plus 2 standard deviations, mean plus 3 standard deviations, and mean plus 4 standard deviations:</p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/01_Histogram&#43;Mean&#43;SD.png"
 	width="3570"
 	height="1769"
 	
@@ -1621,11 +2170,9 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<h2 id="plots">Plots
-</h2><h3 id="historical-vix-data">Historical VIX Data
-</h3><p>Here&rsquo;s two plots for the dataset. The first covers 1990 - 2009, and the second 2010 - 2024. This is the daily high level:</p>
-<h4 id="1990---2009">1990 - 2009
-</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/06_Plot_1990-2009.png"
+<h3 id="historical-data---vix">Historical Data - VIX
+</h3><p>Here&rsquo;s two plots for the dataset. The first covers 1990 - 2009, and the second 2010 - Present. This is the daily high level:</p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/01_VIX_Plot_1990-2009.png"
 	width="3570"
 	height="1768"
 	
@@ -1639,9 +2186,8 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
-<h4 id="2010---present">2010 - Present
-</h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/07_Plot_2010-Present.png"
-	width="3568"
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/01_VIX_Plot_2010-Present.png"
+	width="3567"
 	height="1768"
 	
 	loading="lazy"
@@ -1660,6 +2206,800 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
 <li>The highest levels (&gt; 80) occured only during the GFC &amp; COVID</li>
 <li>Interestingly, the VIX did not ever get above 50 during the .com bubble</li>
 </ul>
+<h2 id="data-overview-vvix">Data Overview (VVIX)
+</h2><p>Before moving on to generating a signal, let&rsquo;s run the above data overview code again, but this time for the CBOE VVIX. From the <a class="link" href="https://www.cboe.com/us/indices/dashboard/vvix/"  target="_blank" rel="noopener"
+    >CBOE VVIX website</a>:</p>
+<p>&ldquo;Volatility is often called a new asset class, and every asset class deserves its own volatility index.  The Cboe VVIX IndexSM represents the expected volatility of the VIX®.  VVIX derives the expected 30-day volatility of VIX by applying the VIX algorithm to VIX options.&rdquo;</p>
+<p>Looking at the statistics of the VVIX should give us an idea of the volatility of the VIX.</p>
+<h3 id="acquire-cboe-vvix-data">Acquire CBOE VVIX Data
+</h3><p>First, let&rsquo;s get the data:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">yf_pull_data</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">base_directory</span><span class="o">=</span><span class="n">DATA_DIR</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ticker</span><span class="o">=</span><span class="s2">&#34;^VVIX&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">source</span><span class="o">=</span><span class="s2">&#34;Yahoo_Finance&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">asset_class</span><span class="o">=</span><span class="s2">&#34;Indices&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">excel_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pickle_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">output_confirmation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="load-data---vvix">Load Data - VVIX
+</h3><p>Now that we have the data, let&rsquo;s load it up and take a look:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Set decimal places</span>
+</span></span><span class="line"><span class="cl"><span class="n">pandas_set_decimal_places</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># VVIX</span>
+</span></span><span class="line"><span class="cl"><span class="n">vvix</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">base_directory</span><span class="o">=</span><span class="n">DATA_DIR</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ticker</span><span class="o">=</span><span class="s2">&#34;^VVIX&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">source</span><span class="o">=</span><span class="s2">&#34;Yahoo_Finance&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">asset_class</span><span class="o">=</span><span class="s2">&#34;Indices&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">timeframe</span><span class="o">=</span><span class="s2">&#34;Daily&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Set &#39;Date&#39; column as datetime</span>
+</span></span><span class="line"><span class="cl"><span class="n">vvix</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">vvix</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Drop &#39;Volume&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">vvix</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Volume&#39;</span><span class="p">},</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Set Date as index</span>
+</span></span><span class="line"><span class="cl"><span class="n">vvix</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Check to see if there are any NaN values</span>
+</span></span><span class="line"><span class="cl"><span class="n">vvix</span><span class="p">[</span><span class="n">vvix</span><span class="p">[</span><span class="s1">&#39;High&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Forward fill to clean up missing data</span>
+</span></span><span class="line"><span class="cl"><span class="n">vvix</span><span class="p">[</span><span class="s1">&#39;High&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vvix</span><span class="p">[</span><span class="s1">&#39;High&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">ffill</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="dataframe-info---vvix">DataFrame Info - VVIX
+</h3><p>Now, running:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df_info</span><span class="p">(</span><span class="n">vvix</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Gives us the following:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">The columns, shape, and data types are:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+</span></span><span class="line"><span class="cl">DatetimeIndex: 8901 entries, 1990-01-02 to 2025-05-05
+</span></span><span class="line"><span class="cl">Data columns (total 4 columns):
+</span></span><span class="line"><span class="cl"> #   Column  Non-Null Count  Dtype  
+</span></span><span class="line"><span class="cl">---  ------  --------------  -----  
+</span></span><span class="line"><span class="cl"> 0   Close   8901 non-null   float64
+</span></span><span class="line"><span class="cl"> 1   High    8901 non-null   float64
+</span></span><span class="line"><span class="cl"> 2   Low     8901 non-null   float64
+</span></span><span class="line"><span class="cl"> 3   Open    8901 non-null   float64
+</span></span><span class="line"><span class="cl">dtypes: float64(4)
+</span></span><span class="line"><span class="cl">memory usage: 347.7 KB
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The first 5 rows are:</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Date</th>
+          <th style="text-align: right">Close</th>
+          <th style="text-align: right">High</th>
+          <th style="text-align: right">Low</th>
+          <th style="text-align: right">Open</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">1990-01-02 00:00:00</td>
+          <td style="text-align: right">17.24</td>
+          <td style="text-align: right">17.24</td>
+          <td style="text-align: right">17.24</td>
+          <td style="text-align: right">17.24</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">1990-01-03 00:00:00</td>
+          <td style="text-align: right">18.19</td>
+          <td style="text-align: right">18.19</td>
+          <td style="text-align: right">18.19</td>
+          <td style="text-align: right">18.19</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">1990-01-04 00:00:00</td>
+          <td style="text-align: right">19.22</td>
+          <td style="text-align: right">19.22</td>
+          <td style="text-align: right">19.22</td>
+          <td style="text-align: right">19.22</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">1990-01-05 00:00:00</td>
+          <td style="text-align: right">20.11</td>
+          <td style="text-align: right">20.11</td>
+          <td style="text-align: right">20.11</td>
+          <td style="text-align: right">20.11</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">1990-01-08 00:00:00</td>
+          <td style="text-align: right">20.26</td>
+          <td style="text-align: right">20.26</td>
+          <td style="text-align: right">20.26</td>
+          <td style="text-align: right">20.26</td>
+      </tr>
+  </tbody>
+</table></div>
+<p>The last 5 rows are:</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Date</th>
+          <th style="text-align: right">Close</th>
+          <th style="text-align: right">High</th>
+          <th style="text-align: right">Low</th>
+          <th style="text-align: right">Open</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">2025-04-29 00:00:00</td>
+          <td style="text-align: right">24.17</td>
+          <td style="text-align: right">25.99</td>
+          <td style="text-align: right">23.76</td>
+          <td style="text-align: right">24.76</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-04-30 00:00:00</td>
+          <td style="text-align: right">24.70</td>
+          <td style="text-align: right">28.17</td>
+          <td style="text-align: right">24.23</td>
+          <td style="text-align: right">24.35</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-01 00:00:00</td>
+          <td style="text-align: right">24.60</td>
+          <td style="text-align: right">25.18</td>
+          <td style="text-align: right">23.30</td>
+          <td style="text-align: right">23.94</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-02 00:00:00</td>
+          <td style="text-align: right">22.68</td>
+          <td style="text-align: right">24.32</td>
+          <td style="text-align: right">22.34</td>
+          <td style="text-align: right">23.63</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-05 00:00:00</td>
+          <td style="text-align: right">23.64</td>
+          <td style="text-align: right">24.63</td>
+          <td style="text-align: right">22.81</td>
+          <td style="text-align: right">24.25</td>
+      </tr>
+  </tbody>
+</table></div>
+<h3 id="statistics---vvix">Statistics - VVIX
+</h3><p>Here are the statistics for the VVIX, generated in the same manner as above for the VIX:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">vvix_stats</span> <span class="o">=</span> <span class="n">vvix</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">num_std</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">num_std</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vvix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="sa">f</span><span class="s2">&#34;mean + </span><span class="si">{</span><span class="n">num</span><span class="si">}</span><span class="s2"> std&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;Open&#39;</span><span class="p">:</span> <span class="n">vvix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">][</span><span class="s1">&#39;Open&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">num</span> <span class="o">*</span> <span class="n">vvix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">][</span><span class="s1">&#39;Open&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;High&#39;</span><span class="p">:</span> <span class="n">vvix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">][</span><span class="s1">&#39;High&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">num</span> <span class="o">*</span> <span class="n">vvix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">][</span><span class="s1">&#39;High&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;Low&#39;</span><span class="p">:</span> <span class="n">vvix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">][</span><span class="s1">&#39;Low&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">num</span> <span class="o">*</span> <span class="n">vvix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">][</span><span class="s1">&#39;Low&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;Close&#39;</span><span class="p">:</span> <span class="n">vvix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">][</span><span class="s1">&#39;Close&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">num</span> <span class="o">*</span> <span class="n">vvix_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">][</span><span class="s1">&#39;Close&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">display</span><span class="p">(</span><span class="n">vvix_stats</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Gives us:</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left"></th>
+          <th style="text-align: right">Close</th>
+          <th style="text-align: right">High</th>
+          <th style="text-align: right">Low</th>
+          <th style="text-align: right">Open</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">count</td>
+          <td style="text-align: right">4605.00</td>
+          <td style="text-align: right">4605.00</td>
+          <td style="text-align: right">4605.00</td>
+          <td style="text-align: right">4605.00</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">mean</td>
+          <td style="text-align: right">93.49</td>
+          <td style="text-align: right">95.52</td>
+          <td style="text-align: right">91.93</td>
+          <td style="text-align: right">93.74</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">std</td>
+          <td style="text-align: right">16.48</td>
+          <td style="text-align: right">18.08</td>
+          <td style="text-align: right">15.13</td>
+          <td style="text-align: right">16.53</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">min</td>
+          <td style="text-align: right">59.74</td>
+          <td style="text-align: right">59.74</td>
+          <td style="text-align: right">59.31</td>
+          <td style="text-align: right">59.31</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">25%</td>
+          <td style="text-align: right">82.29</td>
+          <td style="text-align: right">83.42</td>
+          <td style="text-align: right">81.46</td>
+          <td style="text-align: right">82.52</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">50%</td>
+          <td style="text-align: right">90.47</td>
+          <td style="text-align: right">92.22</td>
+          <td style="text-align: right">89.33</td>
+          <td style="text-align: right">90.76</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">75%</td>
+          <td style="text-align: right">102.22</td>
+          <td style="text-align: right">105.01</td>
+          <td style="text-align: right">100.04</td>
+          <td style="text-align: right">102.58</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">max</td>
+          <td style="text-align: right">207.59</td>
+          <td style="text-align: right">212.22</td>
+          <td style="text-align: right">187.27</td>
+          <td style="text-align: right">212.22</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">mean + -1 std</td>
+          <td style="text-align: right">77.01</td>
+          <td style="text-align: right">77.44</td>
+          <td style="text-align: right">76.80</td>
+          <td style="text-align: right">77.21</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">mean + 0 std</td>
+          <td style="text-align: right">93.49</td>
+          <td style="text-align: right">95.52</td>
+          <td style="text-align: right">91.93</td>
+          <td style="text-align: right">93.74</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">mean + 1 std</td>
+          <td style="text-align: right">109.96</td>
+          <td style="text-align: right">113.60</td>
+          <td style="text-align: right">107.06</td>
+          <td style="text-align: right">110.26</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">mean + 2 std</td>
+          <td style="text-align: right">126.44</td>
+          <td style="text-align: right">131.67</td>
+          <td style="text-align: right">122.19</td>
+          <td style="text-align: right">126.79</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">mean + 3 std</td>
+          <td style="text-align: right">142.92</td>
+          <td style="text-align: right">149.75</td>
+          <td style="text-align: right">137.31</td>
+          <td style="text-align: right">143.32</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">mean + 4 std</td>
+          <td style="text-align: right">159.39</td>
+          <td style="text-align: right">167.83</td>
+          <td style="text-align: right">152.44</td>
+          <td style="text-align: right">159.85</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">mean + 5 std</td>
+          <td style="text-align: right">175.87</td>
+          <td style="text-align: right">185.90</td>
+          <td style="text-align: right">167.57</td>
+          <td style="text-align: right">176.37</td>
+      </tr>
+  </tbody>
+</table></div>
+<p>We can also run the statistics individually for each year:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Group by year and calculate mean and std for OHLC</span>
+</span></span><span class="line"><span class="cl"><span class="n">vvix_stats_by_year</span> <span class="o">=</span> <span class="n">vvix</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">vvix</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">year</span><span class="p">)[[</span><span class="s2">&#34;Open&#34;</span><span class="p">,</span> <span class="s2">&#34;High&#34;</span><span class="p">,</span> <span class="s2">&#34;Low&#34;</span><span class="p">,</span> <span class="s2">&#34;Close&#34;</span><span class="p">]]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s2">&#34;mean&#34;</span><span class="p">,</span> <span class="s2">&#34;std&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Flatten the column MultiIndex</span>
+</span></span><span class="line"><span class="cl"><span class="n">vvix_stats_by_year</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">col</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">vvix_stats_by_year</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">vvix_stats_by_year</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&#34;Year&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">display</span><span class="p">(</span><span class="n">vvix_stats_by_year</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Gives us:</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: right">Year</th>
+          <th style="text-align: right">Open_mean</th>
+          <th style="text-align: right">Open_std</th>
+          <th style="text-align: right">High_mean</th>
+          <th style="text-align: right">High_std</th>
+          <th style="text-align: right">Low_mean</th>
+          <th style="text-align: right">Low_std</th>
+          <th style="text-align: right">Close_mean</th>
+          <th style="text-align: right">Close_std</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: right">2007</td>
+          <td style="text-align: right">87.68</td>
+          <td style="text-align: right">13.31</td>
+          <td style="text-align: right">87.68</td>
+          <td style="text-align: right">13.31</td>
+          <td style="text-align: right">87.68</td>
+          <td style="text-align: right">13.31</td>
+          <td style="text-align: right">87.68</td>
+          <td style="text-align: right">13.31</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2008</td>
+          <td style="text-align: right">81.85</td>
+          <td style="text-align: right">15.60</td>
+          <td style="text-align: right">81.85</td>
+          <td style="text-align: right">15.60</td>
+          <td style="text-align: right">81.85</td>
+          <td style="text-align: right">15.60</td>
+          <td style="text-align: right">81.85</td>
+          <td style="text-align: right">15.60</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2009</td>
+          <td style="text-align: right">79.78</td>
+          <td style="text-align: right">8.63</td>
+          <td style="text-align: right">79.78</td>
+          <td style="text-align: right">8.63</td>
+          <td style="text-align: right">79.78</td>
+          <td style="text-align: right">8.63</td>
+          <td style="text-align: right">79.78</td>
+          <td style="text-align: right">8.63</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2010</td>
+          <td style="text-align: right">88.36</td>
+          <td style="text-align: right">13.07</td>
+          <td style="text-align: right">88.36</td>
+          <td style="text-align: right">13.07</td>
+          <td style="text-align: right">88.36</td>
+          <td style="text-align: right">13.07</td>
+          <td style="text-align: right">88.36</td>
+          <td style="text-align: right">13.07</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2011</td>
+          <td style="text-align: right">92.94</td>
+          <td style="text-align: right">10.21</td>
+          <td style="text-align: right">92.94</td>
+          <td style="text-align: right">10.21</td>
+          <td style="text-align: right">92.94</td>
+          <td style="text-align: right">10.21</td>
+          <td style="text-align: right">92.94</td>
+          <td style="text-align: right">10.21</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2012</td>
+          <td style="text-align: right">94.84</td>
+          <td style="text-align: right">8.38</td>
+          <td style="text-align: right">94.84</td>
+          <td style="text-align: right">8.38</td>
+          <td style="text-align: right">94.84</td>
+          <td style="text-align: right">8.38</td>
+          <td style="text-align: right">94.84</td>
+          <td style="text-align: right">8.38</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2013</td>
+          <td style="text-align: right">80.52</td>
+          <td style="text-align: right">8.97</td>
+          <td style="text-align: right">80.52</td>
+          <td style="text-align: right">8.97</td>
+          <td style="text-align: right">80.52</td>
+          <td style="text-align: right">8.97</td>
+          <td style="text-align: right">80.52</td>
+          <td style="text-align: right">8.97</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2014</td>
+          <td style="text-align: right">83.01</td>
+          <td style="text-align: right">14.33</td>
+          <td style="text-align: right">83.01</td>
+          <td style="text-align: right">14.33</td>
+          <td style="text-align: right">83.01</td>
+          <td style="text-align: right">14.33</td>
+          <td style="text-align: right">83.01</td>
+          <td style="text-align: right">14.33</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2015</td>
+          <td style="text-align: right">95.44</td>
+          <td style="text-align: right">15.59</td>
+          <td style="text-align: right">98.47</td>
+          <td style="text-align: right">16.39</td>
+          <td style="text-align: right">92.15</td>
+          <td style="text-align: right">13.35</td>
+          <td style="text-align: right">94.82</td>
+          <td style="text-align: right">14.75</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2016</td>
+          <td style="text-align: right">93.36</td>
+          <td style="text-align: right">10.02</td>
+          <td style="text-align: right">95.82</td>
+          <td style="text-align: right">10.86</td>
+          <td style="text-align: right">90.54</td>
+          <td style="text-align: right">8.99</td>
+          <td style="text-align: right">92.80</td>
+          <td style="text-align: right">10.07</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2017</td>
+          <td style="text-align: right">90.50</td>
+          <td style="text-align: right">8.65</td>
+          <td style="text-align: right">92.94</td>
+          <td style="text-align: right">9.64</td>
+          <td style="text-align: right">87.85</td>
+          <td style="text-align: right">7.78</td>
+          <td style="text-align: right">90.01</td>
+          <td style="text-align: right">8.80</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2018</td>
+          <td style="text-align: right">102.60</td>
+          <td style="text-align: right">13.22</td>
+          <td style="text-align: right">106.27</td>
+          <td style="text-align: right">16.26</td>
+          <td style="text-align: right">99.17</td>
+          <td style="text-align: right">11.31</td>
+          <td style="text-align: right">102.26</td>
+          <td style="text-align: right">14.04</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2019</td>
+          <td style="text-align: right">91.28</td>
+          <td style="text-align: right">8.43</td>
+          <td style="text-align: right">93.61</td>
+          <td style="text-align: right">8.98</td>
+          <td style="text-align: right">88.90</td>
+          <td style="text-align: right">7.86</td>
+          <td style="text-align: right">91.03</td>
+          <td style="text-align: right">8.36</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2020</td>
+          <td style="text-align: right">118.64</td>
+          <td style="text-align: right">19.32</td>
+          <td style="text-align: right">121.91</td>
+          <td style="text-align: right">20.88</td>
+          <td style="text-align: right">115.05</td>
+          <td style="text-align: right">17.37</td>
+          <td style="text-align: right">118.36</td>
+          <td style="text-align: right">19.39</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2021</td>
+          <td style="text-align: right">115.51</td>
+          <td style="text-align: right">9.37</td>
+          <td style="text-align: right">119.29</td>
+          <td style="text-align: right">11.70</td>
+          <td style="text-align: right">111.99</td>
+          <td style="text-align: right">8.14</td>
+          <td style="text-align: right">115.32</td>
+          <td style="text-align: right">10.20</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2022</td>
+          <td style="text-align: right">102.58</td>
+          <td style="text-align: right">18.01</td>
+          <td style="text-align: right">105.32</td>
+          <td style="text-align: right">19.16</td>
+          <td style="text-align: right">99.17</td>
+          <td style="text-align: right">16.81</td>
+          <td style="text-align: right">101.81</td>
+          <td style="text-align: right">17.81</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2023</td>
+          <td style="text-align: right">90.95</td>
+          <td style="text-align: right">8.64</td>
+          <td style="text-align: right">93.72</td>
+          <td style="text-align: right">9.98</td>
+          <td style="text-align: right">88.01</td>
+          <td style="text-align: right">7.37</td>
+          <td style="text-align: right">90.34</td>
+          <td style="text-align: right">8.38</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2024</td>
+          <td style="text-align: right">92.88</td>
+          <td style="text-align: right">15.06</td>
+          <td style="text-align: right">97.32</td>
+          <td style="text-align: right">18.33</td>
+          <td style="text-align: right">89.51</td>
+          <td style="text-align: right">13.16</td>
+          <td style="text-align: right">92.81</td>
+          <td style="text-align: right">15.60</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2025</td>
+          <td style="text-align: right">108.95</td>
+          <td style="text-align: right">16.83</td>
+          <td style="text-align: right">114.38</td>
+          <td style="text-align: right">19.57</td>
+          <td style="text-align: right">103.74</td>
+          <td style="text-align: right">13.04</td>
+          <td style="text-align: right">107.89</td>
+          <td style="text-align: right">15.99</td>
+      </tr>
+  </tbody>
+</table></div>
+<h3 id="deciles">Deciles
+</h3><p>Here are the levels for each decile, for the full dataset:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">vvix_deciles</span> <span class="o">=</span> <span class="n">vvix</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">display</span><span class="p">(</span><span class="n">vvix_deciles</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Gives us:</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: right"></th>
+          <th style="text-align: right">Close</th>
+          <th style="text-align: right">High</th>
+          <th style="text-align: right">Low</th>
+          <th style="text-align: right">Open</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: right">0.00</td>
+          <td style="text-align: right">59.74</td>
+          <td style="text-align: right">59.74</td>
+          <td style="text-align: right">59.31</td>
+          <td style="text-align: right">59.31</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">0.10</td>
+          <td style="text-align: right">75.80</td>
+          <td style="text-align: right">75.94</td>
+          <td style="text-align: right">75.42</td>
+          <td style="text-align: right">75.74</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">0.20</td>
+          <td style="text-align: right">80.54</td>
+          <td style="text-align: right">81.41</td>
+          <td style="text-align: right">79.80</td>
+          <td style="text-align: right">80.70</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">0.30</td>
+          <td style="text-align: right">83.87</td>
+          <td style="text-align: right">85.16</td>
+          <td style="text-align: right">82.95</td>
+          <td style="text-align: right">84.09</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">0.40</td>
+          <td style="text-align: right">86.99</td>
+          <td style="text-align: right">88.50</td>
+          <td style="text-align: right">85.89</td>
+          <td style="text-align: right">87.41</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">0.50</td>
+          <td style="text-align: right">90.47</td>
+          <td style="text-align: right">92.22</td>
+          <td style="text-align: right">89.33</td>
+          <td style="text-align: right">90.76</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">0.60</td>
+          <td style="text-align: right">94.17</td>
+          <td style="text-align: right">96.10</td>
+          <td style="text-align: right">92.99</td>
+          <td style="text-align: right">94.45</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">0.70</td>
+          <td style="text-align: right">99.13</td>
+          <td style="text-align: right">101.53</td>
+          <td style="text-align: right">97.45</td>
+          <td style="text-align: right">99.41</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">0.80</td>
+          <td style="text-align: right">106.08</td>
+          <td style="text-align: right">109.42</td>
+          <td style="text-align: right">103.96</td>
+          <td style="text-align: right">106.51</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">0.90</td>
+          <td style="text-align: right">115.34</td>
+          <td style="text-align: right">118.83</td>
+          <td style="text-align: right">112.53</td>
+          <td style="text-align: right">115.58</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1.00</td>
+          <td style="text-align: right">207.59</td>
+          <td style="text-align: right">212.22</td>
+          <td style="text-align: right">187.27</td>
+          <td style="text-align: right">212.22</td>
+      </tr>
+  </tbody>
+</table></div>
+<h2 id="plots---vvix">Plots - VVIX
+</h2><h3 id="histogram-distribution---vvix">Histogram Distribution - VVIX
+</h3><p>A quick histogram gives us the distribution for the entire dataset:</p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/02_Histogram.png"
+	width="3570"
+	height="1769"
+	
+	loading="lazy"
+	
+		alt="Histogram"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p>Now, let&rsquo;s add the levels for the mean minus 1 standard deviation, mean, mean plus 1 standard deviation, mean plus 2 standard deviations, mean plus 3 standard deviations, and mean plus 4 standard deviations:</p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/02_Histogram&#43;Mean&#43;SD.png"
+	width="3570"
+	height="1769"
+	
+	loading="lazy"
+	
+		alt="Histogram, Mean, And Standard Deviations"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<h3 id="historical-data---vvix">Historical Data - VVIX
+</h3><p>Here&rsquo;s two plots for the dataset. The first covers 2007 - 2016, and the second 2017 - Present. This is the daily high level:</p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/02_VVIX_Plot_2007-2016.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="VVIX Daily High, 2007 - 2016"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/02_VVIX_Plot_2017-Present.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="VVIX Daily High, 2017 - Present"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
 <h2 id="investigating-a-signal">Investigating A Signal
 </h2><p>Next, we will consider the idea of a spike level in the VIX and how we might use a spike level to generate a signal. These elevated levels usually occur during market sell-off events or longer term drawdowns in the S&amp;P 500. Sometimes the VIX reverts to recent levels after a spike, but other times levels remain elevated for weeks or even months.</p>
 <h3 id="determining-a-spike-level">Determining A Spike Level
@@ -1791,7 +3131,7 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
 </span></span><span class="line"><span class="cl"><span class="c1"># Group by year and the &#34;Spike_SMA&#34; and &#34;Spike_EMA&#34; columns, then count occurrences</span>
 </span></span><span class="line"><span class="cl"><span class="n">spike_count_SMA</span> <span class="o">=</span> <span class="n">vix</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="s1">&#39;Spike_SMA&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">spike_count_SMA</span>
+</span></span><span class="line"><span class="cl"><span class="n">display</span><span class="p">(</span><span class="n">spike_count_SMA</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Which gives us the following:</p>
@@ -1981,7 +3321,7 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
       </tr>
       <tr>
           <td style="text-align: right">2025</td>
-          <td style="text-align: right">67</td>
+          <td style="text-align: right">73</td>
           <td style="text-align: right">11</td>
       </tr>
   </tbody>
@@ -2543,6 +3883,21 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
 		data-flex-basis="484px"
 	
 ></p>
+<p>For comparison with the VVIX plot for 2025:</p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/02_VVIX_Plot_2025-Present.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="VVIX, 2025"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
 <h3 id="spike-counts-signals-plots-by-decade">Spike Counts (Signals) Plots By Decade
 </h3><p>And here are the plots for the signals generated over the past 3 decades:</p>
 <h4 id="1990---1994">1990 - 1994
@@ -2658,6 +4013,21 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
 	loading="lazy"
 	
 		alt="Spike/Signals, 2025 - Present"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p>For comparison with the VVIX plot for 2025:</p>
+<p><img src="/2025/03/01/investigating-a-vix-trading-signal/02_VVIX_Plot_2025-Present.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="VVIX, 2025"
 	
 	
 		class="gallery-image" 
@@ -2836,6 +4206,15 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
           <td style="text-align: right">2563.92</td>
       </tr>
       <tr>
+          <td style="text-align: left">2025-05-02 00:00:00</td>
+          <td style="text-align: left">Sell to Close</td>
+          <td style="text-align: left">VIX 05/21/2025 26.00 P</td>
+          <td style="text-align: right">4</td>
+          <td style="text-align: right">4.35</td>
+          <td style="text-align: right">4.32</td>
+          <td style="text-align: right">1735.68</td>
+      </tr>
+      <tr>
           <td style="text-align: left">2025-04-03 00:00:00</td>
           <td style="text-align: left">Buy to Open</td>
           <td style="text-align: left">VIX 06/18/2025 27.00 P</td>
@@ -2920,7 +4299,7 @@ Update 4/28/2025: VIX data through 4/25/25.</p>
           <th style="text-align: right">Amount_Sell</th>
           <th style="text-align: right">Quantity_Sell</th>
           <th style="text-align: right">Realized_PnL</th>
-          <th style="text-align: right">Profit_Percent</th>
+          <th style="text-align: right">Percent_PnL</th>
       </tr>
   </thead>
   <tbody>
@@ -3090,7 +4469,7 @@ The pdf export of the jupyter notebook is available <a class="link" href="invest
 
 
         <span>
-            Last updated on April 28, 2025
+            Last updated on May 6, 2025
         </span>
     </section></footer>
 

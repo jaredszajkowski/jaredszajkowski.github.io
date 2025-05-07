@@ -1,4 +1,5 @@
 "Date","Action","Symbol","Description","Quantity","Price","Fees & Comm","Amount"
+"05/02/2025","Sell to Close","VIX 05/21/2025 26.00 P","PUT CBOE VOLATILITY IDX $26 EXP 05/21/25","4","$4.35","$4.32","$1735.68"
 "04/24/2025","Sell to Close","VIX 05/21/2025 26.00 P","PUT CBOE VOLATILITY IDX $26 EXP 05/21/25","7","$3.50","$7.57","$2442.43"
 "04/08/2025","Buy to Open","VIX 06/18/2025 27.00 P","PUT CBOE VOLATILITY IDX $27 EXP 06/18/25","4","$4.55","$4.32","-$1824.32"
 "04/07/2025","Buy to Open","VIX 08/20/2025 45.00 P","PUT CBOE VOLATILITY IDX $45 EXP 08/20/25","2","$21.75","$2.16","-$4352.16"

@@ -1,7 +1,9 @@
 import io
 import pandas as pd
 
-def df_info_markdown(df: pd.DataFrame) -> str:
+def df_info_markdown(
+    df: pd.DataFrame
+) -> str:
     
     """
     Generate a Markdown-formatted summary of a pandas DataFrame.

@@ -3,7 +3,7 @@ title: Investigating A VIX Trading Signal
 description: A brief look at finding a trading signal based on moving averages of the VIX.
 slug: investigating-a-vix-trading-signal
 date: 2025-03-01 00:00:01+0000
-lastmod: 2025-04-28 00:00:01+0000
+lastmod: 2025-05-06 00:00:01+0000
 image: cover.jpg
 draft: false
 categories:
@@ -25,7 +25,8 @@ Update 4/12/2025: VIX data through 4/10/25.</br>
 Update 4/22/2025: VIX data through 4/18/25.</br>
 Update 4/23/2025: VIX data through 4/22/25.</br>
 Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, including open and closed positions.</br>
-Update 4/28/2025: VIX data through 4/25/25.
+Update 4/28/2025: VIX data through 4/25/25.</br>
+Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.
 
 ## Introduction
 
@@ -47,361 +48,64 @@ Using the yfinance python module, we can pull what we need and quicky dump it to
 
 First, the typical set of functions I use:
 
-```python
-from pathlib import Path
-
-def export_track_md_deps(
-    dep_file: Path, 
-    md_filename: str, 
-    content: str,
-) -> None:
-    
-    """
-    Export Markdown content to a file and track it as a dependency.
-
-    This function writes the provided content to the specified Markdown file and 
-    appends the filename to the given dependency file (typically `index_dep.txt`).
-    This is useful in workflows where Markdown fragments are later assembled 
-    into a larger document (e.g., a Hugo `index.md`).
-
-    Parameters:
-    -----------
-    dep_file : Path
-        Path to the dependency file that tracks Markdown fragment filenames.
-    md_filename : str
-        The name of the Markdown file to export.
-    content : str
-        The Markdown-formatted content to write to the file.
-
-    Returns:
-    --------
-    None
-
-    Example:
-    --------
-    >>> export_track_md_deps(Path("index_dep.txt"), "01_intro.md", "# Introduction\n...")
-    ✅ Exported and tracked: 01_intro.md
-    """
-    
-    Path(md_filename).write_text(content)
-    with dep_file.open("a") as f:
-        f.write(md_filename + "\n")
-    print(f"✅ Exported and tracked: {md_filename}")
-```
+<!-- INSERT_00_export_track_md_deps_HERE -->
 
 </br>
 
-```python
-from IPython.display import display
-
-def df_info(df) -> None:
-    
-    """
-    Display summary information about a pandas DataFrame.
-
-    This function prints:
-    - The DataFrame's column names, shape, and data types via `df.info()`
-    - The first 5 rows using `df.head()`
-    - The last 5 rows using `df.tail()`
-
-    It uses `display()` for better output formatting in environments like Jupyter notebooks.
-
-    Parameters:
-    -----------
-    df : pd.DataFrame
-        The DataFrame to inspect.
-
-    Returns:
-    --------
-    None
-
-    Example:
-    --------
-    >>> df_info(my_dataframe)
-    """
-    
-    print("The columns, shape, and data types are:")
-    print(df.info())
-    print("The first 5 rows are:")
-    display(df.head())
-    print("The last 5 rows are:")
-    display(df.tail())
-```
+<!-- INSERT_00_df_info_HERE -->
 
 </br>
 
-```python
-import io
-import pandas as pd
-
-def df_info_markdown(df: pd.DataFrame) -> str:
-    
-    """
-    Generate a Markdown-formatted summary of a pandas DataFrame.
-
-    This function captures and formats the output of `df.info()`, `df.head()`, 
-    and `df.tail()` in Markdown for easy inclusion in reports, documentation, 
-    or web-based rendering (e.g., Hugo or Jupyter export workflows).
-
-    Parameters:
-    -----------
-    df : pd.DataFrame
-        The DataFrame to summarize.
-
-    Returns:
-    --------
-    str
-        A string containing the DataFrame's info, head, and tail 
-        formatted in Markdown.
-
-    Example:
-    --------
-    >>> print(df_info_markdown(df))
-    ```text
-    The columns, shape, and data types are:
-    <output from df.info()>
-    ```
-    The first 5 rows are:
-    |   | col1 | col2 |
-    |---|------|------|
-    | 0 | ...  | ...  |
-
-    The last 5 rows are:
-    ...
-    """
-    
-    buffer = io.StringIO()
-
-    # Capture df.info() output
-    df.info(buf=buffer)
-    info_str = buffer.getvalue()
-
-    # Convert head and tail to Markdown
-    head_str = df.head().to_markdown()
-    tail_str = df.tail().to_markdown()
-
-    markdown = [
-        "```text",
-        "The columns, shape, and data types are:\n",
-        info_str,
-        "```",
-        "\nThe first 5 rows are:\n",
-        head_str,
-        "\nThe last 5 rows are:\n",
-        tail_str
-    ]
-
-    return "\n".join(markdown)
-```
+<!-- INSERT_00_df_info_markdown_HERE -->
 
 </br>
 
-```python
-import pandas as pd
-
-def pandas_set_decimal_places(decimal_places: int) -> None:
-    
-    """
-    Set the number of decimal places displayed for floating-point numbers in pandas.
-
-    Parameters:
-    ----------
-    decimal_places : int
-        The number of decimal places to display for float values in pandas DataFrames and Series.
-
-    Example:
-    --------
-    >>> dp(3)
-    >>> pd.DataFrame([1.23456789])
-           0
-    0   1.235
-    """
-    
-    pd.set_option('display.float_format', lambda x: f'%.{decimal_places}f' % x)
-```
+<!-- INSERT_00_pandas_set_decimal_places_HERE -->
 
 </br>
 
-```python
-import pandas as pd
-from pathlib import Path
-
-def load_data(
-    base_directory: str,
-    ticker: str,
-    source: str,
-    asset_class: str,
-    timeframe: str,
-) -> pd.DataFrame:
-    
-    """
-    Load data from a CSV or Excel file into a pandas DataFrame.
-
-    This function attempts to read a file first as a CSV, then as an Excel file 
-    (specifically looking for a sheet named 'data' and using the 'calamine' engine).
-    If both attempts fail, a ValueError is raised.
-
-    Parameters:
-    -----------
-    base_directory : str
-        Root path to read data file.
-    ticker : str
-        Ticker symbol to read.
-    source : str
-        Name of the data source (e.g., 'Yahoo').
-    asset_class : str
-        Asset class name (e.g., 'Equities').
-    timeframe : str
-        Timeframe for the data (e.g., 'Daily', 'Month_End').
-    
-    Returns:
-    --------
-    pd.DataFrame
-        The loaded data.
-
-    Raises:
-    -------
-    ValueError
-        If the file could not be loaded as either CSV or Excel.
-
-    Example:
-    --------
-    >>> df = load_data(DATA_DIR, "^VIX", "Yahoo_Finance", "Indices")
-    """
-
-    # Build file paths using pathlib
-    csv_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.csv"
-    xlsx_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.xlsx"
-
-    # Try CSV
-    try:
-        df = pd.read_csv(csv_path)
-        return df
-    except Exception:
-        pass
-
-    # Try Excel
-    try:
-        df = pd.read_excel(xlsx_path)
-        return df
-    except Exception:
-        pass
-
-    raise ValueError(f"❌ Unable to load file: {ticker}. Ensure it's a valid CSV or Excel file with a 'data' sheet.")
-```
+<!-- INSERT_00_load_data_HERE -->
 
 ### Project Specific Functions
 
 Here's the code for the function to pull the VIX data and export to Excel:
 
-```python
-import yfinance as yf
-import os
-from IPython.display import display
+<!-- INSERT_00_yf_pull_data_HERE -->
 
-def yf_pull_data(
-    base_directory: str,
-    ticker: str,
-    source: str,
-    asset_class: str,
-    excel_export: bool,
-    pickle_export: bool,
-) -> None:
-    
-    """
-    Download daily price data from Yahoo Finance and export it.
-
-    Parameters:
-    -----------
-    base_directory : str
-        Root path to store downloaded data.
-    ticker : str
-        Ticker symbol to download.
-    source : str
-        Name of the data source (e.g., 'Yahoo').
-    asset_class : str
-        Asset class name (e.g., 'Equities').
-    excel_export : bool
-        If True, export data to Excel format.
-    pickle_export : bool
-        If True, export data to Pickle format.
-
-    Returns:
-    --------
-    None
-    """
-    
-    # Download data from YF
-    df = yf.download(ticker)
-
-    # Drop the column level with the ticker symbol
-    df.columns = df.columns.droplevel(1)
-
-    # Reset index
-    df = df.reset_index()
-
-    # Remove the "Price" header from the index
-    df.columns.name = None
-
-    # Reset date column
-    df['Date'] = df['Date'].dt.tz_localize(None)
-
-    # Set 'Date' column as index
-    df = df.set_index('Date', drop=True)
-
-    # Drop data from last day because it's not accrate until end of day
-    df = df.drop(df.index[-1])
-    
-    # Create directory
-    directory = f"{base_directory}/{source}/{asset_class}/Daily"
-    os.makedirs(directory, exist_ok=True)
-
-    # Export to excel
-    if excel_export == True:
-        df.to_excel(f"{directory}/{ticker}.xlsx", sheet_name="data")
-    else:
-        pass
-
-    # Export to pickle
-    if pickle_export == True:
-        df.to_pickle(f"{directory}/{ticker}.pkl")
-    else:
-        pass
-
-    # Print confirmation and display the first and last date 
-    # of data
-    print(f"The first and last date of data for {ticker} is: ")
-    display(df[:1])
-    display(df[-1:])
-    print(f"Yahoo Finance data complete for {ticker}")
-    return print(f"--------------------")
-```
-
-## Data Overview
+## Data Overview (VIX)
 
 ### Acquire CBOE Volatility Index (VIX) Data
 
 First, let's get the data:
 
 ```python
-yf_data_updater('^VIX')
+yf_pull_data(
+    base_directory=DATA_DIR,
+    ticker="^VIX",
+    source="Yahoo_Finance", 
+    asset_class="Indices", 
+    excel_export=True,
+    pickle_export=True,
+    output_confirmation=True,
+)
 ```
 
-### Set Decimal Places
-
-Let's set the number of decimal places to something sane (like 2):
-
-```python
-pandas_set_decimal_places(2)
-```
-
-### Load Data
+### Load Data - VIX
 
 Now that we have the data, let's load it up and take a look:
 
 ```python
+# Set decimal places
+pandas_set_decimal_places(2)
+
 # VIX
-vix = load_data('^VIX.xlsx')
+vix = load_data(
+    base_directory=DATA_DIR,
+    ticker="^VIX",
+    source="Yahoo_Finance", 
+    asset_class="Indices",
+    timeframe="Daily",
+)
 
 # Set 'Date' column as datetime
 vix['Date'] = pd.to_datetime(vix['Date'])
@@ -411,11 +115,7 @@ vix.drop(columns = {'Volume'}, inplace = True)
 
 # Set Date as index
 vix.set_index('Date', inplace = True)
-```
 
-### Check For Missing Values & Forward Fill Any Missing Values
-
-```python
 # Check to see if there are any NaN values
 vix[vix['High'].isna()]
 
@@ -423,7 +123,7 @@ vix[vix['High'].isna()]
 vix['High'] = vix['High'].ffill()
 ```
 
-### VIX DataFrame Info
+### DataFrame Info - VIX
 
 Now, running:
 
@@ -433,11 +133,11 @@ df_info(vix)
 
 Gives us the following:
 
-<!-- INSERT_01_DF_Info_HERE -->
+<!-- INSERT_01_VIX_DF_Info_HERE -->
 
-### Statistics
+### Statistics - VIX
 
-Some interesting statistics jump out at us when we look at the mean, standard deviation, minimum, and maximum values. The following code:
+Some interesting statistics jump out at us when we look at the mean, standard deviation, minimum, and maximum values for the full dataset. The following code:
 
 ```python
 vix_stats = vix.describe()
@@ -449,15 +149,35 @@ for num in num_std:
         'Low': vix_stats.loc['mean']['Low'] + num * vix_stats.loc['std']['Low'],
         'Close': vix_stats.loc['mean']['Close'] + num * vix_stats.loc['std']['Close'],
     }
+display(vix_stats)
 ```
 
 Gives us:
 
-<!-- INSERT_02_VIX_Stats_HERE -->
+<!-- INSERT_01_VIX_Stats_HERE -->
 
-### Deciles
+We can also run the statistics individually for each year:
 
-And the levels for each decile:
+```python
+# Group by year and calculate mean and std for OHLC
+vix_stats_by_year = vix.groupby(vix.index.year)[["Open", "High", "Low", "Close"]].agg(["mean", "std"])
+
+# Flatten the column MultiIndex
+vix_stats_by_year.columns = ['_'.join(col).strip() for col in vix_stats_by_year.columns.values]
+vix_stats_by_year.index.name = "Year"
+
+display(vix_stats_by_year)
+```
+
+Gives us:
+
+<!-- INSERT_01_VIX_Stats_By_Year_HERE -->
+
+It is interesting to see how much the mean OHLC values vary by year.
+
+### Deciles - VIX
+
+Here are the levels for each decile, for the full dataset:
 
 ```python
 vix_deciles = vix.quantile(np.arange(0, 1.1, 0.1))
@@ -466,37 +186,173 @@ display(vix_deciles)
 
 Gives us:
 
-<!-- INSERT_03_VIX_Deciles_HERE -->
+<!-- INSERT_01_VIX_Deciles_HERE -->
 
-### Histogram Distribution
+## Plots - VIX
+
+### Histogram Distribution - VIX
 
 A quick histogram gives us the distribution for the entire dataset:
 
-![Histogram](04_Histogram.png)
+![Histogram](01_Histogram.png)
 
-Now, let's add the levels for the mean, mean plus 1 standard deviation, mean minus 1 standard deviation, and mean plus 2 standard deviations:
+Now, let's add the levels for the mean minus 1 standard deviation, mean, mean plus 1 standard deviation, mean plus 2 standard deviations, mean plus 3 standard deviations, and mean plus 4 standard deviations:
 
-![Histogram, Mean, And Standard Deviations](05_Histogram+Mean.png)
+![Histogram, Mean, And Standard Deviations](01_Histogram+Mean+SD.png)
 
-## Plots
+### Historical Data - VIX
 
-### Historical VIX Data
+Here's two plots for the dataset. The first covers 1990 - 2009, and the second 2010 - Present. This is the daily high level:
 
-Here's two plots for the dataset. The first covers 1990 - 2009, and the second 2010 - 2024. This is the daily high level:
+![VIX Daily High, 1990 - 2009](01_VIX_Plot_1990-2009.png)
 
-#### 1990 - 2009
-
-![VIX Daily High, 1990 - 2009](06_Plot_1990-2009.png)
-
-#### 2010 - Present
-
-![VIX Daily High, 2010 - Present](07_Plot_2010-Present.png)
+![VIX Daily High, 2010 - Present](01_VIX_Plot_2010-Present.png)
 
 From these plots, we can see the following:
 
 * The VIX has really only jumped above 50 several times (GFC, COVID, recently in August of 2024)
 * The highest levels (> 80) occured only during the GFC & COVID
 * Interestingly, the VIX did not ever get above 50 during the .com bubble
+
+## Data Overview (VVIX)
+
+Before moving on to generating a signal, let's run the above data overview code again, but this time for the CBOE VVIX. From the [CBOE VVIX website](https://www.cboe.com/us/indices/dashboard/vvix/):
+
+"Volatility is often called a new asset class, and every asset class deserves its own volatility index.  The Cboe VVIX IndexSM represents the expected volatility of the VIX®.  VVIX derives the expected 30-day volatility of VIX by applying the VIX algorithm to VIX options."
+
+Looking at the statistics of the VVIX should give us an idea of the volatility of the VIX.
+
+### Acquire CBOE VVIX Data
+
+First, let's get the data:
+
+```python
+yf_pull_data(
+    base_directory=DATA_DIR,
+    ticker="^VVIX",
+    source="Yahoo_Finance", 
+    asset_class="Indices", 
+    excel_export=True,
+    pickle_export=True,
+    output_confirmation=True,
+)
+```
+
+### Load Data - VVIX
+
+Now that we have the data, let's load it up and take a look:
+
+```python
+# Set decimal places
+pandas_set_decimal_places(2)
+
+# VVIX
+vvix = load_data(
+    base_directory=DATA_DIR,
+    ticker="^VVIX",
+    source="Yahoo_Finance", 
+    asset_class="Indices",
+    timeframe="Daily",
+)
+
+# Set 'Date' column as datetime
+vvix['Date'] = pd.to_datetime(vvix['Date'])
+
+# Drop 'Volume'
+vvix.drop(columns = {'Volume'}, inplace = True)
+
+# Set Date as index
+vvix.set_index('Date', inplace = True)
+
+# Check to see if there are any NaN values
+vvix[vvix['High'].isna()]
+
+# Forward fill to clean up missing data
+vvix['High'] = vvix['High'].ffill()
+```
+
+### DataFrame Info - VVIX
+
+Now, running:
+
+```python
+df_info(vvix)
+```
+
+Gives us the following:
+
+<!-- INSERT_02_VVIX_DF_Info_HERE -->
+
+### Statistics - VVIX
+
+Here are the statistics for the VVIX, generated in the same manner as above for the VIX:
+
+```python
+vvix_stats = vvix.describe()
+num_std = [-1, 0, 1, 2, 3, 4, 5]
+for num in num_std:
+    vvix_stats.loc[f"mean + {num} std"] = {
+        'Open': vvix_stats.loc['mean']['Open'] + num * vvix_stats.loc['std']['Open'],
+        'High': vvix_stats.loc['mean']['High'] + num * vvix_stats.loc['std']['High'],
+        'Low': vvix_stats.loc['mean']['Low'] + num * vvix_stats.loc['std']['Low'],
+        'Close': vvix_stats.loc['mean']['Close'] + num * vvix_stats.loc['std']['Close'],
+    }
+display(vvix_stats)
+```
+
+Gives us:
+
+<!-- INSERT_02_VVIX_Stats_HERE -->
+
+We can also run the statistics individually for each year:
+
+```python
+# Group by year and calculate mean and std for OHLC
+vvix_stats_by_year = vvix.groupby(vvix.index.year)[["Open", "High", "Low", "Close"]].agg(["mean", "std"])
+
+# Flatten the column MultiIndex
+vvix_stats_by_year.columns = ['_'.join(col).strip() for col in vvix_stats_by_year.columns.values]
+vvix_stats_by_year.index.name = "Year"
+
+display(vvix_stats_by_year)
+```
+
+Gives us:
+
+<!-- INSERT_02_VVIX_Stats_By_Year_HERE -->
+
+### Deciles
+
+Here are the levels for each decile, for the full dataset:
+
+```python
+vvix_deciles = vvix.quantile(np.arange(0, 1.1, 0.1))
+display(vvix_deciles)
+```
+
+Gives us:
+
+<!-- INSERT_02_VVIX_Deciles_HERE -->
+
+## Plots - VVIX
+
+### Histogram Distribution - VVIX
+
+A quick histogram gives us the distribution for the entire dataset:
+
+![Histogram](02_Histogram.png)
+
+Now, let's add the levels for the mean minus 1 standard deviation, mean, mean plus 1 standard deviation, mean plus 2 standard deviations, mean plus 3 standard deviations, and mean plus 4 standard deviations:
+
+![Histogram, Mean, And Standard Deviations](02_Histogram+Mean+SD.png)
+
+### Historical Data - VVIX
+
+Here's two plots for the dataset. The first covers 2007 - 2016, and the second 2017 - Present. This is the daily high level:
+
+![VVIX Daily High, 2007 - 2016](02_VVIX_Plot_2007-2016.png)
+
+![VVIX Daily High, 2017 - Present](02_VVIX_Plot_2017-Present.png)
 
 ## Investigating A Signal
 
@@ -577,7 +433,7 @@ vix['Year'] = vix.index.year
 # Group by year and the "Spike_SMA" and "Spike_EMA" columns, then count occurrences
 spike_count_SMA = vix.groupby(['Year', 'Spike_SMA']).size().unstack(fill_value=0)
 
-spike_count_SMA
+display(spike_count_SMA)
 ```
 
 Which gives us the following:
@@ -736,6 +592,10 @@ Here are the yearly plots for when signals are generated:
 
 ![Spike/Signals, 2025](09_VIX_SMA_Spike_2025_2025.png)
 
+For comparison with the VVIX plot for 2025:
+
+![VVIX, 2025](02_VVIX_Plot_2025-Present.png)
+
 ### Spike Counts (Signals) Plots By Decade
 
 And here are the plots for the signals generated over the past 3 decades:
@@ -771,6 +631,10 @@ And here are the plots for the signals generated over the past 3 decades:
 #### 2025 - Present
 
 ![Spike/Signals, 2025 - Present](09_VIX_SMA_Spike_2025_2029.png)
+
+For comparison with the VVIX plot for 2025:
+
+![VVIX, 2025](02_VVIX_Plot_2025-Present.png)
 
 ## Trading History
 

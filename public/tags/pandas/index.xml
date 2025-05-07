@@ -6,7 +6,7 @@
         <description>Recent content in Pandas on Jared Szajkowski</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Mon, 28 Apr 2025 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/tags/pandas/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 06 May 2025 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/tags/pandas/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Investigating A VIX Trading Signal</title>
         <link>https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/</link>
         <pubDate>Sat, 01 Mar 2025 00:00:01 +0000</pubDate>
@@ -19,11 +19,8 @@ Update 4/12/2025: VIX data through 4/10/25.&lt;/br&gt;
 Update 4/22/2025: VIX data through 4/18/25.&lt;/br&gt;
 Update 4/23/2025: VIX data through 4/22/25.&lt;/br&gt;
 Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, including open and closed positions.&lt;/br&gt;
-Update 4/28/2025: VIX data through 4/25/25.&lt;/p&gt;
-&lt;h2 id=&#34;introduction&#34;&gt;Introduction
-&lt;/h2&gt;&lt;p&gt;From the &lt;a class=&#34;link&#34; href=&#34;https://www.cboe.com/tradable_products/vix/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;CBOE VIX website&lt;/a&gt;:&lt;/p&gt;
-&lt;p&gt;&amp;ldquo;Cboe Global Markets revolutionized investing with the creation of the Cboe Volatility Index® (VIX® Index), the first benchmark index to measure the market’s expectation of future volatility. The VIX Index is based on options of the S&amp;amp;P 500® Index, considered the leading indicator of the broad U.S. stock market. The VIX Index is recognized as the world’s premier gauge of U.S. equity market volatility.&amp;rdquo;&lt;/p&gt;</description>
+Update 4/28/2025: VIX data through 4/25/25.&lt;/br&gt;
+Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.&lt;/p&gt;</description>
         </item>
         <item>
         <title>Does Harry Browne&#39;s permanent portfolio withstand the test of time?</title>
@@ -33,7 +30,8 @@ Update 4/28/2025: VIX data through 4/25/25.&lt;/p&gt;
         <guid>https://www.jaredszajkowski.com/2024/11/04/harry-browne-permanent-portfolio/</guid>
         <description>&lt;img src="https://www.jaredszajkowski.com/2024/11/04/harry-browne-permanent-portfolio/cover.jpg" alt="Featured image of post Does Harry Browne&#39;s permanent portfolio withstand the test of time?" /&gt;&lt;h2 id=&#34;post-updates&#34;&gt;Post Updates
 &lt;/h2&gt;&lt;p&gt;Update 12/5/2024: Updated code for summary stats function, various code comments, and corrected grammatical errors.&lt;/br&gt;
-Update 2/19/2025: Various code updates, commented and documented functions.&lt;/p&gt;
+Update 2/19/2025: Various code updates, commented and documented functions.&lt;/br&gt;
+Update 5/2/2025: Updated functions and code.&lt;/p&gt;
 &lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;Harry Browne was an influencial politician, financial advisor, and author who lived from 1933 to 2006 and published 12 books. Wikipedia has &lt;a class=&#34;link&#34; href=&#34;https://en.wikipedia.org/wiki/Harry_Browne&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;an in-depth biography&lt;/a&gt; on him.&lt;/p&gt;
