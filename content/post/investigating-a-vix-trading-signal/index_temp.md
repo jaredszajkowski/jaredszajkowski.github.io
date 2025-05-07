@@ -321,7 +321,7 @@ Gives us:
 
 <!-- INSERT_02_VVIX_Stats_By_Year_HERE -->
 
-### Deciles
+### Deciles - VVIX
 
 Here are the levels for each decile, for the full dataset:
 
