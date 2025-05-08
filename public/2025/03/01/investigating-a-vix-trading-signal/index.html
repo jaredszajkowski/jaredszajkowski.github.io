@@ -10,7 +10,7 @@
 <meta property='og:description' content="A brief look at finding a trading signal based on moving averages of the VIX.">
 <meta property='og:url' content='https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/'>
 <meta property='og:site_name' content='Jared Szajkowski'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Python' /><meta property='article:tag' content='Yahoo Finance' /><meta property='article:tag' content='pandas' /><meta property='article:tag' content='VIX' /><meta property='article:published_time' content='2025-03-01T00:00:01&#43;00:00'/><meta property='article:modified_time' content='2025-05-06T00:00:01&#43;00:00'/><meta property='og:image' content='https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/cover.jpg' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Python' /><meta property='article:tag' content='Yahoo Finance' /><meta property='article:tag' content='pandas' /><meta property='article:tag' content='VIX' /><meta property='article:published_time' content='2025-03-01T00:00:01&#43;00:00'/><meta property='article:modified_time' content='2025-05-07T00:00:01&#43;00:00'/><meta property='og:image' content='https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/cover.jpg' />
 <meta name="twitter:title" content="Investigating A VIX Trading Signal">
 <meta name="twitter:description" content="A brief look at finding a trading signal based on moving averages of the VIX."><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/cover.jpg' />
@@ -487,7 +487,8 @@ Update 4/22/2025: VIX data through 4/18/25.</br>
 Update 4/23/2025: VIX data through 4/22/25.</br>
 Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, including open and closed positions.</br>
 Update 4/28/2025: VIX data through 4/25/25.</br>
-Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
+Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</br>
+Update 5/7/2025: Data through 5/6/25.</br></p>
 <h2 id="introduction">Introduction
 </h2><p>From the <a class="link" href="https://www.cboe.com/tradable_products/vix/"  target="_blank" rel="noopener"
     >CBOE VIX website</a>:</p>
@@ -1340,14 +1341,14 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
 <pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">The columns, shape, and data types are:
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-</span></span><span class="line"><span class="cl">DatetimeIndex: 8901 entries, 1990-01-02 to 2025-05-05
+</span></span><span class="line"><span class="cl">DatetimeIndex: 8902 entries, 1990-01-02 to 2025-05-06
 </span></span><span class="line"><span class="cl">Data columns (total 4 columns):
 </span></span><span class="line"><span class="cl"> #   Column  Non-Null Count  Dtype  
 </span></span><span class="line"><span class="cl">---  ------  --------------  -----  
-</span></span><span class="line"><span class="cl"> 0   Close   8901 non-null   float64
-</span></span><span class="line"><span class="cl"> 1   High    8901 non-null   float64
-</span></span><span class="line"><span class="cl"> 2   Low     8901 non-null   float64
-</span></span><span class="line"><span class="cl"> 3   Open    8901 non-null   float64
+</span></span><span class="line"><span class="cl"> 0   Close   8902 non-null   float64
+</span></span><span class="line"><span class="cl"> 1   High    8902 non-null   float64
+</span></span><span class="line"><span class="cl"> 2   Low     8902 non-null   float64
+</span></span><span class="line"><span class="cl"> 3   Open    8902 non-null   float64
 </span></span><span class="line"><span class="cl">dtypes: float64(4)
 </span></span><span class="line"><span class="cl">memory usage: 347.7 KB
 </span></span></code></pre></td></tr></table>
@@ -1414,13 +1415,6 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left">2025-04-29 00:00:00</td>
-          <td style="text-align: right">24.17</td>
-          <td style="text-align: right">25.99</td>
-          <td style="text-align: right">23.76</td>
-          <td style="text-align: right">24.76</td>
-      </tr>
-      <tr>
           <td style="text-align: left">2025-04-30 00:00:00</td>
           <td style="text-align: right">24.70</td>
           <td style="text-align: right">28.17</td>
@@ -1447,6 +1441,13 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
           <td style="text-align: right">24.63</td>
           <td style="text-align: right">22.81</td>
           <td style="text-align: right">24.25</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-06 00:00:00</td>
+          <td style="text-align: right">24.76</td>
+          <td style="text-align: right">25.11</td>
+          <td style="text-align: right">23.90</td>
+          <td style="text-align: right">23.97</td>
       </tr>
   </tbody>
 </table></div>
@@ -1492,14 +1493,14 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
   <tbody>
       <tr>
           <td style="text-align: left">count</td>
-          <td style="text-align: right">8901.00</td>
-          <td style="text-align: right">8901.00</td>
-          <td style="text-align: right">8901.00</td>
-          <td style="text-align: right">8901.00</td>
+          <td style="text-align: right">8902.00</td>
+          <td style="text-align: right">8902.00</td>
+          <td style="text-align: right">8902.00</td>
+          <td style="text-align: right">8902.00</td>
       </tr>
       <tr>
           <td style="text-align: left">mean</td>
-          <td style="text-align: right">19.49</td>
+          <td style="text-align: right">19.50</td>
           <td style="text-align: right">20.41</td>
           <td style="text-align: right">18.82</td>
           <td style="text-align: right">19.59</td>
@@ -1528,15 +1529,15 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
       <tr>
           <td style="text-align: left">50%</td>
           <td style="text-align: right">17.65</td>
-          <td style="text-align: right">18.36</td>
+          <td style="text-align: right">18.37</td>
           <td style="text-align: right">17.07</td>
           <td style="text-align: right">17.69</td>
       </tr>
       <tr>
           <td style="text-align: left">75%</td>
-          <td style="text-align: right">22.84</td>
+          <td style="text-align: right">22.85</td>
           <td style="text-align: right">23.85</td>
-          <td style="text-align: right">22.16</td>
+          <td style="text-align: right">22.17</td>
           <td style="text-align: right">22.99</td>
       </tr>
       <tr>
@@ -1555,7 +1556,7 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
       </tr>
       <tr>
           <td style="text-align: left">mean + 0 std</td>
-          <td style="text-align: right">19.49</td>
+          <td style="text-align: right">19.50</td>
           <td style="text-align: right">20.41</td>
           <td style="text-align: right">18.82</td>
           <td style="text-align: right">19.59</td>
@@ -2023,14 +2024,14 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
       </tr>
       <tr>
           <td style="text-align: right">2025</td>
-          <td style="text-align: right">22.45</td>
-          <td style="text-align: right">8.06</td>
-          <td style="text-align: right">24.38</td>
-          <td style="text-align: right">9.80</td>
-          <td style="text-align: right">20.73</td>
-          <td style="text-align: right">5.90</td>
-          <td style="text-align: right">22.14</td>
-          <td style="text-align: right">7.61</td>
+          <td style="text-align: right">22.46</td>
+          <td style="text-align: right">8.02</td>
+          <td style="text-align: right">24.39</td>
+          <td style="text-align: right">9.74</td>
+          <td style="text-align: right">20.77</td>
+          <td style="text-align: right">5.87</td>
+          <td style="text-align: right">22.17</td>
+          <td style="text-align: right">7.57</td>
       </tr>
   </tbody>
 </table></div>
@@ -2097,13 +2098,13 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
       <tr>
           <td style="text-align: right">0.50</td>
           <td style="text-align: right">17.65</td>
-          <td style="text-align: right">18.36</td>
+          <td style="text-align: right">18.37</td>
           <td style="text-align: right">17.07</td>
           <td style="text-align: right">17.69</td>
       </tr>
       <tr>
           <td style="text-align: right">0.60</td>
-          <td style="text-align: right">19.55</td>
+          <td style="text-align: right">19.56</td>
           <td style="text-align: right">20.39</td>
           <td style="text-align: right">19.02</td>
           <td style="text-align: right">19.69</td>
@@ -2112,8 +2113,8 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
           <td style="text-align: right">0.70</td>
           <td style="text-align: right">21.65</td>
           <td style="text-align: right">22.66</td>
-          <td style="text-align: right">21.00</td>
-          <td style="text-align: right">21.80</td>
+          <td style="text-align: right">21.01</td>
+          <td style="text-align: right">21.81</td>
       </tr>
       <tr>
           <td style="text-align: right">0.80</td>
@@ -2328,14 +2329,14 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
 <pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">The columns, shape, and data types are:
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-</span></span><span class="line"><span class="cl">DatetimeIndex: 8901 entries, 1990-01-02 to 2025-05-05
+</span></span><span class="line"><span class="cl">DatetimeIndex: 8902 entries, 1990-01-02 to 2025-05-06
 </span></span><span class="line"><span class="cl">Data columns (total 4 columns):
 </span></span><span class="line"><span class="cl"> #   Column  Non-Null Count  Dtype  
 </span></span><span class="line"><span class="cl">---  ------  --------------  -----  
-</span></span><span class="line"><span class="cl"> 0   Close   8901 non-null   float64
-</span></span><span class="line"><span class="cl"> 1   High    8901 non-null   float64
-</span></span><span class="line"><span class="cl"> 2   Low     8901 non-null   float64
-</span></span><span class="line"><span class="cl"> 3   Open    8901 non-null   float64
+</span></span><span class="line"><span class="cl"> 0   Close   8902 non-null   float64
+</span></span><span class="line"><span class="cl"> 1   High    8902 non-null   float64
+</span></span><span class="line"><span class="cl"> 2   Low     8902 non-null   float64
+</span></span><span class="line"><span class="cl"> 3   Open    8902 non-null   float64
 </span></span><span class="line"><span class="cl">dtypes: float64(4)
 </span></span><span class="line"><span class="cl">memory usage: 347.7 KB
 </span></span></code></pre></td></tr></table>
@@ -2402,13 +2403,6 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left">2025-04-29 00:00:00</td>
-          <td style="text-align: right">24.17</td>
-          <td style="text-align: right">25.99</td>
-          <td style="text-align: right">23.76</td>
-          <td style="text-align: right">24.76</td>
-      </tr>
-      <tr>
           <td style="text-align: left">2025-04-30 00:00:00</td>
           <td style="text-align: right">24.70</td>
           <td style="text-align: right">28.17</td>
@@ -2435,6 +2429,13 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
           <td style="text-align: right">24.63</td>
           <td style="text-align: right">22.81</td>
           <td style="text-align: right">24.25</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-06 00:00:00</td>
+          <td style="text-align: right">24.76</td>
+          <td style="text-align: right">25.11</td>
+          <td style="text-align: right">23.90</td>
+          <td style="text-align: right">23.97</td>
       </tr>
   </tbody>
 </table></div>
@@ -2480,10 +2481,10 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
   <tbody>
       <tr>
           <td style="text-align: left">count</td>
-          <td style="text-align: right">4605.00</td>
-          <td style="text-align: right">4605.00</td>
-          <td style="text-align: right">4605.00</td>
-          <td style="text-align: right">4605.00</td>
+          <td style="text-align: right">4606.00</td>
+          <td style="text-align: right">4606.00</td>
+          <td style="text-align: right">4606.00</td>
+          <td style="text-align: right">4606.00</td>
       </tr>
       <tr>
           <td style="text-align: left">mean</td>
@@ -2494,7 +2495,7 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
       </tr>
       <tr>
           <td style="text-align: left">std</td>
-          <td style="text-align: right">16.48</td>
+          <td style="text-align: right">16.47</td>
           <td style="text-align: right">18.08</td>
           <td style="text-align: right">15.13</td>
           <td style="text-align: right">16.53</td>
@@ -2515,16 +2516,16 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
       </tr>
       <tr>
           <td style="text-align: left">50%</td>
-          <td style="text-align: right">90.47</td>
-          <td style="text-align: right">92.22</td>
+          <td style="text-align: right">90.48</td>
+          <td style="text-align: right">92.23</td>
           <td style="text-align: right">89.33</td>
           <td style="text-align: right">90.76</td>
       </tr>
       <tr>
           <td style="text-align: left">75%</td>
-          <td style="text-align: right">102.22</td>
-          <td style="text-align: right">105.01</td>
-          <td style="text-align: right">100.04</td>
+          <td style="text-align: right">102.24</td>
+          <td style="text-align: right">105.06</td>
+          <td style="text-align: right">100.05</td>
           <td style="text-align: right">102.58</td>
       </tr>
       <tr>
@@ -2536,9 +2537,9 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
       </tr>
       <tr>
           <td style="text-align: left">mean + -1 std</td>
-          <td style="text-align: right">77.01</td>
-          <td style="text-align: right">77.44</td>
-          <td style="text-align: right">76.80</td>
+          <td style="text-align: right">77.02</td>
+          <td style="text-align: right">77.45</td>
+          <td style="text-align: right">76.81</td>
           <td style="text-align: right">77.21</td>
       </tr>
       <tr>
@@ -2550,7 +2551,7 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
       </tr>
       <tr>
           <td style="text-align: left">mean + 1 std</td>
-          <td style="text-align: right">109.96</td>
+          <td style="text-align: right">109.97</td>
           <td style="text-align: right">113.60</td>
           <td style="text-align: right">107.06</td>
           <td style="text-align: right">110.26</td>
@@ -2564,7 +2565,7 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
       </tr>
       <tr>
           <td style="text-align: left">mean + 3 std</td>
-          <td style="text-align: right">142.92</td>
+          <td style="text-align: right">142.91</td>
           <td style="text-align: right">149.75</td>
           <td style="text-align: right">137.31</td>
           <td style="text-align: right">143.32</td>
@@ -2572,13 +2573,13 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
       <tr>
           <td style="text-align: left">mean + 4 std</td>
           <td style="text-align: right">159.39</td>
-          <td style="text-align: right">167.83</td>
+          <td style="text-align: right">167.82</td>
           <td style="text-align: right">152.44</td>
-          <td style="text-align: right">159.85</td>
+          <td style="text-align: right">159.84</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 5 std</td>
-          <td style="text-align: right">175.87</td>
+          <td style="text-align: right">175.86</td>
           <td style="text-align: right">185.90</td>
           <td style="text-align: right">167.57</td>
           <td style="text-align: right">176.37</td>
@@ -2824,14 +2825,14 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
       </tr>
       <tr>
           <td style="text-align: right">2025</td>
-          <td style="text-align: right">108.95</td>
-          <td style="text-align: right">16.83</td>
-          <td style="text-align: right">114.38</td>
-          <td style="text-align: right">19.57</td>
-          <td style="text-align: right">103.74</td>
-          <td style="text-align: right">13.04</td>
-          <td style="text-align: right">107.89</td>
-          <td style="text-align: right">15.99</td>
+          <td style="text-align: right">108.90</td>
+          <td style="text-align: right">16.73</td>
+          <td style="text-align: right">114.29</td>
+          <td style="text-align: right">19.48</td>
+          <td style="text-align: right">103.72</td>
+          <td style="text-align: right">12.96</td>
+          <td style="text-align: right">107.85</td>
+          <td style="text-align: right">15.90</td>
       </tr>
   </tbody>
 </table></div>
@@ -2868,7 +2869,7 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
       </tr>
       <tr>
           <td style="text-align: right">0.10</td>
-          <td style="text-align: right">75.80</td>
+          <td style="text-align: right">75.81</td>
           <td style="text-align: right">75.94</td>
           <td style="text-align: right">75.42</td>
           <td style="text-align: right">75.74</td>
@@ -2882,7 +2883,7 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
       </tr>
       <tr>
           <td style="text-align: right">0.30</td>
-          <td style="text-align: right">83.87</td>
+          <td style="text-align: right">83.88</td>
           <td style="text-align: right">85.16</td>
           <td style="text-align: right">82.95</td>
           <td style="text-align: right">84.09</td>
@@ -2896,35 +2897,35 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
       </tr>
       <tr>
           <td style="text-align: right">0.50</td>
-          <td style="text-align: right">90.47</td>
-          <td style="text-align: right">92.22</td>
+          <td style="text-align: right">90.48</td>
+          <td style="text-align: right">92.23</td>
           <td style="text-align: right">89.33</td>
           <td style="text-align: right">90.76</td>
       </tr>
       <tr>
           <td style="text-align: right">0.60</td>
-          <td style="text-align: right">94.17</td>
+          <td style="text-align: right">94.19</td>
           <td style="text-align: right">96.10</td>
           <td style="text-align: right">92.99</td>
-          <td style="text-align: right">94.45</td>
+          <td style="text-align: right">94.46</td>
       </tr>
       <tr>
           <td style="text-align: right">0.70</td>
           <td style="text-align: right">99.13</td>
           <td style="text-align: right">101.53</td>
           <td style="text-align: right">97.45</td>
-          <td style="text-align: right">99.41</td>
+          <td style="text-align: right">99.42</td>
       </tr>
       <tr>
           <td style="text-align: right">0.80</td>
           <td style="text-align: right">106.08</td>
-          <td style="text-align: right">109.42</td>
+          <td style="text-align: right">109.41</td>
           <td style="text-align: right">103.96</td>
           <td style="text-align: right">106.51</td>
       </tr>
       <tr>
           <td style="text-align: right">0.90</td>
-          <td style="text-align: right">115.34</td>
+          <td style="text-align: right">115.33</td>
           <td style="text-align: right">118.83</td>
           <td style="text-align: right">112.53</td>
           <td style="text-align: right">115.58</td>
@@ -3321,7 +3322,7 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
       </tr>
       <tr>
           <td style="text-align: right">2025</td>
-          <td style="text-align: right">73</td>
+          <td style="text-align: right">74</td>
           <td style="text-align: right">11</td>
       </tr>
   </tbody>
@@ -4215,6 +4216,24 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
           <td style="text-align: right">1735.68</td>
       </tr>
       <tr>
+          <td style="text-align: left">2025-05-07 00:00:00</td>
+          <td style="text-align: left">Sell to Close</td>
+          <td style="text-align: left">VIX 05/21/2025 26.00 P</td>
+          <td style="text-align: right">4</td>
+          <td style="text-align: right">3.55</td>
+          <td style="text-align: right">4.32</td>
+          <td style="text-align: right">1415.68</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-07 00:00:00</td>
+          <td style="text-align: left">Sell to Close</td>
+          <td style="text-align: left">VIX 05/21/2025 37.00 P</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">13.75</td>
+          <td style="text-align: right">3.24</td>
+          <td style="text-align: right">4121.76</td>
+      </tr>
+      <tr>
           <td style="text-align: left">2025-04-03 00:00:00</td>
           <td style="text-align: left">Buy to Open</td>
           <td style="text-align: left">VIX 06/18/2025 27.00 P</td>
@@ -4349,6 +4368,24 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
           <td style="text-align: right">0.23</td>
       </tr>
       <tr>
+          <td style="text-align: left">VIX 05/21/2025 26.00 P</td>
+          <td style="text-align: right">7666.21</td>
+          <td style="text-align: right">15</td>
+          <td style="text-align: right">5593.79</td>
+          <td style="text-align: right">15</td>
+          <td style="text-align: right">-2072.42</td>
+          <td style="text-align: right">-0.27</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">VIX 05/21/2025 37.00 P</td>
+          <td style="text-align: right">3963.24</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">4121.76</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">158.52</td>
+          <td style="text-align: right">0.04</td>
+      </tr>
+      <tr>
           <td style="text-align: left">VIX 05/21/2025 50.00 P</td>
           <td style="text-align: right">4232.16</td>
           <td style="text-align: right">2</td>
@@ -4359,8 +4396,8 @@ Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</p>
       </tr>
   </tbody>
 </table></div>
-<p>Net profit and loss percentage: 27.02%</br>
-Net profit and loss: $3,243.08</p>
+<p>Net profit and loss percentage: 5.62%</br>
+Net profit and loss: $1,329.18</p>
 <h3 id="open-positions">Open Positions
 </h3><p>Here are the positions that are currently open:</p>
 <div class="table-wrapper"><table>
@@ -4372,16 +4409,6 @@ Net profit and loss: $3,243.08</p>
       </tr>
   </thead>
   <tbody>
-      <tr>
-          <td style="text-align: left">VIX 05/21/2025 26.00 P</td>
-          <td style="text-align: right">7666.21</td>
-          <td style="text-align: right">15</td>
-      </tr>
-      <tr>
-          <td style="text-align: left">VIX 05/21/2025 37.00 P</td>
-          <td style="text-align: right">3963.24</td>
-          <td style="text-align: right">3</td>
-      </tr>
       <tr>
           <td style="text-align: left">VIX 06/18/2025 27.00 P</td>
           <td style="text-align: right">7472.97</td>
@@ -4469,7 +4496,7 @@ The pdf export of the jupyter notebook is available <a class="link" href="invest
 
 
         <span>
-            Last updated on May 6, 2025
+            Last updated on May 7, 2025
         </span>
     </section></footer>
 
