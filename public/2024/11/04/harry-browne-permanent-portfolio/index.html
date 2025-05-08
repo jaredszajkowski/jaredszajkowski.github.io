@@ -912,10 +912,6 @@ Update 5/2/2025: Updated functions and code.</p>
 </span><span class="lnt">79
 </span><span class="lnt">80
 </span><span class="lnt">81
-</span><span class="lnt">82
-</span><span class="lnt">83
-</span><span class="lnt">84
-</span><span class="lnt">85
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -965,14 +961,10 @@ Update 5/2/2025: Updated functions and code.</p>
 </span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="c1"># Build file paths using pathlib</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">source</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">asset_class</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">timeframe</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="n">csv_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_directory</span><span class="p">)</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">.csv&#34;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">xlsx_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_directory</span><span class="p">)</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">.xlsx&#34;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">pickle_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_directory</span><span class="p">)</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">.pkl&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="n">csv_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_directory</span><span class="p">)</span> <span class="o">/</span> <span class="n">source</span> <span class="o">/</span> <span class="n">asset_class</span> <span class="o">/</span> <span class="n">timeframe</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">.csv&#34;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">xlsx_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_directory</span><span class="p">)</span> <span class="o">/</span> <span class="n">source</span> <span class="o">/</span> <span class="n">asset_class</span> <span class="o">/</span> <span class="n">timeframe</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">.xlsx&#34;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">pickle_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_directory</span><span class="p">)</span> <span class="o">/</span> <span class="n">source</span> <span class="o">/</span> <span class="n">asset_class</span> <span class="o">/</span> <span class="n">timeframe</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">.pkl&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">csv_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_directory</span><span class="p">)</span> <span class="o">/</span> <span class="n">source</span> <span class="o">/</span> <span class="n">asset_class</span> <span class="o">/</span> <span class="n">timeframe</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">.csv&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">csv_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_directory</span><span class="p">)</span> <span class="o">/</span> <span class="n">source</span> <span class="o">/</span> <span class="n">asset_class</span> <span class="o">/</span> <span class="n">timeframe</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">.zip&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">xlsx_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_directory</span><span class="p">)</span> <span class="o">/</span> <span class="n">source</span> <span class="o">/</span> <span class="n">asset_class</span> <span class="o">/</span> <span class="n">timeframe</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">.xlsx&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pickle_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_directory</span><span class="p">)</span> <span class="o">/</span> <span class="n">source</span> <span class="o">/</span> <span class="n">asset_class</span> <span class="o">/</span> <span class="n">timeframe</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">.pkl&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="c1"># Try CSV</span>
 </span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
@@ -981,7 +973,7 @@ Update 5/2/2025: Updated functions and code.</p>
 </span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">pass</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># Try ZIP</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Try Zip</span>
 </span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_path</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">df</span>
@@ -1002,7 +994,7 @@ Update 5/2/2025: Updated functions and code.</p>
 </span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">pass</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;❌ Unable to load file: </span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">. Ensure it&#39;s a valid CSV, Excel, or Pickle file with a &#39;data&#39; sheet (if required).&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;❌ Unable to load file: </span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">. Ensure it&#39;s a valid CSV, Excel, Zip, or Pickle file with a &#39;data&#39; sheet (if required).&#34;</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="project-specific-functions">Project Specific Functions

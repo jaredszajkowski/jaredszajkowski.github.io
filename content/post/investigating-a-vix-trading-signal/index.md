@@ -283,14 +283,10 @@ def load_data(
     """
 
     # Build file paths using pathlib
-    if source == None and asset_class == None and timeframe == None:
-        csv_path = Path(base_directory) / f"{ticker}.csv"
-        xlsx_path = Path(base_directory) / f"{ticker}.xlsx"
-        pickle_path = Path(base_directory) / f"{ticker}.pkl"
-    else:
-        csv_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.csv"
-        xlsx_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.xlsx"
-        pickle_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.pkl"
+    csv_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.csv"
+    csv_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.zip"
+    xlsx_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.xlsx"
+    pickle_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.pkl"
 
     # Try CSV
     try:
@@ -299,7 +295,7 @@ def load_data(
     except Exception:
         pass
 
-    # Try ZIP
+    # Try Zip
     try:
         df = pd.read_csv(csv_path)
         return df
@@ -320,7 +316,7 @@ def load_data(
     except Exception:
         pass
 
-    raise ValueError(f"❌ Unable to load file: {ticker}. Ensure it's a valid CSV, Excel, or Pickle file with a 'data' sheet (if required).")
+    raise ValueError(f"❌ Unable to load file: {ticker}. Ensure it's a valid CSV, Excel, Zip, or Pickle file with a 'data' sheet (if required).")
 ```
 
 ### Project Specific Functions
@@ -484,16 +480,16 @@ Gives us the following:
 The columns, shape, and data types are:
 
 <class 'pandas.core.frame.DataFrame'>
-DatetimeIndex: 8902 entries, 1990-01-02 to 2025-05-06
+DatetimeIndex: 8903 entries, 1990-01-02 to 2025-05-07
 Data columns (total 4 columns):
  #   Column  Non-Null Count  Dtype  
 ---  ------  --------------  -----  
- 0   Close   8902 non-null   float64
- 1   High    8902 non-null   float64
- 2   Low     8902 non-null   float64
- 3   Open    8902 non-null   float64
+ 0   Close   8903 non-null   float64
+ 1   High    8903 non-null   float64
+ 2   Low     8903 non-null   float64
+ 3   Open    8903 non-null   float64
 dtypes: float64(4)
-memory usage: 347.7 KB
+memory usage: 347.8 KB
 
 ```
 
@@ -511,11 +507,11 @@ The last 5 rows are:
 
 | Date                |   Close |   High |   Low |   Open |
 |:--------------------|--------:|-------:|------:|-------:|
-| 2025-04-30 00:00:00 |   24.70 |  28.17 | 24.23 |  24.35 |
 | 2025-05-01 00:00:00 |   24.60 |  25.18 | 23.30 |  23.94 |
 | 2025-05-02 00:00:00 |   22.68 |  24.32 | 22.34 |  23.63 |
 | 2025-05-05 00:00:00 |   23.64 |  24.63 | 22.81 |  24.25 |
 | 2025-05-06 00:00:00 |   24.76 |  25.11 | 23.90 |  23.97 |
+| 2025-05-07 00:00:00 |   23.55 |  25.62 | 23.29 |  24.56 |
 
 ### Statistics - VIX
 
@@ -538,7 +534,7 @@ Gives us:
 
 |               |   Close |    High |     Low |    Open |
 |:--------------|--------:|--------:|--------:|--------:|
-| count         | 8902.00 | 8902.00 | 8902.00 | 8902.00 |
+| count         | 8903.00 | 8903.00 | 8903.00 | 8903.00 |
 | mean          |   19.50 |   20.41 |   18.82 |   19.59 |
 | std           |    7.84 |    8.40 |    7.40 |    7.92 |
 | min           |    9.14 |    9.31 |    8.56 |    9.01 |
@@ -606,7 +602,7 @@ Gives us:
 |   2022 |       25.98 |       4.30 |       27.25 |       4.59 |      24.69 |      3.91 |        25.62 |        4.22 |
 |   2023 |       17.12 |       3.17 |       17.83 |       3.58 |      16.36 |      2.89 |        16.87 |        3.14 |
 |   2024 |       15.69 |       3.14 |       16.65 |       4.73 |      14.92 |      2.58 |        15.61 |        3.36 |
-|   2025 |       22.46 |       8.02 |       24.39 |       9.74 |      20.77 |      5.87 |        22.17 |        7.57 |
+|   2025 |       22.49 |       7.97 |       24.40 |       9.68 |      20.80 |      5.85 |        22.19 |        7.52 |
 
 It is interesting to see how much the mean OHLC values vary by year.
 
@@ -631,7 +627,7 @@ Gives us:
 | 0.50 |   17.65 |  18.37 | 17.07 |  17.69 |
 | 0.60 |   19.56 |  20.39 | 19.02 |  19.69 |
 | 0.70 |   21.65 |  22.66 | 21.01 |  21.81 |
-| 0.80 |   24.32 |  25.36 | 23.53 |  24.39 |
+| 0.80 |   24.32 |  25.37 | 23.53 |  24.39 |
 | 0.90 |   28.72 |  30.01 | 27.79 |  28.87 |
 | 1.00 |   82.69 |  89.53 | 72.76 |  82.69 |
 
@@ -732,16 +728,16 @@ Gives us the following:
 The columns, shape, and data types are:
 
 <class 'pandas.core.frame.DataFrame'>
-DatetimeIndex: 8902 entries, 1990-01-02 to 2025-05-06
+DatetimeIndex: 8903 entries, 1990-01-02 to 2025-05-07
 Data columns (total 4 columns):
  #   Column  Non-Null Count  Dtype  
 ---  ------  --------------  -----  
- 0   Close   8902 non-null   float64
- 1   High    8902 non-null   float64
- 2   Low     8902 non-null   float64
- 3   Open    8902 non-null   float64
+ 0   Close   8903 non-null   float64
+ 1   High    8903 non-null   float64
+ 2   Low     8903 non-null   float64
+ 3   Open    8903 non-null   float64
 dtypes: float64(4)
-memory usage: 347.7 KB
+memory usage: 347.8 KB
 
 ```
 
@@ -759,11 +755,11 @@ The last 5 rows are:
 
 | Date                |   Close |   High |   Low |   Open |
 |:--------------------|--------:|-------:|------:|-------:|
-| 2025-04-30 00:00:00 |   24.70 |  28.17 | 24.23 |  24.35 |
 | 2025-05-01 00:00:00 |   24.60 |  25.18 | 23.30 |  23.94 |
 | 2025-05-02 00:00:00 |   22.68 |  24.32 | 22.34 |  23.63 |
 | 2025-05-05 00:00:00 |   23.64 |  24.63 | 22.81 |  24.25 |
 | 2025-05-06 00:00:00 |   24.76 |  25.11 | 23.90 |  23.97 |
+| 2025-05-07 00:00:00 |   23.55 |  25.62 | 23.29 |  24.56 |
 
 ### Statistics - VVIX
 
@@ -786,21 +782,21 @@ Gives us:
 
 |               |   Close |    High |     Low |    Open |
 |:--------------|--------:|--------:|--------:|--------:|
-| count         | 4606.00 | 4606.00 | 4606.00 | 4606.00 |
-| mean          |   93.49 |   95.52 |   91.93 |   93.74 |
+| count         | 4607.00 | 4607.00 | 4607.00 | 4607.00 |
+| mean          |   93.49 |   95.53 |   91.94 |   93.74 |
 | std           |   16.47 |   18.08 |   15.13 |   16.53 |
 | min           |   59.74 |   59.74 |   59.31 |   59.31 |
-| 25%           |   82.29 |   83.42 |   81.46 |   82.52 |
-| 50%           |   90.48 |   92.23 |   89.33 |   90.76 |
-| 75%           |  102.24 |  105.06 |  100.05 |  102.58 |
+| 25%           |   82.30 |   83.42 |   81.47 |   82.52 |
+| 50%           |   90.48 |   92.23 |   89.33 |   90.77 |
+| 75%           |  102.24 |  105.07 |  100.05 |  102.58 |
 | max           |  207.59 |  212.22 |  187.27 |  212.22 |
-| mean + -1 std |   77.02 |   77.45 |   76.81 |   77.21 |
-| mean + 0 std  |   93.49 |   95.52 |   91.93 |   93.74 |
-| mean + 1 std  |  109.97 |  113.60 |  107.06 |  110.26 |
-| mean + 2 std  |  126.44 |  131.67 |  122.19 |  126.79 |
-| mean + 3 std  |  142.91 |  149.75 |  137.31 |  143.32 |
-| mean + 4 std  |  159.39 |  167.82 |  152.44 |  159.84 |
-| mean + 5 std  |  175.86 |  185.90 |  167.57 |  176.37 |
+| mean + -1 std |   77.02 |   77.45 |   76.81 |   77.22 |
+| mean + 0 std  |   93.49 |   95.53 |   91.94 |   93.74 |
+| mean + 1 std  |  109.97 |  113.61 |  107.06 |  110.27 |
+| mean + 2 std  |  126.44 |  131.70 |  122.19 |  126.79 |
+| mean + 3 std  |  142.91 |  149.78 |  137.31 |  143.32 |
+| mean + 4 std  |  159.38 |  167.86 |  152.44 |  159.84 |
+| mean + 5 std  |  175.86 |  185.94 |  167.56 |  176.37 |
 
 We can also run the statistics individually for each year:
 
@@ -837,7 +833,7 @@ Gives us:
 |   2022 |      102.58 |      18.01 |      105.32 |      19.16 |      99.17 |     16.81 |       101.81 |       17.81 |
 |   2023 |       90.95 |       8.64 |       93.72 |       9.98 |      88.01 |      7.37 |        90.34 |        8.38 |
 |   2024 |       92.88 |      15.06 |       97.32 |      18.33 |      89.51 |     13.16 |        92.81 |       15.60 |
-|   2025 |      108.90 |      16.73 |      114.29 |      19.48 |     103.72 |     12.96 |       107.85 |       15.90 |
+|   2025 |      108.84 |      16.64 |      114.53 |      19.49 |     103.67 |     12.89 |       107.75 |       15.83 |
 
 ### Deciles - VVIX
 
@@ -853,15 +849,15 @@ Gives us:
 |      |   Close |   High |    Low |   Open |
 |-----:|--------:|-------:|-------:|-------:|
 | 0.00 |   59.74 |  59.74 |  59.31 |  59.31 |
-| 0.10 |   75.81 |  75.94 |  75.42 |  75.74 |
+| 0.10 |   75.81 |  75.95 |  75.42 |  75.75 |
 | 0.20 |   80.54 |  81.41 |  79.80 |  80.70 |
 | 0.30 |   83.88 |  85.16 |  82.95 |  84.09 |
 | 0.40 |   86.99 |  88.50 |  85.89 |  87.41 |
-| 0.50 |   90.48 |  92.23 |  89.33 |  90.76 |
-| 0.60 |   94.19 |  96.10 |  92.99 |  94.46 |
-| 0.70 |   99.13 | 101.53 |  97.45 |  99.42 |
-| 0.80 |  106.08 | 109.41 | 103.96 | 106.51 |
-| 0.90 |  115.33 | 118.83 | 112.53 | 115.58 |
+| 0.50 |   90.48 |  92.23 |  89.33 |  90.77 |
+| 0.60 |   94.20 |  96.11 |  93.00 |  94.46 |
+| 0.70 |   99.14 | 101.53 |  97.46 |  99.44 |
+| 0.80 |  106.08 | 109.43 | 103.96 | 106.51 |
+| 0.90 |  115.33 | 118.83 | 112.53 | 115.57 |
 | 1.00 |  207.59 | 212.22 | 187.27 | 212.22 |
 
 ## Plots - VVIX
@@ -1005,7 +1001,7 @@ Which gives us the following:
 |   2022 |     239 |     12 |
 |   2023 |     246 |      4 |
 |   2024 |     237 |     15 |
-|   2025 |      74 |     11 |
+|   2025 |      75 |     11 |
 
 And the plot to aid with visualization. Based on the plot, it seems as though volatility has increased since the early 2000's:
 

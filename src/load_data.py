@@ -45,14 +45,10 @@ def load_data(
     """
 
     # Build file paths using pathlib
-    if source == None and asset_class == None and timeframe == None:
-        csv_path = Path(base_directory) / f"{ticker}.csv"
-        xlsx_path = Path(base_directory) / f"{ticker}.xlsx"
-        pickle_path = Path(base_directory) / f"{ticker}.pkl"
-    else:
-        csv_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.csv"
-        xlsx_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.xlsx"
-        pickle_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.pkl"
+    csv_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.csv"
+    csv_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.zip"
+    xlsx_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.xlsx"
+    pickle_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.pkl"
 
     # Try CSV
     try:
@@ -61,7 +57,7 @@ def load_data(
     except Exception:
         pass
 
-    # Try ZIP
+    # Try Zip
     try:
         df = pd.read_csv(csv_path)
         return df
@@ -82,4 +78,4 @@ def load_data(
     except Exception:
         pass
 
-    raise ValueError(f"❌ Unable to load file: {ticker}. Ensure it's a valid CSV, Excel, or Pickle file with a 'data' sheet (if required).")
+    raise ValueError(f"❌ Unable to load file: {ticker}. Ensure it's a valid CSV, Excel, Zip, or Pickle file with a 'data' sheet (if required).")
