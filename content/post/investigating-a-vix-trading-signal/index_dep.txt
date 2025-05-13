@@ -7,10 +7,12 @@
 01_VIX_DF_Info.md
 01_VIX_Stats.md
 01_VIX_Stats_By_Year.md
+01_VIX_Stats_By_Month.md
 01_VIX_Deciles.md
 02_VVIX_DF_Info.md
 02_VVIX_Stats.md
 02_VVIX_Stats_By_Year.md
+02_VVIX_Stats_By_Month.md
 02_VVIX_Deciles.md
 08_Spike_Counts.md
 10_Trades_Executed.md

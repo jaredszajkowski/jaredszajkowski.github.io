@@ -1,6 +1,4 @@
-"""Run or update the project. This file uses the `doit` Python package. It works
-like a Makefile, but is Python-based.
-"""
+"""Run or update the project. This file uses the `doit` Python package. It works like a Makefile, but is Python-based."""
 
 #######################################
 ## Import Libraries
@@ -111,10 +109,7 @@ def extract_front_matter(index_path):
     return {}
 
 def notebook_source_hash(notebook_path):
-    """
-    Compute a SHA-256 hash of the notebook's code and markdown cells.
-    This includes all whitespace and comments.
-    """
+    """Compute a SHA-256 hash of the notebook's code and markdown cells. This includes all whitespace and comments."""
     import nbformat
     import hashlib
 
@@ -341,6 +336,35 @@ def task_copy_notebook_exports():
                 "clean": [],  # Don't clean these files by default.
             }
 
+def task_create_schwab_callback():
+    """Create a Schwab callback URL by creating /public/schwab_callback/index.html and placing the html code in it"""
+    def create_callback():
+        callback_path = PUBLIC_DIR / "schwab_callback" / "index.html"
+        callback_path.parent.mkdir(parents=True, exist_ok=True)
+        html = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Schwab OAuth Code</title>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const code = params.get("code");
+        document.write("<h1>Authorization Code:</h1><p>" + code + "</p>");
+    </script>
+</head>
+<body></body>
+</html>"""
+        with open(callback_path, "w") as f:
+            f.write(html)
+        print(f"✅ Created Schwab callback page at {callback_path}")
+
+    return {
+        "actions": [create_callback],
+        "task_dep": ["copy_notebook_exports"],
+        "verbosity": 2,
+        "clean": [],  # Don't clean these files by default.
+    }
+
 def task_deploy_site():
     """Prompt for a commit message and push to GitHub"""
     def commit_and_push():
@@ -356,7 +380,7 @@ def task_deploy_site():
 
     return {
         "actions": [commit_and_push],
-        "task_dep": ["build_site"],
+        "task_dep": ["create_schwab_callback"],
         "verbosity": 2,
         "clean": [],  # Don't clean these files by default.
     }
@@ -371,6 +395,7 @@ def task_deploy_site():
 #             "clean_public",
 #             "build_site",
 #             "copy_notebook_exports",
+#             "create_schwab_callback",
 #             "deploy_site",
 #         ]
 #     }

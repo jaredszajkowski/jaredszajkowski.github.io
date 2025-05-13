@@ -1,7 +1,6 @@
-import pandas as pd
-import numpy as np
-import yfinance as yf
 import os
+import pandas as pd
+
 from IPython.display import display
 
 def yf_quarter_end_total_return(

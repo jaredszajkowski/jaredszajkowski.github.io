@@ -176,6 +176,23 @@ Gives us:
 
 It is interesting to see how much the mean OHLC values vary by year.
 
+And finally, we can run the statistics individually for each month:
+
+```python
+# Group by month and calculate mean and std for OHLC
+vix_stats_by_month = vix.groupby(vix.index.month)[["Open", "High", "Low", "Close"]].agg(["mean", "std"])
+
+# Flatten the column MultiIndex
+vix_stats_by_month.columns = ['_'.join(col).strip() for col in vix_stats_by_month.columns.values]
+vix_stats_by_month.index.name = "Month"
+
+display(vix_stats_by_month)
+```
+
+Gives us:
+
+<!-- INSERT_01_VIX_Stats_By_Month_HERE -->
+
 ### Deciles - VIX
 
 Here are the levels for each decile, for the full dataset:
@@ -321,6 +338,23 @@ display(vvix_stats_by_year)
 Gives us:
 
 <!-- INSERT_02_VVIX_Stats_By_Year_HERE -->
+
+And finally, we can run the statistics individually for each month:
+
+```python
+# Group by month and calculate mean and std for OHLC
+vvix_stats_by_month = vvix.groupby(vvix.index.month)[["Open", "High", "Low", "Close"]].agg(["mean", "std"])
+
+# Flatten the column MultiIndex
+vvix_stats_by_month.columns = ['_'.join(col).strip() for col in vvix_stats_by_month.columns.values]
+vvix_stats_by_month.index.name = "Year"
+
+display(vvix_stats_by_month)
+```
+
+Gives us:
+
+<!-- INSERT_02_VVIX_Stats_By_Month_HERE -->
 
 ### Deciles - VVIX
 

@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+
 from IPython.display import display
 
 def yf_month_end_total_return(

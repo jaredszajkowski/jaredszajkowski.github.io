@@ -1,6 +1,7 @@
-import yfinance as yf
 import os
 import pandas as pd
+import yfinance as yf
+
 from IPython.display import display
 
 def yf_pull_data(

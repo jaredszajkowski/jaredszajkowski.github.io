@@ -67,13 +67,6 @@ d["OS_TYPE"] = get_os()
 d["BASE_DIR"] = Path(__file__).absolute().parent.parent
 
 # fmt: off
-# Other .env variables
-d["ENV_PATH"] = Path.home() / "Cloud_Storage/Dropbox/.env"
-# d["START_DATE"] = _config("START_DATE", default="1930-01-01", cast=to_datetime)
-# d["END_DATE"] = _config("END_DATE", default="2024-01-01", cast=to_datetime)
-# d["PIPELINE_DEV_MODE"] = _config("PIPELINE_DEV_MODE", default=True, cast=bool)
-# d["PIPELINE_THEME"] = _config("PIPELINE_THEME", default="pipeline")
-
 # Paths
 d["CONTENT_DIR"] = if_relative_make_abs(d["BASE_DIR"], _config('CONTENT_DIR', default=Path('content'), cast=Path))
 d["POSTS_DIR"] = if_relative_make_abs(d["BASE_DIR"], _config('POSTS_DIR', default=Path('content/post'), cast=Path))
@@ -83,10 +76,11 @@ d["SOURCE_DIR"] = if_relative_make_abs(d["BASE_DIR"], _config('SOURCE_DIR', defa
 d["DATA_DIR"] = if_relative_make_abs(d["BASE_DIR"], _config('DATA_DIR', default=Path('Data'), cast=Path))
 d["DATA_MANUAL_DIR"] = if_relative_make_abs(d["BASE_DIR"], _config('DATA_MANUAL_DIR', default=Path('Data_Manual'), cast=Path))
 
-# External Paths
+# External filesystem paths
 quant_finance_research_base_directory = "/home/jared/Cloud_Storage/Dropbox/Quant_Finance_Research"
 d["QUANT_FINANCE_RESEARCH_BASE_DIR"] = Path(str(quant_finance_research_base_directory)).absolute()
 d["QUANT_FINANCE_RESEARCH_SOURCE_DIR"] = if_relative_make_abs(d["QUANT_FINANCE_RESEARCH_BASE_DIR"], _config('QUANT_FINANCE_RESEARCH_SOURCE_DIR', default=Path('src'), cast=Path))
+d["ENV_PATH"] = Path.home() / "Cloud_Storage/Dropbox/.env"
 
 # # Print the dictionary to check the values
 # for key, value in d.items():
@@ -129,6 +123,8 @@ def config(*args, **kwargs):
     return var
 
 
+
+
 def create_dirs():
     ## If they don't exist, create the _data and _output directories
     d["CONTENT_DIR"].mkdir(parents=True, exist_ok=True)
@@ -137,8 +133,6 @@ def create_dirs():
     d["PUBLIC_DIR"].mkdir(parents=True, exist_ok=True)
     d["SOURCE_DIR"].mkdir(parents=True, exist_ok=True)
     d["DATA_DIR"].mkdir(parents=True, exist_ok=True)
-    # (d["BASE_DIR"] / "_docs").mkdir(parents=True, exist_ok=True)
-
 
 if __name__ == "__main__":
     create_dirs()
