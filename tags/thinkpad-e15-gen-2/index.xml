@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Thinkpad E15 Gen 2 on Jared Szajkowski</title><link>https://www.jaredszajkowski.com/tags/thinkpad-e15-gen-2/</link><description>Recent content in Thinkpad E15 Gen 2 on Jared Szajkowski</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 07 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/tags/thinkpad-e15-gen-2/index.xml" rel="self" type="application/rss+xml"/><item><title>Arch Linux Install</title><link>https://www.jaredszajkowski.com/2023/09/29/arch-linux-install/</link><pubDate>Fri, 29 Sep 2023 00:00:01 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/09/29/arch-linux-install/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2023/09/29/arch-linux-install/cover.jpg" alt="Featured image of post Arch Linux Install" />&lt;h2 id="introduction">Introduction
+&lt;/h2>&lt;p>This is the basic framework that I use to install Arch Linux, with a few changes catered to the Lenovo ThinkPad E15 Gen 2. I have found that this is a decent mid range laptop, excellent linux compatibility, great keyboard, and overall provides a good value.&lt;/p>
+&lt;h2 id="getting-started">Getting started
+&lt;/h2>&lt;p>This tutorial assumes the following:&lt;/p>
+&lt;ul>
+&lt;li>You are booting from a USB drive with the Arch install ISO.&lt;/li>
+&lt;li>Wireless or wired network is detected and drivers are configured automatically.&lt;/li>
+&lt;li>You want drive encrytion on your root partition, but not on your boot/efi/swap partitions.&lt;/li>
+&lt;/ul>
+&lt;h3 id="verify-uefi-boot-mode">Verify UEFI boot mode
+&lt;/h3>&lt;p>The following command should show directory without error:&lt;/p></description></item></channel></rss>
