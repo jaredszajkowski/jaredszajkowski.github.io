@@ -28,9 +28,18 @@ def load_api_keys(
     load_dotenv(dotenv_path=env_path)
 
     keys = {
+        "INFURA_KEY": os.getenv("INFURA_KEY"),
+        "NASDAQ_DATA_LINK_KEY": os.getenv("NASDAQ_DATA_LINK_KEY"),
         "COINBASE_KEY": os.getenv("COINBASE_KEY"),
         "COINBASE_SECRET": os.getenv("COINBASE_SECRET"),
-        "NASDAQ_DATA_LINK_KEY": os.getenv("NASDAQ_DATA_LINK_KEY"),
+        "SCHWAB_APP_KEY": os.getenv("SCHWAB_APP_KEY"),
+        "SCHWAB_SECRET": os.getenv("SCHWAB_SECRET"),
+        "SCHWAB_ACCOUNT_NUMBER_1": os.getenv("SCHWAB_ACCOUNT_NUMBER_1"),
+        "SCHWAB_ENCRYPTED_ACCOUNT_ID_1": os.getenv("SCHWAB_ENCRYPTED_ACCOUNT_ID_1"),
+        "SCHWAB_ACCOUNT_NUMBER_2": os.getenv("SCHWAB_ACCOUNT_NUMBER_2"),
+        "SCHWAB_ENCRYPTED_ACCOUNT_ID_2": os.getenv("SCHWAB_ENCRYPTED_ACCOUNT_ID_2"),
+        "SCHWAB_ACCOUNT_NUMBER_3": os.getenv("SCHWAB_ACCOUNT_NUMBER_3"),
+        "SCHWAB_ENCRYPTED_ACCOUNT_ID_3": os.getenv("SCHWAB_ENCRYPTED_ACCOUNT_ID_3"),
     }
 
     # Raise error if any key is missing
