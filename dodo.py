@@ -360,7 +360,7 @@ def task_create_schwab_callback():
 
     return {
         "actions": [create_callback],
-        "task_dep": ["copy_notebook_exports"],
+        "task_dep": ["copy_notebook_exports", "clean_public"],
         "verbosity": 2,
         "clean": [],  # Don't clean these files by default.
     }
