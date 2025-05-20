@@ -67,7 +67,7 @@
 
 @media(min-width:768px){
   :root{
-    --article-font-size:1.4rem}} // was 1.7
+    --article-font-size:1.5rem}} // was 1.7
 
 :root{
   --blockquote-border-size:4px;
@@ -1807,12 +1807,12 @@ a.link:hover{
 
 :root{
   --article-font-family:var(--base-font-family);
-  --article-font-size:1.6rem;
-  --article-line-height:1.85}
+  --article-font-size:1.4rem; // was 1.6
+  --article-line-height:1.75} // was 1.85
 
 @media(min-width:768px){
   :root{
-    --article-font-size:1.7rem}}
+    --article-font-size:1.5rem}} // was 1.7
     
 :root{
   --blockquote-border-size:4px;
