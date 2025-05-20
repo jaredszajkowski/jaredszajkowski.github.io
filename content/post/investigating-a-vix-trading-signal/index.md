@@ -416,6 +416,347 @@ def yf_pull_data(
     return df
 ```
 
+</br>
+
+```python
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+import matplotlib.ticker as mtick
+import pandas as pd
+
+from matplotlib.ticker import FormatStrFormatter, MultipleLocator
+
+def plot_price(
+    price_df: pd.DataFrame,
+    plot_start_date: str,
+    plot_end_date: str,
+    plot_columns,
+    title: str,
+    x_label: str,
+    x_format: str,
+    y_label: str,
+    y_format: str,
+    y_tick_spacing: int,
+    grid: bool,
+    legend: bool,
+    export_plot: bool,
+    plot_file_name: str,
+) -> None:
+
+    """
+    Plot the price data from a DataFrame for a specified date range and columns.
+
+    Parameters:
+    -----------
+    df : pd.DataFrame
+        DataFrame containing the price data to plot.
+    plot_start_date : str
+        Start date for the plot in 'YYYY-MM-DD' format.
+    plot_end_date : str
+        End date for the plot in 'YYYY-MM-DD' format.
+    plot_columns : str OR list
+        List of columns to plot from the DataFrame. If none, all columns will be plotted.
+    title : str
+        Title of the plot.
+    x_label : str
+        Label for the x-axis.
+    x_axis_format : str
+        Format for the x-axis date labels.
+    y_label : str
+        Label for the y-axis.
+    y_tick_spacing : int
+        Spacing for the y-axis ticks.
+    grid : bool
+        Whether to display a grid on the plot.
+    legend : bool
+        Whether to display a legend on the plot.
+    export_plot : bool
+        Whether to save the figure as a PNG file.
+    plot_file_name : str
+        File name for saving the figure (if save_fig is True).
+
+    Returns:
+    --------
+    None
+    """
+
+    # If start date and end date are None, use the entire DataFrame
+    if plot_start_date is None and plot_end_date is None:
+        df_filtered = price_df
+
+    # If only end date is specified, filter by end date
+    elif plot_start_date is None and plot_end_date is not None:
+        df_filtered = price_df[(price_df.index <= plot_end_date)]
+
+    # If only start date is specified, filter by start date
+    elif plot_start_date is not None and plot_end_date is None:
+        df_filtered = price_df[(price_df.index >= plot_start_date)]
+
+    # If both start date and end date are specified, filter by both
+    else:
+        df_filtered = price_df[(price_df.index >= plot_start_date) & (price_df.index <= plot_end_date)]
+
+    # Set plot figure size and background color
+    plt.figure(figsize=(12, 6), facecolor="#F5F5F5")
+
+    # Plot data
+    if plot_columns =="All":
+        for col in df_filtered.columns:
+            plt.plot(df_filtered.index, df_filtered[col], label=col, linestyle='-', linewidth=1.5)
+    else:
+        for col in plot_columns:
+            plt.plot(df_filtered.index, df_filtered[col], label=col, linestyle='-', linewidth=1.5)
+
+    # Format X axis
+    if x_format == "Day":
+        plt.gca().xaxis.set_major_locator(mdates.DayLocator())
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
+    elif x_format == "Week":
+        plt.gca().xaxis.set_major_locator(mdates.WeekdayLocator())
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
+    elif x_format == "Month":
+        plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
+    elif x_format == "Year":
+        plt.gca().xaxis.set_major_locator(mdates.YearLocator())
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+    else:
+        raise ValueError(f"Unrecognized x_format: {x_format}. Use 'Day', 'Week', 'Month', or 'Year'.")
+
+    plt.xlabel(x_label, fontsize=10)
+    plt.xticks(rotation=45, fontsize=8)
+
+    # Format Y axis
+    if y_format == "Decimal":
+        plt.gca().yaxis.set_major_formatter(FormatStrFormatter("%.2f"))
+    elif y_format == "Percentage":
+        plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter(xmax=1, decimals=0))
+    elif y_format == "Scientific":
+        plt.gca().yaxis.set_major_formatter(FormatStrFormatter("%.2e"))
+    elif y_format == "log":
+        plt.yscale("log")
+    else:
+        raise ValueError(f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', or 'Scientific'.")
+    
+    plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
+    plt.ylabel(y_label, fontsize=10)
+    plt.yticks(fontsize=8)
+
+    # Format title, layout, grid, and legend
+    plt.title(title, fontsize=12)
+    plt.tight_layout()
+
+    if grid == True:
+        plt.grid(True, linestyle='--', alpha=0.7)
+
+    if legend == True:
+        plt.legend(fontsize=9)
+
+    # Save figure and display plot
+    if export_plot == True:
+        plt.savefig(f"{plot_file_name}.png", dpi=300, bbox_inches="tight")
+
+    # Display the plot
+    plt.show()
+
+    return None
+```
+
+</br>
+
+```python
+import pandas as pd
+
+def calc_vix_trade_pnl(
+    transaction_df: pd.DataFrame,
+    exp_start_date: str,
+    exp_end_date: str,
+    trade_start_date: str,
+    trade_end_date: str,
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, str, str]:
+    
+    """
+    Calculate the profit and loss (PnL) of trades based on transaction data.
+
+    Parameters:
+    -----------
+    transaction_df : pd.DataFrame
+        DataFrame containing transaction data.
+    exp_start_date : str
+        Start date for filtering transactions in 'YYYY-MM-DD' format. This is the start of the range for the option expiration date.
+    exp_end_date : str
+        End date for filtering transactions in 'YYYY-MM-DD' format. This is the end of the range for the option expiration date.
+    trade_start_date : str
+        Start date for filtering transactions in 'YYYY-MM-DD' format. This is the start of the range for the trade date.
+    trade_end_date : str
+        End date for filtering transactions in 'YYYY-MM-DD' format. This is the end of the range for the trade date.
+
+    Returns:
+    --------
+    transactions_data : pd.DataFrame
+        Dataframe containing the transactions for the specified timeframe.
+    closed_trades : pd.DataFrame
+        DataFrame containing the closed trades with realized PnL and percent PnL.
+    open_trades : pd.DataFrame
+        DataFrame containing the open trades.
+    net_PnL_percent_str : str
+        String representation of the net profit percentage.
+    net_PnL_str : str
+        String representation of the net profit and loss in dollars.
+    """
+
+    # If start and end dates for trades and expirations are None, use the entire DataFrame
+    if exp_start_date is None and exp_end_date is None and trade_start_date is None and trade_end_date is None:
+        transactions_data = transaction_df
+    
+    # If both start and end dates for trades and expirations are provided then filter by both
+    else:
+        transactions_data = transaction_df[
+            (transaction_df['Exp_Date'] >= exp_start_date) & (transaction_df['Exp_Date'] <= exp_end_date) &
+            (transaction_df['Trade_Date'] >= trade_start_date) & (transaction_df['Trade_Date'] <= trade_end_date)
+        ]
+
+    # Combine the 'Action' and 'Symbol' columns to create a unique identifier for each transaction
+    transactions_data['TradeDate_Action_Symbol_VIX'] = (
+        transactions_data['Trade_Date'].astype(str) + 
+        ", " + 
+        transactions_data['Action'] + 
+        ", " + 
+        transactions_data['Symbol'] + 
+        ", VIX = " + 
+        transactions_data['Approx_VIX_Level'].astype(str)
+    )
+
+    # Split buys and sells and sum the amounts
+    transactions_sells = transactions_data[transactions_data['Action'] == 'Sell to Close']
+    transactions_sells = transactions_sells.groupby(['Symbol', 'Exp_Date'], as_index=False)[['Amount', 'Quantity']].sum()
+
+    transactions_buys = transactions_data[transactions_data['Action'] == 'Buy to Open']
+    transactions_buys = transactions_buys.groupby(['Symbol', 'Exp_Date'], as_index=False)[['Amount', 'Quantity']].sum()
+
+    # Merge buys and sells dataframes back together
+    merged_transactions = pd.merge(transactions_buys, transactions_sells, on=['Symbol', 'Exp_Date'], how='outer', suffixes=('_Buy', '_Sell'))
+    merged_transactions = merged_transactions.sort_values(by=['Exp_Date'], ascending=[True])
+    merged_transactions = merged_transactions.reset_index(drop=True)
+
+    # Identify the closed positions
+    merged_transactions['Closed'] = (~merged_transactions['Amount_Sell'].isna()) & (~merged_transactions['Amount_Buy'].isna()) & (merged_transactions['Quantity_Buy'] == merged_transactions['Quantity_Sell'])
+
+    # Create a new dataframe for closed positions
+    closed_trades = merged_transactions[merged_transactions['Closed']]
+    closed_trades = closed_trades.reset_index(drop=True)
+    closed_trades['Realized_PnL'] = closed_trades['Amount_Sell'] - closed_trades['Amount_Buy']
+    closed_trades['Percent_PnL'] = closed_trades['Realized_PnL'] / closed_trades['Amount_Buy']
+    closed_trades.drop(columns={'Closed', 'Exp_Date'}, inplace=True)
+    closed_trades['Quantity_Sell'] = closed_trades['Quantity_Sell'].astype(int)
+
+    # Calculate the net % PnL and $ PnL
+    net_PnL_percent = closed_trades['Realized_PnL'].sum() / closed_trades['Amount_Buy'].sum()
+    net_PnL_percent_str = f"{round(net_PnL_percent * 100, 2)}%"
+
+    net_PnL = closed_trades['Realized_PnL'].sum()
+    net_PnL_str = f"${net_PnL:,.2f}"
+
+    # Create a new dataframe for open positions
+    open_trades = merged_transactions[~merged_transactions['Closed']]
+    open_trades = open_trades.reset_index(drop=True)
+    open_trades.drop(columns={'Closed', 'Amount_Sell', 'Quantity_Sell', 'Exp_Date'}, inplace=True)
+
+    return transactions_data, closed_trades, open_trades, net_PnL_percent_str, net_PnL_str
+```
+
+</br>
+
+```python
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import pandas as pd
+
+from matplotlib.ticker import MultipleLocator
+
+def plot_vix_with_trades(
+    vix_price_df: pd.DataFrame,
+    trades_df: pd.DataFrame,
+    plot_start_date: str,
+    plot_end_date: str,
+    x_tick_spacing: int,
+    y_tick_spacing: int,
+    index_number: str,
+    export_plot: bool,
+) -> pd.DataFrame:
+    
+    """
+    Plot the VIX daily high and low prices, along with the VIX spikes, and trades.
+
+    Parameters:
+    -----------
+    vix_price_df : pd.DataFrame
+        Dataframe containing the VIX price data to plot.
+    trades_df: pd.DataFrame
+        Dataframe containing the trades data.
+    plot_start_date : str
+        Start date for the plot in 'YYYY-MM-DD' format.
+    plot_end_date : str
+        End date for the plot in 'YYYY-MM-DD' format.
+    index_number : str
+        Index number to be used in the file name of the plot export.
+    export_plot : bool
+        Whether to save the figure as a PNG file.
+
+    Returns:
+    --------
+    vix_data : pd.DataFrame
+        Dataframe containing the VIX price data for the specified timeframe.
+    """
+
+    # Create temporary dataframe for the specified date range
+    vix_data = vix_price_df[(vix_price_df.index >= plot_start_date) & (vix_price_df.index <= plot_end_date)]
+
+    # Set plot figure size and background color
+    plt.figure(figsize=(12, 6), facecolor="#F5F5F5")
+
+    # Plot data
+    plt.plot(vix_data.index, vix_data['High'], label='High', linestyle='-', color='steelblue', linewidth=1)
+    plt.plot(vix_data.index, vix_data['Low'], label='Low', linestyle='-', color='brown', linewidth=1)
+    plt.scatter(vix_data[vix_data['Spike_SMA'] == True].index, vix_data[vix_data['Spike_SMA'] == True]['High'], label='Spike (High > 1.25 * 10 Day High SMA)', color='black', s=20)
+    plt.scatter(trades_df['Trade_Date'], trades_df['Approx_VIX_Level'], label='Trades', color='red', s=20)
+
+    # Annotate each point in trades_df with the corresponding Action_Symbol
+    for _, row in trades_df.iterrows():
+        plt.text(
+            row['Trade_Date'] + pd.Timedelta(days=1),
+            row['Approx_VIX_Level'] + 0.1,
+            row['TradeDate_Action_Symbol_VIX'],
+            fontsize=9
+        )
+
+    # Format X axis
+    plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=x_tick_spacing))
+    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m-%d"))
+    plt.xlabel("Date", fontsize=10)
+    plt.xticks(rotation=45, fontsize=8)
+
+    # Format Y axis
+    plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
+    plt.ylabel("VIX", fontsize=10)
+    plt.yticks(fontsize=8)
+
+    # Format title, layout, grid, and legend
+    plt.title(f"CBOE Volatility Index (VIX), VIX Spikes, Trades, {plot_start_date} - {plot_end_date}", fontsize=12)
+    plt.tight_layout()
+    plt.grid(True, linestyle='--', alpha=0.7)
+    plt.legend(fontsize=9)
+
+    # Save figure and display plot
+    if export_plot == True:
+        plt.savefig(f"{index_number}_VIX_Spike_Trades_{plot_start_date}_{plot_end_date}.png", dpi=300, bbox_inches="tight")
+    
+    # Display the plot
+    plt.show()
+
+    return vix_data
+```
+
 ## Data Overview (VIX)
 
 ### Acquire CBOE Volatility Index (VIX) Data
@@ -481,16 +822,16 @@ Gives us the following:
 The columns, shape, and data types are:
 
 <class 'pandas.core.frame.DataFrame'>
-DatetimeIndex: 8906 entries, 1990-01-02 to 2025-05-12
+DatetimeIndex: 8911 entries, 1990-01-02 to 2025-05-19
 Data columns (total 4 columns):
  #   Column  Non-Null Count  Dtype  
 ---  ------  --------------  -----  
- 0   Close   8906 non-null   float64
- 1   High    8906 non-null   float64
- 2   Low     8906 non-null   float64
- 3   Open    8906 non-null   float64
+ 0   Close   8911 non-null   float64
+ 1   High    8911 non-null   float64
+ 2   Low     8911 non-null   float64
+ 3   Open    8911 non-null   float64
 dtypes: float64(4)
-memory usage: 347.9 KB
+memory usage: 348.1 KB
 
 ```
 
@@ -508,11 +849,11 @@ The last 5 rows are:
 
 | Date                |   Close |   High |   Low |   Open |
 |:--------------------|--------:|-------:|------:|-------:|
-| 2025-05-06 00:00:00 |   24.76 |  25.11 | 23.90 |  23.97 |
-| 2025-05-07 00:00:00 |   23.55 |  25.62 | 23.29 |  24.56 |
-| 2025-05-08 00:00:00 |   22.48 |  23.61 | 21.88 |  22.84 |
-| 2025-05-09 00:00:00 |   21.90 |  22.82 | 21.83 |  22.40 |
-| 2025-05-12 00:00:00 |   18.39 |  20.44 | 18.14 |  19.84 |
+| 2025-05-13 00:00:00 |   18.22 |  18.85 | 17.65 |  18.69 |
+| 2025-05-14 00:00:00 |   18.62 |  18.82 | 18.06 |  18.10 |
+| 2025-05-15 00:00:00 |   17.83 |  19.38 | 17.77 |  19.19 |
+| 2025-05-16 00:00:00 |   17.24 |  17.96 | 17.15 |  17.96 |
+| 2025-05-19 00:00:00 |   18.14 |  19.92 | 17.92 |  19.84 |
 
 ### Statistics - VIX
 
@@ -535,21 +876,21 @@ Gives us:
 
 |               |   Close |    High |     Low |    Open |
 |:--------------|--------:|--------:|--------:|--------:|
-| count         | 8906.00 | 8906.00 | 8906.00 | 8906.00 |
+| count         | 8911.00 | 8911.00 | 8911.00 | 8911.00 |
 | mean          |   19.50 |   20.41 |   18.82 |   19.59 |
 | std           |    7.84 |    8.40 |    7.40 |    7.92 |
 | min           |    9.14 |    9.31 |    8.56 |    9.01 |
 | 25%           |   13.86 |   14.53 |   13.40 |   13.93 |
 | 50%           |   17.65 |   18.38 |   17.07 |   17.69 |
-| 75%           |   22.85 |   23.85 |   22.17 |   22.99 |
+| 75%           |   22.84 |   23.85 |   22.16 |   22.99 |
 | max           |   82.69 |   89.53 |   72.76 |   82.69 |
-| mean + -1 std |   11.65 |   12.00 |   11.43 |   11.67 |
+| mean + -1 std |   11.65 |   12.01 |   11.43 |   11.67 |
 | mean + 0 std  |   19.50 |   20.41 |   18.82 |   19.59 |
 | mean + 1 std  |   27.34 |   28.81 |   26.22 |   27.51 |
-| mean + 2 std  |   35.18 |   37.21 |   33.62 |   35.43 |
-| mean + 3 std  |   43.03 |   45.62 |   41.02 |   43.35 |
-| mean + 4 std  |   50.87 |   54.02 |   48.41 |   51.27 |
-| mean + 5 std  |   58.71 |   62.42 |   55.81 |   59.18 |
+| mean + 2 std  |   35.18 |   37.21 |   33.61 |   35.42 |
+| mean + 3 std  |   43.02 |   45.61 |   41.01 |   43.34 |
+| mean + 4 std  |   50.86 |   54.01 |   48.40 |   51.26 |
+| mean + 5 std  |   58.70 |   62.41 |   55.80 |   59.17 |
 
 We can also run the statistics individually for each year:
 
@@ -603,7 +944,7 @@ Gives us:
 |   2022 |       25.98 |       4.30 |       27.25 |       4.59 |      24.69 |      3.91 |        25.62 |        4.22 |
 |   2023 |       17.12 |       3.17 |       17.83 |       3.58 |      16.36 |      2.89 |        16.87 |        3.14 |
 |   2024 |       15.69 |       3.14 |       16.65 |       4.73 |      14.92 |      2.58 |        15.61 |        3.36 |
-|   2025 |       22.46 |       7.84 |       24.33 |       9.53 |      20.79 |      5.75 |        22.14 |        7.40 |
+|   2025 |       22.26 |       7.67 |       24.04 |       9.35 |      20.63 |      5.64 |        21.92 |        7.26 |
 
 It is interesting to see how much the mean OHLC values vary by year.
 
@@ -628,7 +969,7 @@ Gives us:
 |       2 |       19.67 |       7.22 |       20.51 |       7.65 |      18.90 |      6.81 |        19.58 |        7.13 |
 |       3 |       20.47 |       9.63 |       21.39 |      10.49 |      19.54 |      8.65 |        20.35 |        9.56 |
 |       4 |       19.43 |       7.48 |       20.24 |       7.93 |      18.65 |      6.88 |        19.29 |        7.28 |
-|       5 |       18.59 |       6.09 |       19.39 |       6.48 |      17.88 |      5.68 |        18.50 |        6.00 |
+|       5 |       18.59 |       6.07 |       19.39 |       6.46 |      17.88 |      5.66 |        18.50 |        5.98 |
 |       6 |       18.45 |       5.82 |       19.15 |       6.09 |      17.73 |      5.46 |        18.35 |        5.75 |
 |       7 |       17.87 |       5.75 |       18.58 |       5.98 |      17.24 |      5.48 |        17.80 |        5.67 |
 |       8 |       19.17 |       6.74 |       20.12 |       7.45 |      18.44 |      6.38 |        19.18 |        6.87 |
@@ -651,15 +992,15 @@ Gives us:
 |      |   Close |   High |   Low |   Open |
 |-----:|--------:|-------:|------:|-------:|
 | 0.00 |    9.14 |   9.31 |  8.56 |   9.01 |
-| 0.10 |   12.12 |  12.62 | 11.72 |  12.13 |
-| 0.20 |   13.25 |  13.87 | 12.85 |  13.30 |
-| 0.30 |   14.60 |  15.28 | 14.07 |  14.68 |
-| 0.40 |   16.09 |  16.75 | 15.55 |  16.12 |
+| 0.10 |   12.12 |  12.63 | 11.72 |  12.13 |
+| 0.20 |   13.25 |  13.87 | 12.85 |  13.31 |
+| 0.30 |   14.60 |  15.29 | 14.08 |  14.68 |
+| 0.40 |   16.09 |  16.75 | 15.56 |  16.12 |
 | 0.50 |   17.65 |  18.38 | 17.07 |  17.69 |
-| 0.60 |   19.56 |  20.40 | 19.02 |  19.70 |
-| 0.70 |   21.65 |  22.66 | 21.01 |  21.82 |
-| 0.80 |   24.32 |  25.36 | 23.53 |  24.39 |
-| 0.90 |   28.71 |  30.01 | 27.79 |  28.87 |
+| 0.60 |   19.55 |  20.39 | 19.02 |  19.69 |
+| 0.70 |   21.65 |  22.66 | 21.01 |  21.81 |
+| 0.80 |   24.32 |  25.36 | 23.52 |  24.39 |
+| 0.90 |   28.71 |  30.00 | 27.79 |  28.86 |
 | 1.00 |   82.69 |  89.53 | 72.76 |  82.69 |
 
 ## Plots - VIX
@@ -759,16 +1100,16 @@ Gives us the following:
 The columns, shape, and data types are:
 
 <class 'pandas.core.frame.DataFrame'>
-DatetimeIndex: 8906 entries, 1990-01-02 to 2025-05-12
+DatetimeIndex: 8911 entries, 1990-01-02 to 2025-05-19
 Data columns (total 4 columns):
  #   Column  Non-Null Count  Dtype  
 ---  ------  --------------  -----  
- 0   Close   8906 non-null   float64
- 1   High    8906 non-null   float64
- 2   Low     8906 non-null   float64
- 3   Open    8906 non-null   float64
+ 0   Close   8911 non-null   float64
+ 1   High    8911 non-null   float64
+ 2   Low     8911 non-null   float64
+ 3   Open    8911 non-null   float64
 dtypes: float64(4)
-memory usage: 347.9 KB
+memory usage: 348.1 KB
 
 ```
 
@@ -786,11 +1127,11 @@ The last 5 rows are:
 
 | Date                |   Close |   High |   Low |   Open |
 |:--------------------|--------:|-------:|------:|-------:|
-| 2025-05-06 00:00:00 |   24.76 |  25.11 | 23.90 |  23.97 |
-| 2025-05-07 00:00:00 |   23.55 |  25.62 | 23.29 |  24.56 |
-| 2025-05-08 00:00:00 |   22.48 |  23.61 | 21.88 |  22.84 |
-| 2025-05-09 00:00:00 |   21.90 |  22.82 | 21.83 |  22.40 |
-| 2025-05-12 00:00:00 |   18.39 |  20.44 | 18.14 |  19.84 |
+| 2025-05-13 00:00:00 |   18.22 |  18.85 | 17.65 |  18.69 |
+| 2025-05-14 00:00:00 |   18.62 |  18.82 | 18.06 |  18.10 |
+| 2025-05-15 00:00:00 |   17.83 |  19.38 | 17.77 |  19.19 |
+| 2025-05-16 00:00:00 |   17.24 |  17.96 | 17.15 |  17.96 |
+| 2025-05-19 00:00:00 |   18.14 |  19.92 | 17.92 |  19.84 |
 
 ### Statistics - VVIX
 
@@ -813,21 +1154,21 @@ Gives us:
 
 |               |   Close |    High |     Low |    Open |
 |:--------------|--------:|--------:|--------:|--------:|
-| count         | 4610.00 | 4610.00 | 4610.00 | 4610.00 |
+| count         | 4615.00 | 4615.00 | 4615.00 | 4615.00 |
 | mean          |   93.49 |   95.53 |   91.94 |   93.74 |
-| std           |   16.47 |   18.08 |   15.12 |   16.52 |
+| std           |   16.46 |   18.07 |   15.11 |   16.51 |
 | min           |   59.74 |   59.74 |   59.31 |   59.31 |
-| 25%           |   82.30 |   83.43 |   81.47 |   82.52 |
-| 50%           |   90.49 |   92.23 |   89.33 |   90.78 |
-| 75%           |  102.22 |  105.06 |  100.03 |  102.58 |
+| 25%           |   82.31 |   83.44 |   81.48 |   82.53 |
+| 50%           |   90.49 |   92.23 |   89.33 |   90.80 |
+| 75%           |  102.20 |  105.01 |   99.98 |  102.57 |
 | max           |  207.59 |  212.22 |  187.27 |  212.22 |
-| mean + -1 std |   77.02 |   77.45 |   76.82 |   77.22 |
+| mean + -1 std |   77.04 |   77.47 |   76.82 |   77.23 |
 | mean + 0 std  |   93.49 |   95.53 |   91.94 |   93.74 |
-| mean + 1 std  |  109.96 |  113.61 |  107.06 |  110.26 |
-| mean + 2 std  |  126.43 |  131.69 |  122.18 |  126.78 |
-| mean + 3 std  |  142.90 |  149.76 |  137.30 |  143.30 |
-| mean + 4 std  |  159.36 |  167.84 |  152.42 |  159.82 |
-| mean + 5 std  |  175.83 |  185.92 |  167.54 |  176.34 |
+| mean + 1 std  |  109.95 |  113.60 |  107.05 |  110.25 |
+| mean + 2 std  |  126.41 |  131.67 |  122.16 |  126.77 |
+| mean + 3 std  |  142.87 |  149.74 |  137.27 |  143.28 |
+| mean + 4 std  |  159.33 |  167.81 |  152.39 |  159.79 |
+| mean + 5 std  |  175.79 |  185.87 |  167.50 |  176.30 |
 
 We can also run the statistics individually for each year:
 
@@ -864,7 +1205,7 @@ Gives us:
 |   2022 |      102.58 |      18.01 |      105.32 |      19.16 |      99.17 |     16.81 |       101.81 |       17.81 |
 |   2023 |       90.95 |       8.64 |       93.72 |       9.98 |      88.01 |      7.37 |        90.34 |        8.38 |
 |   2024 |       92.88 |      15.06 |       97.32 |      18.33 |      89.51 |     13.16 |        92.81 |       15.60 |
-|   2025 |      108.37 |      16.56 |      113.92 |      19.44 |     103.29 |     12.85 |       107.27 |       15.78 |
+|   2025 |      107.63 |      16.46 |      113.06 |      19.28 |     102.72 |     12.77 |       106.62 |       15.61 |
 
 And finally, we can run the statistics individually for each month:
 
@@ -887,7 +1228,7 @@ Gives us:
 |      2 |       93.49 |      18.24 |       95.39 |      20.70 |      91.39 |     16.43 |        93.13 |       18.58 |
 |      3 |       95.30 |      21.66 |       97.38 |      23.56 |      92.94 |     19.51 |        94.89 |       21.59 |
 |      4 |       92.18 |      19.03 |       94.01 |      20.57 |      90.30 |     17.21 |        91.88 |       18.60 |
-|      5 |       92.04 |      17.14 |       93.71 |      18.21 |      90.36 |     16.36 |        91.58 |       17.00 |
+|      5 |       92.07 |      17.04 |       93.76 |      18.11 |      90.39 |     16.26 |        91.62 |       16.90 |
 |      6 |       92.92 |      15.07 |       94.44 |      16.33 |      91.32 |     14.03 |        92.75 |       15.05 |
 |      7 |       89.97 |      13.16 |       91.46 |      14.23 |      88.48 |     12.26 |        89.84 |       13.12 |
 |      8 |       96.83 |      16.94 |       98.89 |      18.72 |      94.68 |     14.86 |        96.61 |       16.63 |
@@ -910,15 +1251,15 @@ Gives us:
 |      |   Close |   High |    Low |   Open |
 |-----:|--------:|-------:|-------:|-------:|
 | 0.00 |   59.74 |  59.74 |  59.31 |  59.31 |
-| 0.10 |   75.81 |  75.95 |  75.43 |  75.76 |
-| 0.20 |   80.55 |  81.41 |  79.81 |  80.71 |
-| 0.30 |   83.89 |  85.16 |  82.96 |  84.10 |
-| 0.40 |   87.02 |  88.51 |  85.92 |  87.43 |
-| 0.50 |   90.49 |  92.23 |  89.33 |  90.78 |
-| 0.60 |   94.20 |  96.11 |  93.00 |  94.47 |
-| 0.70 |   99.13 | 101.53 |  97.45 |  99.42 |
-| 0.80 |  106.06 | 109.42 | 103.96 | 106.50 |
-| 0.90 |  115.31 | 118.83 | 112.53 | 115.57 |
+| 0.10 |   75.81 |  75.97 |  75.43 |  75.78 |
+| 0.20 |   80.55 |  81.41 |  79.81 |  80.73 |
+| 0.30 |   83.89 |  85.17 |  82.96 |  84.12 |
+| 0.40 |   87.05 |  88.52 |  85.95 |  87.44 |
+| 0.50 |   90.49 |  92.23 |  89.33 |  90.80 |
+| 0.60 |   94.20 |  96.12 |  93.01 |  94.47 |
+| 0.70 |   99.12 | 101.53 |  97.44 |  99.41 |
+| 0.80 |  106.06 | 109.40 | 103.95 | 106.49 |
+| 0.90 |  115.31 | 118.83 | 112.51 | 115.57 |
 | 1.00 |  207.59 | 212.22 | 187.27 | 212.22 |
 
 ## Plots - VVIX
@@ -1062,7 +1403,7 @@ Which gives us the following:
 |   2022 |     239 |     12 |
 |   2023 |     246 |      4 |
 |   2024 |     237 |     15 |
-|   2025 |      78 |     11 |
+|   2025 |      83 |     11 |
 
 And the plot to aid with visualization. Based on the plot, it seems as though volatility has increased since the early 2000's:
 
@@ -1070,9 +1411,9 @@ And the plot to aid with visualization. Based on the plot, it seems as though vo
 
 ### Spike Counts (Signals) Plots By Year
 
-Here are the yearly plots for when signals are generated:
+The most recent yearly plots are shown below for when signals are generated. The images for the previous years are linked below.
 
-#### 1990
+<!-- #### 1990
 
 ![Spike/Signals, 1990](09_VIX_SMA_Spike_1990_1990.png)
 
@@ -1190,7 +1531,38 @@ Here are the yearly plots for when signals are generated:
 
 #### 2019
 
-![Spike/Signals, 2019](09_VIX_SMA_Spike_2019_2019.png)
+![Spike/Signals, 2019](09_VIX_SMA_Spike_2019_2019.png) -->
+
+[Spike/Signals, 1990](09_VIX_SMA_Spike_1990_1990.png)</br>
+[Spike/Signals, 1991](09_VIX_SMA_Spike_1991_1991.png)</br>
+[Spike/Signals, 1992](09_VIX_SMA_Spike_1992_1992.png)</br>
+[Spike/Signals, 1993](09_VIX_SMA_Spike_1993_1993.png)</br>
+[Spike/Signals, 1994](09_VIX_SMA_Spike_1994_1994.png)</br>
+[Spike/Signals, 1995](09_VIX_SMA_Spike_1995_1995.png)</br>
+[Spike/Signals, 1996](09_VIX_SMA_Spike_1996_1996.png)</br>
+[Spike/Signals, 1997](09_VIX_SMA_Spike_1997_1997.png)</br>
+[Spike/Signals, 1998](09_VIX_SMA_Spike_1998_1998.png)</br>
+[Spike/Signals, 1999](09_VIX_SMA_Spike_1999_1999.png)</br>
+[Spike/Signals, 2000](09_VIX_SMA_Spike_2000_2000.png)</br>
+[Spike/Signals, 2001](09_VIX_SMA_Spike_2001_2001.png)</br>
+[Spike/Signals, 2002](09_VIX_SMA_Spike_2002_2002.png)</br>
+[Spike/Signals, 2003](09_VIX_SMA_Spike_2003_2003.png)</br>
+[Spike/Signals, 2004](09_VIX_SMA_Spike_2004_2004.png)</br>
+[Spike/Signals, 2005](09_VIX_SMA_Spike_2005_2005.png)</br>
+[Spike/Signals, 2006](09_VIX_SMA_Spike_2006_2006.png)</br>
+[Spike/Signals, 2007](09_VIX_SMA_Spike_2007_2007.png)</br>
+[Spike/Signals, 2008](09_VIX_SMA_Spike_2008_2008.png)</br>
+[Spike/Signals, 2009](09_VIX_SMA_Spike_2009_2009.png)</br>
+[Spike/Signals, 2010](09_VIX_SMA_Spike_2010_2010.png)</br>
+[Spike/Signals, 2011](09_VIX_SMA_Spike_2011_2011.png)</br>
+[Spike/Signals, 2012](09_VIX_SMA_Spike_2012_2012.png)</br>
+[Spike/Signals, 2013](09_VIX_SMA_Spike_2013_2013.png)</br>
+[Spike/Signals, 2014](09_VIX_SMA_Spike_2014_2014.png)</br>
+[Spike/Signals, 2015](09_VIX_SMA_Spike_2015_2015.png)</br>
+[Spike/Signals, 2016](09_VIX_SMA_Spike_2016_2016.png)</br>
+[Spike/Signals, 2017](09_VIX_SMA_Spike_2017_2017.png)</br>
+[Spike/Signals, 2018](09_VIX_SMA_Spike_2018_2018.png)</br>
+[Spike/Signals, 2019](09_VIX_SMA_Spike_2019_2019.png)
 
 #### 2020
 
@@ -1266,52 +1638,56 @@ I've begun trading based on the above ideas, opening positions during the VIX sp
 
 ### Trades Executed
 
-Here are the trades executed to date:
+Here are the trades executed to date, with any comments related to execution, market sentiment, reason for opening/closing position, VIX level, etc.
 
-| Trade_Date          | Action        | Symbol                 |   Quantity |   Price |   Fees & Comm |   Amount |   VIX_Level | Comments                                                                                 |
-|:--------------------|:--------------|:-----------------------|-----------:|--------:|--------------:|---------:|------------:|:-----------------------------------------------------------------------------------------|
-| 2024-08-05 00:00:00 | Buy to Open   | VIX 09/18/2024 34.00 P |          1 |   10.95 |          1.08 |  1096.08 |      nan    | nan                                                                                      |
-| 2024-08-21 00:00:00 | Sell to Close | VIX 09/18/2024 34.00 P |          1 |   17.95 |          1.08 |  1793.92 |      nan    | nan                                                                                      |
-| 2024-08-05 00:00:00 | Buy to Open   | VIX 10/16/2024 40.00 P |          1 |   16.35 |          1.08 |  1636.08 |      nan    | nan                                                                                      |
-| 2024-09-18 00:00:00 | Sell to Close | VIX 10/16/2024 40.00 P |          1 |   21.54 |          1.08 |  2152.92 |      nan    | nan                                                                                      |
-| 2024-08-07 00:00:00 | Buy to Open   | VIX 11/20/2024 25.00 P |          2 |    5.90 |          2.16 |  1182.16 |      nan    | nan                                                                                      |
-| 2024-11-04 00:00:00 | Sell to Close | VIX 11/20/2024 25.00 P |          2 |    6.10 |          2.16 |  1217.84 |      nan    | nan                                                                                      |
-| 2024-08-06 00:00:00 | Buy to Open   | VIX 12/18/2024 30.00 P |          1 |   10.25 |          1.08 |  1026.08 |      nan    | nan                                                                                      |
-| 2024-11-27 00:00:00 | Sell to Close | VIX 12/18/2024 30.00 P |          1 |   14.95 |          1.08 |  1493.92 |      nan    | nan                                                                                      |
-| 2025-03-04 00:00:00 | Buy to Open   | VIX 04/16/2025 25.00 P |          5 |    5.65 |          5.40 |  2830.40 |      nan    | nan                                                                                      |
-| 2025-03-24 00:00:00 | Sell to Close | VIX 04/16/2025 25.00 P |          5 |    7.00 |          5.40 |  3494.60 |      nan    | nan                                                                                      |
-| 2025-03-10 00:00:00 | Buy to Open   | VIX 05/21/2025 26.00 P |          5 |    7.10 |          5.40 |  3555.40 |      nan    | Missed opportunity to close position for 20% profit before vol spike in early April 2025 |
-| 2025-04-04 00:00:00 | Buy to Open   | VIX 05/21/2025 26.00 P |         10 |    4.10 |         10.81 |  4110.81 |      nan    | Averaged down on existing position                                                       |
-| 2025-04-24 00:00:00 | Sell to Close | VIX 05/21/2025 26.00 P |          7 |    3.50 |          7.57 |  2442.43 |      nan    | Sold half of position due to vol spike concerns and theta                                |
-| 2025-05-02 00:00:00 | Sell to Close | VIX 05/21/2025 26.00 P |          4 |    4.35 |          4.32 |  1735.68 |      nan    | Sold half of remaining position due to vol spike concerns and theta                      |
-| 2025-05-07 00:00:00 | Sell to Close | VIX 05/21/2025 26.00 P |          4 |    3.55 |          4.32 |  1415.68 |       24.49 | Closed position ahead of Fed’s (Powell’s) comments                                       |
-| 2025-04-04 00:00:00 | Buy to Open   | VIX 05/21/2025 37.00 P |          3 |   13.20 |          3.24 |  3963.24 |      nan    | nan                                                                                      |
-| 2025-05-07 00:00:00 | Sell to Close | VIX 05/21/2025 37.00 P |          3 |   13.75 |          3.24 |  4121.76 |       24.51 | Closed position ahead of Fed’s (Powell’s) comments                                       |
-| 2025-04-08 00:00:00 | Buy to Open   | VIX 05/21/2025 50.00 P |          2 |   21.15 |          2.16 |  4232.16 |      nan    | nan                                                                                      |
-| 2025-04-24 00:00:00 | Sell to Close | VIX 05/21/2025 50.00 P |          1 |   25.30 |          1.08 |  2528.92 |      nan    | nan                                                                                      |
-| 2025-04-25 00:00:00 | Sell to Close | VIX 05/21/2025 50.00 P |          1 |   25.65 |          1.08 |  2563.92 |      nan    | nan                                                                                      |
-| 2025-04-03 00:00:00 | Buy to Open   | VIX 06/18/2025 27.00 P |          8 |    7.05 |          8.65 |  5648.65 |      nan    | nan                                                                                      |
-| 2025-04-08 00:00:00 | Buy to Open   | VIX 06/18/2025 27.00 P |          4 |    4.55 |          4.32 |  1824.32 |      nan    | Averaged down on existing position                                                       |
-| 2025-05-12 00:00:00 | Sell to Close | VIX 06/18/2025 27.00 P |          6 |    7.55 |          6.49 |  4523.51 |       19.05 | Market up on positive news of lowering tariffs with China; VIX down 15%, VVIX down 10%   |
-| 2025-05-12 00:00:00 | Sell to Close | VIX 06/18/2025 27.00 P |          6 |    7.40 |          6.49 |  4433.51 |       19.47 | Market up on positive news of lowering tariffs with China; VIX down 15%, VVIX down 10%   |
-| 2025-04-04 00:00:00 | Buy to Open   | VIX 06/18/2025 36.00 P |          3 |   13.40 |          3.24 |  4023.24 |      nan    | nan                                                                                      |
-| 2025-05-12 00:00:00 | Sell to Close | VIX 06/18/2025 36.00 P |          3 |   16.00 |          3.24 |  4796.76 |       19.14 | Market up on positive news of lowering tariffs with China; VIX down 15%, VVIX down 10%   |
-| 2025-04-07 00:00:00 | Buy to Open   | VIX 06/18/2025 45.00 P |          2 |   18.85 |          2.16 |  3772.16 |      nan    | nan                                                                                      |
-| 2025-05-12 00:00:00 | Sell to Close | VIX 06/18/2025 45.00 P |          2 |   25.00 |          2.16 |  4997.84 |       19.24 | Market up on positive news of lowering tariffs with China; VIX down 15%, VVIX down 10%   |
-| 2025-04-03 00:00:00 | Buy to Open   | VIX 07/16/2025 29.00 P |          5 |    8.55 |          5.40 |  4280.40 |      nan    | nan                                                                                      |
-| 2025-05-13 00:00:00 | Sell to Close | VIX 07/16/2025 29.00 P |          3 |   10.40 |          3.24 |  3116.76 |       17.72 | nan                                                                                      |
-| 2025-05-13 00:00:00 | Sell to Close | VIX 07/16/2025 29.00 P |          2 |   10.30 |          2.16 |  2057.84 |       17.68 | nan                                                                                      |
-| 2025-04-04 00:00:00 | Buy to Open   | VIX 07/16/2025 36.00 P |          3 |   13.80 |          3.24 |  4143.24 |      nan    | nan                                                                                      |
-| 2025-05-13 00:00:00 | Sell to Close | VIX 07/16/2025 36.00 P |          1 |   17.00 |          1.08 |  1698.92 |       17.79 | nan                                                                                      |
-| 2025-05-13 00:00:00 | Sell to Close | VIX 07/16/2025 36.00 P |          2 |   16.90 |          2.16 |  3377.84 |       17.72 | nan                                                                                      |
-| 2025-04-07 00:00:00 | Buy to Open   | VIX 07/16/2025 45.00 P |          2 |   21.55 |          2.16 |  4312.16 |      nan    | nan                                                                                      |
-| 2025-05-13 00:00:00 | Sell to Close | VIX 07/16/2025 45.00 P |          2 |   25.65 |          2.16 |  5127.84 |       17.96 | nan                                                                                      |
-| 2025-04-07 00:00:00 | Buy to Open   | VIX 08/20/2025 45.00 P |          2 |   21.75 |          2.16 |  4352.16 |      nan    | nan                                                                                      |
-| 2025-05-13 00:00:00 | Sell to Close | VIX 08/20/2025 45.00 P |          2 |   25.40 |          2.16 |  5077.84 |       18.06 | nan                                                                                      |
+| Trade_Date          | Action        | Symbol                 |   Quantity |   Price |   Fees & Comm |   Amount |   Approx_VIX_Level | Comments                                                                                 |
+|:--------------------|:--------------|:-----------------------|-----------:|--------:|--------------:|---------:|-------------------:|:-----------------------------------------------------------------------------------------|
+| 2024-08-05 00:00:00 | Buy to Open   | VIX 09/18/2024 34.00 P |          1 |   10.95 |          1.08 |  1096.08 |              34.33 | nan                                                                                      |
+| 2024-08-21 00:00:00 | Sell to Close | VIX 09/18/2024 34.00 P |          1 |   17.95 |          1.08 |  1793.92 |              16.50 | nan                                                                                      |
+| 2024-08-05 00:00:00 | Buy to Open   | VIX 10/16/2024 40.00 P |          1 |   16.35 |          1.08 |  1636.08 |              42.71 | nan                                                                                      |
+| 2024-09-18 00:00:00 | Sell to Close | VIX 10/16/2024 40.00 P |          1 |   21.54 |          1.08 |  2152.92 |              18.85 | nan                                                                                      |
+| 2024-08-07 00:00:00 | Buy to Open   | VIX 11/20/2024 25.00 P |          2 |    5.90 |          2.16 |  1182.16 |              27.11 | nan                                                                                      |
+| 2024-11-04 00:00:00 | Sell to Close | VIX 11/20/2024 25.00 P |          2 |    6.10 |          2.16 |  1217.84 |              22.43 | nan                                                                                      |
+| 2024-08-06 00:00:00 | Buy to Open   | VIX 12/18/2024 30.00 P |          1 |   10.25 |          1.08 |  1026.08 |              32.27 | nan                                                                                      |
+| 2024-11-27 00:00:00 | Sell to Close | VIX 12/18/2024 30.00 P |          1 |   14.95 |          1.08 |  1493.92 |              14.04 | nan                                                                                      |
+| 2025-03-04 00:00:00 | Buy to Open   | VIX 04/16/2025 25.00 P |          5 |    5.65 |          5.40 |  2830.40 |              25.75 | nan                                                                                      |
+| 2025-03-24 00:00:00 | Sell to Close | VIX 04/16/2025 25.00 P |          5 |    7.00 |          5.40 |  3494.60 |              18.01 | nan                                                                                      |
+| 2025-03-10 00:00:00 | Buy to Open   | VIX 05/21/2025 26.00 P |          5 |    7.10 |          5.40 |  3555.40 |              27.54 | Missed opportunity to close position for 20% profit before vol spike in early April 2025 |
+| 2025-04-04 00:00:00 | Buy to Open   | VIX 05/21/2025 26.00 P |         10 |    4.10 |         10.81 |  4110.81 |              38.88 | Averaged down on existing position                                                       |
+| 2025-04-24 00:00:00 | Sell to Close | VIX 05/21/2025 26.00 P |          7 |    3.50 |          7.57 |  2442.43 |              27.37 | Sold half of position due to vol spike concerns and theta                                |
+| 2025-05-02 00:00:00 | Sell to Close | VIX 05/21/2025 26.00 P |          4 |    4.35 |          4.32 |  1735.68 |              22.73 | Sold half of remaining position due to vol spike concerns and theta                      |
+| 2025-05-07 00:00:00 | Sell to Close | VIX 05/21/2025 26.00 P |          4 |    3.55 |          4.32 |  1415.68 |              24.49 | Closed position ahead of Fed’s (Powell’s) comments                                       |
+| 2025-04-04 00:00:00 | Buy to Open   | VIX 05/21/2025 37.00 P |          3 |   13.20 |          3.24 |  3963.24 |              36.46 | nan                                                                                      |
+| 2025-05-07 00:00:00 | Sell to Close | VIX 05/21/2025 37.00 P |          3 |   13.75 |          3.24 |  4121.76 |              24.51 | Closed position ahead of Fed’s (Powell’s) comments                                       |
+| 2025-04-08 00:00:00 | Buy to Open   | VIX 05/21/2025 50.00 P |          2 |   21.15 |          2.16 |  4232.16 |             nan    | nan                                                                                      |
+| 2025-04-24 00:00:00 | Sell to Close | VIX 05/21/2025 50.00 P |          1 |   25.30 |          1.08 |  2528.92 |             nan    | nan                                                                                      |
+| 2025-04-25 00:00:00 | Sell to Close | VIX 05/21/2025 50.00 P |          1 |   25.65 |          1.08 |  2563.92 |             nan    | nan                                                                                      |
+| 2025-04-03 00:00:00 | Buy to Open   | VIX 06/18/2025 27.00 P |          8 |    7.05 |          8.65 |  5648.65 |              27.62 | nan                                                                                      |
+| 2025-04-08 00:00:00 | Buy to Open   | VIX 06/18/2025 27.00 P |          4 |    4.55 |          4.32 |  1824.32 |              55.44 | Averaged down on existing position                                                       |
+| 2025-05-12 00:00:00 | Sell to Close | VIX 06/18/2025 27.00 P |          6 |    7.55 |          6.49 |  4523.51 |              19.05 | Market up on positive news of lowering tariffs with China; VIX down 15%, VVIX down 10%   |
+| 2025-05-12 00:00:00 | Sell to Close | VIX 06/18/2025 27.00 P |          6 |    7.40 |          6.49 |  4433.51 |              19.47 | Market up on positive news of lowering tariffs with China; VIX down 15%, VVIX down 10%   |
+| 2025-04-04 00:00:00 | Buy to Open   | VIX 06/18/2025 36.00 P |          3 |   13.40 |          3.24 |  4023.24 |              36.61 | nan                                                                                      |
+| 2025-05-12 00:00:00 | Sell to Close | VIX 06/18/2025 36.00 P |          3 |   16.00 |          3.24 |  4796.76 |              19.14 | Market up on positive news of lowering tariffs with China; VIX down 15%, VVIX down 10%   |
+| 2025-04-07 00:00:00 | Buy to Open   | VIX 06/18/2025 45.00 P |          2 |   18.85 |          2.16 |  3772.16 |              53.65 | nan                                                                                      |
+| 2025-05-12 00:00:00 | Sell to Close | VIX 06/18/2025 45.00 P |          2 |   25.00 |          2.16 |  4997.84 |              19.24 | Market up on positive news of lowering tariffs with China; VIX down 15%, VVIX down 10%   |
+| 2025-04-03 00:00:00 | Buy to Open   | VIX 07/16/2025 29.00 P |          5 |    8.55 |          5.40 |  4280.40 |              29.03 | nan                                                                                      |
+| 2025-05-13 00:00:00 | Sell to Close | VIX 07/16/2025 29.00 P |          3 |   10.40 |          3.24 |  3116.76 |              17.72 | nan                                                                                      |
+| 2025-05-13 00:00:00 | Sell to Close | VIX 07/16/2025 29.00 P |          2 |   10.30 |          2.16 |  2057.84 |              17.68 | nan                                                                                      |
+| 2025-04-04 00:00:00 | Buy to Open   | VIX 07/16/2025 36.00 P |          3 |   13.80 |          3.24 |  4143.24 |              36.95 | nan                                                                                      |
+| 2025-05-13 00:00:00 | Sell to Close | VIX 07/16/2025 36.00 P |          1 |   17.00 |          1.08 |  1698.92 |              17.79 | nan                                                                                      |
+| 2025-05-13 00:00:00 | Sell to Close | VIX 07/16/2025 36.00 P |          2 |   16.90 |          2.16 |  3377.84 |              17.72 | nan                                                                                      |
+| 2025-04-07 00:00:00 | Buy to Open   | VIX 07/16/2025 45.00 P |          2 |   21.55 |          2.16 |  4312.16 |              46.17 | nan                                                                                      |
+| 2025-05-13 00:00:00 | Sell to Close | VIX 07/16/2025 45.00 P |          2 |   25.65 |          2.16 |  5127.84 |              17.96 | nan                                                                                      |
+| 2025-04-07 00:00:00 | Buy to Open   | VIX 08/20/2025 45.00 P |          2 |   21.75 |          2.16 |  4352.16 |              49.07 | nan                                                                                      |
+| 2025-05-13 00:00:00 | Sell to Close | VIX 08/20/2025 45.00 P |          2 |   25.40 |          2.16 |  5077.84 |              18.06 | nan                                                                                      |
 
-### Closed Positions
+#### Volatility In August 2024
 
-Here are the closed positions:
+Plot with VIX level, trade side, VIX option, and VIX level at trade date/time:
+
+![VIX Level, Trades](11_VIX_Spike_Trades_2024-07-26_2024-12-07.png)
+
+Closed positions:
 
 | Symbol                 |   Amount_Buy |   Quantity_Buy |   Amount_Sell |   Quantity_Sell |   Realized_PnL |   Percent_PnL |
 |:-----------------------|-------------:|---------------:|--------------:|----------------:|---------------:|--------------:|
@@ -1319,7 +1695,47 @@ Here are the closed positions:
 | VIX 10/16/2024 40.00 P |      1636.08 |              1 |       2152.92 |               1 |         516.84 |          0.32 |
 | VIX 11/20/2024 25.00 P |      1182.16 |              2 |       1217.84 |               2 |          35.68 |          0.03 |
 | VIX 12/18/2024 30.00 P |      1026.08 |              1 |       1493.92 |               1 |         467.84 |          0.46 |
+
+Open positions:
+
+| Symbol   | Amount_Buy   | Quantity_Buy   |
+|----------|--------------|----------------|
+
+Percent profit/loss: 34.78%
+
+Net profit/loss: $1,718.20
+
+#### Volatility In March 2025
+
+Plot with VIX level, trade side, VIX option, and VIX level at trade date/time:
+
+![VIX Level, Trades](12_VIX_Spike_Trades_2025-02-22_2025-04-03.png)
+
+Closed positions:
+
+| Symbol                 |   Amount_Buy |   Quantity_Buy |   Amount_Sell |   Quantity_Sell |   Realized_PnL |   Percent_PnL |
+|:-----------------------|-------------:|---------------:|--------------:|----------------:|---------------:|--------------:|
 | VIX 04/16/2025 25.00 P |      2830.40 |              5 |       3494.60 |               5 |         664.20 |          0.23 |
+
+Open positions:
+
+| Symbol   | Amount_Buy   | Quantity_Buy   |
+|----------|--------------|----------------|
+
+Percent profit/loss: 23.47%
+
+Net profit/loss: $664.20
+
+#### Volatility In April 2025
+
+Plot with VIX level, trade side, VIX option, and VIX level at trade date/time:
+
+![VIX Level, Trades](13_VIX_Spike_Trades_2025-02-28_2025-05-23.png)
+
+Closed positions:
+
+| Symbol                 |   Amount_Buy |   Quantity_Buy |   Amount_Sell |   Quantity_Sell |   Realized_PnL |   Percent_PnL |
+|:-----------------------|-------------:|---------------:|--------------:|----------------:|---------------:|--------------:|
 | VIX 05/21/2025 26.00 P |      7666.21 |             15 |       5593.79 |              15 |       -2072.42 |         -0.27 |
 | VIX 05/21/2025 37.00 P |      3963.24 |              3 |       4121.76 |               3 |         158.52 |          0.04 |
 | VIX 05/21/2025 50.00 P |      4232.16 |              2 |       5092.84 |               2 |         860.68 |          0.20 |
@@ -1331,15 +1747,20 @@ Here are the closed positions:
 | VIX 07/16/2025 45.00 P |      4312.16 |              2 |       5127.84 |               2 |         815.68 |          0.19 |
 | VIX 08/20/2025 45.00 P |      4352.16 |              2 |       5077.84 |               2 |         725.68 |          0.17 |
 
-Net profit and loss percentage: 14.61%</br>
-Net profit and loss: $8,181.51
-
-### Open Positions
-
-Here are the positions that are currently open:
+Open positions:
 
 | Symbol   | Amount_Buy   | Quantity_Buy   |
 |----------|--------------|----------------|
+
+Percent profit/loss: 12.03%
+
+Net profit/loss: $5,799.11
+
+#### Complete Trade History
+
+Percent profit/loss: 14.61%
+
+Net profit/loss: $8,181.51
 
 ## References
 

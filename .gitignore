@@ -4,7 +4,6 @@
 .ipynb_checkpoints/
 *.pyc
 __pycache__/
-.doit-db.sqlite
 Data/
 token.json
 

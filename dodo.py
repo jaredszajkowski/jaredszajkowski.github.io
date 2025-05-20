@@ -250,7 +250,7 @@ def task_export_post_notebooks():
             "clean": [],  # Don't clean these files by default.
         }
 
-def task_build_post_indexes():
+def task_build_post_indices():
     """Run build_index.py in each post subdirectory to generate index.md"""
     script_path = SOURCE_DIR / "build_index.py"
 
@@ -391,7 +391,7 @@ def task_deploy_site():
 #         "task_dep": [
 #             "run_post_notebooks",
 #             "export_post_notebooks",
-#             "build_post_indexes",
+#             "build_post_indices",
 #             "clean_public",
 #             "build_site",
 #             "copy_notebook_exports",

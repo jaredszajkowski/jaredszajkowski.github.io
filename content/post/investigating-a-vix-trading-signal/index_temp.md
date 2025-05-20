@@ -73,6 +73,18 @@ Here's the code for the function to pull the VIX data and export to Excel:
 
 <!-- INSERT_00_yf_pull_data_HERE -->
 
+</br>
+
+<!-- INSERT_00_plot_price_HERE -->
+
+</br>
+
+<!-- INSERT_00_calc_vix_trade_pnl_HERE -->
+
+</br>
+
+<!-- INSERT_00_plot_vix_with_trades_HERE -->
+
 ## Data Overview (VIX)
 
 ### Acquire CBOE Volatility Index (VIX) Data
@@ -481,9 +493,9 @@ And the plot to aid with visualization. Based on the plot, it seems as though vo
 
 ### Spike Counts (Signals) Plots By Year
 
-Here are the yearly plots for when signals are generated:
+The most recent yearly plots are shown below for when signals are generated. The images for the previous years are linked below.
 
-#### 1990
+<!-- #### 1990
 
 ![Spike/Signals, 1990](09_VIX_SMA_Spike_1990_1990.png)
 
@@ -601,7 +613,38 @@ Here are the yearly plots for when signals are generated:
 
 #### 2019
 
-![Spike/Signals, 2019](09_VIX_SMA_Spike_2019_2019.png)
+![Spike/Signals, 2019](09_VIX_SMA_Spike_2019_2019.png) -->
+
+[Spike/Signals, 1990](09_VIX_SMA_Spike_1990_1990.png)</br>
+[Spike/Signals, 1991](09_VIX_SMA_Spike_1991_1991.png)</br>
+[Spike/Signals, 1992](09_VIX_SMA_Spike_1992_1992.png)</br>
+[Spike/Signals, 1993](09_VIX_SMA_Spike_1993_1993.png)</br>
+[Spike/Signals, 1994](09_VIX_SMA_Spike_1994_1994.png)</br>
+[Spike/Signals, 1995](09_VIX_SMA_Spike_1995_1995.png)</br>
+[Spike/Signals, 1996](09_VIX_SMA_Spike_1996_1996.png)</br>
+[Spike/Signals, 1997](09_VIX_SMA_Spike_1997_1997.png)</br>
+[Spike/Signals, 1998](09_VIX_SMA_Spike_1998_1998.png)</br>
+[Spike/Signals, 1999](09_VIX_SMA_Spike_1999_1999.png)</br>
+[Spike/Signals, 2000](09_VIX_SMA_Spike_2000_2000.png)</br>
+[Spike/Signals, 2001](09_VIX_SMA_Spike_2001_2001.png)</br>
+[Spike/Signals, 2002](09_VIX_SMA_Spike_2002_2002.png)</br>
+[Spike/Signals, 2003](09_VIX_SMA_Spike_2003_2003.png)</br>
+[Spike/Signals, 2004](09_VIX_SMA_Spike_2004_2004.png)</br>
+[Spike/Signals, 2005](09_VIX_SMA_Spike_2005_2005.png)</br>
+[Spike/Signals, 2006](09_VIX_SMA_Spike_2006_2006.png)</br>
+[Spike/Signals, 2007](09_VIX_SMA_Spike_2007_2007.png)</br>
+[Spike/Signals, 2008](09_VIX_SMA_Spike_2008_2008.png)</br>
+[Spike/Signals, 2009](09_VIX_SMA_Spike_2009_2009.png)</br>
+[Spike/Signals, 2010](09_VIX_SMA_Spike_2010_2010.png)</br>
+[Spike/Signals, 2011](09_VIX_SMA_Spike_2011_2011.png)</br>
+[Spike/Signals, 2012](09_VIX_SMA_Spike_2012_2012.png)</br>
+[Spike/Signals, 2013](09_VIX_SMA_Spike_2013_2013.png)</br>
+[Spike/Signals, 2014](09_VIX_SMA_Spike_2014_2014.png)</br>
+[Spike/Signals, 2015](09_VIX_SMA_Spike_2015_2015.png)</br>
+[Spike/Signals, 2016](09_VIX_SMA_Spike_2016_2016.png)</br>
+[Spike/Signals, 2017](09_VIX_SMA_Spike_2017_2017.png)</br>
+[Spike/Signals, 2018](09_VIX_SMA_Spike_2018_2018.png)</br>
+[Spike/Signals, 2019](09_VIX_SMA_Spike_2019_2019.png)
 
 #### 2020
 
@@ -677,24 +720,69 @@ I've begun trading based on the above ideas, opening positions during the VIX sp
 
 ### Trades Executed
 
-Here are the trades executed to date:
+Here are the trades executed to date, with any comments related to execution, market sentiment, reason for opening/closing position, VIX level, etc.
 
 <!-- INSERT_10_Trades_Executed_HERE -->
 
-### Closed Positions
+#### Volatility In August 2024
 
-Here are the closed positions:
+Plot with VIX level, trade side, VIX option, and VIX level at trade date/time:
 
-<!-- INSERT_11_Closed_Positions_HERE -->
+![VIX Level, Trades](11_VIX_Spike_Trades_2024-07-26_2024-12-07.png)
 
-Net profit and loss percentage: <!-- INSERT_11_Net_Profit_Percent_HERE --></br>
-Net profit and loss: <!-- INSERT_11_Net_PnL_HERE -->
+Closed positions:
 
-### Open Positions
+<!-- INSERT_11_Closed_Positions_2024-09-18_2024-12-18_2024-08-05_2024-11-27_HERE -->
 
-Here are the positions that are currently open:
+Open positions:
 
-<!-- INSERT_12_Open_Positions_HERE -->
+<!-- INSERT_11_Open_Positions_2024-09-18_2024-12-18_2024-08-05_2024-11-27_HERE -->
+
+Percent profit/loss: <!-- INSERT_11_Percent_PnL_2024-09-18_2024-12-18_2024-08-05_2024-11-27_HERE -->
+
+Net profit/loss: <!-- INSERT_11_PnL_2024-09-18_2024-12-18_2024-08-05_2024-11-27_HERE -->
+
+#### Volatility In March 2025
+
+Plot with VIX level, trade side, VIX option, and VIX level at trade date/time:
+
+![VIX Level, Trades](12_VIX_Spike_Trades_2025-02-22_2025-04-03.png)
+
+Closed positions:
+
+<!-- INSERT_12_Closed_Positions_2025-04-16_2025-04-16_2025-03-04_2025-03-24_HERE -->
+
+Open positions:
+
+<!-- INSERT_12_Open_Positions_2025-04-16_2025-04-16_2025-03-04_2025-03-24_HERE -->
+
+Percent profit/loss: <!-- INSERT_12_Percent_PnL_2025-04-16_2025-04-16_2025-03-04_2025-03-24_HERE -->
+
+Net profit/loss: <!-- INSERT_12_PnL_2025-04-16_2025-04-16_2025-03-04_2025-03-24_HERE -->
+
+#### Volatility In April 2025
+
+Plot with VIX level, trade side, VIX option, and VIX level at trade date/time:
+
+![VIX Level, Trades](13_VIX_Spike_Trades_2025-02-28_2025-05-23.png)
+
+Closed positions:
+
+<!-- INSERT_13_Closed_Positions_2025-05-21_2025-08-20_2025-03-10_2025-05-13_HERE -->
+
+Open positions:
+
+<!-- INSERT_13_Open_Positions_2025-05-21_2025-08-20_2025-03-10_2025-05-13_HERE -->
+
+Percent profit/loss: <!-- INSERT_13_Percent_PnL_2025-05-21_2025-08-20_2025-03-10_2025-05-13_HERE -->
+
+Net profit/loss: <!-- INSERT_13_PnL_2025-05-21_2025-08-20_2025-03-10_2025-05-13_HERE -->
+
+#### Complete Trade History
+
+Percent profit/loss: <!-- INSERT_14_Percent_PnL_None_None_None_None_HERE -->
+
+Net profit/loss: <!-- INSERT_14_PnL_None_None_None_None_HERE -->
 
 ## References
 
