@@ -13,7 +13,7 @@ api_keys = load_api_keys()
 # Get the data directory from the configuration
 DATA_DIR = config("DATA_DIR")
 
-# Credit to Brian Boonstra for much of the code below in the "grab_quandl_table" and "fetch_quandl_table" functions
+# Credit to Professor Brian Boonstra for much of the code below in the "grab_quandl_table" and "fetch_quandl_table" functions
 def grab_quandl_table(
     table_path: str,
     avoid_download: bool=False,

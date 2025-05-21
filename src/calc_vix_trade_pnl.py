@@ -60,7 +60,7 @@ def calc_vix_trade_pnl(
         transactions_data['Approx_VIX_Level'].astype(str)
     )
 
-    # Split buys and sells and sum the amounts
+    # Split buys and sells and sum the notional amounts
     transactions_sells = transactions_data[transactions_data['Action'] == 'Sell to Close']
     transactions_sells = transactions_sells.groupby(['Symbol', 'Exp_Date'], as_index=False)[['Amount', 'Quantity']].sum()
 
