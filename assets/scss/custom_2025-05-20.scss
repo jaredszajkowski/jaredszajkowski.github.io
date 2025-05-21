@@ -62,12 +62,12 @@
 
 :root{
   --article-font-family:var(--base-font-family);
-  --article-font-size:1.4rem; // was 1.6
-  --article-line-height:1.75} // was 1.85
+  --article-font-size:1.5rem; // was 1.6
+  --article-line-height:1.65} // was 1.85
 
 @media(min-width:768px){
   :root{
-    --article-font-size:1.5rem}} // was 1.7
+    --article-font-size:1.6rem}} // was 1.7
 
 :root{
   --blockquote-border-size:4px;
@@ -364,7 +364,7 @@ main{
   display:block}
   
 h1{
-  font-size:2em;
+  font-size:2em; // was 2
   margin:.67em 0}
   
 hr{
@@ -763,7 +763,7 @@ template{
   
 @media(min-width:1280px){
   .article-title{
-    font-size:2.4rem}}
+    font-size:2.4rem}} // was 2.4
     
 .article-title a{
   color:var(--card-text-color-main)}
@@ -780,7 +780,7 @@ template{
   
 @media(min-width:1280px){
   .article-subtitle{
-    font-size:2rem}}
+    font-size:1.9rem}} // was 2
     
 .article-title-wrapper{
   display:flex;
@@ -857,11 +857,11 @@ template{
   
 .article-list--compact article .article-title{
   margin:0;
-  font-size:1.6rem}
+  font-size:1.6rem} // was 1.6
   
 @media(min-width:768px){
   .article-list--compact article .article-title{
-    font-size:1.8rem}}
+    font-size:1.7rem}} // was 1.8
     
 /* .article-list--compact article .article-image img{
   width:var(--image-size);
@@ -929,13 +929,13 @@ template{
     padding:20px}}
     
 .article-list--tile article .article-title{
-  font-size:2rem;
+  font-size:2rem; // was 2
   font-weight:500;
   color:var(--card-text-color-main)}
   
 @media(min-width:640px){
   .article-list--tile article .article-title{
-    font-size:2.2rem}}
+    font-size:2.2rem}} // was 2.2
     
 .widget{
   display:flex;
@@ -1144,11 +1144,11 @@ footer.site-footer .powerby a{
 .sidebar header .site-name{
   color:var(--accent-color);
   margin:0;
-  font-size:1.6rem}
+  font-size:1.6rem} // was 1.6
   
 @media(min-width:1536px){
   .sidebar header .site-name{
-    font-size:1.8rem}}
+    font-size:1.8rem}} // was 1.8
     
 .sidebar header .site-description{
   color:var(--body-text-color);
@@ -1207,7 +1207,7 @@ body{
   background:var(--body-background);
   margin:0;
   font-family:var(--base-font-family);
-  font-size:1.6rem;
+  font-size:1.6rem; // was 1.6
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale}
   
@@ -1608,7 +1608,7 @@ body{
 .section-card .section-description{
   font-weight:400;
   color:var(--card-text-color-secondary);
-  font-size:1.6rem;
+  font-size:1.6rem; // was 1.6
   margin:0}
   
 .section-card .section-details{
@@ -1643,7 +1643,7 @@ body{
 
 .subsection-list .article-list--tile article .article-title{
   margin:0;
-  font-size:1.8rem}
+  font-size:1.8rem} // was 1.8
   
 .subsection-list .article-list--tile article .article-details{
   padding:15px} // was 20px
@@ -1807,12 +1807,12 @@ a.link:hover{
 
 :root{
   --article-font-family:var(--base-font-family);
-  --article-font-size:1.4rem; // was 1.6
-  --article-line-height:1.75} // was 1.85
+  --article-font-size:1.5rem; // was 1.6
+  --article-line-height:1.65} // was 1.85
 
 @media(min-width:768px){
   :root{
-    --article-font-size:1.5rem}} // was 1.7
+    --article-font-size:1.6rem}} // was 1.7
     
 :root{
   --blockquote-border-size:4px;
@@ -2109,9 +2109,10 @@ body{
 main{
   display:block}
   
-h1{font-size:2em;
+h1{
+  font-size:2em; // was 2
   margin:.67em 0}
-  
+
 hr{
   box-sizing:content-box;
   height:0;
