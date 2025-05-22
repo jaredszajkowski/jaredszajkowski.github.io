@@ -28,6 +28,7 @@ Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, inc
 Update 4/28/2025: VIX data through 4/25/25.</br>
 Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</br>
 Update 5/7/2025: Data through 5/6/25.</br>
+Update 5/21/2025: Data through 5/20/25.</br>
 
 ## Introduction
 
@@ -39,15 +40,13 @@ In this tutorial, we will investigate finding a signal to use as a basis to trad
 
 ## VIX Data
 
-I don't have access to data for the VIX through [Nasdaq Data Link](https://www.nasdaq.com/nasdaq-data-link), but for our purposes Yahoo Finance is sufficient.
-
-Using the yfinance python module, we can pull what we need and quicky dump it to excel to retain it for future use.
+I don't have access to data for the VIX through [Nasdaq Data Link](https://www.nasdaq.com/nasdaq-data-link) or any other data source, but for our purposes Yahoo Finance is sufficient. Using the [yfinance](https://pypi.org/project/yfinance/) python module, we can pull what we need and quicky dump it to excel to retain it for future use.
 
 ## Python Functions
 
 ### Typical Functions
 
-First, the typical set of functions I use:
+First, the typical set of functions I use. `export_track_md_deps` exports various text outputs to markdown files, which are included in the index.md file created when building the site with Hugo.
 
 ```python
 from pathlib import Path
@@ -91,7 +90,7 @@ def export_track_md_deps(
     print(f"✅ Exported and tracked: {md_filename}")
 ```
 
-</br>
+`df_info` is a simple function to display the information about a dataframe and the first five rows and last five rows.
 
 ```python
 import pandas as pd
@@ -133,7 +132,7 @@ def df_info(
     display(df.tail())
 ```
 
-</br>
+`df_info_markdown` is similar to the `df_info` function above, except that it coverts the output to markdown instead of displaying it.
 
 ```python
 import io

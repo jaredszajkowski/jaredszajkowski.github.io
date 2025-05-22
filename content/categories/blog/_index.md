@@ -5,6 +5,6 @@ description: Miscellaneous, etc.
 
 # Badge style
 style:
-    #background: "#800000" #34495e (dark gray) # was 2a9d8f (teal), then 3a3a3a (dark brown), then df7988 (coral)
-    #color: "#fff"
+    background: "#00A6A6" 
+    # color: "#fff"
 ---

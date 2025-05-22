@@ -5,6 +5,6 @@ description: Data cleaning, manipulation, modeling, etc.
 
 # Badge style
 style:
-    #background: "#008080" #34495e (dark gray) # was 2a9d8f (teal), then 3a3a3a (dark brown), then 008080 (actual teal)
+    background: "#A0A0A0" 
     #color: "#fff"
 ---

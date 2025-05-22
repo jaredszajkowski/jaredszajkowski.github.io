@@ -1,0 +1,12 @@
+#| Color Name    | Hex Code  | Description                        |
+#| ------------- | --------- | ---------------------------------- |
+#| Ocean Blue    | `#4A90E2` | Versatile, modern blue             | 
+#| Coral Red     | `#F45B69` | Friendly mid-tone red-pink         | trading
+#| Leafy Green   | `#7BC96F` | Calm and nature-inspired           | tech
+#| Gold Amber    | `#F3A712` | Rich golden-yellow                 | investing
+#| Orchid Purple | `#B28DFF` | Mid-tone purple, soft but distinct | 
+#| Teal Blue     | `#00A6A6` | Clear teal, a bit punchy           | blog
+#| Warm Gray     | `#A0A0A0` | Neutral, goes with everything      | financial data
+#| Burnt Sienna  | `#D96C06` | Deep orange with character         |
+#| Dusty Rose    | `#D291BC` | Muted pink-purple                  |
+#| Steel Blue    | `#5A7D9A` | Balanced bluish-gray               | tutorials

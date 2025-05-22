@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/'>
 
-<link rel="stylesheet" href="/scss/style.min.145b449642699cabd28a6acd2975e8191bc3efaa9ed23cc11dd16a7cbb3db7f5.css"><meta property='og:title' content="Investigating A VIX Trading Signal">
+<link rel="stylesheet" href="/scss/style.min.8ba2b668d882ef5310762e838657c6255fc0602ee222e60289ac5a310a53ff8c.css"><meta property='og:title' content="Investigating A VIX Trading Signal">
 <meta property='og:description' content="A brief look at finding a trading signal based on moving averages of the VIX.">
 <meta property='og:url' content='https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/'>
 <meta property='og:site_name' content='Jared Szajkowski'>
@@ -385,11 +385,11 @@
     
     <header class="article-category">
         
-            <a href="/categories/financial-data/" >
+            <a href="/categories/financial-data/" style="background-color: #A0A0A0; color: ;">
                 Financial Data
             </a>
         
-            <a href="/categories/trading/" >
+            <a href="/categories/trading/" style="background-color: #F45B69; color: ;">
                 Trading
             </a>
         
@@ -439,7 +439,7 @@
 
 
                 <time class="article-time--reading">
-                    35 minute read
+                    36 minute read
                 </time>
             </div>
         
@@ -463,7 +463,8 @@ Update 4/23/2025: VIX data through 4/22/25.</br>
 Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, including open and closed positions.</br>
 Update 4/28/2025: VIX data through 4/25/25.</br>
 Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</br>
-Update 5/7/2025: Data through 5/6/25.</br></p>
+Update 5/7/2025: Data through 5/6/25.</br>
+Update 5/21/2025: Data through 5/20/25.</br></p>
 <h2 id="introduction">Introduction
 </h2><p>From the <a class="link" href="https://www.cboe.com/tradable_products/vix/"  target="_blank" rel="noopener"
     >CBOE VIX website</a>:</p>
@@ -471,11 +472,11 @@ Update 5/7/2025: Data through 5/6/25.</br></p>
 <p>In this tutorial, we will investigate finding a signal to use as a basis to trade the VIX.</p>
 <h2 id="vix-data">VIX Data
 </h2><p>I don&rsquo;t have access to data for the VIX through <a class="link" href="https://www.nasdaq.com/nasdaq-data-link"  target="_blank" rel="noopener"
-    >Nasdaq Data Link</a>, but for our purposes Yahoo Finance is sufficient.</p>
-<p>Using the yfinance python module, we can pull what we need and quicky dump it to excel to retain it for future use.</p>
+    >Nasdaq Data Link</a> or any other data source, but for our purposes Yahoo Finance is sufficient. Using the <a class="link" href="https://pypi.org/project/yfinance/"  target="_blank" rel="noopener"
+    >yfinance</a> python module, we can pull what we need and quicky dump it to excel to retain it for future use.</p>
 <h2 id="python-functions">Python Functions
 </h2><h3 id="typical-functions">Typical Functions
-</h3><p>First, the typical set of functions I use:</p>
+</h3><p>First, the typical set of functions I use. <code>export_track_md_deps</code> exports various text outputs to markdown files, which are included in the index.md file created when building the site with Hugo.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -560,7 +561,7 @@ Update 5/7/2025: Data through 5/6/25.</br></p>
 </span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;✅ Exported and tracked: </span><span class="si">{</span><span class="n">md_filename</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div></br>
+</div><p><code>df_info</code> is a simple function to display the information about a dataframe and the first five rows and last five rows.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -641,7 +642,7 @@ Update 5/7/2025: Data through 5/6/25.</br></p>
 </span></span><span class="line"><span class="cl">    <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">())</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div></br>
+</div><p><code>df_info_markdown</code> is similar to the <code>df_info</code> function above, except that it coverts the output to markdown instead of displaying it.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1

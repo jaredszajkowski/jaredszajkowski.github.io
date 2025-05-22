@@ -117,7 +117,8 @@ rev = "11f52b8c72fc3a568e8bb4a4cd1f3eb025ac2e13"
 ### Python code block
 
 ```python
-
+def test_function():
+  return None
 ```
 
 ### Bash code block
