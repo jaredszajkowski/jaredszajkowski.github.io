@@ -3,7 +3,8 @@ title: Investigating A VIX Trading Signal
 description: A brief look at finding a trading signal based on moving averages of the VIX.
 slug: investigating-a-vix-trading-signal
 date: 2025-03-01 00:00:01+0000
-lastmod: 2025-05-07 00:00:01+0000
+# lastmod: <!-- INSERT_last_run_date_HERE --> 00:00:01+0000
+lastmod: 2025-05-26 00:00:01+0000
 image: cover.jpg
 draft: false
 categories:
@@ -90,7 +91,7 @@ def export_track_md_deps(
     print(f"✅ Exported and tracked: {md_filename}")
 ```
 
-`df_info` is a simple function to display the information about a dataframe and the first five rows and last five rows.
+`df_info` is a simple function to display the information about a DataFrame and the first five rows and last five rows.
 
 ```python
 import pandas as pd
@@ -626,7 +627,7 @@ def calc_vix_trade_pnl(
         transactions_data['Approx_VIX_Level'].astype(str)
     )
 
-    # Split buys and sells and sum the amounts
+    # Split buys and sells and sum the notional amounts
     transactions_sells = transactions_data[transactions_data['Action'] == 'Sell to Close']
     transactions_sells = transactions_sells.groupby(['Symbol', 'Exp_Date'], as_index=False)[['Amount', 'Quantity']].sum()
 
@@ -691,7 +692,7 @@ def plot_vix_with_trades(
     -----------
     vix_price_df : pd.DataFrame
         Dataframe containing the VIX price data to plot.
-    trades_df: pd.DataFrame
+    trades_df : pd.DataFrame
         Dataframe containing the trades data.
     plot_start_date : str
         Start date for the plot in 'YYYY-MM-DD' format.
@@ -714,10 +715,14 @@ def plot_vix_with_trades(
     # Set plot figure size and background color
     plt.figure(figsize=(12, 6), facecolor="#F5F5F5")
 
-    # Plot data
+    # Plot VIX high and low price data
     plt.plot(vix_data.index, vix_data['High'], label='High', linestyle='-', color='steelblue', linewidth=1)
     plt.plot(vix_data.index, vix_data['Low'], label='Low', linestyle='-', color='brown', linewidth=1)
+
+    # Plot VIX spikes
     plt.scatter(vix_data[vix_data['Spike_SMA'] == True].index, vix_data[vix_data['Spike_SMA'] == True]['High'], label='Spike (High > 1.25 * 10 Day High SMA)', color='black', s=20)
+    
+    # Plot trades
     plt.scatter(trades_df['Trade_Date'], trades_df['Approx_VIX_Level'], label='Trades', color='red', s=20)
 
     # Annotate each point in trades_df with the corresponding Action_Symbol
@@ -821,16 +826,16 @@ Gives us the following:
 The columns, shape, and data types are:
 
 <class 'pandas.core.frame.DataFrame'>
-DatetimeIndex: 8911 entries, 1990-01-02 to 2025-05-19
+DatetimeIndex: 8915 entries, 1990-01-02 to 2025-05-23
 Data columns (total 4 columns):
  #   Column  Non-Null Count  Dtype  
 ---  ------  --------------  -----  
- 0   Close   8911 non-null   float64
- 1   High    8911 non-null   float64
- 2   Low     8911 non-null   float64
- 3   Open    8911 non-null   float64
+ 0   Close   8915 non-null   float64
+ 1   High    8915 non-null   float64
+ 2   Low     8915 non-null   float64
+ 3   Open    8915 non-null   float64
 dtypes: float64(4)
-memory usage: 348.1 KB
+memory usage: 348.2 KB
 
 ```
 
@@ -848,11 +853,11 @@ The last 5 rows are:
 
 | Date                |   Close |   High |   Low |   Open |
 |:--------------------|--------:|-------:|------:|-------:|
-| 2025-05-13 00:00:00 |   18.22 |  18.85 | 17.65 |  18.69 |
-| 2025-05-14 00:00:00 |   18.62 |  18.82 | 18.06 |  18.10 |
-| 2025-05-15 00:00:00 |   17.83 |  19.38 | 17.77 |  19.19 |
-| 2025-05-16 00:00:00 |   17.24 |  17.96 | 17.15 |  17.96 |
 | 2025-05-19 00:00:00 |   18.14 |  19.92 | 17.92 |  19.84 |
+| 2025-05-20 00:00:00 |   18.09 |  18.68 | 17.70 |  18.46 |
+| 2025-05-21 00:00:00 |   20.87 |  21.05 | 17.77 |  18.77 |
+| 2025-05-22 00:00:00 |   20.28 |  22.07 | 19.64 |  20.62 |
+| 2025-05-23 00:00:00 |   22.29 |  25.53 | 19.83 |  20.14 |
 
 ### Statistics - VIX
 
@@ -875,21 +880,21 @@ Gives us:
 
 |               |   Close |    High |     Low |    Open |
 |:--------------|--------:|--------:|--------:|--------:|
-| count         | 8911.00 | 8911.00 | 8911.00 | 8911.00 |
+| count         | 8915.00 | 8915.00 | 8915.00 | 8915.00 |
 | mean          |   19.50 |   20.41 |   18.82 |   19.59 |
-| std           |    7.84 |    8.40 |    7.40 |    7.92 |
+| std           |    7.84 |    8.40 |    7.39 |    7.92 |
 | min           |    9.14 |    9.31 |    8.56 |    9.01 |
 | 25%           |   13.86 |   14.53 |   13.40 |   13.93 |
-| 50%           |   17.65 |   18.38 |   17.07 |   17.69 |
-| 75%           |   22.84 |   23.85 |   22.16 |   22.99 |
+| 50%           |   17.66 |   18.38 |   17.07 |   17.70 |
+| 75%           |   22.84 |   23.85 |   22.15 |   22.99 |
 | max           |   82.69 |   89.53 |   72.76 |   82.69 |
-| mean + -1 std |   11.65 |   12.01 |   11.43 |   11.67 |
+| mean + -1 std |   11.66 |   12.01 |   11.43 |   11.67 |
 | mean + 0 std  |   19.50 |   20.41 |   18.82 |   19.59 |
-| mean + 1 std  |   27.34 |   28.81 |   26.22 |   27.51 |
-| mean + 2 std  |   35.18 |   37.21 |   33.61 |   35.42 |
-| mean + 3 std  |   43.02 |   45.61 |   41.01 |   43.34 |
-| mean + 4 std  |   50.86 |   54.01 |   48.40 |   51.26 |
-| mean + 5 std  |   58.70 |   62.41 |   55.80 |   59.17 |
+| mean + 1 std  |   27.34 |   28.81 |   26.22 |   27.50 |
+| mean + 2 std  |   35.17 |   37.20 |   33.61 |   35.42 |
+| mean + 3 std  |   43.01 |   45.60 |   41.00 |   43.33 |
+| mean + 4 std  |   50.85 |   54.00 |   48.40 |   51.25 |
+| mean + 5 std  |   58.69 |   62.40 |   55.79 |   59.16 |
 
 We can also run the statistics individually for each year:
 
@@ -943,7 +948,7 @@ Gives us:
 |   2022 |       25.98 |       4.30 |       27.25 |       4.59 |      24.69 |      3.91 |        25.62 |        4.22 |
 |   2023 |       17.12 |       3.17 |       17.83 |       3.58 |      16.36 |      2.89 |        16.87 |        3.14 |
 |   2024 |       15.69 |       3.14 |       16.65 |       4.73 |      14.92 |      2.58 |        15.61 |        3.36 |
-|   2025 |       22.26 |       7.67 |       24.04 |       9.35 |      20.63 |      5.64 |        21.92 |        7.26 |
+|   2025 |       22.15 |       7.54 |       23.95 |       9.18 |      20.55 |      5.54 |        21.86 |        7.13 |
 
 It is interesting to see how much the mean OHLC values vary by year.
 
@@ -968,7 +973,7 @@ Gives us:
 |       2 |       19.67 |       7.22 |       20.51 |       7.65 |      18.90 |      6.81 |        19.58 |        7.13 |
 |       3 |       20.47 |       9.63 |       21.39 |      10.49 |      19.54 |      8.65 |        20.35 |        9.56 |
 |       4 |       19.43 |       7.48 |       20.24 |       7.93 |      18.65 |      6.88 |        19.29 |        7.28 |
-|       5 |       18.59 |       6.07 |       19.39 |       6.46 |      17.88 |      5.66 |        18.50 |        5.98 |
+|       5 |       18.60 |       6.05 |       19.40 |       6.45 |      17.89 |      5.64 |        18.51 |        5.97 |
 |       6 |       18.45 |       5.82 |       19.15 |       6.09 |      17.73 |      5.46 |        18.35 |        5.75 |
 |       7 |       17.87 |       5.75 |       18.58 |       5.98 |      17.24 |      5.48 |        17.80 |        5.67 |
 |       8 |       19.17 |       6.74 |       20.12 |       7.45 |      18.44 |      6.38 |        19.18 |        6.87 |
@@ -993,12 +998,12 @@ Gives us:
 | 0.00 |    9.14 |   9.31 |  8.56 |   9.01 |
 | 0.10 |   12.12 |  12.63 | 11.72 |  12.13 |
 | 0.20 |   13.25 |  13.87 | 12.85 |  13.31 |
-| 0.30 |   14.60 |  15.29 | 14.08 |  14.68 |
-| 0.40 |   16.09 |  16.75 | 15.56 |  16.12 |
-| 0.50 |   17.65 |  18.38 | 17.07 |  17.69 |
-| 0.60 |   19.55 |  20.39 | 19.02 |  19.69 |
-| 0.70 |   21.65 |  22.66 | 21.01 |  21.81 |
-| 0.80 |   24.32 |  25.36 | 23.52 |  24.39 |
+| 0.30 |   14.61 |  15.29 | 14.08 |  14.68 |
+| 0.40 |   16.09 |  16.76 | 15.56 |  16.13 |
+| 0.50 |   17.66 |  18.38 | 17.07 |  17.70 |
+| 0.60 |   19.56 |  20.40 | 19.02 |  19.69 |
+| 0.70 |   21.65 |  22.66 | 21.00 |  21.80 |
+| 0.80 |   24.32 |  25.36 | 23.51 |  24.39 |
 | 0.90 |   28.71 |  30.00 | 27.79 |  28.86 |
 | 1.00 |   82.69 |  89.53 | 72.76 |  82.69 |
 
@@ -1099,16 +1104,16 @@ Gives us the following:
 The columns, shape, and data types are:
 
 <class 'pandas.core.frame.DataFrame'>
-DatetimeIndex: 8911 entries, 1990-01-02 to 2025-05-19
+DatetimeIndex: 8915 entries, 1990-01-02 to 2025-05-23
 Data columns (total 4 columns):
  #   Column  Non-Null Count  Dtype  
 ---  ------  --------------  -----  
- 0   Close   8911 non-null   float64
- 1   High    8911 non-null   float64
- 2   Low     8911 non-null   float64
- 3   Open    8911 non-null   float64
+ 0   Close   8915 non-null   float64
+ 1   High    8915 non-null   float64
+ 2   Low     8915 non-null   float64
+ 3   Open    8915 non-null   float64
 dtypes: float64(4)
-memory usage: 348.1 KB
+memory usage: 348.2 KB
 
 ```
 
@@ -1126,11 +1131,11 @@ The last 5 rows are:
 
 | Date                |   Close |   High |   Low |   Open |
 |:--------------------|--------:|-------:|------:|-------:|
-| 2025-05-13 00:00:00 |   18.22 |  18.85 | 17.65 |  18.69 |
-| 2025-05-14 00:00:00 |   18.62 |  18.82 | 18.06 |  18.10 |
-| 2025-05-15 00:00:00 |   17.83 |  19.38 | 17.77 |  19.19 |
-| 2025-05-16 00:00:00 |   17.24 |  17.96 | 17.15 |  17.96 |
 | 2025-05-19 00:00:00 |   18.14 |  19.92 | 17.92 |  19.84 |
+| 2025-05-20 00:00:00 |   18.09 |  18.68 | 17.70 |  18.46 |
+| 2025-05-21 00:00:00 |   20.87 |  21.05 | 17.77 |  18.77 |
+| 2025-05-22 00:00:00 |   20.28 |  22.07 | 19.64 |  20.62 |
+| 2025-05-23 00:00:00 |   22.29 |  25.53 | 19.83 |  20.14 |
 
 ### Statistics - VVIX
 
@@ -1153,21 +1158,21 @@ Gives us:
 
 |               |   Close |    High |     Low |    Open |
 |:--------------|--------:|--------:|--------:|--------:|
-| count         | 4615.00 | 4615.00 | 4615.00 | 4615.00 |
-| mean          |   93.49 |   95.53 |   91.94 |   93.74 |
-| std           |   16.46 |   18.07 |   15.11 |   16.51 |
+| count         | 4618.00 | 4618.00 | 4618.00 | 4618.00 |
+| mean          |   93.50 |   95.54 |   91.94 |   93.75 |
+| std           |   16.46 |   18.06 |   15.11 |   16.51 |
 | min           |   59.74 |   59.74 |   59.31 |   59.31 |
-| 25%           |   82.31 |   83.44 |   81.48 |   82.53 |
-| 50%           |   90.49 |   92.23 |   89.33 |   90.80 |
-| 75%           |  102.20 |  105.01 |   99.98 |  102.57 |
+| 25%           |   82.32 |   83.45 |   81.48 |   82.53 |
+| 50%           |   90.51 |   92.24 |   89.34 |   90.82 |
+| 75%           |  102.22 |  105.06 |  100.00 |  102.57 |
 | max           |  207.59 |  212.22 |  187.27 |  212.22 |
-| mean + -1 std |   77.04 |   77.47 |   76.82 |   77.23 |
-| mean + 0 std  |   93.49 |   95.53 |   91.94 |   93.74 |
-| mean + 1 std  |  109.95 |  113.60 |  107.05 |  110.25 |
-| mean + 2 std  |  126.41 |  131.67 |  122.16 |  126.77 |
-| mean + 3 std  |  142.87 |  149.74 |  137.27 |  143.28 |
-| mean + 4 std  |  159.33 |  167.81 |  152.39 |  159.79 |
-| mean + 5 std  |  175.79 |  185.87 |  167.50 |  176.30 |
+| mean + -1 std |   77.04 |   77.48 |   76.83 |   77.24 |
+| mean + 0 std  |   93.50 |   95.54 |   91.94 |   93.75 |
+| mean + 1 std  |  109.96 |  113.60 |  107.05 |  110.25 |
+| mean + 2 std  |  126.41 |  131.67 |  122.16 |  126.76 |
+| mean + 3 std  |  142.87 |  149.73 |  137.27 |  143.27 |
+| mean + 4 std  |  159.32 |  167.79 |  152.38 |  159.78 |
+| mean + 5 std  |  175.78 |  185.86 |  167.49 |  176.29 |
 
 We can also run the statistics individually for each year:
 
@@ -1204,7 +1209,7 @@ Gives us:
 |   2022 |      102.58 |      18.01 |      105.32 |      19.16 |      99.17 |     16.81 |       101.81 |       17.81 |
 |   2023 |       90.95 |       8.64 |       93.72 |       9.98 |      88.01 |      7.37 |        90.34 |        8.38 |
 |   2024 |       92.88 |      15.06 |       97.32 |      18.33 |      89.51 |     13.16 |        92.81 |       15.60 |
-|   2025 |      107.63 |      16.46 |      113.06 |      19.28 |     102.72 |     12.77 |       106.62 |       15.61 |
+|   2025 |      107.42 |      16.26 |      112.79 |      19.04 |     102.60 |     12.60 |       106.49 |       15.40 |
 
 And finally, we can run the statistics individually for each month:
 
@@ -1227,7 +1232,7 @@ Gives us:
 |      2 |       93.49 |      18.24 |       95.39 |      20.70 |      91.39 |     16.43 |        93.13 |       18.58 |
 |      3 |       95.30 |      21.66 |       97.38 |      23.56 |      92.94 |     19.51 |        94.89 |       21.59 |
 |      4 |       92.18 |      19.03 |       94.01 |      20.57 |      90.30 |     17.21 |        91.88 |       18.60 |
-|      5 |       92.07 |      17.04 |       93.76 |      18.11 |      90.39 |     16.26 |        91.62 |       16.90 |
+|      5 |       92.14 |      17.00 |       93.84 |      18.06 |      90.45 |     16.22 |        91.70 |       16.86 |
 |      6 |       92.92 |      15.07 |       94.44 |      16.33 |      91.32 |     14.03 |        92.75 |       15.05 |
 |      7 |       89.97 |      13.16 |       91.46 |      14.23 |      88.48 |     12.26 |        89.84 |       13.12 |
 |      8 |       96.83 |      16.94 |       98.89 |      18.72 |      94.68 |     14.86 |        96.61 |       16.63 |
@@ -1250,15 +1255,15 @@ Gives us:
 |      |   Close |   High |    Low |   Open |
 |-----:|--------:|-------:|-------:|-------:|
 | 0.00 |   59.74 |  59.74 |  59.31 |  59.31 |
-| 0.10 |   75.81 |  75.97 |  75.43 |  75.78 |
-| 0.20 |   80.55 |  81.41 |  79.81 |  80.73 |
-| 0.30 |   83.89 |  85.17 |  82.96 |  84.12 |
-| 0.40 |   87.05 |  88.52 |  85.95 |  87.44 |
-| 0.50 |   90.49 |  92.23 |  89.33 |  90.80 |
-| 0.60 |   94.20 |  96.12 |  93.01 |  94.47 |
-| 0.70 |   99.12 | 101.53 |  97.44 |  99.41 |
-| 0.80 |  106.06 | 109.40 | 103.95 | 106.49 |
-| 0.90 |  115.31 | 118.83 | 112.51 | 115.57 |
+| 0.10 |   75.82 |  75.99 |  75.43 |  75.79 |
+| 0.20 |   80.55 |  81.41 |  79.81 |  80.74 |
+| 0.30 |   83.89 |  85.18 |  82.97 |  84.15 |
+| 0.40 |   87.06 |  88.54 |  85.97 |  87.44 |
+| 0.50 |   90.51 |  92.24 |  89.34 |  90.82 |
+| 0.60 |   94.21 |  96.13 |  93.02 |  94.49 |
+| 0.70 |   99.13 | 101.53 |  97.44 |  99.43 |
+| 0.80 |  106.06 | 109.40 | 103.93 | 106.49 |
+| 0.90 |  115.31 | 118.82 | 112.50 | 115.56 |
 | 1.00 |  207.59 | 212.22 | 187.27 | 212.22 |
 
 ## Plots - VVIX
@@ -1402,7 +1407,7 @@ Which gives us the following:
 |   2022 |     239 |     12 |
 |   2023 |     246 |      4 |
 |   2024 |     237 |     15 |
-|   2025 |      83 |     11 |
+|   2025 |      86 |     12 |
 
 And the plot to aid with visualization. Based on the plot, it seems as though volatility has increased since the early 2000's:
 

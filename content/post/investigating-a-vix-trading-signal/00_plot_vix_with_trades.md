@@ -23,7 +23,7 @@ def plot_vix_with_trades(
     -----------
     vix_price_df : pd.DataFrame
         Dataframe containing the VIX price data to plot.
-    trades_df: pd.DataFrame
+    trades_df : pd.DataFrame
         Dataframe containing the trades data.
     plot_start_date : str
         Start date for the plot in 'YYYY-MM-DD' format.
@@ -46,10 +46,14 @@ def plot_vix_with_trades(
     # Set plot figure size and background color
     plt.figure(figsize=(12, 6), facecolor="#F5F5F5")
 
-    # Plot data
+    # Plot VIX high and low price data
     plt.plot(vix_data.index, vix_data['High'], label='High', linestyle='-', color='steelblue', linewidth=1)
     plt.plot(vix_data.index, vix_data['Low'], label='Low', linestyle='-', color='brown', linewidth=1)
+
+    # Plot VIX spikes
     plt.scatter(vix_data[vix_data['Spike_SMA'] == True].index, vix_data[vix_data['Spike_SMA'] == True]['High'], label='Spike (High > 1.25 * 10 Day High SMA)', color='black', s=20)
+    
+    # Plot trades
     plt.scatter(trades_df['Trade_Date'], trades_df['Approx_VIX_Level'], label='Trades', color='red', s=20)
 
     # Annotate each point in trades_df with the corresponding Action_Symbol

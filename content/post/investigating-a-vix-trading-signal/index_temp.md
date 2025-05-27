@@ -3,7 +3,8 @@ title: Investigating A VIX Trading Signal
 description: A brief look at finding a trading signal based on moving averages of the VIX.
 slug: investigating-a-vix-trading-signal
 date: 2025-03-01 00:00:01+0000
-lastmod: 2025-05-07 00:00:01+0000
+# lastmod: <!-- INSERT_last_run_date_HERE --> 00:00:01+0000
+lastmod: 2025-05-26 00:00:01+0000
 image: cover.jpg
 draft: false
 categories:
@@ -50,7 +51,7 @@ First, the typical set of functions I use. `export_track_md_deps` exports variou
 
 <!-- INSERT_00_export_track_md_deps_HERE -->
 
-`df_info` is a simple function to display the information about a dataframe and the first five rows and last five rows.
+`df_info` is a simple function to display the information about a DataFrame and the first five rows and last five rows.
 
 <!-- INSERT_00_df_info_HERE -->
 

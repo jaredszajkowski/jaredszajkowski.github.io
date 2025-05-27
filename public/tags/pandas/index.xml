@@ -6,7 +6,7 @@
         <description>Recent content in Pandas on Jared Szajkowski</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Wed, 07 May 2025 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/tags/pandas/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 26 May 2025 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/tags/pandas/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Investigating A VIX Trading Signal</title>
         <link>https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/</link>
         <pubDate>Sat, 01 Mar 2025 00:00:01 +0000</pubDate>
@@ -23,6 +23,27 @@ Update 4/28/2025: VIX data through 4/25/25.&lt;/br&gt;
 Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.&lt;/br&gt;
 Update 5/7/2025: Data through 5/6/25.&lt;/br&gt;
 Update 5/21/2025: Data through 5/20/25.&lt;/br&gt;&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>Reusable And Extensible Python Functions For Financial Data Analysis</title>
+        <link>https://www.jaredszajkowski.com/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/</link>
+        <pubDate>Sun, 02 Feb 2025 00:00:01 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/cover.jpg" alt="Featured image of post Reusable And Extensible Python Functions For Financial Data Analysis" /&gt;&lt;!-- ## Post Updates
+
+Update 4/8/2025: Added plot for signals for each year. VIX data through 4/7/25.&lt;/br&gt;
+Update 4/9/2025: VIX data through 4/8/25.&lt;/br&gt;
+Update 4/12/2025: VIX data through 4/10/25.&lt;/br&gt;
+Update 4/22/2025: VIX data through 4/18/25.&lt;/br&gt;
+Update 4/23/2025: VIX data through 4/22/25.&lt;/br&gt;
+Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, including open and closed positions.&lt;/br&gt;
+Update 4/28/2025: VIX data through 4/25/25.&lt;/br&gt;
+Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.&lt;/br&gt;
+Update 5/7/2025: Data through 5/6/25.&lt;/br&gt;
+Update 5/21/2025: Data through 5/20/25.&lt;/br&gt; --&gt;
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+&lt;/h2&gt;&lt;p&gt;This post intends to provide the code for all of the python functions that I use in my analysis. The goal here is that when writing another post I will simply be able to link to the functions below as opposed to providing the function code in each post.&lt;/p&gt;</description>
         </item>
         <item>
         <title>Does Harry Browne&#39;s permanent portfolio withstand the test of time?</title>

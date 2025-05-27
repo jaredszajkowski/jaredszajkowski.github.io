@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-    <head><meta charset='utf-8'>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="A brief look at finding a trading signal based on moving averages of the VIX.">
 <title>Investigating A VIX Trading Signal</title>
 
-<link rel='canonical' href='https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/'>
+<link rel='canonical' href='http://localhost:1313/2025/03/01/investigating-a-vix-trading-signal/'>
 
 <link rel="stylesheet" href="/scss/style.min.da28754071fdaf9a58e8a578c9918e494018d97e1164a8200a93b14c08c2cb5a.css"><meta property='og:title' content="Investigating A VIX Trading Signal">
 <meta property='og:description' content="A brief look at finding a trading signal based on moving averages of the VIX.">
-<meta property='og:url' content='https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/'>
+<meta property='og:url' content='http://localhost:1313/2025/03/01/investigating-a-vix-trading-signal/'>
 <meta property='og:site_name' content='Jared Szajkowski'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Python' /><meta property='article:tag' content='Yahoo Finance' /><meta property='article:tag' content='pandas' /><meta property='article:tag' content='VIX' /><meta property='article:published_time' content='2025-03-01T00:00:01&#43;00:00'/><meta property='article:modified_time' content='2025-05-07T00:00:01&#43;00:00'/><meta property='og:image' content='https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/cover.jpg' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Python' /><meta property='article:tag' content='Yahoo Finance' /><meta property='article:tag' content='pandas' /><meta property='article:tag' content='VIX' /><meta property='article:published_time' content='2025-03-01T00:00:01&#43;00:00'/><meta property='article:modified_time' content='2025-05-26T00:00:01&#43;00:00'/><meta property='og:image' content='http://localhost:1313/2025/03/01/investigating-a-vix-trading-signal/cover.jpg' />
 <meta name="twitter:title" content="Investigating A VIX Trading Signal">
 <meta name="twitter:description" content="A brief look at finding a trading signal based on moving averages of the VIX."><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/cover.jpg' />
+    <meta name="twitter:image" content='http://localhost:1313/2025/03/01/investigating-a-vix-trading-signal/cover.jpg' />
     <link rel="shortcut icon" href="/profile_pic.jpg" />
 
     </head>
@@ -561,7 +561,7 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
 </span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;✅ Exported and tracked: </span><span class="si">{</span><span class="n">md_filename</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><code>df_info</code> is a simple function to display the information about a dataframe and the first five rows and last five rows.</p>
+</div><p><code>df_info</code> is a simple function to display the information about a DataFrame and the first five rows and last five rows.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1647,7 +1647,7 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
 </span></span><span class="line"><span class="cl">        <span class="n">transactions_data</span><span class="p">[</span><span class="s1">&#39;Approx_VIX_Level&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># Split buys and sells and sum the amounts</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Split buys and sells and sum the notional amounts</span>
 </span></span><span class="line"><span class="cl">    <span class="n">transactions_sells</span> <span class="o">=</span> <span class="n">transactions_data</span><span class="p">[</span><span class="n">transactions_data</span><span class="p">[</span><span class="s1">&#39;Action&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Sell to Close&#39;</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">    <span class="n">transactions_sells</span> <span class="o">=</span> <span class="n">transactions_sells</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;Exp_Date&#39;</span><span class="p">],</span> <span class="n">as_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)[[</span><span class="s1">&#39;Amount&#39;</span><span class="p">,</span> <span class="s1">&#39;Quantity&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">
@@ -1775,6 +1775,10 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
 </span><span class="lnt">85
 </span><span class="lnt">86
 </span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib.dates</span> <span class="k">as</span> <span class="nn">mdates</span>
@@ -1801,7 +1805,7 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
 </span></span></span><span class="line"><span class="cl"><span class="s2">    -----------
 </span></span></span><span class="line"><span class="cl"><span class="s2">    vix_price_df : pd.DataFrame
 </span></span></span><span class="line"><span class="cl"><span class="s2">        Dataframe containing the VIX price data to plot.
-</span></span></span><span class="line"><span class="cl"><span class="s2">    trades_df: pd.DataFrame
+</span></span></span><span class="line"><span class="cl"><span class="s2">    trades_df : pd.DataFrame
 </span></span></span><span class="line"><span class="cl"><span class="s2">        Dataframe containing the trades data.
 </span></span></span><span class="line"><span class="cl"><span class="s2">    plot_start_date : str
 </span></span></span><span class="line"><span class="cl"><span class="s2">        Start date for the plot in &#39;YYYY-MM-DD&#39; format.
@@ -1824,10 +1828,14 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
 </span></span><span class="line"><span class="cl">    <span class="c1"># Set plot figure size and background color</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">facecolor</span><span class="o">=</span><span class="s2">&#34;#F5F5F5&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># Plot data</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Plot VIX high and low price data</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">vix_data</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">vix_data</span><span class="p">[</span><span class="s1">&#39;High&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;High&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;steelblue&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">vix_data</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">vix_data</span><span class="p">[</span><span class="s1">&#39;Low&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Low&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;brown&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Plot VIX spikes</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">vix_data</span><span class="p">[</span><span class="n">vix_data</span><span class="p">[</span><span class="s1">&#39;Spike_SMA&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">vix_data</span><span class="p">[</span><span class="n">vix_data</span><span class="p">[</span><span class="s1">&#39;Spike_SMA&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">][</span><span class="s1">&#39;High&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Spike (High &gt; 1.25 * 10 Day High SMA)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># Plot trades</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">trades_df</span><span class="p">[</span><span class="s1">&#39;Trade_Date&#39;</span><span class="p">],</span> <span class="n">trades_df</span><span class="p">[</span><span class="s1">&#39;Approx_VIX_Level&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Trades&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="c1"># Annotate each point in trades_df with the corresponding Action_Symbol</span>
@@ -1984,16 +1992,16 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
 <pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">The columns, shape, and data types are:
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-</span></span><span class="line"><span class="cl">DatetimeIndex: 8911 entries, 1990-01-02 to 2025-05-19
+</span></span><span class="line"><span class="cl">DatetimeIndex: 8915 entries, 1990-01-02 to 2025-05-23
 </span></span><span class="line"><span class="cl">Data columns (total 4 columns):
 </span></span><span class="line"><span class="cl"> #   Column  Non-Null Count  Dtype  
 </span></span><span class="line"><span class="cl">---  ------  --------------  -----  
-</span></span><span class="line"><span class="cl"> 0   Close   8911 non-null   float64
-</span></span><span class="line"><span class="cl"> 1   High    8911 non-null   float64
-</span></span><span class="line"><span class="cl"> 2   Low     8911 non-null   float64
-</span></span><span class="line"><span class="cl"> 3   Open    8911 non-null   float64
+</span></span><span class="line"><span class="cl"> 0   Close   8915 non-null   float64
+</span></span><span class="line"><span class="cl"> 1   High    8915 non-null   float64
+</span></span><span class="line"><span class="cl"> 2   Low     8915 non-null   float64
+</span></span><span class="line"><span class="cl"> 3   Open    8915 non-null   float64
 </span></span><span class="line"><span class="cl">dtypes: float64(4)
-</span></span><span class="line"><span class="cl">memory usage: 348.1 KB
+</span></span><span class="line"><span class="cl">memory usage: 348.2 KB
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>The first 5 rows are:</p>
@@ -2058,39 +2066,39 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left">2025-05-13 00:00:00</td>
-          <td style="text-align: right">18.22</td>
-          <td style="text-align: right">18.85</td>
-          <td style="text-align: right">17.65</td>
-          <td style="text-align: right">18.69</td>
-      </tr>
-      <tr>
-          <td style="text-align: left">2025-05-14 00:00:00</td>
-          <td style="text-align: right">18.62</td>
-          <td style="text-align: right">18.82</td>
-          <td style="text-align: right">18.06</td>
-          <td style="text-align: right">18.10</td>
-      </tr>
-      <tr>
-          <td style="text-align: left">2025-05-15 00:00:00</td>
-          <td style="text-align: right">17.83</td>
-          <td style="text-align: right">19.38</td>
-          <td style="text-align: right">17.77</td>
-          <td style="text-align: right">19.19</td>
-      </tr>
-      <tr>
-          <td style="text-align: left">2025-05-16 00:00:00</td>
-          <td style="text-align: right">17.24</td>
-          <td style="text-align: right">17.96</td>
-          <td style="text-align: right">17.15</td>
-          <td style="text-align: right">17.96</td>
-      </tr>
-      <tr>
           <td style="text-align: left">2025-05-19 00:00:00</td>
           <td style="text-align: right">18.14</td>
           <td style="text-align: right">19.92</td>
           <td style="text-align: right">17.92</td>
           <td style="text-align: right">19.84</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-20 00:00:00</td>
+          <td style="text-align: right">18.09</td>
+          <td style="text-align: right">18.68</td>
+          <td style="text-align: right">17.70</td>
+          <td style="text-align: right">18.46</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-21 00:00:00</td>
+          <td style="text-align: right">20.87</td>
+          <td style="text-align: right">21.05</td>
+          <td style="text-align: right">17.77</td>
+          <td style="text-align: right">18.77</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-22 00:00:00</td>
+          <td style="text-align: right">20.28</td>
+          <td style="text-align: right">22.07</td>
+          <td style="text-align: right">19.64</td>
+          <td style="text-align: right">20.62</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-23 00:00:00</td>
+          <td style="text-align: right">22.29</td>
+          <td style="text-align: right">25.53</td>
+          <td style="text-align: right">19.83</td>
+          <td style="text-align: right">20.14</td>
       </tr>
   </tbody>
 </table></div>
@@ -2136,10 +2144,10 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
   <tbody>
       <tr>
           <td style="text-align: left">count</td>
-          <td style="text-align: right">8911.00</td>
-          <td style="text-align: right">8911.00</td>
-          <td style="text-align: right">8911.00</td>
-          <td style="text-align: right">8911.00</td>
+          <td style="text-align: right">8915.00</td>
+          <td style="text-align: right">8915.00</td>
+          <td style="text-align: right">8915.00</td>
+          <td style="text-align: right">8915.00</td>
       </tr>
       <tr>
           <td style="text-align: left">mean</td>
@@ -2152,7 +2160,7 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
           <td style="text-align: left">std</td>
           <td style="text-align: right">7.84</td>
           <td style="text-align: right">8.40</td>
-          <td style="text-align: right">7.40</td>
+          <td style="text-align: right">7.39</td>
           <td style="text-align: right">7.92</td>
       </tr>
       <tr>
@@ -2171,16 +2179,16 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
       </tr>
       <tr>
           <td style="text-align: left">50%</td>
-          <td style="text-align: right">17.65</td>
+          <td style="text-align: right">17.66</td>
           <td style="text-align: right">18.38</td>
           <td style="text-align: right">17.07</td>
-          <td style="text-align: right">17.69</td>
+          <td style="text-align: right">17.70</td>
       </tr>
       <tr>
           <td style="text-align: left">75%</td>
           <td style="text-align: right">22.84</td>
           <td style="text-align: right">23.85</td>
-          <td style="text-align: right">22.16</td>
+          <td style="text-align: right">22.15</td>
           <td style="text-align: right">22.99</td>
       </tr>
       <tr>
@@ -2192,7 +2200,7 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
       </tr>
       <tr>
           <td style="text-align: left">mean + -1 std</td>
-          <td style="text-align: right">11.65</td>
+          <td style="text-align: right">11.66</td>
           <td style="text-align: right">12.01</td>
           <td style="text-align: right">11.43</td>
           <td style="text-align: right">11.67</td>
@@ -2209,35 +2217,35 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
           <td style="text-align: right">27.34</td>
           <td style="text-align: right">28.81</td>
           <td style="text-align: right">26.22</td>
-          <td style="text-align: right">27.51</td>
+          <td style="text-align: right">27.50</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 2 std</td>
-          <td style="text-align: right">35.18</td>
-          <td style="text-align: right">37.21</td>
+          <td style="text-align: right">35.17</td>
+          <td style="text-align: right">37.20</td>
           <td style="text-align: right">33.61</td>
           <td style="text-align: right">35.42</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 3 std</td>
-          <td style="text-align: right">43.02</td>
-          <td style="text-align: right">45.61</td>
-          <td style="text-align: right">41.01</td>
-          <td style="text-align: right">43.34</td>
+          <td style="text-align: right">43.01</td>
+          <td style="text-align: right">45.60</td>
+          <td style="text-align: right">41.00</td>
+          <td style="text-align: right">43.33</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 4 std</td>
-          <td style="text-align: right">50.86</td>
-          <td style="text-align: right">54.01</td>
+          <td style="text-align: right">50.85</td>
+          <td style="text-align: right">54.00</td>
           <td style="text-align: right">48.40</td>
-          <td style="text-align: right">51.26</td>
+          <td style="text-align: right">51.25</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 5 std</td>
-          <td style="text-align: right">58.70</td>
-          <td style="text-align: right">62.41</td>
-          <td style="text-align: right">55.80</td>
-          <td style="text-align: right">59.17</td>
+          <td style="text-align: right">58.69</td>
+          <td style="text-align: right">62.40</td>
+          <td style="text-align: right">55.79</td>
+          <td style="text-align: right">59.16</td>
       </tr>
   </tbody>
 </table></div>
@@ -2667,14 +2675,14 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
       </tr>
       <tr>
           <td style="text-align: right">2025</td>
-          <td style="text-align: right">22.26</td>
-          <td style="text-align: right">7.67</td>
-          <td style="text-align: right">24.04</td>
-          <td style="text-align: right">9.35</td>
-          <td style="text-align: right">20.63</td>
-          <td style="text-align: right">5.64</td>
-          <td style="text-align: right">21.92</td>
-          <td style="text-align: right">7.26</td>
+          <td style="text-align: right">22.15</td>
+          <td style="text-align: right">7.54</td>
+          <td style="text-align: right">23.95</td>
+          <td style="text-align: right">9.18</td>
+          <td style="text-align: right">20.55</td>
+          <td style="text-align: right">5.54</td>
+          <td style="text-align: right">21.86</td>
+          <td style="text-align: right">7.13</td>
       </tr>
   </tbody>
 </table></div>
@@ -2764,14 +2772,14 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
       </tr>
       <tr>
           <td style="text-align: right">5</td>
-          <td style="text-align: right">18.59</td>
-          <td style="text-align: right">6.07</td>
-          <td style="text-align: right">19.39</td>
-          <td style="text-align: right">6.46</td>
-          <td style="text-align: right">17.88</td>
-          <td style="text-align: right">5.66</td>
-          <td style="text-align: right">18.50</td>
-          <td style="text-align: right">5.98</td>
+          <td style="text-align: right">18.60</td>
+          <td style="text-align: right">6.05</td>
+          <td style="text-align: right">19.40</td>
+          <td style="text-align: right">6.45</td>
+          <td style="text-align: right">17.89</td>
+          <td style="text-align: right">5.64</td>
+          <td style="text-align: right">18.51</td>
+          <td style="text-align: right">5.97</td>
       </tr>
       <tr>
           <td style="text-align: right">6</td>
@@ -2899,7 +2907,7 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
       </tr>
       <tr>
           <td style="text-align: right">0.30</td>
-          <td style="text-align: right">14.60</td>
+          <td style="text-align: right">14.61</td>
           <td style="text-align: right">15.29</td>
           <td style="text-align: right">14.08</td>
           <td style="text-align: right">14.68</td>
@@ -2907,21 +2915,21 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
       <tr>
           <td style="text-align: right">0.40</td>
           <td style="text-align: right">16.09</td>
-          <td style="text-align: right">16.75</td>
+          <td style="text-align: right">16.76</td>
           <td style="text-align: right">15.56</td>
-          <td style="text-align: right">16.12</td>
+          <td style="text-align: right">16.13</td>
       </tr>
       <tr>
           <td style="text-align: right">0.50</td>
-          <td style="text-align: right">17.65</td>
+          <td style="text-align: right">17.66</td>
           <td style="text-align: right">18.38</td>
           <td style="text-align: right">17.07</td>
-          <td style="text-align: right">17.69</td>
+          <td style="text-align: right">17.70</td>
       </tr>
       <tr>
           <td style="text-align: right">0.60</td>
-          <td style="text-align: right">19.55</td>
-          <td style="text-align: right">20.39</td>
+          <td style="text-align: right">19.56</td>
+          <td style="text-align: right">20.40</td>
           <td style="text-align: right">19.02</td>
           <td style="text-align: right">19.69</td>
       </tr>
@@ -2929,14 +2937,14 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
           <td style="text-align: right">0.70</td>
           <td style="text-align: right">21.65</td>
           <td style="text-align: right">22.66</td>
-          <td style="text-align: right">21.01</td>
-          <td style="text-align: right">21.81</td>
+          <td style="text-align: right">21.00</td>
+          <td style="text-align: right">21.80</td>
       </tr>
       <tr>
           <td style="text-align: right">0.80</td>
           <td style="text-align: right">24.32</td>
           <td style="text-align: right">25.36</td>
-          <td style="text-align: right">23.52</td>
+          <td style="text-align: right">23.51</td>
           <td style="text-align: right">24.39</td>
       </tr>
       <tr>
@@ -3145,16 +3153,16 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
 <pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">The columns, shape, and data types are:
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-</span></span><span class="line"><span class="cl">DatetimeIndex: 8911 entries, 1990-01-02 to 2025-05-19
+</span></span><span class="line"><span class="cl">DatetimeIndex: 8915 entries, 1990-01-02 to 2025-05-23
 </span></span><span class="line"><span class="cl">Data columns (total 4 columns):
 </span></span><span class="line"><span class="cl"> #   Column  Non-Null Count  Dtype  
 </span></span><span class="line"><span class="cl">---  ------  --------------  -----  
-</span></span><span class="line"><span class="cl"> 0   Close   8911 non-null   float64
-</span></span><span class="line"><span class="cl"> 1   High    8911 non-null   float64
-</span></span><span class="line"><span class="cl"> 2   Low     8911 non-null   float64
-</span></span><span class="line"><span class="cl"> 3   Open    8911 non-null   float64
+</span></span><span class="line"><span class="cl"> 0   Close   8915 non-null   float64
+</span></span><span class="line"><span class="cl"> 1   High    8915 non-null   float64
+</span></span><span class="line"><span class="cl"> 2   Low     8915 non-null   float64
+</span></span><span class="line"><span class="cl"> 3   Open    8915 non-null   float64
 </span></span><span class="line"><span class="cl">dtypes: float64(4)
-</span></span><span class="line"><span class="cl">memory usage: 348.1 KB
+</span></span><span class="line"><span class="cl">memory usage: 348.2 KB
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>The first 5 rows are:</p>
@@ -3219,39 +3227,39 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left">2025-05-13 00:00:00</td>
-          <td style="text-align: right">18.22</td>
-          <td style="text-align: right">18.85</td>
-          <td style="text-align: right">17.65</td>
-          <td style="text-align: right">18.69</td>
-      </tr>
-      <tr>
-          <td style="text-align: left">2025-05-14 00:00:00</td>
-          <td style="text-align: right">18.62</td>
-          <td style="text-align: right">18.82</td>
-          <td style="text-align: right">18.06</td>
-          <td style="text-align: right">18.10</td>
-      </tr>
-      <tr>
-          <td style="text-align: left">2025-05-15 00:00:00</td>
-          <td style="text-align: right">17.83</td>
-          <td style="text-align: right">19.38</td>
-          <td style="text-align: right">17.77</td>
-          <td style="text-align: right">19.19</td>
-      </tr>
-      <tr>
-          <td style="text-align: left">2025-05-16 00:00:00</td>
-          <td style="text-align: right">17.24</td>
-          <td style="text-align: right">17.96</td>
-          <td style="text-align: right">17.15</td>
-          <td style="text-align: right">17.96</td>
-      </tr>
-      <tr>
           <td style="text-align: left">2025-05-19 00:00:00</td>
           <td style="text-align: right">18.14</td>
           <td style="text-align: right">19.92</td>
           <td style="text-align: right">17.92</td>
           <td style="text-align: right">19.84</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-20 00:00:00</td>
+          <td style="text-align: right">18.09</td>
+          <td style="text-align: right">18.68</td>
+          <td style="text-align: right">17.70</td>
+          <td style="text-align: right">18.46</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-21 00:00:00</td>
+          <td style="text-align: right">20.87</td>
+          <td style="text-align: right">21.05</td>
+          <td style="text-align: right">17.77</td>
+          <td style="text-align: right">18.77</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-22 00:00:00</td>
+          <td style="text-align: right">20.28</td>
+          <td style="text-align: right">22.07</td>
+          <td style="text-align: right">19.64</td>
+          <td style="text-align: right">20.62</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-23 00:00:00</td>
+          <td style="text-align: right">22.29</td>
+          <td style="text-align: right">25.53</td>
+          <td style="text-align: right">19.83</td>
+          <td style="text-align: right">20.14</td>
       </tr>
   </tbody>
 </table></div>
@@ -3297,22 +3305,22 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
   <tbody>
       <tr>
           <td style="text-align: left">count</td>
-          <td style="text-align: right">4615.00</td>
-          <td style="text-align: right">4615.00</td>
-          <td style="text-align: right">4615.00</td>
-          <td style="text-align: right">4615.00</td>
+          <td style="text-align: right">4618.00</td>
+          <td style="text-align: right">4618.00</td>
+          <td style="text-align: right">4618.00</td>
+          <td style="text-align: right">4618.00</td>
       </tr>
       <tr>
           <td style="text-align: left">mean</td>
-          <td style="text-align: right">93.49</td>
-          <td style="text-align: right">95.53</td>
+          <td style="text-align: right">93.50</td>
+          <td style="text-align: right">95.54</td>
           <td style="text-align: right">91.94</td>
-          <td style="text-align: right">93.74</td>
+          <td style="text-align: right">93.75</td>
       </tr>
       <tr>
           <td style="text-align: left">std</td>
           <td style="text-align: right">16.46</td>
-          <td style="text-align: right">18.07</td>
+          <td style="text-align: right">18.06</td>
           <td style="text-align: right">15.11</td>
           <td style="text-align: right">16.51</td>
       </tr>
@@ -3325,23 +3333,23 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
       </tr>
       <tr>
           <td style="text-align: left">25%</td>
-          <td style="text-align: right">82.31</td>
-          <td style="text-align: right">83.44</td>
+          <td style="text-align: right">82.32</td>
+          <td style="text-align: right">83.45</td>
           <td style="text-align: right">81.48</td>
           <td style="text-align: right">82.53</td>
       </tr>
       <tr>
           <td style="text-align: left">50%</td>
-          <td style="text-align: right">90.49</td>
-          <td style="text-align: right">92.23</td>
-          <td style="text-align: right">89.33</td>
-          <td style="text-align: right">90.80</td>
+          <td style="text-align: right">90.51</td>
+          <td style="text-align: right">92.24</td>
+          <td style="text-align: right">89.34</td>
+          <td style="text-align: right">90.82</td>
       </tr>
       <tr>
           <td style="text-align: left">75%</td>
-          <td style="text-align: right">102.20</td>
-          <td style="text-align: right">105.01</td>
-          <td style="text-align: right">99.98</td>
+          <td style="text-align: right">102.22</td>
+          <td style="text-align: right">105.06</td>
+          <td style="text-align: right">100.00</td>
           <td style="text-align: right">102.57</td>
       </tr>
       <tr>
@@ -3354,20 +3362,20 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
       <tr>
           <td style="text-align: left">mean + -1 std</td>
           <td style="text-align: right">77.04</td>
-          <td style="text-align: right">77.47</td>
-          <td style="text-align: right">76.82</td>
-          <td style="text-align: right">77.23</td>
+          <td style="text-align: right">77.48</td>
+          <td style="text-align: right">76.83</td>
+          <td style="text-align: right">77.24</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 0 std</td>
-          <td style="text-align: right">93.49</td>
-          <td style="text-align: right">95.53</td>
+          <td style="text-align: right">93.50</td>
+          <td style="text-align: right">95.54</td>
           <td style="text-align: right">91.94</td>
-          <td style="text-align: right">93.74</td>
+          <td style="text-align: right">93.75</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 1 std</td>
-          <td style="text-align: right">109.95</td>
+          <td style="text-align: right">109.96</td>
           <td style="text-align: right">113.60</td>
           <td style="text-align: right">107.05</td>
           <td style="text-align: right">110.25</td>
@@ -3377,28 +3385,28 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
           <td style="text-align: right">126.41</td>
           <td style="text-align: right">131.67</td>
           <td style="text-align: right">122.16</td>
-          <td style="text-align: right">126.77</td>
+          <td style="text-align: right">126.76</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 3 std</td>
           <td style="text-align: right">142.87</td>
-          <td style="text-align: right">149.74</td>
+          <td style="text-align: right">149.73</td>
           <td style="text-align: right">137.27</td>
-          <td style="text-align: right">143.28</td>
+          <td style="text-align: right">143.27</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 4 std</td>
-          <td style="text-align: right">159.33</td>
-          <td style="text-align: right">167.81</td>
-          <td style="text-align: right">152.39</td>
-          <td style="text-align: right">159.79</td>
+          <td style="text-align: right">159.32</td>
+          <td style="text-align: right">167.79</td>
+          <td style="text-align: right">152.38</td>
+          <td style="text-align: right">159.78</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 5 std</td>
-          <td style="text-align: right">175.79</td>
-          <td style="text-align: right">185.87</td>
-          <td style="text-align: right">167.50</td>
-          <td style="text-align: right">176.30</td>
+          <td style="text-align: right">175.78</td>
+          <td style="text-align: right">185.86</td>
+          <td style="text-align: right">167.49</td>
+          <td style="text-align: right">176.29</td>
       </tr>
   </tbody>
 </table></div>
@@ -3641,14 +3649,14 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
       </tr>
       <tr>
           <td style="text-align: right">2025</td>
-          <td style="text-align: right">107.63</td>
-          <td style="text-align: right">16.46</td>
-          <td style="text-align: right">113.06</td>
-          <td style="text-align: right">19.28</td>
-          <td style="text-align: right">102.72</td>
-          <td style="text-align: right">12.77</td>
-          <td style="text-align: right">106.62</td>
-          <td style="text-align: right">15.61</td>
+          <td style="text-align: right">107.42</td>
+          <td style="text-align: right">16.26</td>
+          <td style="text-align: right">112.79</td>
+          <td style="text-align: right">19.04</td>
+          <td style="text-align: right">102.60</td>
+          <td style="text-align: right">12.60</td>
+          <td style="text-align: right">106.49</td>
+          <td style="text-align: right">15.40</td>
       </tr>
   </tbody>
 </table></div>
@@ -3737,14 +3745,14 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
       </tr>
       <tr>
           <td style="text-align: right">5</td>
-          <td style="text-align: right">92.07</td>
-          <td style="text-align: right">17.04</td>
-          <td style="text-align: right">93.76</td>
-          <td style="text-align: right">18.11</td>
-          <td style="text-align: right">90.39</td>
-          <td style="text-align: right">16.26</td>
-          <td style="text-align: right">91.62</td>
-          <td style="text-align: right">16.90</td>
+          <td style="text-align: right">92.14</td>
+          <td style="text-align: right">17.00</td>
+          <td style="text-align: right">93.84</td>
+          <td style="text-align: right">18.06</td>
+          <td style="text-align: right">90.45</td>
+          <td style="text-align: right">16.22</td>
+          <td style="text-align: right">91.70</td>
+          <td style="text-align: right">16.86</td>
       </tr>
       <tr>
           <td style="text-align: right">6</td>
@@ -3858,66 +3866,66 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
       </tr>
       <tr>
           <td style="text-align: right">0.10</td>
-          <td style="text-align: right">75.81</td>
-          <td style="text-align: right">75.97</td>
+          <td style="text-align: right">75.82</td>
+          <td style="text-align: right">75.99</td>
           <td style="text-align: right">75.43</td>
-          <td style="text-align: right">75.78</td>
+          <td style="text-align: right">75.79</td>
       </tr>
       <tr>
           <td style="text-align: right">0.20</td>
           <td style="text-align: right">80.55</td>
           <td style="text-align: right">81.41</td>
           <td style="text-align: right">79.81</td>
-          <td style="text-align: right">80.73</td>
+          <td style="text-align: right">80.74</td>
       </tr>
       <tr>
           <td style="text-align: right">0.30</td>
           <td style="text-align: right">83.89</td>
-          <td style="text-align: right">85.17</td>
-          <td style="text-align: right">82.96</td>
-          <td style="text-align: right">84.12</td>
+          <td style="text-align: right">85.18</td>
+          <td style="text-align: right">82.97</td>
+          <td style="text-align: right">84.15</td>
       </tr>
       <tr>
           <td style="text-align: right">0.40</td>
-          <td style="text-align: right">87.05</td>
-          <td style="text-align: right">88.52</td>
-          <td style="text-align: right">85.95</td>
+          <td style="text-align: right">87.06</td>
+          <td style="text-align: right">88.54</td>
+          <td style="text-align: right">85.97</td>
           <td style="text-align: right">87.44</td>
       </tr>
       <tr>
           <td style="text-align: right">0.50</td>
-          <td style="text-align: right">90.49</td>
-          <td style="text-align: right">92.23</td>
-          <td style="text-align: right">89.33</td>
-          <td style="text-align: right">90.80</td>
+          <td style="text-align: right">90.51</td>
+          <td style="text-align: right">92.24</td>
+          <td style="text-align: right">89.34</td>
+          <td style="text-align: right">90.82</td>
       </tr>
       <tr>
           <td style="text-align: right">0.60</td>
-          <td style="text-align: right">94.20</td>
-          <td style="text-align: right">96.12</td>
-          <td style="text-align: right">93.01</td>
-          <td style="text-align: right">94.47</td>
+          <td style="text-align: right">94.21</td>
+          <td style="text-align: right">96.13</td>
+          <td style="text-align: right">93.02</td>
+          <td style="text-align: right">94.49</td>
       </tr>
       <tr>
           <td style="text-align: right">0.70</td>
-          <td style="text-align: right">99.12</td>
+          <td style="text-align: right">99.13</td>
           <td style="text-align: right">101.53</td>
           <td style="text-align: right">97.44</td>
-          <td style="text-align: right">99.41</td>
+          <td style="text-align: right">99.43</td>
       </tr>
       <tr>
           <td style="text-align: right">0.80</td>
           <td style="text-align: right">106.06</td>
           <td style="text-align: right">109.40</td>
-          <td style="text-align: right">103.95</td>
+          <td style="text-align: right">103.93</td>
           <td style="text-align: right">106.49</td>
       </tr>
       <tr>
           <td style="text-align: right">0.90</td>
           <td style="text-align: right">115.31</td>
-          <td style="text-align: right">118.83</td>
-          <td style="text-align: right">112.51</td>
-          <td style="text-align: right">115.57</td>
+          <td style="text-align: right">118.82</td>
+          <td style="text-align: right">112.50</td>
+          <td style="text-align: right">115.56</td>
       </tr>
       <tr>
           <td style="text-align: right">1.00</td>
@@ -4311,8 +4319,8 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
       </tr>
       <tr>
           <td style="text-align: right">2025</td>
-          <td style="text-align: right">83</td>
-          <td style="text-align: right">11</td>
+          <td style="text-align: right">86</td>
+          <td style="text-align: right">12</td>
       </tr>
   </tbody>
 </table></div>
@@ -5303,7 +5311,7 @@ Update 5/21/2025: Data through 5/20/25.</br></p>
 <h4 id="volatility-in-april-2025">Volatility In April 2025
 </h4><p>Plot with VIX level, trade side, VIX option, and VIX level at trade date/time:</p>
 <p><img src="/2025/03/01/investigating-a-vix-trading-signal/13_VIX_Spike_Trades_2025-02-28_2025-05-23.png"
-	width="3600"
+	width="3597"
 	height="1768"
 	
 	loading="lazy"
@@ -5489,7 +5497,7 @@ The pdf export of the jupyter notebook is available <a class="link" href="invest
 
 
         <span>
-            Last updated on May 7, 2025
+            Last updated on May 26, 2025
         </span>
     </section></footer>
 
@@ -5538,7 +5546,7 @@ The pdf export of the jupyter notebook is available <a class="link" href="invest
         
         
             <div class="article-image">
-                <img src="/2024/11/04/harry-browne-permanent-portfolio/cover.ed06096f80b0b50529892cc225da5f8e.jpg" 
+                <img src="/2024/11/04/harry-browne-permanent-portfolio/cover.ed06096f80b0b50529892cc225da5f8e.ed06096f80b0b50529892cc225da5f8e.jpg" 
                         width="1792" 
                         height="1024" 
                         loading="lazy"
@@ -5599,6 +5607,30 @@ The pdf export of the jupyter notebook is available <a class="link" href="invest
 
         <div class="article-details">
             <h2 class="article-title">Cleaning A Bloomberg Data Excel Export</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/">
+        
+        
+            <div class="article-image">
+                <img src="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/cover.44e597e7046d5f4a09371137a7587b60.jpg" 
+                        width="1920" 
+                        height="800" 
+                        loading="lazy"
+                        alt="Featured image of post Reusable And Extensible Python Functions For Financial Data Analysis"
+                        data-key="reusable-extensible-python-functions-financial-data-analysis" 
+                        data-hash="md5-ROWX5wRtX0oJNxE3p1h7YA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Reusable And Extensible Python Functions For Financial Data Analysis</h2>
         </div>
     </a>
 </article>
@@ -5764,7 +5796,7 @@ The pdf export of the jupyter notebook is available <a class="link" href="invest
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.ebe92fee7f65d9116070be29cca41c8dfc7a4fa49af205c2bf7cc8ed6f956d12.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');
