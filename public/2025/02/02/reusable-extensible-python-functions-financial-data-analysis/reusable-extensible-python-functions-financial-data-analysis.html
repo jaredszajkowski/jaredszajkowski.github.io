@@ -7695,129 +7695,12 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=14af2186">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Functions-For-Assembling/Processing-Posts">Functions For Assembling/Processing Posts<a class="anchor-link" href="#Functions-For-Assembling/Processing-Posts">¶</a></h3>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=686323e5">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="build_index">build_index<a class="anchor-link" href="#build_index">¶</a></h4>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=03343637">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=7e12cbc9">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">build_index</span> <span class="kn">import</span> <span class="n">build_index</span>
-<span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"build_index.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
-<span class="n">md_code_block</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"```python</span><span class="se">\n</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="se">\n</span><span class="s2">```"</span>
-<span class="c1"># Copy this &lt;!-- INSERT_build_index_HERE --&gt; to index_temp.md</span>
-<span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"build_index.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">md_code_block</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>✅ Exported and tracked: build_index.md
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bec1cd91">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="export_track_md_deps">export_track_md_deps<a class="anchor-link" href="#export_track_md_deps">¶</a></h4>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=5c2198d9">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">export_track_md_deps</span> <span class="kn">import</span> <span class="n">export_track_md_deps</span>
-<span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"export_track_md_deps.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
-<span class="n">md_code_block</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"```python</span><span class="se">\n</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="se">\n</span><span class="s2">```"</span>
-<span class="c1"># Copy this &lt;!-- INSERT_export_track_md_deps_HERE --&gt; to index_temp.md</span>
-<span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"export_track_md_deps.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">md_code_block</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>✅ Exported and tracked: export_track_md_deps.md
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c31fb986">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Bloomberg-Functions">Bloomberg Functions<a class="anchor-link" href="#Bloomberg-Functions">¶</a></h3>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d484fba6">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="bb_clean_data">bb_clean_data<a class="anchor-link" href="#bb_clean_data">¶</a></h4>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=8db0f9f2">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">bb_clean_data</span> <span class="kn">import</span> <span class="n">bb_clean_data</span>
@@ -7843,34 +7726,43 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a8ad117f">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Analysis-Functions">Analysis Functions<a class="anchor-link" href="#Analysis-Functions">¶</a></h3>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bb3e58dc">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="calc_vix_trade_pnl">calc_vix_trade_pnl<a class="anchor-link" href="#calc_vix_trade_pnl">¶</a></h4>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=459fd667">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=03343637">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">build_index</span> <span class="kn">import</span> <span class="n">build_index</span>
+<span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"build_index.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
+<span class="n">md_code_block</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"```python</span><span class="se">\n</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="se">\n</span><span class="s2">```"</span>
+<span class="c1"># Copy this &lt;!-- INSERT_build_index_HERE --&gt; to index_temp.md</span>
+<span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"build_index.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">md_code_block</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>✅ Exported and tracked: build_index.md
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=ff53c720">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">calc_vix_trade_pnl</span> <span class="kn">import</span> <span class="n">calc_vix_trade_pnl</span>
@@ -7896,16 +7788,281 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=03276c63">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=c2f67f0d">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span> 
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">df_info</span> <span class="kn">import</span> <span class="n">df_info</span>
+<span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"df_info.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
+<span class="n">md_code_block</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"```python</span><span class="se">\n</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="se">\n</span><span class="s2">```"</span>
+<span class="c1"># Copy this &lt;!-- INSERT_df_info_HERE --&gt; to index_temp.md</span>
+<span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"df_info.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">md_code_block</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>✅ Exported and tracked: df_info.md
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=ce9e3f12">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">df_info_markdown</span> <span class="kn">import</span> <span class="n">df_info_markdown</span>
+<span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"df_info_markdown.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
+<span class="n">md_code_block</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"```python</span><span class="se">\n</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="se">\n</span><span class="s2">```"</span>
+<span class="c1"># Copy this &lt;!-- INSERT_df_info_markdown_HERE --&gt; to index_temp.md</span>
+<span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"df_info_markdown.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">md_code_block</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>✅ Exported and tracked: df_info_markdown.md
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=5c2198d9">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">export_track_md_deps</span> <span class="kn">import</span> <span class="n">export_track_md_deps</span>
+<span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"export_track_md_deps.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
+<span class="n">md_code_block</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"```python</span><span class="se">\n</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="se">\n</span><span class="s2">```"</span>
+<span class="c1"># Copy this &lt;!-- INSERT_export_track_md_deps_HERE --&gt; to index_temp.md</span>
+<span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"export_track_md_deps.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">md_code_block</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>✅ Exported and tracked: export_track_md_deps.md
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=fe0f4271">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">load_api_keys</span> <span class="kn">import</span> <span class="n">load_api_keys</span>
+<span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"load_api_keys.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
+<span class="n">md_code_block</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"```python</span><span class="se">\n</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="se">\n</span><span class="s2">```"</span>
+<span class="c1"># Copy this &lt;!-- INSERT_load_api_keys_HERE --&gt; to index_temp.md</span>
+<span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"load_api_keys.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">md_code_block</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>✅ Exported and tracked: load_api_keys.md
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=03276c63">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">load_data</span> <span class="kn">import</span> <span class="n">load_data</span>
+<span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"load_data.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
+<span class="n">md_code_block</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"```python</span><span class="se">\n</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="se">\n</span><span class="s2">```"</span>
+<span class="c1"># Copy this &lt;!-- INSERT_load_data_HERE --&gt; to index_temp.md</span>
+<span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"load_data.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">md_code_block</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>✅ Exported and tracked: load_data.md
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=687f7289">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pandas_set_decimal_places</span> <span class="kn">import</span> <span class="n">pandas_set_decimal_places</span>
+<span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"pandas_set_decimal_places.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
+<span class="n">md_code_block</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"```python</span><span class="se">\n</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="se">\n</span><span class="s2">```"</span>
+<span class="c1"># Copy this &lt;!-- INSERT_pandas_set_decimal_places_HERE --&gt; to index_temp.md</span>
+<span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"pandas_set_decimal_places.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">md_code_block</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>✅ Exported and tracked: pandas_set_decimal_places.md
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=cb00f66a">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">plot_price</span> <span class="kn">import</span> <span class="n">plot_price</span>
+<span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"plot_price.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
+<span class="n">md_code_block</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"```python</span><span class="se">\n</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="se">\n</span><span class="s2">```"</span>
+<span class="c1"># Copy this &lt;!-- INSERT_plot_price_HERE --&gt; to index_temp.md</span>
+<span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"plot_price.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">md_code_block</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>✅ Exported and tracked: plot_price.md
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=e85c782e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">plot_vix_with_trades</span> <span class="kn">import</span> <span class="n">plot_vix_with_trades</span>
+<span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"plot_vix_with_trades.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
+<span class="n">md_code_block</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"```python</span><span class="se">\n</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="se">\n</span><span class="s2">```"</span>
+<span class="c1"># Copy this &lt;!-- INSERT_plot_vix_with_trades_HERE --&gt; to index_temp.md</span>
+<span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"plot_vix_with_trades.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">md_code_block</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>✅ Exported and tracked: plot_vix_with_trades.md
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=00e83536">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">yf_pull_data</span> <span class="kn">import</span> <span class="n">yf_pull_data</span>
+<span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"yf_pull_data.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
+<span class="n">md_code_block</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"```python</span><span class="se">\n</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="se">\n</span><span class="s2">```"</span>
+<span class="c1"># Copy this &lt;!-- INSERT_yf_pull_data_HERE --&gt; to index_temp.md</span>
+<span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"yf_pull_data.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">md_code_block</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>✅ Exported and tracked: yf_pull_data.md
+</pre>
 </div>
 </div>
 </div>

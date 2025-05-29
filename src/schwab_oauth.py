@@ -6,7 +6,7 @@ import webbrowser
 import requests
 import urllib.parse
 
-from env_vars import load_api_keys
+from load_api_keys import load_api_keys
 from pathlib import Path
 from settings import config
 

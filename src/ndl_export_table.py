@@ -3,7 +3,7 @@ import nasdaqdatalink as quandl
 import os
 import pandas as pd
 
-from env_vars import load_api_keys
+from load_api_keys import load_api_keys
 from pathlib import Path
 from settings import config
 

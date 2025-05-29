@@ -3,7 +3,7 @@ import numpy as np
 import os
 import pandas as pd
 
-from env_vars import load_api_keys
+from load_api_keys import load_api_keys
 from IPython.display import display
 from pathlib import Path
 

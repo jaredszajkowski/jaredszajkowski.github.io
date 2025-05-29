@@ -2,7 +2,7 @@ import os
 import sys
 from settings import config
 
-# Add configured directories
+# Get the posts directory from the configuration
 POSTS_DIR = config("POSTS_DIR")
 
 def list_posts_subdirs() -> None:

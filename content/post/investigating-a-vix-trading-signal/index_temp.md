@@ -4,7 +4,7 @@ description: A brief look at finding a trading signal based on moving averages o
 slug: investigating-a-vix-trading-signal
 date: 2025-03-01 00:00:01+0000
 # lastmod: <!-- INSERT_last_run_date_HERE --> 00:00:01+0000
-lastmod: 2025-05-26 00:00:01+0000
+lastmod: 2025-05-28 00:00:01+0000
 image: cover.jpg
 draft: false
 categories:
@@ -18,7 +18,7 @@ tags:
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 
-## Post Updates
+<!-- ## Post Updates
 
 Update 4/8/2025: Added plot for signals for each year. VIX data through 4/7/25.</br>
 Update 4/9/2025: VIX data through 4/8/25.</br>
@@ -30,6 +30,7 @@ Update 4/28/2025: VIX data through 4/25/25.</br>
 Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</br>
 Update 5/7/2025: Data through 5/6/25.</br>
 Update 5/21/2025: Data through 5/20/25.</br>
+Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
 
 ## Introduction
 
@@ -45,45 +46,17 @@ I don't have access to data for the VIX through [Nasdaq Data Link](https://www.n
 
 ## Python Functions
 
-### Typical Functions
+Here are the functions needed for this project:
 
-First, the typical set of functions I use. `export_track_md_deps` exports various text outputs to markdown files, which are included in the index.md file created when building the site with Hugo.
-
-<!-- INSERT_00_export_track_md_deps_HERE -->
-
-`df_info` is a simple function to display the information about a DataFrame and the first five rows and last five rows.
-
-<!-- INSERT_00_df_info_HERE -->
-
-`df_info_markdown` is similar to the `df_info` function above, except that it coverts the output to markdown instead of displaying it.
-
-<!-- INSERT_00_df_info_markdown_HERE -->
-
-</br>
-
-<!-- INSERT_00_pandas_set_decimal_places_HERE -->
-
-</br>
-
-<!-- INSERT_00_load_data_HERE -->
-
-### Project Specific Functions
-
-Here's the code for the function to pull the VIX data and export to Excel:
-
-<!-- INSERT_00_yf_pull_data_HERE -->
-
-</br>
-
-<!-- INSERT_00_plot_price_HERE -->
-
-</br>
-
-<!-- INSERT_00_calc_vix_trade_pnl_HERE -->
-
-</br>
-
-<!-- INSERT_00_plot_vix_with_trades_HERE -->
+[calc_vix_trade_pnl](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#calc_vix_trade_pnl): Calculates the profit/loss from VIX options trades.</br>
+[df_info](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#df_info): A simple function to display the information about a DataFrame and the first five rows and last five rows.</br>
+[df_info_markdown](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#df_info_markdown): Similar to the `df_info` function above, except that it coverts the output to markdown.</br>
+[export_track_md_deps](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps): Exports various text outputs to markdown files, which are included in the `index.md` file created when building the site with Hugo.</br>
+[load_data](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#load_data): Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.</br>
+[pandas_set_decimal_places](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places): Set the number of decimal places displayed for floating-point numbers in pandas.</br>
+[plot_price](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_price): Plot the price data from a DataFrame for a specified date range and columns.</br>
+[plot_vix_with_trades](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_vix_with_trades): Plot the VIX daily high and low prices, along with the VIX spikes, and trades.</br>
+[yf_pull_data](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#yf_pull_data): Download daily price data from Yahoo Finance and export it.
 
 ## Data Overview (VIX)
 

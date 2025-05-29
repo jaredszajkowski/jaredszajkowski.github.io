@@ -4,7 +4,7 @@ description: A brief look at finding a trading signal based on moving averages o
 slug: investigating-a-vix-trading-signal
 date: 2025-03-01 00:00:01+0000
 # lastmod: <!-- INSERT_last_run_date_HERE --> 00:00:01+0000
-lastmod: 2025-05-26 00:00:01+0000
+lastmod: 2025-05-28 00:00:01+0000
 image: cover.jpg
 draft: false
 categories:
@@ -18,7 +18,7 @@ tags:
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 
-## Post Updates
+<!-- ## Post Updates
 
 Update 4/8/2025: Added plot for signals for each year. VIX data through 4/7/25.</br>
 Update 4/9/2025: VIX data through 4/8/25.</br>
@@ -30,6 +30,7 @@ Update 4/28/2025: VIX data through 4/25/25.</br>
 Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</br>
 Update 5/7/2025: Data through 5/6/25.</br>
 Update 5/21/2025: Data through 5/20/25.</br>
+Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
 
 ## Introduction
 
@@ -45,721 +46,17 @@ I don't have access to data for the VIX through [Nasdaq Data Link](https://www.n
 
 ## Python Functions
 
-### Typical Functions
-
-First, the typical set of functions I use. `export_track_md_deps` exports various text outputs to markdown files, which are included in the index.md file created when building the site with Hugo.
-
-```python
-from pathlib import Path
-
-def export_track_md_deps(
-    dep_file: Path, 
-    md_filename: str, 
-    content: str,
-) -> None:
-    
-    """
-    Export Markdown content to a file and track it as a dependency.
-
-    This function writes the provided content to the specified Markdown file and 
-    appends the filename to the given dependency file (typically `index_dep.txt`).
-    This is useful in workflows where Markdown fragments are later assembled 
-    into a larger document (e.g., a Hugo `index.md`).
-
-    Parameters:
-    -----------
-    dep_file : Path
-        Path to the dependency file that tracks Markdown fragment filenames.
-    md_filename : str
-        The name of the Markdown file to export.
-    content : str
-        The Markdown-formatted content to write to the file.
-
-    Returns:
-    --------
-    None
-
-    Example:
-    --------
-    >>> export_track_md_deps(Path("index_dep.txt"), "01_intro.md", "# Introduction\n...")
-    ✅ Exported and tracked: 01_intro.md
-    """
-    
-    Path(md_filename).write_text(content)
-    with dep_file.open("a") as f:
-        f.write(md_filename + "\n")
-    print(f"✅ Exported and tracked: {md_filename}")
-```
-
-`df_info` is a simple function to display the information about a DataFrame and the first five rows and last five rows.
-
-```python
-import pandas as pd
-from IPython.display import display
-
-def df_info(
-    df: pd.DataFrame,
-) -> None:
-    
-    """
-    Display summary information about a pandas DataFrame.
-
-    This function prints:
-    - The DataFrame's column names, shape, and data types via `df.info()`
-    - The first 5 rows using `df.head()`
-    - The last 5 rows using `df.tail()`
-
-    It uses `display()` for better output formatting in environments like Jupyter notebooks.
-
-    Parameters:
-    -----------
-    df : pd.DataFrame
-        The DataFrame to inspect.
-
-    Returns:
-    --------
-    None
-
-    Example:
-    --------
-    >>> df_info(my_dataframe)
-    """
-    
-    print("The columns, shape, and data types are:")
-    print(df.info())
-    print("The first 5 rows are:")
-    display(df.head())
-    print("The last 5 rows are:")
-    display(df.tail())
-```
-
-`df_info_markdown` is similar to the `df_info` function above, except that it coverts the output to markdown instead of displaying it.
-
-```python
-import io
-import pandas as pd
-
-def df_info_markdown(
-    df: pd.DataFrame
-) -> str:
-    
-    """
-    Generate a Markdown-formatted summary of a pandas DataFrame.
-
-    This function captures and formats the output of `df.info()`, `df.head()`, 
-    and `df.tail()` in Markdown for easy inclusion in reports, documentation, 
-    or web-based rendering (e.g., Hugo or Jupyter export workflows).
-
-    Parameters:
-    -----------
-    df : pd.DataFrame
-        The DataFrame to summarize.
-
-    Returns:
-    --------
-    str
-        A string containing the DataFrame's info, head, and tail 
-        formatted in Markdown.
-
-    Example:
-    --------
-    >>> print(df_info_markdown(df))
-    ```text
-    The columns, shape, and data types are:
-    <output from df.info()>
-    ```
-    The first 5 rows are:
-    |   | col1 | col2 |
-    |---|------|------|
-    | 0 | ...  | ...  |
-
-    The last 5 rows are:
-    ...
-    """
-    
-    buffer = io.StringIO()
-
-    # Capture df.info() output
-    df.info(buf=buffer)
-    info_str = buffer.getvalue()
-
-    # Convert head and tail to Markdown
-    head_str = df.head().to_markdown(floatfmt=".2f")
-    tail_str = df.tail().to_markdown(floatfmt=".2f")
-
-    markdown = [
-        "```text",
-        "The columns, shape, and data types are:\n",
-        info_str,
-        "```",
-        "\nThe first 5 rows are:\n",
-        head_str,
-        "\nThe last 5 rows are:\n",
-        tail_str
-    ]
-
-    return "\n".join(markdown)
-```
-
-</br>
-
-```python
-import pandas as pd
-
-def pandas_set_decimal_places(
-    decimal_places: int,
-) -> None:
-    
-    """
-    Set the number of decimal places displayed for floating-point numbers in pandas.
-
-    Parameters:
-    ----------
-    decimal_places : int
-        The number of decimal places to display for float values in pandas DataFrames and Series.
-
-    Returns:
-    --------
-    None
-
-    Example:
-    --------
-    >>> dp(3)
-    >>> pd.DataFrame([1.23456789])
-           0
-    0   1.235
-    """
-    
-    pd.set_option('display.float_format', lambda x: f'%.{decimal_places}f' % x)
-```
-
-</br>
-
-```python
-import pandas as pd
-from pathlib import Path
-
-def load_data(
-    base_directory: str,
-    ticker: str,
-    source: str,
-    asset_class: str,
-    timeframe: str,
-) -> pd.DataFrame:
-    
-    """
-    Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.
-
-    This function attempts to read a file first as a CSV, then as an Excel file 
-    (specifically looking for a sheet named 'data' and using the 'calamine' engine).
-    If both attempts fail, a ValueError is raised.
-
-    Parameters:
-    -----------
-    base_directory : str
-        Root path to read data file.
-    ticker : str
-        Ticker symbol to read.
-    source : str
-        Name of the data source (e.g., 'Yahoo').
-    asset_class : str
-        Asset class name (e.g., 'Equities').
-    timeframe : str
-        Timeframe for the data (e.g., 'Daily', 'Month_End').
-    
-    Returns:
-    --------
-    pd.DataFrame
-        The loaded data.
-
-    Raises:
-    -------
-    ValueError
-        If the file could not be loaded as either CSV or Excel.
-
-    Example:
-    --------
-    >>> df = load_data(DATA_DIR, "^VIX", "Yahoo_Finance", "Indices")
-    """
-
-    # Build file paths using pathlib
-    csv_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.csv"
-    csv_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.zip"
-    xlsx_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.xlsx"
-    pickle_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.pkl"
-
-    # Try CSV
-    try:
-        df = pd.read_csv(csv_path)
-        return df
-    except Exception:
-        pass
-
-    # Try Zip
-    try:
-        df = pd.read_csv(csv_path)
-        return df
-    except Exception:
-        pass
-
-    # Try Excel
-    try:
-        df = pd.read_excel(xlsx_path)
-        return df
-    except Exception:
-        pass
-
-    # Try Pickle
-    try:
-        df = pd.read_pickle(pickle_path)
-        return df
-    except Exception:
-        pass
-
-    raise ValueError(f"❌ Unable to load file: {ticker}. Ensure it's a valid CSV, Excel, Zip, or Pickle file with a 'data' sheet (if required).")
-```
-
-### Project Specific Functions
-
-Here's the code for the function to pull the VIX data and export to Excel:
-
-```python
-import os
-import pandas as pd
-import yfinance as yf
-
-from IPython.display import display
-
-def yf_pull_data(
-    base_directory: str,
-    ticker: str,
-    source: str,
-    asset_class: str,
-    excel_export: bool,
-    pickle_export: bool,
-    output_confirmation: bool,
-) -> pd.DataFrame:
-    
-    """
-    Download daily price data from Yahoo Finance and export it.
-
-    Parameters:
-    -----------
-    base_directory : str
-        Root path to store downloaded data.
-    ticker : str
-        Ticker symbol to download.
-    source : str
-        Name of the data source (e.g., 'Yahoo').
-    asset_class : str
-        Asset class name (e.g., 'Equities').
-    excel_export : bool
-        If True, export data to Excel format.
-    pickle_export : bool
-        If True, export data to Pickle format.
-    output_confirmation : bool
-        If True, print confirmation message.
-
-    Returns:
-    --------
-    df : pd.DataFrame
-        DataFrame containing the downloaded data.
-    """
-    
-    # Download data from YF
-    df = yf.download(ticker)
-
-    # Drop the column level with the ticker symbol
-    df.columns = df.columns.droplevel(1)
-
-    # Reset index
-    df = df.reset_index()
-
-    # Remove the "Price" header from the index
-    df.columns.name = None
-
-    # Reset date column
-    df['Date'] = df['Date'].dt.tz_localize(None)
-
-    # Set 'Date' column as index
-    df = df.set_index('Date', drop=True)
-
-    # Drop data from last day because it's not accrate until end of day
-    df = df.drop(df.index[-1])
-    
-    # Create directory
-    directory = f"{base_directory}/{source}/{asset_class}/Daily"
-    os.makedirs(directory, exist_ok=True)
-
-    # Export to excel
-    if excel_export == True:
-        df.to_excel(f"{directory}/{ticker}.xlsx", sheet_name="data")
-    else:
-        pass
-
-    # Export to pickle
-    if pickle_export == True:
-        df.to_pickle(f"{directory}/{ticker}.pkl")
-    else:
-        pass
-
-    # Output confirmation
-    if output_confirmation == True:
-        print(f"The first and last date of data for {ticker} is: ")
-        display(df[:1])
-        display(df[-1:])
-        print(f"Yahoo Finance data complete for {ticker}")
-        print(f"--------------------")
-    else:
-        pass
-
-    return df
-```
-
-</br>
-
-```python
-import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
-import matplotlib.ticker as mtick
-import pandas as pd
-
-from matplotlib.ticker import FormatStrFormatter, MultipleLocator
-
-def plot_price(
-    price_df: pd.DataFrame,
-    plot_start_date: str,
-    plot_end_date: str,
-    plot_columns,
-    title: str,
-    x_label: str,
-    x_format: str,
-    y_label: str,
-    y_format: str,
-    y_tick_spacing: int,
-    grid: bool,
-    legend: bool,
-    export_plot: bool,
-    plot_file_name: str,
-) -> None:
-
-    """
-    Plot the price data from a DataFrame for a specified date range and columns.
-
-    Parameters:
-    -----------
-    df : pd.DataFrame
-        DataFrame containing the price data to plot.
-    plot_start_date : str
-        Start date for the plot in 'YYYY-MM-DD' format.
-    plot_end_date : str
-        End date for the plot in 'YYYY-MM-DD' format.
-    plot_columns : str OR list
-        List of columns to plot from the DataFrame. If none, all columns will be plotted.
-    title : str
-        Title of the plot.
-    x_label : str
-        Label for the x-axis.
-    x_axis_format : str
-        Format for the x-axis date labels.
-    y_label : str
-        Label for the y-axis.
-    y_tick_spacing : int
-        Spacing for the y-axis ticks.
-    grid : bool
-        Whether to display a grid on the plot.
-    legend : bool
-        Whether to display a legend on the plot.
-    export_plot : bool
-        Whether to save the figure as a PNG file.
-    plot_file_name : str
-        File name for saving the figure (if save_fig is True).
-
-    Returns:
-    --------
-    None
-    """
-
-    # If start date and end date are None, use the entire DataFrame
-    if plot_start_date is None and plot_end_date is None:
-        df_filtered = price_df
-
-    # If only end date is specified, filter by end date
-    elif plot_start_date is None and plot_end_date is not None:
-        df_filtered = price_df[(price_df.index <= plot_end_date)]
-
-    # If only start date is specified, filter by start date
-    elif plot_start_date is not None and plot_end_date is None:
-        df_filtered = price_df[(price_df.index >= plot_start_date)]
-
-    # If both start date and end date are specified, filter by both
-    else:
-        df_filtered = price_df[(price_df.index >= plot_start_date) & (price_df.index <= plot_end_date)]
-
-    # Set plot figure size and background color
-    plt.figure(figsize=(12, 6), facecolor="#F5F5F5")
-
-    # Plot data
-    if plot_columns =="All":
-        for col in df_filtered.columns:
-            plt.plot(df_filtered.index, df_filtered[col], label=col, linestyle='-', linewidth=1.5)
-    else:
-        for col in plot_columns:
-            plt.plot(df_filtered.index, df_filtered[col], label=col, linestyle='-', linewidth=1.5)
-
-    # Format X axis
-    if x_format == "Day":
-        plt.gca().xaxis.set_major_locator(mdates.DayLocator())
-        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
-    elif x_format == "Week":
-        plt.gca().xaxis.set_major_locator(mdates.WeekdayLocator())
-        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
-    elif x_format == "Month":
-        plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
-        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
-    elif x_format == "Year":
-        plt.gca().xaxis.set_major_locator(mdates.YearLocator())
-        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
-    else:
-        raise ValueError(f"Unrecognized x_format: {x_format}. Use 'Day', 'Week', 'Month', or 'Year'.")
-
-    plt.xlabel(x_label, fontsize=10)
-    plt.xticks(rotation=45, fontsize=8)
-
-    # Format Y axis
-    if y_format == "Decimal":
-        plt.gca().yaxis.set_major_formatter(FormatStrFormatter("%.2f"))
-    elif y_format == "Percentage":
-        plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter(xmax=1, decimals=0))
-    elif y_format == "Scientific":
-        plt.gca().yaxis.set_major_formatter(FormatStrFormatter("%.2e"))
-    elif y_format == "log":
-        plt.yscale("log")
-    else:
-        raise ValueError(f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', or 'Scientific'.")
-    
-    plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
-    plt.ylabel(y_label, fontsize=10)
-    plt.yticks(fontsize=8)
-
-    # Format title, layout, grid, and legend
-    plt.title(title, fontsize=12)
-    plt.tight_layout()
-
-    if grid == True:
-        plt.grid(True, linestyle='--', alpha=0.7)
-
-    if legend == True:
-        plt.legend(fontsize=9)
-
-    # Save figure and display plot
-    if export_plot == True:
-        plt.savefig(f"{plot_file_name}.png", dpi=300, bbox_inches="tight")
-
-    # Display the plot
-    plt.show()
-
-    return None
-```
-
-</br>
-
-```python
-import pandas as pd
-
-def calc_vix_trade_pnl(
-    transaction_df: pd.DataFrame,
-    exp_start_date: str,
-    exp_end_date: str,
-    trade_start_date: str,
-    trade_end_date: str,
-) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, str, str]:
-    
-    """
-    Calculate the profit and loss (PnL) of trades based on transaction data.
-
-    Parameters:
-    -----------
-    transaction_df : pd.DataFrame
-        DataFrame containing transaction data.
-    exp_start_date : str
-        Start date for filtering transactions in 'YYYY-MM-DD' format. This is the start of the range for the option expiration date.
-    exp_end_date : str
-        End date for filtering transactions in 'YYYY-MM-DD' format. This is the end of the range for the option expiration date.
-    trade_start_date : str
-        Start date for filtering transactions in 'YYYY-MM-DD' format. This is the start of the range for the trade date.
-    trade_end_date : str
-        End date for filtering transactions in 'YYYY-MM-DD' format. This is the end of the range for the trade date.
-
-    Returns:
-    --------
-    transactions_data : pd.DataFrame
-        Dataframe containing the transactions for the specified timeframe.
-    closed_trades : pd.DataFrame
-        DataFrame containing the closed trades with realized PnL and percent PnL.
-    open_trades : pd.DataFrame
-        DataFrame containing the open trades.
-    net_PnL_percent_str : str
-        String representation of the net profit percentage.
-    net_PnL_str : str
-        String representation of the net profit and loss in dollars.
-    """
-
-    # If start and end dates for trades and expirations are None, use the entire DataFrame
-    if exp_start_date is None and exp_end_date is None and trade_start_date is None and trade_end_date is None:
-        transactions_data = transaction_df
-    
-    # If both start and end dates for trades and expirations are provided then filter by both
-    else:
-        transactions_data = transaction_df[
-            (transaction_df['Exp_Date'] >= exp_start_date) & (transaction_df['Exp_Date'] <= exp_end_date) &
-            (transaction_df['Trade_Date'] >= trade_start_date) & (transaction_df['Trade_Date'] <= trade_end_date)
-        ]
-
-    # Combine the 'Action' and 'Symbol' columns to create a unique identifier for each transaction
-    transactions_data['TradeDate_Action_Symbol_VIX'] = (
-        transactions_data['Trade_Date'].astype(str) + 
-        ", " + 
-        transactions_data['Action'] + 
-        ", " + 
-        transactions_data['Symbol'] + 
-        ", VIX = " + 
-        transactions_data['Approx_VIX_Level'].astype(str)
-    )
-
-    # Split buys and sells and sum the notional amounts
-    transactions_sells = transactions_data[transactions_data['Action'] == 'Sell to Close']
-    transactions_sells = transactions_sells.groupby(['Symbol', 'Exp_Date'], as_index=False)[['Amount', 'Quantity']].sum()
-
-    transactions_buys = transactions_data[transactions_data['Action'] == 'Buy to Open']
-    transactions_buys = transactions_buys.groupby(['Symbol', 'Exp_Date'], as_index=False)[['Amount', 'Quantity']].sum()
-
-    # Merge buys and sells dataframes back together
-    merged_transactions = pd.merge(transactions_buys, transactions_sells, on=['Symbol', 'Exp_Date'], how='outer', suffixes=('_Buy', '_Sell'))
-    merged_transactions = merged_transactions.sort_values(by=['Exp_Date'], ascending=[True])
-    merged_transactions = merged_transactions.reset_index(drop=True)
-
-    # Identify the closed positions
-    merged_transactions['Closed'] = (~merged_transactions['Amount_Sell'].isna()) & (~merged_transactions['Amount_Buy'].isna()) & (merged_transactions['Quantity_Buy'] == merged_transactions['Quantity_Sell'])
-
-    # Create a new dataframe for closed positions
-    closed_trades = merged_transactions[merged_transactions['Closed']]
-    closed_trades = closed_trades.reset_index(drop=True)
-    closed_trades['Realized_PnL'] = closed_trades['Amount_Sell'] - closed_trades['Amount_Buy']
-    closed_trades['Percent_PnL'] = closed_trades['Realized_PnL'] / closed_trades['Amount_Buy']
-    closed_trades.drop(columns={'Closed', 'Exp_Date'}, inplace=True)
-    closed_trades['Quantity_Sell'] = closed_trades['Quantity_Sell'].astype(int)
-
-    # Calculate the net % PnL and $ PnL
-    net_PnL_percent = closed_trades['Realized_PnL'].sum() / closed_trades['Amount_Buy'].sum()
-    net_PnL_percent_str = f"{round(net_PnL_percent * 100, 2)}%"
-
-    net_PnL = closed_trades['Realized_PnL'].sum()
-    net_PnL_str = f"${net_PnL:,.2f}"
-
-    # Create a new dataframe for open positions
-    open_trades = merged_transactions[~merged_transactions['Closed']]
-    open_trades = open_trades.reset_index(drop=True)
-    open_trades.drop(columns={'Closed', 'Amount_Sell', 'Quantity_Sell', 'Exp_Date'}, inplace=True)
-
-    return transactions_data, closed_trades, open_trades, net_PnL_percent_str, net_PnL_str
-```
-
-</br>
-
-```python
-import matplotlib.dates as mdates
-import matplotlib.pyplot as plt
-import pandas as pd
-
-from matplotlib.ticker import MultipleLocator
-
-def plot_vix_with_trades(
-    vix_price_df: pd.DataFrame,
-    trades_df: pd.DataFrame,
-    plot_start_date: str,
-    plot_end_date: str,
-    x_tick_spacing: int,
-    y_tick_spacing: int,
-    index_number: str,
-    export_plot: bool,
-) -> pd.DataFrame:
-    
-    """
-    Plot the VIX daily high and low prices, along with the VIX spikes, and trades.
-
-    Parameters:
-    -----------
-    vix_price_df : pd.DataFrame
-        Dataframe containing the VIX price data to plot.
-    trades_df : pd.DataFrame
-        Dataframe containing the trades data.
-    plot_start_date : str
-        Start date for the plot in 'YYYY-MM-DD' format.
-    plot_end_date : str
-        End date for the plot in 'YYYY-MM-DD' format.
-    index_number : str
-        Index number to be used in the file name of the plot export.
-    export_plot : bool
-        Whether to save the figure as a PNG file.
-
-    Returns:
-    --------
-    vix_data : pd.DataFrame
-        Dataframe containing the VIX price data for the specified timeframe.
-    """
-
-    # Create temporary dataframe for the specified date range
-    vix_data = vix_price_df[(vix_price_df.index >= plot_start_date) & (vix_price_df.index <= plot_end_date)]
-
-    # Set plot figure size and background color
-    plt.figure(figsize=(12, 6), facecolor="#F5F5F5")
-
-    # Plot VIX high and low price data
-    plt.plot(vix_data.index, vix_data['High'], label='High', linestyle='-', color='steelblue', linewidth=1)
-    plt.plot(vix_data.index, vix_data['Low'], label='Low', linestyle='-', color='brown', linewidth=1)
-
-    # Plot VIX spikes
-    plt.scatter(vix_data[vix_data['Spike_SMA'] == True].index, vix_data[vix_data['Spike_SMA'] == True]['High'], label='Spike (High > 1.25 * 10 Day High SMA)', color='black', s=20)
-    
-    # Plot trades
-    plt.scatter(trades_df['Trade_Date'], trades_df['Approx_VIX_Level'], label='Trades', color='red', s=20)
-
-    # Annotate each point in trades_df with the corresponding Action_Symbol
-    for _, row in trades_df.iterrows():
-        plt.text(
-            row['Trade_Date'] + pd.Timedelta(days=1),
-            row['Approx_VIX_Level'] + 0.1,
-            row['TradeDate_Action_Symbol_VIX'],
-            fontsize=9
-        )
-
-    # Format X axis
-    plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=x_tick_spacing))
-    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m-%d"))
-    plt.xlabel("Date", fontsize=10)
-    plt.xticks(rotation=45, fontsize=8)
-
-    # Format Y axis
-    plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
-    plt.ylabel("VIX", fontsize=10)
-    plt.yticks(fontsize=8)
-
-    # Format title, layout, grid, and legend
-    plt.title(f"CBOE Volatility Index (VIX), VIX Spikes, Trades, {plot_start_date} - {plot_end_date}", fontsize=12)
-    plt.tight_layout()
-    plt.grid(True, linestyle='--', alpha=0.7)
-    plt.legend(fontsize=9)
-
-    # Save figure and display plot
-    if export_plot == True:
-        plt.savefig(f"{index_number}_VIX_Spike_Trades_{plot_start_date}_{plot_end_date}.png", dpi=300, bbox_inches="tight")
-    
-    # Display the plot
-    plt.show()
-
-    return vix_data
-```
+Here are the functions needed for this project:
+
+[calc_vix_trade_pnl](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#calc_vix_trade_pnl): Calculates the profit/loss from VIX options trades.</br>
+[df_info](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#df_info): A simple function to display the information about a DataFrame and the first five rows and last five rows.</br>
+[df_info_markdown](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#df_info_markdown): Similar to the `df_info` function above, except that it coverts the output to markdown.</br>
+[export_track_md_deps](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps): Exports various text outputs to markdown files, which are included in the `index.md` file created when building the site with Hugo.</br>
+[load_data](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#load_data): Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.</br>
+[pandas_set_decimal_places](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places): Set the number of decimal places displayed for floating-point numbers in pandas.</br>
+[plot_price](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_price): Plot the price data from a DataFrame for a specified date range and columns.</br>
+[plot_vix_with_trades](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_vix_with_trades): Plot the VIX daily high and low prices, along with the VIX spikes, and trades.</br>
+[yf_pull_data](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#yf_pull_data): Download daily price data from Yahoo Finance and export it.
 
 ## Data Overview (VIX)
 
@@ -826,16 +123,16 @@ Gives us the following:
 The columns, shape, and data types are:
 
 <class 'pandas.core.frame.DataFrame'>
-DatetimeIndex: 8915 entries, 1990-01-02 to 2025-05-23
+DatetimeIndex: 8916 entries, 1990-01-02 to 2025-05-27
 Data columns (total 4 columns):
  #   Column  Non-Null Count  Dtype  
 ---  ------  --------------  -----  
- 0   Close   8915 non-null   float64
- 1   High    8915 non-null   float64
- 2   Low     8915 non-null   float64
- 3   Open    8915 non-null   float64
+ 0   Close   8916 non-null   float64
+ 1   High    8916 non-null   float64
+ 2   Low     8916 non-null   float64
+ 3   Open    8916 non-null   float64
 dtypes: float64(4)
-memory usage: 348.2 KB
+memory usage: 348.3 KB
 
 ```
 
@@ -853,11 +150,11 @@ The last 5 rows are:
 
 | Date                |   Close |   High |   Low |   Open |
 |:--------------------|--------:|-------:|------:|-------:|
-| 2025-05-19 00:00:00 |   18.14 |  19.92 | 17.92 |  19.84 |
 | 2025-05-20 00:00:00 |   18.09 |  18.68 | 17.70 |  18.46 |
 | 2025-05-21 00:00:00 |   20.87 |  21.05 | 17.77 |  18.77 |
 | 2025-05-22 00:00:00 |   20.28 |  22.07 | 19.64 |  20.62 |
 | 2025-05-23 00:00:00 |   22.29 |  25.53 | 19.83 |  20.14 |
+| 2025-05-27 00:00:00 |   18.96 |  21.01 | 18.95 |  20.63 |
 
 ### Statistics - VIX
 
@@ -880,17 +177,17 @@ Gives us:
 
 |               |   Close |    High |     Low |    Open |
 |:--------------|--------:|--------:|--------:|--------:|
-| count         | 8915.00 | 8915.00 | 8915.00 | 8915.00 |
+| count         | 8916.00 | 8916.00 | 8916.00 | 8916.00 |
 | mean          |   19.50 |   20.41 |   18.82 |   19.59 |
-| std           |    7.84 |    8.40 |    7.39 |    7.92 |
+| std           |    7.84 |    8.40 |    7.39 |    7.91 |
 | min           |    9.14 |    9.31 |    8.56 |    9.01 |
-| 25%           |   13.86 |   14.53 |   13.40 |   13.93 |
+| 25%           |   13.87 |   14.53 |   13.41 |   13.93 |
 | 50%           |   17.66 |   18.38 |   17.07 |   17.70 |
-| 75%           |   22.84 |   23.85 |   22.15 |   22.99 |
+| 75%           |   22.84 |   23.84 |   22.15 |   22.99 |
 | max           |   82.69 |   89.53 |   72.76 |   82.69 |
 | mean + -1 std |   11.66 |   12.01 |   11.43 |   11.67 |
 | mean + 0 std  |   19.50 |   20.41 |   18.82 |   19.59 |
-| mean + 1 std  |   27.34 |   28.81 |   26.22 |   27.50 |
+| mean + 1 std  |   27.33 |   28.81 |   26.22 |   27.50 |
 | mean + 2 std  |   35.17 |   37.20 |   33.61 |   35.42 |
 | mean + 3 std  |   43.01 |   45.60 |   41.00 |   43.33 |
 | mean + 4 std  |   50.85 |   54.00 |   48.40 |   51.25 |
@@ -948,7 +245,7 @@ Gives us:
 |   2022 |       25.98 |       4.30 |       27.25 |       4.59 |      24.69 |      3.91 |        25.62 |        4.22 |
 |   2023 |       17.12 |       3.17 |       17.83 |       3.58 |      16.36 |      2.89 |        16.87 |        3.14 |
 |   2024 |       15.69 |       3.14 |       16.65 |       4.73 |      14.92 |      2.58 |        15.61 |        3.36 |
-|   2025 |       22.15 |       7.54 |       23.95 |       9.18 |      20.55 |      5.54 |        21.86 |        7.13 |
+|   2025 |       22.14 |       7.50 |       23.92 |       9.14 |      20.54 |      5.51 |        21.83 |        7.09 |
 
 It is interesting to see how much the mean OHLC values vary by year.
 
@@ -973,7 +270,7 @@ Gives us:
 |       2 |       19.67 |       7.22 |       20.51 |       7.65 |      18.90 |      6.81 |        19.58 |        7.13 |
 |       3 |       20.47 |       9.63 |       21.39 |      10.49 |      19.54 |      8.65 |        20.35 |        9.56 |
 |       4 |       19.43 |       7.48 |       20.24 |       7.93 |      18.65 |      6.88 |        19.29 |        7.28 |
-|       5 |       18.60 |       6.05 |       19.40 |       6.45 |      17.89 |      5.64 |        18.51 |        5.97 |
+|       5 |       18.60 |       6.05 |       19.40 |       6.44 |      17.89 |      5.64 |        18.51 |        5.97 |
 |       6 |       18.45 |       5.82 |       19.15 |       6.09 |      17.73 |      5.46 |        18.35 |        5.75 |
 |       7 |       17.87 |       5.75 |       18.58 |       5.98 |      17.24 |      5.48 |        17.80 |        5.67 |
 |       8 |       19.17 |       6.74 |       20.12 |       7.45 |      18.44 |      6.38 |        19.18 |        6.87 |
@@ -1001,10 +298,10 @@ Gives us:
 | 0.30 |   14.61 |  15.29 | 14.08 |  14.68 |
 | 0.40 |   16.09 |  16.76 | 15.56 |  16.13 |
 | 0.50 |   17.66 |  18.38 | 17.07 |  17.70 |
-| 0.60 |   19.56 |  20.40 | 19.02 |  19.69 |
+| 0.60 |   19.56 |  20.40 | 19.02 |  19.70 |
 | 0.70 |   21.65 |  22.66 | 21.00 |  21.80 |
 | 0.80 |   24.32 |  25.36 | 23.51 |  24.39 |
-| 0.90 |   28.71 |  30.00 | 27.79 |  28.86 |
+| 0.90 |   28.70 |  30.00 | 27.79 |  28.86 |
 | 1.00 |   82.69 |  89.53 | 72.76 |  82.69 |
 
 ## Plots - VIX
@@ -1104,16 +401,16 @@ Gives us the following:
 The columns, shape, and data types are:
 
 <class 'pandas.core.frame.DataFrame'>
-DatetimeIndex: 8915 entries, 1990-01-02 to 2025-05-23
+DatetimeIndex: 8916 entries, 1990-01-02 to 2025-05-27
 Data columns (total 4 columns):
  #   Column  Non-Null Count  Dtype  
 ---  ------  --------------  -----  
- 0   Close   8915 non-null   float64
- 1   High    8915 non-null   float64
- 2   Low     8915 non-null   float64
- 3   Open    8915 non-null   float64
+ 0   Close   8916 non-null   float64
+ 1   High    8916 non-null   float64
+ 2   Low     8916 non-null   float64
+ 3   Open    8916 non-null   float64
 dtypes: float64(4)
-memory usage: 348.2 KB
+memory usage: 348.3 KB
 
 ```
 
@@ -1131,11 +428,11 @@ The last 5 rows are:
 
 | Date                |   Close |   High |   Low |   Open |
 |:--------------------|--------:|-------:|------:|-------:|
-| 2025-05-19 00:00:00 |   18.14 |  19.92 | 17.92 |  19.84 |
 | 2025-05-20 00:00:00 |   18.09 |  18.68 | 17.70 |  18.46 |
 | 2025-05-21 00:00:00 |   20.87 |  21.05 | 17.77 |  18.77 |
 | 2025-05-22 00:00:00 |   20.28 |  22.07 | 19.64 |  20.62 |
 | 2025-05-23 00:00:00 |   22.29 |  25.53 | 19.83 |  20.14 |
+| 2025-05-27 00:00:00 |   18.96 |  21.01 | 18.95 |  20.63 |
 
 ### Statistics - VVIX
 
@@ -1158,21 +455,21 @@ Gives us:
 
 |               |   Close |    High |     Low |    Open |
 |:--------------|--------:|--------:|--------:|--------:|
-| count         | 4618.00 | 4618.00 | 4618.00 | 4618.00 |
-| mean          |   93.50 |   95.54 |   91.94 |   93.75 |
-| std           |   16.46 |   18.06 |   15.11 |   16.51 |
+| count         | 4620.00 | 4620.00 | 4620.00 | 4620.00 |
+| mean          |   93.50 |   95.55 |   91.94 |   93.75 |
+| std           |   16.45 |   18.06 |   15.11 |   16.51 |
 | min           |   59.74 |   59.74 |   59.31 |   59.31 |
-| 25%           |   82.32 |   83.45 |   81.48 |   82.53 |
-| 50%           |   90.51 |   92.24 |   89.34 |   90.82 |
-| 75%           |  102.22 |  105.06 |  100.00 |  102.57 |
+| 25%           |   82.33 |   83.45 |   81.48 |   82.55 |
+| 50%           |   90.51 |   92.24 |   89.35 |   90.83 |
+| 75%           |  102.23 |  105.07 |  100.02 |  102.58 |
 | max           |  207.59 |  212.22 |  187.27 |  212.22 |
-| mean + -1 std |   77.04 |   77.48 |   76.83 |   77.24 |
-| mean + 0 std  |   93.50 |   95.54 |   91.94 |   93.75 |
-| mean + 1 std  |  109.96 |  113.60 |  107.05 |  110.25 |
-| mean + 2 std  |  126.41 |  131.67 |  122.16 |  126.76 |
-| mean + 3 std  |  142.87 |  149.73 |  137.27 |  143.27 |
-| mean + 4 std  |  159.32 |  167.79 |  152.38 |  159.78 |
-| mean + 5 std  |  175.78 |  185.86 |  167.49 |  176.29 |
+| mean + -1 std |   77.05 |   77.48 |   76.84 |   77.25 |
+| mean + 0 std  |   93.50 |   95.55 |   91.94 |   93.75 |
+| mean + 1 std  |  109.96 |  113.61 |  107.05 |  110.26 |
+| mean + 2 std  |  126.41 |  131.67 |  122.16 |  126.77 |
+| mean + 3 std  |  142.87 |  149.73 |  137.27 |  143.28 |
+| mean + 4 std  |  159.32 |  167.79 |  152.37 |  159.78 |
+| mean + 5 std  |  175.77 |  185.85 |  167.48 |  176.29 |
 
 We can also run the statistics individually for each year:
 
@@ -1209,7 +506,7 @@ Gives us:
 |   2022 |      102.58 |      18.01 |      105.32 |      19.16 |      99.17 |     16.81 |       101.81 |       17.81 |
 |   2023 |       90.95 |       8.64 |       93.72 |       9.98 |      88.01 |      7.37 |        90.34 |        8.38 |
 |   2024 |       92.88 |      15.06 |       97.32 |      18.33 |      89.51 |     13.16 |        92.81 |       15.60 |
-|   2025 |      107.42 |      16.26 |      112.79 |      19.04 |     102.60 |     12.60 |       106.49 |       15.40 |
+|   2025 |      107.44 |      16.10 |      112.71 |      18.87 |     102.56 |     12.49 |       106.42 |       15.28 |
 
 And finally, we can run the statistics individually for each month:
 
@@ -1232,7 +529,7 @@ Gives us:
 |      2 |       93.49 |      18.24 |       95.39 |      20.70 |      91.39 |     16.43 |        93.13 |       18.58 |
 |      3 |       95.30 |      21.66 |       97.38 |      23.56 |      92.94 |     19.51 |        94.89 |       21.59 |
 |      4 |       92.18 |      19.03 |       94.01 |      20.57 |      90.30 |     17.21 |        91.88 |       18.60 |
-|      5 |       92.14 |      17.00 |       93.84 |      18.06 |      90.45 |     16.22 |        91.70 |       16.86 |
+|      5 |       92.22 |      16.99 |       93.92 |      18.05 |      90.50 |     16.20 |        91.76 |       16.85 |
 |      6 |       92.92 |      15.07 |       94.44 |      16.33 |      91.32 |     14.03 |        92.75 |       15.05 |
 |      7 |       89.97 |      13.16 |       91.46 |      14.23 |      88.48 |     12.26 |        89.84 |       13.12 |
 |      8 |       96.83 |      16.94 |       98.89 |      18.72 |      94.68 |     14.86 |        96.61 |       16.63 |
@@ -1255,15 +552,15 @@ Gives us:
 |      |   Close |   High |    Low |   Open |
 |-----:|--------:|-------:|-------:|-------:|
 | 0.00 |   59.74 |  59.74 |  59.31 |  59.31 |
-| 0.10 |   75.82 |  75.99 |  75.43 |  75.79 |
-| 0.20 |   80.55 |  81.41 |  79.81 |  80.74 |
-| 0.30 |   83.89 |  85.18 |  82.97 |  84.15 |
+| 0.10 |   75.82 |  76.00 |  75.43 |  75.80 |
+| 0.20 |   80.55 |  81.42 |  79.81 |  80.74 |
+| 0.30 |   83.89 |  85.18 |  82.98 |  84.15 |
 | 0.40 |   87.06 |  88.54 |  85.97 |  87.44 |
-| 0.50 |   90.51 |  92.24 |  89.34 |  90.82 |
-| 0.60 |   94.21 |  96.13 |  93.02 |  94.49 |
-| 0.70 |   99.13 | 101.53 |  97.44 |  99.43 |
-| 0.80 |  106.06 | 109.40 | 103.93 | 106.49 |
-| 0.90 |  115.31 | 118.82 | 112.50 | 115.56 |
+| 0.50 |   90.51 |  92.24 |  89.35 |  90.83 |
+| 0.60 |   94.22 |  96.14 |  93.03 |  94.50 |
+| 0.70 |   99.13 | 101.54 |  97.44 |  99.46 |
+| 0.80 |  106.06 | 109.40 | 103.95 | 106.49 |
+| 0.90 |  115.31 | 118.82 | 112.49 | 115.56 |
 | 1.00 |  207.59 | 212.22 | 187.27 | 212.22 |
 
 ## Plots - VVIX
@@ -1407,7 +704,7 @@ Which gives us the following:
 |   2022 |     239 |     12 |
 |   2023 |     246 |      4 |
 |   2024 |     237 |     15 |
-|   2025 |      86 |     12 |
+|   2025 |      87 |     12 |
 
 And the plot to aid with visualization. Based on the plot, it seems as though volatility has increased since the early 2000's:
 

@@ -10,7 +10,7 @@
 <meta property='og:description' content="A list of common functions used for data acquisition, cleaning, analysis, etc.">
 <meta property='og:url' content='https://www.jaredszajkowski.com/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/'>
 <meta property='og:site_name' content='Jared Szajkowski'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Bloomberg' /><meta property='article:tag' content='Nasdaq Data Link' /><meta property='article:tag' content='pandas' /><meta property='article:tag' content='Python' /><meta property='article:tag' content='Yahoo Finance' /><meta property='article:published_time' content='2025-02-02T00:00:01&#43;00:00'/><meta property='article:modified_time' content='2025-05-26T00:00:01&#43;00:00'/><meta property='og:image' content='https://www.jaredszajkowski.com/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/cover.jpg' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Bloomberg' /><meta property='article:tag' content='Nasdaq Data Link' /><meta property='article:tag' content='pandas' /><meta property='article:tag' content='Python' /><meta property='article:tag' content='Yahoo Finance' /><meta property='article:published_time' content='2025-02-02T00:00:01&#43;00:00'/><meta property='article:modified_time' content='2025-05-28T00:00:01&#43;00:00'/><meta property='og:image' content='https://www.jaredszajkowski.com/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/cover.jpg' />
 <meta name="twitter:title" content="Reusable And Extensible Python Functions For Financial Data Analysis">
 <meta name="twitter:description" content="A list of common functions used for data acquisition, cleaning, analysis, etc."><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://www.jaredszajkowski.com/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/cover.jpg' />
@@ -275,19 +275,21 @@
             <nav id="TableOfContents">
   <ol>
     <li><a href="#introduction">Introduction</a></li>
-    <li><a href="#function-index">Function Index</a>
-      <ol>
-        <li><a href="#functions-for-assemblingprocessing-posts">Functions For Assembling/Processing Posts</a></li>
-        <li><a href="#bloomberg-functions">Bloomberg Functions</a></li>
-        <li><a href="#analysis-functions">Analysis Functions</a></li>
-      </ol>
-    </li>
+    <li><a href="#function-index">Function Index</a></li>
     <li><a href="#python-functions">Python Functions</a>
       <ol>
         <li><a href="#bb_clean_data">bb_clean_data</a></li>
         <li><a href="#build_index">build_index</a></li>
         <li><a href="#calc_vix_trade_pnl">calc_vix_trade_pnl</a></li>
+        <li><a href="#df_info">df_info</a></li>
+        <li><a href="#df_info_markdown">df_info_markdown</a></li>
         <li><a href="#export_track_md_deps">export_track_md_deps</a></li>
+        <li><a href="#load_api_keys">load_api_keys</a></li>
+        <li><a href="#load_data">load_data</a></li>
+        <li><a href="#pandas_set_decimal_places">pandas_set_decimal_places</a></li>
+        <li><a href="#plot_price">plot_price</a></li>
+        <li><a href="#plot_vix_with_trades">plot_vix_with_trades</a></li>
+        <li><a href="#yf_pull_data">yf_pull_data</a></li>
       </ol>
     </li>
     <li><a href="#references">References</a></li>
@@ -376,7 +378,7 @@
 
 
                 <time class="article-time--reading">
-                    8 minute read
+                    19 minute read
                 </time>
             </div>
         
@@ -406,13 +408,17 @@ Update 5/21/2025: Data through 5/20/25.</br> -->
 <h2 id="introduction">Introduction
 </h2><p>This post intends to provide the code for all of the python functions that I use in my analysis. The goal here is that when writing another post I will simply be able to link to the functions below as opposed to providing the function code in each post.</p>
 <h2 id="function-index">Function Index
-</h2><h3 id="functions-for-assemblingprocessing-posts">Functions For Assembling/Processing Posts
-</h3><p><a class="link" href="#build_index" >build_index</a>: Reads the <code>index_temp.md</code> markdown file and inserts the markdown dependencies where indicated.</br>
-<a class="link" href="#export_track_md_deps" >export_track_md_deps</a>: exports various text outputs to markdown files, which are included in the index.md file created when building the site with Hugo.</p>
-<h3 id="bloomberg-functions">Bloomberg Functions
-</h3><p><a class="link" href="#bb_clean_data" >bb_clean_data</a>: Takes an Excel export from Bloomberg, removes the miscellaneous headings/rows, and returns a DataFrame.</p>
-<h3 id="analysis-functions">Analysis Functions
-</h3><p><a class="link" href="#calc_vix_trade_pnl" >calc_vix_trade_pnl</a>: Calculates the profit/loss from VIX options trades.</p>
+</h2><p><a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#bb_clean_data" >bb_clean_data</a>: Takes an Excel export from Bloomberg, removes the miscellaneous headings/rows, and returns a DataFrame.</br>
+<a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#build_index" >build_index</a>: Reads the <code>index_temp.md</code> markdown file, inserts the markdown dependencies where indicated, and then saves the file as <code>index.md</code>.</br>
+<a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#calc_vix_trade_pnl" >calc_vix_trade_pnl</a>: Calculates the profit/loss from VIX options trades.</br>
+<a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#df_info" >df_info</a>: A simple function to display the information about a DataFrame and the first five rows and last five rows.</br>
+<a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#df_info_markdown" >df_info_markdown</a>: Similar to the <code>df_info</code> function above, except that it coverts the output to markdown.</br>
+<a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps" >export_track_md_deps</a>: Exports various text outputs to markdown files, which are included in the <code>index.md</code> file created when building the site with Hugo.</br>
+<a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#load_data" >load_data</a>: Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.</br>
+<a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places" >pandas_set_decimal_places</a>: Set the number of decimal places displayed for floating-point numbers in pandas.</br>
+<a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_price" >plot_price</a>: Plot the price data from a DataFrame for a specified date range and columns.</br>
+<a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_vix_with_trades" >plot_vix_with_trades</a>: Plot the VIX daily high and low prices, along with the VIX spikes, and trades.</br>
+<a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#yf_pull_data" >yf_pull_data</a>: Download daily price data from Yahoo Finance and export it.</p>
 <h2 id="python-functions">Python Functions
 </h2><h3 id="bb_clean_data">bb_clean_data
 </h3><div class="highlight"><div class="chroma">
@@ -973,6 +979,220 @@ Update 5/21/2025: Data through 5/20/25.</br> -->
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">transactions_data</span><span class="p">,</span> <span class="n">closed_trades</span><span class="p">,</span> <span class="n">open_trades</span><span class="p">,</span> <span class="n">net_PnL_percent_str</span><span class="p">,</span> <span class="n">net_PnL_str</span>
 </span></span></code></pre></td></tr></table>
 </div>
+</div><h3 id="df_info">df_info
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">df_info</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Display summary information about a pandas DataFrame.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    This function prints:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    - The DataFrame&#39;s column names, shape, and data types via `df.info()`
+</span></span></span><span class="line"><span class="cl"><span class="s2">    - The first 5 rows using `df.head()`
+</span></span></span><span class="line"><span class="cl"><span class="s2">    - The last 5 rows using `df.tail()`
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    It uses `display()` for better output formatting in environments like Jupyter notebooks.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    -----------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    df : pd.DataFrame
+</span></span></span><span class="line"><span class="cl"><span class="s2">        The DataFrame to inspect.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    None
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Example:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; df_info(my_dataframe)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;The columns, shape, and data types are:&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;The first 5 rows are:&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;The last 5 rows are:&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">())</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="df_info_markdown">df_info_markdown
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">io</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">df_info_markdown</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Generate a Markdown-formatted summary of a pandas DataFrame.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    This function captures and formats the output of `df.info()`, `df.head()`, 
+</span></span></span><span class="line"><span class="cl"><span class="s2">    and `df.tail()` in Markdown for easy inclusion in reports, documentation, 
+</span></span></span><span class="line"><span class="cl"><span class="s2">    or web-based rendering (e.g., Hugo or Jupyter export workflows).
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    -----------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    df : pd.DataFrame
+</span></span></span><span class="line"><span class="cl"><span class="s2">        The DataFrame to summarize.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        A string containing the DataFrame&#39;s info, head, and tail 
+</span></span></span><span class="line"><span class="cl"><span class="s2">        formatted in Markdown.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Example:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; print(df_info_markdown(df))
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ```text
+</span></span></span><span class="line"><span class="cl"><span class="s2">    The columns, shape, and data types are:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &lt;output from df.info()&gt;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ```
+</span></span></span><span class="line"><span class="cl"><span class="s2">    The first 5 rows are:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    |   | col1 | col2 |
+</span></span></span><span class="line"><span class="cl"><span class="s2">    |---|------|------|
+</span></span></span><span class="line"><span class="cl"><span class="s2">    | 0 | ...  | ...  |
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    The last 5 rows are:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ...
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">buffer</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Capture df.info() output</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">buf</span><span class="o">=</span><span class="n">buffer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">info_str</span> <span class="o">=</span> <span class="n">buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Convert head and tail to Markdown</span>
+</span></span><span class="line"><span class="cl">    <span class="n">head_str</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">floatfmt</span><span class="o">=</span><span class="s2">&#34;.2f&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tail_str</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">floatfmt</span><span class="o">=</span><span class="s2">&#34;.2f&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">markdown</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;```text&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;The columns, shape, and data types are:</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">info_str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;```&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">The first 5 rows are:</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">head_str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">The last 5 rows are:</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tail_str</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">markdown</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
 </div><h3 id="export_track_md_deps">export_track_md_deps
 </h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1058,6 +1278,1008 @@ Update 5/21/2025: Data through 5/20/25.</br> -->
 </span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;✅ Exported and tracked: </span><span class="si">{</span><span class="n">md_filename</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
+</div><h3 id="load_api_keys">load_api_keys
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">settings</span> <span class="kn">import</span> <span class="n">config</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Get the environment variable file path from the configuration</span>
+</span></span><span class="line"><span class="cl"><span class="n">ENV_PATH</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">&#34;ENV_PATH&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">load_api_keys</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">env_path</span><span class="p">:</span> <span class="n">Path</span><span class="o">=</span><span class="n">ENV_PATH</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Load API keys from a .env file.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    -----------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    env_path : Path
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Path to the .env file. Default is the ENV_PATH from settings.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    keys : dict
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Dictionary of API keys.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">load_dotenv</span><span class="p">(</span><span class="n">dotenv_path</span><span class="o">=</span><span class="n">env_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">keys</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;INFURA_KEY&#34;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&#34;INFURA_KEY&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;NASDAQ_DATA_LINK_KEY&#34;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&#34;NASDAQ_DATA_LINK_KEY&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;COINBASE_KEY&#34;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&#34;COINBASE_KEY&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;COINBASE_SECRET&#34;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&#34;COINBASE_SECRET&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;SCHWAB_APP_KEY&#34;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&#34;SCHWAB_APP_KEY&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;SCHWAB_SECRET&#34;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&#34;SCHWAB_SECRET&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;SCHWAB_ACCOUNT_NUMBER_1&#34;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&#34;SCHWAB_ACCOUNT_NUMBER_1&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;SCHWAB_ENCRYPTED_ACCOUNT_ID_1&#34;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&#34;SCHWAB_ENCRYPTED_ACCOUNT_ID_1&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;SCHWAB_ACCOUNT_NUMBER_2&#34;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&#34;SCHWAB_ACCOUNT_NUMBER_2&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;SCHWAB_ENCRYPTED_ACCOUNT_ID_2&#34;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&#34;SCHWAB_ENCRYPTED_ACCOUNT_ID_2&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;SCHWAB_ACCOUNT_NUMBER_3&#34;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&#34;SCHWAB_ACCOUNT_NUMBER_3&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;SCHWAB_ENCRYPTED_ACCOUNT_ID_3&#34;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&#34;SCHWAB_ENCRYPTED_ACCOUNT_ID_3&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Raise error if any key is missing</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">keys</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Missing environment variable: </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">keys</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="load_data">load_data
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">base_directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ticker</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">asset_class</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">timeframe</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    This function attempts to read a file first as a CSV, then as an Excel file 
+</span></span></span><span class="line"><span class="cl"><span class="s2">    (specifically looking for a sheet named &#39;data&#39; and using the &#39;calamine&#39; engine).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    If both attempts fail, a ValueError is raised.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    -----------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    base_directory : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Root path to read data file.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ticker : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Ticker symbol to read.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    source : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Name of the data source (e.g., &#39;Yahoo&#39;).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    asset_class : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Asset class name (e.g., &#39;Equities&#39;).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    timeframe : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Timeframe for the data (e.g., &#39;Daily&#39;, &#39;Month_End&#39;).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    pd.DataFrame
+</span></span></span><span class="line"><span class="cl"><span class="s2">        The loaded data.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Raises:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    -------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ValueError
+</span></span></span><span class="line"><span class="cl"><span class="s2">        If the file could not be loaded as either CSV or Excel.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Example:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; df = load_data(DATA_DIR, &#34;^VIX&#34;, &#34;Yahoo_Finance&#34;, &#34;Indices&#34;)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Build file paths using pathlib</span>
+</span></span><span class="line"><span class="cl">    <span class="n">csv_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_directory</span><span class="p">)</span> <span class="o">/</span> <span class="n">source</span> <span class="o">/</span> <span class="n">asset_class</span> <span class="o">/</span> <span class="n">timeframe</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">.csv&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">csv_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_directory</span><span class="p">)</span> <span class="o">/</span> <span class="n">source</span> <span class="o">/</span> <span class="n">asset_class</span> <span class="o">/</span> <span class="n">timeframe</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">.zip&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">xlsx_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_directory</span><span class="p">)</span> <span class="o">/</span> <span class="n">source</span> <span class="o">/</span> <span class="n">asset_class</span> <span class="o">/</span> <span class="n">timeframe</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">.xlsx&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pickle_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_directory</span><span class="p">)</span> <span class="o">/</span> <span class="n">source</span> <span class="o">/</span> <span class="n">asset_class</span> <span class="o">/</span> <span class="n">timeframe</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">.pkl&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Try CSV</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">df</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Try Zip</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">df</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Try Excel</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">xlsx_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">df</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Try Pickle</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="n">pickle_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">df</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;❌ Unable to load file: </span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">. Ensure it&#39;s a valid CSV, Excel, Zip, or Pickle file with a &#39;data&#39; sheet (if required).&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="pandas_set_decimal_places">pandas_set_decimal_places
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">pandas_set_decimal_places</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">decimal_places</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Set the number of decimal places displayed for floating-point numbers in pandas.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ----------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    decimal_places : int
+</span></span></span><span class="line"><span class="cl"><span class="s2">        The number of decimal places to display for float values in pandas DataFrames and Series.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    None
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Example:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; dp(3)
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; pd.DataFrame([1.23456789])
+</span></span></span><span class="line"><span class="cl"><span class="s2">           0
+</span></span></span><span class="line"><span class="cl"><span class="s2">    0   1.235
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.float_format&#39;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;%.</span><span class="si">{</span><span class="n">decimal_places</span><span class="si">}</span><span class="s1">f&#39;</span> <span class="o">%</span> <span class="n">x</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="plot_price">plot_price
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib.dates</span> <span class="k">as</span> <span class="nn">mdates</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib.ticker</span> <span class="k">as</span> <span class="nn">mtick</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">matplotlib.ticker</span> <span class="kn">import</span> <span class="n">FormatStrFormatter</span><span class="p">,</span> <span class="n">MultipleLocator</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">plot_price</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">price_df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plot_start_date</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plot_end_date</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plot_columns</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x_label</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x_format</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">y_label</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">y_format</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">y_tick_spacing</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">grid</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">legend</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">export_plot</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plot_file_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Plot the price data from a DataFrame for a specified date range and columns.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    -----------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    df : pd.DataFrame
+</span></span></span><span class="line"><span class="cl"><span class="s2">        DataFrame containing the price data to plot.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    plot_start_date : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Start date for the plot in &#39;YYYY-MM-DD&#39; format.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    plot_end_date : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        End date for the plot in &#39;YYYY-MM-DD&#39; format.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    plot_columns : str OR list
+</span></span></span><span class="line"><span class="cl"><span class="s2">        List of columns to plot from the DataFrame. If none, all columns will be plotted.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    title : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Title of the plot.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    x_label : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Label for the x-axis.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    x_axis_format : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Format for the x-axis date labels.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    y_label : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Label for the y-axis.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    y_tick_spacing : int
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Spacing for the y-axis ticks.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    grid : bool
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Whether to display a grid on the plot.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    legend : bool
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Whether to display a legend on the plot.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    export_plot : bool
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Whether to save the figure as a PNG file.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    plot_file_name : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        File name for saving the figure (if save_fig is True).
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    None
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># If start date and end date are None, use the entire DataFrame</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">plot_start_date</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">plot_end_date</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">df_filtered</span> <span class="o">=</span> <span class="n">price_df</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># If only end date is specified, filter by end date</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">plot_start_date</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">plot_end_date</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">df_filtered</span> <span class="o">=</span> <span class="n">price_df</span><span class="p">[(</span><span class="n">price_df</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;=</span> <span class="n">plot_end_date</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># If only start date is specified, filter by start date</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">plot_start_date</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">plot_end_date</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">df_filtered</span> <span class="o">=</span> <span class="n">price_df</span><span class="p">[(</span><span class="n">price_df</span><span class="o">.</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="n">plot_start_date</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># If both start date and end date are specified, filter by both</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">df_filtered</span> <span class="o">=</span> <span class="n">price_df</span><span class="p">[(</span><span class="n">price_df</span><span class="o">.</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="n">plot_start_date</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">price_df</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;=</span> <span class="n">plot_end_date</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Set plot figure size and background color</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">facecolor</span><span class="o">=</span><span class="s2">&#34;#F5F5F5&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Plot data</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">plot_columns</span> <span class="o">==</span><span class="s2">&#34;All&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df_filtered</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df_filtered</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">df_filtered</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">plot_columns</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df_filtered</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">df_filtered</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Format X axis</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">x_format</span> <span class="o">==</span> <span class="s2">&#34;Day&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">DayLocator</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">DateFormatter</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">%d</span><span class="s2"> %b %Y&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">x_format</span> <span class="o">==</span> <span class="s2">&#34;Week&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">WeekdayLocator</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">DateFormatter</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">%d</span><span class="s2"> %b %Y&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">x_format</span> <span class="o">==</span> <span class="s2">&#34;Month&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">MonthLocator</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">DateFormatter</span><span class="p">(</span><span class="s2">&#34;%b %Y&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">x_format</span> <span class="o">==</span> <span class="s2">&#34;Year&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">YearLocator</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">DateFormatter</span><span class="p">(</span><span class="s2">&#34;%Y&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Unrecognized x_format: </span><span class="si">{</span><span class="n">x_format</span><span class="si">}</span><span class="s2">. Use &#39;Day&#39;, &#39;Week&#39;, &#39;Month&#39;, or &#39;Year&#39;.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">x_label</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Format Y axis</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">y_format</span> <span class="o">==</span> <span class="s2">&#34;Decimal&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">FormatStrFormatter</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">%.2f</span><span class="s2">&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">y_format</span> <span class="o">==</span> <span class="s2">&#34;Percentage&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">mtick</span><span class="o">.</span><span class="n">PercentFormatter</span><span class="p">(</span><span class="n">xmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">decimals</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">y_format</span> <span class="o">==</span> <span class="s2">&#34;Scientific&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">FormatStrFormatter</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">%.2e</span><span class="s2">&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">y_format</span> <span class="o">==</span> <span class="s2">&#34;log&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s2">&#34;log&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Unrecognized y_format: </span><span class="si">{</span><span class="n">y_format</span><span class="si">}</span><span class="s2">. Use &#39;Decimal&#39;, &#39;Percentage&#39;, or &#39;Scientific&#39;.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="n">y_tick_spacing</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">y_label</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Format title, layout, grid, and legend</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">grid</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">legend</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Save figure and display plot</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">export_plot</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">plot_file_name</span><span class="si">}</span><span class="s2">.png&#34;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&#34;tight&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Display the plot</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">None</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="plot_vix_with_trades">plot_vix_with_trades
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib.dates</span> <span class="k">as</span> <span class="nn">mdates</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">matplotlib.ticker</span> <span class="kn">import</span> <span class="n">MultipleLocator</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">plot_vix_with_trades</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vix_price_df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">trades_df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plot_start_date</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plot_end_date</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x_tick_spacing</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">y_tick_spacing</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">index_number</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">export_plot</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Plot the VIX daily high and low prices, along with the VIX spikes, and trades.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    -----------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    vix_price_df : pd.DataFrame
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Dataframe containing the VIX price data to plot.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    trades_df : pd.DataFrame
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Dataframe containing the trades data.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    plot_start_date : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Start date for the plot in &#39;YYYY-MM-DD&#39; format.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    plot_end_date : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        End date for the plot in &#39;YYYY-MM-DD&#39; format.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    index_number : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Index number to be used in the file name of the plot export.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    export_plot : bool
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Whether to save the figure as a PNG file.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    vix_data : pd.DataFrame
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Dataframe containing the VIX price data for the specified timeframe.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Create temporary dataframe for the specified date range</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vix_data</span> <span class="o">=</span> <span class="n">vix_price_df</span><span class="p">[(</span><span class="n">vix_price_df</span><span class="o">.</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="n">plot_start_date</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">vix_price_df</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;=</span> <span class="n">plot_end_date</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Set plot figure size and background color</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">facecolor</span><span class="o">=</span><span class="s2">&#34;#F5F5F5&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Plot VIX high and low price data</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">vix_data</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">vix_data</span><span class="p">[</span><span class="s1">&#39;High&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;High&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;steelblue&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">vix_data</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">vix_data</span><span class="p">[</span><span class="s1">&#39;Low&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Low&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;brown&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Plot VIX spikes</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">vix_data</span><span class="p">[</span><span class="n">vix_data</span><span class="p">[</span><span class="s1">&#39;Spike_SMA&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">vix_data</span><span class="p">[</span><span class="n">vix_data</span><span class="p">[</span><span class="s1">&#39;Spike_SMA&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">][</span><span class="s1">&#39;High&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Spike (High &gt; 1.25 * 10 Day High SMA)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># Plot trades</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">trades_df</span><span class="p">[</span><span class="s1">&#39;Trade_Date&#39;</span><span class="p">],</span> <span class="n">trades_df</span><span class="p">[</span><span class="s1">&#39;Approx_VIX_Level&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Trades&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Annotate each point in trades_df with the corresponding Action_Symbol</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">trades_df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Trade_Date&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">            <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Approx_VIX_Level&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">row</span><span class="p">[</span><span class="s1">&#39;TradeDate_Action_Symbol_VIX&#39;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">            <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Format X axis</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">DayLocator</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="n">x_tick_spacing</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">DateFormatter</span><span class="p">(</span><span class="s2">&#34;%Y-%m-</span><span class="si">%d</span><span class="s2">&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&#34;Date&#34;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Format Y axis</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="n">y_tick_spacing</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&#34;VIX&#34;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Format title, layout, grid, and legend</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;CBOE Volatility Index (VIX), VIX Spikes, Trades, </span><span class="si">{</span><span class="n">plot_start_date</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">plot_end_date</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Save figure and display plot</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">export_plot</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">index_number</span><span class="si">}</span><span class="s2">_VIX_Spike_Trades_</span><span class="si">{</span><span class="n">plot_start_date</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">plot_end_date</span><span class="si">}</span><span class="s2">.png&#34;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&#34;tight&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># Display the plot</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">vix_data</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="yf_pull_data">yf_pull_data
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">yf_pull_data</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">base_directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ticker</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">asset_class</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">excel_export</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pickle_export</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">output_confirmation</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Download daily price data from Yahoo Finance and export it.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    -----------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    base_directory : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Root path to store downloaded data.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ticker : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Ticker symbol to download.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    source : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Name of the data source (e.g., &#39;Yahoo&#39;).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    asset_class : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Asset class name (e.g., &#39;Equities&#39;).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    excel_export : bool
+</span></span></span><span class="line"><span class="cl"><span class="s2">        If True, export data to Excel format.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    pickle_export : bool
+</span></span></span><span class="line"><span class="cl"><span class="s2">        If True, export data to Pickle format.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    output_confirmation : bool
+</span></span></span><span class="line"><span class="cl"><span class="s2">        If True, print confirmation message.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    df : pd.DataFrame
+</span></span></span><span class="line"><span class="cl"><span class="s2">        DataFrame containing the downloaded data.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># Download data from YF</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">ticker</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Drop the column level with the ticker symbol</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Reset index</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Remove the &#34;Price&#34; header from the index</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Reset date column</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">tz_localize</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Set &#39;Date&#39; column as index</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Drop data from last day because it&#39;s not accrate until end of day</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># Create directory</span>
+</span></span><span class="line"><span class="cl">    <span class="n">directory</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">base_directory</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">source</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">asset_class</span><span class="si">}</span><span class="s2">/Daily&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Export to excel</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">excel_export</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">directory</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">.xlsx&#34;</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&#34;data&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Export to pickle</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">pickle_export</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">df</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">directory</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">.pkl&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Output confirmation</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">output_confirmation</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;The first and last date of data for </span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2"> is: &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">[:</span><span class="mi">1</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:])</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Yahoo Finance data complete for </span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;--------------------&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">df</span>
+</span></span></code></pre></td></tr></table>
+</div>
 </div><h2 id="references">References
 </h2><p>None</p>
 <h2 id="code">Code
@@ -1107,7 +2329,7 @@ The pdf export of the jupyter notebook is available <a class="link" href="reusab
 
 
         <span>
-            Last updated on May 26, 2025
+            Last updated on May 28, 2025
         </span>
     </section></footer>
 

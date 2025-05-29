@@ -2,7 +2,7 @@ import json
 import pandas as pd
 import requests
 
-from env_vars import load_api_keys
+from load_api_keys import load_api_keys
 from pathlib import Path
 from settings import config
 

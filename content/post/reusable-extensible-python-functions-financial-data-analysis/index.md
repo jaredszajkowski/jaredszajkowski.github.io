@@ -3,7 +3,7 @@ title: Reusable And Extensible Python Functions For Financial Data Analysis
 description: A list of common functions used for data acquisition, cleaning, analysis, etc.
 slug: reusable-extensible-python-functions-financial-data-analysis
 date: 2025-02-02 00:00:01+0000
-lastmod: 2025-05-26 00:00:01+0000
+lastmod: 2025-05-28 00:00:01+0000
 image: cover.jpg
 draft: false
 categories:
@@ -37,18 +37,17 @@ This post intends to provide the code for all of the python functions that I use
 
 ## Function Index
 
-### Functions For Assembling/Processing Posts
-
-[build_index](#build_index): Reads the `index_temp.md` markdown file and inserts the markdown dependencies where indicated.</br>
-[export_track_md_deps](#export_track_md_deps): exports various text outputs to markdown files, which are included in the index.md file created when building the site with Hugo.
-
-### Bloomberg Functions
-
-[bb_clean_data](#bb_clean_data): Takes an Excel export from Bloomberg, removes the miscellaneous headings/rows, and returns a DataFrame.
-
-### Analysis Functions
-
-[calc_vix_trade_pnl](#calc_vix_trade_pnl): Calculates the profit/loss from VIX options trades.
+[bb_clean_data](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#bb_clean_data): Takes an Excel export from Bloomberg, removes the miscellaneous headings/rows, and returns a DataFrame.</br>
+[build_index](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#build_index): Reads the `index_temp.md` markdown file, inserts the markdown dependencies where indicated, and then saves the file as `index.md`.</br>
+[calc_vix_trade_pnl](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#calc_vix_trade_pnl): Calculates the profit/loss from VIX options trades.</br>
+[df_info](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#df_info): A simple function to display the information about a DataFrame and the first five rows and last five rows.</br>
+[df_info_markdown](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#df_info_markdown): Similar to the `df_info` function above, except that it coverts the output to markdown.</br>
+[export_track_md_deps](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps): Exports various text outputs to markdown files, which are included in the `index.md` file created when building the site with Hugo.</br>
+[load_data](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#load_data): Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.</br>
+[pandas_set_decimal_places](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places): Set the number of decimal places displayed for floating-point numbers in pandas.</br>
+[plot_price](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_price): Plot the price data from a DataFrame for a specified date range and columns.</br>
+[plot_vix_with_trades](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_vix_with_trades): Plot the VIX daily high and low prices, along with the VIX spikes, and trades.</br>
+[yf_pull_data](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#yf_pull_data): Download daily price data from Yahoo Finance and export it.
 
 ## Python Functions
 
@@ -337,6 +336,116 @@ def calc_vix_trade_pnl(
     return transactions_data, closed_trades, open_trades, net_PnL_percent_str, net_PnL_str
 ```
 
+### df_info
+
+```python
+import pandas as pd
+from IPython.display import display
+
+def df_info(
+    df: pd.DataFrame,
+) -> None:
+    
+    """
+    Display summary information about a pandas DataFrame.
+
+    This function prints:
+    - The DataFrame's column names, shape, and data types via `df.info()`
+    - The first 5 rows using `df.head()`
+    - The last 5 rows using `df.tail()`
+
+    It uses `display()` for better output formatting in environments like Jupyter notebooks.
+
+    Parameters:
+    -----------
+    df : pd.DataFrame
+        The DataFrame to inspect.
+
+    Returns:
+    --------
+    None
+
+    Example:
+    --------
+    >>> df_info(my_dataframe)
+    """
+    
+    print("The columns, shape, and data types are:")
+    print(df.info())
+    print("The first 5 rows are:")
+    display(df.head())
+    print("The last 5 rows are:")
+    display(df.tail())
+```
+
+### df_info_markdown
+
+```python
+import io
+import pandas as pd
+
+def df_info_markdown(
+    df: pd.DataFrame
+) -> str:
+    
+    """
+    Generate a Markdown-formatted summary of a pandas DataFrame.
+
+    This function captures and formats the output of `df.info()`, `df.head()`, 
+    and `df.tail()` in Markdown for easy inclusion in reports, documentation, 
+    or web-based rendering (e.g., Hugo or Jupyter export workflows).
+
+    Parameters:
+    -----------
+    df : pd.DataFrame
+        The DataFrame to summarize.
+
+    Returns:
+    --------
+    str
+        A string containing the DataFrame's info, head, and tail 
+        formatted in Markdown.
+
+    Example:
+    --------
+    >>> print(df_info_markdown(df))
+    ```text
+    The columns, shape, and data types are:
+    <output from df.info()>
+    ```
+    The first 5 rows are:
+    |   | col1 | col2 |
+    |---|------|------|
+    | 0 | ...  | ...  |
+
+    The last 5 rows are:
+    ...
+    """
+    
+    buffer = io.StringIO()
+
+    # Capture df.info() output
+    df.info(buf=buffer)
+    info_str = buffer.getvalue()
+
+    # Convert head and tail to Markdown
+    head_str = df.head().to_markdown(floatfmt=".2f")
+    tail_str = df.tail().to_markdown(floatfmt=".2f")
+
+    markdown = [
+        "```text",
+        "The columns, shape, and data types are:\n",
+        info_str,
+        "```",
+        "\nThe first 5 rows are:\n",
+        head_str,
+        "\nThe last 5 rows are:\n",
+        tail_str
+    ]
+
+    return "\n".join(markdown)
+```
+
 ### export_track_md_deps
 
 ```python
@@ -379,6 +488,517 @@ def export_track_md_deps(
     with dep_file.open("a") as f:
         f.write(md_filename + "\n")
     print(f"✅ Exported and tracked: {md_filename}")
+```
+
+### load_api_keys
+
+```python
+import os
+
+from dotenv import load_dotenv
+from pathlib import Path
+from settings import config
+
+# Get the environment variable file path from the configuration
+ENV_PATH = config("ENV_PATH")
+
+def load_api_keys(
+    env_path: Path=ENV_PATH
+) -> dict:
+    
+    """
+    Load API keys from a .env file.
+
+    Parameters:
+    -----------
+    env_path : Path
+        Path to the .env file. Default is the ENV_PATH from settings.
+
+    Returns:
+    --------
+    keys : dict
+        Dictionary of API keys.
+    """
+
+    load_dotenv(dotenv_path=env_path)
+
+    keys = {
+        "INFURA_KEY": os.getenv("INFURA_KEY"),
+        "NASDAQ_DATA_LINK_KEY": os.getenv("NASDAQ_DATA_LINK_KEY"),
+        "COINBASE_KEY": os.getenv("COINBASE_KEY"),
+        "COINBASE_SECRET": os.getenv("COINBASE_SECRET"),
+        "SCHWAB_APP_KEY": os.getenv("SCHWAB_APP_KEY"),
+        "SCHWAB_SECRET": os.getenv("SCHWAB_SECRET"),
+        "SCHWAB_ACCOUNT_NUMBER_1": os.getenv("SCHWAB_ACCOUNT_NUMBER_1"),
+        "SCHWAB_ENCRYPTED_ACCOUNT_ID_1": os.getenv("SCHWAB_ENCRYPTED_ACCOUNT_ID_1"),
+        "SCHWAB_ACCOUNT_NUMBER_2": os.getenv("SCHWAB_ACCOUNT_NUMBER_2"),
+        "SCHWAB_ENCRYPTED_ACCOUNT_ID_2": os.getenv("SCHWAB_ENCRYPTED_ACCOUNT_ID_2"),
+        "SCHWAB_ACCOUNT_NUMBER_3": os.getenv("SCHWAB_ACCOUNT_NUMBER_3"),
+        "SCHWAB_ENCRYPTED_ACCOUNT_ID_3": os.getenv("SCHWAB_ENCRYPTED_ACCOUNT_ID_3"),
+    }
+
+    # Raise error if any key is missing
+    for k, v in keys.items():
+        if not v:
+            raise ValueError(f"Missing environment variable: {k}")
+
+    return keys
+
+```
+
+### load_data
+
+```python
+import pandas as pd
+from pathlib import Path
+
+def load_data(
+    base_directory: str,
+    ticker: str,
+    source: str,
+    asset_class: str,
+    timeframe: str,
+) -> pd.DataFrame:
+    
+    """
+    Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.
+
+    This function attempts to read a file first as a CSV, then as an Excel file 
+    (specifically looking for a sheet named 'data' and using the 'calamine' engine).
+    If both attempts fail, a ValueError is raised.
+
+    Parameters:
+    -----------
+    base_directory : str
+        Root path to read data file.
+    ticker : str
+        Ticker symbol to read.
+    source : str
+        Name of the data source (e.g., 'Yahoo').
+    asset_class : str
+        Asset class name (e.g., 'Equities').
+    timeframe : str
+        Timeframe for the data (e.g., 'Daily', 'Month_End').
+    
+    Returns:
+    --------
+    pd.DataFrame
+        The loaded data.
+
+    Raises:
+    -------
+    ValueError
+        If the file could not be loaded as either CSV or Excel.
+
+    Example:
+    --------
+    >>> df = load_data(DATA_DIR, "^VIX", "Yahoo_Finance", "Indices")
+    """
+
+    # Build file paths using pathlib
+    csv_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.csv"
+    csv_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.zip"
+    xlsx_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.xlsx"
+    pickle_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.pkl"
+
+    # Try CSV
+    try:
+        df = pd.read_csv(csv_path)
+        return df
+    except Exception:
+        pass
+
+    # Try Zip
+    try:
+        df = pd.read_csv(csv_path)
+        return df
+    except Exception:
+        pass
+
+    # Try Excel
+    try:
+        df = pd.read_excel(xlsx_path)
+        return df
+    except Exception:
+        pass
+
+    # Try Pickle
+    try:
+        df = pd.read_pickle(pickle_path)
+        return df
+    except Exception:
+        pass
+
+    raise ValueError(f"❌ Unable to load file: {ticker}. Ensure it's a valid CSV, Excel, Zip, or Pickle file with a 'data' sheet (if required).")
+```
+
+### pandas_set_decimal_places
+
+```python
+import pandas as pd
+
+def pandas_set_decimal_places(
+    decimal_places: int,
+) -> None:
+    
+    """
+    Set the number of decimal places displayed for floating-point numbers in pandas.
+
+    Parameters:
+    ----------
+    decimal_places : int
+        The number of decimal places to display for float values in pandas DataFrames and Series.
+
+    Returns:
+    --------
+    None
+
+    Example:
+    --------
+    >>> dp(3)
+    >>> pd.DataFrame([1.23456789])
+           0
+    0   1.235
+    """
+    
+    pd.set_option('display.float_format', lambda x: f'%.{decimal_places}f' % x)
+```
+
+### plot_price
+
+```python
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+import matplotlib.ticker as mtick
+import pandas as pd
+
+from matplotlib.ticker import FormatStrFormatter, MultipleLocator
+
+def plot_price(
+    price_df: pd.DataFrame,
+    plot_start_date: str,
+    plot_end_date: str,
+    plot_columns,
+    title: str,
+    x_label: str,
+    x_format: str,
+    y_label: str,
+    y_format: str,
+    y_tick_spacing: int,
+    grid: bool,
+    legend: bool,
+    export_plot: bool,
+    plot_file_name: str,
+) -> None:
+
+    """
+    Plot the price data from a DataFrame for a specified date range and columns.
+
+    Parameters:
+    -----------
+    df : pd.DataFrame
+        DataFrame containing the price data to plot.
+    plot_start_date : str
+        Start date for the plot in 'YYYY-MM-DD' format.
+    plot_end_date : str
+        End date for the plot in 'YYYY-MM-DD' format.
+    plot_columns : str OR list
+        List of columns to plot from the DataFrame. If none, all columns will be plotted.
+    title : str
+        Title of the plot.
+    x_label : str
+        Label for the x-axis.
+    x_axis_format : str
+        Format for the x-axis date labels.
+    y_label : str
+        Label for the y-axis.
+    y_tick_spacing : int
+        Spacing for the y-axis ticks.
+    grid : bool
+        Whether to display a grid on the plot.
+    legend : bool
+        Whether to display a legend on the plot.
+    export_plot : bool
+        Whether to save the figure as a PNG file.
+    plot_file_name : str
+        File name for saving the figure (if save_fig is True).
+
+    Returns:
+    --------
+    None
+    """
+
+    # If start date and end date are None, use the entire DataFrame
+    if plot_start_date is None and plot_end_date is None:
+        df_filtered = price_df
+
+    # If only end date is specified, filter by end date
+    elif plot_start_date is None and plot_end_date is not None:
+        df_filtered = price_df[(price_df.index <= plot_end_date)]
+
+    # If only start date is specified, filter by start date
+    elif plot_start_date is not None and plot_end_date is None:
+        df_filtered = price_df[(price_df.index >= plot_start_date)]
+
+    # If both start date and end date are specified, filter by both
+    else:
+        df_filtered = price_df[(price_df.index >= plot_start_date) & (price_df.index <= plot_end_date)]
+
+    # Set plot figure size and background color
+    plt.figure(figsize=(12, 6), facecolor="#F5F5F5")
+
+    # Plot data
+    if plot_columns =="All":
+        for col in df_filtered.columns:
+            plt.plot(df_filtered.index, df_filtered[col], label=col, linestyle='-', linewidth=1.5)
+    else:
+        for col in plot_columns:
+            plt.plot(df_filtered.index, df_filtered[col], label=col, linestyle='-', linewidth=1.5)
+
+    # Format X axis
+    if x_format == "Day":
+        plt.gca().xaxis.set_major_locator(mdates.DayLocator())
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
+    elif x_format == "Week":
+        plt.gca().xaxis.set_major_locator(mdates.WeekdayLocator())
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
+    elif x_format == "Month":
+        plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
+    elif x_format == "Year":
+        plt.gca().xaxis.set_major_locator(mdates.YearLocator())
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+    else:
+        raise ValueError(f"Unrecognized x_format: {x_format}. Use 'Day', 'Week', 'Month', or 'Year'.")
+
+    plt.xlabel(x_label, fontsize=10)
+    plt.xticks(rotation=45, fontsize=8)
+
+    # Format Y axis
+    if y_format == "Decimal":
+        plt.gca().yaxis.set_major_formatter(FormatStrFormatter("%.2f"))
+    elif y_format == "Percentage":
+        plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter(xmax=1, decimals=0))
+    elif y_format == "Scientific":
+        plt.gca().yaxis.set_major_formatter(FormatStrFormatter("%.2e"))
+    elif y_format == "log":
+        plt.yscale("log")
+    else:
+        raise ValueError(f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', or 'Scientific'.")
+    
+    plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
+    plt.ylabel(y_label, fontsize=10)
+    plt.yticks(fontsize=8)
+
+    # Format title, layout, grid, and legend
+    plt.title(title, fontsize=12)
+    plt.tight_layout()
+
+    if grid == True:
+        plt.grid(True, linestyle='--', alpha=0.7)
+
+    if legend == True:
+        plt.legend(fontsize=9)
+
+    # Save figure and display plot
+    if export_plot == True:
+        plt.savefig(f"{plot_file_name}.png", dpi=300, bbox_inches="tight")
+
+    # Display the plot
+    plt.show()
+
+    return None
+```
+
+### plot_vix_with_trades
+
+```python
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import pandas as pd
+
+from matplotlib.ticker import MultipleLocator
+
+def plot_vix_with_trades(
+    vix_price_df: pd.DataFrame,
+    trades_df: pd.DataFrame,
+    plot_start_date: str,
+    plot_end_date: str,
+    x_tick_spacing: int,
+    y_tick_spacing: int,
+    index_number: str,
+    export_plot: bool,
+) -> pd.DataFrame:
+    
+    """
+    Plot the VIX daily high and low prices, along with the VIX spikes, and trades.
+
+    Parameters:
+    -----------
+    vix_price_df : pd.DataFrame
+        Dataframe containing the VIX price data to plot.
+    trades_df : pd.DataFrame
+        Dataframe containing the trades data.
+    plot_start_date : str
+        Start date for the plot in 'YYYY-MM-DD' format.
+    plot_end_date : str
+        End date for the plot in 'YYYY-MM-DD' format.
+    index_number : str
+        Index number to be used in the file name of the plot export.
+    export_plot : bool
+        Whether to save the figure as a PNG file.
+
+    Returns:
+    --------
+    vix_data : pd.DataFrame
+        Dataframe containing the VIX price data for the specified timeframe.
+    """
+
+    # Create temporary dataframe for the specified date range
+    vix_data = vix_price_df[(vix_price_df.index >= plot_start_date) & (vix_price_df.index <= plot_end_date)]
+
+    # Set plot figure size and background color
+    plt.figure(figsize=(12, 6), facecolor="#F5F5F5")
+
+    # Plot VIX high and low price data
+    plt.plot(vix_data.index, vix_data['High'], label='High', linestyle='-', color='steelblue', linewidth=1)
+    plt.plot(vix_data.index, vix_data['Low'], label='Low', linestyle='-', color='brown', linewidth=1)
+
+    # Plot VIX spikes
+    plt.scatter(vix_data[vix_data['Spike_SMA'] == True].index, vix_data[vix_data['Spike_SMA'] == True]['High'], label='Spike (High > 1.25 * 10 Day High SMA)', color='black', s=20)
+    
+    # Plot trades
+    plt.scatter(trades_df['Trade_Date'], trades_df['Approx_VIX_Level'], label='Trades', color='red', s=20)
+
+    # Annotate each point in trades_df with the corresponding Action_Symbol
+    for _, row in trades_df.iterrows():
+        plt.text(
+            row['Trade_Date'] + pd.Timedelta(days=1),
+            row['Approx_VIX_Level'] + 0.1,
+            row['TradeDate_Action_Symbol_VIX'],
+            fontsize=9
+        )
+
+    # Format X axis
+    plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=x_tick_spacing))
+    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m-%d"))
+    plt.xlabel("Date", fontsize=10)
+    plt.xticks(rotation=45, fontsize=8)
+
+    # Format Y axis
+    plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
+    plt.ylabel("VIX", fontsize=10)
+    plt.yticks(fontsize=8)
+
+    # Format title, layout, grid, and legend
+    plt.title(f"CBOE Volatility Index (VIX), VIX Spikes, Trades, {plot_start_date} - {plot_end_date}", fontsize=12)
+    plt.tight_layout()
+    plt.grid(True, linestyle='--', alpha=0.7)
+    plt.legend(fontsize=9)
+
+    # Save figure and display plot
+    if export_plot == True:
+        plt.savefig(f"{index_number}_VIX_Spike_Trades_{plot_start_date}_{plot_end_date}.png", dpi=300, bbox_inches="tight")
+    
+    # Display the plot
+    plt.show()
+
+    return vix_data
+```
+
+### yf_pull_data
+
+```python
+import os
+import pandas as pd
+import yfinance as yf
+
+from IPython.display import display
+
+def yf_pull_data(
+    base_directory: str,
+    ticker: str,
+    source: str,
+    asset_class: str,
+    excel_export: bool,
+    pickle_export: bool,
+    output_confirmation: bool,
+) -> pd.DataFrame:
+    
+    """
+    Download daily price data from Yahoo Finance and export it.
+
+    Parameters:
+    -----------
+    base_directory : str
+        Root path to store downloaded data.
+    ticker : str
+        Ticker symbol to download.
+    source : str
+        Name of the data source (e.g., 'Yahoo').
+    asset_class : str
+        Asset class name (e.g., 'Equities').
+    excel_export : bool
+        If True, export data to Excel format.
+    pickle_export : bool
+        If True, export data to Pickle format.
+    output_confirmation : bool
+        If True, print confirmation message.
+
+    Returns:
+    --------
+    df : pd.DataFrame
+        DataFrame containing the downloaded data.
+    """
+    
+    # Download data from YF
+    df = yf.download(ticker)
+
+    # Drop the column level with the ticker symbol
+    df.columns = df.columns.droplevel(1)
+
+    # Reset index
+    df = df.reset_index()
+
+    # Remove the "Price" header from the index
+    df.columns.name = None
+
+    # Reset date column
+    df['Date'] = df['Date'].dt.tz_localize(None)
+
+    # Set 'Date' column as index
+    df = df.set_index('Date', drop=True)
+
+    # Drop data from last day because it's not accrate until end of day
+    df = df.drop(df.index[-1])
+    
+    # Create directory
+    directory = f"{base_directory}/{source}/{asset_class}/Daily"
+    os.makedirs(directory, exist_ok=True)
+
+    # Export to excel
+    if excel_export == True:
+        df.to_excel(f"{directory}/{ticker}.xlsx", sheet_name="data")
+    else:
+        pass
+
+    # Export to pickle
+    if pickle_export == True:
+        df.to_pickle(f"{directory}/{ticker}.pkl")
+    else:
+        pass
+
+    # Output confirmation
+    if output_confirmation == True:
+        print(f"The first and last date of data for {ticker} is: ")
+        display(df[:1])
+        display(df[-1:])
+        print(f"Yahoo Finance data complete for {ticker}")
+        print(f"--------------------")
+    else:
+        pass
+
+    return df
 ```
 
 ## References

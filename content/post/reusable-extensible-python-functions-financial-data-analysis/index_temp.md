@@ -3,7 +3,7 @@ title: Reusable And Extensible Python Functions For Financial Data Analysis
 description: A list of common functions used for data acquisition, cleaning, analysis, etc.
 slug: reusable-extensible-python-functions-financial-data-analysis
 date: 2025-02-02 00:00:01+0000
-lastmod: 2025-05-26 00:00:01+0000
+lastmod: 2025-05-28 00:00:01+0000
 image: cover.jpg
 draft: false
 categories:
@@ -37,18 +37,17 @@ This post intends to provide the code for all of the python functions that I use
 
 ## Function Index
 
-### Functions For Assembling/Processing Posts
-
-[build_index](#build_index): Reads the `index_temp.md` markdown file and inserts the markdown dependencies where indicated.</br>
-[export_track_md_deps](#export_track_md_deps): exports various text outputs to markdown files, which are included in the index.md file created when building the site with Hugo.
-
-### Bloomberg Functions
-
-[bb_clean_data](#bb_clean_data): Takes an Excel export from Bloomberg, removes the miscellaneous headings/rows, and returns a DataFrame.
-
-### Analysis Functions
-
-[calc_vix_trade_pnl](#calc_vix_trade_pnl): Calculates the profit/loss from VIX options trades.
+[bb_clean_data](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#bb_clean_data): Takes an Excel export from Bloomberg, removes the miscellaneous headings/rows, and returns a DataFrame.</br>
+[build_index](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#build_index): Reads the `index_temp.md` markdown file, inserts the markdown dependencies where indicated, and then saves the file as `index.md`.</br>
+[calc_vix_trade_pnl](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#calc_vix_trade_pnl): Calculates the profit/loss from VIX options trades.</br>
+[df_info](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#df_info): A simple function to display the information about a DataFrame and the first five rows and last five rows.</br>
+[df_info_markdown](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#df_info_markdown): Similar to the `df_info` function above, except that it coverts the output to markdown.</br>
+[export_track_md_deps](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps): Exports various text outputs to markdown files, which are included in the `index.md` file created when building the site with Hugo.</br>
+[load_data](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#load_data): Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.</br>
+[pandas_set_decimal_places](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places): Set the number of decimal places displayed for floating-point numbers in pandas.</br>
+[plot_price](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_price): Plot the price data from a DataFrame for a specified date range and columns.</br>
+[plot_vix_with_trades](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_vix_with_trades): Plot the VIX daily high and low prices, along with the VIX spikes, and trades.</br>
+[yf_pull_data](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#yf_pull_data): Download daily price data from Yahoo Finance and export it.
 
 ## Python Functions
 
@@ -64,9 +63,41 @@ This post intends to provide the code for all of the python functions that I use
 
 <!-- INSERT_calc_vix_trade_pnl_HERE -->
 
+### df_info
+
+<!-- INSERT_df_info_HERE -->
+
+### df_info_markdown
+
+<!-- INSERT_df_info_markdown_HERE -->
+
 ### export_track_md_deps
 
 <!-- INSERT_export_track_md_deps_HERE -->
+
+### load_api_keys
+
+<!-- INSERT_load_api_keys_HERE -->
+
+### load_data
+
+<!-- INSERT_load_data_HERE -->
+
+### pandas_set_decimal_places
+
+<!-- INSERT_pandas_set_decimal_places_HERE -->
+
+### plot_price
+
+<!-- INSERT_plot_price_HERE -->
+
+### plot_vix_with_trades
+
+<!-- INSERT_plot_vix_with_trades_HERE -->
+
+### yf_pull_data
+
+<!-- INSERT_yf_pull_data_HERE -->
 
 ## References
 

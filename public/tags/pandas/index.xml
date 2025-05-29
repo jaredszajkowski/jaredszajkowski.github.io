@@ -6,14 +6,15 @@
         <description>Recent content in Pandas on Jared Szajkowski</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Mon, 26 May 2025 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/tags/pandas/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 28 May 2025 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/tags/pandas/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Investigating A VIX Trading Signal</title>
         <link>https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/</link>
         <pubDate>Sat, 01 Mar 2025 00:00:01 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/cover.jpg" alt="Featured image of post Investigating A VIX Trading Signal" /&gt;&lt;h2 id=&#34;post-updates&#34;&gt;Post Updates
-&lt;/h2&gt;&lt;p&gt;Update 4/8/2025: Added plot for signals for each year. VIX data through 4/7/25.&lt;/br&gt;
+        <description>&lt;img src="https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/cover.jpg" alt="Featured image of post Investigating A VIX Trading Signal" /&gt;&lt;!-- ## Post Updates
+
+Update 4/8/2025: Added plot for signals for each year. VIX data through 4/7/25.&lt;/br&gt;
 Update 4/9/2025: VIX data through 4/8/25.&lt;/br&gt;
 Update 4/12/2025: VIX data through 4/10/25.&lt;/br&gt;
 Update 4/22/2025: VIX data through 4/18/25.&lt;/br&gt;
@@ -22,7 +23,11 @@ Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, inc
 Update 4/28/2025: VIX data through 4/25/25.&lt;/br&gt;
 Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.&lt;/br&gt;
 Update 5/7/2025: Data through 5/6/25.&lt;/br&gt;
-Update 5/21/2025: Data through 5/20/25.&lt;/br&gt;&lt;/p&gt;</description>
+Update 5/21/2025: Data through 5/20/25.&lt;/br&gt;
+Update 5/28/2025: Data through 5/27/25. Modified references to functions. --&gt;
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+&lt;/h2&gt;&lt;p&gt;From the &lt;a class=&#34;link&#34; href=&#34;https://www.cboe.com/tradable_products/vix/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;CBOE VIX website&lt;/a&gt;:&lt;/p&gt;</description>
         </item>
         <item>
         <title>Reusable And Extensible Python Functions For Financial Data Analysis</title>
