@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tech on Jared Szajkowski</title><link>https://www.jaredszajkowski.com/categories/tech/</link><description>Recent content in Tech on Jared Szajkowski</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 28 May 2025 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/categories/tech/index.xml" rel="self" type="application/rss+xml"/><item><title>Reusable And Extensible Python Functions For Financial Data Analysis</title><link>https://www.jaredszajkowski.com/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/</link><pubDate>Sun, 02 Feb 2025 00:00:01 +0000</pubDate><guid>https://www.jaredszajkowski.com/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/cover.jpg" alt="Featured image of post Reusable And Extensible Python Functions For Financial Data Analysis" />&lt;!-- ## Post Updates
+Update 4/8/2025: Added plot for signals for each year. VIX data through 4/7/25.&lt;/br>
+Update 4/9/2025: VIX data through 4/8/25.&lt;/br>
+Update 4/12/2025: VIX data through 4/10/25.&lt;/br>
+Update 4/22/2025: VIX data through 4/18/25.&lt;/br>
+Update 4/23/2025: VIX data through 4/22/25.&lt;/br>
+Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, including open and closed positions.&lt;/br>
+Update 4/28/2025: VIX data through 4/25/25.&lt;/br>
+Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.&lt;/br>
+Update 5/7/2025: Data through 5/6/25.&lt;/br>
+Update 5/21/2025: Data through 5/20/25.&lt;/br> -->
+&lt;h2 id="introduction">Introduction
+&lt;/h2>&lt;p>This post intends to provide the code for all of the python functions that I use in my analysis. The goal here is that when writing another post I will simply be able to link to the functions below as opposed to providing the function code in each post.&lt;/p></description></item><item><title>Using Python Virtual Environments</title><link>https://www.jaredszajkowski.com/2024/12/02/using-python-virtual-environments/</link><pubDate>Mon, 02 Dec 2024 00:00:01 +0000</pubDate><guid>https://www.jaredszajkowski.com/2024/12/02/using-python-virtual-environments/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2024/12/02/using-python-virtual-environments/cover.jpg" alt="Featured image of post Using Python Virtual Environments" />&lt;h2 id="post-updates">Post Updates
+&lt;/h2>&lt;p>Update 1/12/2025: Updated section for use of requirements.txt file for dependency management.&lt;/br>
+Update 1/30/2025: Added section for version specific python virtual environments.&lt;/p>
+&lt;h2 id="python-module-management">Python Module Management
+&lt;/h2>&lt;p>As an Arch Linux user, the push is to utilize pacman and related tools to manage dependencies and package updates (including Python modules). In fact, &lt;a class="link" href="https://wiki.archlinux.org/title/Python" target="_blank" rel="noopener"
+>the wiki itself&lt;/a> explicitly states this (see 2.1), and the default Arch installation of Python disables python-pip.&lt;/p>
+&lt;p>Unfortunately, there are limited resources put into maintaining packages for modules and only the most common and popular modules are maintained, and they are updated promptly as is consistent within the Arch ecosystem.&lt;/p></description></item><item><title>Simple Incremental Bash Backup Script</title><link>https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/</link><pubDate>Fri, 12 Jan 2024 00:00:01 +0000</pubDate><guid>https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/cover.jpg" alt="Featured image of post Simple Incremental Bash Backup Script" />&lt;h2 id="post-updates">Post Updates
+&lt;/h2>&lt;p>Update 4/12/2025: &lt;a class="link" href="https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/#updated-incremental-backup-script" target="_blank" rel="noopener"
+>Revised script&lt;/a> to accomodate a list of excluded directories.&lt;/p>
+&lt;h2 id="introduction">Introduction
+&lt;/h2>&lt;p>While there are &lt;a class="link" href="https://wiki.archlinux.org/title/Synchronization_and_backup_programs" target="_blank" rel="noopener"
+>numerous backup solutions available for Linux&lt;/a>, many require extensive configuration and maintenance, and restoring from the backup is not always simple. Incremental backups are ideal because they maintain snapshots of the files and allow for access to previous versions of files.&lt;/p>
+&lt;p>Linux Journal recently &lt;a class="link" href="https://www.linuxjournal.com/content/exploring-rsync-tar-and-other-backup-solutions" target="_blank" rel="noopener"
+>published an article on various backup solutions&lt;/a>, and I thought I&amp;rsquo;d provide my incremental backup script that uses &lt;code>rsync&lt;/code> and &lt;code>cp&lt;/code>.&lt;/p></description></item><item><title>Using yt-dlp With Panopto</title><link>https://www.jaredszajkowski.com/2023/12/10/yt-dlp-with-panopto/</link><pubDate>Sun, 10 Dec 2023 00:00:00 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/12/10/yt-dlp-with-panopto/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2023/12/10/yt-dlp-with-panopto/banner_1.svg" alt="Featured image of post Using yt-dlp With Panopto" />&lt;h2 id="introduction">Introduction
+&lt;/h2>&lt;p>As a follow up to &lt;a class="link" href="https://www.jaredszajkowski.com/p/using-yt-dlp-with-zoom/" target="_blank" rel="noopener"
+>this post about using yt-dlp with Zoom&lt;/a>, I found the need to also download videos hosted by Panopto for offline viewing.&lt;/p>
+&lt;p>Similar to the Zoom tutorial, this also requires you to have a &amp;ldquo;cookies&amp;rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Panopto hosting site after logging in.&lt;/p>
+&lt;p>Here&amp;rsquo;s the steps to setting this up:&lt;/p>
+&lt;h2 id="install-cookie-editor">Install cookie editor
+&lt;/h2>&lt;p>Install the &lt;a class="link" href="https://microsoftedge.microsoft.com/addons/detail/cookie-editor/ajfboaconbpkglpfanbmlfgojgndmhmc" target="_blank" rel="noopener"
+>cookie editor&lt;/a> extension. I personnally use it with Microsoft Edge, but there are similar extensions for Chrome, Firefox, etc.&lt;/p></description></item><item><title>Git Quick Start Guide</title><link>https://www.jaredszajkowski.com/2023/10/16/git-quick-start-guide/</link><pubDate>Mon, 16 Oct 2023 00:00:00 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/10/16/git-quick-start-guide/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2023/10/16/git-quick-start-guide/cover.jpg" alt="Featured image of post Git Quick Start Guide" />&lt;h2 id="introduction">Introduction
+&lt;/h2>&lt;p>Here are my notes for some of the more commonly used git commands along with initial setup for git in Linux.&lt;/p>
+&lt;h2 id="installation">Installation
+&lt;/h2>&lt;p>To begin, install as follows for Arch Linux:&lt;/p>
+&lt;pre>&lt;code># pacman -Syu git
+&lt;/code>&lt;/pre>
+&lt;p>Or&lt;/p>
+&lt;pre>&lt;code>$ yay git
+&lt;/code>&lt;/pre>
+&lt;p>Pacman will include all required depencies.&lt;/p>
+&lt;h2 id="initial-configuration">Initial configuration
+&lt;/h2>&lt;p>First, set your name and email address:&lt;/p>
+&lt;pre>&lt;code>$ git config --global user.name &amp;quot;Firstname Lastname&amp;quot;
+$ git config --global user.email &amp;quot;email@address.com&amp;quot;
+&lt;/code>&lt;/pre>
+&lt;p>Then, set your preferred text editor (if you have one). I use nano:&lt;/p></description></item><item><title>Using yt-dlp With Zoom</title><link>https://www.jaredszajkowski.com/2023/10/01/yt-dlp-with-zoom/</link><pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/10/01/yt-dlp-with-zoom/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2023/10/01/yt-dlp-with-zoom/banner_1.svg" alt="Featured image of post Using yt-dlp With Zoom" />&lt;h2 id="introduction">Introduction
+&lt;/h2>&lt;p>If anyone uses Zoom to record and later wants to access recordings of video calls, here&amp;rsquo;s a simple linux bash script to download the video file and acompanying subtitles. For a long time I used &lt;a class="link" href="https://github.com/Battleman/zoomdl" target="_blank" rel="noopener"
+>zoomdl&lt;/a>, but it is no longer under active development, and I began running into various issues about a year ago.&lt;/p>
+&lt;p>This tutorial requires you to have a &amp;ldquo;cookies&amp;rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Zoom cookies after logging in.&lt;/p></description></item><item><title>Arch Linux Install</title><link>https://www.jaredszajkowski.com/2023/09/29/arch-linux-install/</link><pubDate>Fri, 29 Sep 2023 00:00:01 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/09/29/arch-linux-install/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2023/09/29/arch-linux-install/cover.jpg" alt="Featured image of post Arch Linux Install" />&lt;h2 id="introduction">Introduction
+&lt;/h2>&lt;p>This is the basic framework that I use to install Arch Linux, with a few changes catered to the Lenovo ThinkPad E15 Gen 2. I have found that this is a decent mid range laptop, excellent linux compatibility, great keyboard, and overall provides a good value.&lt;/p>
+&lt;h2 id="getting-started">Getting started
+&lt;/h2>&lt;p>This tutorial assumes the following:&lt;/p>
+&lt;ul>
+&lt;li>You are booting from a USB drive with the Arch install ISO.&lt;/li>
+&lt;li>Wireless or wired network is detected and drivers are configured automatically.&lt;/li>
+&lt;li>You want drive encrytion on your root partition, but not on your boot/efi/swap partitions.&lt;/li>
+&lt;/ul>
+&lt;h3 id="verify-uefi-boot-mode">Verify UEFI boot mode
+&lt;/h3>&lt;p>The following command should show directory without error:&lt;/p></description></item></channel></rss>
