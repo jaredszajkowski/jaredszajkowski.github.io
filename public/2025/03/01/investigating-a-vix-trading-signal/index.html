@@ -472,15 +472,17 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
     >yfinance</a> python module, we can pull what we need and quicky dump it to excel to retain it for future use.</p>
 <h2 id="python-functions">Python Functions
 </h2><p>Here are the functions needed for this project:</p>
-<p><a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#calc_vix_trade_pnl" >calc_vix_trade_pnl</a>: Calculates the profit/loss from VIX options trades.</br>
-<a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#df_info" >df_info</a>: A simple function to display the information about a DataFrame and the first five rows and last five rows.</br>
-<a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#df_info_markdown" >df_info_markdown</a>: Similar to the <code>df_info</code> function above, except that it coverts the output to markdown.</br>
-<a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps" >export_track_md_deps</a>: Exports various text outputs to markdown files, which are included in the <code>index.md</code> file created when building the site with Hugo.</br>
-<a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#load_data" >load_data</a>: Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.</br>
-<a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places" >pandas_set_decimal_places</a>: Set the number of decimal places displayed for floating-point numbers in pandas.</br>
-<a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_price" >plot_price</a>: Plot the price data from a DataFrame for a specified date range and columns.</br>
-<a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_vix_with_trades" >plot_vix_with_trades</a>: Plot the VIX daily high and low prices, along with the VIX spikes, and trades.</br>
-<a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#yf_pull_data" >yf_pull_data</a>: Download daily price data from Yahoo Finance and export it.</p>
+<ul>
+<li><a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#calc_vix_trade_pnl" >calc_vix_trade_pnl</a>: Calculates the profit/loss from VIX options trades.</br></li>
+<li><a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#df_info" >df_info</a>: A simple function to display the information about a DataFrame and the first five rows and last five rows.</br></li>
+<li><a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#df_info_markdown" >df_info_markdown</a>: Similar to the <code>df_info</code> function above, except that it coverts the output to markdown.</br></li>
+<li><a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps" >export_track_md_deps</a>: Exports various text outputs to markdown files, which are included in the <code>index.md</code> file created when building the site with Hugo.</br></li>
+<li><a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#load_data" >load_data</a>: Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.</br></li>
+<li><a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places" >pandas_set_decimal_places</a>: Set the number of decimal places displayed for floating-point numbers in pandas.</br></li>
+<li><a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_price" >plot_price</a>: Plot the price data from a DataFrame for a specified date range and columns.</br></li>
+<li><a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_vix_with_trades" >plot_vix_with_trades</a>: Plot the VIX daily high and low prices, along with the VIX spikes, and trades.</br></li>
+<li><a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#yf_pull_data" >yf_pull_data</a>: Download daily price data from Yahoo Finance and export it.</li>
+</ul>
 <h2 id="data-overview-vix">Data Overview (VIX)
 </h2><h3 id="acquire-cboe-volatility-index-vix-data">Acquire CBOE Volatility Index (VIX) Data
 </h3><p>First, let&rsquo;s get the data:</p>
