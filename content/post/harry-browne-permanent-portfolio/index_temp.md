@@ -3,7 +3,7 @@ title: Does Harry Browne's permanent portfolio withstand the test of time?
 description: A look a Harry Browne's Permanent Portfolio and performance over nearly four decades.
 slug: harry-browne-permanent-portfolio
 date: 2024-11-04 00:00:01+0000
-lastmod: 2025-05-06 00:00:01+0000
+lastmod: 2025-06-04 00:00:01+0000
 image: cover.jpg
 draft: False
 categories:
@@ -16,11 +16,11 @@ tags:
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 
-## Post Updates
+<!-- ## Post Updates
 
 Update 12/5/2024: Updated code for summary stats function, various code comments, and corrected grammatical errors.</br>
 Update 2/19/2025: Various code updates, commented and documented functions.</br>
-Update 5/2/2025: Updated functions and code.
+Update 5/2/2025: Updated functions and code. -->
 
 ## Introduction
 
@@ -81,57 +81,27 @@ We could use ETFs, but the available price history for the ETFs is much shorter 
 
 ## Python Functions
 
-### Typical Functions
+Here are the functions needed for this project:
 
-First, the typical set of functions I use:
-
-<!-- INSERT_00_export_track_md_deps_HERE -->
-
-</br>
-
-<!-- INSERT_00_df_info_HERE -->
-
-</br>
-
-<!-- INSERT_00_df_info_markdown_HERE -->
-
-</br>
-
-<!-- INSERT_00_pandas_set_decimal_places_HERE -->
-
-</br>
-
-<!-- INSERT_00_load_data_HERE -->
-
-### Project Specific Functions
-
-#### Data Cleaning Function For Bloomberg Data
-
-<!-- INSERT_00_bb_clean_data_HERE -->
-
-#### Portfolio Trading Strategy
-
-This is the function that executes the trading strategy for the permanent portfolio based on the above parameters.
-
-<!-- INSERT_00_strategy_harry_brown_perm_port_HERE -->
-
-#### Summary Stats
-
-<!-- INSERT_00_summary_stats_HERE -->
+* [bb_clean_data](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#bb_clean_data): Takes an Excel export from Bloomberg, removes the miscellaneous headings/rows, and returns a DataFrame.</br>
+* [df_info](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#df_info): A simple function to display the information about a DataFrame and the first five rows and last five rows.</br>
+* [df_info_markdown](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#df_info_markdown): Similar to the `df_info` function above, except that it coverts the output to markdown.</br>
+* [export_track_md_deps](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps): Exports various text outputs to markdown files, which are included in the `index.md` file created when building the site with Hugo.</br>
+* [load_data](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#load_data): Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.</br>
+* [pandas_set_decimal_places](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places): Set the number of decimal places displayed for floating-point numbers in pandas.</br>
+* [strategy_harry_brown_perm_port](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#strategy_harry_brown_perm_port): Execute the strategy for the Harry Brown permanent portfolio.</br>
+* [summary_stats](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#summary_stats): Generate summary statistics for a series of returns.</br>
 
 ## Data Overview
-
-### Set Decimal Places
-
-```python
-pandas_set_decimal_places(3)
-```
 
 ### Load Data
 
 As previously mentioned, the data for this exercise comes primarily from Bloomberg. We'll start with loading the data first for bonds:
 
 ``` python
+# Set decimal places
+pandas_set_decimal_places(3)
+
 # Bonds dataframe
 bb_clean_data(
     base_directory=DATA_DIR,
@@ -396,9 +366,9 @@ Here's the annual returns:
 
 Since the strategy, summary statistics, and annual returns are all exported as excel files, they can be found at the following locations:
 
-[Stocks_Bonds_Gold_Cash_Strategy.xlsx](Stocks_Bonds_Gold_Cash_Strategy.xlsx)</br>
-[Stocks_Bonds_Gold_Cash_Summary_Stats.xlsx](Stocks_Bonds_Gold_Cash_Summary_Stats.xlsx)</br>
-[Stocks_Bonds_Gold_Cash_Annual_Returns.xlsx](Stocks_Bonds_Gold_Cash_Annual_Returns.xlsx)</br>
+* [Stocks_Bonds_Gold_Cash_Strategy.xlsx](Stocks_Bonds_Gold_Cash_Strategy.xlsx)</br>
+* [Stocks_Bonds_Gold_Cash_Summary_Stats.xlsx](Stocks_Bonds_Gold_Cash_Summary_Stats.xlsx)</br>
+* [Stocks_Bonds_Gold_Cash_Annual_Returns.xlsx](Stocks_Bonds_Gold_Cash_Annual_Returns.xlsx)</br>
 
 Next we will look at some plots to help visualize the data.
 
@@ -407,6 +377,8 @@ Next we will look at some plots to help visualize the data.
 Here are the various functions needed for the plots:
 
 ### Plot Cumulative Return
+
+Plot cumulative return:
 
 ```python
 def plot_cumulative_return(strat_df):
@@ -448,6 +420,8 @@ def plot_cumulative_return(strat_df):
 ```
 
 ### Plot Portfolio Values
+
+Plot portfolio values:
 
 ```python
 def plot_values(strat_df):   
@@ -496,6 +470,8 @@ def plot_values(strat_df):
 
 ### Plot Portfolio Drawdown
 
+Plot portfolio drawdown:
+
 ```python
 def plot_drawdown(strat_df):
     rolling_max = strat_df['Total_AA_$_Invested'].cummax()
@@ -542,6 +518,8 @@ def plot_drawdown(strat_df):
 
 ### Plot Portfolio Asset Weights
 
+Plot portfolio asset weights:
+
 ```python
 def plot_asset_weights(strat_df):
     # Generate plot   
@@ -584,6 +562,8 @@ def plot_asset_weights(strat_df):
     # Display the plot
     return plt.show()
 ```
+
+Execute plots:
 
 ```python
 plot_cumulative_return(strat)
@@ -652,7 +632,7 @@ Overall, this is an interesting case study and Browne's idea behind the Permanen
 
 ## References
 
-Fail-Safe Investing: Lifelong Financial Security in 30 Minutes, by Harry Browne
+1. Fail-Safe Investing: Lifelong Financial Security in 30 Minutes, by Harry Browne
 
 ## Code
 

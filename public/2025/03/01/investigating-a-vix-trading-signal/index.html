@@ -6,11 +6,11 @@
 
 <link rel='canonical' href='https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/'>
 
-<link rel="stylesheet" href="/scss/style.min.da28754071fdaf9a58e8a578c9918e494018d97e1164a8200a93b14c08c2cb5a.css"><meta property='og:title' content="Investigating A VIX Trading Signal">
+<link rel="stylesheet" href="/scss/style.min.b5046de03b9b90a8153f66de518ac609404897469f028cab9556711c2fbc322e.css"><meta property='og:title' content="Investigating A VIX Trading Signal">
 <meta property='og:description' content="A brief look at finding a trading signal based on moving averages of the VIX.">
 <meta property='og:url' content='https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/'>
 <meta property='og:site_name' content='Jared Szajkowski'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Python' /><meta property='article:tag' content='Yahoo Finance' /><meta property='article:tag' content='pandas' /><meta property='article:tag' content='VIX' /><meta property='article:published_time' content='2025-03-01T00:00:01&#43;00:00'/><meta property='article:modified_time' content='2025-05-28T00:00:01&#43;00:00'/><meta property='og:image' content='https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/cover.jpg' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Python' /><meta property='article:tag' content='Yahoo Finance' /><meta property='article:tag' content='pandas' /><meta property='article:tag' content='VIX' /><meta property='article:published_time' content='2025-03-01T00:00:01&#43;00:00'/><meta property='article:modified_time' content='2025-06-04T00:00:01&#43;00:00'/><meta property='og:image' content='https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/cover.jpg' />
 <meta name="twitter:title" content="Investigating A VIX Trading Signal">
 <meta name="twitter:description" content="A brief look at finding a trading signal based on moving averages of the VIX."><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/cover.jpg' />
@@ -601,16 +601,16 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
 <pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">The columns, shape, and data types are:
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-</span></span><span class="line"><span class="cl">DatetimeIndex: 8916 entries, 1990-01-02 to 2025-05-27
+</span></span><span class="line"><span class="cl">DatetimeIndex: 8921 entries, 1990-01-02 to 2025-06-03
 </span></span><span class="line"><span class="cl">Data columns (total 4 columns):
 </span></span><span class="line"><span class="cl"> #   Column  Non-Null Count  Dtype  
 </span></span><span class="line"><span class="cl">---  ------  --------------  -----  
-</span></span><span class="line"><span class="cl"> 0   Close   8916 non-null   float64
-</span></span><span class="line"><span class="cl"> 1   High    8916 non-null   float64
-</span></span><span class="line"><span class="cl"> 2   Low     8916 non-null   float64
-</span></span><span class="line"><span class="cl"> 3   Open    8916 non-null   float64
+</span></span><span class="line"><span class="cl"> 0   Close   8921 non-null   float64
+</span></span><span class="line"><span class="cl"> 1   High    8921 non-null   float64
+</span></span><span class="line"><span class="cl"> 2   Low     8921 non-null   float64
+</span></span><span class="line"><span class="cl"> 3   Open    8921 non-null   float64
 </span></span><span class="line"><span class="cl">dtypes: float64(4)
-</span></span><span class="line"><span class="cl">memory usage: 348.3 KB
+</span></span><span class="line"><span class="cl">memory usage: 348.5 KB
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>The first 5 rows are:</p>
@@ -675,39 +675,39 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left">2025-05-20 00:00:00</td>
-          <td style="text-align: right">18.09</td>
+          <td style="text-align: left">2025-05-28 00:00:00</td>
+          <td style="text-align: right">19.31</td>
+          <td style="text-align: right">19.43</td>
           <td style="text-align: right">18.68</td>
-          <td style="text-align: right">17.70</td>
-          <td style="text-align: right">18.46</td>
+          <td style="text-align: right">19.21</td>
       </tr>
       <tr>
-          <td style="text-align: left">2025-05-21 00:00:00</td>
-          <td style="text-align: right">20.87</td>
-          <td style="text-align: right">21.05</td>
-          <td style="text-align: right">17.77</td>
-          <td style="text-align: right">18.77</td>
+          <td style="text-align: left">2025-05-29 00:00:00</td>
+          <td style="text-align: right">19.18</td>
+          <td style="text-align: right">20.20</td>
+          <td style="text-align: right">18.11</td>
+          <td style="text-align: right">18.25</td>
       </tr>
       <tr>
-          <td style="text-align: left">2025-05-22 00:00:00</td>
-          <td style="text-align: right">20.28</td>
-          <td style="text-align: right">22.07</td>
-          <td style="text-align: right">19.64</td>
-          <td style="text-align: right">20.62</td>
+          <td style="text-align: left">2025-05-30 00:00:00</td>
+          <td style="text-align: right">18.57</td>
+          <td style="text-align: right">20.55</td>
+          <td style="text-align: right">18.57</td>
+          <td style="text-align: right">19.61</td>
       </tr>
       <tr>
-          <td style="text-align: left">2025-05-23 00:00:00</td>
-          <td style="text-align: right">22.29</td>
-          <td style="text-align: right">25.53</td>
-          <td style="text-align: right">19.83</td>
-          <td style="text-align: right">20.14</td>
+          <td style="text-align: left">2025-06-02 00:00:00</td>
+          <td style="text-align: right">18.36</td>
+          <td style="text-align: right">20.45</td>
+          <td style="text-align: right">18.36</td>
+          <td style="text-align: right">19.81</td>
       </tr>
       <tr>
-          <td style="text-align: left">2025-05-27 00:00:00</td>
-          <td style="text-align: right">18.96</td>
-          <td style="text-align: right">21.01</td>
-          <td style="text-align: right">18.95</td>
-          <td style="text-align: right">20.63</td>
+          <td style="text-align: left">2025-06-03 00:00:00</td>
+          <td style="text-align: right">17.69</td>
+          <td style="text-align: right">19.21</td>
+          <td style="text-align: right">17.64</td>
+          <td style="text-align: right">18.83</td>
       </tr>
   </tbody>
 </table></div>
@@ -753,10 +753,10 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
   <tbody>
       <tr>
           <td style="text-align: left">count</td>
-          <td style="text-align: right">8916.00</td>
-          <td style="text-align: right">8916.00</td>
-          <td style="text-align: right">8916.00</td>
-          <td style="text-align: right">8916.00</td>
+          <td style="text-align: right">8921.00</td>
+          <td style="text-align: right">8921.00</td>
+          <td style="text-align: right">8921.00</td>
+          <td style="text-align: right">8921.00</td>
       </tr>
       <tr>
           <td style="text-align: left">mean</td>
@@ -788,9 +788,9 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
       </tr>
       <tr>
           <td style="text-align: left">50%</td>
-          <td style="text-align: right">17.66</td>
-          <td style="text-align: right">18.38</td>
-          <td style="text-align: right">17.07</td>
+          <td style="text-align: right">17.67</td>
+          <td style="text-align: right">18.39</td>
+          <td style="text-align: right">17.08</td>
           <td style="text-align: right">17.70</td>
       </tr>
       <tr>
@@ -812,7 +812,7 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
           <td style="text-align: right">11.66</td>
           <td style="text-align: right">12.01</td>
           <td style="text-align: right">11.43</td>
-          <td style="text-align: right">11.67</td>
+          <td style="text-align: right">11.68</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 0 std</td>
@@ -824,16 +824,16 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
       <tr>
           <td style="text-align: left">mean + 1 std</td>
           <td style="text-align: right">27.33</td>
-          <td style="text-align: right">28.81</td>
-          <td style="text-align: right">26.22</td>
+          <td style="text-align: right">28.80</td>
+          <td style="text-align: right">26.21</td>
           <td style="text-align: right">27.50</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 2 std</td>
           <td style="text-align: right">35.17</td>
           <td style="text-align: right">37.20</td>
-          <td style="text-align: right">33.61</td>
-          <td style="text-align: right">35.42</td>
+          <td style="text-align: right">33.60</td>
+          <td style="text-align: right">35.41</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 3 std</td>
@@ -844,17 +844,17 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
       </tr>
       <tr>
           <td style="text-align: left">mean + 4 std</td>
-          <td style="text-align: right">50.85</td>
-          <td style="text-align: right">54.00</td>
-          <td style="text-align: right">48.40</td>
-          <td style="text-align: right">51.25</td>
+          <td style="text-align: right">50.84</td>
+          <td style="text-align: right">53.99</td>
+          <td style="text-align: right">48.39</td>
+          <td style="text-align: right">51.24</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 5 std</td>
-          <td style="text-align: right">58.69</td>
-          <td style="text-align: right">62.40</td>
-          <td style="text-align: right">55.79</td>
-          <td style="text-align: right">59.16</td>
+          <td style="text-align: right">58.68</td>
+          <td style="text-align: right">62.39</td>
+          <td style="text-align: right">55.78</td>
+          <td style="text-align: right">59.15</td>
       </tr>
   </tbody>
 </table></div>
@@ -1284,14 +1284,14 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
       </tr>
       <tr>
           <td style="text-align: right">2025</td>
-          <td style="text-align: right">22.14</td>
-          <td style="text-align: right">7.50</td>
-          <td style="text-align: right">23.92</td>
-          <td style="text-align: right">9.14</td>
-          <td style="text-align: right">20.54</td>
-          <td style="text-align: right">5.51</td>
-          <td style="text-align: right">21.83</td>
-          <td style="text-align: right">7.09</td>
+          <td style="text-align: right">21.99</td>
+          <td style="text-align: right">7.34</td>
+          <td style="text-align: right">23.73</td>
+          <td style="text-align: right">8.95</td>
+          <td style="text-align: right">20.43</td>
+          <td style="text-align: right">5.40</td>
+          <td style="text-align: right">21.68</td>
+          <td style="text-align: right">6.96</td>
       </tr>
   </tbody>
 </table></div>
@@ -1382,24 +1382,24 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
       <tr>
           <td style="text-align: right">5</td>
           <td style="text-align: right">18.60</td>
-          <td style="text-align: right">6.05</td>
+          <td style="text-align: right">6.04</td>
           <td style="text-align: right">19.40</td>
-          <td style="text-align: right">6.44</td>
+          <td style="text-align: right">6.43</td>
           <td style="text-align: right">17.89</td>
-          <td style="text-align: right">5.64</td>
+          <td style="text-align: right">5.63</td>
           <td style="text-align: right">18.51</td>
-          <td style="text-align: right">5.97</td>
+          <td style="text-align: right">5.96</td>
       </tr>
       <tr>
           <td style="text-align: right">6</td>
           <td style="text-align: right">18.45</td>
-          <td style="text-align: right">5.82</td>
+          <td style="text-align: right">5.81</td>
           <td style="text-align: right">19.15</td>
-          <td style="text-align: right">6.09</td>
+          <td style="text-align: right">6.08</td>
           <td style="text-align: right">17.73</td>
           <td style="text-align: right">5.46</td>
           <td style="text-align: right">18.35</td>
-          <td style="text-align: right">5.75</td>
+          <td style="text-align: right">5.74</td>
       </tr>
       <tr>
           <td style="text-align: right">7</td>
@@ -1523,44 +1523,44 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
       </tr>
       <tr>
           <td style="text-align: right">0.40</td>
-          <td style="text-align: right">16.09</td>
+          <td style="text-align: right">16.10</td>
           <td style="text-align: right">16.76</td>
           <td style="text-align: right">15.56</td>
           <td style="text-align: right">16.13</td>
       </tr>
       <tr>
           <td style="text-align: right">0.50</td>
-          <td style="text-align: right">17.66</td>
-          <td style="text-align: right">18.38</td>
-          <td style="text-align: right">17.07</td>
+          <td style="text-align: right">17.67</td>
+          <td style="text-align: right">18.39</td>
+          <td style="text-align: right">17.08</td>
           <td style="text-align: right">17.70</td>
       </tr>
       <tr>
           <td style="text-align: right">0.60</td>
-          <td style="text-align: right">19.56</td>
+          <td style="text-align: right">19.55</td>
           <td style="text-align: right">20.40</td>
           <td style="text-align: right">19.02</td>
-          <td style="text-align: right">19.70</td>
+          <td style="text-align: right">19.69</td>
       </tr>
       <tr>
           <td style="text-align: right">0.70</td>
-          <td style="text-align: right">21.65</td>
+          <td style="text-align: right">21.64</td>
           <td style="text-align: right">22.66</td>
           <td style="text-align: right">21.00</td>
-          <td style="text-align: right">21.80</td>
+          <td style="text-align: right">21.79</td>
       </tr>
       <tr>
           <td style="text-align: right">0.80</td>
           <td style="text-align: right">24.32</td>
           <td style="text-align: right">25.36</td>
           <td style="text-align: right">23.51</td>
-          <td style="text-align: right">24.39</td>
+          <td style="text-align: right">24.38</td>
       </tr>
       <tr>
           <td style="text-align: right">0.90</td>
           <td style="text-align: right">28.70</td>
           <td style="text-align: right">30.00</td>
-          <td style="text-align: right">27.79</td>
+          <td style="text-align: right">27.78</td>
           <td style="text-align: right">28.86</td>
       </tr>
       <tr>
@@ -1574,22 +1574,7 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
 </table></div>
 <h2 id="plots---vix">Plots - VIX
 </h2><h3 id="histogram-distribution---vix">Histogram Distribution - VIX
-</h3><p>A quick histogram gives us the distribution for the entire dataset:</p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/01_Histogram.png"
-	width="3570"
-	height="1769"
-	
-	loading="lazy"
-	
-		alt="Histogram"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="201"
-		data-flex-basis="484px"
-	
-></p>
-<p>Now, let&rsquo;s add the levels for the mean minus 1 standard deviation, mean, mean plus 1 standard deviation, mean plus 2 standard deviations, mean plus 3 standard deviations, and mean plus 4 standard deviations:</p>
+</h3><p>A quick histogram gives us the distribution for the entire dataset, along with the levels for the mean minus 1 standard deviation, mean, mean plus 1 standard deviation, mean plus 2 standard deviations, mean plus 3 standard deviations, and mean plus 4 standard deviations:</p>
 <p><img src="/2025/03/01/investigating-a-vix-trading-signal/01_Histogram&#43;Mean&#43;SD.png"
 	width="3570"
 	height="1769"
@@ -1762,16 +1747,16 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
 <pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">The columns, shape, and data types are:
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-</span></span><span class="line"><span class="cl">DatetimeIndex: 8916 entries, 1990-01-02 to 2025-05-27
+</span></span><span class="line"><span class="cl">DatetimeIndex: 8921 entries, 1990-01-02 to 2025-06-03
 </span></span><span class="line"><span class="cl">Data columns (total 4 columns):
 </span></span><span class="line"><span class="cl"> #   Column  Non-Null Count  Dtype  
 </span></span><span class="line"><span class="cl">---  ------  --------------  -----  
-</span></span><span class="line"><span class="cl"> 0   Close   8916 non-null   float64
-</span></span><span class="line"><span class="cl"> 1   High    8916 non-null   float64
-</span></span><span class="line"><span class="cl"> 2   Low     8916 non-null   float64
-</span></span><span class="line"><span class="cl"> 3   Open    8916 non-null   float64
+</span></span><span class="line"><span class="cl"> 0   Close   8921 non-null   float64
+</span></span><span class="line"><span class="cl"> 1   High    8921 non-null   float64
+</span></span><span class="line"><span class="cl"> 2   Low     8921 non-null   float64
+</span></span><span class="line"><span class="cl"> 3   Open    8921 non-null   float64
 </span></span><span class="line"><span class="cl">dtypes: float64(4)
-</span></span><span class="line"><span class="cl">memory usage: 348.3 KB
+</span></span><span class="line"><span class="cl">memory usage: 348.5 KB
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>The first 5 rows are:</p>
@@ -1836,39 +1821,39 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left">2025-05-20 00:00:00</td>
-          <td style="text-align: right">18.09</td>
+          <td style="text-align: left">2025-05-28 00:00:00</td>
+          <td style="text-align: right">19.31</td>
+          <td style="text-align: right">19.43</td>
           <td style="text-align: right">18.68</td>
-          <td style="text-align: right">17.70</td>
-          <td style="text-align: right">18.46</td>
+          <td style="text-align: right">19.21</td>
       </tr>
       <tr>
-          <td style="text-align: left">2025-05-21 00:00:00</td>
-          <td style="text-align: right">20.87</td>
-          <td style="text-align: right">21.05</td>
-          <td style="text-align: right">17.77</td>
-          <td style="text-align: right">18.77</td>
+          <td style="text-align: left">2025-05-29 00:00:00</td>
+          <td style="text-align: right">19.18</td>
+          <td style="text-align: right">20.20</td>
+          <td style="text-align: right">18.11</td>
+          <td style="text-align: right">18.25</td>
       </tr>
       <tr>
-          <td style="text-align: left">2025-05-22 00:00:00</td>
-          <td style="text-align: right">20.28</td>
-          <td style="text-align: right">22.07</td>
-          <td style="text-align: right">19.64</td>
-          <td style="text-align: right">20.62</td>
+          <td style="text-align: left">2025-05-30 00:00:00</td>
+          <td style="text-align: right">18.57</td>
+          <td style="text-align: right">20.55</td>
+          <td style="text-align: right">18.57</td>
+          <td style="text-align: right">19.61</td>
       </tr>
       <tr>
-          <td style="text-align: left">2025-05-23 00:00:00</td>
-          <td style="text-align: right">22.29</td>
-          <td style="text-align: right">25.53</td>
-          <td style="text-align: right">19.83</td>
-          <td style="text-align: right">20.14</td>
+          <td style="text-align: left">2025-06-02 00:00:00</td>
+          <td style="text-align: right">18.36</td>
+          <td style="text-align: right">20.45</td>
+          <td style="text-align: right">18.36</td>
+          <td style="text-align: right">19.81</td>
       </tr>
       <tr>
-          <td style="text-align: left">2025-05-27 00:00:00</td>
-          <td style="text-align: right">18.96</td>
-          <td style="text-align: right">21.01</td>
-          <td style="text-align: right">18.95</td>
-          <td style="text-align: right">20.63</td>
+          <td style="text-align: left">2025-06-03 00:00:00</td>
+          <td style="text-align: right">17.69</td>
+          <td style="text-align: right">19.21</td>
+          <td style="text-align: right">17.64</td>
+          <td style="text-align: right">18.83</td>
       </tr>
   </tbody>
 </table></div>
@@ -1914,24 +1899,24 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
   <tbody>
       <tr>
           <td style="text-align: left">count</td>
-          <td style="text-align: right">4620.00</td>
-          <td style="text-align: right">4620.00</td>
-          <td style="text-align: right">4620.00</td>
-          <td style="text-align: right">4620.00</td>
+          <td style="text-align: right">4625.00</td>
+          <td style="text-align: right">4625.00</td>
+          <td style="text-align: right">4625.00</td>
+          <td style="text-align: right">4625.00</td>
       </tr>
       <tr>
           <td style="text-align: left">mean</td>
           <td style="text-align: right">93.50</td>
           <td style="text-align: right">95.55</td>
-          <td style="text-align: right">91.94</td>
-          <td style="text-align: right">93.75</td>
+          <td style="text-align: right">91.95</td>
+          <td style="text-align: right">93.76</td>
       </tr>
       <tr>
           <td style="text-align: left">std</td>
           <td style="text-align: right">16.45</td>
-          <td style="text-align: right">18.06</td>
-          <td style="text-align: right">15.11</td>
-          <td style="text-align: right">16.51</td>
+          <td style="text-align: right">18.05</td>
+          <td style="text-align: right">15.10</td>
+          <td style="text-align: right">16.50</td>
       </tr>
       <tr>
           <td style="text-align: left">min</td>
@@ -1942,23 +1927,23 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
       </tr>
       <tr>
           <td style="text-align: left">25%</td>
-          <td style="text-align: right">82.33</td>
-          <td style="text-align: right">83.45</td>
+          <td style="text-align: right">82.34</td>
+          <td style="text-align: right">83.46</td>
           <td style="text-align: right">81.48</td>
           <td style="text-align: right">82.55</td>
       </tr>
       <tr>
           <td style="text-align: left">50%</td>
-          <td style="text-align: right">90.51</td>
-          <td style="text-align: right">92.24</td>
-          <td style="text-align: right">89.35</td>
-          <td style="text-align: right">90.83</td>
+          <td style="text-align: right">90.54</td>
+          <td style="text-align: right">92.26</td>
+          <td style="text-align: right">89.37</td>
+          <td style="text-align: right">90.85</td>
       </tr>
       <tr>
           <td style="text-align: left">75%</td>
-          <td style="text-align: right">102.23</td>
-          <td style="text-align: right">105.07</td>
-          <td style="text-align: right">100.02</td>
+          <td style="text-align: right">102.21</td>
+          <td style="text-align: right">105.01</td>
+          <td style="text-align: right">99.94</td>
           <td style="text-align: right">102.58</td>
       </tr>
       <tr>
@@ -1970,52 +1955,52 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
       </tr>
       <tr>
           <td style="text-align: left">mean + -1 std</td>
-          <td style="text-align: right">77.05</td>
-          <td style="text-align: right">77.48</td>
-          <td style="text-align: right">76.84</td>
-          <td style="text-align: right">77.25</td>
+          <td style="text-align: right">77.06</td>
+          <td style="text-align: right">77.50</td>
+          <td style="text-align: right">76.85</td>
+          <td style="text-align: right">77.26</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 0 std</td>
           <td style="text-align: right">93.50</td>
           <td style="text-align: right">95.55</td>
-          <td style="text-align: right">91.94</td>
-          <td style="text-align: right">93.75</td>
+          <td style="text-align: right">91.95</td>
+          <td style="text-align: right">93.76</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 1 std</td>
-          <td style="text-align: right">109.96</td>
-          <td style="text-align: right">113.61</td>
+          <td style="text-align: right">109.95</td>
+          <td style="text-align: right">113.60</td>
           <td style="text-align: right">107.05</td>
-          <td style="text-align: right">110.26</td>
+          <td style="text-align: right">110.25</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 2 std</td>
-          <td style="text-align: right">126.41</td>
-          <td style="text-align: right">131.67</td>
-          <td style="text-align: right">122.16</td>
-          <td style="text-align: right">126.77</td>
+          <td style="text-align: right">126.40</td>
+          <td style="text-align: right">131.65</td>
+          <td style="text-align: right">122.15</td>
+          <td style="text-align: right">126.75</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 3 std</td>
-          <td style="text-align: right">142.87</td>
-          <td style="text-align: right">149.73</td>
-          <td style="text-align: right">137.27</td>
-          <td style="text-align: right">143.28</td>
+          <td style="text-align: right">142.84</td>
+          <td style="text-align: right">149.71</td>
+          <td style="text-align: right">137.24</td>
+          <td style="text-align: right">143.25</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 4 std</td>
-          <td style="text-align: right">159.32</td>
-          <td style="text-align: right">167.79</td>
-          <td style="text-align: right">152.37</td>
-          <td style="text-align: right">159.78</td>
+          <td style="text-align: right">159.29</td>
+          <td style="text-align: right">167.76</td>
+          <td style="text-align: right">152.34</td>
+          <td style="text-align: right">159.75</td>
       </tr>
       <tr>
           <td style="text-align: left">mean + 5 std</td>
-          <td style="text-align: right">175.77</td>
-          <td style="text-align: right">185.85</td>
-          <td style="text-align: right">167.48</td>
-          <td style="text-align: right">176.29</td>
+          <td style="text-align: right">175.73</td>
+          <td style="text-align: right">185.81</td>
+          <td style="text-align: right">167.44</td>
+          <td style="text-align: right">176.25</td>
       </tr>
   </tbody>
 </table></div>
@@ -2258,14 +2243,14 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
       </tr>
       <tr>
           <td style="text-align: right">2025</td>
-          <td style="text-align: right">107.44</td>
-          <td style="text-align: right">16.10</td>
-          <td style="text-align: right">112.71</td>
-          <td style="text-align: right">18.87</td>
-          <td style="text-align: right">102.56</td>
-          <td style="text-align: right">12.49</td>
-          <td style="text-align: right">106.42</td>
-          <td style="text-align: right">15.28</td>
+          <td style="text-align: right">106.89</td>
+          <td style="text-align: right">15.91</td>
+          <td style="text-align: right">112.00</td>
+          <td style="text-align: right">18.68</td>
+          <td style="text-align: right">102.13</td>
+          <td style="text-align: right">12.35</td>
+          <td style="text-align: right">105.82</td>
+          <td style="text-align: right">15.15</td>
       </tr>
   </tbody>
 </table></div>
@@ -2354,25 +2339,25 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
       </tr>
       <tr>
           <td style="text-align: right">5</td>
-          <td style="text-align: right">92.22</td>
-          <td style="text-align: right">16.99</td>
-          <td style="text-align: right">93.92</td>
-          <td style="text-align: right">18.05</td>
-          <td style="text-align: right">90.50</td>
-          <td style="text-align: right">16.20</td>
-          <td style="text-align: right">91.76</td>
-          <td style="text-align: right">16.85</td>
+          <td style="text-align: right">92.25</td>
+          <td style="text-align: right">16.93</td>
+          <td style="text-align: right">93.95</td>
+          <td style="text-align: right">17.99</td>
+          <td style="text-align: right">90.54</td>
+          <td style="text-align: right">16.14</td>
+          <td style="text-align: right">91.79</td>
+          <td style="text-align: right">16.79</td>
       </tr>
       <tr>
           <td style="text-align: right">6</td>
-          <td style="text-align: right">92.92</td>
-          <td style="text-align: right">15.07</td>
-          <td style="text-align: right">94.44</td>
-          <td style="text-align: right">16.33</td>
+          <td style="text-align: right">92.93</td>
+          <td style="text-align: right">15.04</td>
+          <td style="text-align: right">94.45</td>
+          <td style="text-align: right">16.29</td>
           <td style="text-align: right">91.32</td>
-          <td style="text-align: right">14.03</td>
-          <td style="text-align: right">92.75</td>
-          <td style="text-align: right">15.05</td>
+          <td style="text-align: right">13.99</td>
+          <td style="text-align: right">92.74</td>
+          <td style="text-align: right">15.01</td>
       </tr>
       <tr>
           <td style="text-align: right">7</td>
@@ -2476,65 +2461,65 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
       <tr>
           <td style="text-align: right">0.10</td>
           <td style="text-align: right">75.82</td>
-          <td style="text-align: right">76.00</td>
+          <td style="text-align: right">76.01</td>
           <td style="text-align: right">75.43</td>
           <td style="text-align: right">75.80</td>
       </tr>
       <tr>
           <td style="text-align: right">0.20</td>
-          <td style="text-align: right">80.55</td>
+          <td style="text-align: right">80.57</td>
           <td style="text-align: right">81.42</td>
           <td style="text-align: right">79.81</td>
           <td style="text-align: right">80.74</td>
       </tr>
       <tr>
           <td style="text-align: right">0.30</td>
-          <td style="text-align: right">83.89</td>
-          <td style="text-align: right">85.18</td>
-          <td style="text-align: right">82.98</td>
-          <td style="text-align: right">84.15</td>
+          <td style="text-align: right">83.90</td>
+          <td style="text-align: right">85.21</td>
+          <td style="text-align: right">83.01</td>
+          <td style="text-align: right">84.16</td>
       </tr>
       <tr>
           <td style="text-align: right">0.40</td>
-          <td style="text-align: right">87.06</td>
-          <td style="text-align: right">88.54</td>
+          <td style="text-align: right">87.08</td>
+          <td style="text-align: right">88.55</td>
           <td style="text-align: right">85.97</td>
-          <td style="text-align: right">87.44</td>
+          <td style="text-align: right">87.45</td>
       </tr>
       <tr>
           <td style="text-align: right">0.50</td>
-          <td style="text-align: right">90.51</td>
-          <td style="text-align: right">92.24</td>
-          <td style="text-align: right">89.35</td>
-          <td style="text-align: right">90.83</td>
+          <td style="text-align: right">90.54</td>
+          <td style="text-align: right">92.26</td>
+          <td style="text-align: right">89.37</td>
+          <td style="text-align: right">90.85</td>
       </tr>
       <tr>
           <td style="text-align: right">0.60</td>
-          <td style="text-align: right">94.22</td>
-          <td style="text-align: right">96.14</td>
-          <td style="text-align: right">93.03</td>
-          <td style="text-align: right">94.50</td>
+          <td style="text-align: right">94.23</td>
+          <td style="text-align: right">96.16</td>
+          <td style="text-align: right">93.04</td>
+          <td style="text-align: right">94.52</td>
       </tr>
       <tr>
           <td style="text-align: right">0.70</td>
-          <td style="text-align: right">99.13</td>
-          <td style="text-align: right">101.54</td>
+          <td style="text-align: right">99.12</td>
+          <td style="text-align: right">101.53</td>
           <td style="text-align: right">97.44</td>
-          <td style="text-align: right">99.46</td>
+          <td style="text-align: right">99.43</td>
       </tr>
       <tr>
           <td style="text-align: right">0.80</td>
           <td style="text-align: right">106.06</td>
           <td style="text-align: right">109.40</td>
-          <td style="text-align: right">103.95</td>
+          <td style="text-align: right">103.92</td>
           <td style="text-align: right">106.49</td>
       </tr>
       <tr>
           <td style="text-align: right">0.90</td>
-          <td style="text-align: right">115.31</td>
-          <td style="text-align: right">118.82</td>
-          <td style="text-align: right">112.49</td>
-          <td style="text-align: right">115.56</td>
+          <td style="text-align: right">115.29</td>
+          <td style="text-align: right">118.81</td>
+          <td style="text-align: right">112.48</td>
+          <td style="text-align: right">115.54</td>
       </tr>
       <tr>
           <td style="text-align: right">1.00</td>
@@ -2547,22 +2532,7 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
 </table></div>
 <h2 id="plots---vvix">Plots - VVIX
 </h2><h3 id="histogram-distribution---vvix">Histogram Distribution - VVIX
-</h3><p>A quick histogram gives us the distribution for the entire dataset:</p>
-<p><img src="/2025/03/01/investigating-a-vix-trading-signal/02_Histogram.png"
-	width="3570"
-	height="1769"
-	
-	loading="lazy"
-	
-		alt="Histogram"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="201"
-		data-flex-basis="484px"
-	
-></p>
-<p>Now, let&rsquo;s add the levels for the mean minus 1 standard deviation, mean, mean plus 1 standard deviation, mean plus 2 standard deviations, mean plus 3 standard deviations, and mean plus 4 standard deviations:</p>
+</h3><p>A quick histogram gives us the distribution for the entire dataset, along with the levels for the mean minus 1 standard deviation, mean, mean plus 1 standard deviation, mean plus 2 standard deviations, mean plus 3 standard deviations, and mean plus 4 standard deviations:</p>
 <p><img src="/2025/03/01/investigating-a-vix-trading-signal/02_Histogram&#43;Mean&#43;SD.png"
 	width="3570"
 	height="1769"
@@ -2928,7 +2898,7 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
       </tr>
       <tr>
           <td style="text-align: right">2025</td>
-          <td style="text-align: right">87</td>
+          <td style="text-align: right">92</td>
           <td style="text-align: right">12</td>
       </tr>
   </tbody>
@@ -3176,7 +3146,7 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
 ></p>
 <h4 id="2025">2025
 </h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2025_2025.png"
-	width="3563"
+	width="3570"
 	height="1768"
 	
 	loading="lazy"
@@ -3186,12 +3156,12 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
 	
 		class="gallery-image" 
 		data-flex-grow="201"
-		data-flex-basis="483px"
+		data-flex-basis="484px"
 	
 ></p>
 <p>For comparison with the VVIX plot for 2025:</p>
 <p><img src="/2025/03/01/investigating-a-vix-trading-signal/02_VVIX_Plot_2025-Present.png"
-	width="3563"
+	width="3570"
 	height="1768"
 	
 	loading="lazy"
@@ -3201,7 +3171,7 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
 	
 		class="gallery-image" 
 		data-flex-grow="201"
-		data-flex-basis="483px"
+		data-flex-basis="484px"
 	
 ></p>
 <h3 id="spike-counts-signals-plots-by-decade">Spike Counts (Signals) Plots By Decade
@@ -3313,7 +3283,7 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
 ></p>
 <h4 id="2025---present">2025 - Present
 </h4><p><img src="/2025/03/01/investigating-a-vix-trading-signal/09_VIX_SMA_Spike_2025_2029.png"
-	width="3563"
+	width="3570"
 	height="1768"
 	
 	loading="lazy"
@@ -3323,12 +3293,12 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
 	
 		class="gallery-image" 
 		data-flex-grow="201"
-		data-flex-basis="483px"
+		data-flex-basis="484px"
 	
 ></p>
 <p>For comparison with the VVIX plot for 2025:</p>
 <p><img src="/2025/03/01/investigating-a-vix-trading-signal/02_VVIX_Plot_2025-Present.png"
-	width="3563"
+	width="3570"
 	height="1768"
 	
 	loading="lazy"
@@ -3338,7 +3308,7 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
 	
 		class="gallery-image" 
 		data-flex-grow="201"
-		data-flex-basis="483px"
+		data-flex-basis="484px"
 	
 ></p>
 <h2 id="trading-history">Trading History
@@ -4057,10 +4027,12 @@ Update 5/28/2025: Data through 5/27/25. Modified references to functions. -->
 </h4><p>Percent profit/loss: 14.61%</p>
 <p>Net profit/loss: $8,181.51</p>
 <h2 id="references">References
-</h2><p><a class="link" href="https://www.cboe.com/tradable_products/vix/"  target="_blank" rel="noopener"
-    >https://www.cboe.com/tradable_products/vix/</a></br>
-<a class="link" href="https://github.com/ranaroussi/yfinance"  target="_blank" rel="noopener"
-    >https://github.com/ranaroussi/yfinance</a></p>
+</h2><ol>
+<li><a class="link" href="https://www.cboe.com/tradable_products/vix/"  target="_blank" rel="noopener"
+    >https://www.cboe.com/tradable_products/vix/</a></li>
+<li><a class="link" href="https://github.com/ranaroussi/yfinance"  target="_blank" rel="noopener"
+    >https://github.com/ranaroussi/yfinance</a></li>
+</ol>
 <h2 id="code">Code
 </h2><p>The jupyter notebook with the functions and all other code is available <a class="link" href="investigating-a-vix-trading-signal.ipynb" >here</a>.</br>
 The html export of the jupyter notebook is available <a class="link" href="investigating-a-vix-trading-signal.html" >here</a>.</br>
@@ -4106,7 +4078,7 @@ The pdf export of the jupyter notebook is available <a class="link" href="invest
 
 
         <span>
-            Last updated on May 28, 2025
+            Last updated on June 4, 2025
         </span>
     </section></footer>
 

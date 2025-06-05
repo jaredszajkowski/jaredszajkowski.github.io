@@ -4,7 +4,7 @@ description: A brief look at finding a trading signal based on moving averages o
 slug: investigating-a-vix-trading-signal
 date: 2025-03-01 00:00:01+0000
 # lastmod: <!-- INSERT_last_run_date_HERE --> 00:00:01+0000
-lastmod: 2025-05-28 00:00:01+0000
+lastmod: 2025-06-04 00:00:01+0000
 image: cover.jpg
 draft: false
 categories:
@@ -195,11 +195,7 @@ Gives us:
 
 ### Histogram Distribution - VIX
 
-A quick histogram gives us the distribution for the entire dataset:
-
-![Histogram](01_Histogram.png)
-
-Now, let's add the levels for the mean minus 1 standard deviation, mean, mean plus 1 standard deviation, mean plus 2 standard deviations, mean plus 3 standard deviations, and mean plus 4 standard deviations:
+A quick histogram gives us the distribution for the entire dataset, along with the levels for the mean minus 1 standard deviation, mean, mean plus 1 standard deviation, mean plus 2 standard deviations, mean plus 3 standard deviations, and mean plus 4 standard deviations:
 
 ![Histogram, Mean, And Standard Deviations](01_Histogram+Mean+SD.png)
 
@@ -358,11 +354,7 @@ Gives us:
 
 ### Histogram Distribution - VVIX
 
-A quick histogram gives us the distribution for the entire dataset:
-
-![Histogram](02_Histogram.png)
-
-Now, let's add the levels for the mean minus 1 standard deviation, mean, mean plus 1 standard deviation, mean plus 2 standard deviations, mean plus 3 standard deviations, and mean plus 4 standard deviations:
+A quick histogram gives us the distribution for the entire dataset, along with the levels for the mean minus 1 standard deviation, mean, mean plus 1 standard deviation, mean plus 2 standard deviations, mean plus 3 standard deviations, and mean plus 4 standard deviations:
 
 ![Histogram, Mean, And Standard Deviations](02_Histogram+Mean+SD.png)
 
@@ -759,8 +751,8 @@ Net profit/loss: <!-- INSERT_14_PnL_None_None_None_None_HERE -->
 
 ## References
 
-https://www.cboe.com/tradable_products/vix/</br>
-https://github.com/ranaroussi/yfinance
+1. https://www.cboe.com/tradable_products/vix/
+2. https://github.com/ranaroussi/yfinance
 
 ## Code
 

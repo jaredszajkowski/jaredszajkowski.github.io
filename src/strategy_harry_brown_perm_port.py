@@ -15,7 +15,7 @@ def strategy_harry_brown_perm_port(
 ) -> pd.DataFrame:
     
     """
-    Execute the rebalance strategy based on specified criteria.
+    Execute the re-balance strategy based on specified criteria.
 
     Parameters:
     -----------

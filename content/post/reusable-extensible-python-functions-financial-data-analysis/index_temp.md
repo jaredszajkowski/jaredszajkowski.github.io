@@ -3,7 +3,7 @@ title: Reusable And Extensible Python Functions For Financial Data Analysis
 description: A list of common functions used for data acquisition, cleaning, analysis, etc.
 slug: reusable-extensible-python-functions-financial-data-analysis
 date: 2025-02-02 00:00:01+0000
-lastmod: 2025-05-28 00:00:01+0000
+lastmod: 2025-06-04 00:00:01+0000
 image: cover.jpg
 draft: false
 categories:
@@ -47,6 +47,8 @@ This post intends to provide the code for all of the python functions that I use
 * [pandas_set_decimal_places](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places): Set the number of decimal places displayed for floating-point numbers in pandas.</br>
 * [plot_price](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_price): Plot the price data from a DataFrame for a specified date range and columns.</br>
 * [plot_vix_with_trades](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_vix_with_trades): Plot the VIX daily high and low prices, along with the VIX spikes, and trades.</br>
+* [strategy_harry_brown_perm_port](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#strategy_harry_brown_perm_port): Execute the strategy for the Harry Brown permanent portfolio.</br>
+* [summary_stats](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#summary_stats): Generate summary statistics for a series of returns.</br>
 * [yf_pull_data](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#yf_pull_data): Download daily price data from Yahoo Finance and export it.
 
 ## Python Functions
@@ -94,6 +96,14 @@ This post intends to provide the code for all of the python functions that I use
 ### plot_vix_with_trades
 
 <!-- INSERT_plot_vix_with_trades_HERE -->
+
+### strategy_harry_brown_perm_port
+
+<!-- INSERT_strategy_harry_brown_perm_port_HERE -->
+
+### summary_stats
+
+<!-- INSERT_summary_stats_HERE -->
 
 ### yf_pull_data
 

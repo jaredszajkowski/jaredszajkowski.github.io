@@ -3,7 +3,7 @@ title: Does Harry Browne's permanent portfolio withstand the test of time?
 description: A look a Harry Browne's Permanent Portfolio and performance over nearly four decades.
 slug: harry-browne-permanent-portfolio
 date: 2024-11-04 00:00:01+0000
-lastmod: 2025-05-06 00:00:01+0000
+lastmod: 2025-06-04 00:00:01+0000
 image: cover.jpg
 draft: False
 categories:
@@ -16,11 +16,11 @@ tags:
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 
-## Post Updates
+<!-- ## Post Updates
 
 Update 12/5/2024: Updated code for summary stats function, various code comments, and corrected grammatical errors.</br>
 Update 2/19/2025: Various code updates, commented and documented functions.</br>
-Update 5/2/2025: Updated functions and code.
+Update 5/2/2025: Updated functions and code. -->
 
 ## Introduction
 
@@ -81,712 +81,27 @@ We could use ETFs, but the available price history for the ETFs is much shorter 
 
 ## Python Functions
 
-### Typical Functions
-
-First, the typical set of functions I use:
-
-```python
-from pathlib import Path
-
-def export_track_md_deps(
-    dep_file: Path, 
-    md_filename: str, 
-    content: str,
-) -> None:
-    
-    """
-    Export Markdown content to a file and track it as a dependency.
-
-    This function writes the provided content to the specified Markdown file and 
-    appends the filename to the given dependency file (typically `index_dep.txt`).
-    This is useful in workflows where Markdown fragments are later assembled 
-    into a larger document (e.g., a Hugo `index.md`).
-
-    Parameters:
-    -----------
-    dep_file : Path
-        Path to the dependency file that tracks Markdown fragment filenames.
-    md_filename : str
-        The name of the Markdown file to export.
-    content : str
-        The Markdown-formatted content to write to the file.
-
-    Returns:
-    --------
-    None
-
-    Example:
-    --------
-    >>> export_track_md_deps(Path("index_dep.txt"), "01_intro.md", "# Introduction\n...")
-    ✅ Exported and tracked: 01_intro.md
-    """
-    
-    Path(md_filename).write_text(content)
-    with dep_file.open("a") as f:
-        f.write(md_filename + "\n")
-    print(f"✅ Exported and tracked: {md_filename}")
-```
-
-</br>
-
-```python
-import pandas as pd
-from IPython.display import display
-
-def df_info(
-    df: pd.DataFrame,
-) -> None:
-    
-    """
-    Display summary information about a pandas DataFrame.
-
-    This function prints:
-    - The DataFrame's column names, shape, and data types via `df.info()`
-    - The first 5 rows using `df.head()`
-    - The last 5 rows using `df.tail()`
-
-    It uses `display()` for better output formatting in environments like Jupyter notebooks.
-
-    Parameters:
-    -----------
-    df : pd.DataFrame
-        The DataFrame to inspect.
-
-    Returns:
-    --------
-    None
-
-    Example:
-    --------
-    >>> df_info(my_dataframe)
-    """
-    
-    print("The columns, shape, and data types are:")
-    print(df.info())
-    print("The first 5 rows are:")
-    display(df.head())
-    print("The last 5 rows are:")
-    display(df.tail())
-```
-
-</br>
-
-```python
-import io
-import pandas as pd
-
-def df_info_markdown(
-    df: pd.DataFrame
-) -> str:
-    
-    """
-    Generate a Markdown-formatted summary of a pandas DataFrame.
-
-    This function captures and formats the output of `df.info()`, `df.head()`, 
-    and `df.tail()` in Markdown for easy inclusion in reports, documentation, 
-    or web-based rendering (e.g., Hugo or Jupyter export workflows).
-
-    Parameters:
-    -----------
-    df : pd.DataFrame
-        The DataFrame to summarize.
-
-    Returns:
-    --------
-    str
-        A string containing the DataFrame's info, head, and tail 
-        formatted in Markdown.
-
-    Example:
-    --------
-    >>> print(df_info_markdown(df))
-    ```text
-    The columns, shape, and data types are:
-    <output from df.info()>
-    ```
-    The first 5 rows are:
-    |   | col1 | col2 |
-    |---|------|------|
-    | 0 | ...  | ...  |
-
-    The last 5 rows are:
-    ...
-    """
-    
-    buffer = io.StringIO()
-
-    # Capture df.info() output
-    df.info(buf=buffer)
-    info_str = buffer.getvalue()
-
-    # Convert head and tail to Markdown
-    head_str = df.head().to_markdown(floatfmt=".2f")
-    tail_str = df.tail().to_markdown(floatfmt=".2f")
-
-    markdown = [
-        "```text",
-        "The columns, shape, and data types are:\n",
-        info_str,
-        "```",
-        "\nThe first 5 rows are:\n",
-        head_str,
-        "\nThe last 5 rows are:\n",
-        tail_str
-    ]
-
-    return "\n".join(markdown)
-```
-
-</br>
-
-```python
-import pandas as pd
-
-def pandas_set_decimal_places(
-    decimal_places: int,
-) -> None:
-    
-    """
-    Set the number of decimal places displayed for floating-point numbers in pandas.
-
-    Parameters:
-    ----------
-    decimal_places : int
-        The number of decimal places to display for float values in pandas DataFrames and Series.
-
-    Returns:
-    --------
-    None
-
-    Example:
-    --------
-    >>> dp(3)
-    >>> pd.DataFrame([1.23456789])
-           0
-    0   1.235
-    """
-    
-    pd.set_option('display.float_format', lambda x: f'%.{decimal_places}f' % x)
-```
-
-</br>
-
-```python
-import pandas as pd
-from pathlib import Path
-
-def load_data(
-    base_directory: str,
-    ticker: str,
-    source: str,
-    asset_class: str,
-    timeframe: str,
-) -> pd.DataFrame:
-    
-    """
-    Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.
-
-    This function attempts to read a file first as a CSV, then as an Excel file 
-    (specifically looking for a sheet named 'data' and using the 'calamine' engine).
-    If both attempts fail, a ValueError is raised.
-
-    Parameters:
-    -----------
-    base_directory : str
-        Root path to read data file.
-    ticker : str
-        Ticker symbol to read.
-    source : str
-        Name of the data source (e.g., 'Yahoo').
-    asset_class : str
-        Asset class name (e.g., 'Equities').
-    timeframe : str
-        Timeframe for the data (e.g., 'Daily', 'Month_End').
-    
-    Returns:
-    --------
-    pd.DataFrame
-        The loaded data.
-
-    Raises:
-    -------
-    ValueError
-        If the file could not be loaded as either CSV or Excel.
-
-    Example:
-    --------
-    >>> df = load_data(DATA_DIR, "^VIX", "Yahoo_Finance", "Indices")
-    """
-
-    # Build file paths using pathlib
-    csv_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.csv"
-    csv_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.zip"
-    xlsx_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.xlsx"
-    pickle_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.pkl"
-
-    # Try CSV
-    try:
-        df = pd.read_csv(csv_path)
-        return df
-    except Exception:
-        pass
-
-    # Try Zip
-    try:
-        df = pd.read_csv(csv_path)
-        return df
-    except Exception:
-        pass
-
-    # Try Excel
-    try:
-        df = pd.read_excel(xlsx_path)
-        return df
-    except Exception:
-        pass
-
-    # Try Pickle
-    try:
-        df = pd.read_pickle(pickle_path)
-        return df
-    except Exception:
-        pass
-
-    raise ValueError(f"❌ Unable to load file: {ticker}. Ensure it's a valid CSV, Excel, Zip, or Pickle file with a 'data' sheet (if required).")
-```
-
-### Project Specific Functions
-
-#### Data Cleaning Function For Bloomberg Data
-
-```python
-import os
-import pandas as pd
-
-from IPython.display import display
-
-def bb_clean_data(
-    base_directory: str,
-    fund_ticker_name: str,
-    source: str,
-    asset_class: str,
-    excel_export: bool,
-    pickle_export: bool,
-    output_confirmation: bool,
-) -> pd.DataFrame:
-
-    """
-    This function takes an excel export from Bloomberg and removes all excess data leaving date and close columns
-
-    Parameters:
-    -----------
-    base_directory : str
-        Root path to store downloaded data.
-    fund : str
-        The fund to clean the data from.
-    source : str
-        Name of the data source (e.g., 'Bloomberg').
-    asset_class : str
-        Asset class name (e.g., 'Equities').
-    excel_export : bool
-        If True, export data to Excel format.
-    pickle_export : bool
-        If True, export data to Pickle format.
-    output_confirmation : bool
-        If True, print confirmation message.
-        
-    Returns:
-    --------
-    df : pd.DataFrame
-        DataFrame containing cleaned data prices.
-    """
-
-    # Set location from where to read existing excel file
-    location = f"{base_directory}/{source}/{asset_class}/Daily/{fund_ticker_name}.xlsx"
-
-    # Read data from excel
-    try:
-        df = pd.read_excel(location, sheet_name ="Worksheet", engine="calamine")
-    except FileNotFoundError:
-        print(f"File not found...please download the data for {fund_ticker_name}")
-    
-    # Set the column headings from row 5 (which is physically row 6)
-    df.columns = df.iloc[5]
-    
-    # Set the column heading for the index to be "None"
-    df.rename_axis(None, axis=1, inplace = True)
-    
-    # Drop the first 6 rows, 0 - 5
-    df.drop(df.index[0:6], inplace=True)
-    
-    # Set the date column as the index
-    df.set_index('Date', inplace = True)
-    
-    # Drop the volume column
-    try:
-        df.drop(columns = {'PX_VOLUME'}, inplace = True)
-    except KeyError:
-        pass
-        
-    # Rename column
-    df.rename(columns = {'PX_LAST':'Close'}, inplace = True)
-    
-    # Sort by date
-    df.sort_values(by=['Date'], inplace = True)
-
-    # Create directory
-    directory = f"{base_directory}/{source}/{asset_class}/Daily"
-    os.makedirs(directory, exist_ok=True)
-
-    # Export to excel
-    if excel_export == True:
-        df.to_excel(f"{directory}/{fund_ticker_name}_Clean.xlsx", sheet_name="data")
-    else:
-        pass
-
-    # Export to pickle
-    if pickle_export == True:
-        df.to_pickle(f"{directory}/{fund_ticker_name}_Clean.pkl")
-    else:
-        pass
-
-    # Output confirmation
-    if output_confirmation == True:
-        print(f"The first and last date of data for {fund_ticker_name} is: ")
-        display(df[:1])
-        display(df[-1:])
-        print(f"Bloomberg data cleaning complete for {fund_ticker_name}")
-        print(f"--------------------")
-    else:
-        pass
-    
-    return df
-```
-
-#### Portfolio Trading Strategy
-
-This is the function that executes the trading strategy for the permanent portfolio based on the above parameters.
-
-```python
-import pandas as pd
-
-def strategy_harry_brown_perm_port(
-    fund_list: str, 
-    starting_cash: int, 
-    cash_contrib: int, 
-    close_prices_df: pd.DataFrame, 
-    rebal_month: int, 
-    rebal_day: int, 
-    rebal_per_high: float, 
-    rebal_per_low: float,
-    excel_export: bool,
-    pickle_export: bool,
-    output_confirmation: bool,
-) -> pd.DataFrame:
-    
-    """
-    Execute the rebalance strategy based on specified criteria.
-
-    Parameters:
-    -----------
-    fund_list (str):
-        List of funds for data to be combined from. Funds are strings in the form "BTC-USD".
-    starting_cash (int):
-        Starting investment balance.
-    cash_contrib (int):
-        Cash contribution to be made daily.
-    close_prices_df (pd.DataFrame):
-        DataFrame containing date and close prices for all funds to be included.
-    rebal_month (int):
-        Month for annual rebalance.
-    rebal_day (int):
-        Day for annual rebalance.
-    rebal_per_high (float):
-        High percentage for rebalance.
-    rebal_per_low (float):
-        Low percentage for rebalance.
-    excel_export : bool
-        If True, export data to Excel format.
-    pickle_export : bool
-        If True, export data to Pickle format.
-    output_confirmation : bool
-        If True, print confirmation message.
-
-    Returns:
-    --------
-    df (pd.DataFrame):
-        DataFrame containing strategy data for all funds to be included. Also dumps the df to excel for reference later.
-    """
-
-    num_funds = len(fund_list)
-
-    df = close_prices_df.copy()
-    df.reset_index(inplace = True)
-
-    # Date to be used for annual rebalance
-    target_month = rebal_month
-    target_day = rebal_day
-
-    # Create a dataframe with dates from the specific month
-    rebal_date = df[df['Date'].dt.month == target_month]
-
-    # Specify the date or the next closest
-    rebal_date = rebal_date[rebal_date['Date'].dt.day >= target_day]
-
-    # Group by year and take the first entry for each year
-    rebal_dates_by_year = rebal_date.groupby(rebal_date['Date'].dt.year).first().reset_index(drop=True)
-
-    '''
-    Column order for the dataframe:
-    df[fund + "_BA_Shares"]
-    df[fund + "_BA_$_Invested"]
-    df[fund + "_BA_Port_%"]
-    df['Total_BA_$_Invested']
-    df['Contribution']
-    df['Rebalance']
-    df[fund + "_AA_Shares"]
-    df[fund + "_AA_$_Invested"]
-    df[fund + "_AA_Port_%"]
-    df['Total_AA_$_Invested']
-    '''
-
-    # Calculate the columns and initial values for before action (BA) shares, $ invested, and port %
-    for fund in fund_list:
-        df[fund + "_BA_Shares"] = starting_cash / num_funds / df[fund + "_Close"]
-        df[fund + "_BA_$_Invested"] = df[fund + "_BA_Shares"] * df[fund + "_Close"]
-        df[fund + "_BA_Port_%"] = 0.25
-
-    # Set column values initially
-    df['Total_BA_$_Invested'] = starting_cash
-    df['Contribution'] = cash_contrib
-    df['Rebalance'] = "No"
-
-    # Set columns and values initially for after action (AA) shares, $ invested, and port %
-    for fund in fund_list:
-        df[fund + "_AA_Shares"] = starting_cash / num_funds / df[fund + "_Close"]
-        df[fund + "_AA_$_Invested"] = df[fund + "_AA_Shares"] * df[fund + "_Close"]
-        df[fund + "_AA_Port_%"] = 0.25
-        
-    # Set column value for after action (AA) total $ invested
-    df['Total_AA_$_Invested'] = starting_cash
-
-    # Iterate through the dataframe and execute the strategy
-    for index, row in df.iterrows():
-
-        # Ensure there's a previous row to reference by checking the index value
-        if index > 0:
-
-            # Initialize variable
-            Total_BA_Invested = 0
-
-            # Calculate before action (BA) shares and $ invested values
-            for fund in fund_list:
-                df.at[index, fund + "_BA_Shares"] = df.at[index - 1, fund + "_AA_Shares"]
-                df.at[index, fund + "_BA_$_Invested"] = df.at[index, fund + "_BA_Shares"] * row[fund + "_Close"]
-
-                # Sum the asset values to find the total
-                Total_BA_Invested = Total_BA_Invested + df.at[index, fund + "_BA_$_Invested"]
-
-            # Calculate before action (BA) port % values
-            for fund in fund_list:
-                df.at[index, fund + "_BA_Port_%"] = df.at[index, fund + "_BA_$_Invested"] / Total_BA_Invested
-
-            # Set column for before action (BA) total $ invested
-            df.at[index, 'Total_BA_$_Invested'] = Total_BA_Invested
-
-            # Initialize variables
-            rebalance = "No"
-            date = row['Date']
-
-            # Check for a specific date annually
-            # Simple if statement to check if date_to_check is in jan_28_or_after_each_year
-            if date in rebal_dates_by_year['Date'].values:
-                rebalance = "Yes"
-            else:
-                pass
-
-            # Check to see if any asset has portfolio percentage of greater than 35% or less than 15% and if so set variable
-            for fund in fund_list:
-                if df.at[index, fund + "_BA_Port_%"] > rebal_per_high or df.at[index, fund + "_BA_Port_%"] < rebal_per_low:
-                    rebalance = "Yes"
-                else:
-                    pass
-
-            # If rebalance is required, rebalance back to 25% for each asset, else just divide contribution evenly across assets
-            if rebalance == "Yes":
-                df.at[index, 'Rebalance'] = rebalance
-                for fund in fund_list:
-                        df.at[index, fund + "_AA_$_Invested"] = (Total_BA_Invested + df.at[index, 'Contribution']) * 0.25
-            else:
-                df.at[index, 'Rebalance'] = rebalance
-                for fund in fund_list:
-                        df.at[index, fund + "_AA_$_Invested"] = df.at[index, fund + "_BA_$_Invested"] + df.at[index, 'Contribution'] * 0.25
-
-            # Initialize variable
-            Total_AA_Invested = 0
-
-            # Set column values for after action (AA) shares and port %
-            for fund in fund_list:
-                df.at[index, fund + "_AA_Shares"] = df.at[index, fund + "_AA_$_Invested"] / row[fund + "_Close"]
-
-                # Sum the asset values to find the total
-                Total_AA_Invested = Total_AA_Invested + df.at[index, fund + "_AA_$_Invested"]
-
-            # Calculate after action (AA) port % values
-            for fund in fund_list:
-                df.at[index, fund + "_AA_Port_%"] = df.at[index, fund + "_AA_$_Invested"] / Total_AA_Invested
-
-            # Set column for after action (AA) total $ invested
-            df.at[index, 'Total_AA_$_Invested'] = Total_AA_Invested
-
-        # If this is the first row
-        else:
-            pass
-
-    df['Return'] = df['Total_AA_$_Invested'].pct_change()
-    df['Cumulative_Return'] = (1 + df['Return']).cumprod()
-
-    plan_name = '_'.join(fund_list)
-
-    # Export to excel
-    if excel_export == True:
-        df.to_excel(f"{plan_name}_Strategy.xlsx", sheet_name="data")
-    else:
-        pass
-
-    # Export to pickle
-    if pickle_export == True:
-        df.to_pickle(f"{plan_name}_Strategy.pkl")
-    else:
-        pass
-
-    # Output confirmation
-    if output_confirmation == True:
-        print(f"Strategy complete for {plan_name}")
-    else:
-        pass
-
-    return df
-```
-
-#### Summary Stats
-
-```python
-import pandas as pd
-import numpy as np
-
-def summary_stats(
-    fund_list: str, 
-    df: pd.DataFrame, 
-    period: str,
-    excel_export: bool,
-    pickle_export: bool,
-    output_confirmation: bool,
-) -> pd.DataFrame:
-    
-    """
-    Calculate summary statistics for the given fund list and return data.
-
-    Parameters:
-    -----------
-    fund_list (str):
-        List of funds for data to be combined from. Funds are strings in the form "BTC-USD".
-    df (pd.DataFrame):
-        Dataframe with return data.
-    period (str):
-        Period for which to calculate statistics. Options are "Monthly", "Weekly", "Daily", "Hourly".
-    excel_export : bool
-        If True, export data to Excel format.
-    pickle_export : bool
-        If True, export data to Pickle format.
-    output_confirmation : bool
-        If True, print confirmation message.
-
-    Returns:
-    --------
-    df_stats (pd.DataFrame):
-        pd.DataFrame: DataFrame containing various portfolio statistics.
-    """
-
-    if period == "Monthly":
-        timeframe = 12 # months
-    elif period == "Weekly":
-        timeframe = 52 # weeks
-    elif period == "Daily":
-        timeframe = 252 # days
-        # timeframe = 365 # days
-    elif period == "Hourly":
-        timeframe = 252 * 6.5 # hours
-    #     timeframe = 8760 # hours
-    # else:
-        return print("Error, check inputs")
-
-    df_stats = pd.DataFrame(df.mean(axis=0) * timeframe) # annualized
-    # df_stats = pd.DataFrame((1 + df.mean(axis=0)) ** timeframe - 1) # annualized, this is this true annualized return but we will simply use the mean
-    df_stats.columns = ['Annualized Mean']
-    df_stats['Annualized Volatility'] = df.std() * np.sqrt(timeframe) # annualized
-    df_stats['Annualized Sharpe Ratio'] = df_stats['Annualized Mean'] / df_stats['Annualized Volatility']
-
-    df_cagr = (1 + df['Return']).cumprod()
-    cagr = (df_cagr.iloc[-1] / 1) ** (1/(len(df_cagr) / timeframe)) - 1
-    df_stats['CAGR'] = cagr
-
-    df_stats[period + ' Max Return'] = df.max()
-    df_stats[period + ' Max Return (Date)'] = df.idxmax().values[0]
-    df_stats[period + ' Min Return'] = df.min()
-    df_stats[period + ' Min Return (Date)'] = df.idxmin().values[0]
-    
-    wealth_index = 1000 * (1 + df).cumprod()
-    previous_peaks = wealth_index.cummax()
-    drawdowns = (wealth_index - previous_peaks)/previous_peaks
-
-    df_stats['Max Drawdown'] = drawdowns.min()
-    df_stats['Peak'] = [previous_peaks[col][:drawdowns[col].idxmin()].idxmax() for col in previous_peaks.columns]
-    df_stats['Bottom'] = drawdowns.idxmin()
-
-    recovery_date = []
-    for col in wealth_index.columns:
-        prev_max = previous_peaks[col][:drawdowns[col].idxmin()].max()
-        recovery_wealth = pd.DataFrame([wealth_index[col][drawdowns[col].idxmin():]]).T
-        recovery_date.append(recovery_wealth[recovery_wealth[col] >= prev_max].index.min())
-    df_stats['Recovery Date'] = recovery_date
-
-    plan_name = '_'.join(fund_list)
-
-    # Export to excel
-    if excel_export == True:
-        df_stats.to_excel(f"{plan_name}_Summary_Stats.xlsx", sheet_name="data")
-    else:
-        pass
-
-    # Export to pickle
-    if pickle_export == True:
-        df_stats.to_pickle(f"{plan_name}_Summary_Stats.pkl")
-    else:
-        pass
-
-    # Output confirmation
-    if output_confirmation == True:
-        print(f"Summary stats complete for {plan_name}")
-    else:
-        pass
-    
-    return df_stats
-```
+Here are the functions needed for this project:
+
+* [bb_clean_data](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#bb_clean_data): Takes an Excel export from Bloomberg, removes the miscellaneous headings/rows, and returns a DataFrame.</br>
+* [df_info](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#df_info): A simple function to display the information about a DataFrame and the first five rows and last five rows.</br>
+* [df_info_markdown](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#df_info_markdown): Similar to the `df_info` function above, except that it coverts the output to markdown.</br>
+* [export_track_md_deps](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps): Exports various text outputs to markdown files, which are included in the `index.md` file created when building the site with Hugo.</br>
+* [load_data](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#load_data): Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.</br>
+* [pandas_set_decimal_places](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places): Set the number of decimal places displayed for floating-point numbers in pandas.</br>
+* [strategy_harry_brown_perm_port](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#strategy_harry_brown_perm_port): Execute the strategy for the Harry Brown permanent portfolio.</br>
+* [summary_stats](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#summary_stats): Generate summary statistics for a series of returns.</br>
 
 ## Data Overview
-
-### Set Decimal Places
-
-```python
-pandas_set_decimal_places(3)
-```
 
 ### Load Data
 
 As previously mentioned, the data for this exercise comes primarily from Bloomberg. We'll start with loading the data first for bonds:
 
 ``` python
+# Set decimal places
+pandas_set_decimal_places(3)
+
 # Bonds dataframe
 bb_clean_data(
     base_directory=DATA_DIR,
@@ -1208,9 +523,9 @@ Here's the annual returns:
 
 Since the strategy, summary statistics, and annual returns are all exported as excel files, they can be found at the following locations:
 
-[Stocks_Bonds_Gold_Cash_Strategy.xlsx](Stocks_Bonds_Gold_Cash_Strategy.xlsx)</br>
-[Stocks_Bonds_Gold_Cash_Summary_Stats.xlsx](Stocks_Bonds_Gold_Cash_Summary_Stats.xlsx)</br>
-[Stocks_Bonds_Gold_Cash_Annual_Returns.xlsx](Stocks_Bonds_Gold_Cash_Annual_Returns.xlsx)</br>
+* [Stocks_Bonds_Gold_Cash_Strategy.xlsx](Stocks_Bonds_Gold_Cash_Strategy.xlsx)</br>
+* [Stocks_Bonds_Gold_Cash_Summary_Stats.xlsx](Stocks_Bonds_Gold_Cash_Summary_Stats.xlsx)</br>
+* [Stocks_Bonds_Gold_Cash_Annual_Returns.xlsx](Stocks_Bonds_Gold_Cash_Annual_Returns.xlsx)</br>
 
 Next we will look at some plots to help visualize the data.
 
@@ -1219,6 +534,8 @@ Next we will look at some plots to help visualize the data.
 Here are the various functions needed for the plots:
 
 ### Plot Cumulative Return
+
+Plot cumulative return:
 
 ```python
 def plot_cumulative_return(strat_df):
@@ -1260,6 +577,8 @@ def plot_cumulative_return(strat_df):
 ```
 
 ### Plot Portfolio Values
+
+Plot portfolio values:
 
 ```python
 def plot_values(strat_df):   
@@ -1308,6 +627,8 @@ def plot_values(strat_df):
 
 ### Plot Portfolio Drawdown
 
+Plot portfolio drawdown:
+
 ```python
 def plot_drawdown(strat_df):
     rolling_max = strat_df['Total_AA_$_Invested'].cummax()
@@ -1354,6 +675,8 @@ def plot_drawdown(strat_df):
 
 ### Plot Portfolio Asset Weights
 
+Plot portfolio asset weights:
+
 ```python
 def plot_asset_weights(strat_df):
     # Generate plot   
@@ -1396,6 +719,8 @@ def plot_asset_weights(strat_df):
     # Display the plot
     return plt.show()
 ```
+
+Execute plots:
 
 ```python
 plot_cumulative_return(strat)
@@ -1464,7 +789,7 @@ Overall, this is an interesting case study and Browne's idea behind the Permanen
 
 ## References
 
-Fail-Safe Investing: Lifelong Financial Security in 30 Minutes, by Harry Browne
+1. Fail-Safe Investing: Lifelong Financial Security in 30 Minutes, by Harry Browne
 
 ## Code
 

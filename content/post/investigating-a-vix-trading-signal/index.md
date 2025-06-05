@@ -4,7 +4,7 @@ description: A brief look at finding a trading signal based on moving averages o
 slug: investigating-a-vix-trading-signal
 date: 2025-03-01 00:00:01+0000
 # lastmod: <!-- INSERT_last_run_date_HERE --> 00:00:01+0000
-lastmod: 2025-05-28 00:00:01+0000
+lastmod: 2025-06-04 00:00:01+0000
 image: cover.jpg
 draft: false
 categories:
@@ -123,16 +123,16 @@ Gives us the following:
 The columns, shape, and data types are:
 
 <class 'pandas.core.frame.DataFrame'>
-DatetimeIndex: 8916 entries, 1990-01-02 to 2025-05-27
+DatetimeIndex: 8921 entries, 1990-01-02 to 2025-06-03
 Data columns (total 4 columns):
  #   Column  Non-Null Count  Dtype  
 ---  ------  --------------  -----  
- 0   Close   8916 non-null   float64
- 1   High    8916 non-null   float64
- 2   Low     8916 non-null   float64
- 3   Open    8916 non-null   float64
+ 0   Close   8921 non-null   float64
+ 1   High    8921 non-null   float64
+ 2   Low     8921 non-null   float64
+ 3   Open    8921 non-null   float64
 dtypes: float64(4)
-memory usage: 348.3 KB
+memory usage: 348.5 KB
 
 ```
 
@@ -150,11 +150,11 @@ The last 5 rows are:
 
 | Date                |   Close |   High |   Low |   Open |
 |:--------------------|--------:|-------:|------:|-------:|
-| 2025-05-20 00:00:00 |   18.09 |  18.68 | 17.70 |  18.46 |
-| 2025-05-21 00:00:00 |   20.87 |  21.05 | 17.77 |  18.77 |
-| 2025-05-22 00:00:00 |   20.28 |  22.07 | 19.64 |  20.62 |
-| 2025-05-23 00:00:00 |   22.29 |  25.53 | 19.83 |  20.14 |
-| 2025-05-27 00:00:00 |   18.96 |  21.01 | 18.95 |  20.63 |
+| 2025-05-28 00:00:00 |   19.31 |  19.43 | 18.68 |  19.21 |
+| 2025-05-29 00:00:00 |   19.18 |  20.20 | 18.11 |  18.25 |
+| 2025-05-30 00:00:00 |   18.57 |  20.55 | 18.57 |  19.61 |
+| 2025-06-02 00:00:00 |   18.36 |  20.45 | 18.36 |  19.81 |
+| 2025-06-03 00:00:00 |   17.69 |  19.21 | 17.64 |  18.83 |
 
 ### Statistics - VIX
 
@@ -177,21 +177,21 @@ Gives us:
 
 |               |   Close |    High |     Low |    Open |
 |:--------------|--------:|--------:|--------:|--------:|
-| count         | 8916.00 | 8916.00 | 8916.00 | 8916.00 |
+| count         | 8921.00 | 8921.00 | 8921.00 | 8921.00 |
 | mean          |   19.50 |   20.41 |   18.82 |   19.59 |
 | std           |    7.84 |    8.40 |    7.39 |    7.91 |
 | min           |    9.14 |    9.31 |    8.56 |    9.01 |
 | 25%           |   13.87 |   14.53 |   13.41 |   13.93 |
-| 50%           |   17.66 |   18.38 |   17.07 |   17.70 |
+| 50%           |   17.67 |   18.39 |   17.08 |   17.70 |
 | 75%           |   22.84 |   23.84 |   22.15 |   22.99 |
 | max           |   82.69 |   89.53 |   72.76 |   82.69 |
-| mean + -1 std |   11.66 |   12.01 |   11.43 |   11.67 |
+| mean + -1 std |   11.66 |   12.01 |   11.43 |   11.68 |
 | mean + 0 std  |   19.50 |   20.41 |   18.82 |   19.59 |
-| mean + 1 std  |   27.33 |   28.81 |   26.22 |   27.50 |
-| mean + 2 std  |   35.17 |   37.20 |   33.61 |   35.42 |
+| mean + 1 std  |   27.33 |   28.80 |   26.21 |   27.50 |
+| mean + 2 std  |   35.17 |   37.20 |   33.60 |   35.41 |
 | mean + 3 std  |   43.01 |   45.60 |   41.00 |   43.33 |
-| mean + 4 std  |   50.85 |   54.00 |   48.40 |   51.25 |
-| mean + 5 std  |   58.69 |   62.40 |   55.79 |   59.16 |
+| mean + 4 std  |   50.84 |   53.99 |   48.39 |   51.24 |
+| mean + 5 std  |   58.68 |   62.39 |   55.78 |   59.15 |
 
 We can also run the statistics individually for each year:
 
@@ -245,7 +245,7 @@ Gives us:
 |   2022 |       25.98 |       4.30 |       27.25 |       4.59 |      24.69 |      3.91 |        25.62 |        4.22 |
 |   2023 |       17.12 |       3.17 |       17.83 |       3.58 |      16.36 |      2.89 |        16.87 |        3.14 |
 |   2024 |       15.69 |       3.14 |       16.65 |       4.73 |      14.92 |      2.58 |        15.61 |        3.36 |
-|   2025 |       22.14 |       7.50 |       23.92 |       9.14 |      20.54 |      5.51 |        21.83 |        7.09 |
+|   2025 |       21.99 |       7.34 |       23.73 |       8.95 |      20.43 |      5.40 |        21.68 |        6.96 |
 
 It is interesting to see how much the mean OHLC values vary by year.
 
@@ -270,8 +270,8 @@ Gives us:
 |       2 |       19.67 |       7.22 |       20.51 |       7.65 |      18.90 |      6.81 |        19.58 |        7.13 |
 |       3 |       20.47 |       9.63 |       21.39 |      10.49 |      19.54 |      8.65 |        20.35 |        9.56 |
 |       4 |       19.43 |       7.48 |       20.24 |       7.93 |      18.65 |      6.88 |        19.29 |        7.28 |
-|       5 |       18.60 |       6.05 |       19.40 |       6.44 |      17.89 |      5.64 |        18.51 |        5.97 |
-|       6 |       18.45 |       5.82 |       19.15 |       6.09 |      17.73 |      5.46 |        18.35 |        5.75 |
+|       5 |       18.60 |       6.04 |       19.40 |       6.43 |      17.89 |      5.63 |        18.51 |        5.96 |
+|       6 |       18.45 |       5.81 |       19.15 |       6.08 |      17.73 |      5.46 |        18.35 |        5.74 |
 |       7 |       17.87 |       5.75 |       18.58 |       5.98 |      17.24 |      5.48 |        17.80 |        5.67 |
 |       8 |       19.17 |       6.74 |       20.12 |       7.45 |      18.44 |      6.38 |        19.18 |        6.87 |
 |       9 |       20.51 |       8.32 |       21.35 |       8.64 |      19.74 |      7.90 |        20.43 |        8.20 |
@@ -296,23 +296,19 @@ Gives us:
 | 0.10 |   12.12 |  12.63 | 11.72 |  12.13 |
 | 0.20 |   13.25 |  13.87 | 12.85 |  13.31 |
 | 0.30 |   14.61 |  15.29 | 14.08 |  14.68 |
-| 0.40 |   16.09 |  16.76 | 15.56 |  16.13 |
-| 0.50 |   17.66 |  18.38 | 17.07 |  17.70 |
-| 0.60 |   19.56 |  20.40 | 19.02 |  19.70 |
-| 0.70 |   21.65 |  22.66 | 21.00 |  21.80 |
-| 0.80 |   24.32 |  25.36 | 23.51 |  24.39 |
-| 0.90 |   28.70 |  30.00 | 27.79 |  28.86 |
+| 0.40 |   16.10 |  16.76 | 15.56 |  16.13 |
+| 0.50 |   17.67 |  18.39 | 17.08 |  17.70 |
+| 0.60 |   19.55 |  20.40 | 19.02 |  19.69 |
+| 0.70 |   21.64 |  22.66 | 21.00 |  21.79 |
+| 0.80 |   24.32 |  25.36 | 23.51 |  24.38 |
+| 0.90 |   28.70 |  30.00 | 27.78 |  28.86 |
 | 1.00 |   82.69 |  89.53 | 72.76 |  82.69 |
 
 ## Plots - VIX
 
 ### Histogram Distribution - VIX
 
-A quick histogram gives us the distribution for the entire dataset:
-
-![Histogram](01_Histogram.png)
-
-Now, let's add the levels for the mean minus 1 standard deviation, mean, mean plus 1 standard deviation, mean plus 2 standard deviations, mean plus 3 standard deviations, and mean plus 4 standard deviations:
+A quick histogram gives us the distribution for the entire dataset, along with the levels for the mean minus 1 standard deviation, mean, mean plus 1 standard deviation, mean plus 2 standard deviations, mean plus 3 standard deviations, and mean plus 4 standard deviations:
 
 ![Histogram, Mean, And Standard Deviations](01_Histogram+Mean+SD.png)
 
@@ -401,16 +397,16 @@ Gives us the following:
 The columns, shape, and data types are:
 
 <class 'pandas.core.frame.DataFrame'>
-DatetimeIndex: 8916 entries, 1990-01-02 to 2025-05-27
+DatetimeIndex: 8921 entries, 1990-01-02 to 2025-06-03
 Data columns (total 4 columns):
  #   Column  Non-Null Count  Dtype  
 ---  ------  --------------  -----  
- 0   Close   8916 non-null   float64
- 1   High    8916 non-null   float64
- 2   Low     8916 non-null   float64
- 3   Open    8916 non-null   float64
+ 0   Close   8921 non-null   float64
+ 1   High    8921 non-null   float64
+ 2   Low     8921 non-null   float64
+ 3   Open    8921 non-null   float64
 dtypes: float64(4)
-memory usage: 348.3 KB
+memory usage: 348.5 KB
 
 ```
 
@@ -428,11 +424,11 @@ The last 5 rows are:
 
 | Date                |   Close |   High |   Low |   Open |
 |:--------------------|--------:|-------:|------:|-------:|
-| 2025-05-20 00:00:00 |   18.09 |  18.68 | 17.70 |  18.46 |
-| 2025-05-21 00:00:00 |   20.87 |  21.05 | 17.77 |  18.77 |
-| 2025-05-22 00:00:00 |   20.28 |  22.07 | 19.64 |  20.62 |
-| 2025-05-23 00:00:00 |   22.29 |  25.53 | 19.83 |  20.14 |
-| 2025-05-27 00:00:00 |   18.96 |  21.01 | 18.95 |  20.63 |
+| 2025-05-28 00:00:00 |   19.31 |  19.43 | 18.68 |  19.21 |
+| 2025-05-29 00:00:00 |   19.18 |  20.20 | 18.11 |  18.25 |
+| 2025-05-30 00:00:00 |   18.57 |  20.55 | 18.57 |  19.61 |
+| 2025-06-02 00:00:00 |   18.36 |  20.45 | 18.36 |  19.81 |
+| 2025-06-03 00:00:00 |   17.69 |  19.21 | 17.64 |  18.83 |
 
 ### Statistics - VVIX
 
@@ -455,21 +451,21 @@ Gives us:
 
 |               |   Close |    High |     Low |    Open |
 |:--------------|--------:|--------:|--------:|--------:|
-| count         | 4620.00 | 4620.00 | 4620.00 | 4620.00 |
-| mean          |   93.50 |   95.55 |   91.94 |   93.75 |
-| std           |   16.45 |   18.06 |   15.11 |   16.51 |
+| count         | 4625.00 | 4625.00 | 4625.00 | 4625.00 |
+| mean          |   93.50 |   95.55 |   91.95 |   93.76 |
+| std           |   16.45 |   18.05 |   15.10 |   16.50 |
 | min           |   59.74 |   59.74 |   59.31 |   59.31 |
-| 25%           |   82.33 |   83.45 |   81.48 |   82.55 |
-| 50%           |   90.51 |   92.24 |   89.35 |   90.83 |
-| 75%           |  102.23 |  105.07 |  100.02 |  102.58 |
+| 25%           |   82.34 |   83.46 |   81.48 |   82.55 |
+| 50%           |   90.54 |   92.26 |   89.37 |   90.85 |
+| 75%           |  102.21 |  105.01 |   99.94 |  102.58 |
 | max           |  207.59 |  212.22 |  187.27 |  212.22 |
-| mean + -1 std |   77.05 |   77.48 |   76.84 |   77.25 |
-| mean + 0 std  |   93.50 |   95.55 |   91.94 |   93.75 |
-| mean + 1 std  |  109.96 |  113.61 |  107.05 |  110.26 |
-| mean + 2 std  |  126.41 |  131.67 |  122.16 |  126.77 |
-| mean + 3 std  |  142.87 |  149.73 |  137.27 |  143.28 |
-| mean + 4 std  |  159.32 |  167.79 |  152.37 |  159.78 |
-| mean + 5 std  |  175.77 |  185.85 |  167.48 |  176.29 |
+| mean + -1 std |   77.06 |   77.50 |   76.85 |   77.26 |
+| mean + 0 std  |   93.50 |   95.55 |   91.95 |   93.76 |
+| mean + 1 std  |  109.95 |  113.60 |  107.05 |  110.25 |
+| mean + 2 std  |  126.40 |  131.65 |  122.15 |  126.75 |
+| mean + 3 std  |  142.84 |  149.71 |  137.24 |  143.25 |
+| mean + 4 std  |  159.29 |  167.76 |  152.34 |  159.75 |
+| mean + 5 std  |  175.73 |  185.81 |  167.44 |  176.25 |
 
 We can also run the statistics individually for each year:
 
@@ -506,7 +502,7 @@ Gives us:
 |   2022 |      102.58 |      18.01 |      105.32 |      19.16 |      99.17 |     16.81 |       101.81 |       17.81 |
 |   2023 |       90.95 |       8.64 |       93.72 |       9.98 |      88.01 |      7.37 |        90.34 |        8.38 |
 |   2024 |       92.88 |      15.06 |       97.32 |      18.33 |      89.51 |     13.16 |        92.81 |       15.60 |
-|   2025 |      107.44 |      16.10 |      112.71 |      18.87 |     102.56 |     12.49 |       106.42 |       15.28 |
+|   2025 |      106.89 |      15.91 |      112.00 |      18.68 |     102.13 |     12.35 |       105.82 |       15.15 |
 
 And finally, we can run the statistics individually for each month:
 
@@ -529,8 +525,8 @@ Gives us:
 |      2 |       93.49 |      18.24 |       95.39 |      20.70 |      91.39 |     16.43 |        93.13 |       18.58 |
 |      3 |       95.30 |      21.66 |       97.38 |      23.56 |      92.94 |     19.51 |        94.89 |       21.59 |
 |      4 |       92.18 |      19.03 |       94.01 |      20.57 |      90.30 |     17.21 |        91.88 |       18.60 |
-|      5 |       92.22 |      16.99 |       93.92 |      18.05 |      90.50 |     16.20 |        91.76 |       16.85 |
-|      6 |       92.92 |      15.07 |       94.44 |      16.33 |      91.32 |     14.03 |        92.75 |       15.05 |
+|      5 |       92.25 |      16.93 |       93.95 |      17.99 |      90.54 |     16.14 |        91.79 |       16.79 |
+|      6 |       92.93 |      15.04 |       94.45 |      16.29 |      91.32 |     13.99 |        92.74 |       15.01 |
 |      7 |       89.97 |      13.16 |       91.46 |      14.23 |      88.48 |     12.26 |        89.84 |       13.12 |
 |      8 |       96.83 |      16.94 |       98.89 |      18.72 |      94.68 |     14.86 |        96.61 |       16.63 |
 |      9 |       94.71 |      14.03 |       96.50 |      15.52 |      92.86 |     12.50 |        94.40 |       13.78 |
@@ -552,26 +548,22 @@ Gives us:
 |      |   Close |   High |    Low |   Open |
 |-----:|--------:|-------:|-------:|-------:|
 | 0.00 |   59.74 |  59.74 |  59.31 |  59.31 |
-| 0.10 |   75.82 |  76.00 |  75.43 |  75.80 |
-| 0.20 |   80.55 |  81.42 |  79.81 |  80.74 |
-| 0.30 |   83.89 |  85.18 |  82.98 |  84.15 |
-| 0.40 |   87.06 |  88.54 |  85.97 |  87.44 |
-| 0.50 |   90.51 |  92.24 |  89.35 |  90.83 |
-| 0.60 |   94.22 |  96.14 |  93.03 |  94.50 |
-| 0.70 |   99.13 | 101.54 |  97.44 |  99.46 |
-| 0.80 |  106.06 | 109.40 | 103.95 | 106.49 |
-| 0.90 |  115.31 | 118.82 | 112.49 | 115.56 |
+| 0.10 |   75.82 |  76.01 |  75.43 |  75.80 |
+| 0.20 |   80.57 |  81.42 |  79.81 |  80.74 |
+| 0.30 |   83.90 |  85.21 |  83.01 |  84.16 |
+| 0.40 |   87.08 |  88.55 |  85.97 |  87.45 |
+| 0.50 |   90.54 |  92.26 |  89.37 |  90.85 |
+| 0.60 |   94.23 |  96.16 |  93.04 |  94.52 |
+| 0.70 |   99.12 | 101.53 |  97.44 |  99.43 |
+| 0.80 |  106.06 | 109.40 | 103.92 | 106.49 |
+| 0.90 |  115.29 | 118.81 | 112.48 | 115.54 |
 | 1.00 |  207.59 | 212.22 | 187.27 | 212.22 |
 
 ## Plots - VVIX
 
 ### Histogram Distribution - VVIX
 
-A quick histogram gives us the distribution for the entire dataset:
-
-![Histogram](02_Histogram.png)
-
-Now, let's add the levels for the mean minus 1 standard deviation, mean, mean plus 1 standard deviation, mean plus 2 standard deviations, mean plus 3 standard deviations, and mean plus 4 standard deviations:
+A quick histogram gives us the distribution for the entire dataset, along with the levels for the mean minus 1 standard deviation, mean, mean plus 1 standard deviation, mean plus 2 standard deviations, mean plus 3 standard deviations, and mean plus 4 standard deviations:
 
 ![Histogram, Mean, And Standard Deviations](02_Histogram+Mean+SD.png)
 
@@ -704,7 +696,7 @@ Which gives us the following:
 |   2022 |     239 |     12 |
 |   2023 |     246 |      4 |
 |   2024 |     237 |     15 |
-|   2025 |      87 |     12 |
+|   2025 |      92 |     12 |
 
 And the plot to aid with visualization. Based on the plot, it seems as though volatility has increased since the early 2000's:
 
@@ -1065,8 +1057,8 @@ Net profit/loss: $8,181.51
 
 ## References
 
-https://www.cboe.com/tradable_products/vix/</br>
-https://github.com/ranaroussi/yfinance
+1. https://www.cboe.com/tradable_products/vix/
+2. https://github.com/ranaroussi/yfinance
 
 ## Code
 
