@@ -246,7 +246,7 @@ Gives us the following:
 
 <!-- INSERT_02_Perm_Port_DF_Info_HERE -->
 
-We can see that we have close data for all 4 asset classes from the beginning of 1990 to the end of 2023.
+We can see that we have daily close price data for all 4 asset classes from the beginning of 1990 to the end of 2023.
 
 ## Execute Strategy
 
@@ -279,6 +279,8 @@ strat = strategy_harry_brown_perm_port(
 strat = strat.set_index('Date')
 ```
 
+This returns a dataframe with the entire strategy.
+
 Running:
 
 ```python
@@ -288,6 +290,8 @@ df_info(strat)
 Gives us:
 
 <!-- INSERT_03_Strategy_HERE -->
+
+From the above, we can see that there are all columns for before/after re-balancing, including the shares, asset values, percentages, etc. for the four different asset classes.
 
 ## Strategy Statistics
 

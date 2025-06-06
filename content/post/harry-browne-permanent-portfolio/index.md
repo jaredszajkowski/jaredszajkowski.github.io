@@ -299,7 +299,7 @@ The last 5 rows are:
 | 2023-12-28 00:00:00 |       10356.59 |        606.83 |      2065.61 |         1.00 |
 | 2023-12-29 00:00:00 |       10327.83 |        606.18 |      2062.98 |         1.00 |
 
-We can see that we have close data for all 4 asset classes from the beginning of 1990 to the end of 2023.
+We can see that we have daily close price data for all 4 asset classes from the beginning of 1990 to the end of 2023.
 
 ## Execute Strategy
 
@@ -331,6 +331,8 @@ strat = strategy_harry_brown_perm_port(
 
 strat = strat.set_index('Date')
 ```
+
+This returns a dataframe with the entire strategy.
 
 Running:
 
@@ -406,6 +408,8 @@ The last 5 rows are:
 | 2023-12-27 00:00:00 |       10351.60 |        609.36 |      2077.49 |            1 |               1.81 |               18702.89 |               0.29 |             25.03 |              15254.36 |              0.23 |             8.00 |             16621.42 |             0.25 |         14717.17 |             14717.17 |             0.23 |              65295.84 |              0 | No          |               1.81 |               18702.89 |               0.29 |             25.03 |              15254.36 |              0.23 |             8.00 |             16621.42 |             0.25 |         14717.17 |             14717.17 |             0.23 |              65295.84 |     0.00 |                6.53 |
 | 2023-12-28 00:00:00 |       10356.59 |        606.83 |      2065.61 |            1 |               1.81 |               18711.90 |               0.29 |             25.03 |              15191.10 |              0.23 |             8.00 |             16526.37 |             0.25 |         14717.17 |             14717.17 |             0.23 |              65146.54 |              0 | No          |               1.81 |               18711.90 |               0.29 |             25.03 |              15191.10 |              0.23 |             8.00 |             16526.37 |             0.25 |         14717.17 |             14717.17 |             0.23 |              65146.54 |    -0.00 |                6.51 |
 | 2023-12-29 00:00:00 |       10327.83 |        606.18 |      2062.98 |            1 |               1.81 |               18659.94 |               0.29 |             25.03 |              15175.01 |              0.23 |             8.00 |             16505.33 |             0.25 |         14717.17 |             14717.17 |             0.23 |              65057.44 |              0 | No          |               1.81 |               18659.94 |               0.29 |             25.03 |              15175.01 |              0.23 |             8.00 |             16505.33 |             0.25 |         14717.17 |             14717.17 |             0.23 |              65057.44 |    -0.00 |                6.51 |
+
+From the above, we can see that there are all columns for before/after re-balancing, including the shares, asset values, percentages, etc. for the four different asset classes.
 
 ## Strategy Statistics
 

@@ -268,7 +268,7 @@ Deleting or removing old and out-of-date backups is as simple as deleting the di
 
 ## References
 
-https://rsync.samba.org/</br>
-https://github.com/WayneD/rsync</br>
-https://www.gnu.org/software/coreutils/</br>
-https://www.man7.org/linux/man-pages/man1/cp.1.html
+1. https://rsync.samba.org/
+2. https://github.com/WayneD/rsync
+3. https://www.gnu.org/software/coreutils/
+4. https://www.man7.org/linux/man-pages/man1/cp.1.html

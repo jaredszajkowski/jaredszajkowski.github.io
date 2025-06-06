@@ -94,8 +94,8 @@ To avoid having to redundantly install modules on different systems, after I mak
 
 ## References
 
-https://docs.python.org/3/library/venv.html</br>
-https://pypi.org/</br>
-https://note.nkmk.me/en/python-pip-usage/</br>
-https://wiki.archlinux.org/title/Python</br>
-https://github.com/Jguer/yay
+1. https://docs.python.org/3/library/venv.html
+2. https://pypi.org/
+3. https://note.nkmk.me/en/python-pip-usage/
+4. https://wiki.archlinux.org/title/Python
+5. https://github.com/Jguer/yay

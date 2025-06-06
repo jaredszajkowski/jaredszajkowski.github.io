@@ -55,6 +55,7 @@ Here are the functions needed for this project:
 * [load_data](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#load_data): Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.</br>
 * [pandas_set_decimal_places](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places): Set the number of decimal places displayed for floating-point numbers in pandas.</br>
 * [plot_price](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_price): Plot the price data from a DataFrame for a specified date range and columns.</br>
+* [plot_stats](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_stats): Generate a scatter plot for the mean OHLC prices.</br>
 * [plot_vix_with_trades](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_vix_with_trades): Plot the VIX daily high and low prices, along with the VIX spikes, and trades.</br>
 * [yf_pull_data](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#yf_pull_data): Download daily price data from Yahoo Finance and export it.
 
@@ -213,6 +214,18 @@ From these plots, we can see the following:
 * The highest levels (> 80) occured only during the GFC & COVID
 * Interestingly, the VIX did not ever get above 50 during the .com bubble
 
+### Stats By Year - VIX
+
+Here's the plot for the mean OHLC values for the VIX by year:
+
+![VIX OHLC Stats By Year](01_VIX_Stats_By_Year.png)
+
+### Stats By Month - VIX
+
+Here's the plot for the mean OHLC values for the VIX by month:
+
+![VIX OHLC Stats By Month](01_VIX_Stats_By_Month.png)
+
 ## Data Overview (VVIX)
 
 Before moving on to generating a signal, let's run the above data overview code again, but this time for the CBOE VVIX. From the [CBOE VVIX website](https://www.cboe.com/us/indices/dashboard/vvix/):
@@ -365,6 +378,18 @@ Here's two plots for the dataset. The first covers 2007 - 2016, and the second 2
 ![VVIX Daily High, 2007 - 2016](02_VVIX_Plot_2007-2016.png)
 
 ![VVIX Daily High, 2017 - Present](02_VVIX_Plot_2017-Present.png)
+
+### Stats By Year - VVIX
+
+Here's the plot for the mean OHLC values for the VVIX by year:
+
+![VVIX OHLC Stats By Year](02_VVIX_Stats_By_Year.png)
+
+### Stats By Month - VVIX
+
+Here's the plot for the mean OHLC values for the VVIX by month:
+
+![VVIX OHLC Stats By Month](02_VVIX_Stats_By_Month.png)
 
 ## Investigating A Signal
 

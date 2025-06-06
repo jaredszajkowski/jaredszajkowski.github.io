@@ -969,7 +969,7 @@ Update 5/2/2025: Updated functions and code. -->
       </tr>
   </tbody>
 </table></div>
-<p>We can see that we have close data for all 4 asset classes from the beginning of 1990 to the end of 2023.</p>
+<p>We can see that we have daily close price data for all 4 asset classes from the beginning of 1990 to the end of 2023.</p>
 <h2 id="execute-strategy">Execute Strategy
 </h2><p>Using an annual rebalance date of January 1, we&rsquo;ll now execute the strategy with the following code:</p>
 <div class="highlight"><div class="chroma">
@@ -1026,7 +1026,8 @@ Update 5/2/2025: Updated functions and code. -->
 </span></span><span class="line"><span class="cl"><span class="n">strat</span> <span class="o">=</span> <span class="n">strat</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>Running:</p>
+</div><p>This returns a dataframe with the entire strategy.</p>
+<p>Running:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1586,6 +1587,7 @@ Update 5/2/2025: Updated functions and code. -->
       </tr>
   </tbody>
 </table></div>
+<p>From the above, we can see that there are all columns for before/after re-balancing, including the shares, asset values, percentages, etc. for the four different asset classes.</p>
 <h2 id="strategy-statistics">Strategy Statistics
 </h2><p>Let&rsquo;s look at the summary statistics for the entire timeframe, as well as several different ranges:</p>
 <div class="highlight"><div class="chroma">
