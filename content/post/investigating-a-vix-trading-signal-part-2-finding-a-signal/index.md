@@ -374,7 +374,7 @@ For comparison with the VVIX plot for 2025:
 
 ## Code
 
-Note: The files below are identical to those linked in [part 1](/2025/03/01/investigating-a-vix-trading-signal-part-1-vix-and-vvix/).
+Note: The files below are identical to those linked in [part 1](/2025/03/01/investigating-a-vix-trading-signal-part-1-vix-and-vvix/#code).
 
 The jupyter notebook with the functions and all other code is available [here](investigating-a-vix-trading-signal-part-2-finding-a-signal.ipynb).</br>
 The html export of the jupyter notebook is available [here](investigating-a-vix-trading-signal-part-2-finding-a-signal.html).</br>

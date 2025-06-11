@@ -94,7 +94,7 @@ Net profit/loss: <!-- INSERT_14_PnL_None_None_None_None_HERE -->
 
 ## Code
 
-Note: The files below are identical to those linked in [part 1](/2025/03/01/investigating-a-vix-trading-signal-part-1-vix-and-vvix/) and [part 2](/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/).
+Note: The files below are identical to those linked in [part 1](/2025/03/01/investigating-a-vix-trading-signal-part-1-vix-and-vvix/#code) and [part 2](/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/#code).
 
 The jupyter notebook with the functions and all other code is available [here](investigating-a-vix-trading-signal-part-3-trading.ipynb).</br>
 The html export of the jupyter notebook is available [here](investigating-a-vix-trading-signal-part-3-trading.html).</br>

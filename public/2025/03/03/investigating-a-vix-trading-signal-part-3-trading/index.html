@@ -372,7 +372,7 @@
 
 
                 <time class="article-time--reading">
-                    2 minute read
+                    6 minute read
                 </time>
             </div>
         
@@ -391,7 +391,441 @@
 </h2><p>I have began trading based on the ideas from <a class="link" href="/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/" >part 2</a>, opening positions during the VIX spikes and closing them as volatility comes back down. The executed trades, closed positions, and open positions listed below are all automated updates from the transaction history exports from Schwab. The exported CSV files are available in the GitHub repository.</p>
 <h3 id="trades-executed">Trades Executed
 </h3><p>Here are the trades executed to date, with any comments related to execution, market sentiment, reason for opening/closing position, VIX level, etc.</p>
-<p><em>10_Trades_Executed.md not found</em></p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Trade_Date</th>
+          <th style="text-align: left">Action</th>
+          <th style="text-align: left">Symbol</th>
+          <th style="text-align: right">Quantity</th>
+          <th style="text-align: right">Price</th>
+          <th style="text-align: right">Fees &amp; Comm</th>
+          <th style="text-align: right">Amount</th>
+          <th style="text-align: right">Approx_VIX_Level</th>
+          <th style="text-align: left">Comments</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">2024-08-05 00:00:00</td>
+          <td style="text-align: left">Buy to Open</td>
+          <td style="text-align: left">VIX 09/18/2024 34.00 P</td>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">10.95</td>
+          <td style="text-align: right">1.08</td>
+          <td style="text-align: right">1096.08</td>
+          <td style="text-align: right">34.33</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2024-08-21 00:00:00</td>
+          <td style="text-align: left">Sell to Close</td>
+          <td style="text-align: left">VIX 09/18/2024 34.00 P</td>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">17.95</td>
+          <td style="text-align: right">1.08</td>
+          <td style="text-align: right">1793.92</td>
+          <td style="text-align: right">16.50</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2024-08-05 00:00:00</td>
+          <td style="text-align: left">Buy to Open</td>
+          <td style="text-align: left">VIX 10/16/2024 40.00 P</td>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">16.35</td>
+          <td style="text-align: right">1.08</td>
+          <td style="text-align: right">1636.08</td>
+          <td style="text-align: right">42.71</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2024-09-18 00:00:00</td>
+          <td style="text-align: left">Sell to Close</td>
+          <td style="text-align: left">VIX 10/16/2024 40.00 P</td>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">21.54</td>
+          <td style="text-align: right">1.08</td>
+          <td style="text-align: right">2152.92</td>
+          <td style="text-align: right">18.85</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2024-08-07 00:00:00</td>
+          <td style="text-align: left">Buy to Open</td>
+          <td style="text-align: left">VIX 11/20/2024 25.00 P</td>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">5.90</td>
+          <td style="text-align: right">2.16</td>
+          <td style="text-align: right">1182.16</td>
+          <td style="text-align: right">27.11</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2024-11-04 00:00:00</td>
+          <td style="text-align: left">Sell to Close</td>
+          <td style="text-align: left">VIX 11/20/2024 25.00 P</td>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">6.10</td>
+          <td style="text-align: right">2.16</td>
+          <td style="text-align: right">1217.84</td>
+          <td style="text-align: right">22.43</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2024-08-06 00:00:00</td>
+          <td style="text-align: left">Buy to Open</td>
+          <td style="text-align: left">VIX 12/18/2024 30.00 P</td>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">10.25</td>
+          <td style="text-align: right">1.08</td>
+          <td style="text-align: right">1026.08</td>
+          <td style="text-align: right">32.27</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2024-11-27 00:00:00</td>
+          <td style="text-align: left">Sell to Close</td>
+          <td style="text-align: left">VIX 12/18/2024 30.00 P</td>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">14.95</td>
+          <td style="text-align: right">1.08</td>
+          <td style="text-align: right">1493.92</td>
+          <td style="text-align: right">14.04</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-03-04 00:00:00</td>
+          <td style="text-align: left">Buy to Open</td>
+          <td style="text-align: left">VIX 04/16/2025 25.00 P</td>
+          <td style="text-align: right">5</td>
+          <td style="text-align: right">5.65</td>
+          <td style="text-align: right">5.40</td>
+          <td style="text-align: right">2830.40</td>
+          <td style="text-align: right">25.75</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-03-24 00:00:00</td>
+          <td style="text-align: left">Sell to Close</td>
+          <td style="text-align: left">VIX 04/16/2025 25.00 P</td>
+          <td style="text-align: right">5</td>
+          <td style="text-align: right">7.00</td>
+          <td style="text-align: right">5.40</td>
+          <td style="text-align: right">3494.60</td>
+          <td style="text-align: right">18.01</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-03-10 00:00:00</td>
+          <td style="text-align: left">Buy to Open</td>
+          <td style="text-align: left">VIX 05/21/2025 26.00 P</td>
+          <td style="text-align: right">5</td>
+          <td style="text-align: right">7.10</td>
+          <td style="text-align: right">5.40</td>
+          <td style="text-align: right">3555.40</td>
+          <td style="text-align: right">27.54</td>
+          <td style="text-align: left">Missed opportunity to close position for 20% profit before vol spike in early April 2025</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-04-04 00:00:00</td>
+          <td style="text-align: left">Buy to Open</td>
+          <td style="text-align: left">VIX 05/21/2025 26.00 P</td>
+          <td style="text-align: right">10</td>
+          <td style="text-align: right">4.10</td>
+          <td style="text-align: right">10.81</td>
+          <td style="text-align: right">4110.81</td>
+          <td style="text-align: right">38.88</td>
+          <td style="text-align: left">Averaged down on existing position</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-04-24 00:00:00</td>
+          <td style="text-align: left">Sell to Close</td>
+          <td style="text-align: left">VIX 05/21/2025 26.00 P</td>
+          <td style="text-align: right">7</td>
+          <td style="text-align: right">3.50</td>
+          <td style="text-align: right">7.57</td>
+          <td style="text-align: right">2442.43</td>
+          <td style="text-align: right">27.37</td>
+          <td style="text-align: left">Sold half of position due to vol spike concerns and theta</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-02 00:00:00</td>
+          <td style="text-align: left">Sell to Close</td>
+          <td style="text-align: left">VIX 05/21/2025 26.00 P</td>
+          <td style="text-align: right">4</td>
+          <td style="text-align: right">4.35</td>
+          <td style="text-align: right">4.32</td>
+          <td style="text-align: right">1735.68</td>
+          <td style="text-align: right">22.73</td>
+          <td style="text-align: left">Sold half of remaining position due to vol spike concerns and theta</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-07 00:00:00</td>
+          <td style="text-align: left">Sell to Close</td>
+          <td style="text-align: left">VIX 05/21/2025 26.00 P</td>
+          <td style="text-align: right">4</td>
+          <td style="text-align: right">3.55</td>
+          <td style="text-align: right">4.32</td>
+          <td style="text-align: right">1415.68</td>
+          <td style="text-align: right">24.49</td>
+          <td style="text-align: left">Closed position ahead of Fed’s (Powell’s) comments</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-04-04 00:00:00</td>
+          <td style="text-align: left">Buy to Open</td>
+          <td style="text-align: left">VIX 05/21/2025 37.00 P</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">13.20</td>
+          <td style="text-align: right">3.24</td>
+          <td style="text-align: right">3963.24</td>
+          <td style="text-align: right">36.46</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-07 00:00:00</td>
+          <td style="text-align: left">Sell to Close</td>
+          <td style="text-align: left">VIX 05/21/2025 37.00 P</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">13.75</td>
+          <td style="text-align: right">3.24</td>
+          <td style="text-align: right">4121.76</td>
+          <td style="text-align: right">24.51</td>
+          <td style="text-align: left">Closed position ahead of Fed’s (Powell’s) comments</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-04-08 00:00:00</td>
+          <td style="text-align: left">Buy to Open</td>
+          <td style="text-align: left">VIX 05/21/2025 50.00 P</td>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">21.15</td>
+          <td style="text-align: right">2.16</td>
+          <td style="text-align: right">4232.16</td>
+          <td style="text-align: right">nan</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-04-24 00:00:00</td>
+          <td style="text-align: left">Sell to Close</td>
+          <td style="text-align: left">VIX 05/21/2025 50.00 P</td>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">25.30</td>
+          <td style="text-align: right">1.08</td>
+          <td style="text-align: right">2528.92</td>
+          <td style="text-align: right">nan</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-04-25 00:00:00</td>
+          <td style="text-align: left">Sell to Close</td>
+          <td style="text-align: left">VIX 05/21/2025 50.00 P</td>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">25.65</td>
+          <td style="text-align: right">1.08</td>
+          <td style="text-align: right">2563.92</td>
+          <td style="text-align: right">nan</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-04-03 00:00:00</td>
+          <td style="text-align: left">Buy to Open</td>
+          <td style="text-align: left">VIX 06/18/2025 27.00 P</td>
+          <td style="text-align: right">8</td>
+          <td style="text-align: right">7.05</td>
+          <td style="text-align: right">8.65</td>
+          <td style="text-align: right">5648.65</td>
+          <td style="text-align: right">27.62</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-04-08 00:00:00</td>
+          <td style="text-align: left">Buy to Open</td>
+          <td style="text-align: left">VIX 06/18/2025 27.00 P</td>
+          <td style="text-align: right">4</td>
+          <td style="text-align: right">4.55</td>
+          <td style="text-align: right">4.32</td>
+          <td style="text-align: right">1824.32</td>
+          <td style="text-align: right">55.44</td>
+          <td style="text-align: left">Averaged down on existing position</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-12 00:00:00</td>
+          <td style="text-align: left">Sell to Close</td>
+          <td style="text-align: left">VIX 06/18/2025 27.00 P</td>
+          <td style="text-align: right">6</td>
+          <td style="text-align: right">7.55</td>
+          <td style="text-align: right">6.49</td>
+          <td style="text-align: right">4523.51</td>
+          <td style="text-align: right">19.05</td>
+          <td style="text-align: left">Market up on positive news of lowering tariffs with China; VIX down 15%, VVIX down 10%</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-12 00:00:00</td>
+          <td style="text-align: left">Sell to Close</td>
+          <td style="text-align: left">VIX 06/18/2025 27.00 P</td>
+          <td style="text-align: right">6</td>
+          <td style="text-align: right">7.40</td>
+          <td style="text-align: right">6.49</td>
+          <td style="text-align: right">4433.51</td>
+          <td style="text-align: right">19.47</td>
+          <td style="text-align: left">Market up on positive news of lowering tariffs with China; VIX down 15%, VVIX down 10%</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-04-04 00:00:00</td>
+          <td style="text-align: left">Buy to Open</td>
+          <td style="text-align: left">VIX 06/18/2025 36.00 P</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">13.40</td>
+          <td style="text-align: right">3.24</td>
+          <td style="text-align: right">4023.24</td>
+          <td style="text-align: right">36.61</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-12 00:00:00</td>
+          <td style="text-align: left">Sell to Close</td>
+          <td style="text-align: left">VIX 06/18/2025 36.00 P</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">16.00</td>
+          <td style="text-align: right">3.24</td>
+          <td style="text-align: right">4796.76</td>
+          <td style="text-align: right">19.14</td>
+          <td style="text-align: left">Market up on positive news of lowering tariffs with China; VIX down 15%, VVIX down 10%</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-04-07 00:00:00</td>
+          <td style="text-align: left">Buy to Open</td>
+          <td style="text-align: left">VIX 06/18/2025 45.00 P</td>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">18.85</td>
+          <td style="text-align: right">2.16</td>
+          <td style="text-align: right">3772.16</td>
+          <td style="text-align: right">53.65</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-12 00:00:00</td>
+          <td style="text-align: left">Sell to Close</td>
+          <td style="text-align: left">VIX 06/18/2025 45.00 P</td>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">25.00</td>
+          <td style="text-align: right">2.16</td>
+          <td style="text-align: right">4997.84</td>
+          <td style="text-align: right">19.24</td>
+          <td style="text-align: left">Market up on positive news of lowering tariffs with China; VIX down 15%, VVIX down 10%</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-04-03 00:00:00</td>
+          <td style="text-align: left">Buy to Open</td>
+          <td style="text-align: left">VIX 07/16/2025 29.00 P</td>
+          <td style="text-align: right">5</td>
+          <td style="text-align: right">8.55</td>
+          <td style="text-align: right">5.40</td>
+          <td style="text-align: right">4280.40</td>
+          <td style="text-align: right">29.03</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-13 00:00:00</td>
+          <td style="text-align: left">Sell to Close</td>
+          <td style="text-align: left">VIX 07/16/2025 29.00 P</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">10.40</td>
+          <td style="text-align: right">3.24</td>
+          <td style="text-align: right">3116.76</td>
+          <td style="text-align: right">17.72</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-13 00:00:00</td>
+          <td style="text-align: left">Sell to Close</td>
+          <td style="text-align: left">VIX 07/16/2025 29.00 P</td>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">10.30</td>
+          <td style="text-align: right">2.16</td>
+          <td style="text-align: right">2057.84</td>
+          <td style="text-align: right">17.68</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-04-04 00:00:00</td>
+          <td style="text-align: left">Buy to Open</td>
+          <td style="text-align: left">VIX 07/16/2025 36.00 P</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">13.80</td>
+          <td style="text-align: right">3.24</td>
+          <td style="text-align: right">4143.24</td>
+          <td style="text-align: right">36.95</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-13 00:00:00</td>
+          <td style="text-align: left">Sell to Close</td>
+          <td style="text-align: left">VIX 07/16/2025 36.00 P</td>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">17.00</td>
+          <td style="text-align: right">1.08</td>
+          <td style="text-align: right">1698.92</td>
+          <td style="text-align: right">17.79</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-13 00:00:00</td>
+          <td style="text-align: left">Sell to Close</td>
+          <td style="text-align: left">VIX 07/16/2025 36.00 P</td>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">16.90</td>
+          <td style="text-align: right">2.16</td>
+          <td style="text-align: right">3377.84</td>
+          <td style="text-align: right">17.72</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-04-07 00:00:00</td>
+          <td style="text-align: left">Buy to Open</td>
+          <td style="text-align: left">VIX 07/16/2025 45.00 P</td>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">21.55</td>
+          <td style="text-align: right">2.16</td>
+          <td style="text-align: right">4312.16</td>
+          <td style="text-align: right">46.17</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-13 00:00:00</td>
+          <td style="text-align: left">Sell to Close</td>
+          <td style="text-align: left">VIX 07/16/2025 45.00 P</td>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">25.65</td>
+          <td style="text-align: right">2.16</td>
+          <td style="text-align: right">5127.84</td>
+          <td style="text-align: right">17.96</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-04-07 00:00:00</td>
+          <td style="text-align: left">Buy to Open</td>
+          <td style="text-align: left">VIX 08/20/2025 45.00 P</td>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">21.75</td>
+          <td style="text-align: right">2.16</td>
+          <td style="text-align: right">4352.16</td>
+          <td style="text-align: right">49.07</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-05-13 00:00:00</td>
+          <td style="text-align: left">Sell to Close</td>
+          <td style="text-align: left">VIX 08/20/2025 45.00 P</td>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">25.40</td>
+          <td style="text-align: right">2.16</td>
+          <td style="text-align: right">5077.84</td>
+          <td style="text-align: right">18.06</td>
+          <td style="text-align: left">nan</td>
+      </tr>
+  </tbody>
+</table></div>
 <h4 id="volatility-in-august-2024">Volatility In August 2024
 </h4><p>Plot with VIX level, trade side, VIX option, and VIX level at trade date/time:</p>
 <p><img src="/2025/03/03/investigating-a-vix-trading-signal-part-3-trading/11_VIX_Spike_Trades_2024-07-26_2024-12-07.png"
@@ -409,11 +843,71 @@
 	
 ></p>
 <p>Closed positions:</p>
-<p><em>11_Closed_Positions_2024-09-18_2024-12-18_2024-08-05_2024-11-27.md not found</em></p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Symbol</th>
+          <th style="text-align: right">Amount_Buy</th>
+          <th style="text-align: right">Quantity_Buy</th>
+          <th style="text-align: right">Amount_Sell</th>
+          <th style="text-align: right">Quantity_Sell</th>
+          <th style="text-align: right">Realized_PnL</th>
+          <th style="text-align: right">Percent_PnL</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">VIX 09/18/2024 34.00 P</td>
+          <td style="text-align: right">1096.08</td>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">1793.92</td>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">697.84</td>
+          <td style="text-align: right">0.64</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">VIX 10/16/2024 40.00 P</td>
+          <td style="text-align: right">1636.08</td>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">2152.92</td>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">516.84</td>
+          <td style="text-align: right">0.32</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">VIX 11/20/2024 25.00 P</td>
+          <td style="text-align: right">1182.16</td>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">1217.84</td>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">35.68</td>
+          <td style="text-align: right">0.03</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">VIX 12/18/2024 30.00 P</td>
+          <td style="text-align: right">1026.08</td>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">1493.92</td>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">467.84</td>
+          <td style="text-align: right">0.46</td>
+      </tr>
+  </tbody>
+</table></div>
 <p>Open positions:</p>
-<p><em>11_Open_Positions_2024-09-18_2024-12-18_2024-08-05_2024-11-27.md not found</em></p>
-<p>Percent profit/loss: <em>11_Percent_PnL_2024-09-18_2024-12-18_2024-08-05_2024-11-27.md not found</em></p>
-<p>Net profit/loss: <em>11_PnL_2024-09-18_2024-12-18_2024-08-05_2024-11-27.md not found</em></p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>Symbol</th>
+          <th>Amount_Buy</th>
+          <th>Quantity_Buy</th>
+      </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table></div>
+<p>Percent profit/loss: 34.78%</p>
+<p>Net profit/loss: $1,718.20</p>
 <h4 id="volatility-in-march-2025">Volatility In March 2025
 </h4><p>Plot with VIX level, trade side, VIX option, and VIX level at trade date/time:</p>
 <p><img src="/2025/03/03/investigating-a-vix-trading-signal-part-3-trading/12_VIX_Spike_Trades_2025-02-22_2025-04-03.png"
@@ -431,11 +925,44 @@
 	
 ></p>
 <p>Closed positions:</p>
-<p><em>12_Closed_Positions_2025-04-16_2025-04-16_2025-03-04_2025-03-24.md not found</em></p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Symbol</th>
+          <th style="text-align: right">Amount_Buy</th>
+          <th style="text-align: right">Quantity_Buy</th>
+          <th style="text-align: right">Amount_Sell</th>
+          <th style="text-align: right">Quantity_Sell</th>
+          <th style="text-align: right">Realized_PnL</th>
+          <th style="text-align: right">Percent_PnL</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">VIX 04/16/2025 25.00 P</td>
+          <td style="text-align: right">2830.40</td>
+          <td style="text-align: right">5</td>
+          <td style="text-align: right">3494.60</td>
+          <td style="text-align: right">5</td>
+          <td style="text-align: right">664.20</td>
+          <td style="text-align: right">0.23</td>
+      </tr>
+  </tbody>
+</table></div>
 <p>Open positions:</p>
-<p><em>12_Open_Positions_2025-04-16_2025-04-16_2025-03-04_2025-03-24.md not found</em></p>
-<p>Percent profit/loss: <em>12_Percent_PnL_2025-04-16_2025-04-16_2025-03-04_2025-03-24.md not found</em></p>
-<p>Net profit/loss: <em>12_PnL_2025-04-16_2025-04-16_2025-03-04_2025-03-24.md not found</em></p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>Symbol</th>
+          <th>Amount_Buy</th>
+          <th>Quantity_Buy</th>
+      </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table></div>
+<p>Percent profit/loss: 23.47%</p>
+<p>Net profit/loss: $664.20</p>
 <h4 id="volatility-in-april-2025">Volatility In April 2025
 </h4><p>Plot with VIX level, trade side, VIX option, and VIX level at trade date/time:</p>
 <p><img src="/2025/03/03/investigating-a-vix-trading-signal-part-3-trading/13_VIX_Spike_Trades_2025-02-28_2025-05-23.png"
@@ -453,14 +980,128 @@
 	
 ></p>
 <p>Closed positions:</p>
-<p><em>13_Closed_Positions_2025-05-21_2025-08-20_2025-03-10_2025-05-13.md not found</em></p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Symbol</th>
+          <th style="text-align: right">Amount_Buy</th>
+          <th style="text-align: right">Quantity_Buy</th>
+          <th style="text-align: right">Amount_Sell</th>
+          <th style="text-align: right">Quantity_Sell</th>
+          <th style="text-align: right">Realized_PnL</th>
+          <th style="text-align: right">Percent_PnL</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">VIX 05/21/2025 26.00 P</td>
+          <td style="text-align: right">7666.21</td>
+          <td style="text-align: right">15</td>
+          <td style="text-align: right">5593.79</td>
+          <td style="text-align: right">15</td>
+          <td style="text-align: right">-2072.42</td>
+          <td style="text-align: right">-0.27</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">VIX 05/21/2025 37.00 P</td>
+          <td style="text-align: right">3963.24</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">4121.76</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">158.52</td>
+          <td style="text-align: right">0.04</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">VIX 05/21/2025 50.00 P</td>
+          <td style="text-align: right">4232.16</td>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">5092.84</td>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">860.68</td>
+          <td style="text-align: right">0.20</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">VIX 06/18/2025 27.00 P</td>
+          <td style="text-align: right">7472.97</td>
+          <td style="text-align: right">12</td>
+          <td style="text-align: right">8957.02</td>
+          <td style="text-align: right">12</td>
+          <td style="text-align: right">1484.05</td>
+          <td style="text-align: right">0.20</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">VIX 06/18/2025 36.00 P</td>
+          <td style="text-align: right">4023.24</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">4796.76</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">773.52</td>
+          <td style="text-align: right">0.19</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">VIX 06/18/2025 45.00 P</td>
+          <td style="text-align: right">3772.16</td>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">4997.84</td>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">1225.68</td>
+          <td style="text-align: right">0.32</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">VIX 07/16/2025 29.00 P</td>
+          <td style="text-align: right">4280.40</td>
+          <td style="text-align: right">5</td>
+          <td style="text-align: right">5174.60</td>
+          <td style="text-align: right">5</td>
+          <td style="text-align: right">894.20</td>
+          <td style="text-align: right">0.21</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">VIX 07/16/2025 36.00 P</td>
+          <td style="text-align: right">4143.24</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">5076.76</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">933.52</td>
+          <td style="text-align: right">0.23</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">VIX 07/16/2025 45.00 P</td>
+          <td style="text-align: right">4312.16</td>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">5127.84</td>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">815.68</td>
+          <td style="text-align: right">0.19</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">VIX 08/20/2025 45.00 P</td>
+          <td style="text-align: right">4352.16</td>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">5077.84</td>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">725.68</td>
+          <td style="text-align: right">0.17</td>
+      </tr>
+  </tbody>
+</table></div>
 <p>Open positions:</p>
-<p><em>13_Open_Positions_2025-05-21_2025-08-20_2025-03-10_2025-05-13.md not found</em></p>
-<p>Percent profit/loss: <em>13_Percent_PnL_2025-05-21_2025-08-20_2025-03-10_2025-05-13.md not found</em></p>
-<p>Net profit/loss: <em>13_PnL_2025-05-21_2025-08-20_2025-03-10_2025-05-13.md not found</em></p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>Symbol</th>
+          <th>Amount_Buy</th>
+          <th>Quantity_Buy</th>
+      </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table></div>
+<p>Percent profit/loss: 12.03%</p>
+<p>Net profit/loss: $5,799.11</p>
 <h4 id="complete-trade-history">Complete Trade History
-</h4><p>Percent profit/loss: <em>14_Percent_PnL_None_None_None_None.md not found</em></p>
-<p>Net profit/loss: <em>14_PnL_None_None_None_None.md not found</em></p>
+</h4><p>Percent profit/loss: 14.61%</p>
+<p>Net profit/loss: $8,181.51</p>
 <h2 id="references">References
 </h2><ol>
 <li><a class="link" href="https://www.cboe.com/tradable_products/vix/"  target="_blank" rel="noopener"
@@ -469,7 +1110,8 @@
     >https://github.com/ranaroussi/yfinance</a></li>
 </ol>
 <h2 id="code">Code
-</h2><p>The jupyter notebook with the functions and all other code is available <a class="link" href="investigating-a-vix-trading-signal-part-3-trading.ipynb" >here</a>.</br>
+</h2><p>Note: The files below are identical to those linked in <a class="link" href="/2025/03/01/investigating-a-vix-trading-signal-part-1-vix-and-vvix/#code" >part 1</a> and <a class="link" href="/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/#code" >part 2</a>.</p>
+<p>The jupyter notebook with the functions and all other code is available <a class="link" href="investigating-a-vix-trading-signal-part-3-trading.ipynb" >here</a>.</br>
 The html export of the jupyter notebook is available <a class="link" href="investigating-a-vix-trading-signal-part-3-trading.html" >here</a>.</br>
 The pdf export of the jupyter notebook is available <a class="link" href="investigating-a-vix-trading-signal-part-3-trading.pdf" >here</a>.</p>
 
