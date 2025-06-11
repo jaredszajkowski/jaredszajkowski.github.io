@@ -6,28 +6,36 @@
         <description>Recent content on Jared Szajkowski</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Wed, 04 Jun 2025 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Investigating A VIX Trading Signal</title>
-        <link>https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/</link>
+        <lastBuildDate>Tue, 10 Jun 2025 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Investigating A VIX Trading Signal, Part 3: Trading</title>
+        <link>https://www.jaredszajkowski.com/2025/03/03/investigating-a-vix-trading-signal-part-3-trading/</link>
+        <pubDate>Mon, 03 Mar 2025 00:00:01 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/2025/03/03/investigating-a-vix-trading-signal-part-3-trading/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2025/03/03/investigating-a-vix-trading-signal-part-3-trading/cover.jpg" alt="Featured image of post Investigating A VIX Trading Signal, Part 3: Trading" /&gt;&lt;h2 id=&#34;trading-history&#34;&gt;Trading History
+&lt;/h2&gt;&lt;p&gt;I have began trading based on the ideas from &lt;a class=&#34;link&#34; href=&#34;https://www.jaredszajkowski.com/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/&#34; &gt;part 2&lt;/a&gt;, opening positions during the VIX spikes and closing them as volatility comes back down. The executed trades, closed positions, and open positions listed below are all automated updates from the transaction history exports from Schwab. The exported CSV files are available in the GitHub repository.&lt;/p&gt;
+&lt;h3 id=&#34;trades-executed&#34;&gt;Trades Executed
+&lt;/h3&gt;&lt;p&gt;Here are the trades executed to date, with any comments related to execution, market sentiment, reason for opening/closing position, VIX level, etc.&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>Investigating A VIX Trading Signal, Part 2: Finding A Signal</title>
+        <link>https://www.jaredszajkowski.com/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/</link>
+        <pubDate>Sun, 02 Mar 2025 00:00:01 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/cover.jpg" alt="Featured image of post Investigating A VIX Trading Signal, Part 2: Finding A Signal" /&gt;&lt;h2 id=&#34;investigating-a-signal&#34;&gt;Investigating A Signal
+&lt;/h2&gt;&lt;p&gt;Continuing from where we left off in &lt;a class=&#34;link&#34; href=&#34;https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal-part-1-vix-and-vvix/&#34; &gt;part 1&lt;/a&gt;, we will now consider the idea of a spike level in the VIX and how we might use a spike level to generate a signal. These elevated levels usually occur during market sell-off events or longer term drawdowns in the S&amp;amp;P 500. Sometimes the VIX reverts to recent levels after a spike, but other times levels remain elevated for weeks or even months.&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>Investigating A VIX Trading Signal, Part 1: VIX And VVIX</title>
+        <link>https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal-part-1-vix-and-vvix/</link>
         <pubDate>Sat, 01 Mar 2025 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal/cover.jpg" alt="Featured image of post Investigating A VIX Trading Signal" /&gt;&lt;!-- ## Post Updates
-
-Update 4/8/2025: Added plot for signals for each year. VIX data through 4/7/25.&lt;/br&gt;
-Update 4/9/2025: VIX data through 4/8/25.&lt;/br&gt;
-Update 4/12/2025: VIX data through 4/10/25.&lt;/br&gt;
-Update 4/22/2025: VIX data through 4/18/25.&lt;/br&gt;
-Update 4/23/2025: VIX data through 4/22/25.&lt;/br&gt;
-Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, including open and closed positions.&lt;/br&gt;
-Update 4/28/2025: VIX data through 4/25/25.&lt;/br&gt;
-Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.&lt;/br&gt;
-Update 5/7/2025: Data through 5/6/25.&lt;/br&gt;
-Update 5/21/2025: Data through 5/20/25.&lt;/br&gt;
-Update 5/28/2025: Data through 5/27/25. Modified references to functions. --&gt;
-&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+        <guid>https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal-part-1-vix-and-vvix/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal-part-1-vix-and-vvix/cover.jpg" alt="Featured image of post Investigating A VIX Trading Signal, Part 1: VIX And VVIX" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;From the &lt;a class=&#34;link&#34; href=&#34;https://www.cboe.com/tradable_products/vix/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;CBOE VIX website&lt;/a&gt;:&lt;/p&gt;</description>
+    &gt;CBOE VIX website&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;Cboe Global Markets revolutionized investing with the creation of the Cboe Volatility Index® (VIX® Index), the first benchmark index to measure the market’s expectation of future volatility. The VIX Index is based on options of the S&amp;amp;P 500® Index, considered the leading indicator of the broad U.S. stock market. The VIX Index is recognized as the world’s premier gauge of U.S. equity market volatility.&amp;rdquo;&lt;/p&gt;</description>
         </item>
         <item>
         <title>Reusable And Extensible Python Functions For Financial Data Analysis</title>
@@ -109,21 +117,6 @@ Update 5/2/2025: Updated functions and code. --&gt;
     &gt;individual retail investors&lt;/a&gt;.&lt;/p&gt;</description>
         </item>
         <item>
-        <title>Using yt-dlp With Panopto</title>
-        <link>https://www.jaredszajkowski.com/2023/12/10/yt-dlp-with-panopto/</link>
-        <pubDate>Sun, 10 Dec 2023 00:00:00 +0000</pubDate>
-        
-        <guid>https://www.jaredszajkowski.com/2023/12/10/yt-dlp-with-panopto/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/12/10/yt-dlp-with-panopto/banner_1.svg" alt="Featured image of post Using yt-dlp With Panopto" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
-&lt;/h2&gt;&lt;p&gt;As a follow up to &lt;a class=&#34;link&#34; href=&#34;https://www.jaredszajkowski.com/p/using-yt-dlp-with-zoom/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;this post about using yt-dlp with Zoom&lt;/a&gt;, I found the need to also download videos hosted by Panopto for offline viewing.&lt;/p&gt;
-&lt;p&gt;Similar to the Zoom tutorial, this also requires you to have a &amp;ldquo;cookies&amp;rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Panopto hosting site after logging in.&lt;/p&gt;
-&lt;p&gt;Here&amp;rsquo;s the steps to setting this up:&lt;/p&gt;
-&lt;h2 id=&#34;install-cookie-editor&#34;&gt;Install cookie editor
-&lt;/h2&gt;&lt;p&gt;Install the &lt;a class=&#34;link&#34; href=&#34;https://microsoftedge.microsoft.com/addons/detail/cookie-editor/ajfboaconbpkglpfanbmlfgojgndmhmc&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;cookie editor&lt;/a&gt; extension. I personnally use it with Microsoft Edge, but there are similar extensions for Chrome, Firefox, etc.&lt;/p&gt;</description>
-        </item>
-        <item>
         <title>Cleaning A Bloomberg Data Excel Export</title>
         <link>https://www.jaredszajkowski.com/2023/11/15/cleaning-bloomberg-excel-export/</link>
         <pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate>
@@ -144,7 +137,7 @@ Update 5/2/2025: Updated functions and code. --&gt;
 &lt;/h2&gt;&lt;p&gt;Here are my notes for some of the more commonly used git commands along with initial setup for git in Linux.&lt;/p&gt;
 &lt;h2 id=&#34;installation&#34;&gt;Installation
 &lt;/h2&gt;&lt;p&gt;To begin, install as follows for Arch Linux:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# pacman -Syu git
+&lt;pre&gt;&lt;code&gt;$ sudo pacman -Sy git
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Or&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ yay git
@@ -166,15 +159,15 @@ $ git config --global user.email &amp;quot;email@address.com&amp;quot;
         <description>&lt;img src="https://www.jaredszajkowski.com/links/cover.jpg" alt="Featured image of post Links" /&gt;&lt;p&gt;Here are some links to software, etc. that I find interesting and use.&lt;/p&gt;</description>
         </item>
         <item>
-        <title>Using yt-dlp With Zoom</title>
-        <link>https://www.jaredszajkowski.com/2023/10/01/yt-dlp-with-zoom/</link>
+        <title>Using yt-dlp With Zoom And Panopto</title>
+        <link>https://www.jaredszajkowski.com/2023/10/01/yt-dlp-with-zoom-and-panopto/</link>
         <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2023/10/01/yt-dlp-with-zoom/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2023/10/01/yt-dlp-with-zoom/banner_1.svg" alt="Featured image of post Using yt-dlp With Zoom" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
-&lt;/h2&gt;&lt;p&gt;If anyone uses Zoom to record and later wants to access recordings of video calls, here&amp;rsquo;s a simple linux bash script to download the video file and acompanying subtitles. For a long time I used &lt;a class=&#34;link&#34; href=&#34;https://github.com/Battleman/zoomdl&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;zoomdl&lt;/a&gt;, but it is no longer under active development, and I began running into various issues about a year ago.&lt;/p&gt;
-&lt;p&gt;This tutorial requires you to have a &amp;ldquo;cookies&amp;rdquo; text file, which needs to contain the cookies export in the Netscape HTTP format of the Zoom cookies after logging in.&lt;/p&gt;</description>
+        <guid>https://www.jaredszajkowski.com/2023/10/01/yt-dlp-with-zoom-and-panopto/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/10/01/yt-dlp-with-zoom-and-panopto/banner_1.svg" alt="Featured image of post Using yt-dlp With Zoom And Panopto" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+&lt;/h2&gt;&lt;p&gt;If anyone uses Zoom to record or Panopto to host recordings and later wants to access the recordings, here&amp;rsquo;s a simple linux bash script to download the video file and acompanying subtitles. For a while I used &lt;a class=&#34;link&#34; href=&#34;https://github.com/Battleman/zoomdl&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;zoomdl&lt;/a&gt;, but it is no longer under active development, and I began running into various issues about a year ago. I stumbled upon &lt;a class=&#34;link&#34; href=&#34;https://github.com/yt-dlp/yt-dlp&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;yt-dlp&lt;/a&gt; and found it under active development and quite extensive.&lt;/p&gt;</description>
         </item>
         <item>
         <title>Arch Linux Install</title>

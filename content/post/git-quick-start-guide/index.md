@@ -3,7 +3,7 @@ title: Git Quick Start Guide
 description: Commonly used commands and functionality for git.
 #slug: hello-world-2
 date: 2023-10-16 00:00:00+0000
-lastmod: 2025-03-03 00:00:00+0000
+lastmod: 2025-06-10 00:00:00+0000
 image: cover.jpg
 draft: false
 categories:
@@ -23,7 +23,7 @@ Here are my notes for some of the more commonly used git commands along with ini
 
 To begin, install as follows for Arch Linux:
 
-    # pacman -Syu git
+    $ sudo pacman -Sy git
 
 Or
 
@@ -125,11 +125,9 @@ This has proven to be very useful for me when I forget to update a repository be
 
 ## References
 
-References for git (and used for above):
-
-https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens</br>
-https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup#_first_time</br>
-https://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Setup-and-Config</br>
-https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage#_credential_caching</br>
-https://git-scm.com/book/en/v2/Git-Tools-Stashing-and-Cleaning</br>
-https://www.geeksforgeeks.org/difference-between-chaining-operators-in-linux/
+1. https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
+2. https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup#_first_time
+3. https://git-scm.com/book/en/v2/Appendix-C%3A-Git-Commands-Setup-and-Config
+4. https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage#_credential_caching
+5. https://git-scm.com/book/en/v2/Git-Tools-Stashing-and-Cleaning
+6. https://www.geeksforgeeks.org/difference-between-chaining-operators-in-linux/

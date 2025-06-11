@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="A brief look at finding a trading signal based on moving averages of the VIX.">
+<title>Investigating A VIX Trading Signal, Part 2: Finding A Signal</title>
+
+<link rel='canonical' href='https://www.jaredszajkowski.com/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/'>
+
+<link rel="stylesheet" href="/scss/style.min.b5046de03b9b90a8153f66de518ac609404897469f028cab9556711c2fbc322e.css"><meta property='og:title' content="Investigating A VIX Trading Signal, Part 2: Finding A Signal">
+<meta property='og:description' content="A brief look at finding a trading signal based on moving averages of the VIX.">
+<meta property='og:url' content='https://www.jaredszajkowski.com/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/'>
+<meta property='og:site_name' content='Jared Szajkowski'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Python' /><meta property='article:tag' content='Yahoo Finance' /><meta property='article:tag' content='pandas' /><meta property='article:tag' content='VIX' /><meta property='article:published_time' content='2025-03-02T00:00:01&#43;00:00'/><meta property='article:modified_time' content='2025-06-10T00:00:01&#43;00:00'/><meta property='og:image' content='https://www.jaredszajkowski.com/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/cover.jpg' />
+<meta name="twitter:title" content="Investigating A VIX Trading Signal, Part 2: Finding A Signal">
+<meta name="twitter:description" content="A brief look at finding a trading signal based on moving averages of the VIX."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://www.jaredszajkowski.com/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/cover.jpg' />
+    <link rel="shortcut icon" href="/profile_pic.jpg" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/profile_pic_hu_35859dcdcf246484.jpg" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Jared Szajkowski</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='mailto:jared.szajkowski@gmail.com'
+                        target="_blank"
+                        title="Email"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/jaredszajkowski'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.linkedin.com/in/jaredszajkowski/'
+                        target="_blank"
+                        title="LinkedIn"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-linkedin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M8 11l0 5" /><path d="M8 8l0 .01" /><path d="M12 16l0 -5" /><path d="M16 16v-3a2 2 0 0 0 -4 0" /></svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about-me/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About Me</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#investigating-a-signal">Investigating A Signal</a>
+      <ol>
+        <li><a href="#determining-a-spike-level">Determining A Spike Level</a></li>
+        <li><a href="#spike-counts-signals-by-year">Spike Counts (Signals) By Year</a></li>
+        <li><a href="#spike-counts-signals-plots-by-year">Spike Counts (Signals) Plots By Year</a>
+          <ol>
+            <li><a href="#2020">2020</a></li>
+            <li><a href="#2021">2021</a></li>
+            <li><a href="#2022">2022</a></li>
+            <li><a href="#2023">2023</a></li>
+            <li><a href="#2024">2024</a></li>
+            <li><a href="#2025">2025</a></li>
+          </ol>
+        </li>
+        <li><a href="#spike-counts-signals-plots-by-decade">Spike Counts (Signals) Plots By Decade</a>
+          <ol>
+            <li><a href="#1990---1994">1990 - 1994</a></li>
+            <li><a href="#1995---1999">1995 - 1999</a></li>
+            <li><a href="#2000---2004">2000 - 2004</a></li>
+            <li><a href="#2005---2009">2005 - 2009</a></li>
+            <li><a href="#2010---2014">2010 - 2014</a></li>
+            <li><a href="#2015---2019">2015 - 2019</a></li>
+            <li><a href="#2020---2024">2020 - 2024</a></li>
+            <li><a href="#2025---present">2025 - Present</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#references">References</a></li>
+    <li><a href="#code">Code</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/">
+                <img src="/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/cover.jpg"
+                        
+                        width="1920" 
+                        height="800" 
+                        loading="lazy"
+                        alt="Featured image of post Investigating A VIX Trading Signal, Part 2: Finding A Signal" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/financial-data/" style="background-color: #A0A0A0; color: ;">
+                Financial Data
+            </a>
+        
+            <a href="/categories/trading/" style="background-color: #F45B69; color: ;">
+                Trading
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/">Investigating A VIX Trading Signal, Part 2: Finding A Signal</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            A brief look at finding a trading signal based on moving averages of the VIX.
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">March 2, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    5 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="investigating-a-signal">Investigating A Signal
+</h2><p>Continuing from where we left off in <a class="link" href="/2025/03/01/investigating-a-vix-trading-signal-part-1-vix-and-vvix/" >part 1</a>, we will now consider the idea of a spike level in the VIX and how we might use a spike level to generate a signal. These elevated levels usually occur during market sell-off events or longer term drawdowns in the S&amp;P 500. Sometimes the VIX reverts to recent levels after a spike, but other times levels remain elevated for weeks or even months.</p>
+<h3 id="determining-a-spike-level">Determining A Spike Level
+</h3><p>We will start the 10 day simple moving average (SMA) of the daily high level to get an idea of what is happening recently with the VIX. We&rsquo;ll then pick an arbitrary spike level (25% above the 10 day SMA), and our signal is generated if the VIX hits a level that is above the spike threshold.</p>
+<p>The idea is that the 10 day SMA will smooth out the recent short term volatility in the VIX, and therefore any gradual increases in the VIX are not interpreted as spike events.</p>
+<p>We also will generate the 20 and 50 day SMAs for reference, and again to see what is happening with the level of the VIX over slightly longer timeframes.</p>
+<p>Here&rsquo;s the code for the above:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Define the spike multiplier for detecting significant spikes</span>
+</span></span><span class="line"><span class="cl"><span class="n">spike_level</span> <span class="o">=</span> <span class="mf">1.25</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># =========================</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Simple Moving Averages (SMA)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># =========================</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Calculate 10-period SMA of &#39;High&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">vix</span><span class="p">[</span><span class="s1">&#39;High_SMA_10&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vix</span><span class="p">[</span><span class="s1">&#39;High&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Shift the 10-period SMA by 1 to compare with current &#39;High&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">vix</span><span class="p">[</span><span class="s1">&#39;High_SMA_10_Shift&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vix</span><span class="p">[</span><span class="s1">&#39;High_SMA_10&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Calculate the spike level based on shifted SMA and spike multiplier</span>
+</span></span><span class="line"><span class="cl"><span class="n">vix</span><span class="p">[</span><span class="s1">&#39;Spike_Level_SMA&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vix</span><span class="p">[</span><span class="s1">&#39;High_SMA_10_Shift&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">spike_level</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Calculate 20-period SMA of &#39;High&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">vix</span><span class="p">[</span><span class="s1">&#39;High_SMA_20&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vix</span><span class="p">[</span><span class="s1">&#39;High&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Determine if &#39;High&#39; exceeds the spike level (indicates a spike)</span>
+</span></span><span class="line"><span class="cl"><span class="n">vix</span><span class="p">[</span><span class="s1">&#39;Spike_SMA&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vix</span><span class="p">[</span><span class="s1">&#39;High&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">vix</span><span class="p">[</span><span class="s1">&#39;Spike_Level_SMA&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Calculate 50-period SMA of &#39;High&#39; for trend analysis</span>
+</span></span><span class="line"><span class="cl"><span class="n">vix</span><span class="p">[</span><span class="s1">&#39;High_SMA_50&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vix</span><span class="p">[</span><span class="s1">&#39;High&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># =========================</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Exponential Moving Averages (EMA)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># =========================</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Calculate 10-period EMA of &#39;High&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">vix</span><span class="p">[</span><span class="s1">&#39;High_EMA_10&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vix</span><span class="p">[</span><span class="s1">&#39;High&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">ewm</span><span class="p">(</span><span class="n">span</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">adjust</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Shift the 10-period EMA by 1 to compare with current &#39;High&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">vix</span><span class="p">[</span><span class="s1">&#39;High_EMA_10_Shift&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vix</span><span class="p">[</span><span class="s1">&#39;High_EMA_10&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Calculate the spike level based on shifted EMA and spike multiplier</span>
+</span></span><span class="line"><span class="cl"><span class="n">vix</span><span class="p">[</span><span class="s1">&#39;Spike_Level_EMA&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vix</span><span class="p">[</span><span class="s1">&#39;High_EMA_10_Shift&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">spike_level</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Calculate 20-period EMA of &#39;High&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="n">vix</span><span class="p">[</span><span class="s1">&#39;High_EMA_20&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vix</span><span class="p">[</span><span class="s1">&#39;High&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">ewm</span><span class="p">(</span><span class="n">span</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">adjust</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Determine if &#39;High&#39; exceeds the spike level (indicates a spike)</span>
+</span></span><span class="line"><span class="cl"><span class="n">vix</span><span class="p">[</span><span class="s1">&#39;Spike_EMA&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vix</span><span class="p">[</span><span class="s1">&#39;High&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">vix</span><span class="p">[</span><span class="s1">&#39;Spike_Level_EMA&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Calculate 50-period EMA of &#39;High&#39; for trend analysis</span>
+</span></span><span class="line"><span class="cl"><span class="n">vix</span><span class="p">[</span><span class="s1">&#39;High_EMA_50&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vix</span><span class="p">[</span><span class="s1">&#39;High&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">ewm</span><span class="p">(</span><span class="n">span</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">adjust</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>For this exercise, we will use simple moving averages.</p>
+<h3 id="spike-counts-signals-by-year">Spike Counts (Signals) By Year
+</h3><p>To investigate the number of spike events (or signals) that we receive on a yearly basis, we can run the following:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Ensure the index is a DatetimeIndex</span>
+</span></span><span class="line"><span class="cl"><span class="n">vix</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">vix</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Create a new column for the year extracted from the date index</span>
+</span></span><span class="line"><span class="cl"><span class="n">vix</span><span class="p">[</span><span class="s1">&#39;Year&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vix</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">year</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Group by year and the &#34;Spike_SMA&#34; and &#34;Spike_EMA&#34; columns, then count occurrences</span>
+</span></span><span class="line"><span class="cl"><span class="n">spike_count_SMA</span> <span class="o">=</span> <span class="n">vix</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Year&#39;</span><span class="p">,</span> <span class="s1">&#39;Spike_SMA&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">display</span><span class="p">(</span><span class="n">spike_count_SMA</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Which gives us the following:</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: right">Year</th>
+          <th style="text-align: right">False</th>
+          <th style="text-align: right">True</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: right">1990</td>
+          <td style="text-align: right">248</td>
+          <td style="text-align: right">5</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1991</td>
+          <td style="text-align: right">249</td>
+          <td style="text-align: right">4</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1992</td>
+          <td style="text-align: right">250</td>
+          <td style="text-align: right">4</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1993</td>
+          <td style="text-align: right">251</td>
+          <td style="text-align: right">2</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1994</td>
+          <td style="text-align: right">243</td>
+          <td style="text-align: right">9</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1995</td>
+          <td style="text-align: right">252</td>
+          <td style="text-align: right">0</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1996</td>
+          <td style="text-align: right">248</td>
+          <td style="text-align: right">6</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1997</td>
+          <td style="text-align: right">247</td>
+          <td style="text-align: right">6</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1998</td>
+          <td style="text-align: right">243</td>
+          <td style="text-align: right">9</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">1999</td>
+          <td style="text-align: right">250</td>
+          <td style="text-align: right">2</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2000</td>
+          <td style="text-align: right">248</td>
+          <td style="text-align: right">4</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2001</td>
+          <td style="text-align: right">240</td>
+          <td style="text-align: right">8</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2002</td>
+          <td style="text-align: right">248</td>
+          <td style="text-align: right">4</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2003</td>
+          <td style="text-align: right">251</td>
+          <td style="text-align: right">1</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2004</td>
+          <td style="text-align: right">250</td>
+          <td style="text-align: right">2</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2005</td>
+          <td style="text-align: right">250</td>
+          <td style="text-align: right">2</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2006</td>
+          <td style="text-align: right">242</td>
+          <td style="text-align: right">9</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2007</td>
+          <td style="text-align: right">239</td>
+          <td style="text-align: right">12</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2008</td>
+          <td style="text-align: right">238</td>
+          <td style="text-align: right">15</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2009</td>
+          <td style="text-align: right">249</td>
+          <td style="text-align: right">3</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2010</td>
+          <td style="text-align: right">239</td>
+          <td style="text-align: right">13</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2011</td>
+          <td style="text-align: right">240</td>
+          <td style="text-align: right">12</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2012</td>
+          <td style="text-align: right">248</td>
+          <td style="text-align: right">2</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2013</td>
+          <td style="text-align: right">249</td>
+          <td style="text-align: right">3</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2014</td>
+          <td style="text-align: right">235</td>
+          <td style="text-align: right">17</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2015</td>
+          <td style="text-align: right">240</td>
+          <td style="text-align: right">12</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2016</td>
+          <td style="text-align: right">234</td>
+          <td style="text-align: right">18</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2017</td>
+          <td style="text-align: right">244</td>
+          <td style="text-align: right">7</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2018</td>
+          <td style="text-align: right">228</td>
+          <td style="text-align: right">23</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2019</td>
+          <td style="text-align: right">241</td>
+          <td style="text-align: right">11</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2020</td>
+          <td style="text-align: right">224</td>
+          <td style="text-align: right">29</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2021</td>
+          <td style="text-align: right">235</td>
+          <td style="text-align: right">17</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2022</td>
+          <td style="text-align: right">239</td>
+          <td style="text-align: right">12</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2023</td>
+          <td style="text-align: right">246</td>
+          <td style="text-align: right">4</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2024</td>
+          <td style="text-align: right">237</td>
+          <td style="text-align: right">15</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2025</td>
+          <td style="text-align: right">96</td>
+          <td style="text-align: right">12</td>
+      </tr>
+  </tbody>
+</table></div>
+<p>And the plot to aid with visualization. Based on the plot, it seems as though volatility has increased since the early 2000&rsquo;s:</p>
+<p><img src="/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/08_Spike_Counts.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike Counts"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<h3 id="spike-counts-signals-plots-by-year">Spike Counts (Signals) Plots By Year
+</h3><p>The most recent yearly plots are shown below for when signals are generated. The images for the previous years are linked below.</p>
+<!-- #### 1990
+
+![Spike/Signals, 1990](09_VIX_SMA_Spike_1990_1990.png)
+
+#### 1991
+
+![Spike/Signals, 1991](09_VIX_SMA_Spike_1991_1991.png)
+
+#### 1992
+
+![Spike/Signals, 1992](09_VIX_SMA_Spike_1992_1992.png)
+
+#### 1993
+
+![Spike/Signals, 1993](09_VIX_SMA_Spike_1993_1993.png)
+
+#### 1994
+
+![Spike/Signals, 1994](09_VIX_SMA_Spike_1994_1994.png)
+
+#### 1995
+
+![Spike/Signals, 1995](09_VIX_SMA_Spike_1995_1995.png)
+
+#### 1996
+
+![Spike/Signals, 1996](09_VIX_SMA_Spike_1996_1996.png)
+
+#### 1997
+
+![Spike/Signals, 1997](09_VIX_SMA_Spike_1997_1997.png)
+
+#### 1998
+
+![Spike/Signals, 1998](09_VIX_SMA_Spike_1998_1998.png)
+
+#### 1999
+
+![Spike/Signals, 1999](09_VIX_SMA_Spike_1999_1999.png)
+
+#### 2000
+
+![Spike/Signals, 2000](09_VIX_SMA_Spike_2000_2000.png)
+
+#### 2001
+
+![Spike/Signals, 2001](09_VIX_SMA_Spike_2001_2001.png)
+
+#### 2002
+
+![Spike/Signals, 2002](09_VIX_SMA_Spike_2002_2002.png)
+
+#### 2003
+
+![Spike/Signals, 2003](09_VIX_SMA_Spike_2003_2003.png)
+
+#### 2004
+
+![Spike/Signals, 2004](09_VIX_SMA_Spike_2004_2004.png)
+
+#### 2005
+
+![Spike/Signals, 2005](09_VIX_SMA_Spike_2005_2005.png)
+
+#### 2006
+
+![Spike/Signals, 2006](09_VIX_SMA_Spike_2006_2006.png)
+
+#### 2007
+
+![Spike/Signals, 2007](09_VIX_SMA_Spike_2007_2007.png)
+
+#### 2008
+
+![Spike/Signals, 2008](09_VIX_SMA_Spike_2008_2008.png)
+
+#### 2009
+
+![Spike/Signals, 2009](09_VIX_SMA_Spike_2009_2009.png)
+
+#### 2010
+
+![Spike/Signals, 2010](09_VIX_SMA_Spike_2010_2010.png)
+
+#### 2011
+
+![Spike/Signals, 2011](09_VIX_SMA_Spike_2011_2011.png)
+
+#### 2012
+
+![Spike/Signals, 2012](09_VIX_SMA_Spike_2012_2012.png)
+
+#### 2013
+
+![Spike/Signals, 2013](09_VIX_SMA_Spike_2013_2013.png)
+
+#### 2014
+
+![Spike/Signals, 2014](09_VIX_SMA_Spike_2014_2014.png)
+
+#### 2015
+
+![Spike/Signals, 2015](09_VIX_SMA_Spike_2015_2015.png)
+
+#### 2016
+
+![Spike/Signals, 2016](09_VIX_SMA_Spike_2016_2016.png)
+
+#### 2017
+
+![Spike/Signals, 2017](09_VIX_SMA_Spike_2017_2017.png)
+
+#### 2018
+
+![Spike/Signals, 2018](09_VIX_SMA_Spike_2018_2018.png)
+
+#### 2019
+
+![Spike/Signals, 2019](09_VIX_SMA_Spike_2019_2019.png) -->
+<p><a class="link" href="09_VIX_SMA_Spike_1990_1990.png" >Spike/Signals, 1990</a></br>
+<a class="link" href="09_VIX_SMA_Spike_1991_1991.png" >Spike/Signals, 1991</a></br>
+<a class="link" href="09_VIX_SMA_Spike_1992_1992.png" >Spike/Signals, 1992</a></br>
+<a class="link" href="09_VIX_SMA_Spike_1993_1993.png" >Spike/Signals, 1993</a></br>
+<a class="link" href="09_VIX_SMA_Spike_1994_1994.png" >Spike/Signals, 1994</a></br>
+<a class="link" href="09_VIX_SMA_Spike_1995_1995.png" >Spike/Signals, 1995</a></br>
+<a class="link" href="09_VIX_SMA_Spike_1996_1996.png" >Spike/Signals, 1996</a></br>
+<a class="link" href="09_VIX_SMA_Spike_1997_1997.png" >Spike/Signals, 1997</a></br>
+<a class="link" href="09_VIX_SMA_Spike_1998_1998.png" >Spike/Signals, 1998</a></br>
+<a class="link" href="09_VIX_SMA_Spike_1999_1999.png" >Spike/Signals, 1999</a></br>
+<a class="link" href="09_VIX_SMA_Spike_2000_2000.png" >Spike/Signals, 2000</a></br>
+<a class="link" href="09_VIX_SMA_Spike_2001_2001.png" >Spike/Signals, 2001</a></br>
+<a class="link" href="09_VIX_SMA_Spike_2002_2002.png" >Spike/Signals, 2002</a></br>
+<a class="link" href="09_VIX_SMA_Spike_2003_2003.png" >Spike/Signals, 2003</a></br>
+<a class="link" href="09_VIX_SMA_Spike_2004_2004.png" >Spike/Signals, 2004</a></br>
+<a class="link" href="09_VIX_SMA_Spike_2005_2005.png" >Spike/Signals, 2005</a></br>
+<a class="link" href="09_VIX_SMA_Spike_2006_2006.png" >Spike/Signals, 2006</a></br>
+<a class="link" href="09_VIX_SMA_Spike_2007_2007.png" >Spike/Signals, 2007</a></br>
+<a class="link" href="09_VIX_SMA_Spike_2008_2008.png" >Spike/Signals, 2008</a></br>
+<a class="link" href="09_VIX_SMA_Spike_2009_2009.png" >Spike/Signals, 2009</a></br>
+<a class="link" href="09_VIX_SMA_Spike_2010_2010.png" >Spike/Signals, 2010</a></br>
+<a class="link" href="09_VIX_SMA_Spike_2011_2011.png" >Spike/Signals, 2011</a></br>
+<a class="link" href="09_VIX_SMA_Spike_2012_2012.png" >Spike/Signals, 2012</a></br>
+<a class="link" href="09_VIX_SMA_Spike_2013_2013.png" >Spike/Signals, 2013</a></br>
+<a class="link" href="09_VIX_SMA_Spike_2014_2014.png" >Spike/Signals, 2014</a></br>
+<a class="link" href="09_VIX_SMA_Spike_2015_2015.png" >Spike/Signals, 2015</a></br>
+<a class="link" href="09_VIX_SMA_Spike_2016_2016.png" >Spike/Signals, 2016</a></br>
+<a class="link" href="09_VIX_SMA_Spike_2017_2017.png" >Spike/Signals, 2017</a></br>
+<a class="link" href="09_VIX_SMA_Spike_2018_2018.png" >Spike/Signals, 2018</a></br>
+<a class="link" href="09_VIX_SMA_Spike_2019_2019.png" >Spike/Signals, 2019</a></p>
+<h4 id="2020">2020
+</h4><p><img src="/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/09_VIX_SMA_Spike_2020_2020.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2020"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<h4 id="2021">2021
+</h4><p><img src="/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/09_VIX_SMA_Spike_2021_2021.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2021"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<h4 id="2022">2022
+</h4><p><img src="/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/09_VIX_SMA_Spike_2022_2022.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2022"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<h4 id="2023">2023
+</h4><p><img src="/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/09_VIX_SMA_Spike_2023_2023.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2023"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<h4 id="2024">2024
+</h4><p><img src="/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/09_VIX_SMA_Spike_2024_2024.png"
+	width="3570"
+	height="1767"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2024"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="202"
+		data-flex-basis="484px"
+	
+></p>
+<h4 id="2025">2025
+</h4><p><img src="/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/09_VIX_SMA_Spike_2025_2025.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2025"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p>For comparison with the VVIX plot for 2025:</p>
+<p><img src="/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/02_VVIX_Plot_2025-Present.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="VVIX, 2025"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<h3 id="spike-counts-signals-plots-by-decade">Spike Counts (Signals) Plots By Decade
+</h3><p>And here are the plots for the signals generated over the past 3 decades:</p>
+<h4 id="1990---1994">1990 - 1994
+</h4><p><img src="/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/09_VIX_SMA_Spike_1990_1994.png"
+	width="3562"
+	height="1767"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 1990 - 1994"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="483px"
+	
+></p>
+<h4 id="1995---1999">1995 - 1999
+</h4><p><img src="/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/09_VIX_SMA_Spike_1995_1999.png"
+	width="3562"
+	height="1767"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 1995 - 1999"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="483px"
+	
+></p>
+<h4 id="2000---2004">2000 - 2004
+</h4><p><img src="/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/09_VIX_SMA_Spike_2000_2004.png"
+	width="3571"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2000 - 2004"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<h4 id="2005---2009">2005 - 2009
+</h4><p><img src="/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/09_VIX_SMA_Spike_2005_2009.png"
+	width="3571"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2005 - 2009"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<h4 id="2010---2014">2010 - 2014
+</h4><p><img src="/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/09_VIX_SMA_Spike_2010_2014.png"
+	width="3571"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2010 - 2014"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<h4 id="2015---2019">2015 - 2019
+</h4><p><img src="/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/09_VIX_SMA_Spike_2015_2019.png"
+	width="3562"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2015 - 2019"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="483px"
+	
+></p>
+<h4 id="2020---2024">2020 - 2024
+</h4><p><img src="/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/09_VIX_SMA_Spike_2020_2024.png"
+	width="3571"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2020 - 2024"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<h4 id="2025---present">2025 - Present
+</h4><p><img src="/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/09_VIX_SMA_Spike_2025_2029.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="Spike/Signals, 2025 - Present"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<p>For comparison with the VVIX plot for 2025:</p>
+<p><img src="/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/02_VVIX_Plot_2025-Present.png"
+	width="3570"
+	height="1768"
+	
+	loading="lazy"
+	
+		alt="VVIX, 2025"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="201"
+		data-flex-basis="484px"
+	
+></p>
+<h2 id="references">References
+</h2><ol>
+<li><a class="link" href="https://www.cboe.com/tradable_products/vix/"  target="_blank" rel="noopener"
+    >https://www.cboe.com/tradable_products/vix/</a></li>
+<li><a class="link" href="https://github.com/ranaroussi/yfinance"  target="_blank" rel="noopener"
+    >https://github.com/ranaroussi/yfinance</a></li>
+</ol>
+<h2 id="code">Code
+</h2><p>Note: The files below are identical to those linked in <a class="link" href="/2025/03/01/investigating-a-vix-trading-signal-part-1-vix-and-vvix/" >part 1</a>.</p>
+<p>The jupyter notebook with the functions and all other code is available <a class="link" href="investigating-a-vix-trading-signal-part-2-finding-a-signal.ipynb" >here</a>.</br>
+The html export of the jupyter notebook is available <a class="link" href="investigating-a-vix-trading-signal-part-2-finding-a-signal.html" >here</a>.</br>
+The pdf export of the jupyter notebook is available <a class="link" href="investigating-a-vix-trading-signal-part-2-finding-a-signal.pdf" >here</a>.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/python/">Python</a>
+        
+            <a href="/tags/yahoo-finance/">Yahoo Finance</a>
+        
+            <a href="/tags/pandas/">Pandas</a>
+        
+            <a href="/tags/vix/">VIX</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on June 10, 2025
+        </span>
+    </section></footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+	const mainArticleElement = document.querySelector(".main-article");
+        renderMathInElement(mainArticleElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/2025/03/03/investigating-a-vix-trading-signal-part-3-trading/">
+        
+        
+            <div class="article-image">
+                <img src="/2025/03/03/investigating-a-vix-trading-signal-part-3-trading/cover.6c26bbaa157bd04e55552d08c0af8235.jpg" 
+                        width="1920" 
+                        height="800" 
+                        loading="lazy"
+                        alt="Featured image of post Investigating A VIX Trading Signal, Part 3: Trading"
+                        data-key="investigating-a-vix-trading-signal-part-3-trading" 
+                        data-hash="md5-bCa7qhV70E5VVS0IwK&#43;CNQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Investigating A VIX Trading Signal, Part 3: Trading</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/2025/03/01/investigating-a-vix-trading-signal-part-1-vix-and-vvix/">
+        
+        
+            <div class="article-image">
+                <img src="/2025/03/01/investigating-a-vix-trading-signal-part-1-vix-and-vvix/cover.6c26bbaa157bd04e55552d08c0af8235.jpg" 
+                        width="1920" 
+                        height="800" 
+                        loading="lazy"
+                        alt="Featured image of post Investigating A VIX Trading Signal, Part 1: VIX And VVIX"
+                        data-key="investigating-a-vix-trading-signal-part-1-vix-and-vvix" 
+                        data-hash="md5-bCa7qhV70E5VVS0IwK&#43;CNQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Investigating A VIX Trading Signal, Part 1: VIX And VVIX</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/2024/11/04/harry-browne-permanent-portfolio/">
+        
+        
+            <div class="article-image">
+                <img src="/2024/11/04/harry-browne-permanent-portfolio/cover.064c900ecb7e5996b2bf7b0cb30919d7.jpg" 
+                        width="1920" 
+                        height="800" 
+                        loading="lazy"
+                        alt="Featured image of post Does Harry Browne&#39;s permanent portfolio withstand the test of time?"
+                        data-key="harry-browne-permanent-portfolio" 
+                        data-hash="md5-BkyQDst&#43;WZayv3sMswkZ1w==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Does Harry Browne&#39;s permanent portfolio withstand the test of time?</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/">
+        
+        
+            <div class="article-image">
+                <img src="/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/cover.976000143a9e4ce879bc3e4c2b9c2311.jpg" 
+                        width="1920" 
+                        height="800" 
+                        loading="lazy"
+                        alt="Featured image of post Nasdaq Data Link Tables API Data Retrieval"
+                        data-key="nasdaq-data-link-tables-api-data-retrieval" 
+                        data-hash="md5-l2AAFDqeTOh5vD5MK5wjEQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Nasdaq Data Link Tables API Data Retrieval</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/2023/11/15/cleaning-bloomberg-excel-export/">
+        
+        
+            <div class="article-image">
+                <img src="/2023/11/15/cleaning-bloomberg-excel-export/cover.60bf7aebe924616e0a0bbf9ac0093b2e.jpg" 
+                        width="1920" 
+                        height="800" 
+                        loading="lazy"
+                        alt="Featured image of post Cleaning A Bloomberg Data Excel Export"
+                        data-key="cleaning-bloomberg-excel-export" 
+                        data-hash="md5-YL966&#43;kkYW4KC7&#43;awAk7Lg==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Cleaning A Bloomberg Data Excel Export</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="jaredszajkowski/jaredszajkowski.github.io"
+    data-repo-id="R_kgDOKZLn5w"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOKZLn584CaJwO"
+    data-mapping="title"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="light"
+    data-lang="en"
+    data-loading=""
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('light');
+            } else {
+                setGiscusTheme('dark');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2023 - 
+        
+        2025 Jared Szajkowski
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
