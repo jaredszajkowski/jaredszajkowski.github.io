@@ -44,7 +44,7 @@ Jared has completed the following graduate courses in the Univeristy of Chicago 
 * [FINM 35910 - Applied Algorithmic Trading](https://finmath.uchicago.edu/curriculum/degree-concentrations/trading/finm-35910/)
 * [FINM 31200 - Blockchain and Cryptoassets for Finance](https://finmath.uchicago.edu/curriculum/degree-concentrations/rates-and-credit/finm-31200/)
 * [FINM 32900 - Full-Stack Quantitative Finance](https://finmath.uchicago.edu/curriculum/degree-concentrations/financial-computing/finm-32900/)
-* [BUSN 41204 81,01 (Spring 2025) Machine Learning](https://apps.chicagobooth.edu/PublicApps/CourseSearch/CourseSearchFilter) (search "41204" in the course search)
+* [BUSN 41204 - Machine Learning](https://apps.chicagobooth.edu/PublicApps/CourseSearch/CourseSearchFilter) (search "41204" in the course search)
 
 ### Professional Certifications
 
