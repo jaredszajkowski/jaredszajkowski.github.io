@@ -13,5 +13,6 @@ menu:
         params: 
             icon: search
 
-#comments: false
+comments: false
+toc: false
 ---

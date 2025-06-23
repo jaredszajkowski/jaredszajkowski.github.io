@@ -6,21 +6,24 @@
         <description>Recent content in Pages on Jared Szajkowski</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Wed, 27 Dec 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/page/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 23 Jun 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/page/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>About Me</title>
+        <link>https://www.jaredszajkowski.com/about-me/</link>
+        <pubDate>Mon, 23 Jun 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/about-me/</guid>
+        <description>&lt;h3 id=&#34;profile&#34;&gt;Profile
+&lt;/h3&gt;&lt;p&gt;Jared is a seasoned civil engineer with extensive experience in infrastructure design and construction, specifically within the heavy highway and telecommunications sectors. With a strong foundation in field operations, contract administration, and project cost forecasting, Jared has consistently demonstrated the ability to drive projects to success through aggressive problem-solving and meticulous planning.&lt;/p&gt;
+&lt;p&gt;After spending the first 15 years of his career in engineering, Jared decided to follow his passion for financial markets by enrolling in the &lt;a class=&#34;link&#34; href=&#34;https://finmath.uchicago.edu/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Financial Mathematics&lt;/a&gt; graduate program at the University of Chicago in the fall of 2022. This rigorous program, known for its emphasis on quantitative analysis, stochastic processes, and financial modeling, has equipped Jared with advanced skills in data-driven decision-making, risk management, and derivative pricing. He will complete the program in the spring of 2026.&lt;/p&gt;</description>
+        </item>
+        <item>
         <title>Links</title>
         <link>https://www.jaredszajkowski.com/links/</link>
-        <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
+        <pubDate>Wed, 27 Dec 2023 00:00:00 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/links/</guid>
         <description>&lt;img src="https://www.jaredszajkowski.com/links/cover.jpg" alt="Featured image of post Links" /&gt;&lt;p&gt;Here are some links to software, etc. that I find interesting and use.&lt;/p&gt;</description>
-        </item>
-        <item>
-        <title>About Me</title>
-        <link>https://www.jaredszajkowski.com/about-me/</link>
-        <pubDate>Tue, 26 Sep 2023 00:00:00 +0000</pubDate>
-        
-        <guid>https://www.jaredszajkowski.com/about-me/</guid>
-        <description>&lt;p&gt;Nothing here yet.&lt;/p&gt;</description>
         </item>
         <item>
         <title>Archives</title>

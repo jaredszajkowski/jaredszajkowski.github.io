@@ -20,11 +20,11 @@ lastupdated = "January 2, 2006"
 [sidebar.avatar]
 enabled = true
 local = true
-#src = "img/avatar.png"
 src = "img/profile_pic.jpg"
 
 [article]
 math = true
+toc = true
 readingTime = true
 
 [article.license]
@@ -71,13 +71,9 @@ default = "auto"
 
 [imageProcessing.cover]
 enabled = false
-#disableCompression = true
-#resizable = false
 
 [imageProcessing.content]
 enabled = false
-#disableCompression = true
-#resizable = false
 
 ## Comments
 [comments]

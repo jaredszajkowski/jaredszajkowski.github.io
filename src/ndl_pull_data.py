@@ -3,8 +3,8 @@ import numpy as np
 import os
 import pandas as pd
 
-from load_api_keys import load_api_keys
 from IPython.display import display
+from load_api_keys import load_api_keys
 from pathlib import Path
 
 # Load API keys from the environment

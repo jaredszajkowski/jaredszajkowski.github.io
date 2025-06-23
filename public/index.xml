@@ -6,7 +6,18 @@
         <description>Recent content on Jared Szajkowski</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Tue, 10 Jun 2025 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 23 Jun 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>About Me</title>
+        <link>https://www.jaredszajkowski.com/about-me/</link>
+        <pubDate>Mon, 23 Jun 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/about-me/</guid>
+        <description>&lt;h3 id=&#34;profile&#34;&gt;Profile
+&lt;/h3&gt;&lt;p&gt;Jared is a seasoned civil engineer with extensive experience in infrastructure design and construction, specifically within the heavy highway and telecommunications sectors. With a strong foundation in field operations, contract administration, and project cost forecasting, Jared has consistently demonstrated the ability to drive projects to success through aggressive problem-solving and meticulous planning.&lt;/p&gt;
+&lt;p&gt;After spending the first 15 years of his career in engineering, Jared decided to follow his passion for financial markets by enrolling in the &lt;a class=&#34;link&#34; href=&#34;https://finmath.uchicago.edu/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Financial Mathematics&lt;/a&gt; graduate program at the University of Chicago in the fall of 2022. This rigorous program, known for its emphasis on quantitative analysis, stochastic processes, and financial modeling, has equipped Jared with advanced skills in data-driven decision-making, risk management, and derivative pricing. He will complete the program in the spring of 2026.&lt;/p&gt;</description>
+        </item>
+        <item>
         <title>Investigating A VIX Trading Signal, Part 3: Trading</title>
         <link>https://www.jaredszajkowski.com/2025/03/03/investigating-a-vix-trading-signal-part-3-trading/</link>
         <pubDate>Mon, 03 Mar 2025 00:00:01 +0000</pubDate>
@@ -104,6 +115,14 @@ Update 5/2/2025: Updated functions and code. --&gt;
     &gt;published an article on various backup solutions&lt;/a&gt;, and I thought I&amp;rsquo;d provide my incremental backup script that uses &lt;code&gt;rsync&lt;/code&gt; and &lt;code&gt;cp&lt;/code&gt;.&lt;/p&gt;</description>
         </item>
         <item>
+        <title>Links</title>
+        <link>https://www.jaredszajkowski.com/links/</link>
+        <pubDate>Wed, 27 Dec 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/links/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/links/cover.jpg" alt="Featured image of post Links" /&gt;&lt;p&gt;Here are some links to software, etc. that I find interesting and use.&lt;/p&gt;</description>
+        </item>
+        <item>
         <title>Nasdaq Data Link Tables API Data Retrieval</title>
         <link>https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/</link>
         <pubDate>Sun, 24 Dec 2023 00:00:01 +0000</pubDate>
@@ -151,14 +170,6 @@ $ git config --global user.email &amp;quot;email@address.com&amp;quot;
 &lt;p&gt;Then, set your preferred text editor (if you have one). I use nano:&lt;/p&gt;</description>
         </item>
         <item>
-        <title>Links</title>
-        <link>https://www.jaredszajkowski.com/links/</link>
-        <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
-        
-        <guid>https://www.jaredszajkowski.com/links/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/links/cover.jpg" alt="Featured image of post Links" /&gt;&lt;p&gt;Here are some links to software, etc. that I find interesting and use.&lt;/p&gt;</description>
-        </item>
-        <item>
         <title>Using yt-dlp With Zoom And Panopto</title>
         <link>https://www.jaredszajkowski.com/2023/10/01/yt-dlp-with-zoom-and-panopto/</link>
         <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
@@ -186,14 +197,6 @@ $ git config --global user.email &amp;quot;email@address.com&amp;quot;
 &lt;/ul&gt;
 &lt;h3 id=&#34;verify-uefi-boot-mode&#34;&gt;Verify UEFI boot mode
 &lt;/h3&gt;&lt;p&gt;The following command should show directory without error:&lt;/p&gt;</description>
-        </item>
-        <item>
-        <title>About Me</title>
-        <link>https://www.jaredszajkowski.com/about-me/</link>
-        <pubDate>Tue, 26 Sep 2023 00:00:00 +0000</pubDate>
-        
-        <guid>https://www.jaredszajkowski.com/about-me/</guid>
-        <description>&lt;p&gt;Nothing here yet.&lt;/p&gt;</description>
         </item>
         <item>
         <title>Hello World</title>
