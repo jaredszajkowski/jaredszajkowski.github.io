@@ -12,5 +12,7 @@ menu:
         params: 
             icon: archives
 
-#comments: false
+comments: false
+toc: false
+readingTime: false
 ---
