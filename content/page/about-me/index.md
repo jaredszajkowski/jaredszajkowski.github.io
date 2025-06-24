@@ -15,6 +15,7 @@ menu:
 comments: false
 toc: false
 readingTime: false
+license: false
 ---
 
 ### Profile
