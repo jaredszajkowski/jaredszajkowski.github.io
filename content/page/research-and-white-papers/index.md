@@ -14,6 +14,8 @@ menu:
             icon: "writing"
 
 comments: false
+toc: false
+readingTime: false
 ---
 
 Needs to be updated.
