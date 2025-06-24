@@ -48,6 +48,7 @@ menu:
 
 comments: false
 toc: false
+readingTime: false
 ---
 
 Here are some links to software, etc. that I find interesting and use.
