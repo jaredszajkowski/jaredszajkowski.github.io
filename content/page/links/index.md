@@ -3,7 +3,7 @@ title: "Links"
 # date: 2023-10-01 00:00:00+0000
 # lastmod: 2023-12-27 00:00:00+0000
 slug: "links"
-image: cover.jpg
+# image: cover.jpg
 #layout: "search"
 links:
   - title: GitHub
@@ -49,6 +49,7 @@ menu:
 comments: false
 toc: false
 readingTime: false
+license: false
 ---
 
 Here are some links to software, etc. that I find interesting and use.
