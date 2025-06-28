@@ -7,6 +7,7 @@ def load_data(
     source: str,
     asset_class: str,
     timeframe: str,
+    file_format: str,
 ) -> pd.DataFrame:
     
     """
@@ -28,7 +29,9 @@ def load_data(
         Asset class name (e.g., 'Equities').
     timeframe : str
         Timeframe for the data (e.g., 'Daily', 'Month_End').
-    
+    file_format : str
+        Format of the file to load ('csv', 'excel', or 'pickle')
+
     Returns:
     --------
     pd.DataFrame
@@ -44,38 +47,20 @@ def load_data(
     >>> df = load_data(DATA_DIR, "^VIX", "Yahoo_Finance", "Indices")
     """
 
-    # Build file paths using pathlib
-    csv_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.csv"
-    csv_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.zip"
-    xlsx_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.xlsx"
-    pickle_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.pkl"
-
-    # Try CSV
-    try:
+    if file_format == "csv":
+        csv_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.csv"
         df = pd.read_csv(csv_path)
         return df
-    except Exception:
-        pass
-
-    # Try Zip
-    try:
-        df = pd.read_csv(csv_path)
+    
+    elif file_format == "excel":
+        xlsx_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.xlsx"
+        df = pd.read_excel(xlsx_path, sheet_name="data", engine="calamine")
         return df
-    except Exception:
-        pass
 
-    # Try Excel
-    try:
-        df = pd.read_excel(xlsx_path)
-        return df
-    except Exception:
-        pass
-
-    # Try Pickle
-    try:
+    elif file_format == "pickle":
+        pickle_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.pkl"
         df = pd.read_pickle(pickle_path)
         return df
-    except Exception:
-        pass
-
-    raise ValueError(f"❌ Unable to load file: {ticker}. Ensure it's a valid CSV, Excel, Zip, or Pickle file with a 'data' sheet (if required).")
+    
+    else:
+        raise ValueError(f"❌ Unsupported file format: {file_format}. Please use 'csv', 'excel', or 'pickle'.")

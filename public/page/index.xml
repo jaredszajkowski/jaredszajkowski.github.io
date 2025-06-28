@@ -6,10 +6,10 @@
         <description>Recent content in Pages on Jared Szajkowski</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Mon, 23 Jun 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/page/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/page/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>About Me</title>
         <link>https://www.jaredszajkowski.com/about-me/</link>
-        <pubDate>Mon, 23 Jun 2025 00:00:00 +0000</pubDate>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/about-me/</guid>
         <description>&lt;h3 id=&#34;profile&#34;&gt;Profile
@@ -18,20 +18,20 @@
     &gt;Financial Mathematics&lt;/a&gt; graduate program at the University of Chicago in the fall of 2022. This rigorous program, known for its emphasis on quantitative analysis, stochastic processes, and financial modeling, has equipped Jared with advanced skills in data-driven decision-making, risk management, and derivative pricing. He will complete the program in the spring of 2026.&lt;/p&gt;</description>
         </item>
         <item>
-        <title>Links</title>
-        <link>https://www.jaredszajkowski.com/links/</link>
-        <pubDate>Wed, 27 Dec 2023 00:00:00 +0000</pubDate>
-        
-        <guid>https://www.jaredszajkowski.com/links/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/links/cover.jpg" alt="Featured image of post Links" /&gt;&lt;p&gt;Here are some links to software, etc. that I find interesting and use.&lt;/p&gt;</description>
-        </item>
-        <item>
         <title>Archives</title>
         <link>https://www.jaredszajkowski.com/archives/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/archives/</guid>
         <description></description>
+        </item>
+        <item>
+        <title>Links</title>
+        <link>https://www.jaredszajkowski.com/links/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/links/</guid>
+        <description>&lt;p&gt;Here are some links to software, etc. that I find interesting and use.&lt;/p&gt;</description>
         </item>
         <item>
         <title>Search</title>

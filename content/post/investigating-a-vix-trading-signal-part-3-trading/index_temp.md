@@ -81,11 +81,29 @@ Percent profit/loss: <!-- INSERT_13_Percent_PnL_2025-05-21_2025-08-20_2025-03-10
 
 Net profit/loss: <!-- INSERT_13_PnL_2025-05-21_2025-08-20_2025-03-10_2025-05-13_HERE -->
 
+#### Low Volatility In June 2025
+
+Plot with VIX level, trade side, VIX option, and VIX level at trade date/time:
+
+![VIX Level, Trades](14_VIX_Spike_Trades_2025-06-16_2025-10-06.png)
+
+Closed positions:
+
+<!-- INSERT_14_Closed_Positions_2025-09-17_2025-10-22_2025-06-26_2025-09-26_HERE -->
+
+Open positions:
+
+<!-- INSERT_14_Open_Positions_2025-09-17_2025-10-22_2025-06-26_2025-09-26_HERE -->
+
+Percent profit/loss: <!-- INSERT_14_Percent_PnL_2025-09-17_2025-10-22_2025-06-26_2025-09-26_HERE -->
+
+Net profit/loss: <!-- INSERT_14_PnL_2025-09-17_2025-10-22_2025-06-26_2025-09-26_HERE -->
+
 #### Complete Trade History
 
-Percent profit/loss: <!-- INSERT_14_Percent_PnL_None_None_None_None_HERE -->
+Percent profit/loss: <!-- INSERT_99_Percent_PnL_None_None_None_None_HERE -->
 
-Net profit/loss: <!-- INSERT_14_PnL_None_None_None_None_HERE -->
+Net profit/loss: <!-- INSERT_99_PnL_None_None_None_None_HERE -->
 
 ## References
 

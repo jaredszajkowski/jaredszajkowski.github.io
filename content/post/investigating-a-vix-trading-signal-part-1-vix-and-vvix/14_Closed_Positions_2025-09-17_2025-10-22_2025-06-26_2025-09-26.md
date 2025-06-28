@@ -1,0 +1,2 @@
+| Symbol   | Amount_Buy   | Quantity_Buy   | Amount_Sell   | Quantity_Sell   | Realized_PnL   | Percent_PnL   |
+|----------|--------------|----------------|---------------|-----------------|----------------|---------------|

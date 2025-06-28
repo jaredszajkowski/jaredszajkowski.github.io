@@ -65,6 +65,8 @@ Here are the trades executed to date, with any comments related to execution, ma
 | 2025-05-13 00:00:00 | Sell to Close | VIX 07/16/2025 45.00 P |          2 |   25.65 |          2.16 |  5127.84 |              17.96 | nan                                                                                      |
 | 2025-04-07 00:00:00 | Buy to Open   | VIX 08/20/2025 45.00 P |          2 |   21.75 |          2.16 |  4352.16 |              49.07 | nan                                                                                      |
 | 2025-05-13 00:00:00 | Sell to Close | VIX 08/20/2025 45.00 P |          2 |   25.40 |          2.16 |  5077.84 |              18.06 | nan                                                                                      |
+| 2025-06-26 00:00:00 | Buy to Open   | VIX 09/17/2025 20.00 C |         10 |    3.00 |         10.81 |  3010.81 |              16.37 | nan                                                                                      |
+| 2025-06-26 00:00:00 | Buy to Open   | VIX 10/22/2025 22.00 C |         10 |    2.94 |         10.81 |  2950.81 |              16.43 | nan                                                                                      |
 
 #### Volatility In August 2024
 
@@ -140,6 +142,28 @@ Open positions:
 Percent profit/loss: 12.03%
 
 Net profit/loss: $5,799.11
+
+#### Low Volatility In June 2025
+
+Plot with VIX level, trade side, VIX option, and VIX level at trade date/time:
+
+![VIX Level, Trades](14_VIX_Spike_Trades_2025-06-16_2025-10-06.png)
+
+Closed positions:
+
+| Symbol   | Amount_Buy   | Quantity_Buy   | Amount_Sell   | Quantity_Sell   | Realized_PnL   | Percent_PnL   |
+|----------|--------------|----------------|---------------|-----------------|----------------|---------------|
+
+Open positions:
+
+| Symbol                 |   Amount_Buy |   Quantity_Buy |
+|:-----------------------|-------------:|---------------:|
+| VIX 09/17/2025 20.00 C |      3010.81 |             10 |
+| VIX 10/22/2025 22.00 C |      2950.81 |             10 |
+
+Percent profit/loss: nan%
+
+Net profit/loss: $0.00
 
 #### Complete Trade History
 

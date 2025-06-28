@@ -3,13 +3,10 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.jaredszajkowski.com/</loc>
-    <lastmod>2025-06-23T00:00:00+00:00</lastmod>
+    <lastmod>2025-06-24T00:00:01+00:00</lastmod>
   </url><url>
-    <loc>https://www.jaredszajkowski.com/about-me/</loc>
-    <lastmod>2025-06-23T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.jaredszajkowski.com/page/</loc>
-    <lastmod>2025-06-23T00:00:00+00:00</lastmod>
+    <loc>https://www.jaredszajkowski.com/post/</loc>
+    <lastmod>2025-06-24T00:00:01+00:00</lastmod>
   </url><url>
     <loc>https://www.jaredszajkowski.com/categories/</loc>
     <lastmod>2025-06-10T00:00:01+00:00</lastmod>
@@ -21,9 +18,6 @@
     <lastmod>2025-06-10T00:00:01+00:00</lastmod>
   </url><url>
     <loc>https://www.jaredszajkowski.com/tags/pandas/</loc>
-    <lastmod>2025-06-10T00:00:01+00:00</lastmod>
-  </url><url>
-    <loc>https://www.jaredszajkowski.com/post/</loc>
     <lastmod>2025-06-10T00:00:01+00:00</lastmod>
   </url><url>
     <loc>https://www.jaredszajkowski.com/tags/python/</loc>
@@ -86,8 +80,8 @@
     <loc>https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/</loc>
     <lastmod>2025-04-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://www.jaredszajkowski.com/links/</loc>
-    <lastmod>2023-12-27T00:00:00+00:00</lastmod>
+    <loc>https://www.jaredszajkowski.com/page/</loc>
+    <lastmod>2024-01-03T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/</loc>
     <lastmod>2023-12-26T00:00:00+00:00</lastmod>
@@ -134,7 +128,11 @@
     <loc>https://www.jaredszajkowski.com/tags/hugo/</loc>
     <lastmod>2023-12-10T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://www.jaredszajkowski.com/about-me/</loc>
+  </url><url>
     <loc>https://www.jaredszajkowski.com/archives/</loc>
+  </url><url>
+    <loc>https://www.jaredszajkowski.com/links/</loc>
   </url><url>
     <loc>https://www.jaredszajkowski.com/search/</loc>
   </url>

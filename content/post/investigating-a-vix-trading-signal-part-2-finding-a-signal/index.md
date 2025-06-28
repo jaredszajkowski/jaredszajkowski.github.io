@@ -138,7 +138,7 @@ Which gives us the following:
 |   2022 |     239 |     12 |
 |   2023 |     246 |      4 |
 |   2024 |     237 |     15 |
-|   2025 |      96 |     12 |
+|   2025 |     108 |     12 |
 
 And the plot to aid with visualization. Based on the plot, it seems as though volatility has increased since the early 2000's:
 
