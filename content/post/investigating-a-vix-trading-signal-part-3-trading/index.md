@@ -88,10 +88,10 @@ Open positions:
 | Symbol   | Amount_Buy   | Quantity_Buy   |
 |----------|--------------|----------------|
 
-Total Opened Position Market Value: $4,940.40
-Total Closed Position Market Value: $6,658.60
-Net profit/loss: $1,718.20
-Percent profit/loss: 34.78%
+Total Opened Position Market Value: $4,940.40</br>
+Total Closed Position Market Value: $6,658.60</br>
+Net Profit/Loss: $1,718.20</br>
+Percent Profit/Loss: 34.78%
 
 #### Volatility In March 2025
 
@@ -110,10 +110,10 @@ Open positions:
 | Symbol   | Amount_Buy   | Quantity_Buy   |
 |----------|--------------|----------------|
 
-Total Opened Position Market Value: $2,830.40
-Total Closed Position Market Value: $3,494.60
-Net profit/loss: $664.20
-Percent profit/loss: 23.47%
+Total Opened Position Market Value: $2,830.40</br>
+Total Closed Position Market Value: $3,494.60</br>
+Net Profit/Loss: $664.20</br>
+Percent Profit/Loss: 23.47%
 
 #### Volatility In April 2025
 
@@ -141,10 +141,10 @@ Open positions:
 | Symbol   | Amount_Buy   | Quantity_Buy   |
 |----------|--------------|----------------|
 
-Total Opened Position Market Value: $48,217.94
-Total Closed Position Market Value: $54,017.05
-Net profit/loss: $5,799.11
-Percent profit/loss: 12.03%
+Total Opened Position Market Value: $48,217.94</br>
+Total Closed Position Market Value: $54,017.05</br>
+Net Profit/Loss: $5,799.11</br>
+Percent Profit/Loss: 12.03%
 
 #### Low Volatility In June 2025
 
@@ -164,17 +164,17 @@ Open positions:
 | VIX 09/17/2025 20.00 C |      3010.81 |             10 |
 | VIX 10/22/2025 22.00 C |      2950.81 |             10 |
 
-Total Opened Position Market Value: $0.00
-Total Closed Position Market Value: $0.00
-Net profit/loss: $0.00
-Percent profit/loss: nan%
+Total Opened Position Market Value: $0.00</br>
+Total Closed Position Market Value: $0.00</br>
+Net Profit/Loss: $0.00</br>
+Percent Profit/Loss: nan%
 
 #### Complete Trade History
 
-Total Opened Position Market Value: $55,988.74
-Total Closed Position Market Value: $64,170.25
-Net profit/loss: $8,181.51
-Percent profit/loss: 14.61%
+Total Opened Position Market Value: $55,988.74</br>
+Total Closed Position Market Value: $64,170.25</br>
+Net Profit/Loss: $8,181.51</br>
+Percent Profit/Loss: 14.61%
 
 ## References
 

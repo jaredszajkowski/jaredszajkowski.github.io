@@ -41,10 +41,10 @@ Open positions:
 
 <!-- INSERT_11_Open_Positions_2024-09-18_2024-12-18_2024-08-05_2024-11-27_HERE -->
 
-Total Opened Position Market Value: <!-- INSERT_11_Total_Opened_Position_Market_Value_2024-09-18_2024-12-18_2024-08-05_2024-11-27_HERE -->
-Total Closed Position Market Value: <!-- INSERT_11_Total_Closed_Position_Market_Value_2024-09-18_2024-12-18_2024-08-05_2024-11-27_HERE -->
-Net profit/loss: <!-- INSERT_11_PnL_2024-09-18_2024-12-18_2024-08-05_2024-11-27_HERE -->
-Percent profit/loss: <!-- INSERT_11_Percent_PnL_2024-09-18_2024-12-18_2024-08-05_2024-11-27_HERE -->
+Total Opened Position Market Value: <!-- INSERT_11_Total_Opened_Position_Market_Value_2024-09-18_2024-12-18_2024-08-05_2024-11-27_HERE --></br>
+Total Closed Position Market Value: <!-- INSERT_11_Total_Closed_Position_Market_Value_2024-09-18_2024-12-18_2024-08-05_2024-11-27_HERE --></br>
+Net Profit/Loss: <!-- INSERT_11_PnL_2024-09-18_2024-12-18_2024-08-05_2024-11-27_HERE --></br>
+Percent Profit/Loss: <!-- INSERT_11_Percent_PnL_2024-09-18_2024-12-18_2024-08-05_2024-11-27_HERE -->
 
 #### Volatility In March 2025
 
@@ -60,10 +60,10 @@ Open positions:
 
 <!-- INSERT_12_Open_Positions_2025-04-16_2025-04-16_2025-03-04_2025-03-24_HERE -->
 
-Total Opened Position Market Value: <!-- INSERT_12_Total_Opened_Position_Market_Value_2025-04-16_2025-04-16_2025-03-04_2025-03-24_HERE -->
-Total Closed Position Market Value: <!-- INSERT_12_Total_Closed_Position_Market_Value_2025-04-16_2025-04-16_2025-03-04_2025-03-24_HERE -->
-Net profit/loss: <!-- INSERT_12_PnL_2025-04-16_2025-04-16_2025-03-04_2025-03-24_HERE -->
-Percent profit/loss: <!-- INSERT_12_Percent_PnL_2025-04-16_2025-04-16_2025-03-04_2025-03-24_HERE -->
+Total Opened Position Market Value: <!-- INSERT_12_Total_Opened_Position_Market_Value_2025-04-16_2025-04-16_2025-03-04_2025-03-24_HERE --></br>
+Total Closed Position Market Value: <!-- INSERT_12_Total_Closed_Position_Market_Value_2025-04-16_2025-04-16_2025-03-04_2025-03-24_HERE --></br>
+Net Profit/Loss: <!-- INSERT_12_PnL_2025-04-16_2025-04-16_2025-03-04_2025-03-24_HERE --></br>
+Percent Profit/Loss: <!-- INSERT_12_Percent_PnL_2025-04-16_2025-04-16_2025-03-04_2025-03-24_HERE -->
 
 #### Volatility In April 2025
 
@@ -79,10 +79,10 @@ Open positions:
 
 <!-- INSERT_13_Open_Positions_2025-05-21_2025-08-20_2025-03-10_2025-05-13_HERE -->
 
-Total Opened Position Market Value: <!-- INSERT_13_Total_Opened_Position_Market_Value_2025-05-21_2025-08-20_2025-03-10_2025-05-13_HERE -->
-Total Closed Position Market Value: <!-- INSERT_13_Total_Closed_Position_Market_Value_2025-05-21_2025-08-20_2025-03-10_2025-05-13_HERE -->
-Net profit/loss: <!-- INSERT_13_PnL_2025-05-21_2025-08-20_2025-03-10_2025-05-13_HERE -->
-Percent profit/loss: <!-- INSERT_13_Percent_PnL_2025-05-21_2025-08-20_2025-03-10_2025-05-13_HERE -->
+Total Opened Position Market Value: <!-- INSERT_13_Total_Opened_Position_Market_Value_2025-05-21_2025-08-20_2025-03-10_2025-05-13_HERE --></br>
+Total Closed Position Market Value: <!-- INSERT_13_Total_Closed_Position_Market_Value_2025-05-21_2025-08-20_2025-03-10_2025-05-13_HERE --></br>
+Net Profit/Loss: <!-- INSERT_13_PnL_2025-05-21_2025-08-20_2025-03-10_2025-05-13_HERE --></br>
+Percent Profit/Loss: <!-- INSERT_13_Percent_PnL_2025-05-21_2025-08-20_2025-03-10_2025-05-13_HERE -->
 
 #### Low Volatility In June 2025
 
@@ -98,17 +98,17 @@ Open positions:
 
 <!-- INSERT_14_Open_Positions_2025-09-17_2025-10-22_2025-06-26_2025-09-26_HERE -->
 
-Total Opened Position Market Value: <!-- INSERT_14_Total_Opened_Position_Market_Value_2025-09-17_2025-10-22_2025-06-26_2025-09-26_HERE -->
-Total Closed Position Market Value: <!-- INSERT_14_Total_Closed_Position_Market_Value_2025-09-17_2025-10-22_2025-06-26_2025-09-26_HERE -->
-Net profit/loss: <!-- INSERT_14_PnL_2025-09-17_2025-10-22_2025-06-26_2025-09-26_HERE -->
-Percent profit/loss: <!-- INSERT_14_Percent_PnL_2025-09-17_2025-10-22_2025-06-26_2025-09-26_HERE -->
+Total Opened Position Market Value: <!-- INSERT_14_Total_Opened_Position_Market_Value_2025-09-17_2025-10-22_2025-06-26_2025-09-26_HERE --></br>
+Total Closed Position Market Value: <!-- INSERT_14_Total_Closed_Position_Market_Value_2025-09-17_2025-10-22_2025-06-26_2025-09-26_HERE --></br>
+Net Profit/Loss: <!-- INSERT_14_PnL_2025-09-17_2025-10-22_2025-06-26_2025-09-26_HERE --></br>
+Percent Profit/Loss: <!-- INSERT_14_Percent_PnL_2025-09-17_2025-10-22_2025-06-26_2025-09-26_HERE -->
 
 #### Complete Trade History
 
-Total Opened Position Market Value: <!-- INSERT_99_Total_Opened_Position_Market_Value_None_None_None_None_HERE -->
-Total Closed Position Market Value: <!-- INSERT_99_Total_Closed_Position_Market_Value_None_None_None_None_HERE -->
-Net profit/loss: <!-- INSERT_99_PnL_None_None_None_None_HERE -->
-Percent profit/loss: <!-- INSERT_99_Percent_PnL_None_None_None_None_HERE -->
+Total Opened Position Market Value: <!-- INSERT_99_Total_Opened_Position_Market_Value_None_None_None_None_HERE --></br>
+Total Closed Position Market Value: <!-- INSERT_99_Total_Closed_Position_Market_Value_None_None_None_None_HERE --></br>
+Net Profit/Loss: <!-- INSERT_99_PnL_None_None_None_None_HERE --></br>
+Percent Profit/Loss: <!-- INSERT_99_Percent_PnL_None_None_None_None_HERE -->
 
 ## References
 
