@@ -8335,7 +8335,167 @@ a.anchor-link {
 </div>
 </div>
 </div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3424a823">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Complete-settings.py-File">Complete settings.py File<a class="anchor-link" href="#Complete-settings.py-File">¶</a></h2>
+</div>
+</div>
+</div>
+</div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=82c99458">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="highlight"><pre><span></span><span class="sd">"""</span>
+<span class="sd">Load project configurations from .env files.</span>
+<span class="sd">Provides easy access to paths and credentials used in the project.</span>
+<span class="sd">Meant to be used as an imported module.</span>
+
+<span class="sd">If `settings.py` is run on its own, it will create the appropriate</span>
+<span class="sd">directories.</span>
+
+<span class="sd">For information about the rationale behind decouple and this module,</span>
+<span class="sd">see https://pypi.org/project/python-decouple/</span>
+
+<span class="sd">Note that decouple mentions that it will help to ensure that</span>
+<span class="sd">the project has "only one configuration module to rule all your instances."</span>
+<span class="sd">This is achieved by putting all the configuration into the `.env` file.</span>
+<span class="sd">You can have different sets of variables for difference instances,</span>
+<span class="sd">such as `.env.development` or `.env.production`. You would only</span>
+<span class="sd">need to copy over the settings from one into `.env` to switch</span>
+<span class="sd">over to the other configuration, for example.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">platform</span> <span class="kn">import</span> <span class="n">system</span>
+<span class="kn">from</span> <span class="nn">decouple</span> <span class="kn">import</span> <span class="n">config</span> <span class="k">as</span> <span class="n">_config</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">to_datetime</span>
+
+<span class="k">def</span> <span class="nf">get_os</span><span class="p">():</span>
+    <span class="n">os_name</span> <span class="o">=</span> <span class="n">system</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">os_name</span> <span class="o">==</span> <span class="s2">"Windows"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">"windows"</span>
+    <span class="k">elif</span> <span class="n">os_name</span> <span class="o">==</span> <span class="s2">"Darwin"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">"nix"</span>
+    <span class="k">elif</span> <span class="n">os_name</span> <span class="o">==</span> <span class="s2">"Linux"</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">"nix"</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">"unknown"</span>
+
+<span class="c1"># def if_relative_make_abs(path):</span>
+<span class="k">def</span> <span class="nf">if_relative_make_abs</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""If a relative path is given, make it absolute, assuming</span>
+<span class="sd">    that it is relative to the project root directory (BASE_DIR)</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    ```</span>
+<span class="sd">    &gt;&gt;&gt; if_relative_make_abs(Path('_data'))</span>
+<span class="sd">    WindowsPath('C:/Users/jdoe/GitRepositories/blank_project/_data')</span>
+
+<span class="sd">    &gt;&gt;&gt; if_relative_make_abs(Path("C:/Users/jdoe/GitRepositories/blank_project/_output"))</span>
+<span class="sd">    WindowsPath('C:/Users/jdoe/GitRepositories/blank_project/_output')</span>
+<span class="sd">    ```</span>
+<span class="sd">    """</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">is_absolute</span><span class="p">():</span>
+        <span class="n">abs_path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># abs_path = (d["BASE_DIR"] / path).resolve()</span>
+        <span class="n">abs_path</span> <span class="o">=</span> <span class="p">(</span><span class="n">base_dir</span> <span class="o">/</span> <span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">abs_path</span>
+
+<span class="c1"># Initialize the dictionary to hold all the settings</span>
+<span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="c1"># Get the OS type</span>
+<span class="n">d</span><span class="p">[</span><span class="s2">"OS_TYPE"</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_os</span><span class="p">()</span>
+
+<span class="c1"># Absolute path to root directory of the project</span>
+<span class="n">d</span><span class="p">[</span><span class="s2">"BASE_DIR"</span><span class="p">]</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+
+<span class="c1"># fmt: off</span>
+<span class="c1"># Paths</span>
+<span class="n">d</span><span class="p">[</span><span class="s2">"CONTENT_DIR"</span><span class="p">]</span> <span class="o">=</span> <span class="n">if_relative_make_abs</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">"BASE_DIR"</span><span class="p">],</span> <span class="n">_config</span><span class="p">(</span><span class="s1">'CONTENT_DIR'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">'content'</span><span class="p">),</span> <span class="n">cast</span><span class="o">=</span><span class="n">Path</span><span class="p">))</span>
+<span class="n">d</span><span class="p">[</span><span class="s2">"POSTS_DIR"</span><span class="p">]</span> <span class="o">=</span> <span class="n">if_relative_make_abs</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">"BASE_DIR"</span><span class="p">],</span> <span class="n">_config</span><span class="p">(</span><span class="s1">'POSTS_DIR'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">'content/post'</span><span class="p">),</span> <span class="n">cast</span><span class="o">=</span><span class="n">Path</span><span class="p">))</span>
+<span class="n">d</span><span class="p">[</span><span class="s2">"PAGES_DIR"</span><span class="p">]</span> <span class="o">=</span> <span class="n">if_relative_make_abs</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">"BASE_DIR"</span><span class="p">],</span> <span class="n">_config</span><span class="p">(</span><span class="s1">'PAGES_DIR'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">'content/page'</span><span class="p">),</span> <span class="n">cast</span><span class="o">=</span><span class="n">Path</span><span class="p">))</span>
+<span class="n">d</span><span class="p">[</span><span class="s2">"PUBLIC_DIR"</span><span class="p">]</span> <span class="o">=</span> <span class="n">if_relative_make_abs</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">"BASE_DIR"</span><span class="p">],</span> <span class="n">_config</span><span class="p">(</span><span class="s1">'PUBLIC_DIR'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">'public'</span><span class="p">),</span> <span class="n">cast</span><span class="o">=</span><span class="n">Path</span><span class="p">))</span>
+<span class="n">d</span><span class="p">[</span><span class="s2">"SOURCE_DIR"</span><span class="p">]</span> <span class="o">=</span> <span class="n">if_relative_make_abs</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">"BASE_DIR"</span><span class="p">],</span> <span class="n">_config</span><span class="p">(</span><span class="s1">'SOURCE_DIR'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">'src'</span><span class="p">),</span> <span class="n">cast</span><span class="o">=</span><span class="n">Path</span><span class="p">))</span>
+<span class="n">d</span><span class="p">[</span><span class="s2">"DATA_DIR"</span><span class="p">]</span> <span class="o">=</span> <span class="n">if_relative_make_abs</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">"BASE_DIR"</span><span class="p">],</span> <span class="n">_config</span><span class="p">(</span><span class="s1">'DATA_DIR'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">'Data'</span><span class="p">),</span> <span class="n">cast</span><span class="o">=</span><span class="n">Path</span><span class="p">))</span>
+<span class="n">d</span><span class="p">[</span><span class="s2">"DATA_MANUAL_DIR"</span><span class="p">]</span> <span class="o">=</span> <span class="n">if_relative_make_abs</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">"BASE_DIR"</span><span class="p">],</span> <span class="n">_config</span><span class="p">(</span><span class="s1">'DATA_MANUAL_DIR'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">'Data_Manual'</span><span class="p">),</span> <span class="n">cast</span><span class="o">=</span><span class="n">Path</span><span class="p">))</span>
+
+<span class="c1"># External filesystem paths</span>
+<span class="n">quant_finance_research_base_directory</span> <span class="o">=</span> <span class="s2">"/home/jared/Cloud_Storage/Dropbox/Quant_Finance_Research"</span>
+<span class="n">d</span><span class="p">[</span><span class="s2">"QUANT_FINANCE_RESEARCH_BASE_DIR"</span><span class="p">]</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">quant_finance_research_base_directory</span><span class="p">))</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span>
+<span class="n">d</span><span class="p">[</span><span class="s2">"QUANT_FINANCE_RESEARCH_SOURCE_DIR"</span><span class="p">]</span> <span class="o">=</span> <span class="n">if_relative_make_abs</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">"QUANT_FINANCE_RESEARCH_BASE_DIR"</span><span class="p">],</span> <span class="n">_config</span><span class="p">(</span><span class="s1">'QUANT_FINANCE_RESEARCH_SOURCE_DIR'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s1">'src'</span><span class="p">),</span> <span class="n">cast</span><span class="o">=</span><span class="n">Path</span><span class="p">))</span>
+<span class="n">d</span><span class="p">[</span><span class="s2">"ENV_PATH"</span><span class="p">]</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">"Cloud_Storage/Dropbox/.env"</span>
+
+<span class="c1"># # Print the dictionary to check the values</span>
+<span class="c1"># for key, value in d.items():</span>
+<span class="c1">#     print(f"{key}: {value}")</span>
+
+<span class="c1"># fmt: on</span>
+
+
+<span class="c1"># ## Name of Stata Executable in path</span>
+<span class="c1"># if d["OS_TYPE"] == "windows":</span>
+<span class="c1">#     d["STATA_EXE"] = _config("STATA_EXE", default="StataMP-64.exe")</span>
+<span class="c1"># elif d["OS_TYPE"] == "nix":</span>
+<span class="c1">#     d["STATA_EXE"] = _config("STATA_EXE", default="stata-mp")</span>
+<span class="c1"># else:</span>
+<span class="c1">#     raise ValueError("Unknown OS type")</span>
+
+
+<span class="k">def</span> <span class="nf">config</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">default</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"default"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">cast</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"cast"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
+        <span class="n">var</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"Default for </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> already exists. Check your settings.py file."</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">cast</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Allows for re-emphasizing the type of the variable</span>
+            <span class="c1"># But does not allow for changing the type of the variable</span>
+            <span class="c1"># if the variable is defined in the settings.py file</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">cast</span><span class="p">(</span><span class="n">var</span><span class="p">))</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="n">var</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">"Type for </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> is already set. Check your settings.py file."</span>
+                <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># If the variable is not defined in the settings.py file,</span>
+        <span class="c1"># then fall back to using decouple normally.</span>
+        <span class="n">var</span> <span class="o">=</span> <span class="n">_config</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">var</span>
+
+
+
+
+<span class="k">def</span> <span class="nf">create_dirs</span><span class="p">():</span>
+    <span class="c1">## If they don't exist, create the _data and _output directories</span>
+    <span class="n">d</span><span class="p">[</span><span class="s2">"CONTENT_DIR"</span><span class="p">]</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">d</span><span class="p">[</span><span class="s2">"PAGES_DIR"</span><span class="p">]</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">d</span><span class="p">[</span><span class="s2">"POSTS_DIR"</span><span class="p">]</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">d</span><span class="p">[</span><span class="s2">"PUBLIC_DIR"</span><span class="p">]</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">d</span><span class="p">[</span><span class="s2">"SOURCE_DIR"</span><span class="p">]</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">d</span><span class="p">[</span><span class="s2">"DATA_DIR"</span><span class="p">]</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="n">create_dirs</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c9c8debb">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
