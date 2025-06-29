@@ -70,9 +70,9 @@ Here are the trades executed to date, with any comments related to execution, ma
 
 #### Volatility In August 2024
 
-Plot with VIX level, trade side, VIX option, and VIX level at trade date/time:
+Plot with VIX high/low, trade side, VIX option, and VIX level at trade date/time:
 
-![VIX Level, Trades](11_VIX_Spike_Trades_2024-07-26_2024-12-07.png)
+![VIX Level, Trades](11_VIX_Spike_Trades.png)
 
 Closed positions:
 
@@ -95,9 +95,9 @@ Percent Profit/Loss: 34.78%
 
 #### Volatility In March 2025
 
-Plot with VIX level, trade side, VIX option, and VIX level at trade date/time:
+Plot with VIX high/low, trade side, VIX option, and VIX level at trade date/time:
 
-![VIX Level, Trades](12_VIX_Spike_Trades_2025-02-22_2025-04-03.png)
+![VIX Level, Trades](12_VIX_Spike_Trades.png)
 
 Closed positions:
 
@@ -117,9 +117,9 @@ Percent Profit/Loss: 23.47%
 
 #### Volatility In April 2025
 
-Plot with VIX level, trade side, VIX option, and VIX level at trade date/time:
+Plot with VIX high/low, trade side, VIX option, and VIX level at trade date/time:
 
-![VIX Level, Trades](13_VIX_Spike_Trades_2025-02-28_2025-05-23.png)
+![VIX Level, Trades](13_VIX_Spike_Trades.png)
 
 Closed positions:
 
@@ -148,9 +148,9 @@ Percent Profit/Loss: 12.03%
 
 #### Low Volatility In June 2025
 
-Plot with VIX level, trade side, VIX option, and VIX level at trade date/time:
+Plot with VIX high/low, trade side, VIX option, and VIX level at trade date/time:
 
-![VIX Level, Trades](14_VIX_Spike_Trades_2025-06-16_2025-10-06.png)
+![VIX Level, Trades](14_VIX_Spike_Trades.png)
 
 Closed positions:
 

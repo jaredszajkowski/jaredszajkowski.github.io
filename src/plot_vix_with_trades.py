@@ -83,7 +83,8 @@ def plot_vix_with_trades(
 
     # Save figure and display plot
     if export_plot == True:
-        plt.savefig(f"{index_number}_VIX_Spike_Trades_{plot_start_date}_{plot_end_date}.png", dpi=300, bbox_inches="tight")
+        # plt.savefig(f"{index_number}_VIX_Spike_Trades_{plot_start_date}_{plot_end_date}.png", dpi=300, bbox_inches="tight")
+        plt.savefig(f"{index_number}_VIX_Spike_Trades.png", dpi=300, bbox_inches="tight")
     
     # Display the plot
     plt.show()

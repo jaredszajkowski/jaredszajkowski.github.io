@@ -1,4 +1,4 @@
-"""Run or update the project. This file uses the `doit` Python package. It works like a Makefile, but is Python-based."""
+"""Execute with `doit` in the terminal."""
 
 #######################################
 ## Import Libraries
@@ -9,19 +9,21 @@ import sys
 ## Make sure the src folder is in the path
 sys.path.insert(1, "./src/")
 
-import shutil
 import re
-import yaml
-from datetime import datetime
+import shutil
 import subprocess
+import time
+import yaml
+
+from colorama import Fore, Style, init
+from datetime import datetime
 from os import environ, getcwd, path
 from pathlib import Path
-from colorama import Fore, Style, init
-import time
-import nbformat
-import hashlib
-from datetime import datetime
-import subprocess
+
+# Code from lines 29-75 referenced from the UChicago
+# FINM 32900 - Full-Stack Quantitative Finance course
+# Credit to Jeremy Bejarano
+# https://github.com/jmbejara
 
 ## Custom reporter: Print PyDoit Text in Green
 # This is helpful because some tasks write to sterr and pollute the output in

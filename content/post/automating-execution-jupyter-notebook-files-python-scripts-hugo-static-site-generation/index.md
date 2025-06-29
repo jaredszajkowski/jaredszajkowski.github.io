@@ -2,10 +2,10 @@
 title: Automating Execution of Jupyter Notebook Files, Python Scripts, and Hugo Static Site Generation
 description: A full-stack approach using doit.
 slug: automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation
-date: 2025-06-24 00:00:01+0000
+date: 2025-06-29 00:00:01+0000
 # lastmod: 2025-05-07 00:00:01+0000
 image: cover.jpg
-draft: true
+draft: false
 categories:
     - Financial Data
     - Tech
@@ -33,364 +33,529 @@ In this post, I'll cover the implementation of [doit](https://pydoit.org/) to au
 The primary motivation for automation came from several realizations:
 
 1. Setting directory variables would avoid any issues with managing where the static files were stored locally
-2. I wanted to be able to pull updated data, execute Jupyter notebooks, and update the posts within my Hugo site without a lot of manual intervention and manual processes
+2. I wanted to be able to pull updated data, execute Jupyter notebooks, and update the posts within my Hugo site without a manual intervention and processes
 3. I like to include the html and PDF exports of the Jupyter notebooks, which required copying the exports to the "Public" folder of the website
-4. I needed a system to build the "index.md" files that are present in each post directory, and automatically include Python code and functions (again, without copying/pasting or manual processes especially as functions are modified)
+4. I needed a system to build the "index.md" files that are present in each post directory, and automatically include Python code and functions (again, without copying/pasting or manual processes)
 
-## Python Functions
+## dodo.py
 
-Here are the functions needed for this project:
+The `dodo.py` file in the primary directory is referenced by `doit` and includes all imports, functions, environment variables, etc. as required to execute the desired code. My `dodo.py` is broken down as follows:
 
-* [calc_vix_trade_pnl](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#calc_vix_trade_pnl): Calculates the profit/loss from VIX options trades.</br>
-* [df_info](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#df_info): A simple function to display the information about a DataFrame and the first five rows and last five rows.</br>
-* [df_info_markdown](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#df_info_markdown): Similar to the `df_info` function above, except that it coverts the output to markdown.</br>
-* [export_track_md_deps](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps): Exports various text outputs to markdown files, which are included in the `index.md` file created when building the site with Hugo.</br>
-* [load_data](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#load_data): Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.</br>
-* [pandas_set_decimal_places](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places): Set the number of decimal places displayed for floating-point numbers in pandas.</br>
-* [plot_price](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_price): Plot the price data from a DataFrame for a specified date range and columns.</br>
-* [plot_stats](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_stats): Generate a scatter plot for the mean OHLC prices.</br>
-* [plot_vix_with_trades](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_vix_with_trades): Plot the VIX daily high and low prices, along with the VIX spikes, and trades.</br>
-* [yf_pull_data](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#yf_pull_data): Download daily price data from Yahoo Finance and export it.
+### Imports
 
-## Data Overview (VIX)
+The inital imports are as follows:
 
-### Acquire CBOE Volatility Index (VIX) Data
-
-First, let's get the data:
 
 ```python
-yf_pull_data(
-    base_directory=DATA_DIR,
-    ticker="^VIX",
-    source="Yahoo_Finance", 
-    asset_class="Indices", 
-    excel_export=True,
-    pickle_export=True,
-    output_confirmation=True,
-)
+#######################################
+## Import Libraries
+#######################################
+
+import sys
+
+## Make sure the src folder is in the path
+sys.path.insert(1, "./src/")
+
+import re
+import shutil
+import subprocess
+import time
+import yaml
+
+from colorama import Fore, Style, init
+from datetime import datetime
+from os import environ, getcwd, path
+from pathlib import Path
 ```
 
-### Load Data - VIX
 
-Now that we have the data, let's load it up and take a look:
+This first adds the `/src/` subdirectory to the path (required later on), and then imports any other required modules. I prefer to sort all imports alphabetically for easy reference and readability.
 
-```python
-# Set decimal places
-pandas_set_decimal_places(2)
+### Print PyDoit Text in Green
 
-# VIX
-vix = load_data(
-    base_directory=DATA_DIR,
-    ticker="^VIX",
-    source="Yahoo_Finance", 
-    asset_class="Indices",
-    timeframe="Daily",
-)
+Next, I use the following code to help differentiate the various outputs in the termial when executing `doit`:
 
-# Set 'Date' column as datetime
-vix['Date'] = pd.to_datetime(vix['Date'])
-
-# Drop 'Volume'
-vix.drop(columns = {'Volume'}, inplace = True)
-
-# Set Date as index
-vix.set_index('Date', inplace = True)
-
-# Check to see if there are any NaN values
-vix[vix['High'].isna()]
-
-# Forward fill to clean up missing data
-vix['High'] = vix['High'].ffill()
-```
-
-### DataFrame Info - VIX
-
-Now, running:
 
 ```python
-df_info(vix)
-```
+# Code from lines 29-75 referenced from the UChicago
+# FINM 32900 - Full-Stack Quantitative Finance course
+# Credit to Jeremy Bejarano
+# https://github.com/jmbejara
 
-Gives us the following:
+## Custom reporter: Print PyDoit Text in Green
+# This is helpful because some tasks write to sterr and pollute the output in
+# the console. I don't want to mute this output, because this can sometimes
+# cause issues when, for example, LaTeX hangs on an error and requires
+# presses on the keyboard before continuing. However, I want to be able
+# to easily see the task lines printed by PyDoit. I want them to stand out
+# from among all the other lines printed to the console.
 
-<!-- INSERT_01_VIX_DF_Info_HERE -->
+from doit.reporter import ConsoleReporter
+from settings import config
 
-### Statistics - VIX
+#######################################
+## Slurm Configuration
+#######################################
 
-Some interesting statistics jump out at us when we look at the mean, standard deviation, minimum, and maximum values for the full dataset. The following code:
+try:
+    in_slurm = environ["SLURM_JOB_ID"] is not None
+except:
+    in_slurm = False
 
-```python
-vix_stats = vix.describe()
-num_std = [-1, 0, 1, 2, 3, 4, 5]
-for num in num_std:
-    vix_stats.loc[f"mean + {num} std"] = {
-        'Open': vix_stats.loc['mean']['Open'] + num * vix_stats.loc['std']['Open'],
-        'High': vix_stats.loc['mean']['High'] + num * vix_stats.loc['std']['High'],
-        'Low': vix_stats.loc['mean']['Low'] + num * vix_stats.loc['std']['Low'],
-        'Close': vix_stats.loc['mean']['Close'] + num * vix_stats.loc['std']['Close'],
+class GreenReporter(ConsoleReporter):
+    def write(self, stuff, **kwargs):
+        doit_mark = stuff.split(" ")[0].ljust(2)
+        task = " ".join(stuff.split(" ")[1:]).strip() + "
+"
+        output = (
+            Fore.GREEN
+            + doit_mark
+            + f" {path.basename(getcwd())}: "
+            + task
+            + Style.RESET_ALL
+        )
+        self.outstream.write(output)
+
+if not in_slurm:
+    DOIT_CONFIG = {
+        "reporter": GreenReporter,
+        # other config here...
+        # "cleanforget": True, # Doit will forget about tasks that have been cleaned.
+        "backend": "sqlite3",
+        "dep_file": "./.doit-db.sqlite",
     }
-display(vix_stats)
-```
-
-Gives us:
-
-<!-- INSERT_01_VIX_Stats_HERE -->
-
-We can also run the statistics individually for each year:
-
-```python
-# Group by year and calculate mean and std for OHLC
-vix_stats_by_year = vix.groupby(vix.index.year)[["Open", "High", "Low", "Close"]].agg(["mean", "std"])
-
-# Flatten the column MultiIndex
-vix_stats_by_year.columns = ['_'.join(col).strip() for col in vix_stats_by_year.columns.values]
-vix_stats_by_year.index.name = "Year"
-
-display(vix_stats_by_year)
-```
-
-Gives us:
-
-<!-- INSERT_01_VIX_Stats_By_Year_HERE -->
-
-It is interesting to see how much the mean OHLC values vary by year.
-
-And finally, we can run the statistics individually for each month:
-
-```python
-# Group by month and calculate mean and std for OHLC
-vix_stats_by_month = vix.groupby(vix.index.month)[["Open", "High", "Low", "Close"]].agg(["mean", "std"])
-
-# Flatten the column MultiIndex
-vix_stats_by_month.columns = ['_'.join(col).strip() for col in vix_stats_by_month.columns.values]
-vix_stats_by_month.index.name = "Month"
-
-display(vix_stats_by_month)
-```
-
-Gives us:
-
-<!-- INSERT_01_VIX_Stats_By_Month_HERE -->
-
-### Deciles - VIX
-
-Here are the levels for each decile, for the full dataset:
-
-```python
-vix_deciles = vix.quantile(np.arange(0, 1.1, 0.1))
-display(vix_deciles)
-```
-
-Gives us:
-
-<!-- INSERT_01_VIX_Deciles_HERE -->
-
-## Plots - VIX
-
-### Histogram Distribution - VIX
-
-A quick histogram gives us the distribution for the entire dataset, along with the levels for the mean minus 1 standard deviation, mean, mean plus 1 standard deviation, mean plus 2 standard deviations, mean plus 3 standard deviations, and mean plus 4 standard deviations:
-
-![Histogram, Mean, And Standard Deviations](01_Histogram+Mean+SD.png)
-
-### Historical Data - VIX
-
-Here's two plots for the dataset. The first covers 1990 - 2009, and the second 2010 - Present. This is the daily high level:
-
-![VIX Daily High, 1990 - 2009](01_VIX_Plot_1990-2009.png)
-
-![VIX Daily High, 2010 - Present](01_VIX_Plot_2010-Present.png)
-
-From these plots, we can see the following:
-
-* The VIX has really only jumped above 50 several times (GFC, COVID, recently in August of 2024)
-* The highest levels (> 80) occured only during the GFC & COVID
-* Interestingly, the VIX did not ever get above 50 during the .com bubble
-
-### Stats By Year - VIX
-
-Here's the plot for the mean OHLC values for the VIX by year:
-
-![VIX OHLC Stats By Year](01_VIX_Stats_By_Year.png)
-
-### Stats By Month - VIX
-
-Here's the plot for the mean OHLC values for the VIX by month:
-
-![VIX OHLC Stats By Month](01_VIX_Stats_By_Month.png)
-
-## Data Overview (VVIX)
-
-Before moving on to generating a signal, let's run the above data overview code again, but this time for the CBOE VVIX. From the [CBOE VVIX website](https://www.cboe.com/us/indices/dashboard/vvix/):
-
-"Volatility is often called a new asset class, and every asset class deserves its own volatility index.  The Cboe VVIX IndexSM represents the expected volatility of the VIX®.  VVIX derives the expected 30-day volatility of VIX by applying the VIX algorithm to VIX options."
-
-Looking at the statistics of the VVIX should give us an idea of the volatility of the VIX.
-
-### Acquire CBOE VVIX Data
-
-First, let's get the data:
-
-```python
-yf_pull_data(
-    base_directory=DATA_DIR,
-    ticker="^VVIX",
-    source="Yahoo_Finance", 
-    asset_class="Indices", 
-    excel_export=True,
-    pickle_export=True,
-    output_confirmation=True,
-)
-```
-
-### Load Data - VVIX
-
-Now that we have the data, let's load it up and take a look:
-
-```python
-# Set decimal places
-pandas_set_decimal_places(2)
-
-# VVIX
-vvix = load_data(
-    base_directory=DATA_DIR,
-    ticker="^VVIX",
-    source="Yahoo_Finance", 
-    asset_class="Indices",
-    timeframe="Daily",
-)
-
-# Set 'Date' column as datetime
-vvix['Date'] = pd.to_datetime(vvix['Date'])
-
-# Drop 'Volume'
-vvix.drop(columns = {'Volume'}, inplace = True)
-
-# Set Date as index
-vvix.set_index('Date', inplace = True)
-
-# Check to see if there are any NaN values
-vvix[vvix['High'].isna()]
-
-# Forward fill to clean up missing data
-vvix['High'] = vvix['High'].ffill()
-```
-
-### DataFrame Info - VVIX
-
-Now, running:
-
-```python
-df_info(vvix)
-```
-
-Gives us the following:
-
-<!-- INSERT_02_VVIX_DF_Info_HERE -->
-
-### Statistics - VVIX
-
-Here are the statistics for the VVIX, generated in the same manner as above for the VIX:
-
-```python
-vvix_stats = vvix.describe()
-num_std = [-1, 0, 1, 2, 3, 4, 5]
-for num in num_std:
-    vvix_stats.loc[f"mean + {num} std"] = {
-        'Open': vvix_stats.loc['mean']['Open'] + num * vvix_stats.loc['std']['Open'],
-        'High': vvix_stats.loc['mean']['High'] + num * vvix_stats.loc['std']['High'],
-        'Low': vvix_stats.loc['mean']['Low'] + num * vvix_stats.loc['std']['Low'],
-        'Close': vvix_stats.loc['mean']['Close'] + num * vvix_stats.loc['std']['Close'],
+else:
+    DOIT_CONFIG = {
+        "backend": "sqlite3", 
+        "dep_file": "./.doit-db.sqlite"
     }
-display(vvix_stats)
+init(autoreset=True)
 ```
 
-Gives us:
 
-<!-- INSERT_02_VVIX_Stats_HERE -->
+### Set Directory Variables
 
-We can also run the statistics individually for each year:
+Next, I establish the variables that reference some of the more important directories and subdirectories in the project:
+
 
 ```python
-# Group by year and calculate mean and std for OHLC
-vvix_stats_by_year = vvix.groupby(vvix.index.year)[["Open", "High", "Low", "Close"]].agg(["mean", "std"])
+#######################################
+## Set directory variables
+#######################################
 
-# Flatten the column MultiIndex
-vvix_stats_by_year.columns = ['_'.join(col).strip() for col in vvix_stats_by_year.columns.values]
-vvix_stats_by_year.index.name = "Year"
-
-display(vvix_stats_by_year)
+BASE_DIR = config("BASE_DIR")
+CONTENT_DIR = config("CONTENT_DIR")
+POSTS_DIR = config("POSTS_DIR")
+PAGES_DIR = config("PAGES_DIR")
+PUBLIC_DIR = config("PUBLIC_DIR")
+SOURCE_DIR = config("SOURCE_DIR")
+DATA_DIR = config("DATA_DIR")
+DATA_MANUAL_DIR = config("DATA_MANUAL_DIR")
 ```
 
-Gives us:
 
-<!-- INSERT_02_VVIX_Stats_By_Year_HERE -->
+These directory variables are set from the `settings.py` file in the `/src/` directory. Setting these directory variables allows me to reference them at any point later on in the `dodo.py` file.
 
-And finally, we can run the statistics individually for each month:
+### Helper Functions
+
+The following are several helper functions that are referenced in the tasks. These are somewhat self explanatory, and are used by the task functions in the next section below:
 
 ```python
-# Group by month and calculate mean and std for OHLC
-vvix_stats_by_month = vvix.groupby(vvix.index.month)[["Open", "High", "Low", "Close"]].agg(["mean", "std"])
+#######################################
+## Helper functions
+#######################################
 
-# Flatten the column MultiIndex
-vvix_stats_by_month.columns = ['_'.join(col).strip() for col in vvix_stats_by_month.columns.values]
-vvix_stats_by_month.index.name = "Year"
+def copy_file(origin_path, destination_path, mkdir=True):
+    """Create a Python action for copying a file."""
 
-display(vvix_stats_by_month)
+    def _copy_file():
+        origin = Path(origin_path)
+        dest = Path(destination_path)
+        if mkdir:
+            dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(origin, dest)
+
+    return _copy_file
+
+def extract_front_matter(index_path):
+    """Extract front matter as a dict from a Hugo index.md file."""
+    text = index_path.read_text()
+    match = re.search(r"(?s)^---(.*?)---", text)
+    if match:
+        return yaml.safe_load(match.group(1))
+    return {}
+
+def notebook_source_hash(notebook_path):
+    """Compute a SHA-256 hash of the notebook's code and markdown cells. This includes all whitespace and comments."""
+    import nbformat
+    import hashlib
+
+    with open(notebook_path, "r", encoding="utf-8") as f:
+        nb = nbformat.read(f, as_version=4)
+
+    relevant_cells = [
+        cell["source"]
+        for cell in nb.cells
+        if cell.cell_type in {"code", "markdown"}
+    ]
+    full_content = "\n".join(relevant_cells)
+    return hashlib.sha256(full_content.encode("utf-8")).hexdigest()
+
+def clean_pdf_export_pngs(subdir, notebook_name):
+    """Remove .png files created by nbconvert during PDF export."""
+    pattern = f"{notebook_name}_*_*.png"
+    deleted = False
+    for file in subdir.glob(pattern):
+        print(f"🧹 Removing nbconvert temp image: {file}")
+        file.unlink()
+        deleted = True
+    if not deleted:
+        print(f"✅ No temp PNGs to remove for {notebook_name}")
 ```
 
-Gives us:
+### Tasks
 
-<!-- INSERT_02_VVIX_Stats_By_Month_HERE -->
+Next, we will look at the individual tasks that are being executed by `doit`.
 
-### Deciles - VVIX
-
-Here are the levels for each decile, for the full dataset:
+The config task creates the base directories for the Hugo site:
 
 ```python
-vvix_deciles = vvix.quantile(np.arange(0, 1.1, 0.1))
-display(vvix_deciles)
+#######################################
+## PyDoit tasks
+#######################################
+
+def task_config():
+    """Create empty directories for content, page, post, and public if they don't exist"""
+    return {
+        "actions": ["ipython ./src/settings.py"],
+        "file_dep": ["./src/settings.py"],
+        "targets": [CONTENT_DIR, PAGES_DIR, POSTS_DIR, PUBLIC_DIR],
+        "verbosity": 2,
+        "clean": [],  # Don't clean these files by default.
+    }
 ```
 
-Gives us:
+The `task_list_posts_subdirs` function is not really necessary, but was used as an initial starting point for when I began building the `dodo.py` file:
 
-<!-- INSERT_02_VVIX_Deciles_HERE -->
+```python
+def task_list_posts_subdirs():
+    """Create a list of the subdirectories of the posts directory"""
+    return {
+        "actions": ["python ./src/list_posts_subdirs.py"],
+        "file_dep": ["./src/settings.py"],
+        # "targets": [POSTS_DIR],
+        "verbosity": 2,
+        "clean": [],  # Don't clean these files by default.
+    }
+```
 
-## Plots - VVIX
+The `task_run_post_notebooks` function performs the following actions:
 
-### Histogram Distribution - VVIX
+1. Finds all of the "post" subdirectories
+2. In each "post" directory, it executes the jupyter notebook file (if found) that has the same name as the post
+3. The hash of the non-markdown cells in the notebook is also checked, and if the hash has not changed since the last run, then it skips executing the notebook
+4. After the notebook is executed (or not), the log is updated with the date and action
 
-A quick histogram gives us the distribution for the entire dataset, along with the levels for the mean minus 1 standard deviation, mean, mean plus 1 standard deviation, mean plus 2 standard deviations, mean plus 3 standard deviations, and mean plus 4 standard deviations:
+```python
+def task_run_post_notebooks():
+    """Execute notebooks that match their subdirectory names and only when code or markdown content has changed"""
+    for subdir in POSTS_DIR.iterdir():
+        if not subdir.is_dir():
+            continue
 
-![Histogram, Mean, And Standard Deviations](02_Histogram+Mean+SD.png)
+        notebook_path = subdir / f"{subdir.name}.ipynb"
+        if not notebook_path.exists():
+            continue  # ✅ Skip subdirs with no matching notebook
 
-### Historical Data - VVIX
+        hash_file = subdir / f"{subdir.name}.last_source_hash"
+        log_file = subdir / f"{subdir.name}.log"
+        
+        def source_has_changed(path=notebook_path, hash_path=hash_file, log_path=log_file):
+            current_hash = notebook_source_hash(path)
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-Here's two plots for the dataset. The first covers 2007 - 2016, and the second 2017 - Present. This is the daily high level:
+            if hash_path.exists():
+                old_hash = hash_path.read_text().strip()
+                if current_hash != old_hash:
+                    print(f"🔁 Change detected in {path.name}")
+                    return False  # needs re-run
 
-![VVIX Daily High, 2007 - 2016](02_VVIX_Plot_2007-2016.png)
+                # ✅ No change → log as skipped
+                with log_path.open("a") as log:
+                    log.write(f"[{timestamp}] ⏩ Skipped (no changes): {path.name}\n")
+                print(f"⏩ No change in hash for {path.name}")
+                return True
 
-![VVIX Daily High, 2017 - Present](02_VVIX_Plot_2017-Present.png)
+            # 🆕 No previous hash → must run
+            print(f"🆕 No previous hash found for {path.name}")
+            return False
+        
+        def run_and_log(path=notebook_path, hash_path=hash_file, log_path=log_file):
+            start_time = time.time()
+            subprocess.run([
+                "jupyter", "nbconvert",
+                "--execute",
+                "--to", "notebook",
+                "--inplace",
+                "--log-level=ERROR",
+                str(path)
+            ], check=True)
+            elapsed = round(time.time() - start_time, 2)
 
-### Stats By Year - VVIX
+            new_hash = notebook_source_hash(path)
+            hash_path.write_text(new_hash)
+            print(f"✅ Saved new hash for {path.name}")
 
-Here's the plot for the mean OHLC values for the VVIX by year:
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            log_msg = f"[{timestamp}] ✅ Executed {path.name} in {elapsed}s\n"
+            with log_path.open("a") as f:
+                f.write(log_msg)
 
-![VVIX OHLC Stats By Year](02_VVIX_Stats_By_Year.png)
+            print(log_msg.strip())
 
-### Stats By Month - VVIX
+        yield {
+            "name": subdir.name,
+            "actions": [run_and_log],
+            "file_dep": [notebook_path],
+            "uptodate": [source_has_changed],
+            "verbosity": 2,
+        }
+```
 
-Here's the plot for the mean OHLC values for the VVIX by month:
+Next, the `task_export_post_notebooks` function exports the executed jupyter notebook to both HTML and PDF formats.
 
-![VVIX OHLC Stats By Month](02_VVIX_Stats_By_Month.png)
+```python
+def task_export_post_notebooks():
+    """Export executed notebooks to HTML and PDF, and clean temp PNGs"""
+    for subdir in POSTS_DIR.iterdir():
+        if not subdir.is_dir():
+            continue
+
+        notebook_name = subdir.name
+        notebook_path = subdir / f"{notebook_name}.ipynb"
+        html_output = subdir / f"{notebook_name}.html"
+        pdf_output = subdir / f"{notebook_name}.pdf"
+
+        if not notebook_path.exists():
+            continue
+
+        yield {
+            "name": notebook_name,
+            "actions": [
+                f"jupyter nbconvert --to=html --log-level=WARN --output={html_output} {notebook_path}",
+                f"jupyter nbconvert --to=pdf --log-level=WARN --output={pdf_output} {notebook_path}",
+                (clean_pdf_export_pngs, [subdir, notebook_name])
+            ],
+            "file_dep": [notebook_path],
+            "targets": [html_output, pdf_output],
+            "verbosity": 2,
+            "clean": [],  # Don't clean these files by default.
+        }
+```
+
+The `task_build_post_indices` builds each `index.md` file within each "post" directory. It looks for an `index_temp.md` and an `index_dep.txt` file, which contains the dependencies required to build the `index.md` file. The dependencies are established within the jupyter notebook for each post, and the `index_dep.txt` file is also updated when the notebook is executed.
+
+```python
+def task_build_post_indices():
+    """Run build_index.py in each post subdirectory to generate index.md"""
+    script_path = SOURCE_DIR / "build_index.py"
+
+    for subdir in POSTS_DIR.iterdir():
+        if subdir.is_dir() and (subdir / "index_temp.md").exists():
+            def run_script(subdir=subdir):
+                subprocess.run(
+                    ["python", str(script_path)],
+                    cwd=subdir,
+                    check=True
+                )
+
+            yield {
+                "name": subdir.name,
+                "actions": [run_script],
+                "file_dep": [
+                    subdir / "index_temp.md",
+                    subdir / "index_dep.txt",
+                    script_path,
+                ],
+                "targets": [subdir / "index.md"],
+                "verbosity": 2,
+                "clean": [],  # Don't clean these files by default.
+            }
+```
+
+Here's an example of when the `index_dep.txt` file is generated, and then updated with a markdown file dependency is generated with the [`export_track_md_deps`](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps) function:
+
+```python
+# Create file to track markdown dependencies
+dep_file = Path("index_dep.txt")
+dep_file.write_text("")
+
+# Copy this <!-- INSERT_01_VIX_Stats_By_Year_HERE --> to index_temp.md
+export_track_md_deps(dep_file=dep_file, md_filename="01_VIX_Stats_By_Year.md", content=vix_stats_by_year.to_markdown(floatfmt=".2f"))
+
+# Copy this <!-- INSERT_02_VVIX_DF_Info_HERE --> to index_temp.md
+export_track_md_deps(dep_file=dep_file, md_filename="02_VVIX_DF_Info.md", content=df_info_markdown(vix))
+
+# Copy this <!-- INSERT_11_Net_Profit_Percent_HERE --> to index_temp.md
+export_track_md_deps(dep_file=dep_file, md_filename="11_Net_Profit_Percent.md", content=net_profit_percent_str)
+```
+
+Moving on, the `task_clean_public` removes the public directory within the static site. This is necessary to clean out any erroneous files or directories that are changed when the site is rebuilt.
+
+```python
+def task_clean_public():
+    """Remove the Hugo public directory before rebuilding the site."""
+    def remove_public():
+        if PUBLIC_DIR.exists():
+            shutil.rmtree(PUBLIC_DIR)
+            print(f"🧹 Deleted {PUBLIC_DIR}")
+        else:
+            print(f"ℹ️  {PUBLIC_DIR} does not exist, nothing to delete.")
+    return {
+        "actions": [remove_public],
+        "verbosity": 2,
+        "clean": [],  # Don't clean these files by default.
+    }
+```
+
+The `task_build_site` builds the Hugo static site.
+
+```python
+def task_build_site():
+    """Build the Hugo static site"""
+    return {
+        "actions": ["hugo"],
+        "task_dep": ["clean_public"],
+        "verbosity": 2,
+        "clean": [],  # Don't clean these files by default.
+    }
+```
+
+The `task_copy_notebook_exports` copies the HTML and PDF exports generated above to the public folder. This is necessary due to how Hugo handles HTML and PDF files and excludes those when generating the static site public directories and files.
+
+```python
+def task_copy_notebook_exports():
+    """Copy notebook HTML exports into the correct Hugo public/ date-based folders"""
+    for subdir in POSTS_DIR.iterdir():
+        if subdir.is_dir():
+            html_file = subdir / f"{subdir.name}.html"
+            index_md = subdir / "index.md"
+
+            if not html_file.exists() or not index_md.exists():
+                continue
+
+            # Extract slug and date from front matter
+            front_matter = extract_front_matter(index_md)
+            slug = front_matter.get("slug", subdir.name)
+            date_str = front_matter.get("date")
+            if not date_str:
+                continue
+
+            # Format path like: public/YYYY/MM/DD/slug/
+            date_obj = datetime.fromisoformat(date_str)
+            public_path = PUBLIC_DIR / f"{date_obj:%Y/%m/%d}" / slug
+            target_path = public_path / f"{slug}.html"
+
+            def copy_html(src=html_file, dest=target_path):
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(src, dest)
+                print(f"✅ Copied {src} → {dest}")
+
+            yield {
+                "name": subdir.name,
+                "actions": [copy_html],
+                "file_dep": [html_file, index_md],
+                "targets": [target_path],
+                "task_dep": ["build_site"],
+                "verbosity": 2,
+                "clean": [],  # Don't clean these files by default.
+            }
+```
+
+The `task_create_schwab_callback` creates a simple HTML file that will read the authorization code when using oauth with the Schwab API.
+
+```python
+def task_create_schwab_callback():
+    """Create a Schwab callback URL by creating /public/schwab_callback/index.html and placing the html code in it"""
+    def create_callback():
+        callback_path = PUBLIC_DIR / "schwab_callback" / "index.html"
+        callback_path.parent.mkdir(parents=True, exist_ok=True)
+        html = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Schwab OAuth Code</title>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const code = params.get("code");
+        document.write("<h1>Authorization Code:</h1><p>" + code + "</p>");
+    </script>
+</head>
+<body></body>
+</html>"""
+        with open(callback_path, "w") as f:
+            f.write(html)
+        print(f"✅ Created Schwab callback page at {callback_path}")
+
+    return {
+        "actions": [create_callback],
+        "task_dep": ["copy_notebook_exports", "clean_public"],
+        "verbosity": 2,
+        "clean": [],  # Don't clean these files by default.
+    }
+```
+
+Finally, the `task_deploy_site` adds any new files, commits the changes, prompts for a message, and pushes the updates to GitHub.
+
+```python
+def task_deploy_site():
+    """Prompt for a commit message and push to GitHub"""
+    def commit_and_push():
+        message = input("What is the commit message? ")
+        if not message.strip():
+            print("❌ Commit message cannot be empty.")
+            return 1  # signal failure
+        import subprocess
+        subprocess.run(["git", "add", "."], check=True)
+        subprocess.run(["git", "commit", "-am", message], check=True)
+        subprocess.run(["git", "push"], check=True)
+        print("✅ Pushed to GitHub.")
+
+    return {
+        "actions": [commit_and_push],
+        "task_dep": ["create_schwab_callback"],
+        "verbosity": 2,
+        "clean": [],  # Don't clean these files by default.
+    }
+```
+
+As (likely) expected, a good portion of the above code was generated by ChatGPT - somewhere ~ 50%-75%. The balance was generated by myself or modified using the base code provided. Importantly, the general idea of automating the entire process within Hugo and processing the post subdirectories is original (as far as I know).
+
+Finally, the complete `dodo.py` file is available in the jupyter notebook / HTML / PDF exports linked below.
+
+## Executing doit
+
+To execute `doit`, simply run:
+
+    $ doit
+
+in the terminal after changing to the high level directory.
+
+Alternatively, you can list the individual tasks with:
+
+    $ doit list
+
+and then execute individually, such as:
+
+    $ doit build_post_indices
 
 ## References
 
-1. https://www.cboe.com/tradable_products/vix/
-2. https://github.com/ranaroussi/yfinance
+1. https://pydoit.org/
+2. https://github.com/jmbejara
 
 ## Code
 
-The jupyter notebook with the functions and all other code is available [here](investigating-a-vix-trading-signal-part-1-vix-and-vvix.ipynb).</br>
-The html export of the jupyter notebook is available [here](investigating-a-vix-trading-signal-part-1-vix-and-vvix.html).</br>
-The pdf export of the jupyter notebook is available [here](investigating-a-vix-trading-signal-part-1-vix-and-vvix.pdf).
+The jupyter notebook with the functions and all other code is available [here](automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation.ipynb).</br>
+The html export of the jupyter notebook is available [here](automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation.html).</br>
+The pdf export of the jupyter notebook is available [here](automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation.pdf).

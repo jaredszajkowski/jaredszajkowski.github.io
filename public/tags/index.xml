@@ -6,20 +6,28 @@
         <description>Recent content in Tags on Jared Szajkowski</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Tue, 10 Jun 2025 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/tags/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Pandas</title>
-        <link>https://www.jaredszajkowski.com/tags/pandas/</link>
-        <pubDate>Mon, 03 Mar 2025 00:00:01 +0000</pubDate>
+        <lastBuildDate>Sun, 29 Jun 2025 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Hugo</title>
+        <link>https://www.jaredszajkowski.com/tags/hugo/</link>
+        <pubDate>Sun, 29 Jun 2025 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/tags/pandas/</guid>
+        <guid>https://www.jaredszajkowski.com/tags/hugo/</guid>
         <description></description>
         </item>
         <item>
         <title>Python</title>
         <link>https://www.jaredszajkowski.com/tags/python/</link>
-        <pubDate>Mon, 03 Mar 2025 00:00:01 +0000</pubDate>
+        <pubDate>Sun, 29 Jun 2025 00:00:01 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/tags/python/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Pandas</title>
+        <link>https://www.jaredszajkowski.com/tags/pandas/</link>
+        <pubDate>Mon, 03 Mar 2025 00:00:01 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/tags/pandas/</guid>
         <description></description>
         </item>
         <item>
@@ -140,14 +148,6 @@
         <pubDate>Fri, 29 Sep 2023 00:00:01 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/tags/thinkpad-e15-gen-2/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Hugo</title>
-        <link>https://www.jaredszajkowski.com/tags/hugo/</link>
-        <pubDate>Tue, 26 Sep 2023 00:00:00 +0000</pubDate>
-        
-        <guid>https://www.jaredszajkowski.com/tags/hugo/</guid>
         <description></description>
         </item>
         
