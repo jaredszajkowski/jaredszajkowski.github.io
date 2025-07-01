@@ -10,6 +10,12 @@ from pathlib import Path
 # Load API keys from the environment
 api_keys = load_api_keys()
 
+# Import settings
+from settings import config
+
+# Get the environment variable for where data is stored
+DATA_DIR = config("DATA_DIR")
+
 def ndl_pull_data(
     base_directory: str,
     ticker: str,
@@ -128,3 +134,15 @@ def ndl_pull_data(
         pass
 
     return df_comp
+
+if __name__ == "__main__":
+
+    ndl_pull_data(
+        base_directory=DATA_DIR,
+        ticker="SPY",
+        source="Nasdaq_Data_Link",
+        asset_class="Exchange_Traded_Funds",
+        excel_export=True,
+        pickle_export=True,
+        output_confirmation=True,
+    )

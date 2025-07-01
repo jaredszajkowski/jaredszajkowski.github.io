@@ -1,5 +1,8 @@
 """
-This script uses existing functions to download daily price data from Nasdaq Data Link, then resample to month end data, then resample to month end total return data, then resample to quarter end data, and finally resample to quarter end total return data.
+This script uses existing functions to download daily price data from 
+Nasdaq Data Link, then resample to month end data, then resample to 
+month end total return data, then resample to quarter end data, and 
+finally resample to quarter end total return data.
 """
 
 # Import necessary modules
@@ -15,9 +18,6 @@ from settings import config
 # Get the environment variable for where data is stored
 DATA_DIR = config("DATA_DIR")
 
-# Define the data directory
-base_directory = DATA_DIR
-
 # Crypto Data
 # None
 
@@ -28,7 +28,7 @@ equities = ["AMZN", "AAPL"]
 for stock in equities:
     # Fetch raw data
     ndl_pull_data(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=stock,
         source="Nasdaq_Data_Link",
         asset_class="Equities",
@@ -39,7 +39,7 @@ for stock in equities:
 
     # Resample to month-end data
     ndl_month_end(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=stock,
         source="Nasdaq_Data_Link",
         asset_class="Equities",
@@ -50,7 +50,7 @@ for stock in equities:
 
     # Resample to month-end total return data
     ndl_month_end_total_return(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=stock,
         source="Nasdaq_Data_Link",
         asset_class="Equities",
@@ -61,7 +61,7 @@ for stock in equities:
 
     # Resample to quarter-end data
     ndl_quarter_end(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=stock,
         source="Nasdaq_Data_Link",
         asset_class="Equities",
@@ -72,7 +72,7 @@ for stock in equities:
 
     # Resample to quarter-end total return data
     ndl_quarter_end_total_return(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=stock,
         source="Nasdaq_Data_Link",
         asset_class="Equities",
@@ -105,7 +105,7 @@ etfs = [
 for fund in etfs:
     # Fetch raw data
     ndl_pull_data(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=fund,
         source="Nasdaq_Data_Link",
         asset_class="Exchange_Traded_Funds",
@@ -116,7 +116,7 @@ for fund in etfs:
 
     # Resample to month-end data
     ndl_month_end(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=fund,
         source="Nasdaq_Data_Link",
         asset_class="Exchange_Traded_Funds",
@@ -127,7 +127,7 @@ for fund in etfs:
 
     # Resample to month-end total return data
     ndl_month_end_total_return(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=fund,
         source="Nasdaq_Data_Link",
         asset_class="Exchange_Traded_Funds",
@@ -138,7 +138,7 @@ for fund in etfs:
 
     # Resample to quarter-end data
     ndl_quarter_end(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=fund,
         source="Nasdaq_Data_Link",
         asset_class="Exchange_Traded_Funds",
@@ -149,7 +149,7 @@ for fund in etfs:
 
     # Resample to quarter-end total return data
     ndl_quarter_end_total_return(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=fund,
         source="Nasdaq_Data_Link",
         asset_class="Exchange_Traded_Funds",
