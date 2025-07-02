@@ -247,7 +247,7 @@ def calc_vix_trade_pnl(
     exp_end_date: str,
     trade_start_date: str,
     trade_end_date: str,
-) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, str, str]:
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, str, str, str, str]:
     
     """
     Calculate the profit and loss (PnL) of trades based on transaction data.
@@ -328,6 +328,12 @@ def calc_vix_trade_pnl(
     net_PnL_percent = closed_trades['Realized_PnL'].sum() / closed_trades['Amount_Buy'].sum()
     net_PnL_percent_str = f"{round(net_PnL_percent * 100, 2)}%"
 
+    total_opened_pos_mkt_val = closed_trades['Amount_Buy'].sum()
+    total_opened_pos_mkt_val_str = f"${total_opened_pos_mkt_val:,.2f}"
+
+    total_closed_pos_mkt_val = closed_trades['Amount_Sell'].sum()
+    total_closed_pos_mkt_val_str = f"${total_closed_pos_mkt_val:,.2f}"
+
     net_PnL = closed_trades['Realized_PnL'].sum()
     net_PnL_str = f"${net_PnL:,.2f}"
 
@@ -336,7 +342,7 @@ def calc_vix_trade_pnl(
     open_trades = open_trades.reset_index(drop=True)
     open_trades.drop(columns={'Closed', 'Amount_Sell', 'Quantity_Sell', 'Exp_Date'}, inplace=True)
 
-    return transactions_data, closed_trades, open_trades, net_PnL_percent_str, net_PnL_str
+    return transactions_data, closed_trades, open_trades, net_PnL_percent_str, net_PnL_str, total_opened_pos_mkt_val_str, total_closed_pos_mkt_val_str
 ```
 
 ### df_info
@@ -561,6 +567,7 @@ def load_data(
     source: str,
     asset_class: str,
     timeframe: str,
+    file_format: str,
 ) -> pd.DataFrame:
     
     """
@@ -582,7 +589,9 @@ def load_data(
         Asset class name (e.g., 'Equities').
     timeframe : str
         Timeframe for the data (e.g., 'Daily', 'Month_End').
-    
+    file_format : str
+        Format of the file to load ('csv', 'excel', or 'pickle')
+
     Returns:
     --------
     pd.DataFrame
@@ -598,41 +607,23 @@ def load_data(
     >>> df = load_data(DATA_DIR, "^VIX", "Yahoo_Finance", "Indices")
     """
 
-    # Build file paths using pathlib
-    csv_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.csv"
-    csv_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.zip"
-    xlsx_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.xlsx"
-    pickle_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.pkl"
-
-    # Try CSV
-    try:
+    if file_format == "csv":
+        csv_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.csv"
         df = pd.read_csv(csv_path)
         return df
-    except Exception:
-        pass
-
-    # Try Zip
-    try:
-        df = pd.read_csv(csv_path)
+    
+    elif file_format == "excel":
+        xlsx_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.xlsx"
+        df = pd.read_excel(xlsx_path, sheet_name="data", engine="calamine")
         return df
-    except Exception:
-        pass
 
-    # Try Excel
-    try:
-        df = pd.read_excel(xlsx_path)
-        return df
-    except Exception:
-        pass
-
-    # Try Pickle
-    try:
+    elif file_format == "pickle":
+        pickle_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.pkl"
         df = pd.read_pickle(pickle_path)
         return df
-    except Exception:
-        pass
-
-    raise ValueError(f"❌ Unable to load file: {ticker}. Ensure it's a valid CSV, Excel, Zip, or Pickle file with a 'data' sheet (if required).")
+    
+    else:
+        raise ValueError(f"❌ Unsupported file format: {file_format}. Please use 'csv', 'excel', or 'pickle'.")
 ```
 
 ### pandas_set_decimal_places
@@ -1000,7 +991,8 @@ def plot_vix_with_trades(
 
     # Save figure and display plot
     if export_plot == True:
-        plt.savefig(f"{index_number}_VIX_Spike_Trades_{plot_start_date}_{plot_end_date}.png", dpi=300, bbox_inches="tight")
+        # plt.savefig(f"{index_number}_VIX_Spike_Trades_{plot_start_date}_{plot_end_date}.png", dpi=300, bbox_inches="tight")
+        plt.savefig(f"{index_number}_VIX_Spike_Trades.png", dpi=300, bbox_inches="tight")
     
     # Display the plot
     plt.show()
