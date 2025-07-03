@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Jupyter Notebook on Jared Szajkowski</title><link>https://www.jaredszajkowski.com/categories/jupyter-notebook/</link><description>Recent content in Jupyter Notebook on Jared Szajkowski</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 29 Jun 2025 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/categories/jupyter-notebook/index.xml" rel="self" type="application/rss+xml"/><item><title>Automating Execution of Jupyter Notebook Files, Python Scripts, and Hugo Static Site Generation</title><link>https://www.jaredszajkowski.com/2025/06/29/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation/</link><pubDate>Sun, 29 Jun 2025 00:00:01 +0000</pubDate><guid>https://www.jaredszajkowski.com/2025/06/29/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2025/06/29/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation/cover.jpg" alt="Featured image of post Automating Execution of Jupyter Notebook Files, Python Scripts, and Hugo Static Site Generation" />&lt;h2 id="introduction">Introduction
+&lt;/h2>&lt;p>In this post, I&amp;rsquo;ll cover the implementation of &lt;a class="link" href="https://pydoit.org/" target="_blank" rel="noopener"
+>doit&lt;/a> to automate the execution of Jupyter notebook files, Python scripts, and building the Hugo static site. Many of the concepts covered below were introduced recently in &lt;a class="link" href="https://finmath.uchicago.edu/curriculum/degree-concentrations/financial-computing/finm-32900/" target="_blank" rel="noopener"
+>FINM 32900 - Full-Stack Quantitative Finance&lt;/a>. This course emphasized the &amp;ldquo;full stack&amp;rdquo; approach, including the following:&lt;/p>
+&lt;ul>
+&lt;li>Use of GitHub&lt;/li>
+&lt;li>Virtual environments&lt;/li>
+&lt;li>Environment variables&lt;/li>
+&lt;li>Use of various data sources (particularly WRDS)&lt;/li>
+&lt;li>Processing/cleaning data&lt;/li>
+&lt;li>GitHub actions&lt;/li>
+&lt;li>Publishing data&lt;/li>
+&lt;li>Restricting access to GitHub hosted sites&lt;/li>
+&lt;/ul>
+&lt;h2 id="motivation">Motivation
+&lt;/h2>&lt;p>The primary motivation for automation came from several realizations:&lt;/p></description></item></channel></rss>
