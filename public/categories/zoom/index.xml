@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Zoom on Jared Szajkowski</title>
+        <link>https://www.jaredszajkowski.com/categories/zoom/</link>
+        <description>Recent content in Zoom on Jared Szajkowski</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Tue, 10 Jun 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/categories/zoom/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Using yt-dlp With Zoom And Panopto</title>
+        <link>https://www.jaredszajkowski.com/2023/10/01/yt-dlp-with-zoom-and-panopto/</link>
+        <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/2023/10/01/yt-dlp-with-zoom-and-panopto/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2023/10/01/yt-dlp-with-zoom-and-panopto/banner_1.svg" alt="Featured image of post Using yt-dlp With Zoom And Panopto" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+&lt;/h2&gt;&lt;p&gt;If anyone uses Zoom to record or Panopto to host recordings and later wants to access the recordings, here&amp;rsquo;s a simple linux bash script to download the video file and acompanying subtitles. For a while I used &lt;a class=&#34;link&#34; href=&#34;https://github.com/Battleman/zoomdl&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;zoomdl&lt;/a&gt;, but it is no longer under active development, and I began running into various issues about a year ago. I stumbled upon &lt;a class=&#34;link&#34; href=&#34;https://github.com/yt-dlp/yt-dlp&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;yt-dlp&lt;/a&gt; and found it under active development and quite extensive.&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

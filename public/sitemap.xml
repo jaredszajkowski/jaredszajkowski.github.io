@@ -11,37 +11,34 @@
     <loc>https://www.jaredszajkowski.com/categories/</loc>
     <lastmod>2025-06-29T00:00:01+00:00</lastmod>
   </url><url>
-    <loc>https://www.jaredszajkowski.com/categories/financial-data/</loc>
+    <loc>https://www.jaredszajkowski.com/categories/hugo/</loc>
     <lastmod>2025-06-29T00:00:01+00:00</lastmod>
   </url><url>
-    <loc>https://www.jaredszajkowski.com/tags/hugo/</loc>
+    <loc>https://www.jaredszajkowski.com/categories/jupyter-notebook/</loc>
     <lastmod>2025-06-29T00:00:01+00:00</lastmod>
   </url><url>
     <loc>https://www.jaredszajkowski.com/post/</loc>
     <lastmod>2025-06-29T00:00:01+00:00</lastmod>
   </url><url>
-    <loc>https://www.jaredszajkowski.com/tags/python/</loc>
+    <loc>https://www.jaredszajkowski.com/categories/pydoit/</loc>
     <lastmod>2025-06-29T00:00:01+00:00</lastmod>
   </url><url>
-    <loc>https://www.jaredszajkowski.com/tags/</loc>
-    <lastmod>2025-06-29T00:00:01+00:00</lastmod>
-  </url><url>
-    <loc>https://www.jaredszajkowski.com/categories/tech/</loc>
+    <loc>https://www.jaredszajkowski.com/categories/python/</loc>
     <lastmod>2025-06-29T00:00:01+00:00</lastmod>
   </url><url>
     <loc>https://www.jaredszajkowski.com/2025/03/03/investigating-a-vix-trading-signal-part-3-trading/</loc>
     <lastmod>2025-06-10T00:00:01+00:00</lastmod>
   </url><url>
-    <loc>https://www.jaredszajkowski.com/tags/pandas/</loc>
+    <loc>https://www.jaredszajkowski.com/categories/pandas/</loc>
     <lastmod>2025-06-10T00:00:01+00:00</lastmod>
   </url><url>
     <loc>https://www.jaredszajkowski.com/categories/trading/</loc>
     <lastmod>2025-06-10T00:00:01+00:00</lastmod>
   </url><url>
-    <loc>https://www.jaredszajkowski.com/tags/vix/</loc>
+    <loc>https://www.jaredszajkowski.com/categories/vix/</loc>
     <lastmod>2025-06-10T00:00:01+00:00</lastmod>
   </url><url>
-    <loc>https://www.jaredszajkowski.com/tags/yahoo-finance/</loc>
+    <loc>https://www.jaredszajkowski.com/categories/yahoo-finance/</loc>
     <lastmod>2025-06-10T00:00:01+00:00</lastmod>
   </url><url>
     <loc>https://www.jaredszajkowski.com/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/</loc>
@@ -50,22 +47,19 @@
     <loc>https://www.jaredszajkowski.com/2025/03/01/investigating-a-vix-trading-signal-part-1-vix-and-vvix/</loc>
     <lastmod>2025-06-10T00:00:01+00:00</lastmod>
   </url><url>
-    <loc>https://www.jaredszajkowski.com/tags/bloomberg/</loc>
+    <loc>https://www.jaredszajkowski.com/categories/bloomberg/</loc>
     <lastmod>2025-06-04T00:00:01+00:00</lastmod>
   </url><url>
-    <loc>https://www.jaredszajkowski.com/tags/nasdaq-data-link/</loc>
+    <loc>https://www.jaredszajkowski.com/categories/nasdaq-data-link/</loc>
     <lastmod>2025-06-04T00:00:01+00:00</lastmod>
   </url><url>
     <loc>https://www.jaredszajkowski.com/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/</loc>
     <lastmod>2025-06-04T00:00:01+00:00</lastmod>
   </url><url>
-    <loc>https://www.jaredszajkowski.com/categories/tutorials/</loc>
-    <lastmod>2025-06-10T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.jaredszajkowski.com/tags/arch-linux/</loc>
+    <loc>https://www.jaredszajkowski.com/categories/arch-linux/</loc>
     <lastmod>2025-01-30T00:00:01+00:00</lastmod>
   </url><url>
-    <loc>https://www.jaredszajkowski.com/tags/pip/</loc>
+    <loc>https://www.jaredszajkowski.com/categories/pip/</loc>
     <lastmod>2025-01-30T00:00:01+00:00</lastmod>
   </url><url>
     <loc>https://www.jaredszajkowski.com/2024/12/02/using-python-virtual-environments/</loc>
@@ -74,14 +68,14 @@
     <loc>https://www.jaredszajkowski.com/2024/11/04/harry-browne-permanent-portfolio/</loc>
     <lastmod>2025-06-04T00:00:01+00:00</lastmod>
   </url><url>
-    <loc>https://www.jaredszajkowski.com/categories/investing/</loc>
-    <lastmod>2025-06-04T00:00:01+00:00</lastmod>
-  </url><url>
-    <loc>https://www.jaredszajkowski.com/tags/backup/</loc>
+    <loc>https://www.jaredszajkowski.com/categories/backup/</loc>
     <lastmod>2025-04-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://www.jaredszajkowski.com/tags/bash/</loc>
+    <loc>https://www.jaredszajkowski.com/categories/bash/</loc>
     <lastmod>2025-06-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.jaredszajkowski.com/categories/linux/</loc>
+    <lastmod>2025-04-12T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/</loc>
     <lastmod>2025-04-12T00:00:00+00:00</lastmod>
@@ -92,37 +86,31 @@
     <loc>https://www.jaredszajkowski.com/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/</loc>
     <lastmod>2023-12-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://www.jaredszajkowski.com/tags/openpyxl/</loc>
-    <lastmod>2023-12-26T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://www.jaredszajkowski.com/2023/11/15/cleaning-bloomberg-excel-export/</loc>
     <lastmod>2023-12-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://www.jaredszajkowski.com/tags/git/</loc>
+    <loc>https://www.jaredszajkowski.com/categories/git/</loc>
     <lastmod>2025-06-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.jaredszajkowski.com/2023/10/16/git-quick-start-guide/</loc>
     <lastmod>2025-06-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://www.jaredszajkowski.com/tags/github/</loc>
+    <loc>https://www.jaredszajkowski.com/categories/github/</loc>
     <lastmod>2025-06-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://www.jaredszajkowski.com/tags/panopto/</loc>
+    <loc>https://www.jaredszajkowski.com/categories/panopto/</loc>
     <lastmod>2025-06-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.jaredszajkowski.com/2023/10/01/yt-dlp-with-zoom-and-panopto/</loc>
     <lastmod>2025-06-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://www.jaredszajkowski.com/tags/yt-dlp/</loc>
+    <loc>https://www.jaredszajkowski.com/categories/yt-dlp/</loc>
     <lastmod>2025-06-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://www.jaredszajkowski.com/tags/zoom/</loc>
+    <loc>https://www.jaredszajkowski.com/categories/zoom/</loc>
     <lastmod>2025-06-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.jaredszajkowski.com/2023/09/29/arch-linux-install/</loc>
-    <lastmod>2023-11-07T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.jaredszajkowski.com/tags/thinkpad-e15-gen-2/</loc>
     <lastmod>2023-11-07T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.jaredszajkowski.com/categories/blog/</loc>
@@ -138,5 +126,7 @@
     <loc>https://www.jaredszajkowski.com/links/</loc>
   </url><url>
     <loc>https://www.jaredszajkowski.com/search/</loc>
+  </url><url>
+    <loc>https://www.jaredszajkowski.com/tags/</loc>
   </url>
 </urlset>

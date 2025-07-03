@@ -17,8 +17,8 @@ from settings import config
 DATA_DIR = config("DATA_DIR")
 
 
-df = nasdaqdatalink.get_table("QUOTEMEDIA/PRICES", ticker="SPY", paginate=True, api_key=api_keys["NASDAQ_DATA_LINK_KEY"])
-print(df.head())
+df = nasdaqdatalink.get_table("QUOTEMEDIA/PRICES", ticker="SPY", api_key=api_keys["NASDAQ_DATA_LINK_KEY"])
+print(df)
 print(df.columns)
 
 #     # Sort columns by date ascending

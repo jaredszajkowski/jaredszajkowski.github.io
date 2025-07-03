@@ -7,13 +7,16 @@ lastmod: 2025-06-10 00:00:01+0000
 image: cover.jpg
 draft: false
 categories:
-    - Financial Data
-    - Trading
-tags:
+    - Pandas
     - Python
-    - Yahoo Finance
-    - pandas
+    - Trading
     - VIX
+    - Yahoo Finance
+# tags:
+#     - Python
+#     - Yahoo Finance
+#     - pandas
+#     - VIX
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 

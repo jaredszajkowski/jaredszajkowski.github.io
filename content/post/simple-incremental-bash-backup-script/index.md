@@ -7,11 +7,12 @@ lastmod: 2025-04-12 00:00:00+0000
 image: cover.jpg
 draft: false
 categories:
-    - Tech
-    - Tutorials
-tags:
-    - Bash
     - Backup
+    - Bash
+    - Linux
+# tags:
+#     - Bash
+#     - Backup
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 ## Post Updates

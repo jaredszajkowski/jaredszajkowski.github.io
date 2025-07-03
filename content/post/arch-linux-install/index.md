@@ -7,11 +7,11 @@ lastmod: 2023-11-07 00:00:00+0000
 image: cover.jpg
 draft: false
 categories:
-    - Tech
-    - Tutorials
-tags:
     - Arch Linux
-    - Thinkpad E15 Gen 2
+    - Linux
+# tags:
+#     - Arch Linux
+#     - Thinkpad E15 Gen 2
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 

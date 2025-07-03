@@ -7,13 +7,15 @@ lastmod: 2025-06-10 00:00:00+0000
 image: banner_1.svg
 draft: false
 categories:
-    - Tech
-    - Tutorials
-tags:
+    - Bash
+    - Panopto
     - yt-dlp
     - Zoom
-    - Panopto
-    - Bash
+# tags:
+#     - yt-dlp
+#     - Zoom
+#     - Panopto
+#     - Bash
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 

@@ -7,11 +7,13 @@ lastmod: 2025-01-30 00:00:01+0000
 image: cover.jpg
 draft: false
 categories:
-    - Tech
-tags:
-    - Python
-    - pip
     - Arch Linux
+    - Python
+    - Pip
+# tags:
+#     - Python
+#     - pip
+#     - Arch Linux
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 

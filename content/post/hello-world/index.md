@@ -8,9 +8,11 @@ image: cover.jpg
 draft: false
 categories:
     - Blog
-tags:
-    - Hugo
     - GitHub
+    - Hugo
+# tags:
+#     - Hugo
+#     - GitHub
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 

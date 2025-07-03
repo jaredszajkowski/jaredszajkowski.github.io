@@ -7,11 +7,11 @@ lastmod: 2025-06-10 00:00:00+0000
 image: cover.jpg
 draft: false
 categories:
-    - Tech
-    - Tutorials
-tags:
     - Git
     - GitHub
+# tags:
+#     - Git
+#     - GitHub
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 

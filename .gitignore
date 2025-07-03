@@ -5,6 +5,7 @@
 *.pyc
 __pycache__/
 Data/
+Data_Manual/
 token.json
 
 

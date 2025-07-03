@@ -13,9 +13,10 @@ customText = ""
 published = "January 2, 2006"
 lastupdated = "January 2, 2006"
 
-# [sidebar]
+[sidebar]
 # emoji = "🍥"
 # subtitle = "Personal Website"
+compact = false
 
 [sidebar.avatar]
 enabled = true
@@ -47,11 +48,11 @@ type = "categories"
 [widgets.homepage.params]
 limit = 100
 
-[[widgets.homepage]]
-type = "tag-cloud"
+# [[widgets.homepage]]
+# type = "tag-cloud"
 
-[widgets.homepage.params]
-limit = 100
+# [widgets.homepage.params]
+# limit = 100
 
 [[widgets.page]]
 type = "toc"

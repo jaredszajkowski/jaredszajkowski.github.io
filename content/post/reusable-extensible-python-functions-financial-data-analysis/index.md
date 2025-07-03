@@ -7,14 +7,17 @@ lastmod: 2025-06-04 00:00:01+0000
 image: cover.jpg
 draft: false
 categories:
-    - Tutorials
-    - Tech
-tags:
     - Bloomberg
     - Nasdaq Data Link
-    - pandas
+    - Pandas
     - Python
     - Yahoo Finance
+# tags:
+#     - Bloomberg
+#     - Nasdaq Data Link
+#     - Pandas
+#     - Python
+#     - Yahoo Finance
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 

@@ -7,12 +7,14 @@ lastmod: 2025-06-04 00:00:01+0000
 image: cover.jpg
 draft: False
 categories:
-    - Financial Data
-    - Investing
-tags:
-    - Python
     - Bloomberg
-    - pandas
+    - Pandas
+    - Python
+    - Trading
+# tags:
+#     - Python
+#     - Bloomberg
+#     - pandas
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 

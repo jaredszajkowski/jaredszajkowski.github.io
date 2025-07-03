@@ -7,13 +7,14 @@ lastmod: 2023-12-26 00:00:00+0000
 image: cover.jpg
 draft: false
 categories:
-    - Financial Data
-    - Tutorials
-tags:
-    - Python
     - Nasdaq Data Link
-    - pandas
-    - OpenPyXL
+    - Pandas
+    - Python
+# tags:
+#     - Python
+#     - Nasdaq Data Link
+#     - pandas
+#     - OpenPyXL
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 

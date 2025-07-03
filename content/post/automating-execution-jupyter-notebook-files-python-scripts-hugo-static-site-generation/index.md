@@ -7,11 +7,13 @@ date: 2025-06-29 00:00:01+0000
 image: cover.jpg
 draft: false
 categories:
-    - Financial Data
-    - Tech
-tags:
-    - Python
     - Hugo
+    - Jupyter Notebook
+    - Pydoit
+    - Python
+# tags:
+#     - Python
+#     - Hugo
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 

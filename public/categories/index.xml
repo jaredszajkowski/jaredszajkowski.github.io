@@ -7,20 +7,44 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <lastBuildDate>Sun, 29 Jun 2025 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/categories/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Financial Data</title>
-        <link>https://www.jaredszajkowski.com/categories/financial-data/</link>
+        <title>Hugo</title>
+        <link>https://www.jaredszajkowski.com/categories/hugo/</link>
         <pubDate>Sun, 29 Jun 2025 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/categories/financial-data/</guid>
-        <description></description>
+        <guid>https://www.jaredszajkowski.com/categories/hugo/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/categories/hugo/logo.svg" alt="Featured image of post Hugo" /&gt;</description>
         </item>
         <item>
-        <title>Tech</title>
-        <link>https://www.jaredszajkowski.com/categories/tech/</link>
+        <title>Jupyter Notebook</title>
+        <link>https://www.jaredszajkowski.com/categories/jupyter-notebook/</link>
         <pubDate>Sun, 29 Jun 2025 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/categories/tech/</guid>
-        <description></description>
+        <guid>https://www.jaredszajkowski.com/categories/jupyter-notebook/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/categories/jupyter-notebook/logo.svg" alt="Featured image of post Jupyter Notebook" /&gt;</description>
+        </item>
+        <item>
+        <title>Pydoit</title>
+        <link>https://www.jaredszajkowski.com/categories/pydoit/</link>
+        <pubDate>Sun, 29 Jun 2025 00:00:01 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/categories/pydoit/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/categories/pydoit/logo.png" alt="Featured image of post Pydoit" /&gt;</description>
+        </item>
+        <item>
+        <title>Python</title>
+        <link>https://www.jaredszajkowski.com/categories/python/</link>
+        <pubDate>Sun, 29 Jun 2025 00:00:01 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/categories/python/</guid>
+        <description>&lt;img src="https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/community/logos/python-logo-only.png" alt="Featured image of post Python" /&gt;</description>
+        </item>
+        <item>
+        <title>Pandas</title>
+        <link>https://www.jaredszajkowski.com/categories/pandas/</link>
+        <pubDate>Mon, 03 Mar 2025 00:00:01 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/categories/pandas/</guid>
+        <description>&lt;img src="https://pandas.pydata.org/static/img/pandas_secondary.svg" alt="Featured image of post Pandas" /&gt;</description>
         </item>
         <item>
         <title>Trading</title>
@@ -28,23 +52,119 @@
         <pubDate>Mon, 03 Mar 2025 00:00:01 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/categories/trading/</guid>
-        <description></description>
+        <description>&lt;img src="https://www.jaredszajkowski.com/categories/trading/logo.jpg" alt="Featured image of post Trading" /&gt;</description>
         </item>
         <item>
-        <title>Tutorials</title>
-        <link>https://www.jaredszajkowski.com/categories/tutorials/</link>
+        <title>VIX</title>
+        <link>https://www.jaredszajkowski.com/categories/vix/</link>
+        <pubDate>Mon, 03 Mar 2025 00:00:01 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/categories/vix/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/categories/vix/logo.png" alt="Featured image of post VIX" /&gt;</description>
+        </item>
+        <item>
+        <title>Yahoo Finance</title>
+        <link>https://www.jaredszajkowski.com/categories/yahoo-finance/</link>
+        <pubDate>Mon, 03 Mar 2025 00:00:01 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/categories/yahoo-finance/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/categories/yahoo-finance/logo.png" alt="Featured image of post Yahoo Finance" /&gt;</description>
+        </item>
+        <item>
+        <title>Bloomberg</title>
+        <link>https://www.jaredszajkowski.com/categories/bloomberg/</link>
         <pubDate>Sun, 02 Feb 2025 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/categories/tutorials/</guid>
-        <description></description>
+        <guid>https://www.jaredszajkowski.com/categories/bloomberg/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/categories/bloomberg/logo.png" alt="Featured image of post Bloomberg" /&gt;</description>
         </item>
         <item>
-        <title>Investing</title>
-        <link>https://www.jaredszajkowski.com/categories/investing/</link>
-        <pubDate>Mon, 04 Nov 2024 00:00:01 +0000</pubDate>
+        <title>Nasdaq Data Link</title>
+        <link>https://www.jaredszajkowski.com/categories/nasdaq-data-link/</link>
+        <pubDate>Sun, 02 Feb 2025 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/categories/investing/</guid>
-        <description></description>
+        <guid>https://www.jaredszajkowski.com/categories/nasdaq-data-link/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/categories/nasdaq-data-link/logo.svg" alt="Featured image of post Nasdaq Data Link" /&gt;</description>
+        </item>
+        <item>
+        <title>Arch Linux</title>
+        <link>https://www.jaredszajkowski.com/categories/arch-linux/</link>
+        <pubDate>Mon, 02 Dec 2024 00:00:01 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/categories/arch-linux/</guid>
+        <description>&lt;img src="https://archlinux.org/static/logos/legacy/arch-legacy-blue2.svg" alt="Featured image of post Arch Linux" /&gt;</description>
+        </item>
+        <item>
+        <title>Pip</title>
+        <link>https://www.jaredszajkowski.com/categories/pip/</link>
+        <pubDate>Mon, 02 Dec 2024 00:00:01 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/categories/pip/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/categories/pip/logo.svg" alt="Featured image of post Pip" /&gt;</description>
+        </item>
+        <item>
+        <title>Backup</title>
+        <link>https://www.jaredszajkowski.com/categories/backup/</link>
+        <pubDate>Fri, 12 Jan 2024 00:00:01 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/categories/backup/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/categories/backup/logo.png" alt="Featured image of post Backup" /&gt;</description>
+        </item>
+        <item>
+        <title>Bash</title>
+        <link>https://www.jaredszajkowski.com/categories/bash/</link>
+        <pubDate>Fri, 12 Jan 2024 00:00:01 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/categories/bash/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/categories/bash/logo.png" alt="Featured image of post Bash" /&gt;</description>
+        </item>
+        <item>
+        <title>Linux</title>
+        <link>https://www.jaredszajkowski.com/categories/linux/</link>
+        <pubDate>Fri, 12 Jan 2024 00:00:01 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/categories/linux/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/categories/linux/logo.png" alt="Featured image of post Linux" /&gt;</description>
+        </item>
+        <item>
+        <title>Git</title>
+        <link>https://www.jaredszajkowski.com/categories/git/</link>
+        <pubDate>Mon, 16 Oct 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/categories/git/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/categories/git/logo.png" alt="Featured image of post Git" /&gt;</description>
+        </item>
+        <item>
+        <title>GitHub</title>
+        <link>https://www.jaredszajkowski.com/categories/github/</link>
+        <pubDate>Mon, 16 Oct 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/categories/github/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/categories/github/logo.png" alt="Featured image of post GitHub" /&gt;</description>
+        </item>
+        <item>
+        <title>Panopto</title>
+        <link>https://www.jaredszajkowski.com/categories/panopto/</link>
+        <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/categories/panopto/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/categories/panopto/logo.svg" alt="Featured image of post Panopto" /&gt;</description>
+        </item>
+        <item>
+        <title>yt-dlp</title>
+        <link>https://www.jaredszajkowski.com/categories/yt-dlp/</link>
+        <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/categories/yt-dlp/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/categories/yt-dlp/logo.svg" alt="Featured image of post yt-dlp" /&gt;</description>
+        </item>
+        <item>
+        <title>Zoom</title>
+        <link>https://www.jaredszajkowski.com/categories/zoom/</link>
+        <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/categories/zoom/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/categories/zoom/logo.svg" alt="Featured image of post Zoom" /&gt;</description>
         </item>
         <item>
         <title>Blog</title>
@@ -52,7 +172,7 @@
         <pubDate>Tue, 26 Sep 2023 00:00:00 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/categories/blog/</guid>
-        <description></description>
+        <description>&lt;img src="https://www.jaredszajkowski.com/categories/blog/logo.png" alt="Featured image of post Blog" /&gt;</description>
         </item>
         
     </channel>
