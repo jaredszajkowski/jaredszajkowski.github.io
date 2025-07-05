@@ -7,10 +7,9 @@ date: 2025-06-29 00:00:01+0000
 image: cover.jpg
 draft: false
 categories:
-    - Hugo
-    - Jupyter Notebook
-    - Pydoit
+    - Tech
     - Python
+    - Hugo
 # tags:
 #     - Python
 #     - Hugo
@@ -550,6 +549,14 @@ Alternatively, you can list the individual tasks with:
 and then execute individually, such as:
 
     $ doit build_post_indices
+
+And finally, doit can be forced to execute all tasks with:
+
+    $ doit --always
+
+or an individual task with:
+
+    $ doit --always build_post_indices
 
 ## References
 

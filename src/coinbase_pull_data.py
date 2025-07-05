@@ -331,7 +331,7 @@ if __name__ == "__main__":
     #             continue
 
     current_year = datetime.now().year
-    current_month = datetime.now().month
+    current_month = datetime.now().month - 1
     currencies = ["BTC", "ETH", "SOL"]
 
     for cur in currencies:

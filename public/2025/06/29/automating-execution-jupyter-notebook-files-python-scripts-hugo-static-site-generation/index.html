@@ -318,20 +318,16 @@
     
     <header class="article-category">
         
-            <a href="/categories/hugo/" style="background-color: #FFDD00; color: ;">
-                Hugo
-            </a>
-        
-            <a href="/categories/jupyter-notebook/" style="background-color: #A0A0A0; color: ;">
-                Jupyter Notebook
-            </a>
-        
-            <a href="/categories/pydoit/" style="background-color: #E34C4C; color: ;">
-                Pydoit
+            <a href="/categories/tech/" >
+                Tech
             </a>
         
             <a href="/categories/python/" style="background-color: #306998; color: ;">
                 Python
+            </a>
+        
+            <a href="/categories/hugo/" style="background-color: #FFDD00; color: ;">
+                Hugo
             </a>
         
     </header>
@@ -1322,6 +1318,12 @@
 </code></pre>
 <p>and then execute individually, such as:</p>
 <pre><code>$ doit build_post_indices
+</code></pre>
+<p>And finally, doit can be forced to execute all tasks with:</p>
+<pre><code>$ doit --always
+</code></pre>
+<p>or an individual task with:</p>
+<pre><code>$ doit --always build_post_indices
 </code></pre>
 <h2 id="references">References
 </h2><ol>

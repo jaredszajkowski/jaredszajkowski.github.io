@@ -7,17 +7,14 @@ lastmod: 2025-06-04 00:00:01+0000
 image: cover.jpg
 draft: false
 categories:
+    - Tutorials
+    - Tech
+tags:
     - Bloomberg
     - Nasdaq Data Link
-    - Pandas
+    - pandas
     - Python
     - Yahoo Finance
-# tags:
-#     - Bloomberg
-#     - Nasdaq Data Link
-#     - Pandas
-#     - Python
-#     - Yahoo Finance
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 
@@ -1214,9 +1211,10 @@ import pandas as pd
 import numpy as np
 
 def summary_stats(
-    fund_list: str, 
+    fund_list: list[str], 
     df: pd.DataFrame, 
     period: str,
+    use_calendar_days: bool,
     excel_export: bool,
     pickle_export: bool,
     output_confirmation: bool,
@@ -1228,11 +1226,13 @@ def summary_stats(
     Parameters:
     -----------
     fund_list (str):
-        List of funds for data to be combined from. Funds are strings in the form "BTC-USD".
+        List of funds. This is used below in the excel/pickle export but not in the analysis.. Funds are strings in the form "BTC-USD".
     df (pd.DataFrame):
         Dataframe with return data.
     period (str):
-        Period for which to calculate statistics. Options are "Monthly", "Weekly", "Daily", "Hourly".
+        Period for which to calculate statistics. Options are "Monthly", "Weekly", "Daily".
+    use_calendar_days (bool):
+        If True, use calendar days for calculations. If False, use trading days.
     excel_export : bool
         If True, export data to Excel format.
     pickle_export : bool
@@ -1246,18 +1246,19 @@ def summary_stats(
         pd.DataFrame: DataFrame containing various portfolio statistics.
     """
 
-    if period == "Monthly":
-        timeframe = 12 # months
-    elif period == "Weekly":
-        timeframe = 52 # weeks
-    elif period == "Daily":
-        timeframe = 252 # days
-        # timeframe = 365 # days
-    elif period == "Hourly":
-        timeframe = 252 * 6.5 # hours
-    #     timeframe = 8760 # hours
-    # else:
-        return print("Error, check inputs")
+    period = period.strip().capitalize()
+
+    # Map base timeframes
+    period_to_timeframe = {
+        "Monthly": 12,
+        "Weekly": 52,
+        "Daily": 365 if use_calendar_days else 252,
+    }
+
+    try:
+        timeframe = period_to_timeframe[period]
+    except KeyError:
+        raise ValueError(f"Invalid period: {period}. Must be one of {list(period_to_timeframe.keys())}")
 
     df_stats = pd.DataFrame(df.mean(axis=0) * timeframe) # annualized
     # df_stats = pd.DataFrame((1 + df.mean(axis=0)) ** timeframe - 1) # annualized, this is this true annualized return but we will simply use the mean
@@ -1266,17 +1267,17 @@ def summary_stats(
     df_stats['Annualized Sharpe Ratio'] = df_stats['Annualized Mean'] / df_stats['Annualized Volatility']
 
     df_cagr = (1 + df['Return']).cumprod()
-    cagr = (df_cagr.iloc[-1] / 1) ** (1/(len(df_cagr) / timeframe)) - 1
+    cagr = (df_cagr.iloc[-1] / 1) ** ( 1 / (len(df_cagr) / timeframe)) - 1
     df_stats['CAGR'] = cagr
 
-    df_stats[period + ' Max Return'] = df.max()
-    df_stats[period + ' Max Return (Date)'] = df.idxmax().values[0]
-    df_stats[period + ' Min Return'] = df.min()
-    df_stats[period + ' Min Return (Date)'] = df.idxmin().values[0]
+    df_stats[f'{period} Max Return'] = df.max()
+    df_stats[f'{period} Max Return (Date)'] = df.idxmax().values[0]
+    df_stats[f'{period} Min Return'] = df.min()
+    df_stats[f'{period} Min Return (Date)'] = df.idxmin().values[0]
     
     wealth_index = 1000 * (1 + df).cumprod()
     previous_peaks = wealth_index.cummax()
-    drawdowns = (wealth_index - previous_peaks)/previous_peaks
+    drawdowns = (wealth_index - previous_peaks) / previous_peaks
 
     df_stats['Max Drawdown'] = drawdowns.min()
     df_stats['Peak'] = [previous_peaks[col][:drawdowns[col].idxmin()].idxmax() for col in previous_peaks.columns]
