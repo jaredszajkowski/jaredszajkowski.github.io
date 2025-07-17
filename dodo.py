@@ -338,6 +338,32 @@ def task_copy_notebook_exports():
                 "clean": [],  # Don't clean these files by default.
             }
 
+def task_copy_about_me_exports():
+    """Copy all HTML files from the about-me page to the Hugo public/ folder"""
+    src_dir = PAGES_DIR / "about-me"
+    dest_dir = PUBLIC_DIR / "page" / "about-me"
+
+    html_files = list(src_dir.glob("*.html"))
+    if not html_files:
+        return  # Skip if no HTML files found
+
+    def copy_all_html():
+        dest_dir.mkdir(parents=True, exist_ok=True)
+        for html_file in html_files:
+            dest_path = dest_dir / html_file.name
+            shutil.copy2(html_file, dest_path)
+            print(f"✅ Copied {html_file} → {dest_path}")
+
+    return {
+        "actions": [copy_all_html],
+        "file_dep": html_files,
+        "targets": [dest_dir / f.name for f in html_files],
+        "task_dep": ["build_site"],
+        "verbosity": 2,
+        "clean": [],  # Don't clean these files by default.
+    }
+
+
 def task_create_schwab_callback():
     """Create a Schwab callback URL by creating /public/schwab_callback/index.html and placing the html code in it"""
     def create_callback():
@@ -397,6 +423,7 @@ def task_deploy_site():
 #             "clean_public",
 #             "build_site",
 #             "copy_notebook_exports",
+#             "copy_about_me_exports",
 #             "create_schwab_callback",
 #             "deploy_site",
 #         ]
