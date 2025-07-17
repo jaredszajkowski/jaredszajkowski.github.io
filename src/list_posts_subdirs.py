@@ -1,5 +1,6 @@
 import os
 import sys
+
 from settings import config
 
 # Get the posts directory from the configuration

@@ -3,18 +3,19 @@ import pandas as pd
 
 from IPython.display import display
 
-def ndl_month_end_total_return(
+def polygon_month_end(
     base_directory: str,
     ticker: str,
     source: str,
     asset_class: str,
+    timespan: str,
     excel_export: bool,
     pickle_export: bool,
     output_confirmation: bool,
 ) -> pd.DataFrame:
     
     """
-    Read daily data from an existing excel file and export month-end total return close prices.
+    Read daily data from an existing pickle file and export month-end close prices.
 
     Parameters:
     -----------
@@ -26,6 +27,8 @@ def ndl_month_end_total_return(
         Name of the data source (e.g., 'Nasdaq_Data_Link').
     asset_class : str
         Asset class name (e.g., 'Equities').
+    timespan : str
+        Time span for the data (e.g., "day").
     excel_export : bool
         If True, export data to Excel format.
     pickle_export : bool
@@ -35,49 +38,52 @@ def ndl_month_end_total_return(
 
     Returns:
     --------
-    df_month_end_total_return : pd.DataFrame
-        DataFrame containing month-end total return close prices.
+    df_month_end : pd.DataFrame
+        DataFrame containing month-end close prices.
     """
 
-    # Set location from where to read existing excel file
-    location = f"{base_directory}/{source}/{asset_class}/Daily/{ticker}.xlsx"
+    # Set location from where to read existing pickle file
+    location = f"{base_directory}/{source}/{asset_class}/{timespan}/{ticker}.pkl"
 
-    # Read data from excel
+    # Read data from pickle
     try:
-        df = pd.read_excel(location, sheet_name="data", engine="calamine")
+        df = pd.read_pickle(location)
     except FileNotFoundError:
         print(f"File not found...please download the data for {ticker}")
     
+    # Reset index
+    df = df.reset_index()
+
     # Keep only required columns
-    df = df[['Date', 'adj_close']]
+    df = df[['Date', 'close']]
 
     # Set index to date column
-    df.set_index('Date', inplace=True)
+    df = df.set_index('Date')
         
     # Resample data to month end
-    df_month_end_total_return = df.resample("ME").last()
+    df_month_end = df.resample("ME").last()
 
     # Create directory
-    directory = f"{base_directory}/{source}/{asset_class}/Month_End_Total_Return"
+    directory = f"{base_directory}/{source}/{asset_class}/Month_End"
     os.makedirs(directory, exist_ok=True)
 
     # Export to excel
     if excel_export == True:
-        df_month_end_total_return.to_excel(f"{directory}/{ticker}_ME_TR.xlsx", sheet_name="data")
+        df_month_end.to_excel(f"{directory}/{ticker}_ME.xlsx", sheet_name="data")
     else:
         pass
 
     # Export to pickle
     if pickle_export == True:
-        df_month_end_total_return.to_pickle(f"{directory}/{ticker}_ME_TR.pkl")
+        df_month_end.to_pickle(f"{directory}/{ticker}_ME.pkl")
     else:
         pass
         
     # Output confirmation
     if output_confirmation == True:
-        print(f"Month end total return data complete for {ticker}")
+        print(f"Month end data complete for {ticker}")
         print(f"--------------------")
     else:
         pass
 
-    return df_month_end_total_return
+    return df_month_end

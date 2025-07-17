@@ -94,16 +94,14 @@ def coinbase_pull_data(
             print("Error - please confirm timeframe.")
             break
 
+        # Set file location based on parameters
         file_location = f"{base_directory}/{source}/{asset_class}/{time_length}/{product}.pkl"
-
-        # start_date = datetime(2025, 1, 1) # Default start date
-        # end_date = datetime.now() - timedelta(days = 1) # Updates data through 1 day ago
     
         try:
             # Attempt to read existing pickle data file
             ex_data = pd.read_pickle(file_location)
             ex_data = ex_data.reset_index()
-            print(f'File found...updating the {product} data')
+            print(f"File found...updating the {product} data")
             print("Existing data:")
             print(ex_data)
 
@@ -144,15 +142,6 @@ def coinbase_pull_data(
                 print("--------------------")
             else:
                 pass
-
-            # # Export data to excel
-            # os.makedirs(f"{base_directory}/Data/Coinbase/Cryptocurrencies/Minute", exist_ok=True)
-            # os.makedirs(f"{base_directory}/Data/Coinbase/Cryptocurrencies/Hourly", exist_ok=True)
-            # os.makedirs(f"{base_directory}/Data/Coinbase/Cryptocurrencies/Daily", exist_ok=True)
-            # full_history_df.to_pickle(location)
-            # # full_history_df.to_excel(location, sheet_name="data")
-            # print(f"Data update complete for {time_length} {product}")
-            # print("--------------------")
             
         except FileNotFoundError:
             # Starting year for fetching initial data
@@ -331,7 +320,7 @@ if __name__ == "__main__":
     #             continue
 
     current_year = datetime.now().year
-    current_month = datetime.now().month - 1
+    current_month = datetime.now().month
     currencies = ["BTC", "ETH", "SOL"]
 
     for cur in currencies:

@@ -15,9 +15,6 @@ from settings import config
 # Get the environment variable for where data is stored
 DATA_DIR = config("DATA_DIR")
 
-# Define the data directory
-base_directory = DATA_DIR
-
 # Crypto Data
 cryptocurrencies = [
     "ADA-USD",
@@ -37,7 +34,7 @@ cryptocurrencies = [
 for currency in cryptocurrencies:
     # Fetch raw data
     yf_pull_data(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=currency,
         source="Yahoo_Finance",
         asset_class="Cryptocurrencies",
@@ -48,7 +45,7 @@ for currency in cryptocurrencies:
 
     # Resample to month-end data
     yf_month_end(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=currency,
         source="Yahoo_Finance",
         asset_class="Cryptocurrencies",
@@ -59,7 +56,7 @@ for currency in cryptocurrencies:
 
     # Resample to month-end total return data
     yf_month_end_total_return(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=currency,
         source="Yahoo_Finance",
         asset_class="Cryptocurrencies",
@@ -70,7 +67,7 @@ for currency in cryptocurrencies:
 
     # Resample to quarter-end data
     yf_quarter_end(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=currency,
         source="Yahoo_Finance",
         asset_class="Cryptocurrencies",
@@ -81,7 +78,7 @@ for currency in cryptocurrencies:
 
     # Resample to quarter-end total return data
     yf_quarter_end_total_return(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=currency,
         source="Yahoo_Finance",
         asset_class="Cryptocurrencies",
@@ -97,7 +94,7 @@ equities = ["AMZN", "AAPL"]
 for stock in equities:
     # Fetch raw data
     yf_pull_data(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=stock,
         source="Yahoo_Finance",
         asset_class="Equities",
@@ -108,7 +105,7 @@ for stock in equities:
 
     # Resample to month-end data
     yf_month_end(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=stock,
         source="Yahoo_Finance",
         asset_class="Equities",
@@ -119,7 +116,7 @@ for stock in equities:
 
     # Resample to month-end total return data
     yf_month_end_total_return(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=stock,
         source="Yahoo_Finance",
         asset_class="Equities",
@@ -130,7 +127,7 @@ for stock in equities:
 
     # Resample to quarter-end data
     yf_quarter_end(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=stock,
         source="Yahoo_Finance",
         asset_class="Equities",
@@ -141,7 +138,7 @@ for stock in equities:
 
     # Resample to quarter-end total return data
     yf_quarter_end_total_return(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=stock,
         source="Yahoo_Finance",
         asset_class="Equities",
@@ -157,7 +154,7 @@ indices = ["^GSPC", "^VIX", "^VVIX"]
 for index in indices:
     # Fetch raw data
     yf_pull_data(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=index,
         source="Yahoo_Finance",
         asset_class="Indices",
@@ -168,7 +165,7 @@ for index in indices:
 
     # Resample to month-end data
     yf_month_end(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=index,
         source="Yahoo_Finance",
         asset_class="Indices",
@@ -179,7 +176,7 @@ for index in indices:
 
     # Resample to month-end total return data
     yf_month_end_total_return(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=index,
         source="Yahoo_Finance",
         asset_class="Indices",
@@ -190,7 +187,7 @@ for index in indices:
 
     # Resample to quarter-end data
     yf_quarter_end(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=index,
         source="Yahoo_Finance",
         asset_class="Indices",
@@ -201,7 +198,7 @@ for index in indices:
 
     # Resample to quarter-end total return data
     yf_quarter_end_total_return(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=index,
         source="Yahoo_Finance",
         asset_class="Indices",
@@ -217,7 +214,7 @@ etfs = ["SPY"]
 for fund in etfs:
     # Fetch raw data
     yf_pull_data(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=fund,
         source="Yahoo_Finance",
         asset_class="Exchange_Traded_Funds",
@@ -228,7 +225,7 @@ for fund in etfs:
 
     # Resample to month-end data
     yf_month_end(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=fund,
         source="Yahoo_Finance",
         asset_class="Exchange_Traded_Funds",
@@ -239,7 +236,7 @@ for fund in etfs:
 
     # Resample to month-end total return data
     yf_month_end_total_return(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=fund,
         source="Yahoo_Finance",
         asset_class="Exchange_Traded_Funds",
@@ -250,7 +247,7 @@ for fund in etfs:
 
     # Resample to quarter-end data
     yf_quarter_end(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=fund,
         source="Yahoo_Finance",
         asset_class="Exchange_Traded_Funds",
@@ -261,7 +258,7 @@ for fund in etfs:
 
     # Resample to quarter-end total return data
     yf_quarter_end_total_return(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=fund,
         source="Yahoo_Finance",
         asset_class="Exchange_Traded_Funds",
@@ -277,7 +274,7 @@ mutual_funds = ["VFIAX", "FXAIX", "TCIEX", "OGGYX", "VSMAX", "VBTLX", "VMVAX", "
 for fund in mutual_funds:
     # Fetch raw data
     yf_pull_data(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=fund,
         source="Yahoo_Finance",
         asset_class="Mutual_Funds",
@@ -288,7 +285,7 @@ for fund in mutual_funds:
 
     # Resample to month-end data
     yf_month_end(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=fund,
         source="Yahoo_Finance",
         asset_class="Mutual_Funds",
@@ -299,7 +296,7 @@ for fund in mutual_funds:
 
     # Resample to month-end total return data
     yf_month_end_total_return(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=fund,
         source="Yahoo_Finance",
         asset_class="Mutual_Funds",
@@ -310,7 +307,7 @@ for fund in mutual_funds:
 
     # Resample to quarter-end data
     yf_quarter_end(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=fund,
         source="Yahoo_Finance",
         asset_class="Mutual_Funds",
@@ -321,7 +318,7 @@ for fund in mutual_funds:
 
     # Resample to quarter-end total return data
     yf_quarter_end_total_return(
-        base_directory=base_directory,
+        base_directory=DATA_DIR,
         ticker=fund,
         source="Yahoo_Finance",
         asset_class="Mutual_Funds",

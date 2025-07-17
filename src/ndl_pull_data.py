@@ -6,12 +6,10 @@ import pandas as pd
 from IPython.display import display
 from load_api_keys import load_api_keys
 from pathlib import Path
+from settings import config
 
 # Load API keys from the environment
 api_keys = load_api_keys()
-
-# Import settings
-from settings import config
 
 # Get the environment variable for where data is stored
 DATA_DIR = config("DATA_DIR")

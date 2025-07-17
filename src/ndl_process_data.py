@@ -1,8 +1,11 @@
 """
 This script uses existing functions to download daily price data from 
-Nasdaq Data Link, then resample to month end data, then resample to 
-month end total return data, then resample to quarter end data, and 
-finally resample to quarter end total return data.
+Nasdaq Data Link, then:
+
+* Resample to month end data
+* Resample to month end total return data
+* Resample to quarter end data
+* Resample to quarter end total return data
 """
 
 # Import necessary modules

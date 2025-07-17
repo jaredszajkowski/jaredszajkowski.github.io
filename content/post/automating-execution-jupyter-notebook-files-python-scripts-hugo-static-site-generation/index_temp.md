@@ -457,7 +457,7 @@ and then execute individually, such as:
 
     $ doit build_post_indices
 
-And finally, doit can be forced to execute all tasks with:
+And finally, `doit` can be forced to execute all tasks with:
 
     $ doit --always
 

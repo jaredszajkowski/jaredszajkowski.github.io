@@ -1,5 +1,5 @@
-import requests
 import pandas as pd
+import requests
 
 def coinbase_fetch_available_products(
     base_currency: str=None,
@@ -18,6 +18,7 @@ def coinbase_fetch_available_products(
         Filter products by quote currency (e.g., 'USD').
     status : str, optional
         Filter products by status (e.g., 'online', 'offline').
+
     Returns:
     --------
     pd.DataFrame
