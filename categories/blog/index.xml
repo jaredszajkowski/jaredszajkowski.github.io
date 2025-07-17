@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blog on Jared Szajkowski</title><link>https://www.jaredszajkowski.com/categories/blog/</link><description>Recent content in Blog on Jared Szajkowski</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 10 Dec 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/categories/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Hello World</title><link>https://www.jaredszajkowski.com/2023/09/26/hello-world/</link><pubDate>Tue, 26 Sep 2023 00:00:00 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/09/26/hello-world/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2023/09/26/hello-world/cover.jpg" alt="Featured image of post Hello World" />&lt;h2 id="hello-world">Hello World
+&lt;/h2>&lt;p>Welcome to my website. This is meant to serve as a place for me to publish various posts from my explorations into Arch Linux, data science, quant finance, and other topics.&lt;/p>
+&lt;p>The theme has been adopted from the &lt;a class="link" href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener"
+>Hugo Theme Stack&lt;/a> produced by Jimmy Cai.&lt;/p>
+&lt;p>This is the only theme that I have found that checks all of the following boxes:&lt;/p>
+&lt;ul>
+&lt;li>Theme for the static site generator Hugo&lt;/li>
+&lt;li>Includes modules for archives&lt;/li>
+&lt;li>Includes tags and topics/categories&lt;/li>
+&lt;li>Includes built-in search functionality&lt;/li>
+&lt;li>Simple interface that is easily navigable&lt;/li>
+&lt;li>Highly extensible including modules for image galleries, posts, comment capabilities, etc.&lt;/li>
+&lt;/ul>
+&lt;p>It is hosted on &lt;a class="link" href="https://pages.github.com/" target="_blank" rel="noopener"
+>GitHub pages&lt;/a>. I followed the install instructions that the theme author provided, including using GitHub codespace for editing in the cloud. There are only a few details that I ran into that he did not mention.&lt;/p></description></item></channel></rss>
