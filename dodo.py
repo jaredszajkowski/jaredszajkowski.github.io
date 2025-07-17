@@ -341,7 +341,7 @@ def task_copy_notebook_exports():
 def task_copy_about_me_exports():
     """Copy all HTML files from the about-me page to the Hugo public/ folder"""
     src_dir = PAGES_DIR / "about-me"
-    dest_dir = PUBLIC_DIR / "page" / "about-me"
+    dest_dir = PUBLIC_DIR / "about-me"
 
     html_files = list(src_dir.glob("*.html"))
     if not html_files:
