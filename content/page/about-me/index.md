@@ -34,7 +34,7 @@ Jared graduated from the Illinois Institue of Technology with a Bachelor of Scie
 
 Jared has completed the following graduate courses in the Univeristy of Chicago Financial Mathematics program and is currenlty on pace to complete spring 2026:
 
-* [FINM 34000 - Probability and Stochastic Processes](https://finmath.uchicago.edu/curriculum/required-courses/finm-34000/)
+* [**FINM 34000 - Probability and Stochastic Processes**](https://finmath.uchicago.edu/curriculum/required-courses/finm-34000/)
 * [FINM 36700 - Portfolio and Risk Management](https://finmath.uchicago.edu/curriculum/required-courses/finm-36700/)
 * [FINM 32500 - Computing for Finance in Python](https://finmath.uchicago.edu/curriculum/required-courses/finm-32500/)
 * [FINM 32600 - Computing for Finance in C++](https://finmath.uchicago.edu/curriculum/degree-concentrations/financial-computing/finm-32600/)
