@@ -3,7 +3,7 @@ title: "Investigating A VIX Trading Signal, Part 3: Trading"
 description: A brief look at finding a trading signal based on moving averages of the VIX.
 slug: investigating-a-vix-trading-signal-part-3-trading
 date: 2025-03-03 00:00:01+0000
-lastmod: 2025-06-10 00:00:01+0000
+lastmod: 2025-07-21 00:00:01+0000
 image: cover.jpg
 draft: false
 categories:
