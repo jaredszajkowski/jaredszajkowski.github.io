@@ -1,6 +1,6 @@
 # README
 
-This repository holds the Hugo static site for jaredszajkowski.github.io, which redirects to jaredszajkowski.com.
+This repository holds the Hugo static site for jaredszajkowski.github.io, which redirects to [jaredszajkowski.com](https://www.jaredszajkowski.com/).
 
 The original README (from the Hugo theme developer) is shown below for reference and credit.
 
