@@ -97,7 +97,11 @@ def calc_vix_trade_pnl(
     open_trades.drop(columns={'Closed', 'Amount_Sell', 'Quantity_Sell', 'Exp_Date'}, inplace=True)
 
     # Calculate the total market value of opened positions
-    total_opened_pos_mkt_val = closed_trades['Amount_Buy'].sum() + open_trades['Amount_Buy'].sum()
+    # If start and end dates for trades and expirations are None, use only the closed positions
+    if exp_start_date is None and exp_end_date is None and trade_start_date is None and trade_end_date is None:
+        total_opened_pos_mkt_val = closed_trades['Amount_Buy'].sum()
+    else:
+        total_opened_pos_mkt_val = closed_trades['Amount_Buy'].sum() + open_trades['Amount_Buy'].sum()
     total_opened_pos_mkt_val_str = f"${total_opened_pos_mkt_val:,.2f}"
 
     # Calculate the total market value of closed positions

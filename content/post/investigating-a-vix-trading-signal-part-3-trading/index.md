@@ -150,7 +150,7 @@ Total Closed Position Market Value: $54,017.05</br>
 Net Profit/Loss: $5,799.11</br>
 Percent Profit/Loss: 12.03%
 
-#### Low Volatility In June 2025
+#### Low Volatility In June, July 2025
 
 Plot with VIX high/low, trade side, VIX option, and VIX level at trade date/time:
 
@@ -174,9 +174,9 @@ Total Closed Position Market Value: $0.00</br>
 Net Profit/Loss: $0.00</br>
 Percent Profit/Loss: nan%
 
-#### Complete Trade History
+#### Complete Trade History (Closed Positions)
 
-Total Opened Position Market Value: $64,711.17</br>
+Total Opened Position Market Value: $55,988.74</br>
 Total Closed Position Market Value: $64,170.25</br>
 Net Profit/Loss: $8,181.51</br>
 Percent Profit/Loss: 14.61%

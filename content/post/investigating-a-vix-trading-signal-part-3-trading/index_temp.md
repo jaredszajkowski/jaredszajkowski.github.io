@@ -87,7 +87,7 @@ Total Closed Position Market Value: <!-- INSERT_13_Total_Closed_Position_Market_
 Net Profit/Loss: <!-- INSERT_13_PnL_HERE --></br>
 Percent Profit/Loss: <!-- INSERT_13_Percent_PnL_HERE -->
 
-#### Low Volatility In June 2025
+#### Low Volatility In June, July 2025
 
 Plot with VIX high/low, trade side, VIX option, and VIX level at trade date/time:
 
@@ -106,7 +106,7 @@ Total Closed Position Market Value: <!-- INSERT_14_Total_Closed_Position_Market_
 Net Profit/Loss: <!-- INSERT_14_PnL_HERE --></br>
 Percent Profit/Loss: <!-- INSERT_14_Percent_PnL_HERE -->
 
-#### Complete Trade History
+#### Complete Trade History (Closed Positions)
 
 Total Opened Position Market Value: <!-- INSERT_99_Total_Opened_Position_Market_Value_HERE --></br>
 Total Closed Position Market Value: <!-- INSERT_99_Total_Closed_Position_Market_Value_HERE --></br>
