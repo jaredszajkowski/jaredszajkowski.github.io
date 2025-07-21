@@ -7776,6 +7776,7 @@ a.anchor-link {
     <span class="n">source</span><span class="o">=</span><span class="s2">"Bloomberg"</span><span class="p">,</span>
     <span class="n">asset_class</span><span class="o">=</span><span class="s2">"Indices"</span><span class="p">,</span>
     <span class="n">timeframe</span><span class="o">=</span><span class="s2">"Daily"</span><span class="p">,</span>
+    <span class="n">file_format</span><span class="o">=</span><span class="s2">"excel"</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">bonds_data</span><span class="p">[</span><span class="s1">'Date'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">bonds_data</span><span class="p">[</span><span class="s1">'Date'</span><span class="p">])</span>
@@ -8008,6 +8009,7 @@ a.anchor-link {
     <span class="n">source</span><span class="o">=</span><span class="s2">"Bloomberg"</span><span class="p">,</span>
     <span class="n">asset_class</span><span class="o">=</span><span class="s2">"Indices"</span><span class="p">,</span>
     <span class="n">timeframe</span><span class="o">=</span><span class="s2">"Daily"</span><span class="p">,</span>
+    <span class="n">file_format</span><span class="o">=</span><span class="s2">"excel"</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">stocks_data</span><span class="p">[</span><span class="s1">'Date'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">stocks_data</span><span class="p">[</span><span class="s1">'Date'</span><span class="p">])</span>
@@ -8240,6 +8242,7 @@ a.anchor-link {
     <span class="n">source</span><span class="o">=</span><span class="s2">"Bloomberg"</span><span class="p">,</span>
     <span class="n">asset_class</span><span class="o">=</span><span class="s2">"Commodities"</span><span class="p">,</span>
     <span class="n">timeframe</span><span class="o">=</span><span class="s2">"Daily"</span><span class="p">,</span>
+    <span class="n">file_format</span><span class="o">=</span><span class="s2">"excel"</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">gold_data</span><span class="p">[</span><span class="s1">'Date'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">gold_data</span><span class="p">[</span><span class="s1">'Date'</span><span class="p">])</span>
@@ -9466,6 +9469,7 @@ The first 5 rows are:
     <span class="n">fund_list</span><span class="o">=</span><span class="n">fund_list</span><span class="p">,</span>
     <span class="n">df</span><span class="o">=</span><span class="n">strat</span><span class="p">[[</span><span class="s1">'Return'</span><span class="p">]],</span>
     <span class="n">period</span><span class="o">=</span><span class="s2">"Daily"</span><span class="p">,</span>
+    <span class="n">use_calendar_days</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">excel_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">pickle_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">output_confirmation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -9476,6 +9480,7 @@ The first 5 rows are:
     <span class="n">fund_list</span><span class="o">=</span><span class="n">fund_list</span><span class="p">,</span> 
     <span class="n">df</span><span class="o">=</span><span class="n">strat_pre_1999</span><span class="p">[[</span><span class="s1">'Return'</span><span class="p">]],</span> 
     <span class="n">period</span><span class="o">=</span><span class="s2">"Daily"</span><span class="p">,</span>
+    <span class="n">use_calendar_days</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">excel_export</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">pickle_export</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">output_confirmation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -9486,6 +9491,7 @@ The first 5 rows are:
     <span class="n">fund_list</span><span class="o">=</span><span class="n">fund_list</span><span class="p">,</span> 
     <span class="n">df</span><span class="o">=</span><span class="n">strat_post_1999</span><span class="p">[[</span><span class="s1">'Return'</span><span class="p">]],</span> 
     <span class="n">period</span><span class="o">=</span><span class="s2">"Daily"</span><span class="p">,</span>
+    <span class="n">use_calendar_days</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">excel_export</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">pickle_export</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">output_confirmation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -9496,6 +9502,7 @@ The first 5 rows are:
     <span class="n">fund_list</span><span class="o">=</span><span class="n">fund_list</span><span class="p">,</span> 
     <span class="n">df</span><span class="o">=</span><span class="n">strat_post_2009</span><span class="p">[[</span><span class="s1">'Return'</span><span class="p">]],</span> 
     <span class="n">period</span><span class="o">=</span><span class="s2">"Daily"</span><span class="p">,</span>
+    <span class="n">use_calendar_days</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">excel_export</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">pickle_export</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">output_confirmation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -9514,7 +9521,13 @@ The first 5 rows are:
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Summary stats complete for Stocks_Bonds_Gold_Cash
 Summary stats complete for Stocks_Bonds_Gold_Cash
-Summary stats complete for Stocks_Bonds_Gold_Cash
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Summary stats complete for Stocks_Bonds_Gold_Cash
 Summary stats complete for Stocks_Bonds_Gold_Cash
 </pre>
 </div>
