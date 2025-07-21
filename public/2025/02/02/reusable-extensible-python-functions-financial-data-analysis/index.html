@@ -891,6 +891,9 @@ Update 5/21/2025: Data through 5/20/25.</br> -->
 </span><span class="lnt">102
 </span><span class="lnt">103
 </span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -978,16 +981,11 @@ Update 5/21/2025: Data through 5/20/25.</br> -->
 </span></span><span class="line"><span class="cl">    <span class="n">closed_trades</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Closed&#39;</span><span class="p">,</span> <span class="s1">&#39;Exp_Date&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">closed_trades</span><span class="p">[</span><span class="s1">&#39;Quantity_Sell&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">closed_trades</span><span class="p">[</span><span class="s1">&#39;Quantity_Sell&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1"># Calculate the net % PnL and $ PnL</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Calculate the net % PnL</span>
 </span></span><span class="line"><span class="cl">    <span class="n">net_PnL_percent</span> <span class="o">=</span> <span class="n">closed_trades</span><span class="p">[</span><span class="s1">&#39;Realized_PnL&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">closed_trades</span><span class="p">[</span><span class="s1">&#39;Amount_Buy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">    <span class="n">net_PnL_percent_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">net_PnL_percent</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">%&#34;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">total_opened_pos_mkt_val</span> <span class="o">=</span> <span class="n">closed_trades</span><span class="p">[</span><span class="s1">&#39;Amount_Buy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="n">total_opened_pos_mkt_val_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;$</span><span class="si">{</span><span class="n">total_opened_pos_mkt_val</span><span class="si">:</span><span class="s2">,.2f</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">total_closed_pos_mkt_val</span> <span class="o">=</span> <span class="n">closed_trades</span><span class="p">[</span><span class="s1">&#39;Amount_Sell&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="n">total_closed_pos_mkt_val_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;$</span><span class="si">{</span><span class="n">total_closed_pos_mkt_val</span><span class="si">:</span><span class="s2">,.2f</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Calculate the net $ PnL</span>
 </span></span><span class="line"><span class="cl">    <span class="n">net_PnL</span> <span class="o">=</span> <span class="n">closed_trades</span><span class="p">[</span><span class="s1">&#39;Realized_PnL&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">    <span class="n">net_PnL_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;$</span><span class="si">{</span><span class="n">net_PnL</span><span class="si">:</span><span class="s2">,.2f</span><span class="si">}</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl">
@@ -995,6 +993,14 @@ Update 5/21/2025: Data through 5/20/25.</br> -->
 </span></span><span class="line"><span class="cl">    <span class="n">open_trades</span> <span class="o">=</span> <span class="n">merged_transactions</span><span class="p">[</span><span class="o">~</span><span class="n">merged_transactions</span><span class="p">[</span><span class="s1">&#39;Closed&#39;</span><span class="p">]]</span>
 </span></span><span class="line"><span class="cl">    <span class="n">open_trades</span> <span class="o">=</span> <span class="n">open_trades</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">open_trades</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Closed&#39;</span><span class="p">,</span> <span class="s1">&#39;Amount_Sell&#39;</span><span class="p">,</span> <span class="s1">&#39;Quantity_Sell&#39;</span><span class="p">,</span> <span class="s1">&#39;Exp_Date&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Calculate the total market value of opened positions</span>
+</span></span><span class="line"><span class="cl">    <span class="n">total_opened_pos_mkt_val</span> <span class="o">=</span> <span class="n">closed_trades</span><span class="p">[</span><span class="s1">&#39;Amount_Buy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">+</span> <span class="n">open_trades</span><span class="p">[</span><span class="s1">&#39;Amount_Buy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">total_opened_pos_mkt_val_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;$</span><span class="si">{</span><span class="n">total_opened_pos_mkt_val</span><span class="si">:</span><span class="s2">,.2f</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Calculate the total market value of closed positions</span>
+</span></span><span class="line"><span class="cl">    <span class="n">total_closed_pos_mkt_val</span> <span class="o">=</span> <span class="n">closed_trades</span><span class="p">[</span><span class="s1">&#39;Amount_Sell&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">total_closed_pos_mkt_val_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;$</span><span class="si">{</span><span class="n">total_closed_pos_mkt_val</span><span class="si">:</span><span class="s2">,.2f</span><span class="si">}</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">transactions_data</span><span class="p">,</span> <span class="n">closed_trades</span><span class="p">,</span> <span class="n">open_trades</span><span class="p">,</span> <span class="n">net_PnL_percent_str</span><span class="p">,</span> <span class="n">net_PnL_str</span><span class="p">,</span> <span class="n">total_opened_pos_mkt_val_str</span><span class="p">,</span> <span class="n">total_closed_pos_mkt_val_str</span>
 </span></span></code></pre></td></tr></table>
@@ -1351,6 +1357,12 @@ Update 5/21/2025: Data through 5/20/25.</br> -->
 </span><span class="lnt">48
 </span><span class="lnt">49
 </span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
@@ -1395,6 +1407,7 @@ Update 5/21/2025: Data through 5/20/25.</br> -->
 </span></span><span class="line"><span class="cl">        <span class="s2">&#34;SCHWAB_ENCRYPTED_ACCOUNT_ID_2&#34;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&#34;SCHWAB_ENCRYPTED_ACCOUNT_ID_2&#34;</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl">        <span class="s2">&#34;SCHWAB_ACCOUNT_NUMBER_3&#34;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&#34;SCHWAB_ACCOUNT_NUMBER_3&#34;</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl">        <span class="s2">&#34;SCHWAB_ENCRYPTED_ACCOUNT_ID_3&#34;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&#34;SCHWAB_ENCRYPTED_ACCOUNT_ID_3&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;POLYGON_KEY&#34;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&#34;POLYGON_KEY&#34;</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="c1"># Raise error if any key is missing</span>
@@ -1403,6 +1416,11 @@ Update 5/21/2025: Data through 5/20/25.</br> -->
 </span></span><span class="line"><span class="cl">            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Missing environment variable: </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">keys</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Example usage</span>
+</span></span><span class="line"><span class="cl">    <span class="n">api_keys</span> <span class="o">=</span> <span class="n">load_api_keys</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;API keys loaded successfully.&#34;</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="load_data">load_data

@@ -41,6 +41,7 @@ def load_api_keys(
         "SCHWAB_ENCRYPTED_ACCOUNT_ID_2": os.getenv("SCHWAB_ENCRYPTED_ACCOUNT_ID_2"),
         "SCHWAB_ACCOUNT_NUMBER_3": os.getenv("SCHWAB_ACCOUNT_NUMBER_3"),
         "SCHWAB_ENCRYPTED_ACCOUNT_ID_3": os.getenv("SCHWAB_ENCRYPTED_ACCOUNT_ID_3"),
+        "POLYGON_KEY": os.getenv("POLYGON_KEY"),
     }
 
     # Raise error if any key is missing
@@ -50,4 +51,8 @@ def load_api_keys(
 
     return keys
 
+if __name__ == "__main__":
+    # Example usage
+    api_keys = load_api_keys()
+    print("API keys loaded successfully.")
 ```

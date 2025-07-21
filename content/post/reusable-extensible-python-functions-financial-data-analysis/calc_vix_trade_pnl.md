@@ -84,16 +84,11 @@ def calc_vix_trade_pnl(
     closed_trades.drop(columns={'Closed', 'Exp_Date'}, inplace=True)
     closed_trades['Quantity_Sell'] = closed_trades['Quantity_Sell'].astype(int)
 
-    # Calculate the net % PnL and $ PnL
+    # Calculate the net % PnL
     net_PnL_percent = closed_trades['Realized_PnL'].sum() / closed_trades['Amount_Buy'].sum()
     net_PnL_percent_str = f"{round(net_PnL_percent * 100, 2)}%"
 
-    total_opened_pos_mkt_val = closed_trades['Amount_Buy'].sum()
-    total_opened_pos_mkt_val_str = f"${total_opened_pos_mkt_val:,.2f}"
-
-    total_closed_pos_mkt_val = closed_trades['Amount_Sell'].sum()
-    total_closed_pos_mkt_val_str = f"${total_closed_pos_mkt_val:,.2f}"
-
+    # Calculate the net $ PnL
     net_PnL = closed_trades['Realized_PnL'].sum()
     net_PnL_str = f"${net_PnL:,.2f}"
 
@@ -101,6 +96,14 @@ def calc_vix_trade_pnl(
     open_trades = merged_transactions[~merged_transactions['Closed']]
     open_trades = open_trades.reset_index(drop=True)
     open_trades.drop(columns={'Closed', 'Amount_Sell', 'Quantity_Sell', 'Exp_Date'}, inplace=True)
+
+    # Calculate the total market value of opened positions
+    total_opened_pos_mkt_val = closed_trades['Amount_Buy'].sum() + open_trades['Amount_Buy'].sum()
+    total_opened_pos_mkt_val_str = f"${total_opened_pos_mkt_val:,.2f}"
+
+    # Calculate the total market value of closed positions
+    total_closed_pos_mkt_val = closed_trades['Amount_Sell'].sum()
+    total_closed_pos_mkt_val_str = f"${total_closed_pos_mkt_val:,.2f}"
 
     return transactions_data, closed_trades, open_trades, net_PnL_percent_str, net_PnL_str, total_opened_pos_mkt_val_str, total_closed_pos_mkt_val_str
 ```

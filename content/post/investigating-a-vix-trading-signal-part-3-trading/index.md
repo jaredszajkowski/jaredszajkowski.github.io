@@ -169,14 +169,14 @@ Open positions:
 | VIX 10/22/2025 22.00 C |      2950.81 |             10 |
 | VIX 10/22/2025 23.00 C |      2760.81 |             10 |
 
-Total Opened Position Market Value: $0.00</br>
+Total Opened Position Market Value: $8,722.43</br>
 Total Closed Position Market Value: $0.00</br>
 Net Profit/Loss: $0.00</br>
 Percent Profit/Loss: nan%
 
 #### Complete Trade History
 
-Total Opened Position Market Value: $55,988.74</br>
+Total Opened Position Market Value: $64,711.17</br>
 Total Closed Position Market Value: $64,170.25</br>
 Net Profit/Loss: $8,181.51</br>
 Percent Profit/Loss: 14.61%
