@@ -1,11 +1,11 @@
-import numpy as np
 import os
 import pandas as pd
 import time
 
+from calendar import monthrange
+from datetime import datetime
 from IPython.display import display
 from load_api_keys import load_api_keys
-from pathlib import Path
 from polygon import RESTClient
 from settings import config
 
@@ -101,6 +101,13 @@ def polygon_pull_data(
         print("New data:")
         print(new_data)
 
+        # Check if new data contains 5000 rows
+        if len(new_data) == 5000:
+            # Raise exception
+            raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
+        else:
+            pass
+
         # Combine existing data with recent data, sort values, set index to date
         full_history_df = pd.concat([ex_data,new_data[new_data['Date'].isin(ex_data['Date']) == False]])
         full_history_df = full_history_df.sort_values(by='Date',ascending=True)
@@ -157,6 +164,13 @@ def polygon_pull_data(
         print("New data:")
         print(full_history_df)
 
+        # Check if new data contains 5000 rows
+        if len(full_history_df) == 5000:
+            # Raise exception
+            raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
+        else:
+            pass
+
         # Create directory
         directory = f"{base_directory}/{source}/{asset_class}/{timespan}"
         os.makedirs(directory, exist_ok=True)
@@ -187,36 +201,92 @@ def polygon_pull_data(
 
 if __name__ == "__main__":
 
-    # Crypto Data
-    # None
+    current_year = datetime.now().year
+    current_month = datetime.now().month
 
     # Stock Data
     equities = ["AMZN", "AAPL"]
 
     # Iterate through each stock
     for stock in equities:
-        # Fetch raw data
-        polygon_pull_data(
-            base_directory=DATA_DIR,
-            ticker=stock,
-            source="Polygon",
-            asset_class="Equities",
-            start_date="2023-01-01",
-            end_date="2025-12-31",
-            timespan="day",
-            multiplier=1,
-            adjusted=True,
-            excel_export=True,
-            pickle_export=True,
-            output_confirmation=True,
-        )
+        for year in range(2025, current_year+1):
+            for month in range(1, current_month-1):
+                print(f"Pulling data for {year}-{month:02d}...")
+                for start_day in [1, 6, 11, 16, 21, 26]:
+                    end_day = min(start_day + 5, monthrange(year, month)[1])
+                    
+                    polygon_pull_data(
+                        base_directory=DATA_DIR,
+                        ticker=stock,
+                        source="Polygon",
+                        asset_class="Equities",
+                        start_date=datetime(year, month, start_day),
+                        end_date=datetime(year, month, end_day),
+                        timespan="minute",
+                        multiplier=1,
+                        adjusted=True,
+                        excel_export=True,
+                        pickle_export=True,
+                        output_confirmation=True,
+                    )
 
-        # Pause for 15 seconds to avoid hitting API rate limits
-        print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
-        time.sleep(15)
+                    # Pause for 15 seconds to avoid hitting API rate limits
+                    print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                    time.sleep(15)
 
-    # Index Data
-    # None
+    # Iterate through each stock
+    for stock in equities:
+        for year in range(2025, current_year+1):
+            for month in range(1, current_month-1):
+                print(f"Pulling data for {year}-{month:02d}...")
+                for start_day in [1, 16]:
+                    end_day = min(start_day + 15, monthrange(year, month)[1])
+                    
+                    polygon_pull_data(
+                        base_directory=DATA_DIR,
+                        ticker=stock,
+                        source="Polygon",
+                        asset_class="Equities",
+                        start_date=datetime(year, month, start_day),
+                        end_date=datetime(year, month, end_day),
+                        timespan="hour",
+                        multiplier=1,
+                        adjusted=True,
+                        excel_export=True,
+                        pickle_export=True,
+                        output_confirmation=True,
+                    )
+
+                    # Pause for 15 seconds to avoid hitting API rate limits
+                    print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                    time.sleep(15)
+
+    # Iterate through each stock
+    for stock in equities:
+        for year in range(2025, current_year+1):
+            for month in range(1, current_month-1):
+                print(f"Pulling data for {year}-{month:02d}...")
+                for start_day in [1]:
+                    end_day = min(start_day + 30, monthrange(year, month)[1])
+                    
+                    polygon_pull_data(
+                        base_directory=DATA_DIR,
+                        ticker=stock,
+                        source="Polygon",
+                        asset_class="Equities",
+                        start_date=datetime(year, month, start_day),
+                        end_date=datetime(year, month, end_day),
+                        timespan="day",
+                        multiplier=1,
+                        adjusted=True,
+                        excel_export=True,
+                        pickle_export=True,
+                        output_confirmation=True,
+                    )
+
+                    # Pause for 15 seconds to avoid hitting API rate limits
+                    print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                    time.sleep(15)
 
     # Exchange Traded Fund Data
     etfs = [
@@ -232,30 +302,87 @@ if __name__ == "__main__":
         'XLB', 'XLC', 'XLE', 'XLF', 'XLI', 'XLK', 'XLP', 'XLRE', 'XLU', 'XLV', 'XLY',
         'IVV', 'EFA', 'EEM', 'IEF', 'IEI', 'TLT', 'GSG', 'IAU', 'IYR',
         'SSO', 'EFO', 'EET', 'UBT', 'UST', 'GSG', 'UGL', 'URE',
-        'UPRO', 'TMF'
+        'TMF',
+        'IWM', 'URTY',
     ]
 
     # Iterate through each ETF
     for fund in etfs:
-        # Fetch raw data
-        polygon_pull_data(
-            base_directory=DATA_DIR,
-            ticker=fund,
-            source="Polygon",
-            asset_class="Exchange_Traded_Funds",
-            start_date="2023-01-01",
-            end_date="2025-12-31",
-            timespan="day",
-            multiplier=1,
-            adjusted=True,
-            excel_export=True,
-            pickle_export=True,
-            output_confirmation=True,
-        )
+        for year in range(2025, current_year+1):
+            for month in range(1, current_month-1):
+                print(f"Pulling data for {year}-{month:02d}...")
+                for start_day in [1, 6, 11, 16, 21, 26]:
+                    end_day = min(start_day + 5, monthrange(year, month)[1])
+                    
+                    polygon_pull_data(
+                        base_directory=DATA_DIR,
+                        ticker=fund,
+                        source="Polygon",
+                        asset_class="Exchange_Traded_Funds",
+                        start_date=datetime(year, month, start_day),
+                        end_date=datetime(year, month, end_day),
+                        timespan="minute",
+                        multiplier=1,
+                        adjusted=True,
+                        excel_export=True,
+                        pickle_export=True,
+                        output_confirmation=True,
+                    )
 
-        # Pause for 15 seconds to avoid hitting API rate limits
-        print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
-        time.sleep(15)
+                    # Pause for 15 seconds to avoid hitting API rate limits
+                    print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                    time.sleep(15)
 
-    # Mutual Fund Data
-    # None
+    # Iterate through each ETF
+    for fund in etfs:
+        for year in range(2025, current_year+1):
+            for month in range(1, current_month-1):
+                print(f"Pulling data for {year}-{month:02d}...")
+                for start_day in [1, 16]:
+                    end_day = min(start_day + 15, monthrange(year, month)[1])
+                    
+                    polygon_pull_data(
+                        base_directory=DATA_DIR,
+                        ticker=fund,
+                        source="Polygon",
+                        asset_class="Exchange_Traded_Funds",
+                        start_date=datetime(year, month, start_day),
+                        end_date=datetime(year, month, end_day),
+                        timespan="hour",
+                        multiplier=1,
+                        adjusted=True,
+                        excel_export=True,
+                        pickle_export=True,
+                        output_confirmation=True,
+                    )
+
+                    # Pause for 15 seconds to avoid hitting API rate limits
+                    print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                    time.sleep(15)
+
+    # Iterate through each ETF
+    for fund in etfs:
+        for year in range(2025, current_year+1):
+            for month in range(1, current_month-1):
+                print(f"Pulling data for {year}-{month:02d}...")
+                for start_day in [1]:
+                    end_day = min(start_day + 30, monthrange(year, month)[1])
+                    
+                    polygon_pull_data(
+                        base_directory=DATA_DIR,
+                        ticker=fund,
+                        source="Polygon",
+                        asset_class="Exchange_Traded_Funds",
+                        start_date=datetime(year, month, start_day),
+                        end_date=datetime(year, month, end_day),
+                        timespan="day",
+                        multiplier=1,
+                        adjusted=True,
+                        excel_export=True,
+                        pickle_export=True,
+                        output_confirmation=True,
+                    )
+
+                    # Pause for 15 seconds to avoid hitting API rate limits
+                    print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                    time.sleep(15)

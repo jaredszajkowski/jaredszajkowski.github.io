@@ -3,18 +3,14 @@ This script uses existing functions to download daily price data from
 Polygon, then:
 
 * Resample to month end data
-* Resample to month end total return data
 * Resample to quarter end data
-* Resample to quarter end total return data
 """
 
 import time
 
 from polygon_pull_data import polygon_pull_data
 from polygon_month_end import polygon_month_end
-# from ndl_month_end_total_return import ndl_month_end_total_return
 from polygon_quarter_end import polygon_quarter_end
-# from ndl_quarter_end_total_return import ndl_quarter_end_total_return
 from settings import config
 
 # Get the environment variable for where data is stored
@@ -111,7 +107,8 @@ etfs = [
     'XLB', 'XLC', 'XLE', 'XLF', 'XLI', 'XLK', 'XLP', 'XLRE', 'XLU', 'XLV', 'XLY',
     'IVV', 'EFA', 'EEM', 'IEF', 'IEI', 'TLT', 'GSG', 'IAU', 'IYR',
     'SSO', 'EFO', 'EET', 'UBT', 'UST', 'GSG', 'UGL', 'URE',
-    'UPRO', 'TMF'
+    'TMF',
+    'IWM', 'URTY',
 ]
 
 # Iterate through each ETF

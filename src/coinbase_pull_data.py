@@ -1,3 +1,4 @@
+import calendar
 import os
 import pandas as pd
 
@@ -198,10 +199,10 @@ def coinbase_pull_data(
                         return None
 
                     # Recursive call for the next year
-                    return get_full_hist(next_year)
+                    return get_full_hist(year=next_year)
 
             # Fetch the full history starting from the given year
-            full_history_df = get_full_hist(starting_year)
+            full_history_df = get_full_hist(year=starting_year)
 
             if full_history_df is not None:
 
@@ -291,37 +292,36 @@ def coinbase_pull_data(
     return full_history_df
 
 if __name__ == "__main__":
+
+    base_currency = "XRP"
        
-    # # Example usage to pull all data for each month from 2010 to 2024
+    # Example usage to pull all data for each month from 2010 to 2024
     # for year in range(2010, 2025):
     #     for month in range(1, 13):
     #         print(f"Pulling data for {year}-{month:02d}...")
-    #         for days in [31, 30, 29, 28]:
-    #             try:
-    #                 df = coinbase_pull_data(
-    #                     base_directory=DATA_DIR,
-    #                     source="Coinbase",
-    #                     asset_class="Cryptocurrencies",
-    #                     excel_export=False,
-    #                     pickle_export=True,
-    #                     output_confirmation=True,
-    #                     base_currency="SOL",
-    #                     quote_currency="USD",
-    #                     granularity=86400, # 60=minute, 3600=hourly, 86400=daily
-    #                     status='online',
-    #                     start_date=datetime(year, month, 1),
-    #                     end_date=datetime(year, month, days),
-    #                 )
-    #                 break  # success
-    #             except Exception as e:
-    #                 print(f"Error pulling data for {year}-{month:02d} with {days} days: {e}")
-    #         else:
-    #             print(f"All attempts failed for {year}-{month:02d}, skipping...")
-    #             continue
+    #         try:
+    #             # Get the last day of the month
+    #             last_day = calendar.monthrange(year, month)[1]
+    #             df = coinbase_pull_data(
+    #                 base_directory=DATA_DIR,
+    #                 source="Coinbase",
+    #                 asset_class="Cryptocurrencies",
+    #                 excel_export=False,
+    #                 pickle_export=True,
+    #                 output_confirmation=True,
+    #                 base_currency=base_currency,
+    #                 quote_currency="USD",
+    #                 granularity=86400, # 60=minute, 3600=hourly, 86400=daily
+    #                 status='online',
+    #                 start_date=datetime(year, month, 1),
+    #                 end_date=datetime(year, month, last_day),
+    #             )
+    #         except Exception as e:
+    #             print(f"Failed to pull data for {year}-{month:02d}: {e}")
 
     current_year = datetime.now().year
     current_month = datetime.now().month
-    currencies = ["BTC", "ETH", "SOL"]
+    currencies = ["BTC", "ETH", "SOL", "XRP"]
 
     for cur in currencies:
 

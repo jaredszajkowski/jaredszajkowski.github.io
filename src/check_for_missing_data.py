@@ -11,7 +11,7 @@ DATA_DIR = config("DATA_DIR")
 # Load the pickle file
 df = load_data(
     base_directory=DATA_DIR,
-    ticker="SOL-USD",
+    ticker="XRP-USD",
     source="Coinbase",
     asset_class="Cryptocurrencies",
     timeframe="Minute",
@@ -52,10 +52,21 @@ missing_df['year'] = missing_df['missing_timestamp'].dt.year
 missing_df['month'] = missing_df['missing_timestamp'].dt.month
 
 # Count missing timestamps by year and month
-missing_by_year_month = missing_df.groupby(['year', 'month']).size().rename('missing_count')
+missing_by_year_month = (
+    missing_df.groupby(['year', 'month'])
+    .size()
+    .reset_index(name='missing_count')
+)
 
-# Convert to DataFrame for display
-missing_by_year_month = missing_by_year_month.reset_index()
+# Generate all year-month combinations in your date range
+years = range(df['Date'].min().year, df['Date'].max().year + 1)
+months = range(1, 13)
+all_combinations = pd.MultiIndex.from_product([years, months], names=['year', 'month'])
+
+# Reindex to force inclusion
+missing_by_year_month = missing_by_year_month.set_index(['year', 'month']).reindex(
+    all_combinations, fill_value=0
+).reset_index()
 
 # Optional: pivot for nicer display
 pivot_table = missing_by_year_month.pivot(index='year', columns='month', values='missing_count').fillna(0).astype(int)
