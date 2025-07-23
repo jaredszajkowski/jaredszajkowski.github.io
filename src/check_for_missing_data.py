@@ -11,7 +11,7 @@ DATA_DIR = config("DATA_DIR")
 # Load the pickle file
 df = load_data(
     base_directory=DATA_DIR,
-    ticker="XRP-USD",
+    ticker="BTC-USD",
     source="Coinbase",
     asset_class="Cryptocurrencies",
     timeframe="Minute",

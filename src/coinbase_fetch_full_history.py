@@ -2,12 +2,12 @@ import pandas as pd
 import time
 
 from coinbase_fetch_historical_candles import coinbase_fetch_historical_candles
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 def coinbase_fetch_full_history(
     product_id: str,
-    start: str,
-    end: str,
+    start: datetime,
+    end: datetime,
     granularity: int,
 ) -> pd.DataFrame:
     
@@ -18,9 +18,9 @@ def coinbase_fetch_full_history(
     -----------
     product_id : str
         The trading pair (e.g., 'BTC-USD').
-    start : str
+    start : datetime
         Start time in UTC.
-    end : str
+    end : datetime
         End time in UTC.
     granularity : int
         Time slice in seconds (e.g., 3600 for hourly candles).

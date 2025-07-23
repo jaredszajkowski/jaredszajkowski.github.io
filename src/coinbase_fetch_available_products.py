@@ -2,9 +2,9 @@ import pandas as pd
 import requests
 
 def coinbase_fetch_available_products(
-    base_currency: str=None,
-    quote_currency: str=None,
-    status: str=None,
+    base_currency: str,
+    quote_currency: str,
+    status: str,
 ) -> pd.DataFrame:
 
     """
@@ -58,9 +58,10 @@ def coinbase_fetch_available_products(
         print(f"Oops: Something Else {err}")
 
 if __name__ == "__main__":
+    
     # Example usage
-    df = coinbase_fetch_available_products(base_currency='BTC', quote_currency='USD', status='online')
+    df = coinbase_fetch_available_products(base_currency=None, quote_currency='USD', status='online')
     if df is not None:
-        print(df.head())
+        print(df)
     else:
         print("No data returned.")

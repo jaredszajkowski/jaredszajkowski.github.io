@@ -1,3 +1,4 @@
+import calendar
 import os
 import pandas as pd
 import time
@@ -20,15 +21,14 @@ def polygon_pull_data(
     ticker: str,
     source: str,
     asset_class: str,
-    start_date: str,
-    end_date: str,
+    start_date: datetime,
     timespan: str,
     multiplier: int,
     adjusted: bool,
     excel_export: bool,
     pickle_export: bool,
     output_confirmation: bool,
-) -> pd.DataFrame:
+) -> None:
     
     """
     Read existing data file, download price data from Polygon, and export data.
@@ -43,10 +43,8 @@ def polygon_pull_data(
         Name of the data source (e.g., 'Polygon').
     asset_class : str
         Asset class name (e.g., 'Equities').
-    start_date : str
-        Start date for the data in 'YYYY-MM-DD' format.
-    end_date : str
-        End date for the data in 'YYYY-MM-DD' format.
+    start_date : datetime
+        Start date for the data in datetime format.
     timespan : str
         Time span for the data (e.g., "minute", "hour", "day", "week", "month", "quarter", "year").
     multiplier : int
@@ -62,8 +60,7 @@ def polygon_pull_data(
 
     Returns:
     --------
-    df : pd.DataFrame
-        DataFrame containing the downloaded data.
+    None
     """
 
     # Open client connection
@@ -74,315 +71,703 @@ def polygon_pull_data(
 
     try:
         # Attempt to read existing pickle data file
-        ex_data = pd.read_pickle(file_location)
-        ex_data = ex_data.reset_index()
+        full_history_df = pd.read_pickle(file_location)
+
+        # Reset index if 'Date' is column is the index
+        if 'Date' not in full_history_df.columns:
+            full_history_df = full_history_df.reset_index()
+
         print(f"File found...updating the {ticker} data")
         print("Existing data:")
-        print(ex_data)
-
-        # Pull recent data
-        aggs = client.get_aggs(
-            ticker=ticker,
-            timespan=timespan,
-            multiplier=multiplier,
-            from_=start_date,
-            to=end_date,
-            adjusted=adjusted,
-            sort="asc",
-            limit=5000,
-        )
-
-        # Convert to DataFrame
-        new_data = pd.DataFrame([bar.__dict__ for bar in aggs])
-        new_data["timestamp"] = pd.to_datetime(new_data["timestamp"], unit="ms")
-        new_data = new_data.rename(columns = {'timestamp':'Date'})
-        new_data = new_data[['Date', 'open', 'high', 'low', 'close', 'volume', 'vwap', 'transactions', 'otc']]
-        new_data = new_data.sort_values(by='Date', ascending=True)
-        print("New data:")
-        print(new_data)
-
-        # Check if new data contains 5000 rows
-        if len(new_data) == 5000:
-            # Raise exception
-            raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
-        else:
-            pass
-
-        # Combine existing data with recent data, sort values, set index to date
-        full_history_df = pd.concat([ex_data,new_data[new_data['Date'].isin(ex_data['Date']) == False]])
-        full_history_df = full_history_df.sort_values(by='Date',ascending=True)
-        full_history_df = full_history_df.set_index('Date')
-        print("Combined data:")
         print(full_history_df)
 
-        # Create directory
-        directory = f"{base_directory}/{source}/{asset_class}/{timespan}"
-        os.makedirs(directory, exist_ok=True)
+        # Find last date in existing data
+        last_date = full_history_df['Date'].max()
+        last_year = last_date.year
+        last_month = last_date.month
+        print(f"Last date in existing data: {last_date}")
 
-        # Export to excel
-        if excel_export == True:
-            full_history_df.to_excel(f"{directory}/{ticker}.xlsx", sheet_name="data")
-        else:
-            pass
+        # If the last date is the current month and year, pull data for the current month (some data may be pulled again)
+        if last_year == current_year and last_month == current_month:
+            # Pull data for minute
+            if timespan == "minute":
+                for start_day in [1, 6, 11, 16, 21, 26]:
+                    end_day = min(start_day + 5, monthrange(current_year, current_month)[1])
+                    print(f"Pulling data for {current_year}-{current_month:02d}-{start_day:02d} thru {current_year}-{current_month:02d}-{end_day:02d}...")
+                    try:
+                        # Pull new data
+                        aggs = client.get_aggs(
+                            ticker=ticker,
+                            timespan=timespan,
+                            multiplier=multiplier,
+                            from_=datetime(current_year, current_month, start_day),
+                            to=datetime(current_year, current_month, end_day),
+                            adjusted=adjusted,
+                            sort="asc",
+                            limit=5000,
+                        )
 
-        # Export to pickle
-        if pickle_export == True:
-            full_history_df.to_pickle(f"{directory}/{ticker}.pkl")
-        else:
-            pass
+                        # Convert to DataFrame
+                        new_data = pd.DataFrame([bar.__dict__ for bar in aggs])
+                        new_data["timestamp"] = pd.to_datetime(new_data["timestamp"], unit="ms")
+                        new_data = new_data.rename(columns = {'timestamp':'Date'})
+                        new_data = new_data[['Date', 'open', 'high', 'low', 'close', 'volume', 'vwap', 'transactions', 'otc']]
+                        new_data = new_data.sort_values(by='Date', ascending=True)
+                        print("New data:")
+                        print(new_data)
 
-        # Output confirmation
-        if output_confirmation == True:
-            print(f"Data update complete for {timespan} {ticker}.")
-            print("--------------------")
+                        # Check if new data contains 5000 rows
+                        if len(new_data) == 5000:
+                            # Raise exception
+                            raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
+                        else:
+                            pass
+
+                        # Combine existing data with recent data, sort values
+                        full_history_df = pd.concat([full_history_df,new_data[new_data['Date'].isin(full_history_df['Date']) == False]])
+                        full_history_df = full_history_df.sort_values(by='Date',ascending=True)
+                        print("Combined data:")
+                        print(full_history_df)
+
+                    except Exception as e:
+                        print(f"Failed to pull data for {current_year}-{current_month:02d}-{start_day:02d} thru {current_year}-{current_month:02d}-{end_day:02d}: {e}")
+
+                    # Pause for 15 seconds to avoid hitting API rate limits
+                    print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                    time.sleep(15)
+
+            # Pull data for hour
+            elif timespan == "hour":
+                for start_day in [1, 16]:
+                    end_day = min(start_day + 15, monthrange(current_year, current_month)[1])
+                    print(f"Pulling data for {current_year}-{current_month:02d}-{start_day:02d} thru {current_year}-{current_month:02d}-{end_day:02d}...")
+                    try:
+                        # Pull new data
+                        aggs = client.get_aggs(
+                            ticker=ticker,
+                            timespan=timespan,
+                            multiplier=multiplier,
+                            from_=datetime(current_year, current_month, start_day),
+                            to=datetime(current_year, current_month, end_day),
+                            adjusted=adjusted,
+                            sort="asc",
+                            limit=5000,
+                        )
+
+                        # Convert to DataFrame
+                        new_data = pd.DataFrame([bar.__dict__ for bar in aggs])
+                        new_data["timestamp"] = pd.to_datetime(new_data["timestamp"], unit="ms")
+                        new_data = new_data.rename(columns = {'timestamp':'Date'})
+                        new_data = new_data[['Date', 'open', 'high', 'low', 'close', 'volume', 'vwap', 'transactions', 'otc']]
+                        new_data = new_data.sort_values(by='Date', ascending=True)
+                        print("New data:")
+                        print(new_data)
+
+                        # Check if new data contains 5000 rows
+                        if len(new_data) == 5000:
+                            # Raise exception
+                            raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
+                        else:
+                            pass
+
+                        # Combine existing data with recent data, sort values
+                        full_history_df = pd.concat([full_history_df,new_data[new_data['Date'].isin(full_history_df['Date']) == False]])
+                        full_history_df = full_history_df.sort_values(by='Date',ascending=True)
+                        print("Combined data:")
+                        print(full_history_df)
+
+                    except Exception as e:
+                        print(f"Failed to pull data for {current_year}-{current_month:02d}-{start_day:02d} thru {current_year}-{current_month:02d}-{end_day:02d}: {e}")
+
+                    # Pause for 15 seconds to avoid hitting API rate limits
+                    print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                    time.sleep(15)
+
+            # Pull data for day
+            elif timespan == "day":
+                for start_day in [1]:
+                    end_day = min(start_day + 30, monthrange(current_year, current_month)[1])
+                    print(f"Pulling data for {current_year}-{current_month:02d}-{start_day:02d} thru {current_year}-{current_month:02d}-{end_day:02d}...")
+                    try:
+                        # Pull new data
+                        aggs = client.get_aggs(
+                            ticker=ticker,
+                            timespan=timespan,
+                            multiplier=multiplier,
+                            from_=datetime(current_year, current_month, start_day),
+                            to=datetime(current_year, current_month, end_day),
+                            adjusted=adjusted,
+                            sort="asc",
+                            limit=5000,
+                        )
+
+                        # Convert to DataFrame
+                        new_data = pd.DataFrame([bar.__dict__ for bar in aggs])
+                        new_data["timestamp"] = pd.to_datetime(new_data["timestamp"], unit="ms")
+                        new_data = new_data.rename(columns = {'timestamp':'Date'})
+                        new_data = new_data[['Date', 'open', 'high', 'low', 'close', 'volume', 'vwap', 'transactions', 'otc']]
+                        new_data = new_data.sort_values(by='Date', ascending=True)
+                        print("New data:")
+                        print(new_data)
+
+                        # Check if new data contains 5000 rows
+                        if len(new_data) == 5000:
+                            # Raise exception
+                            raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
+                        else:
+                            pass
+
+                        # Combine existing data with recent data, sort values
+                        full_history_df = pd.concat([full_history_df,new_data[new_data['Date'].isin(full_history_df['Date']) == False]])
+                        full_history_df = full_history_df.sort_values(by='Date',ascending=True)
+                        print("Combined data:")
+                        print(full_history_df)
+
+                    except Exception as e:
+                        print(f"Failed to pull data for {current_year}-{current_month:02d}-{start_day:02d} thru {current_year}-{current_month:02d}-{end_day:02d}: {e}")
+
+                    # Pause for 15 seconds to avoid hitting API rate limits
+                    print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                    time.sleep(15)
+
+        # Iterate through each year and month to pull data since the last date
         else:
-            pass
-    
+            # Pull data for minute
+            if timespan == "minute":
+                for year in range(last_year, current_year + 1):
+                    for month in range(1, 13):
+                        for start_day in [1, 6, 11, 16, 21, 26]:
+                            end_day = min(start_day + 5, monthrange(year, month)[1])
+                            print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}...")
+                            try:
+                                # Pull new data
+                                aggs = client.get_aggs(
+                                    ticker=ticker,
+                                    timespan=timespan,
+                                    multiplier=multiplier,
+                                    from_=datetime(year, month, start_day),
+                                    to=datetime(year, month, end_day),
+                                    adjusted=adjusted,
+                                    sort="asc",
+                                    limit=5000,
+                                )
+
+                                # Convert to DataFrame
+                                new_data = pd.DataFrame([bar.__dict__ for bar in aggs])
+                                new_data["timestamp"] = pd.to_datetime(new_data["timestamp"], unit="ms")
+                                new_data = new_data.rename(columns = {'timestamp':'Date'})
+                                new_data = new_data[['Date', 'open', 'high', 'low', 'close', 'volume', 'vwap', 'transactions', 'otc']]
+                                new_data = new_data.sort_values(by='Date', ascending=True)
+                                print("New data:")
+                                print(new_data)
+
+                                # Check if new data contains 5000 rows
+                                if len(new_data) == 5000:
+                                    # Raise exception
+                                    raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
+                                else:
+                                    pass
+
+                                # Combine existing data with recent data, sort values
+                                full_history_df = pd.concat([full_history_df,new_data[new_data['Date'].isin(full_history_df['Date']) == False]])
+                                full_history_df = full_history_df.sort_values(by='Date',ascending=True)
+                                print("Combined data:")
+                                print(full_history_df)
+
+                            except Exception as e:
+                                print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}: {e}")
+
+                            # Pause for 15 seconds to avoid hitting API rate limits
+                            print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                            time.sleep(15)
+
+            # Pull data for hour
+            elif timespan == "hour":
+                for year in range(last_year, current_year + 1):
+                    for month in range(1, 13):
+                        for start_day in [1, 16]:
+                            end_day = min(start_day + 15, monthrange(year, month)[1])
+                            print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}...")
+                            try:
+                                # Pull new data
+                                aggs = client.get_aggs(
+                                    ticker=ticker,
+                                    timespan=timespan,
+                                    multiplier=multiplier,
+                                    from_=datetime(year, month, start_day),
+                                    to=datetime(year, month, end_day),
+                                    adjusted=adjusted,
+                                    sort="asc",
+                                    limit=5000,
+                                )
+
+                                # Convert to DataFrame
+                                new_data = pd.DataFrame([bar.__dict__ for bar in aggs])
+                                new_data["timestamp"] = pd.to_datetime(new_data["timestamp"], unit="ms")
+                                new_data = new_data.rename(columns = {'timestamp':'Date'})
+                                new_data = new_data[['Date', 'open', 'high', 'low', 'close', 'volume', 'vwap', 'transactions', 'otc']]
+                                new_data = new_data.sort_values(by='Date', ascending=True)
+                                print("New data:")
+                                print(new_data)
+
+                                # Check if new data contains 5000 rows
+                                if len(new_data) == 5000:
+                                    # Raise exception
+                                    raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
+                                else:
+                                    pass
+
+                                # Combine existing data with recent data, sort values
+                                full_history_df = pd.concat([full_history_df,new_data[new_data['Date'].isin(full_history_df['Date']) == False]])
+                                full_history_df = full_history_df.sort_values(by='Date',ascending=True)
+                                print("Combined data:")
+                                print(full_history_df)
+
+                            except Exception as e:
+                                print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}: {e}")
+
+                            # Pause for 15 seconds to avoid hitting API rate limits
+                            print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                            time.sleep(15)
+
+            # Pull data for day
+            elif timespan == "day":
+                for year in range(last_year, current_year + 1):
+                    for month in range(1, 13):
+                        for start_day in [1]:
+                            end_day = min(start_day + 30, monthrange(year, month)[1])
+                            print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}...")
+                            try:
+                                # Pull new data
+                                aggs = client.get_aggs(
+                                    ticker=ticker,
+                                    timespan=timespan,
+                                    multiplier=multiplier,
+                                    from_=datetime(year, month, start_day),
+                                    to=datetime(year, month, end_day),
+                                    adjusted=adjusted,
+                                    sort="asc",
+                                    limit=5000,
+                                )
+
+                                # Convert to DataFrame
+                                new_data = pd.DataFrame([bar.__dict__ for bar in aggs])
+                                new_data["timestamp"] = pd.to_datetime(new_data["timestamp"], unit="ms")
+                                new_data = new_data.rename(columns = {'timestamp':'Date'})
+                                new_data = new_data[['Date', 'open', 'high', 'low', 'close', 'volume', 'vwap', 'transactions', 'otc']]
+                                new_data = new_data.sort_values(by='Date', ascending=True)
+                                print("New data:")
+                                print(new_data)
+
+                                # Check if new data contains 5000 rows
+                                if len(new_data) == 5000:
+                                    # Raise exception
+                                    raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
+                                else:
+                                    pass
+
+                                # Combine existing data with recent data, sort values
+                                full_history_df = pd.concat([full_history_df,new_data[new_data['Date'].isin(full_history_df['Date']) == False]])
+                                full_history_df = full_history_df.sort_values(by='Date',ascending=True)
+                                print("Combined data:")
+                                print(full_history_df)
+
+                            except Exception as e:
+                                print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}: {e}")
+
+                            # Pause for 15 seconds to avoid hitting API rate limits
+                            print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                            time.sleep(15)
+
+
     except FileNotFoundError:
         # Print error
         print(f"File not found...downloading the {ticker} data.")
 
-        # Pull recent data
-        aggs = client.get_aggs(
-            ticker=ticker,
-            timespan=timespan,
-            multiplier=multiplier,
-            from_=start_date,
-            to=end_date,
-            adjusted=adjusted,
-            sort="asc",
-            limit=5000,
-        )
+        # Create an empty DataFrame
+        full_history_df = pd.DataFrame({
+            'Date': pd.Series(dtype="datetime64[ns]"),
+            'open': pd.Series(dtype="float64"),
+            'high': pd.Series(dtype="float64"),
+            'low': pd.Series(dtype="float64"),
+            'close': pd.Series(dtype="float64"),
+            'volume': pd.Series(dtype="float64"),
+            'vwap': pd.Series(dtype="float64"),
+            'transactions': pd.Series(dtype="int64"),
+            'otc': pd.Series(dtype="object")
+        })
 
-        # Convert to DataFrame
-        full_history_df = pd.DataFrame([bar.__dict__ for bar in aggs])
-        full_history_df["timestamp"] = pd.to_datetime(full_history_df["timestamp"], unit="ms")
-        full_history_df = full_history_df.rename(columns = {'timestamp':'Date'})
-        full_history_df = full_history_df[['Date', 'open', 'high', 'low', 'close', 'volume', 'vwap', 'transactions', 'otc']]
-        full_history_df = full_history_df.sort_values(by='Date', ascending=True)
-        full_history_df = full_history_df.set_index('Date')
-        print("New data:")
-        print(full_history_df)
+        # Pull data for minute
+        if timespan == "minute":
+            for year in range(start_date.year, start_date.year + 1):
+                for month in range(start_date.month, 13):
+                    for start_day in [1, 6, 11, 16, 21, 26]:
+                        end_day = min(start_day + 5, monthrange(year, month)[1])
+                        print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}...")
+                        try:
+                            # Pull new data
+                            aggs = client.get_aggs(
+                                ticker=ticker,
+                                timespan=timespan,
+                                multiplier=multiplier,
+                                from_=datetime(year, month, start_day),
+                                to=datetime(year, month, end_day),
+                                adjusted=adjusted,
+                                sort="asc",
+                                limit=5000,
+                            )
 
-        # Check if new data contains 5000 rows
-        if len(full_history_df) == 5000:
-            # Raise exception
-            raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
-        else:
-            pass
+                            # Convert to DataFrame
+                            new_data = pd.DataFrame([bar.__dict__ for bar in aggs])
+                            new_data["timestamp"] = pd.to_datetime(new_data["timestamp"], unit="ms")
+                            new_data = new_data.rename(columns = {'timestamp':'Date'})
+                            new_data = new_data[['Date', 'open', 'high', 'low', 'close', 'volume', 'vwap', 'transactions', 'otc']]
+                            new_data = new_data.sort_values(by='Date', ascending=True)
+                            print("New data:")
+                            print(new_data)
 
-        # Create directory
-        directory = f"{base_directory}/{source}/{asset_class}/{timespan}"
-        os.makedirs(directory, exist_ok=True)
+                            # Check if new data contains 5000 rows
+                            if len(new_data) == 5000:
+                                # Raise exception
+                                raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
+                            else:
+                                pass
 
-        # Export to excel
-        if excel_export == True:
-            full_history_df.to_excel(f"{directory}/{ticker}.xlsx", sheet_name="data")
-        else:
-            pass
+                            # Combine existing data with recent data, sort values
+                            full_history_df = pd.concat([full_history_df,new_data[new_data['Date'].isin(full_history_df['Date']) == False]])
+                            full_history_df = full_history_df.sort_values(by='Date',ascending=True)
+                            print("Combined data:")
+                            print(full_history_df) 
 
-        # Export to pickle
-        if pickle_export == True:
-            full_history_df.to_pickle(f"{directory}/{ticker}.pkl")
-        else:
-            pass
+                        except Exception as e:
+                            print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}: {e}")
 
-        # Output confirmation
-        if output_confirmation == True:
-            print(f"The first and last date of data for {ticker} is: ")
-            display(full_history_df[:1])
-            display(full_history_df[-1:])
-            print(f"Polygon data complete for {ticker}")
-            print(f"--------------------")
-        else:
-            pass
+                        # Pause for 15 seconds to avoid hitting API rate limits
+                        print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                        time.sleep(15)
+            
+            # Continue pulling data for the next years and months
+            for year in range(start_date.year + 1, datetime.now().year + 1):
+                for month in range(1, datetime.now().month):
+                    for start_day in [1, 6, 11, 16, 21, 26]:
+                        end_day = min(start_day + 5, monthrange(year, month)[1])
+                        print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}...")
+                        try:
+                            # Pull new data
+                            aggs = client.get_aggs(
+                                ticker=ticker,
+                                timespan=timespan,
+                                multiplier=multiplier,
+                                from_=datetime(year, month, start_day),
+                                to=datetime(year, month, end_day),
+                                adjusted=adjusted,
+                                sort="asc",
+                                limit=5000,
+                            )
 
-    return full_history_df
+                            # Convert to DataFrame
+                            new_data = pd.DataFrame([bar.__dict__ for bar in aggs])
+                            new_data["timestamp"] = pd.to_datetime(new_data["timestamp"], unit="ms")
+                            new_data = new_data.rename(columns = {'timestamp':'Date'})
+                            new_data = new_data[['Date', 'open', 'high', 'low', 'close', 'volume', 'vwap', 'transactions', 'otc']]
+                            new_data = new_data.sort_values(by='Date', ascending=True)
+                            print("New data:")
+                            print(new_data)
+
+                            # Check if new data contains 5000 rows
+                            if len(new_data) == 5000:
+                                # Raise exception
+                                raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
+                            else:
+                                pass
+
+                            # Combine existing data with recent data, sort values
+                            full_history_df = pd.concat([full_history_df,new_data[new_data['Date'].isin(full_history_df['Date']) == False]])
+                            full_history_df = full_history_df.sort_values(by='Date',ascending=True)
+                            print("Combined data:")
+                            print(full_history_df) 
+
+                        except Exception as e:
+                            print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}: {e}")
+
+                        # Pause for 15 seconds to avoid hitting API rate limits
+                        print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                        time.sleep(15)
+        
+        # Pull data for hour
+        elif timespan == "hour":
+            for year in range(start_date.year, start_date.year + 1):
+                for month in range(start_date.month, 13):
+                    for start_day in [1, 16]:
+                        end_day = min(start_day + 15, monthrange(year, month)[1])
+                        print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}...")
+                        try:
+                            # Pull new data
+                            aggs = client.get_aggs(
+                                ticker=ticker,
+                                timespan=timespan,
+                                multiplier=multiplier,
+                                from_=datetime(year, month, start_day),
+                                to=datetime(year, month, end_day),
+                                adjusted=adjusted,
+                                sort="asc",
+                                limit=5000,
+                            )
+
+                            # Convert to DataFrame
+                            new_data = pd.DataFrame([bar.__dict__ for bar in aggs])
+                            new_data["timestamp"] = pd.to_datetime(new_data["timestamp"], unit="ms")
+                            new_data = new_data.rename(columns = {'timestamp':'Date'})
+                            new_data = new_data[['Date', 'open', 'high', 'low', 'close', 'volume', 'vwap', 'transactions', 'otc']]
+                            new_data = new_data.sort_values(by='Date', ascending=True)
+                            print("New data:")
+                            print(new_data)
+
+                            # Check if new data contains 5000 rows
+                            if len(new_data) == 5000:
+                                # Raise exception
+                                raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
+                            else:
+                                pass
+
+                            # Combine existing data with recent data, sort values
+                            full_history_df = pd.concat([full_history_df,new_data[new_data['Date'].isin(full_history_df['Date']) == False]])
+                            full_history_df = full_history_df.sort_values(by='Date',ascending=True)
+                            print("Combined data:")
+                            print(full_history_df) 
+
+                        except Exception as e:
+                            print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}: {e}")
+
+                        # Pause for 15 seconds to avoid hitting API rate limits
+                        print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                        time.sleep(15)
+
+            # Continue pulling data for the next years and months
+            for year in range(start_date.year + 1, datetime.now().year + 1):
+                for month in range(1, datetime.now().month):
+                    for start_day in [1, 16]:
+                        end_day = min(start_day + 15, monthrange(year, month)[1])
+                        print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}...")
+                        try:
+                            # Pull new data
+                            aggs = client.get_aggs(
+                                ticker=ticker,
+                                timespan=timespan,
+                                multiplier=multiplier,
+                                from_=datetime(year, month, start_day),
+                                to=datetime(year, month, end_day),
+                                adjusted=adjusted,
+                                sort="asc",
+                                limit=5000,
+                            )
+
+                            # Convert to DataFrame
+                            new_data = pd.DataFrame([bar.__dict__ for bar in aggs])
+                            new_data["timestamp"] = pd.to_datetime(new_data["timestamp"], unit="ms")
+                            new_data = new_data.rename(columns = {'timestamp':'Date'})
+                            new_data = new_data[['Date', 'open', 'high', 'low', 'close', 'volume', 'vwap', 'transactions', 'otc']]
+                            new_data = new_data.sort_values(by='Date', ascending=True)
+                            print("New data:")
+                            print(new_data)
+
+                            # Check if new data contains 5000 rows
+                            if len(new_data) == 5000:
+                                # Raise exception
+                                raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
+                            else:
+                                pass
+
+                            # Combine existing data with recent data, sort values
+                            full_history_df = pd.concat([full_history_df,new_data[new_data['Date'].isin(full_history_df['Date']) == False]])
+                            full_history_df = full_history_df.sort_values(by='Date',ascending=True)
+                            print("Combined data:")
+                            print(full_history_df)
+
+                        except Exception as e:
+                            print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}: {e}")
+
+                        # Pause for 15 seconds to avoid hitting API rate limits
+                        print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                        time.sleep(15)
+
+        # Pull data for day
+        elif timespan == "day":
+            for year in range(start_date.year, start_date.year + 1):
+                for month in range(start_date.month, 13):
+                    for start_day in [1]:
+                        end_day = min(start_day + 30, monthrange(year, month)[1])
+                        print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}...")
+                        try:
+                            # Pull new data
+                            aggs = client.get_aggs(
+                                ticker=ticker,
+                                timespan=timespan,
+                                multiplier=multiplier,
+                                from_=datetime(year, month, start_day),
+                                to=datetime(year, month, end_day),
+                                adjusted=adjusted,
+                                sort="asc",
+                                limit=5000,
+                            )
+
+                            # Convert to DataFrame
+                            new_data = pd.DataFrame([bar.__dict__ for bar in aggs])
+                            new_data["timestamp"] = pd.to_datetime(new_data["timestamp"], unit="ms")
+                            new_data = new_data.rename(columns = {'timestamp':'Date'})
+                            new_data = new_data[['Date', 'open', 'high', 'low', 'close', 'volume', 'vwap', 'transactions', 'otc']]
+                            new_data = new_data.sort_values(by='Date', ascending=True)
+                            print("New data:")
+                            print(new_data)
+
+                            # Check if new data contains 5000 rows
+                            if len(new_data) == 5000:
+                                # Raise exception
+                                raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
+                            else:
+                                pass
+
+                            # Combine existing data with recent data, sort values
+                            full_history_df = pd.concat([full_history_df,new_data[new_data['Date'].isin(full_history_df['Date']) == False]])
+                            full_history_df = full_history_df.sort_values(by='Date',ascending=True)
+                            print("Combined data:")
+                            print(full_history_df)
+
+                        except Exception as e:
+                            print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}: {e}")
+
+                        # Pause for 15 seconds to avoid hitting API rate limits
+                        print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                        time.sleep(15)
+
+            # Continue pulling data for the next years and months
+            for year in range(start_date.year + 1, datetime.now().year + 1):
+                for month in range(1, datetime.now().month):
+                    for start_day in [1]:
+                        end_day = min(start_day + 30, monthrange(year, month)[1])
+                        print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}...")
+                        try:
+                            # Pull new data
+                            aggs = client.get_aggs(
+                                ticker=ticker,
+                                timespan=timespan,
+                                multiplier=multiplier,
+                                from_=datetime(year, month, start_day),
+                                to=datetime(year, month, end_day),
+                                adjusted=adjusted,
+                                sort="asc",
+                                limit=5000,
+                            )
+
+                            # Convert to DataFrame
+                            new_data = pd.DataFrame([bar.__dict__ for bar in aggs])
+                            new_data["timestamp"] = pd.to_datetime(new_data["timestamp"], unit="ms")
+                            new_data = new_data.rename(columns = {'timestamp':'Date'})
+                            new_data = new_data[['Date', 'open', 'high', 'low', 'close', 'volume', 'vwap', 'transactions', 'otc']]
+                            new_data = new_data.sort_values(by='Date', ascending=True)
+                            print("New data:")
+                            print(new_data)
+
+                            # Check if new data contains 5000 rows
+                            if len(new_data) == 5000:
+                                # Raise exception
+                                raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
+                            else:
+                                pass
+
+                            # Combine existing data with recent data, sort values
+                            full_history_df = pd.concat([full_history_df,new_data[new_data['Date'].isin(full_history_df['Date']) == False]])
+                            full_history_df = full_history_df.sort_values(by='Date',ascending=True)
+                            print("Combined data:")
+                            print(full_history_df)
+
+                        except Exception as e:
+                            print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}: {e}")
+
+                        # Pause for 15 seconds to avoid hitting API rate limits
+                        print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                        time.sleep(15)
+
+    # Create directory
+    directory = f"{base_directory}/{source}/{asset_class}/{timespan}"
+    os.makedirs(directory, exist_ok=True)
+
+    # Export to excel
+    if excel_export == True:
+        full_history_df.to_excel(f"{directory}/{ticker}.xlsx", sheet_name="data")
+    else:
+        pass
+
+    # Export to pickle
+    if pickle_export == True:
+        full_history_df.to_pickle(f"{directory}/{ticker}.pkl")
+    else:
+        pass
+
+    # Output confirmation
+    if output_confirmation == True:
+        print(f"The first and last date of data for {ticker} is: ")
+        display(full_history_df[:1])
+        display(full_history_df[-1:])
+        print(f"Polygon data complete for {ticker}")
+        print(f"--------------------")
+    else:
+        pass
+
+    return None
 
 if __name__ == "__main__":
 
     current_year = datetime.now().year
     current_month = datetime.now().month
+    current_day = datetime.now().day
 
     # Stock Data
     equities = ["AMZN", "AAPL"]
 
     # Iterate through each stock
     for stock in equities:
-        for year in range(2025, current_year+1):
-            for month in range(1, current_month-1):
-                print(f"Pulling data for {year}-{month:02d}...")
-                for start_day in [1, 6, 11, 16, 21, 26]:
-                    end_day = min(start_day + 5, monthrange(year, month)[1])
-                    
-                    polygon_pull_data(
-                        base_directory=DATA_DIR,
-                        ticker=stock,
-                        source="Polygon",
-                        asset_class="Equities",
-                        start_date=datetime(year, month, start_day),
-                        end_date=datetime(year, month, end_day),
-                        timespan="minute",
-                        multiplier=1,
-                        adjusted=True,
-                        excel_export=True,
-                        pickle_export=True,
-                        output_confirmation=True,
-                    )
+        # Example usage - minute
+        polygon_pull_data(
+            base_directory=str(DATA_DIR),
+            ticker=stock,
+            source="Polygon",
+            asset_class="Equities",
+            start_date=datetime(datetime.now().year - 2, datetime.now().month, datetime.now().day),
+            timespan="minute",
+            multiplier=1,
+            adjusted=True,
+            excel_export=True,
+            pickle_export=True,
+            output_confirmation=True,
+        )
 
-                    # Pause for 15 seconds to avoid hitting API rate limits
-                    print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
-                    time.sleep(15)
+        # Example usage - hourly
+        polygon_pull_data(
+            base_directory=str(DATA_DIR),
+            ticker=stock,
+            source="Polygon",
+            asset_class="Equities",
+            start_date=datetime(datetime.now().year - 2, datetime.now().month, datetime.now().day),
+            timespan="hour",
+            multiplier=1,
+            adjusted=True,
+            excel_export=True,
+            pickle_export=True,
+            output_confirmation=True,
+        )
 
-    # Iterate through each stock
-    for stock in equities:
-        for year in range(2025, current_year+1):
-            for month in range(1, current_month-1):
-                print(f"Pulling data for {year}-{month:02d}...")
-                for start_day in [1, 16]:
-                    end_day = min(start_day + 15, monthrange(year, month)[1])
-                    
-                    polygon_pull_data(
-                        base_directory=DATA_DIR,
-                        ticker=stock,
-                        source="Polygon",
-                        asset_class="Equities",
-                        start_date=datetime(year, month, start_day),
-                        end_date=datetime(year, month, end_day),
-                        timespan="hour",
-                        multiplier=1,
-                        adjusted=True,
-                        excel_export=True,
-                        pickle_export=True,
-                        output_confirmation=True,
-                    )
-
-                    # Pause for 15 seconds to avoid hitting API rate limits
-                    print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
-                    time.sleep(15)
-
-    # Iterate through each stock
-    for stock in equities:
-        for year in range(2025, current_year+1):
-            for month in range(1, current_month-1):
-                print(f"Pulling data for {year}-{month:02d}...")
-                for start_day in [1]:
-                    end_day = min(start_day + 30, monthrange(year, month)[1])
-                    
-                    polygon_pull_data(
-                        base_directory=DATA_DIR,
-                        ticker=stock,
-                        source="Polygon",
-                        asset_class="Equities",
-                        start_date=datetime(year, month, start_day),
-                        end_date=datetime(year, month, end_day),
-                        timespan="day",
-                        multiplier=1,
-                        adjusted=True,
-                        excel_export=True,
-                        pickle_export=True,
-                        output_confirmation=True,
-                    )
-
-                    # Pause for 15 seconds to avoid hitting API rate limits
-                    print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
-                    time.sleep(15)
-
-    # Exchange Traded Fund Data
-    etfs = [
-        'SPY',
-        'TQQQ', 'AGG', 
-        'EDC', 'EBND',
-        'MVV', 'SCHZ',
-        'VB', 'VIOO', 'BND',
-        'UPRO', 'SGOV',
-        'DHY',
-        'IDU', 'IYC', 'IYE', 'IYF', 'IYH', 'IYJ', 'IYK', 'IYM', 'IYR', 'IYW', 'IYZ',
-        'DIG', 'LTL', 'ROM', 'RXL', 'UCC', 'UGE', 'UPW', 'URE', 'UXI', 'UYG', 'UYM',
-        'XLB', 'XLC', 'XLE', 'XLF', 'XLI', 'XLK', 'XLP', 'XLRE', 'XLU', 'XLV', 'XLY',
-        'IVV', 'EFA', 'EEM', 'IEF', 'IEI', 'TLT', 'GSG', 'IAU', 'IYR',
-        'SSO', 'EFO', 'EET', 'UBT', 'UST', 'GSG', 'UGL', 'URE',
-        'TMF',
-        'IWM', 'URTY',
-    ]
-
-    # Iterate through each ETF
-    for fund in etfs:
-        for year in range(2025, current_year+1):
-            for month in range(1, current_month-1):
-                print(f"Pulling data for {year}-{month:02d}...")
-                for start_day in [1, 6, 11, 16, 21, 26]:
-                    end_day = min(start_day + 5, monthrange(year, month)[1])
-                    
-                    polygon_pull_data(
-                        base_directory=DATA_DIR,
-                        ticker=fund,
-                        source="Polygon",
-                        asset_class="Exchange_Traded_Funds",
-                        start_date=datetime(year, month, start_day),
-                        end_date=datetime(year, month, end_day),
-                        timespan="minute",
-                        multiplier=1,
-                        adjusted=True,
-                        excel_export=True,
-                        pickle_export=True,
-                        output_confirmation=True,
-                    )
-
-                    # Pause for 15 seconds to avoid hitting API rate limits
-                    print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
-                    time.sleep(15)
-
-    # Iterate through each ETF
-    for fund in etfs:
-        for year in range(2025, current_year+1):
-            for month in range(1, current_month-1):
-                print(f"Pulling data for {year}-{month:02d}...")
-                for start_day in [1, 16]:
-                    end_day = min(start_day + 15, monthrange(year, month)[1])
-                    
-                    polygon_pull_data(
-                        base_directory=DATA_DIR,
-                        ticker=fund,
-                        source="Polygon",
-                        asset_class="Exchange_Traded_Funds",
-                        start_date=datetime(year, month, start_day),
-                        end_date=datetime(year, month, end_day),
-                        timespan="hour",
-                        multiplier=1,
-                        adjusted=True,
-                        excel_export=True,
-                        pickle_export=True,
-                        output_confirmation=True,
-                    )
-
-                    # Pause for 15 seconds to avoid hitting API rate limits
-                    print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
-                    time.sleep(15)
-
-    # Iterate through each ETF
-    for fund in etfs:
-        for year in range(2025, current_year+1):
-            for month in range(1, current_month-1):
-                print(f"Pulling data for {year}-{month:02d}...")
-                for start_day in [1]:
-                    end_day = min(start_day + 30, monthrange(year, month)[1])
-                    
-                    polygon_pull_data(
-                        base_directory=DATA_DIR,
-                        ticker=fund,
-                        source="Polygon",
-                        asset_class="Exchange_Traded_Funds",
-                        start_date=datetime(year, month, start_day),
-                        end_date=datetime(year, month, end_day),
-                        timespan="day",
-                        multiplier=1,
-                        adjusted=True,
-                        excel_export=True,
-                        pickle_export=True,
-                        output_confirmation=True,
-                    )
-
-                    # Pause for 15 seconds to avoid hitting API rate limits
-                    print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
-                    time.sleep(15)
+        # Example usage - daily
+        polygon_pull_data(
+            base_directory=str(DATA_DIR),
+            ticker=stock,
+            source="Polygon",
+            asset_class="Equities",
+            start_date=datetime(datetime.now().year - 2, datetime.now().month, datetime.now().day),
+            timespan="day",
+            multiplier=1,
+            adjusted=True,
+            excel_export=True,
+            pickle_export=True,
+            output_confirmation=True,
+        )

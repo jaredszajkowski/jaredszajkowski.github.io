@@ -21,9 +21,9 @@ def coinbase_pull_data(
     quote_currency: str,
     granularity: int=3600, # 60=minute, 3600=hourly, 86400=daily
     status: str='online', # default status is 'online'
-    start_date: str = datetime(2025, 1, 1), # default start date
-    end_date: str = datetime.now() - timedelta(days = 1), # updates data through 1 day ago
-) -> pd.DataFrame:
+    start_date: datetime=datetime(2025, 1, 1), # default start date
+    end_date: datetime=datetime.now() - timedelta(days=1), # updates data through 1 day ago due to lag in data availability
+) -> None:
     
     """
     Pull historical data for a given product from Coinbase Exchange API.
@@ -57,8 +57,7 @@ def coinbase_pull_data(
 
     Returns:
     --------
-    pd.DataFrame
-        DataFrame containing time, low, high, open, close, volume.
+    None
     """
 
     # List of crypto assets
@@ -116,8 +115,9 @@ def coinbase_pull_data(
             # Combine existing data with recent data
             full_history_df = pd.concat([ex_data,new_data[new_data['Date'].isin(ex_data['Date']) == False]])
             full_history_df = full_history_df.sort_values(by='Date')
+            full_history_df['Date'] = full_history_df['Date'].dt.tz_localize(None)
             full_history_df = full_history_df.set_index('Date')
-            full_history_df.index = full_history_df.index.tz_localize(None)
+            
             print("Combined data:")
             print(full_history_df)
 
@@ -289,7 +289,7 @@ def coinbase_pull_data(
     print(f"Final list of tokens: {filtered_products_list}")
     print(f"Length of final list of tokens: {len(filtered_products_list)}")
 
-    return full_history_df
+    return None
 
 if __name__ == "__main__":
 
@@ -302,7 +302,7 @@ if __name__ == "__main__":
     #         try:
     #             # Get the last day of the month
     #             last_day = calendar.monthrange(year, month)[1]
-    #             df = coinbase_pull_data(
+    #             coinbase_pull_data(
     #                 base_directory=DATA_DIR,
     #                 source="Coinbase",
     #                 asset_class="Cryptocurrencies",
@@ -321,13 +321,16 @@ if __name__ == "__main__":
 
     current_year = datetime.now().year
     current_month = datetime.now().month
+    current_day = datetime.now().day
+
+    # Crypto Data
     currencies = ["BTC", "ETH", "SOL", "XRP"]
 
+    # Iterate through each currency
     for cur in currencies:
-
         # Example usage - minute
-        df = coinbase_pull_data(
-            base_directory=DATA_DIR,
+        coinbase_pull_data(
+            base_directory=str(DATA_DIR),
             source="Coinbase",
             asset_class="Cryptocurrencies",
             excel_export=False,
@@ -337,13 +340,13 @@ if __name__ == "__main__":
             quote_currency="USD",
             granularity=60, # 60=minute, 3600=hourly, 86400=daily
             status='online', # default status is 'online'
-            start_date=datetime(current_year, current_month, 1), # default start date
-            end_date=datetime.now() - timedelta(days = 1), # updates data through 1 day ago
+            start_date=datetime(current_year, current_month - 1, 1), # default start date
+            end_date=datetime.now() - timedelta(days=1), # updates data through 1 day ago due to lag in data availability
         )
 
         # Example usage - hourly
-        df = coinbase_pull_data(
-            base_directory=DATA_DIR,
+        coinbase_pull_data(
+            base_directory=str(DATA_DIR),
             source="Coinbase",
             asset_class="Cryptocurrencies",
             excel_export=True,
@@ -353,13 +356,13 @@ if __name__ == "__main__":
             quote_currency="USD",
             granularity=3600, # 60=minute, 3600=hourly, 86400=daily
             status='online', # default status is 'online'
-            start_date=datetime(current_year, current_month, 1), # default start date
-            end_date=datetime.now() - timedelta(days = 1), # updates data through 1 day ago
+            start_date=datetime(current_year, current_month - 1, 1), # default start date
+            end_date=datetime.now() - timedelta(days=1), # updates data through 1 day ago due to lag in data availability
         )
 
         # Example usage - daily
-        df = coinbase_pull_data(
-            base_directory=DATA_DIR,
+        coinbase_pull_data(
+            base_directory=str(DATA_DIR),
             source="Coinbase",
             asset_class="Cryptocurrencies",
             excel_export=True,
@@ -369,6 +372,6 @@ if __name__ == "__main__":
             quote_currency="USD",
             granularity=86400, # 60=minute, 3600=hourly, 86400=daily
             status='online', # default status is 'online'
-            start_date=datetime(current_year, current_month, 1), # default start date
-            end_date=datetime.now() - timedelta(days = 1), # updates data through 1 day ago
+            start_date=datetime(current_year, current_month - 1, 1), # default start date
+            end_date=datetime.now() - timedelta(days=1), # updates data through 1 day ago due to lag in data availability
         )

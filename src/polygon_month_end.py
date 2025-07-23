@@ -51,8 +51,9 @@ def polygon_month_end(
     except FileNotFoundError:
         print(f"File not found...please download the data for {ticker}")
     
-    # Reset index
-    df = df.reset_index()
+    # Reset index if 'Date' is column is the index
+    if 'Date' not in df.columns:
+        df = df.reset_index()
 
     # Keep only required columns
     df = df[['Date', 'close']]

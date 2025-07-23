@@ -2,10 +2,12 @@ import pandas as pd
 import requests
 import time
 
+from datetime import datetime
+
 def coinbase_fetch_historical_candles(
     product_id: str,
-    start: str,
-    end: str,
+    start: datetime,
+    end: datetime,
     granularity: int,
 ) -> pd.DataFrame:
 
