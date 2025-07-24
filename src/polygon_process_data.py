@@ -7,6 +7,7 @@ Polygon, then:
 """
 
 from datetime import datetime
+from pathlib import Path
 from polygon_pull_data import polygon_pull_data
 from polygon_month_end import polygon_month_end
 from polygon_quarter_end import polygon_quarter_end

@@ -1,4 +1,3 @@
-import calendar
 import os
 import pandas as pd
 import time
@@ -17,7 +16,7 @@ api_keys = load_api_keys()
 DATA_DIR = config("DATA_DIR")
 
 def polygon_pull_data(
-    base_directory: str,
+    base_directory,
     ticker: str,
     source: str,
     asset_class: str,
@@ -28,14 +27,14 @@ def polygon_pull_data(
     excel_export: bool,
     pickle_export: bool,
     output_confirmation: bool,
-) -> None:
+) -> pd.DataFrame:
     
     """
     Read existing data file, download price data from Polygon, and export data.
 
     Parameters:
     -----------
-    base_directory : str
+    base_directory : any
         Root path to store downloaded data.
     ticker : str
         Ticker symbol to download.
@@ -714,7 +713,7 @@ def polygon_pull_data(
     else:
         pass
 
-    return None
+    return full_history_df
 
 if __name__ == "__main__":
 
@@ -729,7 +728,7 @@ if __name__ == "__main__":
     for stock in equities:
         # Example usage - minute
         polygon_pull_data(
-            base_directory=str(DATA_DIR),
+            base_directory=DATA_DIR,
             ticker=stock,
             source="Polygon",
             asset_class="Equities",
@@ -744,7 +743,7 @@ if __name__ == "__main__":
 
         # Example usage - hourly
         polygon_pull_data(
-            base_directory=str(DATA_DIR),
+            base_directory=DATA_DIR,
             ticker=stock,
             source="Polygon",
             asset_class="Equities",
@@ -759,7 +758,7 @@ if __name__ == "__main__":
 
         # Example usage - daily
         polygon_pull_data(
-            base_directory=str(DATA_DIR),
+            base_directory=DATA_DIR,
             ticker=stock,
             source="Polygon",
             asset_class="Equities",

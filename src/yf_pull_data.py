@@ -5,7 +5,7 @@ import yfinance as yf
 from IPython.display import display
 
 def yf_pull_data(
-    base_directory: str,
+    base_directory,
     ticker: str,
     source: str,
     asset_class: str,
@@ -19,7 +19,7 @@ def yf_pull_data(
 
     Parameters:
     -----------
-    base_directory : str
+    base_directory
         Root path to store downloaded data.
     ticker : str
         Ticker symbol to download.

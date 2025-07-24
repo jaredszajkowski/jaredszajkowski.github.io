@@ -11,7 +11,7 @@ from settings import config
 DATA_DIR = config("DATA_DIR")
 
 def coinbase_pull_data(
-    base_directory: str,
+    base_directory,
     source: str,
     asset_class: str,
     excel_export: bool,
@@ -23,14 +23,14 @@ def coinbase_pull_data(
     status: str='online', # default status is 'online'
     start_date: datetime=datetime(2025, 1, 1), # default start date
     end_date: datetime=datetime.now() - timedelta(days=1), # updates data through 1 day ago due to lag in data availability
-) -> None:
+) -> pd.DataFrame:
     
     """
     Pull historical data for a given product from Coinbase Exchange API.
 
     Parameters:
     -----------
-    base_directory : str
+    base_directory
         Root path to store downloaded data.
     source : str
         Name of the data source (e.g., 'Nasdaq_Data_Link').
@@ -289,35 +289,34 @@ def coinbase_pull_data(
     print(f"Final list of tokens: {filtered_products_list}")
     print(f"Length of final list of tokens: {len(filtered_products_list)}")
 
-    return None
+    return full_history_df
 
 if __name__ == "__main__":
-
-    base_currency = "XRP"
-       
-    # Example usage to pull all data for each month from 2010 to 2024
-    # for year in range(2010, 2025):
-    #     for month in range(1, 13):
-    #         print(f"Pulling data for {year}-{month:02d}...")
-    #         try:
-    #             # Get the last day of the month
-    #             last_day = calendar.monthrange(year, month)[1]
-    #             coinbase_pull_data(
-    #                 base_directory=DATA_DIR,
-    #                 source="Coinbase",
-    #                 asset_class="Cryptocurrencies",
-    #                 excel_export=False,
-    #                 pickle_export=True,
-    #                 output_confirmation=True,
-    #                 base_currency=base_currency,
-    #                 quote_currency="USD",
-    #                 granularity=86400, # 60=minute, 3600=hourly, 86400=daily
-    #                 status='online',
-    #                 start_date=datetime(year, month, 1),
-    #                 end_date=datetime(year, month, last_day),
-    #             )
-    #         except Exception as e:
-    #             print(f"Failed to pull data for {year}-{month:02d}: {e}")
+     
+    # # Example usage to pull all data for each month from 2010 to 2024
+    # for granularity in [60, 3600, 86400]:
+    #     for year in range(2010, 2025):
+    #         for month in range(1, 13):
+    #             print(f"Pulling data for {year}-{month:02d}...")
+    #             try:
+    #                 # Get the last day of the month
+    #                 last_day = calendar.monthrange(year, month)[1]
+    #                 coinbase_pull_data(
+    #                     base_directory=DATA_DIR,
+    #                     source="Coinbase",
+    #                     asset_class="Cryptocurrencies",
+    #                     excel_export=False,
+    #                     pickle_export=True,
+    #                     output_confirmation=True,
+    #                     base_currency="XRP",
+    #                     quote_currency="USD",
+    #                     granularity=granularity, # 60=minute, 3600=hourly, 86400=daily
+    #                     status='online',
+    #                     start_date=datetime(year, month, 1),
+    #                     end_date=datetime(year, month, last_day),
+    #                 )
+    #             except Exception as e:
+    #                 print(f"Failed to pull data for {year}-{month:02d}: {e}")
 
     current_year = datetime.now().year
     current_month = datetime.now().month
@@ -330,7 +329,7 @@ if __name__ == "__main__":
     for cur in currencies:
         # Example usage - minute
         coinbase_pull_data(
-            base_directory=str(DATA_DIR),
+            base_directory=DATA_DIR,
             source="Coinbase",
             asset_class="Cryptocurrencies",
             excel_export=False,
@@ -346,7 +345,7 @@ if __name__ == "__main__":
 
         # Example usage - hourly
         coinbase_pull_data(
-            base_directory=str(DATA_DIR),
+            base_directory=DATA_DIR,
             source="Coinbase",
             asset_class="Cryptocurrencies",
             excel_export=True,
@@ -362,7 +361,7 @@ if __name__ == "__main__":
 
         # Example usage - daily
         coinbase_pull_data(
-            base_directory=str(DATA_DIR),
+            base_directory=DATA_DIR,
             source="Coinbase",
             asset_class="Cryptocurrencies",
             excel_export=True,

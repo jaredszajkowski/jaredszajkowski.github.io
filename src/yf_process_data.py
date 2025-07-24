@@ -2,15 +2,12 @@
 This script uses existing functions to download daily price data from Yahoo Finance, then resample to month end data, then resample to month end total return data, then resample to quarter end data, and finally resample to quarter end total return data.
 """
 
-# Import necessary modules
+from settings import config
 from yf_pull_data import yf_pull_data
 from yf_month_end import yf_month_end
 from yf_month_end_total_return import yf_month_end_total_return
 from yf_quarter_end import yf_quarter_end
 from yf_quarter_end_total_return import yf_quarter_end_total_return
-
-# Import settings
-from settings import config
 
 # Get the environment variable for where data is stored
 DATA_DIR = config("DATA_DIR")

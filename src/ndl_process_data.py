@@ -8,14 +8,11 @@ Nasdaq Data Link, then:
 * Resample to quarter end total return data
 """
 
-# Import necessary modules
 from ndl_pull_data import ndl_pull_data
 from ndl_month_end import ndl_month_end
 from ndl_month_end_total_return import ndl_month_end_total_return
 from ndl_quarter_end import ndl_quarter_end
 from ndl_quarter_end_total_return import ndl_quarter_end_total_return
-
-# Import settings
 from settings import config
 
 # Get the environment variable for where data is stored

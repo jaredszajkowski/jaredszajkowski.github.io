@@ -2,9 +2,10 @@ import os
 import pandas as pd
 
 from IPython.display import display
+from pathlib import Path
 
 def polygon_quarter_end(
-    base_directory: str,
+    base_directory,
     ticker: str,
     source: str,
     asset_class: str,
@@ -19,7 +20,7 @@ def polygon_quarter_end(
 
     Parameters:
     -----------
-    base_directory : str
+    base_directory
         Root path to store downloaded data.
     ticker : str
         Ticker symbol to download.
@@ -46,10 +47,7 @@ def polygon_quarter_end(
     location = f"{base_directory}/{source}/{asset_class}/{timespan}/{ticker}.pkl"
 
     # Read data from pickle
-    try:
-        df = pd.read_pickle(location)
-    except FileNotFoundError:
-        print(f"File not found...please download the data for {ticker}")
+    df = pd.read_pickle(location)
     
     # Reset index if 'Date' is column is the index
     if 'Date' not in df.columns:

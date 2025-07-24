@@ -4,7 +4,7 @@ import pandas as pd
 from IPython.display import display
 
 def yf_quarter_end_total_return(
-    base_directory: str,
+    base_directory,
     ticker: str,
     source: str,
     asset_class: str,
@@ -20,7 +20,7 @@ def yf_quarter_end_total_return(
 
     Parameters:
     -----------
-    base_directory : str
+    base_directory
         Root path to store downloaded data.
     ticker : str
         Ticker symbol to download.
@@ -45,10 +45,7 @@ def yf_quarter_end_total_return(
     location = f"{base_directory}/{source}/{asset_class}/Daily/{ticker}.xlsx"
 
     # Read data from excel
-    try:
-        df = pd.read_excel(location, sheet_name="data", engine="calamine")
-    except FileNotFoundError:
-        print(f"File not found...please download the data for {ticker}")
+    df = pd.read_excel(location, sheet_name="data", engine="calamine")
 
     # Keep only required columns
 

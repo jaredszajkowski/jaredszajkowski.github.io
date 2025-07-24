@@ -15,7 +15,7 @@ api_keys = load_api_keys()
 DATA_DIR = config("DATA_DIR")
 
 def ndl_pull_data(
-    base_directory: str,
+    base_directory,
     ticker: str,
     source: str,
     asset_class: str,
@@ -25,11 +25,11 @@ def ndl_pull_data(
 ) -> pd.DataFrame:
     
     """
-    Download daily price data from Nasdaq Data Link and add many missing columns and export it.
+    Download daily price ata from Nasdaq Data Link and add many missing columns and export it.
 
     Parameters:
     -----------
-    base_directory : str
+    base_directory
         Root path to store downloaded data.
     ticker : str
         Ticker symbol to download.
@@ -83,7 +83,7 @@ def ndl_pull_data(
     df_comp = pd.merge(df, df_splits, on='Date', how="outer")
 
     # Forward fill for all cumulative split values
-    df_comp['Cum_Split'] = df_comp['Cum_Split'].fillna(method="ffill")
+    df_comp['Cum_Split'] = df_comp['Cum_Split'].ffill()
 
     # Replace all split and cumulative split values of NaN with 1.0 to have complete split values
     df_comp['split'] = df_comp['split'].replace(np.nan, 1.0)
@@ -137,7 +137,7 @@ if __name__ == "__main__":
 
     ndl_pull_data(
         base_directory=DATA_DIR,
-        ticker="SPY",
+        ticker="TQQQ",
         source="Nasdaq_Data_Link",
         asset_class="Exchange_Traded_Funds",
         excel_export=True,
