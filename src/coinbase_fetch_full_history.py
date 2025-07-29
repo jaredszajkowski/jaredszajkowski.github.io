@@ -48,3 +48,18 @@ def coinbase_fetch_full_history(
         return full_df
     else:
         return pd.DataFrame()
+    
+if __name__ == "__main__":
+    
+    # Example usage
+    df = coinbase_fetch_full_history(
+        product_id="BTC-USD",
+        start=datetime(2025, 1, 1),
+        end=datetime(2025, 1, 31),
+        granularity=86_400,
+    )
+
+    if df is not None:
+        print(df)
+    else:
+        print("No data returned.")

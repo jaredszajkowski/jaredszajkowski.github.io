@@ -5,6 +5,30 @@
         <link>https://www.jaredszajkowski.com/categories/jupyter-notebook/</link>
         <description>Recent content in Jupyter Notebook on Jared Szajkowski</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>en-us</language><atom:link href="https://www.jaredszajkowski.com/categories/jupyter-notebook/index.xml" rel="self" type="application/rss+xml" />
+        <language>en-us</language>
+        <lastBuildDate>Mon, 28 Jul 2025 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/categories/jupyter-notebook/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Automating Execution of Jupyter Notebook Files, Python Scripts, and Hugo Static Site Generation</title>
+        <link>https://www.jaredszajkowski.com/2025/06/29/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation/</link>
+        <pubDate>Sun, 29 Jun 2025 00:00:01 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/2025/06/29/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2025/06/29/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation/cover.jpg" alt="Featured image of post Automating Execution of Jupyter Notebook Files, Python Scripts, and Hugo Static Site Generation" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+&lt;/h2&gt;&lt;p&gt;In this post, I&amp;rsquo;ll cover the implementation of &lt;a class=&#34;link&#34; href=&#34;https://pydoit.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;doit&lt;/a&gt; to automate the execution of Jupyter notebook files, Python scripts, and building the Hugo static site. Many of the concepts covered below were introduced recently in &lt;a class=&#34;link&#34; href=&#34;https://finmath.uchicago.edu/curriculum/degree-concentrations/financial-computing/finm-32900/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;FINM 32900 - Full-Stack Quantitative Finance&lt;/a&gt;. This course emphasized the &amp;ldquo;full stack&amp;rdquo; approach, including the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Use of GitHub&lt;/li&gt;
+&lt;li&gt;Virtual environments&lt;/li&gt;
+&lt;li&gt;Environment variables&lt;/li&gt;
+&lt;li&gt;Use of various data sources (particularly WRDS)&lt;/li&gt;
+&lt;li&gt;Processing/cleaning data&lt;/li&gt;
+&lt;li&gt;GitHub actions&lt;/li&gt;
+&lt;li&gt;Publishing data&lt;/li&gt;
+&lt;li&gt;Restricting access to GitHub hosted sites&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;motivation&#34;&gt;Motivation
+&lt;/h2&gt;&lt;p&gt;The primary motivation for automation came from several realizations:&lt;/p&gt;</description>
+        </item>
+        
     </channel>
 </rss>

@@ -2,7 +2,7 @@ import pandas as pd
 from pathlib import Path
 
 def load_data(
-    base_directory: str,
+    base_directory,
     ticker: str,
     source: str,
     asset_class: str,
@@ -19,7 +19,7 @@ def load_data(
 
     Parameters:
     -----------
-    base_directory : str
+    base_directory
         Root path to read data file.
     ticker : str
         Ticker symbol to read.

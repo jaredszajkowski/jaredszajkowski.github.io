@@ -6,7 +6,16 @@
         <description>Recent content in Python on Jared Szajkowski</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Mon, 21 Jul 2025 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/categories/python/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 28 Jul 2025 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/categories/python/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Data Pipelining With Coinbase</title>
+        <link>https://www.jaredszajkowski.com/2025/07/06/data-pipelining-with-coinbase/</link>
+        <pubDate>Sun, 06 Jul 2025 00:00:01 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/2025/07/06/data-pipelining-with-coinbase/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2025/07/06/data-pipelining-with-coinbase/data-pipelining-with-coinbase.png" alt="Featured image of post Data Pipelining With Coinbase" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+&lt;/h2&gt;&lt;p&gt;This is a quick post to illustrate how I collect and store crypto asset data from Coinbase. Essentially, the scripts below pull minute, hour, and daily data for the specified assets and if there is an existing data record, then the existing record is updated to include the most recent data. If there is not an existing data record, then the complete historical record from coinbase is pulled and stored.&lt;/p&gt;</description>
+        </item>
+        <item>
         <title>Automating Execution of Jupyter Notebook Files, Python Scripts, and Hugo Static Site Generation</title>
         <link>https://www.jaredszajkowski.com/2025/06/29/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation/</link>
         <pubDate>Sun, 29 Jun 2025 00:00:01 +0000</pubDate>
@@ -59,6 +68,27 @@
 &lt;/h2&gt;&lt;p&gt;From the &lt;a class=&#34;link&#34; href=&#34;https://www.cboe.com/tradable_products/vix/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;CBOE VIX website&lt;/a&gt;:&lt;/p&gt;
 &lt;p&gt;&amp;ldquo;Cboe Global Markets revolutionized investing with the creation of the Cboe Volatility Index® (VIX® Index), the first benchmark index to measure the market’s expectation of future volatility. The VIX Index is based on options of the S&amp;amp;P 500® Index, considered the leading indicator of the broad U.S. stock market. The VIX Index is recognized as the world’s premier gauge of U.S. equity market volatility.&amp;rdquo;&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>Reusable And Extensible Python Functions For Financial Data Analysis</title>
+        <link>https://www.jaredszajkowski.com/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/</link>
+        <pubDate>Sun, 02 Feb 2025 00:00:01 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/cover.jpg" alt="Featured image of post Reusable And Extensible Python Functions For Financial Data Analysis" /&gt;&lt;!-- ## Post Updates
+
+Update 4/8/2025: Added plot for signals for each year. VIX data through 4/7/25.&lt;/br&gt;
+Update 4/9/2025: VIX data through 4/8/25.&lt;/br&gt;
+Update 4/12/2025: VIX data through 4/10/25.&lt;/br&gt;
+Update 4/22/2025: VIX data through 4/18/25.&lt;/br&gt;
+Update 4/23/2025: VIX data through 4/22/25.&lt;/br&gt;
+Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, including open and closed positions.&lt;/br&gt;
+Update 4/28/2025: VIX data through 4/25/25.&lt;/br&gt;
+Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.&lt;/br&gt;
+Update 5/7/2025: Data through 5/6/25.&lt;/br&gt;
+Update 5/21/2025: Data through 5/20/25.&lt;/br&gt; --&gt;
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+&lt;/h2&gt;&lt;p&gt;This post intends to provide the code for all of the python functions that I use in my analysis. The goal here is that when writing another post I will simply be able to link to the functions below as opposed to providing the function code in each post.&lt;/p&gt;</description>
         </item>
         <item>
         <title>Using Python Virtual Environments</title>

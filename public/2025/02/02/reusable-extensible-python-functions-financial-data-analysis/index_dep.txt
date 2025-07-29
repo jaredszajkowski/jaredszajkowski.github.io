@@ -1,6 +1,10 @@
 bb_clean_data.md
 build_index.md
 calc_vix_trade_pnl.md
+coinbase_fetch_available_products.md
+coinbase_fetch_full_history.md
+coinbase_fetch_historical_candles.md
+coinbase_pull_data.md
 df_info.md
 df_info_markdown.md
 export_track_md_deps.md

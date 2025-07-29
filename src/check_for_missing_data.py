@@ -18,7 +18,7 @@ df = load_data(
     file_format="pickle",
 )
 
-print(df)
+print(f"Full data: {df}")
 
 # Reset the index
 df = df.reset_index(drop=False)
@@ -42,7 +42,7 @@ full_range = pd.date_range(start=df['Date'].min(), end=df['Date'].max(), freq=ex
 missing = full_range.difference(df['Date'])
 
 # Summary
-print(f"Total expected timestamps: {len(full_range)}")
+print(f"\nTotal expected timestamps: {len(full_range)}")
 print(f"Total actual timestamps: {df.shape[0]}")
 print(f"Missing timestamps: {len(missing)}")
 
@@ -50,6 +50,8 @@ print(f"Missing timestamps: {len(missing)}")
 missing_df = pd.DataFrame({'missing_timestamp': missing})
 missing_df['year'] = missing_df['missing_timestamp'].dt.year
 missing_df['month'] = missing_df['missing_timestamp'].dt.month
+
+print(f"Missing data: {missing_df}")
 
 # Count missing timestamps by year and month
 missing_by_year_month = (
@@ -68,6 +70,6 @@ missing_by_year_month = missing_by_year_month.set_index(['year', 'month']).reind
     all_combinations, fill_value=0
 ).reset_index()
 
-# Optional: pivot for nicer display
+# Pivot for nicer display
 pivot_table = missing_by_year_month.pivot(index='year', columns='month', values='missing_count').fillna(0).astype(int)
 print(pivot_table)

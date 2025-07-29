@@ -3,18 +3,21 @@ title: Reusable And Extensible Python Functions For Financial Data Analysis
 description: A list of common functions used for data acquisition, cleaning, analysis, etc.
 slug: reusable-extensible-python-functions-financial-data-analysis
 date: 2025-02-02 00:00:01+0000
-lastmod: 2025-06-04 00:00:01+0000
+lastmod: 2025-07-28 00:00:01+0000
 image: cover.jpg
 draft: false
 categories:
-    - Tutorials
-    - Tech
-tags:
     - Bloomberg
     - Nasdaq Data Link
-    - pandas
+    - Pandas
     - Python
     - Yahoo Finance
+# tags:
+#     - Bloomberg
+#     - Nasdaq Data Link
+#     - pandas
+#     - Python
+#     - Yahoo Finance
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 
@@ -40,6 +43,10 @@ This post intends to provide the code for all of the python functions that I use
 * [bb_clean_data](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#bb_clean_data): Takes an Excel export from Bloomberg, removes the miscellaneous headings/rows, and returns a DataFrame.</br>
 * [build_index](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#build_index): Reads the `index_temp.md` markdown file, inserts the markdown dependencies where indicated, and then saves the file as `index.md`.</br>
 * [calc_vix_trade_pnl](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#calc_vix_trade_pnl): Calculates the profit/loss from VIX options trades.</br>
+* [coinbase_fetch_available_products](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_available_products): Fetch available products from Coinbase Exchange API.</br>
+* [coinbase_fetch_full_history](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_full_history): Fetch full historical data for a given product from Coinbase Exchange API.</br>
+* [coinbase_fetch_historical_candles](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_historical_candles): Fetch historical candle data for a given product from Coinbase Exchange API.</br>
+* [coinbase_pull_data](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#coinbase_pull_data): Update existing record or pull full historical data for a given product from Coinbase Exchange API.</br>
 * [df_info](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#df_info): A simple function to display the information about a DataFrame and the first five rows and last five rows.</br>
 * [df_info_markdown](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#df_info_markdown): Similar to the `df_info` function above, except that it coverts the output to markdown.</br>
 * [export_track_md_deps](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps): Exports various text outputs to markdown files, which are included in the `index.md` file created when building the site with Hugo.</br>
@@ -65,6 +72,22 @@ This post intends to provide the code for all of the python functions that I use
 ### calc_vix_trade_pnl
 
 <!-- INSERT_calc_vix_trade_pnl_HERE -->
+
+### coinbase_fetch_available_products
+
+<!-- INSERT_coinbase_fetch_available_products_HERE -->
+
+### coinbase_fetch_full_history
+
+<!-- INSERT_coinbase_fetch_full_history_HERE -->
+
+### coinbase_fetch_historical_candles
+
+<!-- INSERT_coinbase_fetch_historical_candles_HERE -->
+
+### coinbase_pull_data
+
+<!-- INSERT_coinbase_pull_data_HERE -->
 
 ### df_info
 

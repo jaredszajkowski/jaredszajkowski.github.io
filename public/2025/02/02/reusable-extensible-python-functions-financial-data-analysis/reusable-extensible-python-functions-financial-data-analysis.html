@@ -7611,12 +7611,6 @@ a.anchor-link {
 <span class="n">SOURCE_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">"SOURCE_DIR"</span><span class="p">)</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span><span class="p">)))</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span><span class="p">))</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span> <span class="k">else</span> <span class="kc">None</span>
 
-<span class="n">QUANT_FINANCE_RESEARCH_BASE_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">"QUANT_FINANCE_RESEARCH_BASE_DIR"</span><span class="p">)</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">QUANT_FINANCE_RESEARCH_BASE_DIR</span><span class="p">)))</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">QUANT_FINANCE_RESEARCH_BASE_DIR</span><span class="p">))</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span> <span class="k">else</span> <span class="kc">None</span>
-
-<span class="n">QUANT_FINANCE_RESEARCH_SOURCE_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">"QUANT_FINANCE_RESEARCH_SOURCE_DIR"</span><span class="p">)</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">QUANT_FINANCE_RESEARCH_SOURCE_DIR</span><span class="p">)))</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">QUANT_FINANCE_RESEARCH_SOURCE_DIR</span><span class="p">))</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span> <span class="k">else</span> <span class="kc">None</span>
-
 <span class="c1"># Add other configured directories</span>
 <span class="n">BASE_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">"BASE_DIR"</span><span class="p">)</span>
 <span class="n">CONTENT_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">"CONTENT_DIR"</span><span class="p">)</span>
@@ -7648,8 +7642,6 @@ a.anchor-link {
 3: 
 4: /home/jared/python-virtual-envs/general_313/lib/python3.13/site-packages
 5: /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/src
-6: /home/jared/Cloud_Storage/Dropbox/Quant_Finance_Research
-7: /home/jared/Cloud_Storage/Dropbox/Quant_Finance_Research/src
 </pre>
 </div>
 </div>
@@ -7788,12 +7780,136 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=c2f67f0d">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=f947c472">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">coinbase_fetch_available_products</span> <span class="kn">import</span> <span class="n">coinbase_fetch_available_products</span>
+<span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"coinbase_fetch_available_products.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
+<span class="n">md_code_block</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"```python</span><span class="se">\n</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="se">\n</span><span class="s2">```"</span>
+<span class="c1"># Copy this &lt;!-- INSERT_coinbase_fetch_available_products_HERE --&gt; to index_temp.md</span>
+<span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"coinbase_fetch_available_products.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">md_code_block</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>✅ Exported and tracked: coinbase_fetch_available_products.md
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=acaf1340">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">coinbase_fetch_full_history</span> <span class="kn">import</span> <span class="n">coinbase_fetch_full_history</span>
+<span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"coinbase_fetch_full_history.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
+<span class="n">md_code_block</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"```python</span><span class="se">\n</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="se">\n</span><span class="s2">```"</span>
+<span class="c1"># Copy this &lt;!-- INSERT_coinbase_fetch_full_history_HERE --&gt; to index_temp.md</span>
+<span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"coinbase_fetch_full_history.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">md_code_block</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>✅ Exported and tracked: coinbase_fetch_full_history.md
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=95ac9b71">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">coinbase_fetch_historical_candles</span> <span class="kn">import</span> <span class="n">coinbase_fetch_historical_candles</span>
+<span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"coinbase_fetch_historical_candles.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
+<span class="n">md_code_block</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"```python</span><span class="se">\n</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="se">\n</span><span class="s2">```"</span>
+<span class="c1"># Copy this &lt;!-- INSERT_coinbase_fetch_historical_candles_HERE --&gt; to index_temp.md</span>
+<span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"coinbase_fetch_historical_candles.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">md_code_block</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>✅ Exported and tracked: coinbase_fetch_historical_candles.md
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=9ff3771f">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">coinbase_pull_data</span> <span class="kn">import</span> <span class="n">coinbase_pull_data</span>
+<span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"coinbase_pull_data.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
+<span class="n">md_code_block</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"```python</span><span class="se">\n</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="se">\n</span><span class="s2">```"</span>
+<span class="c1"># Copy this &lt;!-- INSERT_coinbase_pull_data_HERE --&gt; to index_temp.md</span>
+<span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"coinbase_pull_data.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">md_code_block</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>✅ Exported and tracked: coinbase_pull_data.md
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=c2f67f0d">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">df_info</span> <span class="kn">import</span> <span class="n">df_info</span>
@@ -7824,7 +7940,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">df_info_markdown</span> <span class="kn">import</span> <span class="n">df_info_markdown</span>
@@ -7855,7 +7971,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">export_track_md_deps</span> <span class="kn">import</span> <span class="n">export_track_md_deps</span>
@@ -7886,7 +8002,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">load_api_keys</span> <span class="kn">import</span> <span class="n">load_api_keys</span>
@@ -7917,7 +8033,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">load_data</span> <span class="kn">import</span> <span class="n">load_data</span>
@@ -7948,7 +8064,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pandas_set_decimal_places</span> <span class="kn">import</span> <span class="n">pandas_set_decimal_places</span>
@@ -7979,7 +8095,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">plot_price</span> <span class="kn">import</span> <span class="n">plot_price</span>
@@ -8010,7 +8126,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">plot_stats</span> <span class="kn">import</span> <span class="n">plot_stats</span>
@@ -8041,7 +8157,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">plot_vix_with_trades</span> <span class="kn">import</span> <span class="n">plot_vix_with_trades</span>
@@ -8072,7 +8188,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">strategy_harry_brown_perm_port</span> <span class="kn">import</span> <span class="n">strategy_harry_brown_perm_port</span>
@@ -8103,7 +8219,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">summary_stats</span> <span class="kn">import</span> <span class="n">summary_stats</span>
@@ -8134,7 +8250,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">yf_pull_data</span> <span class="kn">import</span> <span class="n">yf_pull_data</span>

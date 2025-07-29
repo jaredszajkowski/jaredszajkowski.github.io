@@ -45,6 +45,9 @@ def coinbase_fetch_available_products(
         # Filter by status if provided
         if status:
             df = df[df['status'] == status]
+
+        # Sort by "id"
+        df = df.sort_values(by='id')
         
         return df
     
@@ -60,7 +63,12 @@ def coinbase_fetch_available_products(
 if __name__ == "__main__":
     
     # Example usage
-    df = coinbase_fetch_available_products(base_currency=None, quote_currency='USD', status='online')
+    df = coinbase_fetch_available_products(
+        base_currency=None,
+        quote_currency="USD",
+        status="online",
+    )
+
     if df is not None:
         print(df)
     else:

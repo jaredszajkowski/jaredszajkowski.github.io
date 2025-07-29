@@ -26,7 +26,7 @@ def coinbase_pull_data(
 ) -> pd.DataFrame:
     
     """
-    Pull historical data for a given product from Coinbase Exchange API.
+    Update existing record or pull full historical data for a given product from Coinbase Exchange API.
 
     Parameters:
     -----------

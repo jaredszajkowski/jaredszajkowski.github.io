@@ -10,7 +10,7 @@
 <meta property='og:description' content="A list of common functions used for data acquisition, cleaning, analysis, etc.">
 <meta property='og:url' content='https://www.jaredszajkowski.com/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/'>
 <meta property='og:site_name' content='Jared Szajkowski'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Bloomberg' /><meta property='article:tag' content='Nasdaq Data Link' /><meta property='article:tag' content='pandas' /><meta property='article:tag' content='Python' /><meta property='article:tag' content='Yahoo Finance' /><meta property='article:published_time' content='2025-02-02T00:00:01&#43;00:00'/><meta property='article:modified_time' content='2025-06-04T00:00:01&#43;00:00'/><meta property='og:image' content='https://www.jaredszajkowski.com/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/cover.jpg' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-02-02T00:00:01&#43;00:00'/><meta property='article:modified_time' content='2025-07-28T00:00:01&#43;00:00'/><meta property='og:image' content='https://www.jaredszajkowski.com/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/cover.jpg' />
 <meta name="twitter:title" content="Reusable And Extensible Python Functions For Financial Data Analysis">
 <meta name="twitter:description" content="A list of common functions used for data acquisition, cleaning, analysis, etc."><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='https://www.jaredszajkowski.com/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/cover.jpg' />
@@ -281,6 +281,10 @@
         <li><a href="#bb_clean_data">bb_clean_data</a></li>
         <li><a href="#build_index">build_index</a></li>
         <li><a href="#calc_vix_trade_pnl">calc_vix_trade_pnl</a></li>
+        <li><a href="#coinbase_fetch_available_products">coinbase_fetch_available_products</a></li>
+        <li><a href="#coinbase_fetch_full_history">coinbase_fetch_full_history</a></li>
+        <li><a href="#coinbase_fetch_historical_candles">coinbase_fetch_historical_candles</a></li>
+        <li><a href="#coinbase_pull_data">coinbase_pull_data</a></li>
         <li><a href="#df_info">df_info</a></li>
         <li><a href="#df_info_markdown">df_info_markdown</a></li>
         <li><a href="#export_track_md_deps">export_track_md_deps</a></li>
@@ -327,12 +331,24 @@
     
     <header class="article-category">
         
-            <a href="/categories/tutorials/" >
-                Tutorials
+            <a href="/categories/bloomberg/" style="background-color: #000000; color: ;">
+                Bloomberg
             </a>
         
-            <a href="/categories/tech/" >
-                Tech
+            <a href="/categories/nasdaq-data-link/" style="background-color: #009AD7; color: ;">
+                Nasdaq Data Link
+            </a>
+        
+            <a href="/categories/pandas/" style="background-color: #130754; color: ;">
+                Pandas
+            </a>
+        
+            <a href="/categories/python/" style="background-color: #306998; color: ;">
+                Python
+            </a>
+        
+            <a href="/categories/yahoo-finance/" style="background-color: #6001D2; color: ;">
+                Yahoo Finance
             </a>
         
     </header>
@@ -381,7 +397,7 @@
 
 
                 <time class="article-time--reading">
-                    28 minute read
+                    41 minute read
                 </time>
             </div>
         
@@ -415,6 +431,10 @@ Update 5/21/2025: Data through 5/20/25.</br> -->
 <li><a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#bb_clean_data" >bb_clean_data</a>: Takes an Excel export from Bloomberg, removes the miscellaneous headings/rows, and returns a DataFrame.</br></li>
 <li><a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#build_index" >build_index</a>: Reads the <code>index_temp.md</code> markdown file, inserts the markdown dependencies where indicated, and then saves the file as <code>index.md</code>.</br></li>
 <li><a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#calc_vix_trade_pnl" >calc_vix_trade_pnl</a>: Calculates the profit/loss from VIX options trades.</br></li>
+<li><a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_available_products" >coinbase_fetch_available_products</a>: Fetch available products from Coinbase Exchange API.</br></li>
+<li><a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_full_history" >coinbase_fetch_full_history</a>: Fetch full historical data for a given product from Coinbase Exchange API.</br></li>
+<li><a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_historical_candles" >coinbase_fetch_historical_candles</a>: Fetch historical candle data for a given product from Coinbase Exchange API.</br></li>
+<li><a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#coinbase_pull_data" >coinbase_pull_data</a>: Update existing record or pull full historical data for a given product from Coinbase Exchange API.</br></li>
 <li><a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#df_info" >df_info</a>: A simple function to display the information about a DataFrame and the first five rows and last five rows.</br></li>
 <li><a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#df_info_markdown" >df_info_markdown</a>: Similar to the <code>df_info</code> function above, except that it coverts the output to markdown.</br></li>
 <li><a class="link" href="/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps" >export_track_md_deps</a>: Exports various text outputs to markdown files, which are included in the <code>index.md</code> file created when building the site with Hugo.</br></li>
@@ -894,6 +914,10 @@ Update 5/21/2025: Data through 5/20/25.</br> -->
 </span><span class="lnt">105
 </span><span class="lnt">106
 </span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -995,7 +1019,11 @@ Update 5/21/2025: Data through 5/20/25.</br> -->
 </span></span><span class="line"><span class="cl">    <span class="n">open_trades</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Closed&#39;</span><span class="p">,</span> <span class="s1">&#39;Amount_Sell&#39;</span><span class="p">,</span> <span class="s1">&#39;Quantity_Sell&#39;</span><span class="p">,</span> <span class="s1">&#39;Exp_Date&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="c1"># Calculate the total market value of opened positions</span>
-</span></span><span class="line"><span class="cl">    <span class="n">total_opened_pos_mkt_val</span> <span class="o">=</span> <span class="n">closed_trades</span><span class="p">[</span><span class="s1">&#39;Amount_Buy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">+</span> <span class="n">open_trades</span><span class="p">[</span><span class="s1">&#39;Amount_Buy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># If start and end dates for trades and expirations are None, use only the closed positions</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">exp_start_date</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">exp_end_date</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">trade_start_date</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">trade_end_date</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">total_opened_pos_mkt_val</span> <span class="o">=</span> <span class="n">closed_trades</span><span class="p">[</span><span class="s1">&#39;Amount_Buy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">total_opened_pos_mkt_val</span> <span class="o">=</span> <span class="n">closed_trades</span><span class="p">[</span><span class="s1">&#39;Amount_Buy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">+</span> <span class="n">open_trades</span><span class="p">[</span><span class="s1">&#39;Amount_Buy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">    <span class="n">total_opened_pos_mkt_val_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;$</span><span class="si">{</span><span class="n">total_opened_pos_mkt_val</span><span class="si">:</span><span class="s2">,.2f</span><span class="si">}</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="c1"># Calculate the total market value of closed positions</span>
@@ -1003,6 +1031,1252 @@ Update 5/21/2025: Data through 5/20/25.</br> -->
 </span></span><span class="line"><span class="cl">    <span class="n">total_closed_pos_mkt_val_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;$</span><span class="si">{</span><span class="n">total_closed_pos_mkt_val</span><span class="si">:</span><span class="s2">,.2f</span><span class="si">}</span><span class="s2">&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">transactions_data</span><span class="p">,</span> <span class="n">closed_trades</span><span class="p">,</span> <span class="n">open_trades</span><span class="p">,</span> <span class="n">net_PnL_percent_str</span><span class="p">,</span> <span class="n">net_PnL_str</span><span class="p">,</span> <span class="n">total_opened_pos_mkt_val_str</span><span class="p">,</span> <span class="n">total_closed_pos_mkt_val_str</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="coinbase_fetch_available_products">coinbase_fetch_available_products
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">coinbase_fetch_available_products</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">base_currency</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">quote_currency</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">status</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Fetch available products from Coinbase Exchange API.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    -----------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    base_currency : str, optional
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Filter products by base currency (e.g., &#39;BTC&#39;).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    quote_currency : str, optional
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Filter products by quote currency (e.g., &#39;USD&#39;).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    status : str, optional
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Filter products by status (e.g., &#39;online&#39;, &#39;offline&#39;).
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    pd.DataFrame
+</span></span></span><span class="line"><span class="cl"><span class="s2">        DataFrame containing available products with their details.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://api.exchange.coinbase.com/products&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">products</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># Convert the list of products into a pandas DataFrame</span>
+</span></span><span class="line"><span class="cl">        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">products</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># Filter by base_currency if provided</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">base_currency</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;base_currency&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">base_currency</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1"># Filter by quote_currency if provided</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">quote_currency</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;quote_currency&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">quote_currency</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># Filter by status if provided</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">status</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;status&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">status</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># Sort by &#34;id&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">df</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">errh</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;HTTP Error: </span><span class="si">{</span><span class="n">errh</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">ConnectionError</span> <span class="k">as</span> <span class="n">errc</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Error Connecting: </span><span class="si">{</span><span class="n">errc</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">Timeout</span> <span class="k">as</span> <span class="n">errt</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Timeout Error: </span><span class="si">{</span><span class="n">errt</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Oops: Something Else </span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># Example usage</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span> <span class="o">=</span> <span class="n">coinbase_fetch_available_products</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">base_currency</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">quote_currency</span><span class="o">=</span><span class="s2">&#34;USD&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">status</span><span class="o">=</span><span class="s2">&#34;online&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;No data returned.&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="coinbase_fetch_full_history">coinbase_fetch_full_history
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">coinbase_fetch_historical_candles</span> <span class="kn">import</span> <span class="n">coinbase_fetch_historical_candles</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">coinbase_fetch_full_history</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">product_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">start</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">end</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">granularity</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Fetch full historical data for a given product from Coinbase Exchange API.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    -----------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    product_id : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        The trading pair (e.g., &#39;BTC-USD&#39;).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    start : datetime
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Start time in UTC.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    end : datetime
+</span></span></span><span class="line"><span class="cl"><span class="s2">        End time in UTC.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    granularity : int
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Time slice in seconds (e.g., 3600 for hourly candles).
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    pd.DataFrame
+</span></span></span><span class="line"><span class="cl"><span class="s2">        DataFrame containing time, low, high, open, close, volume.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">all_data</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">current_start</span> <span class="o">=</span> <span class="n">start</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">while</span> <span class="n">current_start</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">current_end</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">current_start</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="n">granularity</span> <span class="o">*</span> <span class="mi">300</span><span class="p">),</span> <span class="n">end</span><span class="p">)</span>  <span class="c1"># Fetch max 300 candles per request</span>
+</span></span><span class="line"><span class="cl">        <span class="n">df</span> <span class="o">=</span> <span class="n">coinbase_fetch_historical_candles</span><span class="p">(</span><span class="n">product_id</span><span class="p">,</span> <span class="n">current_start</span><span class="p">,</span> <span class="n">current_end</span><span class="p">,</span> <span class="n">granularity</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span>
+</span></span><span class="line"><span class="cl">        <span class="n">all_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">current_start</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="n">granularity</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>  <span class="c1"># Small delay to respect rate limits</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">all_data</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">full_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">all_data</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">full_df</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># Example usage</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span> <span class="o">=</span> <span class="n">coinbase_fetch_full_history</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">product_id</span><span class="o">=</span><span class="s2">&#34;BTC-USD&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">start</span><span class="o">=</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">end</span><span class="o">=</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">31</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">granularity</span><span class="o">=</span><span class="mi">86_400</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;No data returned.&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="coinbase_fetch_historical_candles">coinbase_fetch_historical_candles
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
+</span><span class="lnt">91
+</span><span class="lnt">92
+</span><span class="lnt">93
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">coinbase_fetch_historical_candles</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">product_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">start</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">end</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">granularity</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Fetch historical candle data for a given product from Coinbase Exchange API.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    -----------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    product_id : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        The trading pair (e.g., &#39;BTC-USD&#39;).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    start : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Start time in UTC.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    end : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        End time in UTC.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    granularity : int
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Time slice in seconds (e.g., 3600 for hourly candles).
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    pd.DataFrame
+</span></span></span><span class="line"><span class="cl"><span class="s2">        DataFrame containing time, low, high, open, close, volume.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;https://api.exchange.coinbase.com/products/</span><span class="si">{</span><span class="n">product_id</span><span class="si">}</span><span class="s1">/candles&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;start&#39;</span><span class="p">:</span> <span class="n">start</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;end&#39;</span><span class="p">:</span> <span class="n">end</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;granularity&#39;</span><span class="p">:</span> <span class="n">granularity</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">max_retries</span> <span class="o">=</span> <span class="mi">5</span>
+</span></span><span class="line"><span class="cl">    <span class="n">retry_delay</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># initial delay in seconds</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">attempt</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_retries</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1"># Coinbase Exchange API returns data in reverse chronological order</span>
+</span></span><span class="line"><span class="cl">            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1"># Convert to DataFrame</span>
+</span></span><span class="line"><span class="cl">            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;low&#39;</span><span class="p">,</span> <span class="s1">&#39;high&#39;</span><span class="p">,</span> <span class="s1">&#39;open&#39;</span><span class="p">,</span> <span class="s1">&#39;close&#39;</span><span class="p">,</span> <span class="s1">&#39;volume&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">            <span class="n">df</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">],</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">df</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">errh</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">429</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Rate limit exceeded. Retrying in </span><span class="si">{</span><span class="n">retry_delay</span><span class="si">}</span><span class="s2"> seconds...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">retry_delay</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="n">retry_delay</span> <span class="o">*=</span> <span class="mi">2</span>  <span class="c1"># Exponential backoff</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;HTTP Error: </span><span class="si">{</span><span class="n">errh</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">break</span>
+</span></span><span class="line"><span class="cl">        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">ConnectionError</span> <span class="k">as</span> <span class="n">errc</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Error Connecting: </span><span class="si">{</span><span class="n">errc</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">retry_delay</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">retry_delay</span> <span class="o">*=</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">Timeout</span> <span class="k">as</span> <span class="n">errt</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Timeout Error: </span><span class="si">{</span><span class="n">errt</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">retry_delay</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">retry_delay</span> <span class="o">*=</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;OOps: Something Else </span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&#34;Failed to fetch data after multiple retries.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># Example usage</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span> <span class="o">=</span> <span class="n">coinbase_fetch_historical_candles</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">product_id</span><span class="o">=</span><span class="s2">&#34;BTC-USD&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">start</span><span class="o">=</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">end</span><span class="o">=</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">granularity</span><span class="o">=</span><span class="mi">86_400</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;No data returned.&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="coinbase_pull_data">coinbase_pull_data
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span><span class="lnt">208
+</span><span class="lnt">209
+</span><span class="lnt">210
+</span><span class="lnt">211
+</span><span class="lnt">212
+</span><span class="lnt">213
+</span><span class="lnt">214
+</span><span class="lnt">215
+</span><span class="lnt">216
+</span><span class="lnt">217
+</span><span class="lnt">218
+</span><span class="lnt">219
+</span><span class="lnt">220
+</span><span class="lnt">221
+</span><span class="lnt">222
+</span><span class="lnt">223
+</span><span class="lnt">224
+</span><span class="lnt">225
+</span><span class="lnt">226
+</span><span class="lnt">227
+</span><span class="lnt">228
+</span><span class="lnt">229
+</span><span class="lnt">230
+</span><span class="lnt">231
+</span><span class="lnt">232
+</span><span class="lnt">233
+</span><span class="lnt">234
+</span><span class="lnt">235
+</span><span class="lnt">236
+</span><span class="lnt">237
+</span><span class="lnt">238
+</span><span class="lnt">239
+</span><span class="lnt">240
+</span><span class="lnt">241
+</span><span class="lnt">242
+</span><span class="lnt">243
+</span><span class="lnt">244
+</span><span class="lnt">245
+</span><span class="lnt">246
+</span><span class="lnt">247
+</span><span class="lnt">248
+</span><span class="lnt">249
+</span><span class="lnt">250
+</span><span class="lnt">251
+</span><span class="lnt">252
+</span><span class="lnt">253
+</span><span class="lnt">254
+</span><span class="lnt">255
+</span><span class="lnt">256
+</span><span class="lnt">257
+</span><span class="lnt">258
+</span><span class="lnt">259
+</span><span class="lnt">260
+</span><span class="lnt">261
+</span><span class="lnt">262
+</span><span class="lnt">263
+</span><span class="lnt">264
+</span><span class="lnt">265
+</span><span class="lnt">266
+</span><span class="lnt">267
+</span><span class="lnt">268
+</span><span class="lnt">269
+</span><span class="lnt">270
+</span><span class="lnt">271
+</span><span class="lnt">272
+</span><span class="lnt">273
+</span><span class="lnt">274
+</span><span class="lnt">275
+</span><span class="lnt">276
+</span><span class="lnt">277
+</span><span class="lnt">278
+</span><span class="lnt">279
+</span><span class="lnt">280
+</span><span class="lnt">281
+</span><span class="lnt">282
+</span><span class="lnt">283
+</span><span class="lnt">284
+</span><span class="lnt">285
+</span><span class="lnt">286
+</span><span class="lnt">287
+</span><span class="lnt">288
+</span><span class="lnt">289
+</span><span class="lnt">290
+</span><span class="lnt">291
+</span><span class="lnt">292
+</span><span class="lnt">293
+</span><span class="lnt">294
+</span><span class="lnt">295
+</span><span class="lnt">296
+</span><span class="lnt">297
+</span><span class="lnt">298
+</span><span class="lnt">299
+</span><span class="lnt">300
+</span><span class="lnt">301
+</span><span class="lnt">302
+</span><span class="lnt">303
+</span><span class="lnt">304
+</span><span class="lnt">305
+</span><span class="lnt">306
+</span><span class="lnt">307
+</span><span class="lnt">308
+</span><span class="lnt">309
+</span><span class="lnt">310
+</span><span class="lnt">311
+</span><span class="lnt">312
+</span><span class="lnt">313
+</span><span class="lnt">314
+</span><span class="lnt">315
+</span><span class="lnt">316
+</span><span class="lnt">317
+</span><span class="lnt">318
+</span><span class="lnt">319
+</span><span class="lnt">320
+</span><span class="lnt">321
+</span><span class="lnt">322
+</span><span class="lnt">323
+</span><span class="lnt">324
+</span><span class="lnt">325
+</span><span class="lnt">326
+</span><span class="lnt">327
+</span><span class="lnt">328
+</span><span class="lnt">329
+</span><span class="lnt">330
+</span><span class="lnt">331
+</span><span class="lnt">332
+</span><span class="lnt">333
+</span><span class="lnt">334
+</span><span class="lnt">335
+</span><span class="lnt">336
+</span><span class="lnt">337
+</span><span class="lnt">338
+</span><span class="lnt">339
+</span><span class="lnt">340
+</span><span class="lnt">341
+</span><span class="lnt">342
+</span><span class="lnt">343
+</span><span class="lnt">344
+</span><span class="lnt">345
+</span><span class="lnt">346
+</span><span class="lnt">347
+</span><span class="lnt">348
+</span><span class="lnt">349
+</span><span class="lnt">350
+</span><span class="lnt">351
+</span><span class="lnt">352
+</span><span class="lnt">353
+</span><span class="lnt">354
+</span><span class="lnt">355
+</span><span class="lnt">356
+</span><span class="lnt">357
+</span><span class="lnt">358
+</span><span class="lnt">359
+</span><span class="lnt">360
+</span><span class="lnt">361
+</span><span class="lnt">362
+</span><span class="lnt">363
+</span><span class="lnt">364
+</span><span class="lnt">365
+</span><span class="lnt">366
+</span><span class="lnt">367
+</span><span class="lnt">368
+</span><span class="lnt">369
+</span><span class="lnt">370
+</span><span class="lnt">371
+</span><span class="lnt">372
+</span><span class="lnt">373
+</span><span class="lnt">374
+</span><span class="lnt">375
+</span><span class="lnt">376
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">calendar</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">coinbase_fetch_available_products</span> <span class="kn">import</span> <span class="n">coinbase_fetch_available_products</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">coinbase_fetch_full_history</span> <span class="kn">import</span> <span class="n">coinbase_fetch_full_history</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">settings</span> <span class="kn">import</span> <span class="n">config</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Get the data directory from the configuration</span>
+</span></span><span class="line"><span class="cl"><span class="n">DATA_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">&#34;DATA_DIR&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">coinbase_pull_data</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">base_directory</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">asset_class</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">excel_export</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pickle_export</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">output_confirmation</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">base_currency</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">quote_currency</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">granularity</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">3600</span><span class="p">,</span> <span class="c1"># 60=minute, 3600=hourly, 86400=daily</span>
+</span></span><span class="line"><span class="cl">    <span class="n">status</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;online&#39;</span><span class="p">,</span> <span class="c1"># default status is &#39;online&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">start_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">=</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="c1"># default start date</span>
+</span></span><span class="line"><span class="cl">    <span class="n">end_date</span><span class="p">:</span> <span class="n">datetime</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="c1"># updates data through 1 day ago due to lag in data availability</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Update existing record or pull full historical data for a given product from Coinbase Exchange API.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    -----------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    base_directory
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Root path to store downloaded data.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    source : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Name of the data source (e.g., &#39;Nasdaq_Data_Link&#39;).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    asset_class : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Asset class name (e.g., &#39;Equities&#39;).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    excel_export : bool
+</span></span></span><span class="line"><span class="cl"><span class="s2">        If True, export data to Excel format.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    pickle_export : bool
+</span></span></span><span class="line"><span class="cl"><span class="s2">        If True, export data to Pickle format.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    output_confirmation : bool
+</span></span></span><span class="line"><span class="cl"><span class="s2">        If True, print confirmation message.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    base_currency : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        The base currency (e.g., &#39;BTC&#39;).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    quote_currency : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        The quote currency (e.g., &#39;USD&#39;).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    status : str, optional
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Filter products by status (default is &#39;online&#39;).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    granularity : int
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Time slice in seconds (e.g., 3600 for hourly candles).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    start_date : str, optional
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Start date in UTC (ISO format).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    end_date : str, optional
+</span></span></span><span class="line"><span class="cl"><span class="s2">        End date in UTC (ISO format).
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    None
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># List of crypto assets</span>
+</span></span><span class="line"><span class="cl">    <span class="n">filtered_products</span> <span class="o">=</span> <span class="n">coinbase_fetch_available_products</span><span class="p">(</span><span class="n">base_currency</span><span class="o">=</span><span class="n">base_currency</span><span class="p">,</span> <span class="n">quote_currency</span><span class="o">=</span><span class="n">quote_currency</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">filtered_products_list</span> <span class="o">=</span> <span class="n">filtered_products</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">filtered_products_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">filtered_products_list</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">filtered_products</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">filtered_products</span><span class="p">[[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;base_currency&#39;</span><span class="p">,</span> <span class="s1">&#39;quote_currency&#39;</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span><span class="p">]])</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">filtered_products_list</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">filtered_products_list</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;No products found with the specified base and/or quote currencies.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">missing_data</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">omitted_data</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">num_products</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">filtered_products_list</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Loop for updates</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="n">filtered_products_list</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">counter</span><span class="o">+=</span><span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Updating product </span><span class="si">{</span><span class="n">counter</span><span class="si">}</span><span class="s2"> of </span><span class="si">{</span><span class="n">num_products</span><span class="si">}</span><span class="s2">.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">granularity</span> <span class="o">==</span> <span class="mi">60</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">time_length</span> <span class="o">=</span> <span class="s2">&#34;Minute&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="n">granularity</span> <span class="o">==</span> <span class="mi">3600</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">time_length</span> <span class="o">=</span> <span class="s2">&#34;Hourly&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">elif</span> <span class="n">granularity</span> <span class="o">==</span> <span class="mi">86400</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">time_length</span> <span class="o">=</span> <span class="s2">&#34;Daily&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Error - please confirm timeframe.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">break</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># Set file location based on parameters</span>
+</span></span><span class="line"><span class="cl">        <span class="n">file_location</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">base_directory</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">source</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">asset_class</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">time_length</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">product</span><span class="si">}</span><span class="s2">.pkl&#34;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">        <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># Attempt to read existing pickle data file</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ex_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="n">file_location</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ex_data</span> <span class="o">=</span> <span class="n">ex_data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;File found...updating the </span><span class="si">{</span><span class="n">product</span><span class="si">}</span><span class="s2"> data&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Existing data:&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="n">ex_data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1"># Pull recent data</span>
+</span></span><span class="line"><span class="cl">            <span class="n">new_data</span> <span class="o">=</span> <span class="n">coinbase_fetch_full_history</span><span class="p">(</span><span class="n">product</span><span class="p">,</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">,</span> <span class="n">granularity</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">new_data</span> <span class="o">=</span> <span class="n">new_data</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;time&#39;</span><span class="p">:</span><span class="s1">&#39;Date&#39;</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">tz_localize</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;New data:&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="n">new_data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1"># Combine existing data with recent data</span>
+</span></span><span class="line"><span class="cl">            <span class="n">full_history_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">ex_data</span><span class="p">,</span><span class="n">new_data</span><span class="p">[</span><span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">ex_data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="kc">False</span><span class="p">]])</span>
+</span></span><span class="line"><span class="cl">            <span class="n">full_history_df</span> <span class="o">=</span> <span class="n">full_history_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;Date&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">full_history_df</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">full_history_df</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">tz_localize</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">full_history_df</span> <span class="o">=</span> <span class="n">full_history_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Combined data:&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="n">full_history_df</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1"># Create directory</span>
+</span></span><span class="line"><span class="cl">            <span class="n">directory</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">base_directory</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">source</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">asset_class</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">time_length</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1"># Export to excel</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">excel_export</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">full_history_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">directory</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">product</span><span class="si">}</span><span class="s2">.xlsx&#34;</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&#34;data&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1"># Export to pickle</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">pickle_export</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">full_history_df</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">directory</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">product</span><span class="si">}</span><span class="s2">.pkl&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1"># Output confirmation</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">output_confirmation</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Data update complete for </span><span class="si">{</span><span class="n">time_length</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">product</span><span class="si">}</span><span class="s2">.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;--------------------&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">        <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># Starting year for fetching initial data</span>
+</span></span><span class="line"><span class="cl">            <span class="n">starting_year</span> <span class="o">=</span> <span class="mi">2025</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1"># Print error</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;File not found...downloading the </span><span class="si">{</span><span class="n">product</span><span class="si">}</span><span class="s2"> data starting with </span><span class="si">{</span><span class="n">starting_year</span><span class="si">}</span><span class="s2">.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="k">def</span> <span class="nf">get_full_hist</span><span class="p">(</span><span class="n">year</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1"># Define the start and end dates</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">start_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># Default start date</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">end_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># Updates data through 1 day ago</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                    <span class="c1"># Fetch and process the data</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">full_history_df</span> <span class="o">=</span> <span class="n">coinbase_fetch_full_history</span><span class="p">(</span><span class="n">product</span><span class="p">,</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">,</span> <span class="n">granularity</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">full_history_df</span> <span class="o">=</span> <span class="n">full_history_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="s1">&#39;Date&#39;</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">full_history_df</span> <span class="o">=</span> <span class="n">full_history_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;Date&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                    <span class="c1"># Iterate through rows to see if the value of the asset ever exceeds a specified threshold</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1"># Default value for the price threshold is 0 USD</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1"># If the price never exceeds this threshold, the asset is omitted from the final list</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">def</span> <span class="nf">find_first_close_above_threshold</span><span class="p">(</span><span class="n">full_history_df</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1"># Ensure &#39;Date&#39; is the index before proceeding</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">if</span> <span class="s1">&#39;Date&#39;</span> <span class="ow">in</span> <span class="n">full_history_df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                            <span class="n">full_history_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">full_history_df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">full_history_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tz_localize</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                        
+</span></span><span class="line"><span class="cl">                        <span class="c1"># Iterate through the DataFrame</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">full_history_df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">                            <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;First occurrence: </span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s2">, close=</span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;close&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                                <span class="c1"># Return the filtered DataFrame starting from this row</span>
+</span></span><span class="line"><span class="cl">                                <span class="k">return</span> <span class="n">full_history_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">index</span><span class="p">:]</span>
+</span></span><span class="line"><span class="cl">                        
+</span></span><span class="line"><span class="cl">                        <span class="c1"># If no value meets the condition, return an empty DataFrame</span>
+</span></span><span class="line"><span class="cl">                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Share price never exceeds </span><span class="si">{</span><span class="n">threshold</span><span class="si">}</span><span class="s2"> USD.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">omitted_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">product</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">return</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">                    
+</span></span><span class="line"><span class="cl">                    <span class="n">full_history_above_threshold_df</span> <span class="o">=</span> <span class="n">find_first_close_above_threshold</span><span class="p">(</span><span class="n">full_history_df</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                    <span class="k">return</span> <span class="n">full_history_above_threshold_df</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;KeyError: No data available for </span><span class="si">{</span><span class="n">product</span><span class="si">}</span><span class="s2"> in </span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2">. Trying next year...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">next_year</span> <span class="o">=</span> <span class="n">year</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                    <span class="c1"># Base case: Stop if the next year exceeds the current year</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="n">next_year</span> <span class="o">&gt;</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">year</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;No more data available for any future years.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">missing_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">product</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">return</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                    <span class="c1"># Recursive call for the next year</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">return</span> <span class="n">get_full_hist</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="n">next_year</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1"># Fetch the full history starting from the given year</span>
+</span></span><span class="line"><span class="cl">            <span class="n">full_history_df</span> <span class="o">=</span> <span class="n">get_full_hist</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="n">starting_year</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">full_history_df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="c1"># Create directory</span>
+</span></span><span class="line"><span class="cl">                <span class="n">directory</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">base_directory</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">source</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">asset_class</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">time_length</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="c1"># Export to excel</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="n">excel_export</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">full_history_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">directory</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">product</span><span class="si">}</span><span class="s2">.xlsx&#34;</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&#34;data&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="c1"># Export to pickle</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="n">pickle_export</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">full_history_df</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">directory</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">product</span><span class="si">}</span><span class="s2">.pkl&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="c1"># Output confirmation</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="n">output_confirmation</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Initial data fetching completed successfully for </span><span class="si">{</span><span class="n">time_length</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">product</span><span class="si">}</span><span class="s2">.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;--------------------&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;No data could be fetched for the specified range.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                
+</span></span><span class="line"><span class="cl">        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Remove the cryptocurrencies with missing data from the final list</span>
+</span></span><span class="line"><span class="cl">    <span class="n">missing_data</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">missing_data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Data missing for: </span><span class="si">{</span><span class="n">missing_data</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">asset</span> <span class="ow">in</span> <span class="n">missing_data</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Removing </span><span class="si">{</span><span class="n">asset</span><span class="si">}</span><span class="s2"> from the list because it is missing data.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">filtered_products_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">asset</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">asset</span><span class="si">}</span><span class="s2"> not in list.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Remove the cryptocurrencies with share prices that never exceed 1 USD from the final list</span>
+</span></span><span class="line"><span class="cl">    <span class="n">omitted_data</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">omitted_data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Data omitted due to price for: </span><span class="si">{</span><span class="n">omitted_data</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">asset</span> <span class="ow">in</span> <span class="n">omitted_data</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Removing </span><span class="si">{</span><span class="n">asset</span><span class="si">}</span><span class="s2"> from the list because the share price never exceeds 1 USD.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">filtered_products_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">asset</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">asset</span><span class="si">}</span><span class="s2"> not in list.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">pass</span>  
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># Remove stablecoins from the final list</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stablecoins_to_remove</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;USDT-USD&#39;</span><span class="p">,</span> <span class="s1">&#39;USDC-USD&#39;</span><span class="p">,</span> <span class="s1">&#39;PAX-USD&#39;</span><span class="p">,</span> <span class="s1">&#39;DAI-USD&#39;</span><span class="p">,</span> <span class="s1">&#39;PYUSD-USD&#39;</span><span class="p">,</span> <span class="s1">&#39;GUSD-USD&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stablecoins_to_remove</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">stablecoins_to_remove</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Data for stable coins not to be used: </span><span class="si">{</span><span class="n">stablecoins_to_remove</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">asset</span> <span class="ow">in</span> <span class="n">stablecoins_to_remove</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">filtered_products_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">asset</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># print(f&#34;Removing {asset} from the list because it is a stablecoin.&#34;)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># print(f&#34;{asset} not in list.&#34;)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">pass</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Remove the wrapped coins from the final list</span>
+</span></span><span class="line"><span class="cl">    <span class="n">wrapped_coins_to_remove</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;WAXL-USD&#39;</span><span class="p">,</span> <span class="s1">&#39;WBTC-USD&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">wrapped_coins_to_remove</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">wrapped_coins_to_remove</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Data for wrapped coins not to be used: </span><span class="si">{</span><span class="n">wrapped_coins_to_remove</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">asset</span> <span class="ow">in</span> <span class="n">wrapped_coins_to_remove</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">filtered_products_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">asset</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># print(f&#34;Removing {asset} from the list because it is a wrapped coin.&#34;)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="c1"># print(f&#34;{asset} not in list.&#34;)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">pass</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Print the final list of token and the length of the list</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Final list of tokens: </span><span class="si">{</span><span class="n">filtered_products_list</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Length of final list of tokens: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">filtered_products_list</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">full_history_df</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">     
+</span></span><span class="line"><span class="cl">    <span class="c1"># # Example usage to pull all data for each month from 2010 to 2024</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># for granularity in [60, 3600, 86400]:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#     for year in range(2010, 2025):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#         for month in range(1, 13):</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#             print(f&#34;Pulling data for {year}-{month:02d}...&#34;)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#             try:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#                 # Get the last day of the month</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#                 last_day = calendar.monthrange(year, month)[1]</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#                 coinbase_pull_data(</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#                     base_directory=DATA_DIR,</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#                     source=&#34;Coinbase&#34;,</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#                     asset_class=&#34;Cryptocurrencies&#34;,</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#                     excel_export=False,</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#                     pickle_export=True,</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#                     output_confirmation=True,</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#                     base_currency=&#34;XRP&#34;,</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#                     quote_currency=&#34;USD&#34;,</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#                     granularity=granularity, # 60=minute, 3600=hourly, 86400=daily</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#                     status=&#39;online&#39;,</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#                     start_date=datetime(year, month, 1),</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#                     end_date=datetime(year, month, last_day),</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#                 )</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#             except Exception as e:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#                 print(f&#34;Failed to pull data for {year}-{month:02d}: {e}&#34;)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">current_year</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">year</span>
+</span></span><span class="line"><span class="cl">    <span class="n">current_month</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">month</span>
+</span></span><span class="line"><span class="cl">    <span class="n">current_day</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">day</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Crypto Data</span>
+</span></span><span class="line"><span class="cl">    <span class="n">currencies</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;BTC&#34;</span><span class="p">,</span> <span class="s2">&#34;ETH&#34;</span><span class="p">,</span> <span class="s2">&#34;SOL&#34;</span><span class="p">,</span> <span class="s2">&#34;XRP&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Iterate through each currency</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">cur</span> <span class="ow">in</span> <span class="n">currencies</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Example usage - minute</span>
+</span></span><span class="line"><span class="cl">        <span class="n">coinbase_pull_data</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">base_directory</span><span class="o">=</span><span class="n">DATA_DIR</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">source</span><span class="o">=</span><span class="s2">&#34;Coinbase&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">asset_class</span><span class="o">=</span><span class="s2">&#34;Cryptocurrencies&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">excel_export</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pickle_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">output_confirmation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">base_currency</span><span class="o">=</span><span class="n">cur</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">quote_currency</span><span class="o">=</span><span class="s2">&#34;USD&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">granularity</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="c1"># 60=minute, 3600=hourly, 86400=daily</span>
+</span></span><span class="line"><span class="cl">            <span class="n">status</span><span class="o">=</span><span class="s1">&#39;online&#39;</span><span class="p">,</span> <span class="c1"># default status is &#39;online&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">start_date</span><span class="o">=</span><span class="n">datetime</span><span class="p">(</span><span class="n">current_year</span><span class="p">,</span> <span class="n">current_month</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="c1"># default start date</span>
+</span></span><span class="line"><span class="cl">            <span class="n">end_date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="c1"># updates data through 1 day ago due to lag in data availability</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># Example usage - hourly</span>
+</span></span><span class="line"><span class="cl">        <span class="n">coinbase_pull_data</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">base_directory</span><span class="o">=</span><span class="n">DATA_DIR</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">source</span><span class="o">=</span><span class="s2">&#34;Coinbase&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">asset_class</span><span class="o">=</span><span class="s2">&#34;Cryptocurrencies&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">excel_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pickle_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">output_confirmation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">base_currency</span><span class="o">=</span><span class="n">cur</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">quote_currency</span><span class="o">=</span><span class="s2">&#34;USD&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">granularity</span><span class="o">=</span><span class="mi">3600</span><span class="p">,</span> <span class="c1"># 60=minute, 3600=hourly, 86400=daily</span>
+</span></span><span class="line"><span class="cl">            <span class="n">status</span><span class="o">=</span><span class="s1">&#39;online&#39;</span><span class="p">,</span> <span class="c1"># default status is &#39;online&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">start_date</span><span class="o">=</span><span class="n">datetime</span><span class="p">(</span><span class="n">current_year</span><span class="p">,</span> <span class="n">current_month</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="c1"># default start date</span>
+</span></span><span class="line"><span class="cl">            <span class="n">end_date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="c1"># updates data through 1 day ago due to lag in data availability</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># Example usage - daily</span>
+</span></span><span class="line"><span class="cl">        <span class="n">coinbase_pull_data</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">base_directory</span><span class="o">=</span><span class="n">DATA_DIR</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">source</span><span class="o">=</span><span class="s2">&#34;Coinbase&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">asset_class</span><span class="o">=</span><span class="s2">&#34;Cryptocurrencies&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">excel_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pickle_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">output_confirmation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">base_currency</span><span class="o">=</span><span class="n">cur</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">quote_currency</span><span class="o">=</span><span class="s2">&#34;USD&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">granularity</span><span class="o">=</span><span class="mi">86400</span><span class="p">,</span> <span class="c1"># 60=minute, 3600=hourly, 86400=daily</span>
+</span></span><span class="line"><span class="cl">            <span class="n">status</span><span class="o">=</span><span class="s1">&#39;online&#39;</span><span class="p">,</span> <span class="c1"># default status is &#39;online&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">start_date</span><span class="o">=</span><span class="n">datetime</span><span class="p">(</span><span class="n">current_year</span><span class="p">,</span> <span class="n">current_month</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="c1"># default start date</span>
+</span></span><span class="line"><span class="cl">            <span class="n">end_date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="c1"># updates data through 1 day ago due to lag in data availability</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h3 id="df_info">df_info
@@ -1498,7 +2772,7 @@ Update 5/21/2025: Data through 5/20/25.</br> -->
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">    <span class="n">base_directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">base_directory</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">ticker</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">asset_class</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -1515,7 +2789,7 @@ Update 5/21/2025: Data through 5/20/25.</br> -->
 </span></span></span><span class="line"><span class="cl"><span class="s2">
 </span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
 </span></span></span><span class="line"><span class="cl"><span class="s2">    -----------
-</span></span></span><span class="line"><span class="cl"><span class="s2">    base_directory : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">    base_directory
 </span></span></span><span class="line"><span class="cl"><span class="s2">        Root path to read data file.
 </span></span></span><span class="line"><span class="cl"><span class="s2">    ticker : str
 </span></span></span><span class="line"><span class="cl"><span class="s2">        Ticker symbol to read.
@@ -3020,7 +4294,7 @@ Update 5/21/2025: Data through 5/20/25.</br> -->
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">yf_pull_data</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">    <span class="n">base_directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">base_directory</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">ticker</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">asset_class</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -3034,7 +4308,7 @@ Update 5/21/2025: Data through 5/20/25.</br> -->
 </span></span></span><span class="line"><span class="cl"><span class="s2">
 </span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
 </span></span></span><span class="line"><span class="cl"><span class="s2">    -----------
-</span></span></span><span class="line"><span class="cl"><span class="s2">    base_directory : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">    base_directory
 </span></span></span><span class="line"><span class="cl"><span class="s2">        Root path to store downloaded data.
 </span></span></span><span class="line"><span class="cl"><span class="s2">    ticker : str
 </span></span></span><span class="line"><span class="cl"><span class="s2">        Ticker symbol to download.
@@ -3117,20 +4391,6 @@ The pdf export of the jupyter notebook is available <a class="link" href="reusab
 
     <footer class="article-footer">
     
-    <section class="article-tags">
-        
-            <a href="/tags/bloomberg/">Bloomberg</a>
-        
-            <a href="/tags/nasdaq-data-link/">Nasdaq Data Link</a>
-        
-            <a href="/tags/pandas/">Pandas</a>
-        
-            <a href="/tags/python/">Python</a>
-        
-            <a href="/tags/yahoo-finance/">Yahoo Finance</a>
-        
-    </section>
-
 
     
     <section class="article-copyright">
@@ -3154,7 +4414,7 @@ The pdf export of the jupyter notebook is available <a class="link" href="reusab
 
 
         <span>
-            Last updated on June 4, 2025
+            Last updated on July 28, 2025
         </span>
     </section></footer>
 
@@ -3199,23 +4459,119 @@ The pdf export of the jupyter notebook is available <a class="link" href="reusab
             
                 
 <article class="has-image">
-    <a href="/2025/06/29/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation/">
+    <a href="/2025/03/03/investigating-a-vix-trading-signal-part-3-trading/">
         
         
             <div class="article-image">
-                <img src="/2025/06/29/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation/cover.d63bb0d0c85aafab4eaeb0991d8b7159.jpg" 
+                <img src="/2025/03/03/investigating-a-vix-trading-signal-part-3-trading/cover.6c26bbaa157bd04e55552d08c0af8235.jpg" 
                         width="1920" 
                         height="800" 
                         loading="lazy"
-                        alt="Featured image of post Automating Execution of Jupyter Notebook Files, Python Scripts, and Hugo Static Site Generation"
-                        data-key="automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation" 
-                        data-hash="md5-1juw0Mhar6tOrrCZHYtxWQ==">
+                        alt="Featured image of post Investigating A VIX Trading Signal, Part 3: Trading"
+                        data-key="investigating-a-vix-trading-signal-part-3-trading" 
+                        data-hash="md5-bCa7qhV70E5VVS0IwK&#43;CNQ==">
                 
             </div>
         
 
         <div class="article-details">
-            <h2 class="article-title">Automating Execution of Jupyter Notebook Files, Python Scripts, and Hugo Static Site Generation</h2>
+            <h2 class="article-title">Investigating A VIX Trading Signal, Part 3: Trading</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/">
+        
+        
+            <div class="article-image">
+                <img src="/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/cover.6c26bbaa157bd04e55552d08c0af8235.jpg" 
+                        width="1920" 
+                        height="800" 
+                        loading="lazy"
+                        alt="Featured image of post Investigating A VIX Trading Signal, Part 2: Finding A Signal"
+                        data-key="investigating-a-vix-trading-signal-part-2-finding-a-signal" 
+                        data-hash="md5-bCa7qhV70E5VVS0IwK&#43;CNQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Investigating A VIX Trading Signal, Part 2: Finding A Signal</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/2025/03/01/investigating-a-vix-trading-signal-part-1-vix-and-vvix/">
+        
+        
+            <div class="article-image">
+                <img src="/2025/03/01/investigating-a-vix-trading-signal-part-1-vix-and-vvix/cover.6c26bbaa157bd04e55552d08c0af8235.jpg" 
+                        width="1920" 
+                        height="800" 
+                        loading="lazy"
+                        alt="Featured image of post Investigating A VIX Trading Signal, Part 1: VIX And VVIX"
+                        data-key="investigating-a-vix-trading-signal-part-1-vix-and-vvix" 
+                        data-hash="md5-bCa7qhV70E5VVS0IwK&#43;CNQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Investigating A VIX Trading Signal, Part 1: VIX And VVIX</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/2024/11/04/harry-browne-permanent-portfolio/">
+        
+        
+            <div class="article-image">
+                <img src="/2024/11/04/harry-browne-permanent-portfolio/cover.064c900ecb7e5996b2bf7b0cb30919d7.jpg" 
+                        width="1920" 
+                        height="800" 
+                        loading="lazy"
+                        alt="Featured image of post Does Harry Browne&#39;s permanent portfolio withstand the test of time?"
+                        data-key="harry-browne-permanent-portfolio" 
+                        data-hash="md5-BkyQDst&#43;WZayv3sMswkZ1w==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Does Harry Browne&#39;s permanent portfolio withstand the test of time?</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/">
+        
+        
+            <div class="article-image">
+                <img src="/2023/12/24/nasdaq-data-link-tables-api-data-retrieval/cover.976000143a9e4ce879bc3e4c2b9c2311.jpg" 
+                        width="1920" 
+                        height="800" 
+                        loading="lazy"
+                        alt="Featured image of post Nasdaq Data Link Tables API Data Retrieval"
+                        data-key="nasdaq-data-link-tables-api-data-retrieval" 
+                        data-hash="md5-l2AAFDqeTOh5vD5MK5wjEQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Nasdaq Data Link Tables API Data Retrieval</h2>
         </div>
     </a>
 </article>

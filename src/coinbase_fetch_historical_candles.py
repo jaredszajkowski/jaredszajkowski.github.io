@@ -76,3 +76,18 @@ def coinbase_fetch_historical_candles(
             break
 
     raise Exception("Failed to fetch data after multiple retries.")
+
+if __name__ == "__main__":
+    
+    # Example usage
+    df = coinbase_fetch_historical_candles(
+        product_id="BTC-USD",
+        start=datetime(2025, 1, 1),
+        end=datetime(2025, 1, 1),
+        granularity=86_400,
+    )
+
+    if df is not None:
+        print(df)
+    else:
+        print("No data returned.")

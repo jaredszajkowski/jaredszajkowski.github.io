@@ -7,7 +7,6 @@ Polygon, then:
 """
 
 from datetime import datetime
-from pathlib import Path
 from polygon_pull_data import polygon_pull_data
 from polygon_month_end import polygon_month_end
 from polygon_quarter_end import polygon_quarter_end
@@ -15,6 +14,11 @@ from settings import config
 
 # Get the environment variable for where data is stored
 DATA_DIR = config("DATA_DIR")
+
+# Get current year, month, day
+current_year = datetime.now().year
+current_month = datetime.now().month
+current_day = datetime.now().day
 
 # Crypto Data
 # None
@@ -30,7 +34,7 @@ for stock in equities:
         ticker=stock,
         source="Polygon",
         asset_class="Equities",
-        start_date=datetime(datetime.now().year - 2, datetime.now().month, datetime.now().day),
+        start_date=datetime(current_year - 2, current_month, current_day),
         timespan="minute",
         multiplier=1,
         adjusted=True,
@@ -45,7 +49,7 @@ for stock in equities:
         ticker=stock,
         source="Polygon",
         asset_class="Equities",
-        start_date=datetime(datetime.now().year - 2, datetime.now().month, datetime.now().day),
+        start_date=datetime(current_year - 2, current_month, current_day),
         timespan="hour",
         multiplier=1,
         adjusted=True,
@@ -60,7 +64,7 @@ for stock in equities:
         ticker=stock,
         source="Polygon",
         asset_class="Equities",
-        start_date=datetime(datetime.now().year - 2, datetime.now().month, datetime.now().day),
+        start_date=datetime(current_year - 2, current_month, current_day),
         timespan="day",
         multiplier=1,
         adjusted=True,
@@ -120,13 +124,13 @@ for stock in equities:
 
 # Exchange Traded Fund Data
 etfs = [
+    'DHY',
     'SPY',
-    'TQQQ', 'AGG', 
+    'TQQQ', 'AGG',
     'EDC', 'EBND',
     'MVV', 'SCHZ',
     'VB', 'VIOO', 'BND',
     'UPRO', 'SGOV',
-    'DHY',
     'IDU', 'IYC', 'IYE', 'IYF', 'IYH', 'IYJ', 'IYK', 'IYM', 'IYR', 'IYW', 'IYZ',
     'DIG', 'LTL', 'ROM', 'RXL', 'UCC', 'UGE', 'UPW', 'URE', 'UXI', 'UYG', 'UYM',
     'XLB', 'XLC', 'XLE', 'XLF', 'XLI', 'XLK', 'XLP', 'XLRE', 'XLU', 'XLV', 'XLY',
@@ -144,7 +148,7 @@ for fund in etfs:
         ticker=fund,
         source="Polygon",
         asset_class="Exchange_Traded_Funds",
-        start_date=datetime(datetime.now().year - 2, datetime.now().month, datetime.now().day),
+        start_date=datetime(current_year - 2, current_month, current_day),
         timespan="minute",
         multiplier=1,
         adjusted=True,
@@ -159,7 +163,7 @@ for fund in etfs:
         ticker=fund,
         source="Polygon",
         asset_class="Exchange_Traded_Funds",
-        start_date=datetime(datetime.now().year - 2, datetime.now().month, datetime.now().day),
+        start_date=datetime(current_year - 2, current_month, current_day),
         timespan="hour",
         multiplier=1,
         adjusted=True,
@@ -174,7 +178,7 @@ for fund in etfs:
         ticker=fund,
         source="Polygon",
         asset_class="Exchange_Traded_Funds",
-        start_date=datetime(datetime.now().year - 2, datetime.now().month, datetime.now().day),
+        start_date=datetime(current_year - 2, current_month, current_day),
         timespan="day",
         multiplier=1,
         adjusted=True,

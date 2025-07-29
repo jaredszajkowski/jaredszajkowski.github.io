@@ -3,13 +3,13 @@ title: Automating Execution of Jupyter Notebook Files, Python Scripts, and Hugo 
 description: A full-stack approach using doit.
 slug: automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation
 date: 2025-06-29 00:00:01+0000
-# lastmod: 2025-05-07 00:00:01+0000
+lastmod: 2025-07-28 00:00:01+0000
 image: cover.jpg
 draft: false
 categories:
-    - Tech
-    - Python
     - Hugo
+    - Jupyter Notebook
+    - Python
 # tags:
 #     - Python
 #     - Hugo

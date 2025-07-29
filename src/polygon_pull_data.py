@@ -15,6 +15,11 @@ api_keys = load_api_keys()
 # Get the environment variable for where data is stored
 DATA_DIR = config("DATA_DIR")
 
+# Get current year, month, day
+current_year = datetime.now().year
+current_month = datetime.now().month
+current_day = datetime.now().day
+
 def polygon_pull_data(
     base_directory,
     ticker: str,
@@ -92,7 +97,7 @@ def polygon_pull_data(
             if timespan == "minute":
                 for start_day in [1, 6, 11, 16, 21, 26]:
                     end_day = min(start_day + 5, monthrange(current_year, current_month)[1])
-                    print(f"Pulling data for {current_year}-{current_month:02d}-{start_day:02d} thru {current_year}-{current_month:02d}-{end_day:02d}...")
+                    print(f"Pulling data for {current_year}-{current_month:02d}-{start_day:02d} thru {current_year}-{current_month:02d}-{end_day:02d} for {ticker}...")
                     try:
                         # Pull new data
                         aggs = client.get_aggs(
@@ -129,17 +134,17 @@ def polygon_pull_data(
                         print(full_history_df)
 
                     except Exception as e:
-                        print(f"Failed to pull data for {current_year}-{current_month:02d}-{start_day:02d} thru {current_year}-{current_month:02d}-{end_day:02d}: {e}")
+                        print(f"Failed to pull data for {current_year}-{current_month:02d}-{start_day:02d} thru {current_year}-{current_month:02d}-{end_day:02d} for {ticker}: {e}")
 
                     # Pause for 15 seconds to avoid hitting API rate limits
-                    print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                    print(f"Sleeping for 15 seconds to avoid hitting API rate limits...\n")
                     time.sleep(15)
 
             # Pull data for hour
             elif timespan == "hour":
                 for start_day in [1, 16]:
                     end_day = min(start_day + 15, monthrange(current_year, current_month)[1])
-                    print(f"Pulling data for {current_year}-{current_month:02d}-{start_day:02d} thru {current_year}-{current_month:02d}-{end_day:02d}...")
+                    print(f"Pulling data for {current_year}-{current_month:02d}-{start_day:02d} thru {current_year}-{current_month:02d}-{end_day:02d} for {ticker}...")
                     try:
                         # Pull new data
                         aggs = client.get_aggs(
@@ -176,17 +181,17 @@ def polygon_pull_data(
                         print(full_history_df)
 
                     except Exception as e:
-                        print(f"Failed to pull data for {current_year}-{current_month:02d}-{start_day:02d} thru {current_year}-{current_month:02d}-{end_day:02d}: {e}")
+                        print(f"Failed to pull data for {current_year}-{current_month:02d}-{start_day:02d} thru {current_year}-{current_month:02d}-{end_day:02d} for {ticker}: {e}")
 
                     # Pause for 15 seconds to avoid hitting API rate limits
-                    print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                    print(f"Sleeping for 15 seconds to avoid hitting API rate limits...\n")
                     time.sleep(15)
 
             # Pull data for day
             elif timespan == "day":
                 for start_day in [1]:
                     end_day = min(start_day + 30, monthrange(current_year, current_month)[1])
-                    print(f"Pulling data for {current_year}-{current_month:02d}-{start_day:02d} thru {current_year}-{current_month:02d}-{end_day:02d}...")
+                    print(f"Pulling data for {current_year}-{current_month:02d}-{start_day:02d} thru {current_year}-{current_month:02d}-{end_day:02d} for {ticker}...")
                     try:
                         # Pull new data
                         aggs = client.get_aggs(
@@ -223,10 +228,10 @@ def polygon_pull_data(
                         print(full_history_df)
 
                     except Exception as e:
-                        print(f"Failed to pull data for {current_year}-{current_month:02d}-{start_day:02d} thru {current_year}-{current_month:02d}-{end_day:02d}: {e}")
+                        print(f"Failed to pull data for {current_year}-{current_month:02d}-{start_day:02d} thru {current_year}-{current_month:02d}-{end_day:02d} for {ticker}: {e}")
 
                     # Pause for 15 seconds to avoid hitting API rate limits
-                    print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                    print(f"Sleeping for 15 seconds to avoid hitting API rate limits...\n")
                     time.sleep(15)
 
         # Iterate through each year and month to pull data since the last date
@@ -274,10 +279,10 @@ def polygon_pull_data(
                                 print(full_history_df)
 
                             except Exception as e:
-                                print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}: {e}")
+                                print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d} for {ticker}: {e}")
 
                             # Pause for 15 seconds to avoid hitting API rate limits
-                            print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                            print(f"Sleeping for 15 seconds to avoid hitting API rate limits...\n")
                             time.sleep(15)
 
             # Pull data for hour
@@ -286,7 +291,7 @@ def polygon_pull_data(
                     for month in range(1, 13):
                         for start_day in [1, 16]:
                             end_day = min(start_day + 15, monthrange(year, month)[1])
-                            print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}...")
+                            print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d} for {ticker}...")
                             try:
                                 # Pull new data
                                 aggs = client.get_aggs(
@@ -323,10 +328,10 @@ def polygon_pull_data(
                                 print(full_history_df)
 
                             except Exception as e:
-                                print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}: {e}")
+                                print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d} for {ticker}: {e}")
 
                             # Pause for 15 seconds to avoid hitting API rate limits
-                            print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                            print(f"Sleeping for 15 seconds to avoid hitting API rate limits...\n")
                             time.sleep(15)
 
             # Pull data for day
@@ -335,7 +340,7 @@ def polygon_pull_data(
                     for month in range(1, 13):
                         for start_day in [1]:
                             end_day = min(start_day + 30, monthrange(year, month)[1])
-                            print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}...")
+                            print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d} for {ticker}...")
                             try:
                                 # Pull new data
                                 aggs = client.get_aggs(
@@ -372,10 +377,10 @@ def polygon_pull_data(
                                 print(full_history_df)
 
                             except Exception as e:
-                                print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}: {e}")
+                                print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d} for {ticker}: {e}")
 
                             # Pause for 15 seconds to avoid hitting API rate limits
-                            print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                            print(f"Sleeping for 15 seconds to avoid hitting API rate limits...\n")
                             time.sleep(15)
 
 
@@ -398,11 +403,12 @@ def polygon_pull_data(
 
         # Pull data for minute
         if timespan == "minute":
+            # Pull data for the remainder of the starting year (i.e. 7/23 - 12/23)
             for year in range(start_date.year, start_date.year + 1):
                 for month in range(start_date.month, 13):
                     for start_day in [1, 6, 11, 16, 21, 26]:
                         end_day = min(start_day + 5, monthrange(year, month)[1])
-                        print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}...")
+                        print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d} for {ticker}...")
                         try:
                             # Pull new data
                             aggs = client.get_aggs(
@@ -439,18 +445,18 @@ def polygon_pull_data(
                             print(full_history_df) 
 
                         except Exception as e:
-                            print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}: {e}")
+                            print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d} for {ticker}: {e}")
 
                         # Pause for 15 seconds to avoid hitting API rate limits
-                        print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                        print(f"Sleeping for 15 seconds to avoid hitting API rate limits...\n")
                         time.sleep(15)
             
-            # Continue pulling data for the next years and months
-            for year in range(start_date.year + 1, datetime.now().year + 1):
-                for month in range(1, datetime.now().month):
+            # Continue pulling data for the middle full year (i.e. 1/24 - 12/24)
+            for year in range(start_date.year + 1, current_year):
+                for month in range(1, 13):
                     for start_day in [1, 6, 11, 16, 21, 26]:
                         end_day = min(start_day + 5, monthrange(year, month)[1])
-                        print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}...")
+                        print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d} for {ticker}...")
                         try:
                             # Pull new data
                             aggs = client.get_aggs(
@@ -487,19 +493,68 @@ def polygon_pull_data(
                             print(full_history_df) 
 
                         except Exception as e:
-                            print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}: {e}")
+                            print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d} for {ticker}: {e}")
 
                         # Pause for 15 seconds to avoid hitting API rate limits
-                        print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                        print(f"Sleeping for 15 seconds to avoid hitting API rate limits...\n")
+                        time.sleep(15)
+
+            # Continue pulling data for the beginning of the current year (i.e. 1/25 - 7/25)
+            for year in range(current_year, current_year + 1):
+                for month in range(1, current_month + 1):
+                    for start_day in [1, 6, 11, 16, 21, 26]:
+                        end_day = min(start_day + 5, monthrange(year, month)[1])
+                        print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d} for {ticker}...")
+                        try:
+                            # Pull new data
+                            aggs = client.get_aggs(
+                                ticker=ticker,
+                                timespan=timespan,
+                                multiplier=multiplier,
+                                from_=datetime(year, month, start_day),
+                                to=datetime(year, month, end_day),
+                                adjusted=adjusted,
+                                sort="asc",
+                                limit=5000,
+                            )
+
+                            # Convert to DataFrame
+                            new_data = pd.DataFrame([bar.__dict__ for bar in aggs])
+                            new_data["timestamp"] = pd.to_datetime(new_data["timestamp"], unit="ms")
+                            new_data = new_data.rename(columns = {'timestamp':'Date'})
+                            new_data = new_data[['Date', 'open', 'high', 'low', 'close', 'volume', 'vwap', 'transactions', 'otc']]
+                            new_data = new_data.sort_values(by='Date', ascending=True)
+                            print("New data:")
+                            print(new_data)
+
+                            # Check if new data contains 5000 rows
+                            if len(new_data) == 5000:
+                                # Raise exception
+                                raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
+                            else:
+                                pass
+
+                            # Combine existing data with recent data, sort values
+                            full_history_df = pd.concat([full_history_df,new_data[new_data['Date'].isin(full_history_df['Date']) == False]])
+                            full_history_df = full_history_df.sort_values(by='Date',ascending=True)
+                            print("Combined data:")
+                            print(full_history_df) 
+
+                        except Exception as e:
+                            print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d} for {ticker}: {e}")
+
+                        # Pause for 15 seconds to avoid hitting API rate limits
+                        print(f"Sleeping for 15 seconds to avoid hitting API rate limits...\n")
                         time.sleep(15)
         
         # Pull data for hour
         elif timespan == "hour":
+            # Pull data for the remainder of the starting year (i.e. 7/23 - 12/23)
             for year in range(start_date.year, start_date.year + 1):
                 for month in range(start_date.month, 13):
                     for start_day in [1, 16]:
                         end_day = min(start_day + 15, monthrange(year, month)[1])
-                        print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}...")
+                        print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d} for {ticker}...")
                         try:
                             # Pull new data
                             aggs = client.get_aggs(
@@ -536,15 +591,15 @@ def polygon_pull_data(
                             print(full_history_df) 
 
                         except Exception as e:
-                            print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}: {e}")
+                            print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d} for {ticker}: {e}")
 
                         # Pause for 15 seconds to avoid hitting API rate limits
-                        print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                        print(f"Sleeping for 15 seconds to avoid hitting API rate limits...\n")
                         time.sleep(15)
 
-            # Continue pulling data for the next years and months
-            for year in range(start_date.year + 1, datetime.now().year + 1):
-                for month in range(1, datetime.now().month):
+            # Continue pulling data for the middle full year (i.e. 1/24 - 12/24)
+            for year in range(start_date.year + 1, current_year):
+                for month in range(1, 13):
                     for start_day in [1, 16]:
                         end_day = min(start_day + 15, monthrange(year, month)[1])
                         print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}...")
@@ -584,19 +639,68 @@ def polygon_pull_data(
                             print(full_history_df)
 
                         except Exception as e:
-                            print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}: {e}")
+                            print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d} for {ticker}: {e}")
 
                         # Pause for 15 seconds to avoid hitting API rate limits
-                        print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                        print(f"Sleeping for 15 seconds to avoid hitting API rate limits...\n")
+                        time.sleep(15)
+
+            # Continue pulling data for the beginning of the current year (i.e. 1/25 - 7/25)
+            for year in range(current_year, current_year + 1):
+                for month in range(1, current_month + 1):
+                    for start_day in [1, 16]:
+                        end_day = min(start_day + 15, monthrange(year, month)[1])
+                        print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}...")
+                        try:
+                            # Pull new data
+                            aggs = client.get_aggs(
+                                ticker=ticker,
+                                timespan=timespan,
+                                multiplier=multiplier,
+                                from_=datetime(year, month, start_day),
+                                to=datetime(year, month, end_day),
+                                adjusted=adjusted,
+                                sort="asc",
+                                limit=5000,
+                            )
+
+                            # Convert to DataFrame
+                            new_data = pd.DataFrame([bar.__dict__ for bar in aggs])
+                            new_data["timestamp"] = pd.to_datetime(new_data["timestamp"], unit="ms")
+                            new_data = new_data.rename(columns = {'timestamp':'Date'})
+                            new_data = new_data[['Date', 'open', 'high', 'low', 'close', 'volume', 'vwap', 'transactions', 'otc']]
+                            new_data = new_data.sort_values(by='Date', ascending=True)
+                            print("New data:")
+                            print(new_data)
+
+                            # Check if new data contains 5000 rows
+                            if len(new_data) == 5000:
+                                # Raise exception
+                                raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
+                            else:
+                                pass
+
+                            # Combine existing data with recent data, sort values
+                            full_history_df = pd.concat([full_history_df,new_data[new_data['Date'].isin(full_history_df['Date']) == False]])
+                            full_history_df = full_history_df.sort_values(by='Date',ascending=True)
+                            print("Combined data:")
+                            print(full_history_df)
+
+                        except Exception as e:
+                            print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d} for {ticker}: {e}")
+
+                        # Pause for 15 seconds to avoid hitting API rate limits
+                        print(f"Sleeping for 15 seconds to avoid hitting API rate limits...\n")
                         time.sleep(15)
 
         # Pull data for day
         elif timespan == "day":
+            # Pull data for the remainder of the starting year (i.e. 7/23 - 12/23)
             for year in range(start_date.year, start_date.year + 1):
                 for month in range(start_date.month, 13):
                     for start_day in [1]:
                         end_day = min(start_day + 30, monthrange(year, month)[1])
-                        print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}...")
+                        print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d} for {ticker}...")
                         try:
                             # Pull new data
                             aggs = client.get_aggs(
@@ -633,18 +737,18 @@ def polygon_pull_data(
                             print(full_history_df)
 
                         except Exception as e:
-                            print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}: {e}")
+                            print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d} for {ticker}: {e}")
 
                         # Pause for 15 seconds to avoid hitting API rate limits
-                        print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                        print(f"Sleeping for 15 seconds to avoid hitting API rate limits...\n")
                         time.sleep(15)
 
-            # Continue pulling data for the next years and months
-            for year in range(start_date.year + 1, datetime.now().year + 1):
-                for month in range(1, datetime.now().month):
+            # Continue pulling data for the middle full year (i.e. 1/24 - 12/24)
+            for year in range(start_date.year + 1, current_year):
+                for month in range(1, 13):
                     for start_day in [1]:
                         end_day = min(start_day + 30, monthrange(year, month)[1])
-                        print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}...")
+                        print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d} for {ticker}...")
                         try:
                             # Pull new data
                             aggs = client.get_aggs(
@@ -681,10 +785,58 @@ def polygon_pull_data(
                             print(full_history_df)
 
                         except Exception as e:
-                            print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d}: {e}")
+                            print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d} for {ticker}: {e}")
 
                         # Pause for 15 seconds to avoid hitting API rate limits
-                        print(f"Sleeping for 15 seconds to avoid hitting API rate limits...")
+                        print(f"Sleeping for 15 seconds to avoid hitting API rate limits...\n")
+                        time.sleep(15)
+
+            # Continue pulling data for the beginning of the current year (i.e. 1/25 - 7/25)
+            for year in range(current_year, current_year + 1):
+                for month in range(1, current_month + 1):
+                    for start_day in [1]:
+                        end_day = min(start_day + 30, monthrange(year, month)[1])
+                        print(f"Pulling data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d} for {ticker}...")
+                        try:
+                            # Pull new data
+                            aggs = client.get_aggs(
+                                ticker=ticker,
+                                timespan=timespan,
+                                multiplier=multiplier,
+                                from_=datetime(year, month, start_day),
+                                to=datetime(year, month, end_day),
+                                adjusted=adjusted,
+                                sort="asc",
+                                limit=5000,
+                            )
+
+                            # Convert to DataFrame
+                            new_data = pd.DataFrame([bar.__dict__ for bar in aggs])
+                            new_data["timestamp"] = pd.to_datetime(new_data["timestamp"], unit="ms")
+                            new_data = new_data.rename(columns = {'timestamp':'Date'})
+                            new_data = new_data[['Date', 'open', 'high', 'low', 'close', 'volume', 'vwap', 'transactions', 'otc']]
+                            new_data = new_data.sort_values(by='Date', ascending=True)
+                            print("New data:")
+                            print(new_data)
+
+                            # Check if new data contains 5000 rows
+                            if len(new_data) == 5000:
+                                # Raise exception
+                                raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
+                            else:
+                                pass
+
+                            # Combine existing data with recent data, sort values
+                            full_history_df = pd.concat([full_history_df,new_data[new_data['Date'].isin(full_history_df['Date']) == False]])
+                            full_history_df = full_history_df.sort_values(by='Date',ascending=True)
+                            print("Combined data:")
+                            print(full_history_df)
+
+                        except Exception as e:
+                            print(f"Failed to pull data for {year}-{month:02d}-{start_day:02d} thru {year}-{month:02d}-{end_day:02d} for {ticker}: {e}")
+
+                        # Pause for 15 seconds to avoid hitting API rate limits
+                        print(f"Sleeping for 15 seconds to avoid hitting API rate limits...\n")
                         time.sleep(15)
 
     # Create directory
@@ -732,7 +884,7 @@ if __name__ == "__main__":
             ticker=stock,
             source="Polygon",
             asset_class="Equities",
-            start_date=datetime(datetime.now().year - 2, datetime.now().month, datetime.now().day),
+            start_date=datetime(current_year - 2, current_month, current_day),
             timespan="minute",
             multiplier=1,
             adjusted=True,
@@ -747,7 +899,7 @@ if __name__ == "__main__":
             ticker=stock,
             source="Polygon",
             asset_class="Equities",
-            start_date=datetime(datetime.now().year - 2, datetime.now().month, datetime.now().day),
+            start_date=datetime(current_year - 2, current_month, current_day),
             timespan="hour",
             multiplier=1,
             adjusted=True,
@@ -762,7 +914,7 @@ if __name__ == "__main__":
             ticker=stock,
             source="Polygon",
             asset_class="Equities",
-            start_date=datetime(datetime.now().year - 2, datetime.now().month, datetime.now().day),
+            start_date=datetime(current_year - 2, current_month, current_day),
             timespan="day",
             multiplier=1,
             adjusted=True,

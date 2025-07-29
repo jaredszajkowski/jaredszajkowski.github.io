@@ -1,0 +1,3 @@
+coinbase_fetch_available_products.md
+coinbase_fetch_historical_candles.md
+coinbase_fetch_full_history.md
