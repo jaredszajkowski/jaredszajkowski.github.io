@@ -32,7 +32,7 @@ Jared graduated from the Illinois Institue of Technology with a Bachelor of Scie
 
 ### Graduate Education
 
-Jared has completed the following graduate courses in the Univeristy of Chicago Financial Mathematics program and is currently on pace to graduate in the spring of 2026:
+Jared has completed the following graduate courses in the Univeristy of Chicago Financial Mathematics program:
 
 * [**FINM 34000 - Probability and Stochastic Processes**](https://finmath.uchicago.edu/curriculum/required-courses/finm-34000/)
 * [**FINM 36700 - Portfolio and Risk Management**](https://finmath.uchicago.edu/curriculum/required-courses/finm-36700/)
@@ -68,6 +68,12 @@ Kraken. As we continue to advance our proprietary research and models, we plan t
 * [**FINM 31200 - Blockchain and Cryptoassets for Finance**](https://finmath.uchicago.edu/curriculum/degree-concentrations/rates-and-credit/finm-31200/)
 * [**FINM 32900 - Full-Stack Quantitative Finance**](https://finmath.uchicago.edu/curriculum/degree-concentrations/financial-computing/finm-32900/)
 * [**BUSN 41204 - Machine Learning**](https://apps.chicagobooth.edu/PublicApps/CourseSearch/CourseSearchFilter) (search "41204" in the search under "Course Number")
+
+Jared currently plans to graduate in the spring of 2026 after completing the following courses:
+
+* [**FINM 36000 - Project Lab**](https://finmath.uchicago.edu/curriculum/project-lab/)
+* [**FINM 37400 - Fixed Income**](https://finmath.uchicago.edu/curriculum/degree-concentrations/rates-and-credit/finm-37400/)
+* [**FINM 35700 - Credit Markets**](https://finmath.uchicago.edu/curriculum/degree-concentrations/rates-and-credit/finm-35700/)
 
 ### Professional Certifications
 

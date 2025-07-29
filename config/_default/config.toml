@@ -3,7 +3,7 @@ baseurl = "https://www.jaredszajkowski.com"
 languageCode = "en-us"
 # paginate = 10 # old config key
 pagination.pagerSize = 10
-title = "Jared Szajkowski"
+title = "Jared Szajkowski, P.E., PMP"
 
 # Theme i18n support
 # Available values: en, fr, id, ja, ko, pt-br, zh-cn, zh-tw, es, de, nl, it, th, el, uk, ar
