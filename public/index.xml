@@ -45,9 +45,16 @@
         
         <guid>https://www.jaredszajkowski.com/2025/03/03/investigating-a-vix-trading-signal-part-3-trading/</guid>
         <description>&lt;img src="https://www.jaredszajkowski.com/2025/03/03/investigating-a-vix-trading-signal-part-3-trading/cover.jpg" alt="Featured image of post Investigating A VIX Trading Signal, Part 3: Trading" /&gt;&lt;h2 id=&#34;trading-history&#34;&gt;Trading History
-&lt;/h2&gt;&lt;p&gt;I have began trading based on the ideas from &lt;a class=&#34;link&#34; href=&#34;https://www.jaredszajkowski.com/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/&#34; &gt;part 2&lt;/a&gt;, opening positions during the VIX spikes and closing them as volatility comes back down. The executed trades, closed positions, and open positions listed below are all automated updates from the transaction history exports from Schwab. The exported CSV files are available in the GitHub repository.&lt;/p&gt;
-&lt;h3 id=&#34;trades-executed&#34;&gt;Trades Executed
-&lt;/h3&gt;&lt;p&gt;Here are the trades executed to date, with any comments related to execution, market sentiment, reason for opening/closing position, VIX level, etc.&lt;/p&gt;</description>
+&lt;/h2&gt;&lt;p&gt;I have recently started trading based on the ideas from &lt;a class=&#34;link&#34; href=&#34;https://www.jaredszajkowski.com/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/&#34; &gt;part 2&lt;/a&gt;, using the following as guidelines:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Look for opportunities when the VIX is the 7 - 10th deciles to buy puts, opening positions during the VIX spikes and closing them as volatility comes back down&lt;/li&gt;
+&lt;li&gt;Look for opportunities when the VIX is in the 1 - 4th deciles to buy calls during periods of lower volatility based on seasonality&lt;/li&gt;
+&lt;li&gt;When volatility spikes, sell call spreads and buy puts&lt;/li&gt;
+&lt;li&gt;When volatility is low, buy calls&lt;/li&gt;
+&lt;li&gt;Open positions with 2, 3, and 4 months to expiration&lt;/li&gt;
+&lt;li&gt;Close positions within 4 - 5 weeks of expiration to avoid theta drag&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The executed trades, closed positions, and open positions listed below are all automated updates from the transaction history exports from Schwab. The exported CSV files are available in the GitHub repository.&lt;/p&gt;</description>
         </item>
         <item>
         <title>Investigating A VIX Trading Signal, Part 2: Finding A Signal</title>

@@ -281,7 +281,7 @@
             <li><a href="#volatility-in-august-2024">Volatility In August 2024</a></li>
             <li><a href="#volatility-in-march-2025">Volatility In March 2025</a></li>
             <li><a href="#volatility-in-april-2025">Volatility In April 2025</a></li>
-            <li><a href="#low-volatility-in-june-july-2025">Low Volatility In June, July 2025</a></li>
+            <li><a href="#low-volatility-in-june-july-august-2025">Low Volatility In June, July, August 2025</a></li>
             <li><a href="#complete-trade-history-closed-positions">Complete Trade History (Closed Positions)</a></li>
           </ol>
         </li>
@@ -401,7 +401,16 @@
     
     
     <h2 id="trading-history">Trading History
-</h2><p>I have began trading based on the ideas from <a class="link" href="/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/" >part 2</a>, opening positions during the VIX spikes and closing them as volatility comes back down. The executed trades, closed positions, and open positions listed below are all automated updates from the transaction history exports from Schwab. The exported CSV files are available in the GitHub repository.</p>
+</h2><p>I have recently started trading based on the ideas from <a class="link" href="/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/" >part 2</a>, using the following as guidelines:</p>
+<ul>
+<li>Look for opportunities when the VIX is the 7 - 10th deciles to buy puts, opening positions during the VIX spikes and closing them as volatility comes back down</li>
+<li>Look for opportunities when the VIX is in the 1 - 4th deciles to buy calls during periods of lower volatility based on seasonality</li>
+<li>When volatility spikes, sell call spreads and buy puts</li>
+<li>When volatility is low, buy calls</li>
+<li>Open positions with 2, 3, and 4 months to expiration</li>
+<li>Close positions within 4 - 5 weeks of expiration to avoid theta drag</li>
+</ul>
+<p>The executed trades, closed positions, and open positions listed below are all automated updates from the transaction history exports from Schwab. The exported CSV files are available in the GitHub repository.</p>
 <h3 id="trades-executed">Trades Executed
 </h3><p>Here are the trades executed to date, with any comments related to execution, market sentiment, reason for opening/closing position, VIX level, etc.</p>
 <div class="table-wrapper"><table>
@@ -849,6 +858,28 @@
           <td style="text-align: left">Opened long dated call position; VIX level at 4th historical decile</td>
       </tr>
       <tr>
+          <td style="text-align: left">2025-08-01 00:00:00</td>
+          <td style="text-align: left">Sell to Close</td>
+          <td style="text-align: left">VIX 09/17/2025 20.00 C</td>
+          <td style="text-align: right">5</td>
+          <td style="text-align: right">3.05</td>
+          <td style="text-align: right">5.40</td>
+          <td style="text-align: right">1519.60</td>
+          <td style="text-align: right">20.48</td>
+          <td style="text-align: left">Sold half of position due to theta drag, held remaining half for vol spike</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">2025-07-23 00:00:00</td>
+          <td style="text-align: left">Buy to Open</td>
+          <td style="text-align: left">VIX 10/22/2025 21.00 C</td>
+          <td style="text-align: right">10</td>
+          <td style="text-align: right">2.92</td>
+          <td style="text-align: right">10.81</td>
+          <td style="text-align: right">2930.81</td>
+          <td style="text-align: right">15.40</td>
+          <td style="text-align: left">Continued low volatility, opened long dated call position; VIX level at 4th historical decile</td>
+      </tr>
+      <tr>
           <td style="text-align: left">2025-06-26 00:00:00</td>
           <td style="text-align: left">Buy to Open</td>
           <td style="text-align: left">VIX 10/22/2025 22.00 C</td>
@@ -1151,10 +1182,10 @@ Percent Profit/Loss: 23.47%</p>
 Total Closed Position Market Value: $54,017.05</br>
 Net Profit/Loss: $5,799.11</br>
 Percent Profit/Loss: 12.03%</p>
-<h4 id="low-volatility-in-june-july-2025">Low Volatility In June, July 2025
+<h4 id="low-volatility-in-june-july-august-2025">Low Volatility In June, July, August 2025
 </h4><p>Plot with VIX high/low, trade side, VIX option, and VIX level at trade date/time:</p>
 <p><img src="/2025/03/03/investigating-a-vix-trading-signal-part-3-trading/14_VIX_Spike_Trades.png"
-	width="3591"
+	width="3599"
 	height="1768"
 	
 	loading="lazy"
@@ -1164,7 +1195,7 @@ Percent Profit/Loss: 12.03%</p>
 	
 		class="gallery-image" 
 		data-flex-grow="203"
-		data-flex-basis="487px"
+		data-flex-basis="488px"
 	
 ></p>
 <p>Closed positions:</p>
@@ -1199,6 +1230,11 @@ Percent Profit/Loss: 12.03%</p>
           <td style="text-align: right">10</td>
       </tr>
       <tr>
+          <td style="text-align: left">VIX 10/22/2025 21.00 C</td>
+          <td style="text-align: right">2930.81</td>
+          <td style="text-align: right">10</td>
+      </tr>
+      <tr>
           <td style="text-align: left">VIX 10/22/2025 22.00 C</td>
           <td style="text-align: right">2950.81</td>
           <td style="text-align: right">10</td>
@@ -1210,7 +1246,7 @@ Percent Profit/Loss: 12.03%</p>
       </tr>
   </tbody>
 </table></div>
-<p>Total Opened Position Market Value: $8,722.43</br>
+<p>Total Opened Position Market Value: $11,653.24</br>
 Total Closed Position Market Value: $0.00</br>
 Net Profit/Loss: $0.00</br>
 Percent Profit/Loss: nan%</p>

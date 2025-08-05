@@ -22,7 +22,16 @@ categories:
 
 ## Trading History
 
-I have began trading based on the ideas from [part 2](/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/), opening positions during the VIX spikes and closing them as volatility comes back down. The executed trades, closed positions, and open positions listed below are all automated updates from the transaction history exports from Schwab. The exported CSV files are available in the GitHub repository.
+I have recently started trading based on the ideas from [part 2](/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/), using the following as guidelines:
+
+* Look for opportunities when the VIX is the 7 - 10th deciles to buy puts, opening positions during the VIX spikes and closing them as volatility comes back down
+* Look for opportunities when the VIX is in the 1 - 4th deciles to buy calls during periods of lower volatility based on seasonality
+* When volatility spikes, sell call spreads and buy puts
+* When volatility is low, buy calls
+* Open positions with 2, 3, and 4 months to expiration
+* Close positions within 4 - 5 weeks of expiration to avoid theta drag
+
+The executed trades, closed positions, and open positions listed below are all automated updates from the transaction history exports from Schwab. The exported CSV files are available in the GitHub repository.
 
 ### Trades Executed
 
@@ -69,6 +78,8 @@ Here are the trades executed to date, with any comments related to execution, ma
 | 2025-04-07 00:00:00 | Buy to Open   | VIX 08/20/2025 45.00 P |          2 |   21.75 |          2.16 |  4352.16 |              49.07 | nan                                                                                           |
 | 2025-05-13 00:00:00 | Sell to Close | VIX 08/20/2025 45.00 P |          2 |   25.40 |          2.16 |  5077.84 |              18.06 | nan                                                                                           |
 | 2025-06-26 00:00:00 | Buy to Open   | VIX 09/17/2025 20.00 C |         10 |    3.00 |         10.81 |  3010.81 |              16.37 | Opened long dated call position; VIX level at 4th historical decile                           |
+| 2025-08-01 00:00:00 | Sell to Close | VIX 09/17/2025 20.00 C |          5 |    3.05 |          5.40 |  1519.60 |              20.48 | Sold half of position due to theta drag, held remaining half for vol spike                    |
+| 2025-07-23 00:00:00 | Buy to Open   | VIX 10/22/2025 21.00 C |         10 |    2.92 |         10.81 |  2930.81 |              15.40 | Continued low volatility, opened long dated call position; VIX level at 4th historical decile |
 | 2025-06-26 00:00:00 | Buy to Open   | VIX 10/22/2025 22.00 C |         10 |    2.94 |         10.81 |  2950.81 |              16.43 | Opened long dated call position; VIX level at 4th historical decile                           |
 | 2025-07-17 00:00:00 | Buy to Open   | VIX 10/22/2025 23.00 C |         10 |    2.75 |         10.81 |  2760.81 |              16.86 | Continued low volatility, opened long dated call position; VIX level at 4th historical decile |
 
@@ -150,7 +161,7 @@ Total Closed Position Market Value: $54,017.05</br>
 Net Profit/Loss: $5,799.11</br>
 Percent Profit/Loss: 12.03%
 
-#### Low Volatility In June, July 2025
+#### Low Volatility In June, July, August 2025
 
 Plot with VIX high/low, trade side, VIX option, and VIX level at trade date/time:
 
@@ -166,10 +177,11 @@ Open positions:
 | Symbol                 |   Amount_Buy |   Quantity_Buy |
 |:-----------------------|-------------:|---------------:|
 | VIX 09/17/2025 20.00 C |      3010.81 |             10 |
+| VIX 10/22/2025 21.00 C |      2930.81 |             10 |
 | VIX 10/22/2025 22.00 C |      2950.81 |             10 |
 | VIX 10/22/2025 23.00 C |      2760.81 |             10 |
 
-Total Opened Position Market Value: $8,722.43</br>
+Total Opened Position Market Value: $11,653.24</br>
 Total Closed Position Market Value: $0.00</br>
 Net Profit/Loss: $0.00</br>
 Percent Profit/Loss: nan%

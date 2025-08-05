@@ -22,7 +22,16 @@ categories:
 
 ## Trading History
 
-I have began trading based on the ideas from [part 2](/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/), opening positions during the VIX spikes and closing them as volatility comes back down. The executed trades, closed positions, and open positions listed below are all automated updates from the transaction history exports from Schwab. The exported CSV files are available in the GitHub repository.
+I have recently started trading based on the ideas from [part 2](/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/), using the following as guidelines:
+
+* Look for opportunities when the VIX is the 7 - 10th deciles to buy puts, opening positions during the VIX spikes and closing them as volatility comes back down
+* Look for opportunities when the VIX is in the 1 - 4th deciles to buy calls during periods of lower volatility based on seasonality
+* When volatility spikes, sell call spreads and buy puts
+* When volatility is low, buy calls
+* Open positions with 2, 3, and 4 months to expiration
+* Close positions within 4 - 5 weeks of expiration to avoid theta drag
+
+The executed trades, closed positions, and open positions listed below are all automated updates from the transaction history exports from Schwab. The exported CSV files are available in the GitHub repository.
 
 ### Trades Executed
 
@@ -87,7 +96,7 @@ Total Closed Position Market Value: <!-- INSERT_13_Total_Closed_Position_Market_
 Net Profit/Loss: <!-- INSERT_13_PnL_HERE --></br>
 Percent Profit/Loss: <!-- INSERT_13_Percent_PnL_HERE -->
 
-#### Low Volatility In June, July 2025
+#### Low Volatility In June, July, August 2025
 
 Plot with VIX high/low, trade side, VIX option, and VIX level at trade date/time:
 

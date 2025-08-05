@@ -1,9 +1,6 @@
 import os
 import pandas as pd
 
-from IPython.display import display
-from pathlib import Path
-
 def polygon_quarter_end(
     base_directory,
     ticker: str,

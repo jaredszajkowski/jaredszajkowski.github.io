@@ -12,11 +12,17 @@ from datetime import datetime
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-# Coinbase API credentials (replace with your own)
-API_KEY_NAME = "organizations/{org_id}/apiKeys/{key_id}"  # Replace with your API key name
-API_PRIVATE_KEY = """-----BEGIN EC PRIVATE KEY-----
-YOUR_PRIVATE_KEY
------END EC PRIVATE KEY-----"""  # Replace with your private key
+import time
+
+from coinbase.websocket import WSClient
+from load_api_keys import load_api_keys
+
+# Load API keys from the environment
+api_keys = load_api_keys()
+
+API_KEY = api_keys["COINBASE_KEY"]
+API_SECRET = api_keys["COINBASE_SECRET"]
+
 PRODUCT_ID = "BTC-USD"  # Trading pair
 RSI_PERIOD = 14  # RSI calculation period
 RSI_OVERSOLD = 30  # RSI threshold for buy
@@ -26,7 +32,7 @@ SANDBOX = True  # Set to False for production
 
 # Initialize Coinbase REST client
 api_url = "https://api-public.sandbox.cdp.coinbase.com" if SANDBOX else "https://api.coinbase.com"
-client = RESTClient(api_key=API_KEY_NAME, api_secret=API_PRIVATE_KEY, api_url=api_url)
+client = RESTClient(api_key=API_KEY, api_secret=API_SECRET, base_url=api_url)
 
 # Data storage
 price_data = []
@@ -144,12 +150,15 @@ def run_websocket():
     """Run WebSocket client."""
     ws_url = "wss://ws-direct.sandbox.cdp.coinbase.com" if SANDBOX else "wss://ws-direct.cdp.coinbase.com"
     ws = WSClient(
-        api_key=API_KEY_NAME,
-        api_secret=API_PRIVATE_KEY,
-        channels=["candles"],
+        api_key=API_KEY,
+        api_secret=API_SECRET,
         callback=handle_candle_event,
         ws_url=ws_url
     )
+    
+    # Subscribe to the candles channel AFTER connection
+    ws.subscribe([PRODUCT_ID], channel="candles", granularity="ONE_MINUTE")  # adjust as needed
+
     ws.run_forever()
 
 def monitor_orders():
