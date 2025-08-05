@@ -52,14 +52,9 @@ def polygon_fetch_full_history(
         raise Exception(f"Invalid {timespan}.")
 
     while current_start < datetime.now():
-        # current_start_year = current_start.year
-        # current_start_month = current_start.month
-        # current_start_day = current_start.day
 
+        # Offset end date by time_delta
         current_end = current_start + timedelta(days=time_delta)
-        # current_end_year = current_end.year
-        # current_end_month = current_end.month
-        # current_end_day = current_end.day
 
         print(f"Pulling {timespan} data for {current_start} thru {current_end} for {ticker}...")
         try:
@@ -88,7 +83,6 @@ def polygon_fetch_full_history(
 
             # Check if new data contains 5000 rows
             if len(new_data) == 5000:
-                # Raise exception
                 raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
             else:
                 pass
@@ -99,15 +93,15 @@ def polygon_fetch_full_history(
             print("Combined data:")
             print(full_history_df)
 
+            # Check for free tier and if so then pause for 12 seconds to avoid hitting API rate limits
+            if free_tier == True:
+                print(f"Sleeping for 12 seconds to avoid hitting API rate limits...\n")
+                time.sleep(12)
+            else:
+                pass
+
         except Exception as e:
             print(f"Failed to pull {timespan} data for {current_start} thru {current_end} for {ticker}: {e}")
-
-        # Check for free tier and if so then pause for 12 seconds to avoid hitting API rate limits
-        if free_tier == True:
-            print(f"Sleeping for 12 seconds to avoid hitting API rate limits...\n")
-            time.sleep(12)
-        else:
-            pass
 
         # Break out of loop if data is up-to-date, otherwise pause if free tier
         if current_end > datetime.now():
