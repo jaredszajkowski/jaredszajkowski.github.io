@@ -21,19 +21,6 @@ categories:
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
 
-<!-- ## Post Updates
-
-Update 4/8/2025: Added plot for signals for each year. VIX data through 4/7/25.</br>
-Update 4/9/2025: VIX data through 4/8/25.</br>
-Update 4/12/2025: VIX data through 4/10/25.</br>
-Update 4/22/2025: VIX data through 4/18/25.</br>
-Update 4/23/2025: VIX data through 4/22/25.</br>
-Update 4/25/2025: VIX data through 4/23/25. Added section for trade history, including open and closed positions.</br>
-Update 4/28/2025: VIX data through 4/25/25.</br>
-Update 5/6/2025: Data through 5/5/25. Added section for the VVIX.</br>
-Update 5/7/2025: Data through 5/6/25.</br>
-Update 5/21/2025: Data through 5/20/25.</br> -->
-
 ## Introduction
 
 This post intends to provide the code for all of the python functions that I use in my analysis. The goal here is that when writing another post I will simply be able to link to the functions below as opposed to providing the function code in each post.
@@ -55,6 +42,8 @@ This post intends to provide the code for all of the python functions that I use
 * [plot_price](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_price): Plot the price data from a DataFrame for a specified date range and columns.</br>
 * [plot_stats](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_stats): Generate a scatter plot for the mean OHLC prices.</br>
 * [plot_vix_with_trades](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_vix_with_trades): Plot the VIX daily high and low prices, along with the VIX spikes, and trades.</br>
+* [polygon_fetch_full_history](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#polygon_fetch_full_history): Fetch full historical data for a given product from Polygon API.</br>
+* [polygon_pull_data](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#polygon_pull_data): Read existing data file, download price data from Polygon, and export data.</br>
 * [strategy_harry_brown_perm_port](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#strategy_harry_brown_perm_port): Execute the strategy for the Harry Brown permanent portfolio.</br>
 * [summary_stats](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#summary_stats): Generate summary statistics for a series of returns.</br>
 * [yf_pull_data](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#yf_pull_data): Download daily price data from Yahoo Finance and export it.
@@ -124,6 +113,14 @@ This post intends to provide the code for all of the python functions that I use
 ### plot_vix_with_trades
 
 <!-- INSERT_plot_vix_with_trades_HERE -->
+
+### polygon_fetch_full_history
+
+<!-- INSERT_polygon_fetch_full_history_HERE -->
+
+### polygon_pull_data
+
+<!-- INSERT_polygon_pull_data_HERE -->
 
 ### strategy_harry_brown_perm_port
 

@@ -14,6 +14,8 @@ pandas_set_decimal_places.md
 plot_price.md
 plot_stats.md
 plot_vix_with_trades.md
+polygon_fetch_full_history.md
+polygon_pull_data.md
 strategy_harry_brown_perm_port.md
 summary_stats.md
 yf_pull_data.md

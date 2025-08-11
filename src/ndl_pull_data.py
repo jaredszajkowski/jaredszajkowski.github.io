@@ -137,7 +137,7 @@ if __name__ == "__main__":
 
     ndl_pull_data(
         base_directory=DATA_DIR,
-        ticker="TQQQ",
+        ticker="TMF",
         source="Nasdaq_Data_Link",
         asset_class="Exchange_Traded_Funds",
         excel_export=True,

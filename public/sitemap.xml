@@ -3,24 +3,30 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.jaredszajkowski.com/</loc>
-    <lastmod>2025-07-28T00:00:01+00:00</lastmod>
-  </url><url>
-    <loc>https://www.jaredszajkowski.com/post/</loc>
-    <lastmod>2025-07-28T00:00:01+00:00</lastmod>
+    <lastmod>2025-08-10T00:00:01+00:00</lastmod>
   </url><url>
     <loc>https://www.jaredszajkowski.com/categories/</loc>
-    <lastmod>2025-07-28T00:00:01+00:00</lastmod>
+    <lastmod>2025-08-10T00:00:01+00:00</lastmod>
+  </url><url>
+    <loc>https://www.jaredszajkowski.com/2025/08/10/data-pipelining-with-polygon/</loc>
+    <lastmod>2025-08-10T00:00:01+00:00</lastmod>
+  </url><url>
+    <loc>https://www.jaredszajkowski.com/categories/pandas/</loc>
+    <lastmod>2025-08-10T00:00:01+00:00</lastmod>
+  </url><url>
+    <loc>https://www.jaredszajkowski.com/categories/polygon/</loc>
+    <lastmod>2025-08-10T00:00:01+00:00</lastmod>
+  </url><url>
+    <loc>https://www.jaredszajkowski.com/post/</loc>
+    <lastmod>2025-08-10T00:00:01+00:00</lastmod>
+  </url><url>
+    <loc>https://www.jaredszajkowski.com/categories/python/</loc>
+    <lastmod>2025-08-10T00:00:01+00:00</lastmod>
   </url><url>
     <loc>https://www.jaredszajkowski.com/categories/coinbase/</loc>
     <lastmod>2025-07-28T00:00:01+00:00</lastmod>
   </url><url>
     <loc>https://www.jaredszajkowski.com/2025/07/06/data-pipelining-with-coinbase/</loc>
-    <lastmod>2025-07-28T00:00:01+00:00</lastmod>
-  </url><url>
-    <loc>https://www.jaredszajkowski.com/categories/pandas/</loc>
-    <lastmod>2025-07-28T00:00:01+00:00</lastmod>
-  </url><url>
-    <loc>https://www.jaredszajkowski.com/categories/python/</loc>
     <lastmod>2025-07-28T00:00:01+00:00</lastmod>
   </url><url>
     <loc>https://www.jaredszajkowski.com/2025/06/29/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation/</loc>

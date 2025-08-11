@@ -2,6 +2,15 @@ import pandas as pd
 import time
 
 from datetime import datetime, timedelta
+from load_api_keys import load_api_keys
+from polygon import RESTClient
+from settings import config
+
+# Load API keys from the environment
+api_keys = load_api_keys()
+
+# Get the environment variable for where data is stored
+DATA_DIR = config("DATA_DIR")
 
 def polygon_fetch_full_history(
     client,
@@ -63,9 +72,7 @@ def polygon_fetch_full_history(
                 ticker=ticker,
                 timespan=timespan,
                 multiplier=multiplier,
-                # from_=datetime(current_start_year, current_start_month, current_start_day),
                 from_=current_start,
-                # to=datetime(current_end_year, current_end_month, current_end_day),
                 to=current_end,
                 adjusted=adjusted,
                 sort="asc",
@@ -110,3 +117,33 @@ def polygon_fetch_full_history(
             current_start = current_end + timedelta(days=time_delta)
 
     return full_history_df
+
+if __name__ == "__main__":
+
+    # Open client connection
+    client = RESTClient(api_key=api_keys["POLYGON_KEY"])
+
+    # Create an empty DataFrame
+    df = pd.DataFrame({
+        'Date': pd.Series(dtype="datetime64[ns]"),
+        'open': pd.Series(dtype="float64"),
+        'high': pd.Series(dtype="float64"),
+        'low': pd.Series(dtype="float64"),
+        'close': pd.Series(dtype="float64"),
+        'volume': pd.Series(dtype="float64"),
+        'vwap': pd.Series(dtype="float64"),
+        'transactions': pd.Series(dtype="int64"),
+        'otc': pd.Series(dtype="object")
+    })
+
+    # Example usage - minute
+    df = polygon_fetch_full_history(
+        client=client,
+        ticker="AMZN",
+        timespan="day",
+        multiplier=1,
+        adjusted=True,
+        full_history_df=df,
+        current_start=datetime(2025, 1, 1),
+        free_tier=True,
+    )

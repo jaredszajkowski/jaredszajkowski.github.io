@@ -4,7 +4,7 @@ description: A full-stack approach using doit.
 slug: automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation
 date: 2025-06-29 00:00:01+0000
 lastmod: 2025-07-28 00:00:01+0000
-image: cover.jpg
+image: automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation_final.jpg
 draft: false
 categories:
     - Hugo
