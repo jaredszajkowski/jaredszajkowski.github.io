@@ -4,7 +4,7 @@ description: Managing virtual environments across multiple systems within Arch L
 slug: using-python-virtual-environments
 date: 2024-12-02 00:00:01+0000
 lastmod: 2025-01-30 00:00:01+0000
-image: cover.jpg
+image: using-python-virtual-environments_3_final.jpg
 draft: false
 categories:
     - Arch Linux
