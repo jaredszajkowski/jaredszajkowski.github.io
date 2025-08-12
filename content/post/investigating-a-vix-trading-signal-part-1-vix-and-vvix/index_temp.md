@@ -180,6 +180,40 @@ Gives us:
 
 <!-- INSERT_01_VIX_Deciles_HERE -->
 
+We can also run the deciles individually for each year (note: the markdown export is messy):
+
+```python
+# Group by year for deciles
+vix_deciles_by_year = vix.groupby(vix.index.year)[["Open", "High", "Low", "Close"]].quantile(np.arange(0, 1.1, 0.1))
+
+display(vix_deciles_by_year)
+```
+
+<!-- INSERT_01_VIX_Deciles_By_Year_HERE -->
+
+And then comparing last year to the current year:
+
+```python
+current_year = datetime.now().year
+last_year = current_year - 1
+
+print(f"Last year: {last_year}")
+vix_deciles_last_year = vix_deciles_by_year.loc[last_year]
+display(vix_deciles_last_year)
+
+print(f"Current year: {current_year}")
+vix_deciles_current_year = vix_deciles_by_year.loc[current_year]
+display(vix_deciles_current_year)
+```
+
+Year: <!-- INSERT_01_Last_Year_HERE -->
+
+<!-- INSERT_01_VIX_Deciles_Last_Year_HERE -->
+
+Year: <!-- INSERT_01_Current_Year_HERE -->
+
+<!-- INSERT_01_VIX_Deciles_Current_Year_HERE -->
+
 ## Plots - VIX
 
 ### Histogram Distribution - VIX

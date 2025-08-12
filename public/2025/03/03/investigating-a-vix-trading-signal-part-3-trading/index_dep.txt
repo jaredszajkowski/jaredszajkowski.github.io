@@ -3,6 +3,11 @@
 01_VIX_Stats_By_Year.md
 01_VIX_Stats_By_Month.md
 01_VIX_Deciles.md
+01_VIX_Deciles_By_Year.md
+01_Last_Year.md
+01_VIX_Deciles_Last_Year.md
+01_Current_Year.md
+01_VIX_Deciles_Current_Year.md
 02_VVIX_DF_Info.md
 02_VVIX_Stats.md
 02_VVIX_Stats_By_Year.md
