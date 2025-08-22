@@ -35,6 +35,40 @@ Here are the functions needed for this project:
 
 ### Polygon Fetch Full History
 
+Here's the docstring with the parameters/variables:
+
+```python
+    """
+    Fetch full historical data for a given product from Polygon API.
+
+    Parameters:
+    -----------
+    client
+        Polygon API client instance.
+    ticker : str
+        Ticker symbol to download.
+    timespan : str
+        Time span for the data (e.g., "minute", "hour", "day", "week", "month", "quarter", "year").
+    multiplier : int
+        Multiplier for the time span (e.g., 1 for daily data).
+    adjusted : bool
+        If True, return adjusted data; if False, return raw data.
+    full_history_df : pd.DataFrame
+        DataFrame containing the data.
+    current_start : datetime
+        Date for which to start pulling data in datetime format.
+    free_tier : bool
+        If True, then pause to avoid API limits.
+    verbose : bool
+        If True, print detailed information about the data being processed.
+
+    Returns:
+    --------
+    full_history_df : pd.DataFrame
+        DataFrame containing the data.
+    """
+```
+
 This script pulls the full history for a specified asset:
 
 ```python
@@ -89,6 +123,49 @@ This script uses the above function to perform the following:
 2. If a data file exists, then pull updated data
 3. Otherwise, pull all historical data available for that asset for the past 2 years (using the free tier from Polygon)
 4. Store pickle and/or excel files of the data in the specified directories
+
+Here's the docstring with the parameters/variables:
+
+```python
+    """
+    Read existing data file, download price data from Polygon, and export data.
+
+    Parameters:
+    -----------
+    base_directory : any
+        Root path to store downloaded data.
+    ticker : str
+        Ticker symbol to download.
+    source : str
+        Name of the data source (e.g., 'Polygon').
+    asset_class : str
+        Asset class name (e.g., 'Equities').
+    start_date : datetime
+        Start date for the data in datetime format.
+    timespan : str
+        Time span for the data (e.g., "minute", "hour", "day", "week", "month", "quarter", "year").
+    multiplier : int
+        Multiplier for the time span (e.g., 1 for daily data).
+    adjusted : bool
+        If True, return adjusted data; if False, return raw data.
+    force_existing_check : bool
+        If True, force a complete check of the existing data file to verify that there are not any gaps in the data.
+    free_tier : bool
+        If True, then pause to avoid API limits.
+    verbose : bool
+        If True, print detailed information about the data being processed.
+    excel_export : bool
+        If True, export data to Excel format.
+    pickle_export : bool
+        If True, export data to Pickle format.
+    output_confirmation : bool
+        If True, print confirmation message.
+
+    Returns:
+    --------
+    None
+    """
+```
 
 Through the `base_directory`, `source`, and `asset_class` variables the script knows where in the local filesystem to look for an existing pickle file and the store the resulting updated pickle and/or excel files:
 

@@ -372,7 +372,7 @@
 
 
                 <time class="article-time--reading">
-                    35 minute read
+                    37 minute read
                 </time>
             </div>
         
@@ -399,7 +399,72 @@
 </ul>
 <h2 id="function-usage">Function Usage
 </h2><h3 id="polygon-fetch-full-history">Polygon Fetch Full History
-</h3><p>This script pulls the full history for a specified asset:</p>
+</h3><p>Here&rsquo;s the docstring with the parameters/variables:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Fetch full historical data for a given product from Polygon API.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    -----------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    client
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Polygon API client instance.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ticker : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Ticker symbol to download.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    timespan : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Time span for the data (e.g., &#34;minute&#34;, &#34;hour&#34;, &#34;day&#34;, &#34;week&#34;, &#34;month&#34;, &#34;quarter&#34;, &#34;year&#34;).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    multiplier : int
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Multiplier for the time span (e.g., 1 for daily data).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    adjusted : bool
+</span></span></span><span class="line"><span class="cl"><span class="s2">        If True, return adjusted data; if False, return raw data.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    full_history_df : pd.DataFrame
+</span></span></span><span class="line"><span class="cl"><span class="s2">        DataFrame containing the data.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    current_start : datetime
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Date for which to start pulling data in datetime format.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    free_tier : bool
+</span></span></span><span class="line"><span class="cl"><span class="s2">        If True, then pause to avoid API limits.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    verbose : bool
+</span></span></span><span class="line"><span class="cl"><span class="s2">        If True, print detailed information about the data being processed.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    full_history_df : pd.DataFrame
+</span></span></span><span class="line"><span class="cl"><span class="s2">        DataFrame containing the data.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>This script pulls the full history for a specified asset:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -2403,7 +2468,90 @@
 <li>Otherwise, pull all historical data available for that asset for the past 2 years (using the free tier from Polygon)</li>
 <li>Store pickle and/or excel files of the data in the specified directories</li>
 </ol>
-<p>Through the <code>base_directory</code>, <code>source</code>, and <code>asset_class</code> variables the script knows where in the local filesystem to look for an existing pickle file and the store the resulting updated pickle and/or excel files:</p>
+<p>Here&rsquo;s the docstring with the parameters/variables:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Read existing data file, download price data from Polygon, and export data.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    -----------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    base_directory : any
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Root path to store downloaded data.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ticker : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Ticker symbol to download.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    source : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Name of the data source (e.g., &#39;Polygon&#39;).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    asset_class : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Asset class name (e.g., &#39;Equities&#39;).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    start_date : datetime
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Start date for the data in datetime format.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    timespan : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Time span for the data (e.g., &#34;minute&#34;, &#34;hour&#34;, &#34;day&#34;, &#34;week&#34;, &#34;month&#34;, &#34;quarter&#34;, &#34;year&#34;).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    multiplier : int
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Multiplier for the time span (e.g., 1 for daily data).
+</span></span></span><span class="line"><span class="cl"><span class="s2">    adjusted : bool
+</span></span></span><span class="line"><span class="cl"><span class="s2">        If True, return adjusted data; if False, return raw data.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    force_existing_check : bool
+</span></span></span><span class="line"><span class="cl"><span class="s2">        If True, force a complete check of the existing data file to verify that there are not any gaps in the data.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    free_tier : bool
+</span></span></span><span class="line"><span class="cl"><span class="s2">        If True, then pause to avoid API limits.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    verbose : bool
+</span></span></span><span class="line"><span class="cl"><span class="s2">        If True, print detailed information about the data being processed.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    excel_export : bool
+</span></span></span><span class="line"><span class="cl"><span class="s2">        If True, export data to Excel format.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    pickle_export : bool
+</span></span></span><span class="line"><span class="cl"><span class="s2">        If True, export data to Pickle format.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    output_confirmation : bool
+</span></span></span><span class="line"><span class="cl"><span class="s2">        If True, print confirmation message.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    None
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Through the <code>base_directory</code>, <code>source</code>, and <code>asset_class</code> variables the script knows where in the local filesystem to look for an existing pickle file and the store the resulting updated pickle and/or excel files:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
