@@ -4,7 +4,7 @@ description: Acquiring and managing minute, hour, and daily equity and ETF data 
 slug: data-pipelining-with-polygon
 date: 2025-08-10 00:00:01+0000
 lastmod: 2025-08-10 00:00:01+0000
-image: data-pipelining-with-polygon_original_2.png
+image: data-pipelining-with-polygon_original2.png
 draft: false
 categories:
     - Polygon
