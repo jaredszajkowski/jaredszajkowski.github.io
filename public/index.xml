@@ -12,7 +12,7 @@
         <pubDate>Sun, 10 Aug 2025 00:00:01 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/2025/08/10/data-pipelining-with-polygon/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2025/08/10/data-pipelining-with-polygon/data-pipelining-with-polygon_original_2.png" alt="Featured image of post Data Pipelining With Polygon" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+        <description>&lt;img src="https://www.jaredszajkowski.com/data-pipelining-with-polygon_original_2.png" alt="Featured image of post Data Pipelining With Polygon" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;Similar to the recent post about &lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/2025/07/06/data-pipelining-with-coinbase/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;how I collect and store crypto asset data from Coinbase&lt;/a&gt;, the scripts below pull minute, hour, and daily data for equities and ETFs from &lt;a class=&#34;link&#34; href=&#34;polygon.io&#34; &gt;Polygon.io&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;The scripts check for an existing data record, and if found then the existing record is updated to include the most recent data. If there is not an existing data record, then the complete historical record from Polygon is pulled and stored.&lt;/p&gt;</description>

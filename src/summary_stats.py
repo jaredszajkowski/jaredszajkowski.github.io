@@ -72,7 +72,7 @@ def summary_stats(
 
     df_stats['Max Drawdown'] = drawdowns.min()
     df_stats['Peak'] = [previous_peaks[col][:drawdowns[col].idxmin()].idxmax() for col in previous_peaks.columns]
-    df_stats['Bottom'] = drawdowns.idxmin()
+    df_stats['Trough'] = drawdowns.idxmin()
 
     recovery_date = []
     for col in wealth_index.columns:

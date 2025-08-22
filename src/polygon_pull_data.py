@@ -23,6 +23,9 @@ def polygon_pull_data(
     timespan: str,
     multiplier: int,
     adjusted: bool,
+    force_existing_check: bool,
+    free_tier: bool,
+    verbose: bool,
     excel_export: bool,
     pickle_export: bool,
     output_confirmation: bool,
@@ -49,6 +52,12 @@ def polygon_pull_data(
         Multiplier for the time span (e.g., 1 for daily data).
     adjusted : bool
         If True, return adjusted data; if False, return raw data.
+    force_existing_check : bool
+        If True, force a complete check of the existing data file to verify that there are not any gaps in the data.
+    free_tier : bool
+        If True, then pause to avoid API limits.
+    verbose : bool
+        If True, print detailed information about the data being processed.
     excel_export : bool
         If True, export data to Excel format.
     pickle_export : bool
@@ -76,12 +85,17 @@ def polygon_pull_data(
             full_history_df = full_history_df.reset_index()
 
         print(f"File found...updating the {ticker} {timespan} data.")
-        print("Existing data:")
-        print(full_history_df)
+
+        if verbose ==True:
+            print("Existing data:")
+            print(full_history_df)
 
         # Find last date in existing data
         last_date = full_history_df['Date'].max()
         print(f"Last date in existing data: {last_date}")
+
+        starting_rows = len(full_history_df)
+        print(f"Number of rows in existing data: {starting_rows}")
 
         # Overlap 1 day with existing data to capture all data
         current_start = last_date - timedelta(days=1)
@@ -106,6 +120,11 @@ def polygon_pull_data(
         # Set current date to start date
         current_start = start_date
 
+    # Check for force_existing_check flag
+    if force_existing_check == True:
+        print("Forcing check of existing data...")
+        current_start = start_date
+
     full_history_df = polygon_fetch_full_history(
         client=client,
         ticker=ticker,
@@ -114,7 +133,8 @@ def polygon_pull_data(
         adjusted=adjusted,
         full_history_df=full_history_df,
         current_start=current_start,
-        free_tier=True,
+        free_tier=free_tier,
+        verbose=verbose,
     )
 
     # Create directory
@@ -125,25 +145,26 @@ def polygon_pull_data(
     if excel_export == True:
         print(f"Exporting {ticker} {timespan} data to Excel...")
         full_history_df.to_excel(f"{directory}/{ticker}.xlsx", sheet_name="data")
-    else:
-        pass
 
-    # Export to pickle
+    # Export to Pickle
     if pickle_export == True:
-        print(f"Exporting {ticker} {timespan} data to pickle...")
+        print(f"Exporting {ticker} {timespan} data to Pickle...")
         full_history_df.to_pickle(f"{directory}/{ticker}.pkl")
-    else:
-        pass
+
+    total_rows = len(full_history_df)
 
     # Output confirmation
     if output_confirmation == True:
         print(f"The first and last date of data for {ticker} is: ")
         display(full_history_df[:1])
         display(full_history_df[-1:])
-        print(f"Polygon data complete for {ticker}")
+        print(f"Number of rows after data update: {total_rows}")
+
+        if starting_rows:
+            print(f"Number of rows added during update: {total_rows - starting_rows}")
+
+        print(f"Polygon data complete for {ticker} {timespan} data.")
         print(f"--------------------")
-    else:
-        pass
 
     return full_history_df
 
@@ -168,6 +189,9 @@ if __name__ == "__main__":
             timespan="minute",
             multiplier=1,
             adjusted=True,
+            force_existing_check=False,
+            free_tier=True,
+            verbose=False,
             excel_export=True,
             pickle_export=True,
             output_confirmation=True,
@@ -183,11 +207,13 @@ if __name__ == "__main__":
             timespan="hour",
             multiplier=1,
             adjusted=True,
+            force_existing_check=False,
+            free_tier=True,
+            verbose=False,
             excel_export=True,
             pickle_export=True,
             output_confirmation=True,
         )
-
         # Example usage - daily
         polygon_pull_data(
             base_directory=DATA_DIR,
@@ -198,6 +224,9 @@ if __name__ == "__main__":
             timespan="day",
             multiplier=1,
             adjusted=True,
+            force_existing_check=False,
+            free_tier=True,
+            verbose=False,
             excel_export=True,
             pickle_export=True,
             output_confirmation=True,

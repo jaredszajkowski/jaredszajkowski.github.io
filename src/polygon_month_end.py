@@ -63,13 +63,13 @@ def polygon_month_end(
     directory = f"{base_directory}/{source}/{asset_class}/Month_End"
     os.makedirs(directory, exist_ok=True)
 
-    # Export to excel
+    # Export to Excel
     if excel_export == True:
         df_month_end.to_excel(f"{directory}/{ticker}_ME.xlsx", sheet_name="data")
     else:
         pass
 
-    # Export to pickle
+    # Export to Pickle
     if pickle_export == True:
         df_month_end.to_pickle(f"{directory}/{ticker}_ME.pkl")
     else:

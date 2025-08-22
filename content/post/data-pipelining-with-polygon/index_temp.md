@@ -73,6 +73,7 @@ df = polygon_fetch_full_history(
     full_history_df=df,
     current_start=datetime(2025, 1, 1),
     free_tier=True,
+    verbose=True,
 )
 ```
 
@@ -106,6 +107,9 @@ df = polygon_pull_data(
     timespan="day",
     multiplier=1,
     adjusted=True,
+    force_existing_check=True,
+    free_tier=True,
+    verbose=True,
     excel_export=True,
     pickle_export=True,
     output_confirmation=True,
