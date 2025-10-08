@@ -2,8 +2,8 @@ import pandas as pd
 import numpy as np
 
 def summary_stats(
-    fund_list: list[str], 
-    df: pd.DataFrame, 
+    fund_list: list[str],
+    df: pd.DataFrame,
     period: str,
     use_calendar_days: bool,
     excel_export: bool,
@@ -80,6 +80,8 @@ def summary_stats(
         recovery_wealth = pd.DataFrame([wealth_index[col][drawdowns[col].idxmin():]]).T
         recovery_date.append(recovery_wealth[recovery_wealth[col] >= prev_max].index.min())
     df_stats['Recovery Date'] = recovery_date
+    df_stats['Days to Recover'] = (df_stats['Recovery Date'] - df_stats['Trough']).dt.days
+    df_stats['MAR Ratio'] = df_stats['CAGR'] / -df_stats['Max Drawdown']
 
     plan_name = '_'.join(fund_list)
 

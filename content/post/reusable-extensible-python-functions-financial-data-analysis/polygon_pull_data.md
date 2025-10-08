@@ -1,6 +1,7 @@
 ```python
 import os
 import pandas as pd
+import time
 
 from datetime import datetime, timedelta
 from IPython.display import display
@@ -24,6 +25,9 @@ def polygon_pull_data(
     timespan: str,
     multiplier: int,
     adjusted: bool,
+    force_existing_check: bool,
+    free_tier: bool,
+    verbose: bool,
     excel_export: bool,
     pickle_export: bool,
     output_confirmation: bool,
@@ -50,6 +54,12 @@ def polygon_pull_data(
         Multiplier for the time span (e.g., 1 for daily data).
     adjusted : bool
         If True, return adjusted data; if False, return raw data.
+    force_existing_check : bool
+        If True, force a complete check of the existing data file to verify that there are not any gaps in the data.
+    free_tier : bool
+        If True, then pause to avoid API limits.
+    verbose : bool
+        If True, print detailed information about the data being processed.
     excel_export : bool
         If True, export data to Excel format.
     pickle_export : bool
@@ -68,31 +78,48 @@ def polygon_pull_data(
     # Set file location based on parameters
     file_location = f"{base_directory}/{source}/{asset_class}/{timespan}/{ticker}.pkl"
 
+    if timespan == "minute":
+        time_delta = 15
+        time_overlap = 1
+    elif timespan == "hour":
+        time_delta = 15
+        time_overlap = 1
+    elif timespan == "day":
+        time_delta = 180
+        time_overlap = 1
+    else:
+        raise Exception(f"Invalid {timespan}.")
+
     try:
         # Attempt to read existing pickle data file
-        full_history_df = pd.read_pickle(file_location)
+        existing_history_df = pd.read_pickle(file_location)
 
         # Reset index if 'Date' is column is the index
-        if 'Date' not in full_history_df.columns:
-            full_history_df = full_history_df.reset_index()
+        if 'Date' not in existing_history_df.columns:
+            existing_history_df = existing_history_df.reset_index()
 
         print(f"File found...updating the {ticker} {timespan} data.")
-        print("Existing data:")
-        print(full_history_df)
+
+        if verbose ==True:
+            print("Existing data:")
+            print(existing_history_df)
 
         # Find last date in existing data
-        last_date = full_history_df['Date'].max()
-        print(f"Last date in existing data: {last_date}")
+        last_data_date = existing_history_df['Date'].max()
+        print(f"Last date in existing data: {last_data_date}")
 
-        # Overlap 1 day with existing data to capture all data
-        current_start = last_date - timedelta(days=1)
+        starting_rows = len(existing_history_df)
+        print(f"Number of rows in existing data: {starting_rows}")
+
+        # Overlap with existing data to capture all data
+        current_start = last_data_date - timedelta(days=time_overlap)
 
     except FileNotFoundError:
         # Print error
         print(f"File not found...downloading the {ticker} {timespan} data.")
 
         # Create an empty DataFrame
-        full_history_df = pd.DataFrame({
+        existing_history_df = pd.DataFrame({
             'Date': pd.Series(dtype="datetime64[ns]"),
             'open': pd.Series(dtype="float64"),
             'high': pd.Series(dtype="float64"),
@@ -107,15 +134,21 @@ def polygon_pull_data(
         # Set current date to start date
         current_start = start_date
 
+    # Check for force_existing_check flag
+    if force_existing_check == True:
+        print("Forcing check of existing data...")
+        current_start = start_date
+
     full_history_df = polygon_fetch_full_history(
         client=client,
         ticker=ticker,
         timespan=timespan,
         multiplier=multiplier,
         adjusted=adjusted,
-        full_history_df=full_history_df,
+        existing_history_df=existing_history_df,
         current_start=current_start,
-        free_tier=True,
+        free_tier=free_tier,
+        verbose=verbose,
     )
 
     # Create directory
@@ -126,25 +159,26 @@ def polygon_pull_data(
     if excel_export == True:
         print(f"Exporting {ticker} {timespan} data to Excel...")
         full_history_df.to_excel(f"{directory}/{ticker}.xlsx", sheet_name="data")
-    else:
-        pass
 
-    # Export to pickle
+    # Export to Pickle
     if pickle_export == True:
-        print(f"Exporting {ticker} {timespan} data to pickle...")
+        print(f"Exporting {ticker} {timespan} data to Pickle...")
         full_history_df.to_pickle(f"{directory}/{ticker}.pkl")
-    else:
-        pass
+
+    total_rows = len(full_history_df)
 
     # Output confirmation
     if output_confirmation == True:
-        print(f"The first and last date of data for {ticker} is: ")
+        print(f"The first and last date of {timespan} data for {ticker} is: ")
         display(full_history_df[:1])
         display(full_history_df[-1:])
-        print(f"Polygon data complete for {ticker}")
+        print(f"Number of rows after data update: {total_rows}")
+
+        if starting_rows:
+            print(f"Number of rows added during update: {total_rows - starting_rows}")
+
+        print(f"Polygon data complete for {ticker} {timespan} data.")
         print(f"--------------------")
-    else:
-        pass
 
     return full_history_df
 
@@ -169,10 +203,15 @@ if __name__ == "__main__":
             timespan="minute",
             multiplier=1,
             adjusted=True,
+            force_existing_check=False,
+            free_tier=True,
+            verbose=False,
             excel_export=True,
             pickle_export=True,
             output_confirmation=True,
         )
+
+        time.sleep(12)
 
         # Example usage - hourly
         polygon_pull_data(
@@ -184,10 +223,15 @@ if __name__ == "__main__":
             timespan="hour",
             multiplier=1,
             adjusted=True,
+            force_existing_check=False,
+            free_tier=True,
+            verbose=False,
             excel_export=True,
             pickle_export=True,
             output_confirmation=True,
         )
+
+        time.sleep(12)
 
         # Example usage - daily
         polygon_pull_data(
@@ -199,8 +243,13 @@ if __name__ == "__main__":
             timespan="day",
             multiplier=1,
             adjusted=True,
+            force_existing_check=False,
+            free_tier=True,
+            verbose=False,
             excel_export=True,
             pickle_export=True,
             output_confirmation=True,
         )
+
+        time.sleep(12)
 ```

@@ -1,5 +1,4 @@
 import pandas as pd
-import sys
 import time
 
 from datetime import datetime, timedelta
@@ -19,7 +18,7 @@ def polygon_fetch_full_history(
     timespan: str,
     multiplier: int,
     adjusted: bool,
-    full_history_df: pd.DataFrame,
+    existing_history_df: pd.DataFrame,
     current_start: datetime,
     free_tier: bool,
     verbose: bool,
@@ -55,14 +54,23 @@ def polygon_fetch_full_history(
         DataFrame containing the data.
     """
 
+    # Copy DataFrame
+    full_history_df = existing_history_df.copy()
+
     if timespan == "minute":
-        time_delta = 5
+        time_delta = 15
+        time_overlap = 1
     elif timespan == "hour":
         time_delta = 15
+        time_overlap = 1
     elif timespan == "day":
-        time_delta = 60
+        time_delta = 180
+        time_overlap = 1
     else:
         raise Exception(f"Invalid {timespan}.")
+    
+    new_data_last_date = None
+    new_date_last_date_check = None
 
     while current_start < datetime.now():
 
@@ -85,9 +93,8 @@ def polygon_fetch_full_history(
                 limit=5000,
             )
 
-            # Check if data was pulled
-            if len(aggs) == 0:
-                raise Exception(f"No data is available for {ticker} for {current_start} thru {current_end}. Please attempt different dates.")
+            # if len(aggs) == 0:
+                # raise Exception(f"No data is available for {ticker} for {current_start} thru {current_end}. Please attempt different dates.")
             
             # Convert to DataFrame
             new_data = pd.DataFrame([bar.__dict__ for bar in aggs])
@@ -96,22 +103,49 @@ def polygon_fetch_full_history(
             new_data = new_data[['Date', 'open', 'high', 'low', 'close', 'volume', 'vwap', 'transactions', 'otc']]
             new_data = new_data.sort_values(by='Date', ascending=True)
 
+            # Enforce dtypes to match full_history_df
+            new_data = new_data.astype(full_history_df.dtypes.to_dict())
+
+            # (Optional) reorder columns to match schema
+            # new_data = new_data[full_history_df.columns]
+
+            # Find last date in new_data
+            new_data_last_date = new_data['Date'].max()
+
             if verbose == True:
                 print("New data:")
                 print(new_data)
 
+            # No longer necessary to check for 5000 rows of data
+
             # Check if new data contains 5000 rows
-            if len(new_data) == 5000:
-                raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
+            # if len(new_data) == 5000:
+                # raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
 
-            # Combine existing data with recent data, sort values, reset index
+            # If full_history_df length is not 0, check to confirm that data overlaps to verify that there were not any splits in the data
+            # if not full_history_df.empty:
+                # if not full_history_df['Date'].isin(new_data['Date']).any():
+                    # raise Exception(f"New data does not overlap with existing data.")
 
-            # Old code
-            # full_history_df = pd.concat([full_history_df,new_data[new_data['Date'].isin(full_history_df['Date']) == False]])
-            
-            # New code
+            if not full_history_df.empty:
+                # Columns present in both frames
+                common_cols = list(full_history_df.columns.intersection(new_data.columns))
+                if not common_cols:
+                    raise Exception("No common columns to compare.")
+
+                # (Optional) de-duplicate to speed up the merge
+                full_dedup = full_history_df[common_cols].drop_duplicates()
+                new_dedup  = new_data[common_cols].drop_duplicates()
+
+                # Inner join on every shared column = exact row matches
+                overlap = full_dedup.merge(new_dedup, on=common_cols, how="inner")
+
+                if overlap.empty:
+                    raise Exception(f"New data does not overlap with existing data (full-row check).")
+
+            # Combine existing data with recent data, drop duplicates, sort values, reset index
             full_history_df = pd.concat([full_history_df, new_data])
-            full_history_df = full_history_df.drop_duplicates(subset='Date', keep="first")
+            full_history_df = full_history_df.drop_duplicates(subset="Date", keep="last")
             full_history_df = full_history_df.sort_values(by='Date',ascending=True)
             full_history_df = full_history_df.reset_index(drop=True)
 
@@ -119,29 +153,65 @@ def polygon_fetch_full_history(
                 print("Combined data:")
                 print(full_history_df)
 
-            # Check for free tier and if so then pause for 12 seconds to avoid hitting API rate limits
-            if free_tier == True:
-                if verbose == True:
-                    print(f"Sleeping for 12 seconds to avoid hitting API rate limits...\n")
-                    time.sleep(12)
-                else:
-                    time.sleep(12)
+        except KeyError as e:
+            print(f"No data is available for {ticker} from {current_start} thru {current_end}.")
+
+            user_choice = input(
+                f"Press Enter to continue, or type 'q' to quit: "
+            )
+            if user_choice.lower() == "q":
+                print(f"Aborting operation to update {ticker} {timespan} data.")
+                break  # break out of the while loop
+            else:
+                print(f"Trying next timeframe for {ticker} {timespan} data.")
+
+                # Set last_data_date to current_end because we know data was not available
+                # up until current_end
+                new_data_last_date = current_end
+                pass
 
         except Exception as e:
             print(f"Failed to pull {timespan} data for {current_start} thru {current_end} for {ticker}: {e}")
             raise  # Re-raise the original exception
 
-        # Break out of loop if data is up-to-date, otherwise pause if free tier
+        # Break out of loop if data is up-to-date (or close to being up-to-date because it is 
+        # possible that entire range was not pulled due to the way API handles hour data
+        # from minute data)
         if current_end > datetime.now():
             break
         else:
-            # Overlap 1 day with existing data to capture all data
-            current_start = current_end - timedelta(days=1)
+            # Edge case, if the last date for new_date is exactly time_overlap's duration
+            # past current_start
+            if new_date_last_date_check == new_data_last_date:
+                current_start = current_end - timedelta(days=time_overlap)
+                new_date_last_date_check = new_data_last_date
+            else:
+                current_start = new_data_last_date - timedelta(days=time_overlap)
+                new_date_last_date_check = new_data_last_date
+
+            # Code below is likely not necessary
+
+            # # Overlap with existing data to capture all data but check to see if
+            # # current_end is a Sunday and if so ensure overlap covers a trading day
+            # if current_end.weekday() == 6:
+            #     current_start = last_data_date - timedelta(days=(time_overlap+1))
+            # else:
+            #     current_start = last_data_date - timedelta(days=time_overlap)
+
+        # Check for free tier and if so then pause for 12 seconds to avoid hitting API rate limits
+        if free_tier == True:
+            if verbose == True:
+                print(f"Sleeping for 12 seconds to avoid hitting API rate limits...\n")
+            time.sleep(12)
 
     # Return the DataFrame containing the full history
     return full_history_df
 
 if __name__ == "__main__":
+
+    current_year = datetime.now().year
+    current_month = datetime.now().month
+    current_day = datetime.now().day
 
     # Open client connection
     client = RESTClient(api_key=api_keys["POLYGON_KEY"])
@@ -162,12 +232,12 @@ if __name__ == "__main__":
     # Example usage - minute
     df = polygon_fetch_full_history(
         client=client,
-        ticker="XLC",
+        ticker="SPY",
         timespan="hour",
         multiplier=1,
         adjusted=True,
-        full_history_df=df,
-        current_start=datetime(2023, 9, 1),
+        existing_history_df=df,
+        current_start=datetime(current_year - 2, current_month, current_day),
         free_tier=True,
         verbose=True,
     )

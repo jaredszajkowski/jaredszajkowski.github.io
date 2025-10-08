@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+import time
 
 from datetime import datetime, timedelta
 from IPython.display import display
@@ -76,36 +77,48 @@ def polygon_pull_data(
     # Set file location based on parameters
     file_location = f"{base_directory}/{source}/{asset_class}/{timespan}/{ticker}.pkl"
 
+    if timespan == "minute":
+        time_delta = 15
+        time_overlap = 1
+    elif timespan == "hour":
+        time_delta = 15
+        time_overlap = 1
+    elif timespan == "day":
+        time_delta = 180
+        time_overlap = 1
+    else:
+        raise Exception(f"Invalid {timespan}.")
+
     try:
         # Attempt to read existing pickle data file
-        full_history_df = pd.read_pickle(file_location)
+        existing_history_df = pd.read_pickle(file_location)
 
         # Reset index if 'Date' is column is the index
-        if 'Date' not in full_history_df.columns:
-            full_history_df = full_history_df.reset_index()
+        if 'Date' not in existing_history_df.columns:
+            existing_history_df = existing_history_df.reset_index()
 
         print(f"File found...updating the {ticker} {timespan} data.")
 
         if verbose ==True:
             print("Existing data:")
-            print(full_history_df)
+            print(existing_history_df)
 
         # Find last date in existing data
-        last_date = full_history_df['Date'].max()
-        print(f"Last date in existing data: {last_date}")
+        last_data_date = existing_history_df['Date'].max()
+        print(f"Last date in existing data: {last_data_date}")
 
-        starting_rows = len(full_history_df)
+        starting_rows = len(existing_history_df)
         print(f"Number of rows in existing data: {starting_rows}")
 
-        # Overlap 1 day with existing data to capture all data
-        current_start = last_date - timedelta(days=1)
+        # Overlap with existing data to capture all data
+        current_start = last_data_date - timedelta(days=time_overlap)
 
     except FileNotFoundError:
         # Print error
         print(f"File not found...downloading the {ticker} {timespan} data.")
 
         # Create an empty DataFrame
-        full_history_df = pd.DataFrame({
+        existing_history_df = pd.DataFrame({
             'Date': pd.Series(dtype="datetime64[ns]"),
             'open': pd.Series(dtype="float64"),
             'high': pd.Series(dtype="float64"),
@@ -131,7 +144,7 @@ def polygon_pull_data(
         timespan=timespan,
         multiplier=multiplier,
         adjusted=adjusted,
-        full_history_df=full_history_df,
+        existing_history_df=existing_history_df,
         current_start=current_start,
         free_tier=free_tier,
         verbose=verbose,
@@ -155,7 +168,7 @@ def polygon_pull_data(
 
     # Output confirmation
     if output_confirmation == True:
-        print(f"The first and last date of data for {ticker} is: ")
+        print(f"The first and last date of {timespan} data for {ticker} is: ")
         display(full_history_df[:1])
         display(full_history_df[-1:])
         print(f"Number of rows after data update: {total_rows}")
@@ -197,6 +210,8 @@ if __name__ == "__main__":
             output_confirmation=True,
         )
 
+        time.sleep(12)
+
         # Example usage - hourly
         polygon_pull_data(
             base_directory=DATA_DIR,
@@ -214,6 +229,9 @@ if __name__ == "__main__":
             pickle_export=True,
             output_confirmation=True,
         )
+
+        time.sleep(12)
+
         # Example usage - daily
         polygon_pull_data(
             base_directory=DATA_DIR,
@@ -231,3 +249,5 @@ if __name__ == "__main__":
             pickle_export=True,
             output_confirmation=True,
         )
+
+        time.sleep(12)

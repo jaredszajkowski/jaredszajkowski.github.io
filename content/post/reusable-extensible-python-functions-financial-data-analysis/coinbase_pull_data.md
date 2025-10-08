@@ -294,85 +294,85 @@ def coinbase_pull_data(
 
 if __name__ == "__main__":
      
-    # # Example usage to pull all data for each month from 2010 to 2024
-    # for granularity in [60, 3600, 86400]:
-    #     for year in range(2010, 2025):
-    #         for month in range(1, 13):
-    #             print(f"Pulling data for {year}-{month:02d}...")
-    #             try:
-    #                 # Get the last day of the month
-    #                 last_day = calendar.monthrange(year, month)[1]
-    #                 coinbase_pull_data(
-    #                     base_directory=DATA_DIR,
-    #                     source="Coinbase",
-    #                     asset_class="Cryptocurrencies",
-    #                     excel_export=False,
-    #                     pickle_export=True,
-    #                     output_confirmation=True,
-    #                     base_currency="XRP",
-    #                     quote_currency="USD",
-    #                     granularity=granularity, # 60=minute, 3600=hourly, 86400=daily
-    #                     status='online',
-    #                     start_date=datetime(year, month, 1),
-    #                     end_date=datetime(year, month, last_day),
-    #                 )
-    #             except Exception as e:
-    #                 print(f"Failed to pull data for {year}-{month:02d}: {e}")
+    # Example usage to pull all data for each month from 2010 to 2024
+    for granularity in [60, 3600, 86400]:
+        for year in range(2010, 2025):
+            for month in range(1, 13):
+                print(f"Pulling data for {year}-{month:02d}...")
+                try:
+                    # Get the last day of the month
+                    last_day = calendar.monthrange(year, month)[1]
+                    coinbase_pull_data(
+                        base_directory=DATA_DIR,
+                        source="Coinbase",
+                        asset_class="Cryptocurrencies",
+                        excel_export=False,
+                        pickle_export=True,
+                        output_confirmation=True,
+                        base_currency="BTC",
+                        quote_currency="USD",
+                        granularity=granularity, # 60=minute, 3600=hourly, 86400=daily
+                        status='online',
+                        start_date=datetime(year, month, 1),
+                        end_date=datetime(year, month, last_day),
+                    )
+                except Exception as e:
+                    print(f"Failed to pull data for {year}-{month:02d}: {e}")
 
-    current_year = datetime.now().year
-    current_month = datetime.now().month
-    current_day = datetime.now().day
+    # current_year = datetime.now().year
+    # current_month = datetime.now().month
+    # current_day = datetime.now().day
 
-    # Crypto Data
-    currencies = ["BTC", "ETH", "SOL", "XRP"]
+    # # Crypto Data
+    # currencies = ["BTC", "ETH", "SOL", "XRP"]
 
-    # Iterate through each currency
-    for cur in currencies:
-        # Example usage - minute
-        coinbase_pull_data(
-            base_directory=DATA_DIR,
-            source="Coinbase",
-            asset_class="Cryptocurrencies",
-            excel_export=False,
-            pickle_export=True,
-            output_confirmation=True,
-            base_currency=cur,
-            quote_currency="USD",
-            granularity=60, # 60=minute, 3600=hourly, 86400=daily
-            status='online', # default status is 'online'
-            start_date=datetime(current_year, current_month - 1, 1), # default start date
-            end_date=datetime.now() - timedelta(days=1), # updates data through 1 day ago due to lag in data availability
-        )
+    # # Iterate through each currency
+    # for cur in currencies:
+    #     # Example usage - minute
+    #     coinbase_pull_data(
+    #         base_directory=DATA_DIR,
+    #         source="Coinbase",
+    #         asset_class="Cryptocurrencies",
+    #         excel_export=False,
+    #         pickle_export=True,
+    #         output_confirmation=True,
+    #         base_currency=cur,
+    #         quote_currency="USD",
+    #         granularity=60, # 60=minute, 3600=hourly, 86400=daily
+    #         status='online', # default status is 'online'
+    #         start_date=datetime(current_year, current_month - 1, 1), # default start date
+    #         end_date=datetime.now() - timedelta(days=1), # updates data through 1 day ago due to lag in data availability
+    #     )
 
-        # Example usage - hourly
-        coinbase_pull_data(
-            base_directory=DATA_DIR,
-            source="Coinbase",
-            asset_class="Cryptocurrencies",
-            excel_export=True,
-            pickle_export=True,
-            output_confirmation=True,
-            base_currency=cur,
-            quote_currency="USD",
-            granularity=3600, # 60=minute, 3600=hourly, 86400=daily
-            status='online', # default status is 'online'
-            start_date=datetime(current_year, current_month - 1, 1), # default start date
-            end_date=datetime.now() - timedelta(days=1), # updates data through 1 day ago due to lag in data availability
-        )
+    #     # Example usage - hourly
+    #     coinbase_pull_data(
+    #         base_directory=DATA_DIR,
+    #         source="Coinbase",
+    #         asset_class="Cryptocurrencies",
+    #         excel_export=True,
+    #         pickle_export=True,
+    #         output_confirmation=True,
+    #         base_currency=cur,
+    #         quote_currency="USD",
+    #         granularity=3600, # 60=minute, 3600=hourly, 86400=daily
+    #         status='online', # default status is 'online'
+    #         start_date=datetime(current_year, current_month - 1, 1), # default start date
+    #         end_date=datetime.now() - timedelta(days=1), # updates data through 1 day ago due to lag in data availability
+    #     )
 
-        # Example usage - daily
-        coinbase_pull_data(
-            base_directory=DATA_DIR,
-            source="Coinbase",
-            asset_class="Cryptocurrencies",
-            excel_export=True,
-            pickle_export=True,
-            output_confirmation=True,
-            base_currency=cur,
-            quote_currency="USD",
-            granularity=86400, # 60=minute, 3600=hourly, 86400=daily
-            status='online', # default status is 'online'
-            start_date=datetime(current_year, current_month - 1, 1), # default start date
-            end_date=datetime.now() - timedelta(days=1), # updates data through 1 day ago due to lag in data availability
-        )
+    #     # Example usage - daily
+    #     coinbase_pull_data(
+    #         base_directory=DATA_DIR,
+    #         source="Coinbase",
+    #         asset_class="Cryptocurrencies",
+    #         excel_export=True,
+    #         pickle_export=True,
+    #         output_confirmation=True,
+    #         base_currency=cur,
+    #         quote_currency="USD",
+    #         granularity=86400, # 60=minute, 3600=hourly, 86400=daily
+    #         status='online', # default status is 'online'
+    #         start_date=datetime(current_year, current_month - 1, 1), # default start date
+    #         end_date=datetime.now() - timedelta(days=1), # updates data through 1 day ago due to lag in data availability
+    #     )
 ```
