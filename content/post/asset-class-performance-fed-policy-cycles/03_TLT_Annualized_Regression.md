@@ -5,7 +5,7 @@ Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.634
 Model:                             OLS   Adj. R-squared:                  0.593
 Method:                  Least Squares   F-statistic:                     15.56
 Date:                 Sat, 29 Nov 2025   Prob (F-statistic):            0.00338
-Time:                         17:10:04   Log-Likelihood:                -39.515
+Time:                         17:34:22   Log-Likelihood:                -39.515
 No. Observations:                   11   AIC:                             83.03
 Df Residuals:                        9   BIC:                             83.83
 Df Model:                            1                                         

@@ -33,9 +33,8 @@ Here are the functions needed for this project:
 * [export_track_md_deps](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps): Exports various text outputs to markdown files, which are included in the `index.md` file created when building the site with Hugo.</br>
 * [load_data](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#load_data): Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.</br>
 * [pandas_set_decimal_places](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places): Set the number of decimal places displayed for floating-point numbers in pandas.</br>
-* plot_bar_annualized_returns_with_ffr_change: Plot the bar chart of the annualized return for the asset class along with the annualized change in the Fed Funds Rate.</br>
-* plot_bar_cumulative_returns_with_ffr_change: Plot the bar chart of the cumulative return for the asset class along with the cumulative change in the Fed Funds Rate.</br>
-* [plot_price](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_price): Plot the price data from a DataFrame for a specified date range and columns.</br>
+* plot_bar_returns_ffr_change: Plot the bar chart of the cumulative or annualized returns for the asset class along with the change in the Fed Funds Rate.</br>
+* [plot_timeseries](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_timeseries): Plot the timeseries data from a DataFrame for a specified date range and columns.</br>
 * plot_scatter_regression_ffr_vs_returns: Plot the scatter plot and regression of the annualized return for the asset class along with the annualized change in the Fed Funds Rate.</br>
 * [yf_pull_data](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#yf_pull_data): Download daily price data from Yahoo Finance and export it.
 
@@ -288,7 +287,7 @@ The first 5 rows are:
 |:--------------------|--------:|-------:|------:|-------:|------------:|-----------------:|
 | 2004-11-30 00:00:00 |   79.83 |  80.07 | 79.66 |  79.90 | 53685200.00 |           nan    |
 | 2004-12-31 00:00:00 |   82.23 |  82.77 | 82.19 |  82.53 | 28648800.00 |             0.03 |
-| 2005-01-31 00:00:00 |   80.39 |  80.45 | 80.08 |  80.25 | 52532700.00 |            -0.02 |
+| 2005-01-31 00:00:00 |   80.39 |  80.45 | 80.09 |  80.25 | 52532700.00 |            -0.02 |
 | 2005-02-28 00:00:00 |   82.07 |  82.53 | 81.67 |  82.43 | 69381300.00 |             0.02 |
 | 2005-03-31 00:00:00 |   80.57 |  80.91 | 80.51 |  80.73 | 64575400.00 |            -0.02 |
 
@@ -405,7 +404,7 @@ Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.184
 Model:                             OLS   Adj. R-squared:                  0.093
 Method:                  Least Squares   F-statistic:                     2.031
 Date:                 Sat, 29 Nov 2025   Prob (F-statistic):              0.188
-Time:                         17:09:56   Log-Likelihood:                -47.144
+Time:                         17:34:15   Log-Likelihood:                -47.144
 No. Observations:                   11   AIC:                             98.29
 Df Residuals:                        9   BIC:                             99.08
 Df Model:                            1                                         
@@ -630,7 +629,7 @@ Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.634
 Model:                             OLS   Adj. R-squared:                  0.593
 Method:                  Least Squares   F-statistic:                     15.56
 Date:                 Sat, 29 Nov 2025   Prob (F-statistic):            0.00338
-Time:                         17:10:04   Log-Likelihood:                -39.515
+Time:                         17:34:22   Log-Likelihood:                -39.515
 No. Observations:                   11   AIC:                             83.03
 Df Residuals:                        9   BIC:                             83.83
 Df Model:                            1                                         
@@ -857,7 +856,7 @@ Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.073
 Model:                             OLS   Adj. R-squared:                 -0.030
 Method:                  Least Squares   F-statistic:                    0.7118
 Date:                 Sat, 29 Nov 2025   Prob (F-statistic):              0.421
-Time:                         17:10:11   Log-Likelihood:                -42.895
+Time:                         17:34:28   Log-Likelihood:                -42.895
 No. Observations:                   11   AIC:                             89.79
 Df Residuals:                        9   BIC:                             90.59
 Df Model:                            1                                         
@@ -1229,7 +1228,7 @@ Which gives us:
 | 2024-06-30 00:00:00 |                      0.035 |                        19.438 |                0.000 |                0.035 |                   5.715 |          0.000 |                0.018 |                   0.959 |         -0.409 |
 | 2024-07-31 00:00:00 |                      0.012 |                        19.685 |                0.000 |                0.012 |                   5.796 |          0.000 |                0.036 |                   1.030 |         -0.388 |
 | 2024-08-31 00:00:00 |                      0.021 |                        20.122 |                0.000 |                0.023 |                   5.955 |          0.000 |                0.021 |                   1.073 |         -0.375 |
-| 2024-09-30 00:00:00 |                      0.020 |                        20.545 |                0.000 |                0.021 |                   6.101 |          0.000 |                0.020 |                   1.115 |         -0.363 |
+| 2024-09-30 00:00:00 |                      0.020 |                        20.544 |                0.000 |                0.021 |                   6.101 |          0.000 |                0.020 |                   1.115 |         -0.363 |
 | 2024-10-31 00:00:00 |                     -0.055 |                        19.369 |               -0.055 |               -0.009 |                   6.038 |         -0.009 |               -0.055 |                   0.999 |         -0.397 |
 | 2024-11-30 00:00:00 |                      0.020 |                        19.774 |               -0.036 |                0.060 |                   6.457 |          0.000 |                0.020 |                   1.039 |         -0.385 |
 | 2024-12-31 00:00:00 |                     -0.064 |                        18.448 |               -0.097 |               -0.024 |                   6.278 |         -0.024 |               -0.064 |                   0.909 |         -0.425 |
