@@ -8,11 +8,11 @@
         <language>en-us</language>
         <lastBuildDate>Sat, 29 Nov 2025 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/categories/federal-reserve-data/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Performance Of Various Asset Classes During Fed Policy Cycles</title>
-        <link>https://www.jaredszajkowski.com/2025/11/29/trend-following-rsi-minute-level-crypto-part-1-trading-strategy/</link>
+        <link>https://www.jaredszajkowski.com/2025/11/29/asset-class-performance-fed-policy-cycles/</link>
         <pubDate>Sat, 29 Nov 2025 00:00:01 +0000</pubDate>
         
-        <guid>https://www.jaredszajkowski.com/2025/11/29/trend-following-rsi-minute-level-crypto-part-1-trading-strategy/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2025/11/29/trend-following-rsi-minute-level-crypto-part-1-trading-strategy/asset-class-performance-fed-policy-cycles.png" alt="Featured image of post Performance Of Various Asset Classes During Fed Policy Cycles" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+        <guid>https://www.jaredszajkowski.com/2025/11/29/asset-class-performance-fed-policy-cycles/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2025/11/29/asset-class-performance-fed-policy-cycles/asset-class-performance-fed-policy-cycles.png" alt="Featured image of post Performance Of Various Asset Classes During Fed Policy Cycles" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;In this post, we will look into the Fed Funds cycles and evaluate asset class performance during loosening and tightening of monetary policy.&lt;/p&gt;
 &lt;h2 id=&#34;python-functions&#34;&gt;Python Functions
 &lt;/h2&gt;&lt;p&gt;Here are the functions needed for this project:&lt;/p&gt;

@@ -1,7 +1,7 @@
 ---
 title: Performance Of Various Asset Classes During Fed Policy Cycles
 description: How does the performance of stocks, bonds, and other asset classes vary during Fed policy cycles?
-slug: trend-following-rsi-minute-level-crypto-part-1-trading-strategy
+slug: asset-class-performance-fed-policy-cycles
 date: 2025-11-29 00:00:01+0000
 lastmod: 2025-11-29 00:00:01+0000
 image: asset-class-performance-fed-policy-cycles.png
