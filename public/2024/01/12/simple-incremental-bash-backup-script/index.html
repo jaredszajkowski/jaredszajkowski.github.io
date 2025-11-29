@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/'>
 
-<link rel="stylesheet" href="/scss/style.min.da28754071fdaf9a58e8a578c9918e494018d97e1164a8200a93b14c08c2cb5a.css"><meta property='og:title' content="Simple Incremental Bash Backup Script">
+<link rel="stylesheet" href="/scss/style.min.1153a3284d86245d03b9b6ac75af9e223283464e4954a76aa6bafd668cb07a2b.css"><meta property='og:title' content="Simple Incremental Bash Backup Script">
 <meta property='og:description' content="A bash script to incrementally backup multiple different directories.">
 <meta property='og:url' content='https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/'>
 <meta property='og:site_name' content='Jared Szajkowski, P.E., PMP'>
@@ -357,7 +357,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">January 12, 2024</time>
+                <time class="article-time--published" datetime='2024-01-12T00:00:01Z'>January 12, 2024</time>
             </div>
         
 
@@ -570,21 +570,27 @@
 </span><span class="lnt">65
 </span><span class="lnt">66
 </span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl"><span class="c1"># Define the directories to backup and their destination directories</span>
-</span></span><span class="line"><span class="cl"><span class="nv">source_dir1</span><span class="o">=</span><span class="s2">&#34;/source1&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">backup_dir1</span><span class="o">=</span><span class="s2">&#34;/backup1/&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">source_dir1</span><span class="o">=</span><span class="s2">&#34;/home/&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">backup_dir1</span><span class="o">=</span><span class="s2">&#34;/run/media/jared/Elements1/Backup&#34;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nv">source_dir2</span><span class="o">=</span><span class="s2">&#34;/source2&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">backup_dir2</span><span class="o">=</span><span class="s2">&#34;/backup2/&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">source_dir2</span><span class="o">=</span><span class="s2">&#34;/home/&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">backup_dir2</span><span class="o">=</span><span class="s2">&#34;/run/media/jared/Elements2/Backup&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Define excluded directories</span>
 </span></span><span class="line"><span class="cl"><span class="nv">excluded_dirs</span><span class="o">=(</span>
-</span></span><span class="line"><span class="cl">  <span class="s2">&#34;/leave/out/&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="s2">&#34;/dont/want/&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;jared/Cloud_Storage/timeshift/&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;jared/.cache/&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;jared/.nv/&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;jared/Cloud_Storage/Dropbox/.dropbox.cache/&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="o">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Function to run a backup</span>
@@ -605,9 +611,9 @@
 </span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Error: Invalid year entered.&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">3</span>
 </span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;What is today&#39;s date (YYYY-MM-DD):&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">read</span> backup_date
+</span></span><span class="line"><span class="cl">  <span class="nb">read</span> -r backup_date
 </span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[[</span> ! <span class="s2">&#34;</span><span class="nv">$backup_date</span><span class="s2">&#34;</span> <span class="o">=</span>~ ^<span class="o">[</span>0-9<span class="o">]{</span>4<span class="o">}</span>-<span class="o">[</span>0-9<span class="o">]{</span>2<span class="o">}</span>-<span class="o">[</span>0-9<span class="o">]{</span>2<span class="o">}</span>$ <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Error: Invalid date format. Use YYYY-MM-DD.&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">4</span>
@@ -616,17 +622,19 @@
 </span></span><span class="line"><span class="cl">  <span class="c1"># Check if the backup directory exists and run backup</span>
 </span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -d <span class="s2">&#34;</span><span class="nv">$backup_dir</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Backup directory &#39;</span><span class="nv">$backup_dir</span><span class="s2">&#39; found, backing up &#39;</span><span class="nv">$source_dir</span><span class="s2">&#39;...&#34;</span>
-</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="c1"># Build rsync exclude arguments</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">exclude_args</span><span class="o">=()</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> dir in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">excluded_dirs</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span>
 </span></span><span class="line"><span class="cl">      <span class="nv">exclude_args</span><span class="o">+=(</span>--exclude <span class="s2">&#34;</span><span class="nv">$dir</span><span class="s2">&#34;</span><span class="o">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">done</span>
-</span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    rsync -av --delete <span class="s2">&#34;</span><span class="si">${</span><span class="nv">exclude_args</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="nv">$source_dir</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="nv">$backup_dir</span><span class="s2">/Monthly/&#34;</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Perform the backup</span>
+</span></span><span class="line"><span class="cl">    rsync -av --delete <span class="s2">&#34;</span><span class="si">${</span><span class="nv">exclude_args</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="nv">$source_dir</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="nv">$backup_dir</span><span class="s2">/Monthly/home/&#34;</span>
+</span></span><span class="line"><span class="cl">    mkdir -p <span class="s2">&#34;</span><span class="nv">$backup_dir</span><span class="s2">/</span><span class="nv">$backup_year</span><span class="s2">/</span><span class="nv">$backup_date</span><span class="s2">/&#34;</span>
 </span></span><span class="line"><span class="cl">    cp -al <span class="s2">&#34;</span><span class="nv">$backup_dir</span><span class="s2">/Monthly/&#34;</span> <span class="s2">&#34;</span><span class="nv">$backup_dir</span><span class="s2">/</span><span class="nv">$backup_year</span><span class="s2">/</span><span class="nv">$backup_date</span><span class="s2">/&#34;</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Backup for &#39;</span><span class="nv">$source_dir</span><span class="s2">&#39; completed successfully.&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">else</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Error: Backup directory &#39;</span><span class="nv">$backup_dir</span><span class="s2">&#39; not found.&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">5</span>
@@ -658,19 +666,23 @@
 </span><span class="lnt">10
 </span><span class="lnt">11
 </span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Define the directories to backup and their destination directories</span>
-</span></span><span class="line"><span class="cl"><span class="nv">source_dir1</span><span class="o">=</span><span class="s2">&#34;/source1&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">backup_dir1</span><span class="o">=</span><span class="s2">&#34;/backup1/&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">source_dir1</span><span class="o">=</span><span class="s2">&#34;/home/&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">backup_dir1</span><span class="o">=</span><span class="s2">&#34;/run/media/jared/Elements1/Backup&#34;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nv">source_dir2</span><span class="o">=</span><span class="s2">&#34;/source2&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">backup_dir2</span><span class="o">=</span><span class="s2">&#34;/backup2/&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">source_dir2</span><span class="o">=</span><span class="s2">&#34;/home/&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">backup_dir2</span><span class="o">=</span><span class="s2">&#34;/run/media/jared/Elements2/Backup&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Define excluded directories</span>
 </span></span><span class="line"><span class="cl"><span class="nv">excluded_dirs</span><span class="o">=(</span>
-</span></span><span class="line"><span class="cl">  <span class="s2">&#34;/leave/out/&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="s2">&#34;/dont/want/&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;jared/Cloud_Storage/timeshift/&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;jared/.cache/&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;jared/.nv/&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;jared/Cloud_Storage/Dropbox/.dropbox.cache/&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="o">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
@@ -732,6 +744,8 @@
 </span><span class="lnt">43
 </span><span class="lnt">44
 </span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Function to run a backup</span>
@@ -752,9 +766,9 @@
 </span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Error: Invalid year entered.&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">3</span>
 </span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;What is today&#39;s date (YYYY-MM-DD):&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">read</span> backup_date
+</span></span><span class="line"><span class="cl">  <span class="nb">read</span> -r backup_date
 </span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[[</span> ! <span class="s2">&#34;</span><span class="nv">$backup_date</span><span class="s2">&#34;</span> <span class="o">=</span>~ ^<span class="o">[</span>0-9<span class="o">]{</span>4<span class="o">}</span>-<span class="o">[</span>0-9<span class="o">]{</span>2<span class="o">}</span>-<span class="o">[</span>0-9<span class="o">]{</span>2<span class="o">}</span>$ <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Error: Invalid date format. Use YYYY-MM-DD.&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">4</span>
@@ -763,17 +777,19 @@
 </span></span><span class="line"><span class="cl">  <span class="c1"># Check if the backup directory exists and run backup</span>
 </span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[</span> -d <span class="s2">&#34;</span><span class="nv">$backup_dir</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Backup directory &#39;</span><span class="nv">$backup_dir</span><span class="s2">&#39; found, backing up &#39;</span><span class="nv">$source_dir</span><span class="s2">&#39;...&#34;</span>
-</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="c1"># Build rsync exclude arguments</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">exclude_args</span><span class="o">=()</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> dir in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">excluded_dirs</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span>
 </span></span><span class="line"><span class="cl">      <span class="nv">exclude_args</span><span class="o">+=(</span>--exclude <span class="s2">&#34;</span><span class="nv">$dir</span><span class="s2">&#34;</span><span class="o">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">done</span>
-</span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    rsync -av --delete <span class="s2">&#34;</span><span class="si">${</span><span class="nv">exclude_args</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="nv">$source_dir</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="nv">$backup_dir</span><span class="s2">/Monthly/&#34;</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Perform the backup</span>
+</span></span><span class="line"><span class="cl">    rsync -av --delete <span class="s2">&#34;</span><span class="si">${</span><span class="nv">exclude_args</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="nv">$source_dir</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="nv">$backup_dir</span><span class="s2">/Monthly/home/&#34;</span>
+</span></span><span class="line"><span class="cl">    mkdir -p <span class="s2">&#34;</span><span class="nv">$backup_dir</span><span class="s2">/</span><span class="nv">$backup_year</span><span class="s2">/</span><span class="nv">$backup_date</span><span class="s2">/&#34;</span>
 </span></span><span class="line"><span class="cl">    cp -al <span class="s2">&#34;</span><span class="nv">$backup_dir</span><span class="s2">/Monthly/&#34;</span> <span class="s2">&#34;</span><span class="nv">$backup_dir</span><span class="s2">/</span><span class="nv">$backup_year</span><span class="s2">/</span><span class="nv">$backup_date</span><span class="s2">/&#34;</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Backup for &#39;</span><span class="nv">$source_dir</span><span class="s2">&#39; completed successfully.&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="k">else</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Error: Backup directory &#39;</span><span class="nv">$backup_dir</span><span class="s2">&#39; not found.&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">5</span>
@@ -895,18 +911,24 @@
                 >
             </script><script>
     window.addEventListener("DOMContentLoaded", () => {
-	const mainArticleElement = document.querySelector(".main-article");
-        renderMathInElement(mainArticleElement, {
-            delimiters: [
-                { left: "$$", right: "$$", display: true },
-                { left: "$", right: "$", display: false },
-                { left: "\\(", right: "\\)", display: false },
-                { left: "\\[", right: "\\]", display: true }
-            ],
-            ignoredClasses: ["gist"]
-        });})
-</script>
+        const elementsToRender = [".main-article", ".widget--toc"];
 
+        elementsToRender.forEach(selector => {
+            const element = document.querySelector(selector);
+            if (element) {
+                renderMathInElement(element, {
+                    delimiters: [
+                        { left: "$$", right: "$$", display: true },
+                        { left: "$", right: "$", display: false },
+                        { left: "\\(", right: "\\)", display: false },
+                        { left: "\\[", right: "\\]", display: true }
+                    ],
+                    ignoredClasses: ["gist"]
+                });
+            }
+        });
+    });
+</script>
     
 </article>
 
@@ -1033,7 +1055,7 @@
     
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.31.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.32.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
     </section>
 </footer>
 
@@ -1122,7 +1144,7 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.c922af694cc257bf1ecc41c0dd7b0430f9114ec280ccf67cd2c6ad55f5316c4e.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

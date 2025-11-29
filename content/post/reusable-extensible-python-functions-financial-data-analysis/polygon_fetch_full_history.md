@@ -234,7 +234,7 @@ if __name__ == "__main__":
     df = polygon_fetch_full_history(
         client=client,
         ticker="SPY",
-        timespan="hour",
+        timespan="day",
         multiplier=1,
         adjusted=True,
         existing_history_df=df,

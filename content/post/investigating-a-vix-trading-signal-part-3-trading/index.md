@@ -79,9 +79,30 @@ Here are the trades executed to date, with any comments related to execution, ma
 | 2025-05-13 00:00:00 | Sell to Close | VIX 08/20/2025 45.00 P |          2 |   25.40 |          2.16 |  5077.84 |              18.06 | nan                                                                                           |
 | 2025-06-26 00:00:00 | Buy to Open   | VIX 09/17/2025 20.00 C |         10 |    3.00 |         10.81 |  3010.81 |              16.37 | Opened long dated call position; VIX level at 4th historical decile                           |
 | 2025-08-01 00:00:00 | Sell to Close | VIX 09/17/2025 20.00 C |          5 |    3.05 |          5.40 |  1519.60 |              20.48 | Sold half of position due to theta drag, held remaining half for vol spike                    |
+| 2025-08-12 00:00:00 | Buy to Open   | VIX 09/17/2025 20.00 C |         10 |    1.54 |          9.31 |  1549.31 |              14.87 | Doubled existing position to reduce cost basis                                                |
+| 2025-08-22 00:00:00 | Buy to Open   | VIX 09/17/2025 20.00 C |         15 |    0.88 |         12.01 |  1332.01 |             nan    | nan                                                                                           |
+| 2025-08-29 00:00:00 | Sell to Close | VIX 09/17/2025 20.00 C |         15 |    0.80 |         12.01 |  1187.99 |             nan    | nan                                                                                           |
+| 2025-09-02 00:00:00 | Sell to Close | VIX 09/17/2025 20.00 C |         15 |    1.33 |         13.96 |  1981.04 |             nan    | nan                                                                                           |
+| 2025-08-12 00:00:00 | Buy to Open   | VIX 10/22/2025 19.00 C |         10 |    3.05 |         10.81 |  3060.81 |              15.22 | nan                                                                                           |
+| 2025-09-29 00:00:00 | Sell to Close | VIX 10/22/2025 19.00 C |         10 |    1.20 |          9.31 |  1190.69 |             nan    | nan                                                                                           |
+| 2025-08-22 00:00:00 | Buy to Open   | VIX 10/22/2025 20.00 C |         10 |    2.12 |         10.81 |  2130.81 |             nan    | nan                                                                                           |
+| 2025-09-02 00:00:00 | Sell to Close | VIX 10/22/2025 20.00 C |         10 |    2.65 |         10.81 |  2639.19 |             nan    | nan                                                                                           |
 | 2025-07-23 00:00:00 | Buy to Open   | VIX 10/22/2025 21.00 C |         10 |    2.92 |         10.81 |  2930.81 |              15.40 | Continued low volatility, opened long dated call position; VIX level at 4th historical decile |
+| 2025-09-29 00:00:00 | Sell to Close | VIX 10/22/2025 21.00 C |         10 |    0.91 |          8.01 |   901.99 |             nan    | nan                                                                                           |
 | 2025-06-26 00:00:00 | Buy to Open   | VIX 10/22/2025 22.00 C |         10 |    2.94 |         10.81 |  2950.81 |              16.43 | Opened long dated call position; VIX level at 4th historical decile                           |
+| 2025-09-15 00:00:00 | Sell to Close | VIX 10/22/2025 22.00 C |         10 |    1.08 |          9.31 |  1070.69 |             nan    | nan                                                                                           |
 | 2025-07-17 00:00:00 | Buy to Open   | VIX 10/22/2025 23.00 C |         10 |    2.75 |         10.81 |  2760.81 |              16.86 | Continued low volatility, opened long dated call position; VIX level at 4th historical decile |
+| 2025-09-15 00:00:00 | Sell to Close | VIX 10/22/2025 23.00 C |         10 |    0.98 |          8.01 |   971.99 |             nan    | nan                                                                                           |
+| 2025-09-29 00:00:00 | Buy to Open   | VIX 11/19/2025 16.00 C |         10 |    3.65 |         10.81 |  3660.81 |             nan    | nan                                                                                           |
+| 2025-10-10 00:00:00 | Sell to Close | VIX 11/19/2025 16.00 C |         10 |    4.80 |         10.81 |  4789.19 |             nan    | nan                                                                                           |
+| 2025-08-22 00:00:00 | Buy to Open   | VIX 11/19/2025 19.00 C |         10 |    3.17 |         10.81 |  3180.81 |             nan    | nan                                                                                           |
+| 2025-09-02 00:00:00 | Sell to Close | VIX 11/19/2025 19.00 C |         10 |    3.70 |         10.81 |  3689.19 |             nan    | nan                                                                                           |
+| 2025-08-13 00:00:00 | Buy to Open   | VIX 11/19/2025 20.00 C |         10 |    3.26 |         10.81 |  3270.81 |              14.56 | VIX at ~0 decile based on the YTD VIX data                                                    |
+| 2025-10-09 00:00:00 | Sell to Close | VIX 11/19/2025 20.00 C |         10 |    2.08 |         10.81 |  2069.19 |             nan    | nan                                                                                           |
+| 2025-08-12 00:00:00 | Buy to Open   | VIX 11/19/2025 21.00 C |         10 |    3.00 |         10.81 |  3010.81 |              15.17 | nan                                                                                           |
+| 2025-10-08 00:00:00 | Sell to Close | VIX 11/19/2025 21.00 C |         10 |    1.83 |          9.31 |  1820.69 |             nan    | nan                                                                                           |
+| 2025-09-11 00:00:00 | Buy to Open   | VIX 12/17/2025 17.00 C |         10 |    3.90 |         10.81 |  3910.81 |             nan    | nan                                                                                           |
+| 2025-10-10 00:00:00 | Sell to Close | VIX 12/17/2025 17.00 C |         10 |    4.60 |         10.81 |  4589.19 |             nan    | nan                                                                                           |
 
 #### Volatility In August 2024
 
@@ -169,29 +190,36 @@ Plot with VIX high/low, trade side, VIX option, and VIX level at trade date/time
 
 Closed positions:
 
-| Symbol   | Amount_Buy   | Quantity_Buy   | Amount_Sell   | Quantity_Sell   | Realized_PnL   | Percent_PnL   |
-|----------|--------------|----------------|---------------|-----------------|----------------|---------------|
+| Symbol                 |   Amount_Buy |   Quantity_Buy |   Amount_Sell |   Quantity_Sell |   Realized_PnL |   Percent_PnL |
+|:-----------------------|-------------:|---------------:|--------------:|----------------:|---------------:|--------------:|
+| VIX 09/17/2025 20.00 C |      5892.13 |             35 |       4688.63 |              35 |       -1203.50 |         -0.20 |
+| VIX 10/22/2025 19.00 C |      3060.81 |             10 |       1190.69 |              10 |       -1870.12 |         -0.61 |
+| VIX 10/22/2025 20.00 C |      2130.81 |             10 |       2639.19 |              10 |         508.38 |          0.24 |
+| VIX 10/22/2025 21.00 C |      2930.81 |             10 |        901.99 |              10 |       -2028.82 |         -0.69 |
+| VIX 10/22/2025 22.00 C |      2950.81 |             10 |       1070.69 |              10 |       -1880.12 |         -0.64 |
+| VIX 10/22/2025 23.00 C |      2760.81 |             10 |        971.99 |              10 |       -1788.82 |         -0.65 |
+| VIX 11/19/2025 16.00 C |      3660.81 |             10 |       4789.19 |              10 |        1128.38 |          0.31 |
+| VIX 11/19/2025 19.00 C |      3180.81 |             10 |       3689.19 |              10 |         508.38 |          0.16 |
+| VIX 11/19/2025 20.00 C |      3270.81 |             10 |       2069.19 |              10 |       -1201.62 |         -0.37 |
+| VIX 11/19/2025 21.00 C |      3010.81 |             10 |       1820.69 |              10 |       -1190.12 |         -0.40 |
+| VIX 12/17/2025 17.00 C |      3910.81 |             10 |       4589.19 |              10 |         678.38 |          0.17 |
 
 Open positions:
 
-| Symbol                 |   Amount_Buy |   Quantity_Buy |
-|:-----------------------|-------------:|---------------:|
-| VIX 09/17/2025 20.00 C |      3010.81 |             10 |
-| VIX 10/22/2025 21.00 C |      2930.81 |             10 |
-| VIX 10/22/2025 22.00 C |      2950.81 |             10 |
-| VIX 10/22/2025 23.00 C |      2760.81 |             10 |
+| Symbol   | Amount_Buy   | Quantity_Buy   |
+|----------|--------------|----------------|
 
-Total Opened Position Market Value: $11,653.24</br>
-Total Closed Position Market Value: $0.00</br>
-Net Profit/Loss: $0.00</br>
-Percent Profit/Loss: nan%
+Total Opened Position Market Value: $36,760.23</br>
+Total Closed Position Market Value: $28,420.63</br>
+Net Profit/Loss: $-8,339.60</br>
+Percent Profit/Loss: -22.69%
 
 #### Complete Trade History (Closed Positions)
 
-Total Opened Position Market Value: $55,988.74</br>
-Total Closed Position Market Value: $64,170.25</br>
-Net Profit/Loss: $8,181.51</br>
-Percent Profit/Loss: 14.61%
+Total Opened Position Market Value: $92,748.97</br>
+Total Closed Position Market Value: $92,590.88</br>
+Net Profit/Loss: $-158.09</br>
+Percent Profit/Loss: -0.17%
 
 ## References
 

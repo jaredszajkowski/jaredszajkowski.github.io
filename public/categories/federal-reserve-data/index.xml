@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Federal Reserve Data on Jared Szajkowski, P.E., PMP</title>
+        <link>https://www.jaredszajkowski.com/categories/federal-reserve-data/</link>
+        <description>Recent content in Federal Reserve Data on Jared Szajkowski, P.E., PMP</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Sat, 29 Nov 2025 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/categories/federal-reserve-data/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Performance Of Various Asset Classes During Fed Policy Cycles</title>
+        <link>https://www.jaredszajkowski.com/2025/11/29/trend-following-rsi-minute-level-crypto-part-1-trading-strategy/</link>
+        <pubDate>Sat, 29 Nov 2025 00:00:01 +0000</pubDate>
+        
+        <guid>https://www.jaredszajkowski.com/2025/11/29/trend-following-rsi-minute-level-crypto-part-1-trading-strategy/</guid>
+        <description>&lt;img src="https://www.jaredszajkowski.com/2025/11/29/trend-following-rsi-minute-level-crypto-part-1-trading-strategy/asset-class-performance-fed-policy-cycles.png" alt="Featured image of post Performance Of Various Asset Classes During Fed Policy Cycles" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+&lt;/h2&gt;&lt;p&gt;In this post, we will look into the Fed Funds cycles and evaluate asset class performance during loosening and tightening of monetary policy.&lt;/p&gt;
+&lt;h2 id=&#34;python-functions&#34;&gt;Python Functions
+&lt;/h2&gt;&lt;p&gt;Here are the functions needed for this project:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;calc_fed_cycle_asset_performance: Calculates the performance of various asset classes during the Fed Funds cycles.&lt;/br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.jaredszajkowski.com/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#df_info&#34; &gt;df_info&lt;/a&gt;: A simple function to display the information about a DataFrame and the first five rows and last five rows.&lt;/br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.jaredszajkowski.com/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#df_info_markdown&#34; &gt;df_info_markdown&lt;/a&gt;: Similar to the &lt;code&gt;df_info&lt;/code&gt; function above, except that it coverts the output to markdown.&lt;/br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.jaredszajkowski.com/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps&#34; &gt;export_track_md_deps&lt;/a&gt;: Exports various text outputs to markdown files, which are included in the &lt;code&gt;index.md&lt;/code&gt; file created when building the site with Hugo.&lt;/br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.jaredszajkowski.com/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#load_data&#34; &gt;load_data&lt;/a&gt;: Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.&lt;/br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.jaredszajkowski.com/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places&#34; &gt;pandas_set_decimal_places&lt;/a&gt;: Set the number of decimal places displayed for floating-point numbers in pandas.&lt;/br&gt;&lt;/li&gt;
+&lt;li&gt;plot_bar_annualized_returns_with_ffr_change: Plot the bar chart of the annualized return for the asset class along with the annualized change in the Fed Funds Rate.&lt;/br&gt;&lt;/li&gt;
+&lt;li&gt;plot_bar_cumulative_returns_with_ffr_change: Plot the bar chart of the cumulative return for the asset class along with the cumulative change in the Fed Funds Rate.&lt;/br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.jaredszajkowski.com/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_price&#34; &gt;plot_price&lt;/a&gt;: Plot the price data from a DataFrame for a specified date range and columns.&lt;/br&gt;&lt;/li&gt;
+&lt;li&gt;plot_scatter_regression_ffr_vs_returns: Plot the scatter plot and regression of the annualized return for the asset class along with the annualized change in the Fed Funds Rate.&lt;/br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.jaredszajkowski.com/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#yf_pull_data&#34; &gt;yf_pull_data&lt;/a&gt;: Download daily price data from Yahoo Finance and export it.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;data-overview&#34;&gt;Data Overview
+&lt;/h2&gt;&lt;h3 id=&#34;acquire--plot-fed-funds-data&#34;&gt;Acquire &amp;amp; Plot Fed Funds Data
+&lt;/h3&gt;&lt;p&gt;First, let&amp;rsquo;s get the data for the Fed Funds rate (FFR):&lt;/p&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

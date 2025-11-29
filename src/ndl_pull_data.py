@@ -124,8 +124,8 @@ def ndl_pull_data(
     # Output confirmation
     if output_confirmation == True:
         print(f"The first and last date of data for {ticker} is: ")
-        display(df[:1])
-        display(df[-1:])
+        display(df_comp[:1])
+        display(df_comp[-1:])
         print(f"NDL data complete for {ticker}")
         print(f"--------------------")
     else:
@@ -137,7 +137,7 @@ if __name__ == "__main__":
 
     ndl_pull_data(
         base_directory=DATA_DIR,
-        ticker="SPY",
+        ticker="TLT",
         source="Nasdaq_Data_Link",
         asset_class="Exchange_Traded_Funds",
         excel_export=True,

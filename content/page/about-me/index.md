@@ -22,7 +22,7 @@ license: false
 
 Jared is a seasoned civil engineer with extensive experience in infrastructure design and construction, specifically within the heavy highway and telecommunications sectors. With a strong foundation in field operations, contract administration, and project cost forecasting, Jared has consistently demonstrated the ability to drive projects to success through aggressive problem-solving and meticulous planning.
 
-After spending the first 15 years of his career in engineering, Jared decided to follow his passion for financial markets by enrolling in the [Financial Mathematics](https://finmath.uchicago.edu/) graduate program at the University of Chicago in the fall of 2022. This rigorous program, known for its emphasis on quantitative analysis, stochastic processes, and financial modeling, has equipped Jared with advanced skills in data-driven decision-making, risk management, and derivative pricing. He will complete the program in the spring of 2026.
+After spending the first part of his career in engineering, Jared decided to follow his passion for financial markets by enrolling in the [Financial Mathematics](https://finmath.uchicago.edu/) graduate program at the University of Chicago in the fall of 2022. This rigorous program, known for its emphasis on quantitative analysis, stochastic processes, and financial modeling, has equipped Jared with advanced skills in data-driven decision-making, risk management, and derivative pricing. He will complete the program in the spring of 2026.
 
 Jared aims to leverage his prior professional experience, analytical skills, business acumen, and attention to detail to a new career in the financial services industry.
 

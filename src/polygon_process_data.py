@@ -250,6 +250,7 @@ etfs = {
     'EET': 'ProShares Ultra MSCI Emerging Markets', 
     'EFA': 'iShares MSCI EAFE ETF', 
     'EFO': 'ProShares Ultra MSCI EAFE', 
+    'GLD': 'SPDR Gold Trust, SPDR Gold Shares', 
     'GSG': 'iShares S&P  GSCI Commodity-Indexed Trust', 
     'IAU': 'iShares Gold Trust', 
     'IDU': 'iShares U.S. Utilities ETF', 

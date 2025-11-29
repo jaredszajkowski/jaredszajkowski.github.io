@@ -88,16 +88,18 @@ Here's the updated script, which now accomodates a list of excluded directories,
 #!/bin/bash
 
 # Define the directories to backup and their destination directories
-source_dir1="/source1"
-backup_dir1="/backup1/"
+source_dir1="/home/"
+backup_dir1="/run/media/jared/Elements1/Backup"
 
-source_dir2="/source2"
-backup_dir2="/backup2/"
+source_dir2="/home/"
+backup_dir2="/run/media/jared/Elements2/Backup"
 
 # Define excluded directories
 excluded_dirs=(
-  "/leave/out/"
-  "/dont/want/"
+  "jared/Cloud_Storage/timeshift/"
+  "jared/.cache/"
+  "jared/.nv/"
+  "jared/Cloud_Storage/Dropbox/.dropbox.cache/"
 )
 
 # Function to run a backup
@@ -118,9 +120,9 @@ run_backup() {
     echo "Error: Invalid year entered."
     exit 3
   fi
-  
+
   echo "What is today's date (YYYY-MM-DD):"
-  read backup_date
+  read -r backup_date
   if [[ ! "$backup_date" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
     echo "Error: Invalid date format. Use YYYY-MM-DD."
     exit 4
@@ -129,17 +131,19 @@ run_backup() {
   # Check if the backup directory exists and run backup
   if [ -d "$backup_dir" ]; then
     echo "Backup directory '$backup_dir' found, backing up '$source_dir'..."
-    
+
     # Build rsync exclude arguments
     exclude_args=()
     for dir in "${excluded_dirs[@]}"; do
       exclude_args+=(--exclude "$dir")
     done
-    
-    rsync -av --delete "${exclude_args[@]}" "$source_dir" "$backup_dir/Monthly/"
 
+    # Perform the backup
+    rsync -av --delete "${exclude_args[@]}" "$source_dir" "$backup_dir/Monthly/home/"
+    mkdir -p "$backup_dir/$backup_year/$backup_date/"
     cp -al "$backup_dir/Monthly/" "$backup_dir/$backup_year/$backup_date/"
 
+    echo "Backup for '$source_dir' completed successfully."
   else
     echo "Error: Backup directory '$backup_dir' not found."
     exit 5
@@ -162,16 +166,18 @@ First, we need to define the source and backup directories, and any directories 
 
 ```bash
 # Define the directories to backup and their destination directories
-source_dir1="/source1"
-backup_dir1="/backup1/"
+source_dir1="/home/"
+backup_dir1="/run/media/jared/Elements1/Backup"
 
-source_dir2="/source2"
-backup_dir2="/backup2/"
+source_dir2="/home/"
+backup_dir2="/run/media/jared/Elements2/Backup"
 
 # Define excluded directories
 excluded_dirs=(
-  "/leave/out/"
-  "/dont/want/"
+  "jared/Cloud_Storage/timeshift/"
+  "jared/.cache/"
+  "jared/.nv/"
+  "jared/Cloud_Storage/Dropbox/.dropbox.cache/"
 )
 ```
 
@@ -207,9 +213,9 @@ run_backup() {
     echo "Error: Invalid year entered."
     exit 3
   fi
-  
+
   echo "What is today's date (YYYY-MM-DD):"
-  read backup_date
+  read -r backup_date
   if [[ ! "$backup_date" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
     echo "Error: Invalid date format. Use YYYY-MM-DD."
     exit 4
@@ -218,17 +224,19 @@ run_backup() {
   # Check if the backup directory exists and run backup
   if [ -d "$backup_dir" ]; then
     echo "Backup directory '$backup_dir' found, backing up '$source_dir'..."
-    
+
     # Build rsync exclude arguments
     exclude_args=()
     for dir in "${excluded_dirs[@]}"; do
       exclude_args+=(--exclude "$dir")
     done
-    
-    rsync -av --delete "${exclude_args[@]}" "$source_dir" "$backup_dir/Monthly/"
 
+    # Perform the backup
+    rsync -av --delete "${exclude_args[@]}" "$source_dir" "$backup_dir/Monthly/home/"
+    mkdir -p "$backup_dir/$backup_year/$backup_date/"
     cp -al "$backup_dir/Monthly/" "$backup_dir/$backup_year/$backup_date/"
 
+    echo "Backup for '$source_dir' completed successfully."
   else
     echo "Error: Backup directory '$backup_dir' not found."
     exit 5

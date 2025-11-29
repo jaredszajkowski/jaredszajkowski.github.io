@@ -41,7 +41,7 @@ def yf_pull_data(
     """
     
     # Download data from YF
-    df = yf.download(ticker)
+    df = yf.download(ticker, start="1900-01-01")
 
     # Drop the column level with the ticker symbol
     df.columns = df.columns.droplevel(1)

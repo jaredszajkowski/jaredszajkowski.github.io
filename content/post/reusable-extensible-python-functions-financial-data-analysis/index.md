@@ -39,7 +39,7 @@ This post intends to provide the code for all of the python functions that I use
 * [export_track_md_deps](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps): Exports various text outputs to markdown files, which are included in the `index.md` file created when building the site with Hugo.</br>
 * [load_data](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#load_data): Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.</br>
 * [pandas_set_decimal_places](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places): Set the number of decimal places displayed for floating-point numbers in pandas.</br>
-* [plot_price](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_price): Plot the price data from a DataFrame for a specified date range and columns.</br>
+* [plot_timeseries](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_timeseries): Plot the price data from a DataFrame for a specified date range and columns.</br>
 * [plot_stats](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_stats): Generate a scatter plot for the mean OHLC prices.</br>
 * [plot_vix_with_trades](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#plot_vix_with_trades): Plot the VIX daily high and low prices, along with the VIX spikes, and trades.</br>
 * [polygon_fetch_full_history](/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#polygon_fetch_full_history): Fetch full historical data for a given product from Polygon API.</br>
@@ -526,7 +526,7 @@ def coinbase_fetch_historical_candles(
     end : str
         End time in UTC.
     granularity : int
-        Time slice in seconds (e.g., 3600 for hourly candles).
+        Time slice in seconds (e.g., 60 for minute candles, 3600 for hourly candles, 86,400 for daily candles).
 
     Returns:
     --------
@@ -586,8 +586,8 @@ if __name__ == "__main__":
     df = coinbase_fetch_historical_candles(
         product_id="BTC-USD",
         start=datetime(2025, 1, 1),
-        end=datetime(2025, 1, 1),
-        granularity=86_400,
+        end=datetime(2025, 1, 2),
+        granularity=3_600,
     )
 
     if df is not None:
@@ -894,87 +894,87 @@ def coinbase_pull_data(
 
 if __name__ == "__main__":
      
-    # # Example usage to pull all data for each month from 2010 to 2024
-    # for granularity in [60, 3600, 86400]:
-    #     for year in range(2010, 2025):
-    #         for month in range(1, 13):
-    #             print(f"Pulling data for {year}-{month:02d}...")
-    #             try:
-    #                 # Get the last day of the month
-    #                 last_day = calendar.monthrange(year, month)[1]
-    #                 coinbase_pull_data(
-    #                     base_directory=DATA_DIR,
-    #                     source="Coinbase",
-    #                     asset_class="Cryptocurrencies",
-    #                     excel_export=False,
-    #                     pickle_export=True,
-    #                     output_confirmation=True,
-    #                     base_currency="XRP",
-    #                     quote_currency="USD",
-    #                     granularity=granularity, # 60=minute, 3600=hourly, 86400=daily
-    #                     status='online',
-    #                     start_date=datetime(year, month, 1),
-    #                     end_date=datetime(year, month, last_day),
-    #                 )
-    #             except Exception as e:
-    #                 print(f"Failed to pull data for {year}-{month:02d}: {e}")
+    # Example usage to pull all data for each month from 2010 to 2024
+    for granularity in [60, 3600, 86400]:
+        for year in range(2010, 2025):
+            for month in range(1, 13):
+                print(f"Pulling data for {year}-{month:02d}...")
+                try:
+                    # Get the last day of the month
+                    last_day = calendar.monthrange(year, month)[1]
+                    coinbase_pull_data(
+                        base_directory=DATA_DIR,
+                        source="Coinbase",
+                        asset_class="Cryptocurrencies",
+                        excel_export=False,
+                        pickle_export=True,
+                        output_confirmation=True,
+                        base_currency="BTC",
+                        quote_currency="USD",
+                        granularity=granularity, # 60=minute, 3600=hourly, 86400=daily
+                        status='online',
+                        start_date=datetime(year, month, 1),
+                        end_date=datetime(year, month, last_day),
+                    )
+                except Exception as e:
+                    print(f"Failed to pull data for {year}-{month:02d}: {e}")
 
-    current_year = datetime.now().year
-    current_month = datetime.now().month
-    current_day = datetime.now().day
+    # current_year = datetime.now().year
+    # current_month = datetime.now().month
+    # current_day = datetime.now().day
 
-    # Crypto Data
-    currencies = ["BTC", "ETH", "SOL", "XRP"]
+    # # Crypto Data
+    # currencies = ["BTC", "ETH", "SOL", "XRP"]
 
-    # Iterate through each currency
-    for cur in currencies:
-        # Example usage - minute
-        coinbase_pull_data(
-            base_directory=DATA_DIR,
-            source="Coinbase",
-            asset_class="Cryptocurrencies",
-            excel_export=False,
-            pickle_export=True,
-            output_confirmation=True,
-            base_currency=cur,
-            quote_currency="USD",
-            granularity=60, # 60=minute, 3600=hourly, 86400=daily
-            status='online', # default status is 'online'
-            start_date=datetime(current_year, current_month - 1, 1), # default start date
-            end_date=datetime.now() - timedelta(days=1), # updates data through 1 day ago due to lag in data availability
-        )
+    # # Iterate through each currency
+    # for cur in currencies:
+    #     # Example usage - minute
+    #     coinbase_pull_data(
+    #         base_directory=DATA_DIR,
+    #         source="Coinbase",
+    #         asset_class="Cryptocurrencies",
+    #         excel_export=False,
+    #         pickle_export=True,
+    #         output_confirmation=True,
+    #         base_currency=cur,
+    #         quote_currency="USD",
+    #         granularity=60, # 60=minute, 3600=hourly, 86400=daily
+    #         status='online', # default status is 'online'
+    #         start_date=datetime(current_year, current_month - 1, 1), # default start date
+    #         end_date=datetime.now() - timedelta(days=1), # updates data through 1 day ago due to lag in data availability
+    #     )
 
-        # Example usage - hourly
-        coinbase_pull_data(
-            base_directory=DATA_DIR,
-            source="Coinbase",
-            asset_class="Cryptocurrencies",
-            excel_export=True,
-            pickle_export=True,
-            output_confirmation=True,
-            base_currency=cur,
-            quote_currency="USD",
-            granularity=3600, # 60=minute, 3600=hourly, 86400=daily
-            status='online', # default status is 'online'
-            start_date=datetime(current_year, current_month - 1, 1), # default start date
-            end_date=datetime.now() - timedelta(days=1), # updates data through 1 day ago due to lag in data availability
-        )
+    #     # Example usage - hourly
+    #     coinbase_pull_data(
+    #         base_directory=DATA_DIR,
+    #         source="Coinbase",
+    #         asset_class="Cryptocurrencies",
+    #         excel_export=True,
+    #         pickle_export=True,
+    #         output_confirmation=True,
+    #         base_currency=cur,
+    #         quote_currency="USD",
+    #         granularity=3600, # 60=minute, 3600=hourly, 86400=daily
+    #         status='online', # default status is 'online'
+    #         start_date=datetime(current_year, current_month - 1, 1), # default start date
+    #         end_date=datetime.now() - timedelta(days=1), # updates data through 1 day ago due to lag in data availability
+    #     )
 
-        # Example usage - daily
-        coinbase_pull_data(
-            base_directory=DATA_DIR,
-            source="Coinbase",
-            asset_class="Cryptocurrencies",
-            excel_export=True,
-            pickle_export=True,
-            output_confirmation=True,
-            base_currency=cur,
-            quote_currency="USD",
-            granularity=86400, # 60=minute, 3600=hourly, 86400=daily
-            status='online', # default status is 'online'
-            start_date=datetime(current_year, current_month - 1, 1), # default start date
-            end_date=datetime.now() - timedelta(days=1), # updates data through 1 day ago due to lag in data availability
-        )
+    #     # Example usage - daily
+    #     coinbase_pull_data(
+    #         base_directory=DATA_DIR,
+    #         source="Coinbase",
+    #         asset_class="Cryptocurrencies",
+    #         excel_export=True,
+    #         pickle_export=True,
+    #         output_confirmation=True,
+    #         base_currency=cur,
+    #         quote_currency="USD",
+    #         granularity=86400, # 60=minute, 3600=hourly, 86400=daily
+    #         status='online', # default status is 'online'
+    #         start_date=datetime(current_year, current_month - 1, 1), # default start date
+    #         end_date=datetime.now() - timedelta(days=1), # updates data through 1 day ago due to lag in data availability
+    #     )
 ```
 
 ### df_info
@@ -1026,7 +1026,8 @@ import io
 import pandas as pd
 
 def df_info_markdown(
-    df: pd.DataFrame
+    df: pd.DataFrame,
+    decimal_places: int = 2,
 ) -> str:
     
     """
@@ -1070,8 +1071,8 @@ def df_info_markdown(
     info_str = buffer.getvalue()
 
     # Convert head and tail to Markdown
-    head_str = df.head().to_markdown(floatfmt=".2f")
-    tail_str = df.tail().to_markdown(floatfmt=".2f")
+    head_str = df.head().to_markdown(floatfmt=f".{decimal_places}f")
+    tail_str = df.tail().to_markdown(floatfmt=f".{decimal_places}f")
 
     markdown = [
         "```text",
@@ -1295,151 +1296,9 @@ def pandas_set_decimal_places(
     pd.set_option('display.float_format', lambda x: f'%.{decimal_places}f' % x)
 ```
 
-### plot_price
+### plot_timeseries
 
-```python
-import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
-import matplotlib.ticker as mtick
-import pandas as pd
-
-from matplotlib.ticker import FormatStrFormatter, MultipleLocator
-
-def plot_price(
-    price_df: pd.DataFrame,
-    plot_start_date: str,
-    plot_end_date: str,
-    plot_columns,
-    title: str,
-    x_label: str,
-    x_format: str,
-    y_label: str,
-    y_format: str,
-    y_tick_spacing: int,
-    grid: bool,
-    legend: bool,
-    export_plot: bool,
-    plot_file_name: str,
-) -> None:
-
-    """
-    Plot the price data from a DataFrame for a specified date range and columns.
-
-    Parameters:
-    -----------
-    df : pd.DataFrame
-        DataFrame containing the price data to plot.
-    plot_start_date : str
-        Start date for the plot in 'YYYY-MM-DD' format.
-    plot_end_date : str
-        End date for the plot in 'YYYY-MM-DD' format.
-    plot_columns : str OR list
-        List of columns to plot from the DataFrame. If none, all columns will be plotted.
-    title : str
-        Title of the plot.
-    x_label : str
-        Label for the x-axis.
-    x_axis_format : str
-        Format for the x-axis date labels.
-    y_label : str
-        Label for the y-axis.
-    y_tick_spacing : int
-        Spacing for the y-axis ticks.
-    grid : bool
-        Whether to display a grid on the plot.
-    legend : bool
-        Whether to display a legend on the plot.
-    export_plot : bool
-        Whether to save the figure as a PNG file.
-    plot_file_name : str
-        File name for saving the figure (if save_fig is True).
-
-    Returns:
-    --------
-    None
-    """
-
-    # If start date and end date are None, use the entire DataFrame
-    if plot_start_date is None and plot_end_date is None:
-        df_filtered = price_df
-
-    # If only end date is specified, filter by end date
-    elif plot_start_date is None and plot_end_date is not None:
-        df_filtered = price_df[(price_df.index <= plot_end_date)]
-
-    # If only start date is specified, filter by start date
-    elif plot_start_date is not None and plot_end_date is None:
-        df_filtered = price_df[(price_df.index >= plot_start_date)]
-
-    # If both start date and end date are specified, filter by both
-    else:
-        df_filtered = price_df[(price_df.index >= plot_start_date) & (price_df.index <= plot_end_date)]
-
-    # Set plot figure size and background color
-    plt.figure(figsize=(12, 6), facecolor="#F5F5F5")
-
-    # Plot data
-    if plot_columns =="All":
-        for col in df_filtered.columns:
-            plt.plot(df_filtered.index, df_filtered[col], label=col, linestyle='-', linewidth=1.5)
-    else:
-        for col in plot_columns:
-            plt.plot(df_filtered.index, df_filtered[col], label=col, linestyle='-', linewidth=1.5)
-
-    # Format X axis
-    if x_format == "Day":
-        plt.gca().xaxis.set_major_locator(mdates.DayLocator())
-        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
-    elif x_format == "Week":
-        plt.gca().xaxis.set_major_locator(mdates.WeekdayLocator())
-        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
-    elif x_format == "Month":
-        plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
-        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
-    elif x_format == "Year":
-        plt.gca().xaxis.set_major_locator(mdates.YearLocator())
-        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
-    else:
-        raise ValueError(f"Unrecognized x_format: {x_format}. Use 'Day', 'Week', 'Month', or 'Year'.")
-
-    plt.xlabel(x_label, fontsize=10)
-    plt.xticks(rotation=45, fontsize=8)
-
-    # Format Y axis
-    if y_format == "Decimal":
-        plt.gca().yaxis.set_major_formatter(FormatStrFormatter("%.2f"))
-    elif y_format == "Percentage":
-        plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter(xmax=1, decimals=0))
-    elif y_format == "Scientific":
-        plt.gca().yaxis.set_major_formatter(FormatStrFormatter("%.2e"))
-    elif y_format == "log":
-        plt.yscale("log")
-    else:
-        raise ValueError(f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', or 'Scientific'.")
-    
-    plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
-    plt.ylabel(y_label, fontsize=10)
-    plt.yticks(fontsize=8)
-
-    # Format title, layout, grid, and legend
-    plt.title(title, fontsize=12)
-    plt.tight_layout()
-
-    if grid == True:
-        plt.grid(True, linestyle='--', alpha=0.7)
-
-    if legend == True:
-        plt.legend(fontsize=9)
-
-    # Save figure and display plot
-    if export_plot == True:
-        plt.savefig(f"{plot_file_name}.png", dpi=300, bbox_inches="tight")
-
-    # Display the plot
-    plt.show()
-
-    return None
-```
+<!-- INSERT_plot_timeseries_HERE -->
 
 ### plot_stats
 
@@ -1660,9 +1519,10 @@ def polygon_fetch_full_history(
     timespan: str,
     multiplier: int,
     adjusted: bool,
-    full_history_df: pd.DataFrame,
+    existing_history_df: pd.DataFrame,
     current_start: datetime,
     free_tier: bool,
+    verbose: bool,
 ) -> pd.DataFrame:
 
     """
@@ -1686,6 +1546,8 @@ def polygon_fetch_full_history(
         Date for which to start pulling data in datetime format.
     free_tier : bool
         If True, then pause to avoid API limits.
+    verbose : bool
+        If True, print detailed information about the data being processed.
 
     Returns:
     --------
@@ -1693,21 +1555,32 @@ def polygon_fetch_full_history(
         DataFrame containing the data.
     """
 
+    # Copy DataFrame
+    full_history_df = existing_history_df.copy()
+
     if timespan == "minute":
-        time_delta = 5
+        time_delta = 15
+        time_overlap = 1
     elif timespan == "hour":
-        time_delta = 180
+        time_delta = 15
+        time_overlap = 1
     elif timespan == "day":
-        time_delta = 365
+        time_delta = 180
+        time_overlap = 1
     else:
         raise Exception(f"Invalid {timespan}.")
+    
+    new_data_last_date = None
+    new_date_last_date_check = None
 
     while current_start < datetime.now():
 
         # Offset end date by time_delta
         current_end = current_start + timedelta(days=time_delta)
 
-        print(f"Pulling {timespan} data for {current_start} thru {current_end} for {ticker}...")
+        if verbose == True:
+            print(f"Pulling {timespan} data for {current_start} thru {current_end} for {ticker}...\n")
+
         try:
             # Pull new data
             aggs = client.get_aggs(
@@ -1721,46 +1594,125 @@ def polygon_fetch_full_history(
                 limit=5000,
             )
 
+            # if len(aggs) == 0:
+                # raise Exception(f"No data is available for {ticker} for {current_start} thru {current_end}. Please attempt different dates.")
+            
             # Convert to DataFrame
             new_data = pd.DataFrame([bar.__dict__ for bar in aggs])
             new_data["timestamp"] = pd.to_datetime(new_data["timestamp"], unit="ms")
             new_data = new_data.rename(columns = {'timestamp':'Date'})
             new_data = new_data[['Date', 'open', 'high', 'low', 'close', 'volume', 'vwap', 'transactions', 'otc']]
             new_data = new_data.sort_values(by='Date', ascending=True)
-            print("New data:")
-            print(new_data)
+
+            # Enforce dtypes to match full_history_df
+            new_data = new_data.astype(full_history_df.dtypes.to_dict())
+
+            # (Optional) reorder columns to match schema
+            # new_data = new_data[full_history_df.columns]
+
+            # Find last date in new_data
+            new_data_last_date = new_data['Date'].max()
+
+            if verbose == True:
+                print("New data:")
+                print(new_data)
+
+            # No longer necessary to check for 5000 rows of data
 
             # Check if new data contains 5000 rows
-            if len(new_data) == 5000:
-                raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
-            else:
-                pass
+            # if len(new_data) == 5000:
+                # raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
 
-            # Combine existing data with recent data, sort values
-            full_history_df = pd.concat([full_history_df,new_data[new_data['Date'].isin(full_history_df['Date']) == False]])
+            # If full_history_df length is not 0, check to confirm that data overlaps to verify that there were not any splits in the data
+            # if not full_history_df.empty:
+                # if not full_history_df['Date'].isin(new_data['Date']).any():
+                    # raise Exception(f"New data does not overlap with existing data.")
+
+            if not full_history_df.empty:
+                # Columns present in both frames
+                common_cols = list(full_history_df.columns.intersection(new_data.columns))
+                if not common_cols:
+                    raise Exception("No common columns to compare.")
+
+                # (Optional) de-duplicate to speed up the merge
+                full_dedup = full_history_df[common_cols].drop_duplicates()
+                new_dedup  = new_data[common_cols].drop_duplicates()
+
+                # Inner join on every shared column = exact row matches
+                overlap = full_dedup.merge(new_dedup, on=common_cols, how="inner")
+
+                if overlap.empty:
+                    raise Exception(f"New data does not overlap with existing data (full-row check).")
+
+            # Combine existing data with recent data, drop duplicates, sort values, reset index
+            full_history_df = pd.concat([full_history_df, new_data])
+            full_history_df = full_history_df.drop_duplicates(subset="Date", keep="last")
             full_history_df = full_history_df.sort_values(by='Date',ascending=True)
-            print("Combined data:")
-            print(full_history_df)
+            full_history_df = full_history_df.reset_index(drop=True)
 
-            # Check for free tier and if so then pause for 12 seconds to avoid hitting API rate limits
-            if free_tier == True:
-                print(f"Sleeping for 12 seconds to avoid hitting API rate limits...\n")
-                time.sleep(12)
+            if verbose == True:
+                print("Combined data:")
+                print(full_history_df)
+
+        except KeyError as e:
+            print(f"No data is available for {ticker} from {current_start} thru {current_end}.")
+
+            user_choice = input(
+                f"Press Enter to continue, or type 'q' to quit: "
+            )
+            if user_choice.lower() == "q":
+                print(f"Aborting operation to update {ticker} {timespan} data.")
+                break  # break out of the while loop
             else:
+                print(f"Trying next timeframe for {ticker} {timespan} data.")
+
+                # Set last_data_date to current_end because we know data was not available
+                # up until current_end
+                new_data_last_date = current_end
                 pass
 
         except Exception as e:
             print(f"Failed to pull {timespan} data for {current_start} thru {current_end} for {ticker}: {e}")
+            raise  # Re-raise the original exception
 
-        # Break out of loop if data is up-to-date, otherwise pause if free tier
+        # Break out of loop if data is up-to-date (or close to being up-to-date because it is 
+        # possible that entire range was not pulled due to the way API handles hour data
+        # from minute data)
         if current_end > datetime.now():
             break
         else:
-            current_start = current_end + timedelta(days=time_delta)
+            # Edge case, if the last date for new_date is exactly time_overlap's duration
+            # past current_start
+            if new_date_last_date_check == new_data_last_date:
+                current_start = current_end - timedelta(days=time_overlap)
+                new_date_last_date_check = new_data_last_date
+            else:
+                current_start = new_data_last_date - timedelta(days=time_overlap)
+                new_date_last_date_check = new_data_last_date
 
+            # Code below is likely not necessary
+
+            # # Overlap with existing data to capture all data but check to see if
+            # # current_end is a Sunday and if so ensure overlap covers a trading day
+            # if current_end.weekday() == 6:
+            #     current_start = last_data_date - timedelta(days=(time_overlap+1))
+            # else:
+            #     current_start = last_data_date - timedelta(days=time_overlap)
+
+        # Check for free tier and if so then pause for 12 seconds to avoid hitting API rate limits
+        if free_tier == True:
+            if verbose == True:
+                print(f"Sleeping for 12 seconds to avoid hitting API rate limits...\n")
+            time.sleep(12)
+
+    # Return the DataFrame containing the full history
     return full_history_df
 
 if __name__ == "__main__":
+
+    current_year = datetime.now().year
+    current_month = datetime.now().month
+    current_day = datetime.now().day
 
     # Open client connection
     client = RESTClient(api_key=api_keys["POLYGON_KEY"])
@@ -1781,13 +1733,14 @@ if __name__ == "__main__":
     # Example usage - minute
     df = polygon_fetch_full_history(
         client=client,
-        ticker="AMZN",
+        ticker="SPY",
         timespan="day",
         multiplier=1,
         adjusted=True,
-        full_history_df=df,
-        current_start=datetime(2025, 1, 1),
+        existing_history_df=df,
+        current_start=datetime(current_year - 2, current_month, current_day),
         free_tier=True,
+        verbose=True,
     )
 ```
 
@@ -1796,6 +1749,7 @@ if __name__ == "__main__":
 ```python
 import os
 import pandas as pd
+import time
 
 from datetime import datetime, timedelta
 from IPython.display import display
@@ -1819,6 +1773,9 @@ def polygon_pull_data(
     timespan: str,
     multiplier: int,
     adjusted: bool,
+    force_existing_check: bool,
+    free_tier: bool,
+    verbose: bool,
     excel_export: bool,
     pickle_export: bool,
     output_confirmation: bool,
@@ -1845,6 +1802,12 @@ def polygon_pull_data(
         Multiplier for the time span (e.g., 1 for daily data).
     adjusted : bool
         If True, return adjusted data; if False, return raw data.
+    force_existing_check : bool
+        If True, force a complete check of the existing data file to verify that there are not any gaps in the data.
+    free_tier : bool
+        If True, then pause to avoid API limits.
+    verbose : bool
+        If True, print detailed information about the data being processed.
     excel_export : bool
         If True, export data to Excel format.
     pickle_export : bool
@@ -1863,31 +1826,48 @@ def polygon_pull_data(
     # Set file location based on parameters
     file_location = f"{base_directory}/{source}/{asset_class}/{timespan}/{ticker}.pkl"
 
+    if timespan == "minute":
+        time_delta = 15
+        time_overlap = 1
+    elif timespan == "hour":
+        time_delta = 15
+        time_overlap = 1
+    elif timespan == "day":
+        time_delta = 180
+        time_overlap = 1
+    else:
+        raise Exception(f"Invalid {timespan}.")
+
     try:
         # Attempt to read existing pickle data file
-        full_history_df = pd.read_pickle(file_location)
+        existing_history_df = pd.read_pickle(file_location)
 
         # Reset index if 'Date' is column is the index
-        if 'Date' not in full_history_df.columns:
-            full_history_df = full_history_df.reset_index()
+        if 'Date' not in existing_history_df.columns:
+            existing_history_df = existing_history_df.reset_index()
 
         print(f"File found...updating the {ticker} {timespan} data.")
-        print("Existing data:")
-        print(full_history_df)
+
+        if verbose ==True:
+            print("Existing data:")
+            print(existing_history_df)
 
         # Find last date in existing data
-        last_date = full_history_df['Date'].max()
-        print(f"Last date in existing data: {last_date}")
+        last_data_date = existing_history_df['Date'].max()
+        print(f"Last date in existing data: {last_data_date}")
 
-        # Overlap 1 day with existing data to capture all data
-        current_start = last_date - timedelta(days=1)
+        starting_rows = len(existing_history_df)
+        print(f"Number of rows in existing data: {starting_rows}")
+
+        # Overlap with existing data to capture all data
+        current_start = last_data_date - timedelta(days=time_overlap)
 
     except FileNotFoundError:
         # Print error
         print(f"File not found...downloading the {ticker} {timespan} data.")
 
         # Create an empty DataFrame
-        full_history_df = pd.DataFrame({
+        existing_history_df = pd.DataFrame({
             'Date': pd.Series(dtype="datetime64[ns]"),
             'open': pd.Series(dtype="float64"),
             'high': pd.Series(dtype="float64"),
@@ -1902,15 +1882,21 @@ def polygon_pull_data(
         # Set current date to start date
         current_start = start_date
 
+    # Check for force_existing_check flag
+    if force_existing_check == True:
+        print("Forcing check of existing data...")
+        current_start = start_date
+
     full_history_df = polygon_fetch_full_history(
         client=client,
         ticker=ticker,
         timespan=timespan,
         multiplier=multiplier,
         adjusted=adjusted,
-        full_history_df=full_history_df,
+        existing_history_df=existing_history_df,
         current_start=current_start,
-        free_tier=True,
+        free_tier=free_tier,
+        verbose=verbose,
     )
 
     # Create directory
@@ -1921,25 +1907,26 @@ def polygon_pull_data(
     if excel_export == True:
         print(f"Exporting {ticker} {timespan} data to Excel...")
         full_history_df.to_excel(f"{directory}/{ticker}.xlsx", sheet_name="data")
-    else:
-        pass
 
-    # Export to pickle
+    # Export to Pickle
     if pickle_export == True:
-        print(f"Exporting {ticker} {timespan} data to pickle...")
+        print(f"Exporting {ticker} {timespan} data to Pickle...")
         full_history_df.to_pickle(f"{directory}/{ticker}.pkl")
-    else:
-        pass
+
+    total_rows = len(full_history_df)
 
     # Output confirmation
     if output_confirmation == True:
-        print(f"The first and last date of data for {ticker} is: ")
+        print(f"The first and last date of {timespan} data for {ticker} is: ")
         display(full_history_df[:1])
         display(full_history_df[-1:])
-        print(f"Polygon data complete for {ticker}")
+        print(f"Number of rows after data update: {total_rows}")
+
+        if starting_rows:
+            print(f"Number of rows added during update: {total_rows - starting_rows}")
+
+        print(f"Polygon data complete for {ticker} {timespan} data.")
         print(f"--------------------")
-    else:
-        pass
 
     return full_history_df
 
@@ -1964,10 +1951,15 @@ if __name__ == "__main__":
             timespan="minute",
             multiplier=1,
             adjusted=True,
+            force_existing_check=False,
+            free_tier=True,
+            verbose=False,
             excel_export=True,
             pickle_export=True,
             output_confirmation=True,
         )
+
+        time.sleep(12)
 
         # Example usage - hourly
         polygon_pull_data(
@@ -1979,10 +1971,15 @@ if __name__ == "__main__":
             timespan="hour",
             multiplier=1,
             adjusted=True,
+            force_existing_check=False,
+            free_tier=True,
+            verbose=False,
             excel_export=True,
             pickle_export=True,
             output_confirmation=True,
         )
+
+        time.sleep(12)
 
         # Example usage - daily
         polygon_pull_data(
@@ -1994,10 +1991,15 @@ if __name__ == "__main__":
             timespan="day",
             multiplier=1,
             adjusted=True,
+            force_existing_check=False,
+            free_tier=True,
+            verbose=False,
             excel_export=True,
             pickle_export=True,
             output_confirmation=True,
         )
+
+        time.sleep(12)
 ```
 
 ### strategy_harry_brown_perm_port
@@ -2211,8 +2213,8 @@ import pandas as pd
 import numpy as np
 
 def summary_stats(
-    fund_list: list[str], 
-    df: pd.DataFrame, 
+    fund_list: list[str],
+    df: pd.DataFrame,
     period: str,
     use_calendar_days: bool,
     excel_export: bool,
@@ -2228,7 +2230,7 @@ def summary_stats(
     fund_list (str):
         List of funds. This is used below in the excel/pickle export but not in the analysis.. Funds are strings in the form "BTC-USD".
     df (pd.DataFrame):
-        Dataframe with return data.
+        Dataframe with return data. Assumes returns are in decimal format (e.g., 0.05 for 5%), and assumes there is only 1 column.
     period (str):
         Period for which to calculate statistics. Options are "Monthly", "Weekly", "Daily".
     use_calendar_days (bool):
@@ -2246,6 +2248,7 @@ def summary_stats(
         pd.DataFrame: DataFrame containing various portfolio statistics.
     """
 
+    # Get the period in proper format
     period = period.strip().capitalize()
 
     # Map base timeframes
@@ -2261,12 +2264,11 @@ def summary_stats(
         raise ValueError(f"Invalid period: {period}. Must be one of {list(period_to_timeframe.keys())}")
 
     df_stats = pd.DataFrame(df.mean(axis=0) * timeframe) # annualized
-    # df_stats = pd.DataFrame((1 + df.mean(axis=0)) ** timeframe - 1) # annualized, this is this true annualized return but we will simply use the mean
     df_stats.columns = ['Annualized Mean']
     df_stats['Annualized Volatility'] = df.std() * np.sqrt(timeframe) # annualized
     df_stats['Annualized Sharpe Ratio'] = df_stats['Annualized Mean'] / df_stats['Annualized Volatility']
 
-    df_cagr = (1 + df['Return']).cumprod()
+    df_cagr = (1 + df[df.columns[0]]).cumprod()
     cagr = (df_cagr.iloc[-1] / 1) ** ( 1 / (len(df_cagr) / timeframe)) - 1
     df_stats['CAGR'] = cagr
 
@@ -2281,7 +2283,7 @@ def summary_stats(
 
     df_stats['Max Drawdown'] = drawdowns.min()
     df_stats['Peak'] = [previous_peaks[col][:drawdowns[col].idxmin()].idxmax() for col in previous_peaks.columns]
-    df_stats['Bottom'] = drawdowns.idxmin()
+    df_stats['Trough'] = drawdowns.idxmin()
 
     recovery_date = []
     for col in wealth_index.columns:
@@ -2289,6 +2291,8 @@ def summary_stats(
         recovery_wealth = pd.DataFrame([wealth_index[col][drawdowns[col].idxmin():]]).T
         recovery_date.append(recovery_wealth[recovery_wealth[col] >= prev_max].index.min())
     df_stats['Recovery Date'] = recovery_date
+    df_stats['Days to Recover'] = (df_stats['Recovery Date'] - df_stats['Trough']).dt.days
+    df_stats['MAR Ratio'] = df_stats['CAGR'] / -df_stats['Max Drawdown']
 
     plan_name = '_'.join(fund_list)
 
@@ -2359,7 +2363,7 @@ def yf_pull_data(
     """
     
     # Download data from YF
-    df = yf.download(ticker)
+    df = yf.download(ticker, start="1900-01-01")
 
     # Drop the column level with the ticker symbol
     df.columns = df.columns.droplevel(1)

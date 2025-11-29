@@ -3,7 +3,8 @@ import io
 import pandas as pd
 
 def df_info_markdown(
-    df: pd.DataFrame
+    df: pd.DataFrame,
+    decimal_places: int = 2,
 ) -> str:
     
     """
@@ -47,8 +48,8 @@ def df_info_markdown(
     info_str = buffer.getvalue()
 
     # Convert head and tail to Markdown
-    head_str = df.head().to_markdown(floatfmt=".2f")
-    tail_str = df.tail().to_markdown(floatfmt=".2f")
+    head_str = df.head().to_markdown(floatfmt=f".{decimal_places}f")
+    tail_str = df.tail().to_markdown(floatfmt=f".{decimal_places}f")
 
     markdown = [
         "```text",

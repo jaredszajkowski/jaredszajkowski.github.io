@@ -20,7 +20,7 @@ def summary_stats(
     fund_list (str):
         List of funds. This is used below in the excel/pickle export but not in the analysis.. Funds are strings in the form "BTC-USD".
     df (pd.DataFrame):
-        Dataframe with return data.
+        Dataframe with return data. Assumes returns are in decimal format (e.g., 0.05 for 5%), and assumes there is only 1 column.
     period (str):
         Period for which to calculate statistics. Options are "Monthly", "Weekly", "Daily".
     use_calendar_days (bool):
@@ -38,6 +38,7 @@ def summary_stats(
         pd.DataFrame: DataFrame containing various portfolio statistics.
     """
 
+    # Get the period in proper format
     period = period.strip().capitalize()
 
     # Map base timeframes
@@ -53,12 +54,11 @@ def summary_stats(
         raise ValueError(f"Invalid period: {period}. Must be one of {list(period_to_timeframe.keys())}")
 
     df_stats = pd.DataFrame(df.mean(axis=0) * timeframe) # annualized
-    # df_stats = pd.DataFrame((1 + df.mean(axis=0)) ** timeframe - 1) # annualized, this is this true annualized return but we will simply use the mean
     df_stats.columns = ['Annualized Mean']
     df_stats['Annualized Volatility'] = df.std() * np.sqrt(timeframe) # annualized
     df_stats['Annualized Sharpe Ratio'] = df_stats['Annualized Mean'] / df_stats['Annualized Volatility']
 
-    df_cagr = (1 + df['Return']).cumprod()
+    df_cagr = (1 + df[df.columns[0]]).cumprod()
     cagr = (df_cagr.iloc[-1] / 1) ** ( 1 / (len(df_cagr) / timeframe)) - 1
     df_stats['CAGR'] = cagr
 

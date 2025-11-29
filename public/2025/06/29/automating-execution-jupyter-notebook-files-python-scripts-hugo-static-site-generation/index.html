@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://www.jaredszajkowski.com/2025/06/29/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation/'>
 
-<link rel="stylesheet" href="/scss/style.min.da28754071fdaf9a58e8a578c9918e494018d97e1164a8200a93b14c08c2cb5a.css"><meta property='og:title' content="Automating Execution of Jupyter Notebook Files, Python Scripts, and Hugo Static Site Generation">
+<link rel="stylesheet" href="/scss/style.min.1153a3284d86245d03b9b6ac75af9e223283464e4954a76aa6bafd668cb07a2b.css"><meta property='og:title' content="Automating Execution of Jupyter Notebook Files, Python Scripts, and Hugo Static Site Generation">
 <meta property='og:description' content="A full-stack approach using doit.">
 <meta property='og:url' content='https://www.jaredszajkowski.com/2025/06/29/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation/'>
 <meta property='og:site_name' content='Jared Szajkowski, P.E., PMP'>
@@ -361,7 +361,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">June 29, 2025</time>
+                <time class="article-time--published" datetime='2025-06-29T00:00:01Z'>June 29, 2025</time>
             </div>
         
 
@@ -1384,18 +1384,24 @@ The pdf export of the jupyter notebook is available <a class="link" href="automa
                 >
             </script><script>
     window.addEventListener("DOMContentLoaded", () => {
-	const mainArticleElement = document.querySelector(".main-article");
-        renderMathInElement(mainArticleElement, {
-            delimiters: [
-                { left: "$$", right: "$$", display: true },
-                { left: "$", right: "$", display: false },
-                { left: "\\(", right: "\\)", display: false },
-                { left: "\\[", right: "\\]", display: true }
-            ],
-            ignoredClasses: ["gist"]
-        });})
-</script>
+        const elementsToRender = [".main-article", ".widget--toc"];
 
+        elementsToRender.forEach(selector => {
+            const element = document.querySelector(selector);
+            if (element) {
+                renderMathInElement(element, {
+                    delimiters: [
+                        { left: "$$", right: "$$", display: true },
+                        { left: "$", right: "$", display: false },
+                        { left: "\\(", right: "\\)", display: false },
+                        { left: "\\[", right: "\\]", display: true }
+                    ],
+                    ignoredClasses: ["gist"]
+                });
+            }
+        });
+    });
+</script>
     
 </article>
 
@@ -1407,6 +1413,30 @@ The pdf export of the jupyter notebook is available <a class="link" href="automa
     <h2 class="section-title">Related content</h2>
     <div class="related-content">
         <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/2025/11/29/trend-following-rsi-minute-level-crypto-part-1-trading-strategy/">
+        
+        
+            <div class="article-image">
+                <img src="/2025/11/29/trend-following-rsi-minute-level-crypto-part-1-trading-strategy/asset-class-performance-fed-policy-cycles.80d1e3dba00bcbca2f291ef95f0b4e73.png" 
+                        width="1536" 
+                        height="1024" 
+                        loading="lazy"
+                        alt="Featured image of post Performance Of Various Asset Classes During Fed Policy Cycles"
+                        data-key="trend-following-rsi-minute-level-crypto-part-1-trading-strategy" 
+                        data-hash="md5-gNHj26ALy8ovKR75XwtOcw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Performance Of Various Asset Classes During Fed Policy Cycles</h2>
+        </div>
+    </a>
+</article>
+
             
                 
 <article class="has-image">
@@ -1504,30 +1534,6 @@ The pdf export of the jupyter notebook is available <a class="link" href="automa
 </article>
 
             
-                
-<article class="has-image">
-    <a href="/2025/03/01/investigating-a-vix-trading-signal-part-1-vix-and-vvix/">
-        
-        
-            <div class="article-image">
-                <img src="/2025/03/01/investigating-a-vix-trading-signal-part-1-vix-and-vvix/cover.6c26bbaa157bd04e55552d08c0af8235.jpg" 
-                        width="1920" 
-                        height="800" 
-                        loading="lazy"
-                        alt="Featured image of post Investigating A VIX Trading Signal, Part 1: VIX And VVIX"
-                        data-key="investigating-a-vix-trading-signal-part-1-vix-and-vvix" 
-                        data-hash="md5-bCa7qhV70E5VVS0IwK&#43;CNQ==">
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Investigating A VIX Trading Signal, Part 1: VIX And VVIX</h2>
-        </div>
-    </a>
-</article>
-
-            
         </div>
     </div>
 </aside>
@@ -1599,7 +1605,7 @@ The pdf export of the jupyter notebook is available <a class="link" href="automa
     
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.31.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.32.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
     </section>
 </footer>
 
@@ -1688,7 +1694,7 @@ The pdf export of the jupyter notebook is available <a class="link" href="automa
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.c922af694cc257bf1ecc41c0dd7b0430f9114ec280ccf67cd2c6ad55f5316c4e.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

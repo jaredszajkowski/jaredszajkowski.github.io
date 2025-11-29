@@ -23,7 +23,7 @@ def coinbase_fetch_historical_candles(
     end : str
         End time in UTC.
     granularity : int
-        Time slice in seconds (e.g., 3600 for hourly candles).
+        Time slice in seconds (e.g., 60 for minute candles, 3600 for hourly candles, 86,400 for daily candles).
 
     Returns:
     --------
@@ -83,8 +83,8 @@ if __name__ == "__main__":
     df = coinbase_fetch_historical_candles(
         product_id="BTC-USD",
         start=datetime(2025, 1, 1),
-        end=datetime(2025, 1, 1),
-        granularity=86_400,
+        end=datetime(2025, 1, 2),
+        granularity=3_600,
     )
 
     if df is not None:
