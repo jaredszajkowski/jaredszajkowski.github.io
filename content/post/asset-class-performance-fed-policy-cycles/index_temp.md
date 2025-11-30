@@ -716,6 +716,8 @@ Which gives us:
 
 <!-- INSERT_05_Portfolio_DF_HERE -->
 
+Next, we'll look at performance for the assets and portfolio.
+
 ### Performance Statistics
 
 We can then plot the monthly returns:
