@@ -353,6 +353,7 @@ Which gives us:
 | 10 | Cycle 11 | 2024-08-01 | 2025-11-30 |       15 |               0.26 |                 25.72 |                   0.02 |                      1.59 |               0.20 |                 20.09 |         0.11 |            -0.01 |              -124.00 |                  -0.01 |                     -99.20 | Cycle 11, 2024-08-01 to 2025-11-30 |
 
 This gives us the following data points:
+
 * Cycle start date
 * Cycle end date
 * Number of months in the cycle
@@ -578,6 +579,7 @@ Which gives us:
 | 10 | Cycle 11 | 2024-08-01 | 2025-11-30 |       15 |               0.00 |                  0.42 |                   0.00 |                      0.08 |               0.00 |                  0.33 |         0.11 |            -0.01 |              -124.00 |                  -0.01 |                     -99.20 | Cycle 11, 2024-08-01 to 2025-11-30 |
 
 This gives us the following data points:
+
 * Cycle start date
 * Cycle end date
 * Number of months in the cycle
@@ -805,6 +807,7 @@ Which gives us:
 | 10 | Cycle 11 | 2024-08-01 | 2025-11-30 |       15 |               0.62 |                 62.49 |                   0.03 |                      3.36 |               0.47 |                 47.46 |         0.14 |            -0.01 |              -124.00 |                  -0.01 |                     -99.20 | Cycle 11, 2024-08-01 to 2025-11-30 |
 
 This gives us the following data points:
+
 * Cycle start date
 * Cycle end date
 * Number of months in the cycle
@@ -1096,6 +1099,7 @@ Based on the above, our hybrid portfolio outperforms both stocks and bonds, and 
 ## Future Investigation
 
 A couple of ideas sound intriguing for future investigation:
+
 * Do investment grade or high yield bonds show a different behavior than the long term US treasury bonds?
 * Does a commodity index (such as GSCI) exhibit differing behavior than gold?
 * How does leverage affect the returns that are observed for the hybrid portfolio, stocks, and bonds?

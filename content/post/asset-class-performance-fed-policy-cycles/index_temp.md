@@ -257,6 +257,7 @@ Which gives us:
 <!-- INSERT_02_SPY_Cycle_DF_HERE -->
 
 This gives us the following data points:
+
 * Cycle start date
 * Cycle end date
 * Number of months in the cycle
@@ -406,6 +407,7 @@ Which gives us:
 <!-- INSERT_03_TLT_Cycle_DF_HERE -->
 
 This gives us the following data points:
+
 * Cycle start date
 * Cycle end date
 * Number of months in the cycle
@@ -557,6 +559,7 @@ Which gives us:
 <!-- INSERT_04_GLD_Cycle_DF_HERE -->
 
 This gives us the following data points:
+
 * Cycle start date
 * Cycle end date
 * Number of months in the cycle
@@ -777,6 +780,7 @@ Based on the above, our hybrid portfolio outperforms both stocks and bonds, and 
 ## Future Investigation
 
 A couple of ideas sound intriguing for future investigation:
+
 * Do investment grade or high yield bonds show a different behavior than the long term US treasury bonds?
 * Does a commodity index (such as GSCI) exhibit differing behavior than gold?
 * How does leverage affect the returns that are observed for the hybrid portfolio, stocks, and bonds?
