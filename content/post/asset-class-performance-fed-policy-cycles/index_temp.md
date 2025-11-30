@@ -65,7 +65,7 @@ This gives us:
 We can then generate several useful visual aids (plots). First, the FFR from the beginning of our data set (11/2004):
 
 ```python
-plot_price(
+plot_timeseries(
     price_df=fedfunds_monthly,
     plot_start_date=start_date,
     plot_end_date=end_date,
@@ -89,7 +89,7 @@ plot_price(
 And then the change in FFR from month-to-month:
 
 ```python
-plot_price(
+plot_timeseries(
     price_df=fedfunds_monthly,
     plot_start_date=start_date,
     plot_end_date=end_date,
@@ -220,7 +220,7 @@ Gives us the following:
 Next, we can plot the price history before calculating the cycle performance:
 
 ```python
-plot_price(
+plot_timeseries(
     price_df=spy,
     plot_start_date=start_date,
     plot_end_date=end_date,
@@ -369,7 +369,7 @@ Gives us the following:
 Next, we can plot the price history before calculating the cycle performance:
 
 ```python
-plot_price(
+plot_timeseries(
     price_df=tlt,
     plot_start_date=start_date,
     plot_end_date=end_date,
@@ -520,7 +520,7 @@ Gives us the following:
 Next, we can plot the price history before calculating the cycle performance:
 
 ```python
-plot_price(
+plot_timeseries(
     price_df=gld,
     plot_start_date=start_date,
     plot_end_date=end_date,
