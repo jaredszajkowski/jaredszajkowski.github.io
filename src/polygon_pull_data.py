@@ -15,6 +15,7 @@ api_keys = load_api_keys()
 # Get the environment variable for where data is stored
 DATA_DIR = config("DATA_DIR")
 
+
 def polygon_pull_data(
     base_directory,
     ticker: str,
@@ -31,7 +32,6 @@ def polygon_pull_data(
     pickle_export: bool,
     output_confirmation: bool,
 ) -> pd.DataFrame:
-    
     """
     Read existing data file, download price data from Polygon, and export data.
 
@@ -94,17 +94,17 @@ def polygon_pull_data(
         existing_history_df = pd.read_pickle(file_location)
 
         # Reset index if 'Date' is column is the index
-        if 'Date' not in existing_history_df.columns:
+        if "Date" not in existing_history_df.columns:
             existing_history_df = existing_history_df.reset_index()
 
         print(f"File found...updating the {ticker} {timespan} data.")
 
-        if verbose ==True:
+        if verbose == True:
             print("Existing data:")
             print(existing_history_df)
 
         # Find last date in existing data
-        last_data_date = existing_history_df['Date'].max()
+        last_data_date = existing_history_df["Date"].max()
         print(f"Last date in existing data: {last_data_date}")
 
         starting_rows = len(existing_history_df)
@@ -118,17 +118,19 @@ def polygon_pull_data(
         print(f"File not found...downloading the {ticker} {timespan} data.")
 
         # Create an empty DataFrame
-        existing_history_df = pd.DataFrame({
-            'Date': pd.Series(dtype="datetime64[ns]"),
-            'open': pd.Series(dtype="float64"),
-            'high': pd.Series(dtype="float64"),
-            'low': pd.Series(dtype="float64"),
-            'close': pd.Series(dtype="float64"),
-            'volume': pd.Series(dtype="float64"),
-            'vwap': pd.Series(dtype="float64"),
-            'transactions': pd.Series(dtype="int64"),
-            'otc': pd.Series(dtype="object")
-        })
+        existing_history_df = pd.DataFrame(
+            {
+                "Date": pd.Series(dtype="datetime64[ns]"),
+                "open": pd.Series(dtype="float64"),
+                "high": pd.Series(dtype="float64"),
+                "low": pd.Series(dtype="float64"),
+                "close": pd.Series(dtype="float64"),
+                "volume": pd.Series(dtype="float64"),
+                "vwap": pd.Series(dtype="float64"),
+                "transactions": pd.Series(dtype="int64"),
+                "otc": pd.Series(dtype="object"),
+            }
+        )
 
         # Set current date to start date
         current_start = start_date
@@ -181,11 +183,16 @@ def polygon_pull_data(
 
     return full_history_df
 
+
 if __name__ == "__main__":
 
+    # Get current year, month, day
     current_year = datetime.now().year
     current_month = datetime.now().month
     current_day = datetime.now().day
+
+    # Set global variable for free tier
+    GLOBAL_FREE_TIER = True
 
     # Stock Data
     equities = ["AMZN", "AAPL"]
@@ -203,14 +210,17 @@ if __name__ == "__main__":
             multiplier=1,
             adjusted=True,
             force_existing_check=False,
-            free_tier=True,
+            free_tier=GLOBAL_FREE_TIER,
             verbose=False,
             excel_export=True,
             pickle_export=True,
             output_confirmation=True,
         )
 
-        time.sleep(12)
+        if GLOBAL_FREE_TIER == True:
+            time.sleep(12)
+        else:
+            pass
 
         # Example usage - hourly
         polygon_pull_data(
@@ -223,14 +233,17 @@ if __name__ == "__main__":
             multiplier=1,
             adjusted=True,
             force_existing_check=False,
-            free_tier=True,
+            free_tier=GLOBAL_FREE_TIER,
             verbose=False,
             excel_export=True,
             pickle_export=True,
             output_confirmation=True,
         )
 
-        time.sleep(12)
+        if GLOBAL_FREE_TIER == True:
+            time.sleep(12)
+        else:
+            pass
 
         # Example usage - daily
         polygon_pull_data(
@@ -243,11 +256,15 @@ if __name__ == "__main__":
             multiplier=1,
             adjusted=True,
             force_existing_check=False,
-            free_tier=True,
+            free_tier=GLOBAL_FREE_TIER,
             verbose=False,
             excel_export=True,
             pickle_export=True,
             output_confirmation=True,
         )
 
-        time.sleep(12)
+        if GLOBAL_FREE_TIER == True:
+            time.sleep(12)
+        else:
+            pass
+        
