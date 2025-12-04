@@ -202,6 +202,8 @@ fed_changes_df = pd.DataFrame({
 })
 ```
 
+Which gives us the following cycles and cumulative change in rate per cycle:
+
 |    | Cycle    |   FedFunds_Change |
 |---:|:---------|------------------:|
 |  0 | Cycle 1  |            0.0331 |
@@ -214,15 +216,15 @@ fed_changes_df = pd.DataFrame({
 |  7 | Cycle 8  |            0.0003 |
 |  8 | Cycle 9  |            0.0525 |
 |  9 | Cycle 10 |            0.0000 |
-| 10 | Cycle 11 |           -0.0124 |
+| 10 | Cycle 11 |           -0.0145 |
 
 ## Return Performance By Fed Policy Cycle
 
-Moving on, we will now look at the performance of three (3) asset classes during each Fed cycle. We'll use SPY as a proxy for stocks, TLT as a proxy for bonds, and GLD as a proxy for gold. These datasets are slightly limiting due to the availability of all 3 starting in late 2004, but will work for our simple exercise.
+Moving on, we will now look at the performance of three (3) different asset classes during each Fed cycle. We'll use SPY as a proxy for stocks, TLT as a proxy for bonds, and GLD as a proxy for gold. These datasets are slightly limiting due to the availability of all 3 starting in late 2004, but will work for our simple exercise. In a future post, we'll look to use Bloomberg indices instead.
 
 ### Stocks (SPY)
 
-First, we pull data with the following:
+First, we pull data for SPY with the following:
 
 ```python
 # Set decimal places
@@ -259,7 +261,7 @@ spy_monthly = spy.resample("M").last()
 spy_monthly["Monthly_Return"] = spy_monthly["Close"].pct_change()
 ```
 
-Gives us the following:
+Which gives us the following:
 
 ```text
 The columns, shape, and data types are:
@@ -350,7 +352,7 @@ Which gives us:
 |  7 | Cycle 8  | 2020-04-01 | 2022-02-01 |       22 |               0.79 |                 79.13 |                   0.03 |                      2.78 |               0.37 |                 37.43 |         0.16 |             0.00 |                 3.00 |                   0.00 |                       1.64 | Cycle 8, 2020-04-01 to 2022-02-01  |
 |  8 | Cycle 9  | 2022-02-01 | 2023-08-01 |       18 |               0.04 |                  4.18 |                   0.00 |                      0.40 |               0.03 |                  2.77 |         0.21 |             0.05 |               525.00 |                   0.03 |                     350.00 | Cycle 9, 2022-02-01 to 2023-08-01  |
 |  9 | Cycle 10 | 2023-08-01 | 2024-08-01 |       12 |               0.22 |                 22.00 |                   0.02 |                      1.75 |               0.22 |                 22.00 |         0.15 |             0.00 |                 0.00 |                   0.00 |                       0.00 | Cycle 10, 2023-08-01 to 2024-08-01 |
-| 10 | Cycle 11 | 2024-08-01 | 2025-11-30 |       15 |               0.26 |                 25.72 |                   0.02 |                      1.59 |               0.20 |                 20.09 |         0.11 |            -0.01 |              -124.00 |                  -0.01 |                     -99.20 | Cycle 11, 2024-08-01 to 2025-11-30 |
+| 10 | Cycle 11 | 2024-08-01 | 2025-12-04 |       15 |               0.26 |                 25.72 |                   0.02 |                      1.59 |               0.20 |                 20.09 |         0.11 |            -0.01 |              -145.00 |                  -0.01 |                    -116.00 | Cycle 11, 2024-08-01 to 2025-12-04 |
 
 This gives us the following data points:
 
@@ -364,15 +366,15 @@ This gives us the following data points:
 * Cumulative change in FFR during the cycle (decimal and basis points)
 * Annualized change in FFR during the cycle (decimal and basis points)
 
-From the above DataFrame, we can then plot the cumulative and annualized returns for each cycle in a bar chart. First, the cumulative returns:
+From the above DataFrame, we can then plot the cumulative and annualized returns for each cycle in a bar chart. First, the cumulative returns along with the cumulative change in FFR:
 
 ![SPY Cumulative Returns](02_SPY_Cumulative_Returns_FFR_Change.png)
 
-And then the annualized returns:
+And then the annualized returns along with the annualized change in FFR:
 
 ![SPY Annualized Returns](02_SPY_Annualized_Returns_FFR_Change.png)
 
-The cumulative returns plot is not particularly insightful, but there are some interesting observations to be gained from the annualized returns plot. During the past two (2) rate cutting cycles (cycles 3 and 7), the stocks have exhibited negative returns during the rate cutting cycle. However, after the rate cutting cycle was complete, the following returns were quite strong and higher than the historical mean return for the S&P 500. The economic intuition for this behavior is valid; as the economy weakens, the stock market falls, the returns become negative, and the Fed responds with cutting rates.
+The cumulative returns plot is not particularly insightful, but there are some interesting observations to be gained from the annualized returns plot. During the past two (2) rate cutting cycles (cycles 3 and 7), stocks have exhibited negative returns during the rate cutting cycle. However, after the rate cutting cycle was complete, returns during the following cycle (when rates were usually flat) were quite strong and higher than the historical mean return for the S&P 500. The economic intuition for this behavior is valid; as the economy weakens, investors are concerned about the pricing of equities, the returns become negative, and the Fed responds with cutting rates. The exact timing of when the Fed begins cutting rates is one of the unknowns; the Fed could be ahead of the curve, cutting rates as economic data begins to prompt that action, or behind the curve, where the ecomony rolls over rapidly and even the Fed's actions are not enough to halt the economic contraction.
 
 Finally, we can run an OLS regression to check fit:
 
@@ -401,25 +403,25 @@ Which gives us the results of the OLS regression:
 ```
                              OLS Regression Results                            
 ===============================================================================
-Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.184
-Model:                             OLS   Adj. R-squared:                  0.093
-Method:                  Least Squares   F-statistic:                     2.031
-Date:                 Sun, 30 Nov 2025   Prob (F-statistic):              0.188
-Time:                         07:50:16   Log-Likelihood:                -47.144
-No. Observations:                   11   AIC:                             98.29
-Df Residuals:                        9   BIC:                             99.08
+Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.180
+Model:                             OLS   Adj. R-squared:                  0.089
+Method:                  Least Squares   F-statistic:                     1.973
+Date:                 Thu, 04 Dec 2025   Prob (F-statistic):              0.194
+Time:                         14:45:19   Log-Likelihood:                -47.173
+No. Observations:                   11   AIC:                             98.35
+Df Residuals:                        9   BIC:                             99.14
 Df Model:                            1                                         
 Covariance Type:             nonrobust                                         
 ============================================================================================
                                coef    std err          t      P>|t|      [0.025      0.975]
 --------------------------------------------------------------------------------------------
-const                       12.3840      5.875      2.108      0.064      -0.907      25.675
-FFR_AnnualizedChange_bps     0.0437      0.031      1.425      0.188      -0.026       0.113
+const                       12.4404      5.894      2.111      0.064      -0.893      25.774
+FFR_AnnualizedChange_bps     0.0430      0.031      1.405      0.194      -0.026       0.112
 ==============================================================================
-Omnibus:                        1.011   Durbin-Watson:                   3.089
-Prob(Omnibus):                  0.603   Jarque-Bera (JB):                0.652
-Skew:                           0.032   Prob(JB):                        0.722
-Kurtosis:                       1.809   Cond. No.                         192.
+Omnibus:                        1.065   Durbin-Watson:                   3.078
+Prob(Omnibus):                  0.587   Jarque-Bera (JB):                0.665
+Skew:                           0.026   Prob(JB):                        0.717
+Kurtosis:                       1.796   Cond. No.                         193.
 ==============================================================================
 
 Notes:
@@ -443,6 +445,8 @@ plot_scatter_regression_ffr_vs_returns(
 Which gives us:
 
 ![SPY Regression - Annualized Returns On Annualized Change In FFR](02_SPY_Regression_FFR_vs_Returns.png)
+
+Here we can see the data points for cycles 3 and 7 as mentioned above. Ignoring the data points where the annualized change in FFR is roughly zero (cycles 2, 4, 6, 8, and 10), cycles 1, 5, and 9 fit the economic thesis above, and cycle 11 (which is the current rate cutting cycle), stands as an outlier. Of course, the book is not yet finished for cycle 11, and we could certainly see a bear market in stocks over the next several years.
 
 ### Bonds (TLT)
 
@@ -511,21 +515,21 @@ The first 5 rows are:
 
 | Date                |   Close |   High |   Low |   Open |     Volume |   Monthly_Return |
 |:--------------------|--------:|-------:|------:|-------:|-----------:|-----------------:|
-| 2004-11-30 00:00:00 |   44.13 |  44.24 | 43.97 |  44.13 | 1754500.00 |           nan    |
-| 2004-12-31 00:00:00 |   45.30 |  45.35 | 45.17 |  45.21 | 1056400.00 |             0.03 |
-| 2005-01-31 00:00:00 |   46.92 |  46.94 | 46.70 |  46.72 | 1313900.00 |             0.04 |
-| 2005-02-28 00:00:00 |   46.22 |  46.78 | 46.16 |  46.78 | 2797300.00 |            -0.01 |
-| 2005-03-31 00:00:00 |   46.01 |  46.05 | 45.77 |  45.95 | 2410900.00 |            -0.00 |
+| 2004-11-30 00:00:00 |   43.97 |  44.08 | 43.81 |  43.97 | 1754500.00 |           nan    |
+| 2004-12-31 00:00:00 |   45.14 |  45.19 | 45.01 |  45.05 | 1056400.00 |             0.03 |
+| 2005-01-31 00:00:00 |   46.75 |  46.77 | 46.53 |  46.55 | 1313900.00 |             0.04 |
+| 2005-02-28 00:00:00 |   46.06 |  46.61 | 45.99 |  46.61 | 2797300.00 |            -0.01 |
+| 2005-03-31 00:00:00 |   45.85 |  45.88 | 45.61 |  45.78 | 2410900.00 |            -0.00 |
 
 The last 5 rows are:
 
 | Date                |   Close |   High |   Low |   Open |      Volume |   Monthly_Return |
 |:--------------------|--------:|-------:|------:|-------:|------------:|-----------------:|
-| 2025-06-30 00:00:00 |   86.64 |  86.83 | 86.01 |  86.26 | 53695200.00 |             0.03 |
-| 2025-07-31 00:00:00 |   85.65 |  86.14 | 85.57 |  85.86 | 49814100.00 |            -0.01 |
-| 2025-08-31 00:00:00 |   85.66 |  85.92 | 85.51 |  85.82 | 41686400.00 |             0.00 |
-| 2025-09-30 00:00:00 |   88.74 |  89.40 | 88.58 |  89.03 | 38584000.00 |             0.04 |
-| 2025-10-31 00:00:00 |   89.96 |  90.33 | 89.88 |  90.23 | 38247300.00 |             0.01 |
+| 2025-06-30 00:00:00 |   86.33 |  86.52 | 85.71 |  85.95 | 53695200.00 |             0.03 |
+| 2025-07-31 00:00:00 |   85.35 |  85.83 | 85.27 |  85.55 | 49814100.00 |            -0.01 |
+| 2025-08-31 00:00:00 |   85.36 |  85.61 | 85.20 |  85.52 | 41686400.00 |             0.00 |
+| 2025-09-30 00:00:00 |   88.42 |  89.09 | 88.27 |  88.71 | 38584000.00 |             0.04 |
+| 2025-10-31 00:00:00 |   89.64 |  90.01 | 89.56 |  89.91 | 38247300.00 |             0.01 |
 
 Next, we can plot the price history before calculating the cycle performance:
 
@@ -576,7 +580,7 @@ Which gives us:
 |  7 | Cycle 8  | 2020-04-01 | 2022-02-01 |       22 |              -0.11 |                -11.33 |                  -0.00 |                     -0.50 |              -0.06 |                 -6.35 |         0.11 |             0.00 |                 3.00 |                   0.00 |                       1.64 | Cycle 8, 2020-04-01 to 2022-02-01  |
 |  8 | Cycle 9  | 2022-02-01 | 2023-08-01 |       18 |              -0.27 |                -26.96 |                  -0.02 |                     -1.62 |              -0.19 |                -18.90 |         0.17 |             0.05 |               525.00 |                   0.03 |                     350.00 | Cycle 9, 2022-02-01 to 2023-08-01  |
 |  9 | Cycle 10 | 2023-08-01 | 2024-08-01 |       12 |              -0.02 |                 -1.52 |                   0.00 |                      0.02 |              -0.02 |                 -1.52 |         0.20 |             0.00 |                 0.00 |                   0.00 |                       0.00 | Cycle 10, 2023-08-01 to 2024-08-01 |
-| 10 | Cycle 11 | 2024-08-01 | 2025-11-30 |       15 |               0.00 |                  0.42 |                   0.00 |                      0.08 |               0.00 |                  0.33 |         0.11 |            -0.01 |              -124.00 |                  -0.01 |                     -99.20 | Cycle 11, 2024-08-01 to 2025-11-30 |
+| 10 | Cycle 11 | 2024-08-01 | 2025-12-04 |       15 |               0.00 |                  0.42 |                   0.00 |                      0.08 |               0.00 |                  0.33 |         0.11 |            -0.01 |              -145.00 |                  -0.01 |                    -116.00 | Cycle 11, 2024-08-01 to 2025-12-04 |
 
 This gives us the following data points:
 
@@ -627,25 +631,25 @@ Which gives us the results of the OLS regression:
 ```
                              OLS Regression Results                            
 ===============================================================================
-Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.634
-Model:                             OLS   Adj. R-squared:                  0.593
-Method:                  Least Squares   F-statistic:                     15.56
-Date:                 Sun, 30 Nov 2025   Prob (F-statistic):            0.00338
-Time:                         07:50:20   Log-Likelihood:                -39.515
-No. Observations:                   11   AIC:                             83.03
-Df Residuals:                        9   BIC:                             83.83
+Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.623
+Model:                             OLS   Adj. R-squared:                  0.582
+Method:                  Least Squares   F-statistic:                     14.90
+Date:                 Thu, 04 Dec 2025   Prob (F-statistic):            0.00385
+Time:                         14:45:23   Log-Likelihood:                -39.665
+No. Observations:                   11   AIC:                             83.33
+Df Residuals:                        9   BIC:                             84.13
 Df Model:                            1                                         
 Covariance Type:             nonrobust                                         
 ============================================================================================
                                coef    std err          t      P>|t|      [0.025      0.975]
 --------------------------------------------------------------------------------------------
-const                        5.5490      2.937      1.890      0.091      -1.094      12.192
-FFR_AnnualizedChange_bps    -0.0604      0.015     -3.944      0.003      -0.095      -0.026
+const                        5.4676      2.978      1.836      0.100      -1.270      12.205
+FFR_AnnualizedChange_bps    -0.0597      0.015     -3.860      0.004      -0.095      -0.025
 ==============================================================================
-Omnibus:                        0.797   Durbin-Watson:                   1.248
-Prob(Omnibus):                  0.671   Jarque-Bera (JB):                0.712
-Skew:                           0.441   Prob(JB):                        0.701
-Kurtosis:                       2.121   Cond. No.                         192.
+Omnibus:                        0.710   Durbin-Watson:                   1.219
+Prob(Omnibus):                  0.701   Jarque-Bera (JB):                0.663
+Skew:                           0.412   Prob(JB):                        0.718
+Kurtosis:                       2.123   Cond. No.                         193.
 ==============================================================================
 
 Notes:
@@ -804,7 +808,7 @@ Which gives us:
 |  7 | Cycle 8  | 2020-04-01 | 2022-02-01 |       22 |               0.14 |                 13.54 |                   0.01 |                      0.69 |               0.07 |                  7.17 |         0.16 |             0.00 |                 3.00 |                   0.00 |                       1.64 | Cycle 8, 2020-04-01 to 2022-02-01  |
 |  8 | Cycle 9  | 2022-02-01 | 2023-08-01 |       18 |               0.08 |                  8.48 |                   0.01 |                      0.53 |               0.06 |                  5.58 |         0.14 |             0.05 |               525.00 |                   0.03 |                     350.00 | Cycle 9, 2022-02-01 to 2023-08-01  |
 |  9 | Cycle 10 | 2023-08-01 | 2024-08-01 |       12 |               0.24 |                 24.24 |                   0.02 |                      1.89 |               0.24 |                 24.24 |         0.13 |             0.00 |                 0.00 |                   0.00 |                       0.00 | Cycle 10, 2023-08-01 to 2024-08-01 |
-| 10 | Cycle 11 | 2024-08-01 | 2025-11-30 |       15 |               0.62 |                 62.49 |                   0.03 |                      3.36 |               0.47 |                 47.46 |         0.14 |            -0.01 |              -124.00 |                  -0.01 |                     -99.20 | Cycle 11, 2024-08-01 to 2025-11-30 |
+| 10 | Cycle 11 | 2024-08-01 | 2025-12-04 |       15 |               0.62 |                 62.49 |                   0.03 |                      3.36 |               0.47 |                 47.46 |         0.14 |            -0.01 |              -145.00 |                  -0.01 |                    -116.00 | Cycle 11, 2024-08-01 to 2025-12-04 |
 
 This gives us the following data points:
 
@@ -855,25 +859,25 @@ Which gives us the results of the OLS regression:
 ```
                              OLS Regression Results                            
 ===============================================================================
-Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.073
-Model:                             OLS   Adj. R-squared:                 -0.030
-Method:                  Least Squares   F-statistic:                    0.7118
-Date:                 Sun, 30 Nov 2025   Prob (F-statistic):              0.421
-Time:                         07:50:25   Log-Likelihood:                -42.895
-No. Observations:                   11   AIC:                             89.79
-Df Residuals:                        9   BIC:                             90.59
+Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.084
+Model:                             OLS   Adj. R-squared:                 -0.018
+Method:                  Least Squares   F-statistic:                    0.8274
+Date:                 Thu, 04 Dec 2025   Prob (F-statistic):              0.387
+Time:                         14:45:27   Log-Likelihood:                -42.830
+No. Observations:                   11   AIC:                             89.66
+Df Residuals:                        9   BIC:                             90.46
 Df Model:                            1                                         
 Covariance Type:             nonrobust                                         
 ============================================================================================
                                coef    std err          t      P>|t|      [0.025      0.975]
 --------------------------------------------------------------------------------------------
-const                       15.2394      3.993      3.817      0.004       6.207      24.272
-FFR_AnnualizedChange_bps    -0.0176      0.021     -0.844      0.421      -0.065       0.030
+const                       15.1947      3.972      3.826      0.004       6.210      24.179
+FFR_AnnualizedChange_bps    -0.0187      0.021     -0.910      0.387      -0.065       0.028
 ==============================================================================
-Omnibus:                        8.464   Durbin-Watson:                   0.918
-Prob(Omnibus):                  0.015   Jarque-Bera (JB):                3.915
-Skew:                           1.356   Prob(JB):                        0.141
-Kurtosis:                       4.091   Cond. No.                         192.
+Omnibus:                        8.035   Durbin-Watson:                   0.915
+Prob(Omnibus):                  0.018   Jarque-Bera (JB):                3.686
+Skew:                           1.328   Prob(JB):                        0.158
+Kurtosis:                       3.993   Cond. No.                         193.
 ==============================================================================
 
 Notes:

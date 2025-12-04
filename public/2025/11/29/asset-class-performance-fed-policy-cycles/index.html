@@ -390,7 +390,7 @@
 
 
                 <time class="article-time--reading">
-                    25 minute read
+                    26 minute read
                 </time>
             </div>
         
@@ -771,7 +771,8 @@
 </span></span><span class="line"><span class="cl"><span class="p">})</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><div class="table-wrapper"><table>
+</div><p>Which gives us the following cycles and cumulative change in rate per cycle:</p>
+<div class="table-wrapper"><table>
   <thead>
       <tr>
           <th style="text-align: right"></th>
@@ -833,14 +834,14 @@
       <tr>
           <td style="text-align: right">10</td>
           <td style="text-align: left">Cycle 11</td>
-          <td style="text-align: right">-0.0124</td>
+          <td style="text-align: right">-0.0145</td>
       </tr>
   </tbody>
 </table></div>
 <h2 id="return-performance-by-fed-policy-cycle">Return Performance By Fed Policy Cycle
-</h2><p>Moving on, we will now look at the performance of three (3) asset classes during each Fed cycle. We&rsquo;ll use SPY as a proxy for stocks, TLT as a proxy for bonds, and GLD as a proxy for gold. These datasets are slightly limiting due to the availability of all 3 starting in late 2004, but will work for our simple exercise.</p>
+</h2><p>Moving on, we will now look at the performance of three (3) different asset classes during each Fed cycle. We&rsquo;ll use SPY as a proxy for stocks, TLT as a proxy for bonds, and GLD as a proxy for gold. These datasets are slightly limiting due to the availability of all 3 starting in late 2004, but will work for our simple exercise. In a future post, we&rsquo;ll look to use Bloomberg indices instead.</p>
 <h3 id="stocks-spy">Stocks (SPY)
-</h3><p>First, we pull data with the following:</p>
+</h3><p>First, we pull data for SPY with the following:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -908,7 +909,7 @@
 </span></span><span class="line"><span class="cl"><span class="n">spy_monthly</span><span class="p">[</span><span class="s2">&#34;Monthly_Return&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">spy_monthly</span><span class="p">[</span><span class="s2">&#34;Close&#34;</span><span class="p">]</span><span class="o">.</span><span class="n">pct_change</span><span class="p">()</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>Gives us the following:</p>
+</div><p>Which gives us the following:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1361,7 +1362,7 @@
           <td style="text-align: right">10</td>
           <td style="text-align: left">Cycle 11</td>
           <td style="text-align: left">2024-08-01</td>
-          <td style="text-align: left">2025-11-30</td>
+          <td style="text-align: left">2025-12-04</td>
           <td style="text-align: right">15</td>
           <td style="text-align: right">0.26</td>
           <td style="text-align: right">25.72</td>
@@ -1371,10 +1372,10 @@
           <td style="text-align: right">20.09</td>
           <td style="text-align: right">0.11</td>
           <td style="text-align: right">-0.01</td>
-          <td style="text-align: right">-124.00</td>
+          <td style="text-align: right">-145.00</td>
           <td style="text-align: right">-0.01</td>
-          <td style="text-align: right">-99.20</td>
-          <td style="text-align: left">Cycle 11, 2024-08-01 to 2025-11-30</td>
+          <td style="text-align: right">-116.00</td>
+          <td style="text-align: left">Cycle 11, 2024-08-01 to 2025-12-04</td>
       </tr>
   </tbody>
 </table></div>
@@ -1390,7 +1391,7 @@
 <li>Cumulative change in FFR during the cycle (decimal and basis points)</li>
 <li>Annualized change in FFR during the cycle (decimal and basis points)</li>
 </ul>
-<p>From the above DataFrame, we can then plot the cumulative and annualized returns for each cycle in a bar chart. First, the cumulative returns:</p>
+<p>From the above DataFrame, we can then plot the cumulative and annualized returns for each cycle in a bar chart. First, the cumulative returns along with the cumulative change in FFR:</p>
 <p><img src="/2025/11/29/asset-class-performance-fed-policy-cycles/02_SPY_Cumulative_Returns_FFR_Change.png"
 	width="3548"
 	height="2369"
@@ -1405,7 +1406,7 @@
 		data-flex-basis="359px"
 	
 ></p>
-<p>And then the annualized returns:</p>
+<p>And then the annualized returns along with the annualized change in FFR:</p>
 <p><img src="/2025/11/29/asset-class-performance-fed-policy-cycles/02_SPY_Annualized_Returns_FFR_Change.png"
 	width="3540"
 	height="2369"
@@ -1420,7 +1421,7 @@
 		data-flex-basis="358px"
 	
 ></p>
-<p>The cumulative returns plot is not particularly insightful, but there are some interesting observations to be gained from the annualized returns plot. During the past two (2) rate cutting cycles (cycles 3 and 7), the stocks have exhibited negative returns during the rate cutting cycle. However, after the rate cutting cycle was complete, the following returns were quite strong and higher than the historical mean return for the S&amp;P 500. The economic intuition for this behavior is valid; as the economy weakens, the stock market falls, the returns become negative, and the Fed responds with cutting rates.</p>
+<p>The cumulative returns plot is not particularly insightful, but there are some interesting observations to be gained from the annualized returns plot. During the past two (2) rate cutting cycles (cycles 3 and 7), stocks have exhibited negative returns during the rate cutting cycle. However, after the rate cutting cycle was complete, returns during the following cycle (when rates were usually flat) were quite strong and higher than the historical mean return for the S&amp;P 500. The economic intuition for this behavior is valid; as the economy weakens, investors are concerned about the pricing of equities, the returns become negative, and the Fed responds with cutting rates. The exact timing of when the Fed begins cutting rates is one of the unknowns; the Fed could be ahead of the curve, cutting rates as economic data begins to prompt that action, or behind the curve, where the ecomony rolls over rapidly and even the Fed&rsquo;s actions are not enough to halt the economic contraction.</p>
 <p>Finally, we can run an OLS regression to check fit:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1494,25 +1495,25 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">                             <span class="n">OLS</span> <span class="n">Regression</span> <span class="n">Results</span>                            
 </span></span><span class="line"><span class="cl"><span class="o">===============================================================================</span>
-</span></span><span class="line"><span class="cl"><span class="n">Dep</span><span class="o">.</span> <span class="n">Variable</span><span class="p">:</span>     <span class="n">AnnualizedReturnPct</span>   <span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="p">:</span>                       <span class="mf">0.184</span>
-</span></span><span class="line"><span class="cl"><span class="n">Model</span><span class="p">:</span>                             <span class="n">OLS</span>   <span class="n">Adj</span><span class="o">.</span> <span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="p">:</span>                  <span class="mf">0.093</span>
-</span></span><span class="line"><span class="cl"><span class="n">Method</span><span class="p">:</span>                  <span class="n">Least</span> <span class="n">Squares</span>   <span class="n">F</span><span class="o">-</span><span class="n">statistic</span><span class="p">:</span>                     <span class="mf">2.031</span>
-</span></span><span class="line"><span class="cl"><span class="n">Date</span><span class="p">:</span>                 <span class="n">Sun</span><span class="p">,</span> <span class="mi">30</span> <span class="n">Nov</span> <span class="mi">2025</span>   <span class="n">Prob</span> <span class="p">(</span><span class="n">F</span><span class="o">-</span><span class="n">statistic</span><span class="p">):</span>              <span class="mf">0.188</span>
-</span></span><span class="line"><span class="cl"><span class="n">Time</span><span class="p">:</span>                         <span class="mi">07</span><span class="p">:</span><span class="mi">50</span><span class="p">:</span><span class="mi">16</span>   <span class="n">Log</span><span class="o">-</span><span class="n">Likelihood</span><span class="p">:</span>                <span class="o">-</span><span class="mf">47.144</span>
-</span></span><span class="line"><span class="cl"><span class="n">No</span><span class="o">.</span> <span class="n">Observations</span><span class="p">:</span>                   <span class="mi">11</span>   <span class="n">AIC</span><span class="p">:</span>                             <span class="mf">98.29</span>
-</span></span><span class="line"><span class="cl"><span class="n">Df</span> <span class="n">Residuals</span><span class="p">:</span>                        <span class="mi">9</span>   <span class="n">BIC</span><span class="p">:</span>                             <span class="mf">99.08</span>
+</span></span><span class="line"><span class="cl"><span class="n">Dep</span><span class="o">.</span> <span class="n">Variable</span><span class="p">:</span>     <span class="n">AnnualizedReturnPct</span>   <span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="p">:</span>                       <span class="mf">0.180</span>
+</span></span><span class="line"><span class="cl"><span class="n">Model</span><span class="p">:</span>                             <span class="n">OLS</span>   <span class="n">Adj</span><span class="o">.</span> <span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="p">:</span>                  <span class="mf">0.089</span>
+</span></span><span class="line"><span class="cl"><span class="n">Method</span><span class="p">:</span>                  <span class="n">Least</span> <span class="n">Squares</span>   <span class="n">F</span><span class="o">-</span><span class="n">statistic</span><span class="p">:</span>                     <span class="mf">1.973</span>
+</span></span><span class="line"><span class="cl"><span class="n">Date</span><span class="p">:</span>                 <span class="n">Thu</span><span class="p">,</span> <span class="mi">04</span> <span class="n">Dec</span> <span class="mi">2025</span>   <span class="n">Prob</span> <span class="p">(</span><span class="n">F</span><span class="o">-</span><span class="n">statistic</span><span class="p">):</span>              <span class="mf">0.194</span>
+</span></span><span class="line"><span class="cl"><span class="n">Time</span><span class="p">:</span>                         <span class="mi">14</span><span class="p">:</span><span class="mi">45</span><span class="p">:</span><span class="mi">19</span>   <span class="n">Log</span><span class="o">-</span><span class="n">Likelihood</span><span class="p">:</span>                <span class="o">-</span><span class="mf">47.173</span>
+</span></span><span class="line"><span class="cl"><span class="n">No</span><span class="o">.</span> <span class="n">Observations</span><span class="p">:</span>                   <span class="mi">11</span>   <span class="n">AIC</span><span class="p">:</span>                             <span class="mf">98.35</span>
+</span></span><span class="line"><span class="cl"><span class="n">Df</span> <span class="n">Residuals</span><span class="p">:</span>                        <span class="mi">9</span>   <span class="n">BIC</span><span class="p">:</span>                             <span class="mf">99.14</span>
 </span></span><span class="line"><span class="cl"><span class="n">Df</span> <span class="n">Model</span><span class="p">:</span>                            <span class="mi">1</span>                                         
 </span></span><span class="line"><span class="cl"><span class="n">Covariance</span> <span class="n">Type</span><span class="p">:</span>             <span class="n">nonrobust</span>                                         
 </span></span><span class="line"><span class="cl"><span class="o">============================================================================================</span>
 </span></span><span class="line"><span class="cl">                               <span class="n">coef</span>    <span class="n">std</span> <span class="n">err</span>          <span class="n">t</span>      <span class="n">P</span><span class="o">&gt;|</span><span class="n">t</span><span class="o">|</span>      <span class="p">[</span><span class="mf">0.025</span>      <span class="mf">0.975</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl"><span class="o">--------------------------------------------------------------------------------------------</span>
-</span></span><span class="line"><span class="cl"><span class="k">const</span>                       <span class="mf">12.3840</span>      <span class="mf">5.875</span>      <span class="mf">2.108</span>      <span class="mf">0.064</span>      <span class="o">-</span><span class="mf">0.907</span>      <span class="mf">25.675</span>
-</span></span><span class="line"><span class="cl"><span class="n">FFR_AnnualizedChange_bps</span>     <span class="mf">0.0437</span>      <span class="mf">0.031</span>      <span class="mf">1.425</span>      <span class="mf">0.188</span>      <span class="o">-</span><span class="mf">0.026</span>       <span class="mf">0.113</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span>                       <span class="mf">12.4404</span>      <span class="mf">5.894</span>      <span class="mf">2.111</span>      <span class="mf">0.064</span>      <span class="o">-</span><span class="mf">0.893</span>      <span class="mf">25.774</span>
+</span></span><span class="line"><span class="cl"><span class="n">FFR_AnnualizedChange_bps</span>     <span class="mf">0.0430</span>      <span class="mf">0.031</span>      <span class="mf">1.405</span>      <span class="mf">0.194</span>      <span class="o">-</span><span class="mf">0.026</span>       <span class="mf">0.112</span>
 </span></span><span class="line"><span class="cl"><span class="o">==============================================================================</span>
-</span></span><span class="line"><span class="cl"><span class="n">Omnibus</span><span class="p">:</span>                        <span class="mf">1.011</span>   <span class="n">Durbin</span><span class="o">-</span><span class="n">Watson</span><span class="p">:</span>                   <span class="mf">3.089</span>
-</span></span><span class="line"><span class="cl"><span class="n">Prob</span><span class="p">(</span><span class="n">Omnibus</span><span class="p">):</span>                  <span class="mf">0.603</span>   <span class="n">Jarque</span><span class="o">-</span><span class="n">Bera</span> <span class="p">(</span><span class="n">JB</span><span class="p">):</span>                <span class="mf">0.652</span>
-</span></span><span class="line"><span class="cl"><span class="n">Skew</span><span class="p">:</span>                           <span class="mf">0.032</span>   <span class="n">Prob</span><span class="p">(</span><span class="n">JB</span><span class="p">):</span>                        <span class="mf">0.722</span>
-</span></span><span class="line"><span class="cl"><span class="n">Kurtosis</span><span class="p">:</span>                       <span class="mf">1.809</span>   <span class="n">Cond</span><span class="o">.</span> <span class="n">No</span><span class="o">.</span>                         <span class="mf">192.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Omnibus</span><span class="p">:</span>                        <span class="mf">1.065</span>   <span class="n">Durbin</span><span class="o">-</span><span class="n">Watson</span><span class="p">:</span>                   <span class="mf">3.078</span>
+</span></span><span class="line"><span class="cl"><span class="n">Prob</span><span class="p">(</span><span class="n">Omnibus</span><span class="p">):</span>                  <span class="mf">0.587</span>   <span class="n">Jarque</span><span class="o">-</span><span class="n">Bera</span> <span class="p">(</span><span class="n">JB</span><span class="p">):</span>                <span class="mf">0.665</span>
+</span></span><span class="line"><span class="cl"><span class="n">Skew</span><span class="p">:</span>                           <span class="mf">0.026</span>   <span class="n">Prob</span><span class="p">(</span><span class="n">JB</span><span class="p">):</span>                        <span class="mf">0.717</span>
+</span></span><span class="line"><span class="cl"><span class="n">Kurtosis</span><span class="p">:</span>                       <span class="mf">1.796</span>   <span class="n">Cond</span><span class="o">.</span> <span class="n">No</span><span class="o">.</span>                         <span class="mf">193.</span>
 </span></span><span class="line"><span class="cl"><span class="o">==============================================================================</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">Notes</span><span class="p">:</span>
@@ -1559,6 +1560,7 @@
 		data-flex-basis="360px"
 	
 ></p>
+<p>Here we can see the data points for cycles 3 and 7 as mentioned above. Ignoring the data points where the annualized change in FFR is roughly zero (cycles 2, 4, 6, 8, and 10), cycles 1, 5, and 9 fit the economic thesis above, and cycle 11 (which is the current rate cutting cycle), stands as an outlier. Of course, the book is not yet finished for cycle 11, and we could certainly see a bear market in stocks over the next several years.</p>
 <h3 id="bonds-tlt">Bonds (TLT)
 </h3><p>Next, we&rsquo;ll run a similar process for long term bonds using TLT as the proxy.</p>
 <p>First, we pull data with the following:</p>
@@ -1684,46 +1686,46 @@
   <tbody>
       <tr>
           <td style="text-align: left">2004-11-30 00:00:00</td>
-          <td style="text-align: right">44.13</td>
-          <td style="text-align: right">44.24</td>
           <td style="text-align: right">43.97</td>
-          <td style="text-align: right">44.13</td>
+          <td style="text-align: right">44.08</td>
+          <td style="text-align: right">43.81</td>
+          <td style="text-align: right">43.97</td>
           <td style="text-align: right">1754500.00</td>
           <td style="text-align: right">nan</td>
       </tr>
       <tr>
           <td style="text-align: left">2004-12-31 00:00:00</td>
-          <td style="text-align: right">45.30</td>
-          <td style="text-align: right">45.35</td>
-          <td style="text-align: right">45.17</td>
-          <td style="text-align: right">45.21</td>
+          <td style="text-align: right">45.14</td>
+          <td style="text-align: right">45.19</td>
+          <td style="text-align: right">45.01</td>
+          <td style="text-align: right">45.05</td>
           <td style="text-align: right">1056400.00</td>
           <td style="text-align: right">0.03</td>
       </tr>
       <tr>
           <td style="text-align: left">2005-01-31 00:00:00</td>
-          <td style="text-align: right">46.92</td>
-          <td style="text-align: right">46.94</td>
-          <td style="text-align: right">46.70</td>
-          <td style="text-align: right">46.72</td>
+          <td style="text-align: right">46.75</td>
+          <td style="text-align: right">46.77</td>
+          <td style="text-align: right">46.53</td>
+          <td style="text-align: right">46.55</td>
           <td style="text-align: right">1313900.00</td>
           <td style="text-align: right">0.04</td>
       </tr>
       <tr>
           <td style="text-align: left">2005-02-28 00:00:00</td>
-          <td style="text-align: right">46.22</td>
-          <td style="text-align: right">46.78</td>
-          <td style="text-align: right">46.16</td>
-          <td style="text-align: right">46.78</td>
+          <td style="text-align: right">46.06</td>
+          <td style="text-align: right">46.61</td>
+          <td style="text-align: right">45.99</td>
+          <td style="text-align: right">46.61</td>
           <td style="text-align: right">2797300.00</td>
           <td style="text-align: right">-0.01</td>
       </tr>
       <tr>
           <td style="text-align: left">2005-03-31 00:00:00</td>
-          <td style="text-align: right">46.01</td>
-          <td style="text-align: right">46.05</td>
-          <td style="text-align: right">45.77</td>
-          <td style="text-align: right">45.95</td>
+          <td style="text-align: right">45.85</td>
+          <td style="text-align: right">45.88</td>
+          <td style="text-align: right">45.61</td>
+          <td style="text-align: right">45.78</td>
           <td style="text-align: right">2410900.00</td>
           <td style="text-align: right">-0.00</td>
       </tr>
@@ -1745,46 +1747,46 @@
   <tbody>
       <tr>
           <td style="text-align: left">2025-06-30 00:00:00</td>
-          <td style="text-align: right">86.64</td>
-          <td style="text-align: right">86.83</td>
-          <td style="text-align: right">86.01</td>
-          <td style="text-align: right">86.26</td>
+          <td style="text-align: right">86.33</td>
+          <td style="text-align: right">86.52</td>
+          <td style="text-align: right">85.71</td>
+          <td style="text-align: right">85.95</td>
           <td style="text-align: right">53695200.00</td>
           <td style="text-align: right">0.03</td>
       </tr>
       <tr>
           <td style="text-align: left">2025-07-31 00:00:00</td>
-          <td style="text-align: right">85.65</td>
-          <td style="text-align: right">86.14</td>
-          <td style="text-align: right">85.57</td>
-          <td style="text-align: right">85.86</td>
+          <td style="text-align: right">85.35</td>
+          <td style="text-align: right">85.83</td>
+          <td style="text-align: right">85.27</td>
+          <td style="text-align: right">85.55</td>
           <td style="text-align: right">49814100.00</td>
           <td style="text-align: right">-0.01</td>
       </tr>
       <tr>
           <td style="text-align: left">2025-08-31 00:00:00</td>
-          <td style="text-align: right">85.66</td>
-          <td style="text-align: right">85.92</td>
-          <td style="text-align: right">85.51</td>
-          <td style="text-align: right">85.82</td>
+          <td style="text-align: right">85.36</td>
+          <td style="text-align: right">85.61</td>
+          <td style="text-align: right">85.20</td>
+          <td style="text-align: right">85.52</td>
           <td style="text-align: right">41686400.00</td>
           <td style="text-align: right">0.00</td>
       </tr>
       <tr>
           <td style="text-align: left">2025-09-30 00:00:00</td>
-          <td style="text-align: right">88.74</td>
-          <td style="text-align: right">89.40</td>
-          <td style="text-align: right">88.58</td>
-          <td style="text-align: right">89.03</td>
+          <td style="text-align: right">88.42</td>
+          <td style="text-align: right">89.09</td>
+          <td style="text-align: right">88.27</td>
+          <td style="text-align: right">88.71</td>
           <td style="text-align: right">38584000.00</td>
           <td style="text-align: right">0.04</td>
       </tr>
       <tr>
           <td style="text-align: left">2025-10-31 00:00:00</td>
-          <td style="text-align: right">89.96</td>
-          <td style="text-align: right">90.33</td>
-          <td style="text-align: right">89.88</td>
-          <td style="text-align: right">90.23</td>
+          <td style="text-align: right">89.64</td>
+          <td style="text-align: right">90.01</td>
+          <td style="text-align: right">89.56</td>
+          <td style="text-align: right">89.91</td>
           <td style="text-align: right">38247300.00</td>
           <td style="text-align: right">0.01</td>
       </tr>
@@ -2082,7 +2084,7 @@
           <td style="text-align: right">10</td>
           <td style="text-align: left">Cycle 11</td>
           <td style="text-align: left">2024-08-01</td>
-          <td style="text-align: left">2025-11-30</td>
+          <td style="text-align: left">2025-12-04</td>
           <td style="text-align: right">15</td>
           <td style="text-align: right">0.00</td>
           <td style="text-align: right">0.42</td>
@@ -2092,10 +2094,10 @@
           <td style="text-align: right">0.33</td>
           <td style="text-align: right">0.11</td>
           <td style="text-align: right">-0.01</td>
-          <td style="text-align: right">-124.00</td>
+          <td style="text-align: right">-145.00</td>
           <td style="text-align: right">-0.01</td>
-          <td style="text-align: right">-99.20</td>
-          <td style="text-align: left">Cycle 11, 2024-08-01 to 2025-11-30</td>
+          <td style="text-align: right">-116.00</td>
+          <td style="text-align: left">Cycle 11, 2024-08-01 to 2025-12-04</td>
       </tr>
   </tbody>
 </table></div>
@@ -2215,25 +2217,25 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">                             <span class="n">OLS</span> <span class="n">Regression</span> <span class="n">Results</span>                            
 </span></span><span class="line"><span class="cl"><span class="o">===============================================================================</span>
-</span></span><span class="line"><span class="cl"><span class="n">Dep</span><span class="o">.</span> <span class="n">Variable</span><span class="p">:</span>     <span class="n">AnnualizedReturnPct</span>   <span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="p">:</span>                       <span class="mf">0.634</span>
-</span></span><span class="line"><span class="cl"><span class="n">Model</span><span class="p">:</span>                             <span class="n">OLS</span>   <span class="n">Adj</span><span class="o">.</span> <span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="p">:</span>                  <span class="mf">0.593</span>
-</span></span><span class="line"><span class="cl"><span class="n">Method</span><span class="p">:</span>                  <span class="n">Least</span> <span class="n">Squares</span>   <span class="n">F</span><span class="o">-</span><span class="n">statistic</span><span class="p">:</span>                     <span class="mf">15.56</span>
-</span></span><span class="line"><span class="cl"><span class="n">Date</span><span class="p">:</span>                 <span class="n">Sun</span><span class="p">,</span> <span class="mi">30</span> <span class="n">Nov</span> <span class="mi">2025</span>   <span class="n">Prob</span> <span class="p">(</span><span class="n">F</span><span class="o">-</span><span class="n">statistic</span><span class="p">):</span>            <span class="mf">0.00338</span>
-</span></span><span class="line"><span class="cl"><span class="n">Time</span><span class="p">:</span>                         <span class="mi">07</span><span class="p">:</span><span class="mi">50</span><span class="p">:</span><span class="mi">20</span>   <span class="n">Log</span><span class="o">-</span><span class="n">Likelihood</span><span class="p">:</span>                <span class="o">-</span><span class="mf">39.515</span>
-</span></span><span class="line"><span class="cl"><span class="n">No</span><span class="o">.</span> <span class="n">Observations</span><span class="p">:</span>                   <span class="mi">11</span>   <span class="n">AIC</span><span class="p">:</span>                             <span class="mf">83.03</span>
-</span></span><span class="line"><span class="cl"><span class="n">Df</span> <span class="n">Residuals</span><span class="p">:</span>                        <span class="mi">9</span>   <span class="n">BIC</span><span class="p">:</span>                             <span class="mf">83.83</span>
+</span></span><span class="line"><span class="cl"><span class="n">Dep</span><span class="o">.</span> <span class="n">Variable</span><span class="p">:</span>     <span class="n">AnnualizedReturnPct</span>   <span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="p">:</span>                       <span class="mf">0.623</span>
+</span></span><span class="line"><span class="cl"><span class="n">Model</span><span class="p">:</span>                             <span class="n">OLS</span>   <span class="n">Adj</span><span class="o">.</span> <span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="p">:</span>                  <span class="mf">0.582</span>
+</span></span><span class="line"><span class="cl"><span class="n">Method</span><span class="p">:</span>                  <span class="n">Least</span> <span class="n">Squares</span>   <span class="n">F</span><span class="o">-</span><span class="n">statistic</span><span class="p">:</span>                     <span class="mf">14.90</span>
+</span></span><span class="line"><span class="cl"><span class="n">Date</span><span class="p">:</span>                 <span class="n">Thu</span><span class="p">,</span> <span class="mi">04</span> <span class="n">Dec</span> <span class="mi">2025</span>   <span class="n">Prob</span> <span class="p">(</span><span class="n">F</span><span class="o">-</span><span class="n">statistic</span><span class="p">):</span>            <span class="mf">0.00385</span>
+</span></span><span class="line"><span class="cl"><span class="n">Time</span><span class="p">:</span>                         <span class="mi">14</span><span class="p">:</span><span class="mi">45</span><span class="p">:</span><span class="mi">23</span>   <span class="n">Log</span><span class="o">-</span><span class="n">Likelihood</span><span class="p">:</span>                <span class="o">-</span><span class="mf">39.665</span>
+</span></span><span class="line"><span class="cl"><span class="n">No</span><span class="o">.</span> <span class="n">Observations</span><span class="p">:</span>                   <span class="mi">11</span>   <span class="n">AIC</span><span class="p">:</span>                             <span class="mf">83.33</span>
+</span></span><span class="line"><span class="cl"><span class="n">Df</span> <span class="n">Residuals</span><span class="p">:</span>                        <span class="mi">9</span>   <span class="n">BIC</span><span class="p">:</span>                             <span class="mf">84.13</span>
 </span></span><span class="line"><span class="cl"><span class="n">Df</span> <span class="n">Model</span><span class="p">:</span>                            <span class="mi">1</span>                                         
 </span></span><span class="line"><span class="cl"><span class="n">Covariance</span> <span class="n">Type</span><span class="p">:</span>             <span class="n">nonrobust</span>                                         
 </span></span><span class="line"><span class="cl"><span class="o">============================================================================================</span>
 </span></span><span class="line"><span class="cl">                               <span class="n">coef</span>    <span class="n">std</span> <span class="n">err</span>          <span class="n">t</span>      <span class="n">P</span><span class="o">&gt;|</span><span class="n">t</span><span class="o">|</span>      <span class="p">[</span><span class="mf">0.025</span>      <span class="mf">0.975</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl"><span class="o">--------------------------------------------------------------------------------------------</span>
-</span></span><span class="line"><span class="cl"><span class="k">const</span>                        <span class="mf">5.5490</span>      <span class="mf">2.937</span>      <span class="mf">1.890</span>      <span class="mf">0.091</span>      <span class="o">-</span><span class="mf">1.094</span>      <span class="mf">12.192</span>
-</span></span><span class="line"><span class="cl"><span class="n">FFR_AnnualizedChange_bps</span>    <span class="o">-</span><span class="mf">0.0604</span>      <span class="mf">0.015</span>     <span class="o">-</span><span class="mf">3.944</span>      <span class="mf">0.003</span>      <span class="o">-</span><span class="mf">0.095</span>      <span class="o">-</span><span class="mf">0.026</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span>                        <span class="mf">5.4676</span>      <span class="mf">2.978</span>      <span class="mf">1.836</span>      <span class="mf">0.100</span>      <span class="o">-</span><span class="mf">1.270</span>      <span class="mf">12.205</span>
+</span></span><span class="line"><span class="cl"><span class="n">FFR_AnnualizedChange_bps</span>    <span class="o">-</span><span class="mf">0.0597</span>      <span class="mf">0.015</span>     <span class="o">-</span><span class="mf">3.860</span>      <span class="mf">0.004</span>      <span class="o">-</span><span class="mf">0.095</span>      <span class="o">-</span><span class="mf">0.025</span>
 </span></span><span class="line"><span class="cl"><span class="o">==============================================================================</span>
-</span></span><span class="line"><span class="cl"><span class="n">Omnibus</span><span class="p">:</span>                        <span class="mf">0.797</span>   <span class="n">Durbin</span><span class="o">-</span><span class="n">Watson</span><span class="p">:</span>                   <span class="mf">1.248</span>
-</span></span><span class="line"><span class="cl"><span class="n">Prob</span><span class="p">(</span><span class="n">Omnibus</span><span class="p">):</span>                  <span class="mf">0.671</span>   <span class="n">Jarque</span><span class="o">-</span><span class="n">Bera</span> <span class="p">(</span><span class="n">JB</span><span class="p">):</span>                <span class="mf">0.712</span>
-</span></span><span class="line"><span class="cl"><span class="n">Skew</span><span class="p">:</span>                           <span class="mf">0.441</span>   <span class="n">Prob</span><span class="p">(</span><span class="n">JB</span><span class="p">):</span>                        <span class="mf">0.701</span>
-</span></span><span class="line"><span class="cl"><span class="n">Kurtosis</span><span class="p">:</span>                       <span class="mf">2.121</span>   <span class="n">Cond</span><span class="o">.</span> <span class="n">No</span><span class="o">.</span>                         <span class="mf">192.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Omnibus</span><span class="p">:</span>                        <span class="mf">0.710</span>   <span class="n">Durbin</span><span class="o">-</span><span class="n">Watson</span><span class="p">:</span>                   <span class="mf">1.219</span>
+</span></span><span class="line"><span class="cl"><span class="n">Prob</span><span class="p">(</span><span class="n">Omnibus</span><span class="p">):</span>                  <span class="mf">0.701</span>   <span class="n">Jarque</span><span class="o">-</span><span class="n">Bera</span> <span class="p">(</span><span class="n">JB</span><span class="p">):</span>                <span class="mf">0.663</span>
+</span></span><span class="line"><span class="cl"><span class="n">Skew</span><span class="p">:</span>                           <span class="mf">0.412</span>   <span class="n">Prob</span><span class="p">(</span><span class="n">JB</span><span class="p">):</span>                        <span class="mf">0.718</span>
+</span></span><span class="line"><span class="cl"><span class="n">Kurtosis</span><span class="p">:</span>                       <span class="mf">2.123</span>   <span class="n">Cond</span><span class="o">.</span> <span class="n">No</span><span class="o">.</span>                         <span class="mf">193.</span>
 </span></span><span class="line"><span class="cl"><span class="o">==============================================================================</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">Notes</span><span class="p">:</span>
@@ -2804,7 +2806,7 @@
           <td style="text-align: right">10</td>
           <td style="text-align: left">Cycle 11</td>
           <td style="text-align: left">2024-08-01</td>
-          <td style="text-align: left">2025-11-30</td>
+          <td style="text-align: left">2025-12-04</td>
           <td style="text-align: right">15</td>
           <td style="text-align: right">0.62</td>
           <td style="text-align: right">62.49</td>
@@ -2814,10 +2816,10 @@
           <td style="text-align: right">47.46</td>
           <td style="text-align: right">0.14</td>
           <td style="text-align: right">-0.01</td>
-          <td style="text-align: right">-124.00</td>
+          <td style="text-align: right">-145.00</td>
           <td style="text-align: right">-0.01</td>
-          <td style="text-align: right">-99.20</td>
-          <td style="text-align: left">Cycle 11, 2024-08-01 to 2025-11-30</td>
+          <td style="text-align: right">-116.00</td>
+          <td style="text-align: left">Cycle 11, 2024-08-01 to 2025-12-04</td>
       </tr>
   </tbody>
 </table></div>
@@ -2937,25 +2939,25 @@
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">                             <span class="n">OLS</span> <span class="n">Regression</span> <span class="n">Results</span>                            
 </span></span><span class="line"><span class="cl"><span class="o">===============================================================================</span>
-</span></span><span class="line"><span class="cl"><span class="n">Dep</span><span class="o">.</span> <span class="n">Variable</span><span class="p">:</span>     <span class="n">AnnualizedReturnPct</span>   <span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="p">:</span>                       <span class="mf">0.073</span>
-</span></span><span class="line"><span class="cl"><span class="n">Model</span><span class="p">:</span>                             <span class="n">OLS</span>   <span class="n">Adj</span><span class="o">.</span> <span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="p">:</span>                 <span class="o">-</span><span class="mf">0.030</span>
-</span></span><span class="line"><span class="cl"><span class="n">Method</span><span class="p">:</span>                  <span class="n">Least</span> <span class="n">Squares</span>   <span class="n">F</span><span class="o">-</span><span class="n">statistic</span><span class="p">:</span>                    <span class="mf">0.7118</span>
-</span></span><span class="line"><span class="cl"><span class="n">Date</span><span class="p">:</span>                 <span class="n">Sun</span><span class="p">,</span> <span class="mi">30</span> <span class="n">Nov</span> <span class="mi">2025</span>   <span class="n">Prob</span> <span class="p">(</span><span class="n">F</span><span class="o">-</span><span class="n">statistic</span><span class="p">):</span>              <span class="mf">0.421</span>
-</span></span><span class="line"><span class="cl"><span class="n">Time</span><span class="p">:</span>                         <span class="mi">07</span><span class="p">:</span><span class="mi">50</span><span class="p">:</span><span class="mi">25</span>   <span class="n">Log</span><span class="o">-</span><span class="n">Likelihood</span><span class="p">:</span>                <span class="o">-</span><span class="mf">42.895</span>
-</span></span><span class="line"><span class="cl"><span class="n">No</span><span class="o">.</span> <span class="n">Observations</span><span class="p">:</span>                   <span class="mi">11</span>   <span class="n">AIC</span><span class="p">:</span>                             <span class="mf">89.79</span>
-</span></span><span class="line"><span class="cl"><span class="n">Df</span> <span class="n">Residuals</span><span class="p">:</span>                        <span class="mi">9</span>   <span class="n">BIC</span><span class="p">:</span>                             <span class="mf">90.59</span>
+</span></span><span class="line"><span class="cl"><span class="n">Dep</span><span class="o">.</span> <span class="n">Variable</span><span class="p">:</span>     <span class="n">AnnualizedReturnPct</span>   <span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="p">:</span>                       <span class="mf">0.084</span>
+</span></span><span class="line"><span class="cl"><span class="n">Model</span><span class="p">:</span>                             <span class="n">OLS</span>   <span class="n">Adj</span><span class="o">.</span> <span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="p">:</span>                 <span class="o">-</span><span class="mf">0.018</span>
+</span></span><span class="line"><span class="cl"><span class="n">Method</span><span class="p">:</span>                  <span class="n">Least</span> <span class="n">Squares</span>   <span class="n">F</span><span class="o">-</span><span class="n">statistic</span><span class="p">:</span>                    <span class="mf">0.8274</span>
+</span></span><span class="line"><span class="cl"><span class="n">Date</span><span class="p">:</span>                 <span class="n">Thu</span><span class="p">,</span> <span class="mi">04</span> <span class="n">Dec</span> <span class="mi">2025</span>   <span class="n">Prob</span> <span class="p">(</span><span class="n">F</span><span class="o">-</span><span class="n">statistic</span><span class="p">):</span>              <span class="mf">0.387</span>
+</span></span><span class="line"><span class="cl"><span class="n">Time</span><span class="p">:</span>                         <span class="mi">14</span><span class="p">:</span><span class="mi">45</span><span class="p">:</span><span class="mi">27</span>   <span class="n">Log</span><span class="o">-</span><span class="n">Likelihood</span><span class="p">:</span>                <span class="o">-</span><span class="mf">42.830</span>
+</span></span><span class="line"><span class="cl"><span class="n">No</span><span class="o">.</span> <span class="n">Observations</span><span class="p">:</span>                   <span class="mi">11</span>   <span class="n">AIC</span><span class="p">:</span>                             <span class="mf">89.66</span>
+</span></span><span class="line"><span class="cl"><span class="n">Df</span> <span class="n">Residuals</span><span class="p">:</span>                        <span class="mi">9</span>   <span class="n">BIC</span><span class="p">:</span>                             <span class="mf">90.46</span>
 </span></span><span class="line"><span class="cl"><span class="n">Df</span> <span class="n">Model</span><span class="p">:</span>                            <span class="mi">1</span>                                         
 </span></span><span class="line"><span class="cl"><span class="n">Covariance</span> <span class="n">Type</span><span class="p">:</span>             <span class="n">nonrobust</span>                                         
 </span></span><span class="line"><span class="cl"><span class="o">============================================================================================</span>
 </span></span><span class="line"><span class="cl">                               <span class="n">coef</span>    <span class="n">std</span> <span class="n">err</span>          <span class="n">t</span>      <span class="n">P</span><span class="o">&gt;|</span><span class="n">t</span><span class="o">|</span>      <span class="p">[</span><span class="mf">0.025</span>      <span class="mf">0.975</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl"><span class="o">--------------------------------------------------------------------------------------------</span>
-</span></span><span class="line"><span class="cl"><span class="k">const</span>                       <span class="mf">15.2394</span>      <span class="mf">3.993</span>      <span class="mf">3.817</span>      <span class="mf">0.004</span>       <span class="mf">6.207</span>      <span class="mf">24.272</span>
-</span></span><span class="line"><span class="cl"><span class="n">FFR_AnnualizedChange_bps</span>    <span class="o">-</span><span class="mf">0.0176</span>      <span class="mf">0.021</span>     <span class="o">-</span><span class="mf">0.844</span>      <span class="mf">0.421</span>      <span class="o">-</span><span class="mf">0.065</span>       <span class="mf">0.030</span>
+</span></span><span class="line"><span class="cl"><span class="k">const</span>                       <span class="mf">15.1947</span>      <span class="mf">3.972</span>      <span class="mf">3.826</span>      <span class="mf">0.004</span>       <span class="mf">6.210</span>      <span class="mf">24.179</span>
+</span></span><span class="line"><span class="cl"><span class="n">FFR_AnnualizedChange_bps</span>    <span class="o">-</span><span class="mf">0.0187</span>      <span class="mf">0.021</span>     <span class="o">-</span><span class="mf">0.910</span>      <span class="mf">0.387</span>      <span class="o">-</span><span class="mf">0.065</span>       <span class="mf">0.028</span>
 </span></span><span class="line"><span class="cl"><span class="o">==============================================================================</span>
-</span></span><span class="line"><span class="cl"><span class="n">Omnibus</span><span class="p">:</span>                        <span class="mf">8.464</span>   <span class="n">Durbin</span><span class="o">-</span><span class="n">Watson</span><span class="p">:</span>                   <span class="mf">0.918</span>
-</span></span><span class="line"><span class="cl"><span class="n">Prob</span><span class="p">(</span><span class="n">Omnibus</span><span class="p">):</span>                  <span class="mf">0.015</span>   <span class="n">Jarque</span><span class="o">-</span><span class="n">Bera</span> <span class="p">(</span><span class="n">JB</span><span class="p">):</span>                <span class="mf">3.915</span>
-</span></span><span class="line"><span class="cl"><span class="n">Skew</span><span class="p">:</span>                           <span class="mf">1.356</span>   <span class="n">Prob</span><span class="p">(</span><span class="n">JB</span><span class="p">):</span>                        <span class="mf">0.141</span>
-</span></span><span class="line"><span class="cl"><span class="n">Kurtosis</span><span class="p">:</span>                       <span class="mf">4.091</span>   <span class="n">Cond</span><span class="o">.</span> <span class="n">No</span><span class="o">.</span>                         <span class="mf">192.</span>
+</span></span><span class="line"><span class="cl"><span class="n">Omnibus</span><span class="p">:</span>                        <span class="mf">8.035</span>   <span class="n">Durbin</span><span class="o">-</span><span class="n">Watson</span><span class="p">:</span>                   <span class="mf">0.915</span>
+</span></span><span class="line"><span class="cl"><span class="n">Prob</span><span class="p">(</span><span class="n">Omnibus</span><span class="p">):</span>                  <span class="mf">0.018</span>   <span class="n">Jarque</span><span class="o">-</span><span class="n">Bera</span> <span class="p">(</span><span class="n">JB</span><span class="p">):</span>                <span class="mf">3.686</span>
+</span></span><span class="line"><span class="cl"><span class="n">Skew</span><span class="p">:</span>                           <span class="mf">1.328</span>   <span class="n">Prob</span><span class="p">(</span><span class="n">JB</span><span class="p">):</span>                        <span class="mf">0.158</span>
+</span></span><span class="line"><span class="cl"><span class="n">Kurtosis</span><span class="p">:</span>                       <span class="mf">3.993</span>   <span class="n">Cond</span><span class="o">.</span> <span class="n">No</span><span class="o">.</span>                         <span class="mf">193.</span>
 </span></span><span class="line"><span class="cl"><span class="o">==============================================================================</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">Notes</span><span class="p">:</span>

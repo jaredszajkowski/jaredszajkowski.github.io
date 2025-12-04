@@ -168,15 +168,17 @@ fed_changes_df = pd.DataFrame({
 })
 ```
 
+Which gives us the following cycles and cumulative change in rate per cycle:
+
 <!-- INSERT_01_Fed_Funds_Cycle_Change_HERE -->
 
 ## Return Performance By Fed Policy Cycle
 
-Moving on, we will now look at the performance of three (3) asset classes during each Fed cycle. We'll use SPY as a proxy for stocks, TLT as a proxy for bonds, and GLD as a proxy for gold. These datasets are slightly limiting due to the availability of all 3 starting in late 2004, but will work for our simple exercise.
+Moving on, we will now look at the performance of three (3) different asset classes during each Fed cycle. We'll use SPY as a proxy for stocks, TLT as a proxy for bonds, and GLD as a proxy for gold. These datasets are slightly limiting due to the availability of all 3 starting in late 2004, but will work for our simple exercise. In a future post, we'll look to use Bloomberg indices instead.
 
 ### Stocks (SPY)
 
-First, we pull data with the following:
+First, we pull data for SPY with the following:
 
 ```python
 # Set decimal places
@@ -213,7 +215,7 @@ spy_monthly = spy.resample("M").last()
 spy_monthly["Monthly_Return"] = spy_monthly["Close"].pct_change()
 ```
 
-Gives us the following:
+Which gives us the following:
 
 <!-- INSERT_02_SPY_Monthly_HERE -->
 
@@ -268,15 +270,15 @@ This gives us the following data points:
 * Cumulative change in FFR during the cycle (decimal and basis points)
 * Annualized change in FFR during the cycle (decimal and basis points)
 
-From the above DataFrame, we can then plot the cumulative and annualized returns for each cycle in a bar chart. First, the cumulative returns:
+From the above DataFrame, we can then plot the cumulative and annualized returns for each cycle in a bar chart. First, the cumulative returns along with the cumulative change in FFR:
 
 ![SPY Cumulative Returns](02_SPY_Cumulative_Returns_FFR_Change.png)
 
-And then the annualized returns:
+And then the annualized returns along with the annualized change in FFR:
 
 ![SPY Annualized Returns](02_SPY_Annualized_Returns_FFR_Change.png)
 
-The cumulative returns plot is not particularly insightful, but there are some interesting observations to be gained from the annualized returns plot. During the past two (2) rate cutting cycles (cycles 3 and 7), the stocks have exhibited negative returns during the rate cutting cycle. However, after the rate cutting cycle was complete, the following returns were quite strong and higher than the historical mean return for the S&P 500. The economic intuition for this behavior is valid; as the economy weakens, the stock market falls, the returns become negative, and the Fed responds with cutting rates.
+The cumulative returns plot is not particularly insightful, but there are some interesting observations to be gained from the annualized returns plot. During the past two (2) rate cutting cycles (cycles 3 and 7), stocks have exhibited negative returns during the rate cutting cycle. However, after the rate cutting cycle was complete, returns during the following cycle (when rates were usually flat) were quite strong and higher than the historical mean return for the S&P 500. The economic intuition for this behavior is valid; as the economy weakens, investors are concerned about the pricing of equities, the returns become negative, and the Fed responds with cutting rates. The exact timing of when the Fed begins cutting rates is one of the unknowns; the Fed could be ahead of the curve, cutting rates as economic data begins to prompt that action, or behind the curve, where the ecomony rolls over rapidly and even the Fed's actions are not enough to halt the economic contraction.
 
 Finally, we can run an OLS regression to check fit:
 
@@ -321,6 +323,8 @@ plot_scatter_regression_ffr_vs_returns(
 Which gives us:
 
 ![SPY Regression - Annualized Returns On Annualized Change In FFR](02_SPY_Regression_FFR_vs_Returns.png)
+
+Here we can see the data points for cycles 3 and 7 as mentioned above. Ignoring the data points where the annualized change in FFR is roughly zero (cycles 2, 4, 6, 8, and 10), cycles 1, 5, and 9 fit the economic thesis above, and cycle 11 (which is the current rate cutting cycle), stands as an outlier. Of course, the book is not yet finished for cycle 11, and we could certainly see a bear market in stocks over the next several years.
 
 ### Bonds (TLT)
 

@@ -58,7 +58,7 @@ def plot_bar_returns_ffr_change(
     plt.yticks(fontsize=8)
     plt.xlabel("Fed Policy Cycle (Date Range)", fontsize=10)
     plt.xticks(rotation=45, ha="right", fontsize=8)
-    plt.title(f"{asset_label} {annualized_or_cumulative} Return by Fed Policy Cycle With Annualized Change in Fed Funds Rate", fontsize=12)
+    plt.title(f"{asset_label} {annualized_or_cumulative} Return by Fed Policy Cycle With {annualized_or_cumulative} Change in Fed Funds Rate", fontsize=12)
     plt.tight_layout()
     plt.savefig(f"{index_num}_{asset_label}_{annualized_or_cumulative}_Returns_FFR_Change.png", dpi=300, bbox_inches="tight")
     plt.show()
