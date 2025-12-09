@@ -3,6 +3,7 @@ import pandas as pd
 
 from matplotlib.ticker import MultipleLocator
 
+
 def plot_stats(
     stats_df: pd.DataFrame,
     plot_columns,
@@ -17,7 +18,6 @@ def plot_stats(
     export_plot: bool,
     plot_file_name: str,
 ) -> None:
-
     """
     Plot the price data from a DataFrame for a specified date range and columns.
 
@@ -59,10 +59,14 @@ def plot_stats(
     # Plot data
     if plot_columns == "All":
         for col in stats_df.columns:
-            plt.scatter(stats_df.index, stats_df[col], label=col, linestyle='-', linewidth=1.5)
+            plt.scatter(
+                stats_df.index, stats_df[col], label=col, linestyle="-", linewidth=1.5
+            )
     else:
         for col in plot_columns:
-            plt.scatter(stats_df.index, stats_df[col], label=col, linestyle='-', linewidth=1.5)
+            plt.scatter(
+                stats_df.index, stats_df[col], label=col, linestyle="-", linewidth=1.5
+            )
 
     # Format X axis
     plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
@@ -79,7 +83,7 @@ def plot_stats(
     plt.tight_layout()
 
     if grid == True:
-        plt.grid(True, linestyle='--', alpha=0.7)
+        plt.grid(True, linestyle="--", alpha=0.7)
 
     if legend == True:
         plt.legend(fontsize=9)

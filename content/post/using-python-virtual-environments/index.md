@@ -64,7 +64,7 @@ The virtual environment can then be activated in a similar manner as any other:
 
 After the virtual environment is created and activated, modules can be installed by using python-pip, such as:
 
-    $ pip install <package-name>
+    $ pip install <module-name>
 
 If you want to view all installed modules, run:
 
@@ -76,7 +76,11 @@ Or the outdated modules:
 
 And updated at a later point in time with:
 
-    $ pip install --upgrade <package-name>
+    $ pip install --upgrade <module-name>
+
+If you are interested in the specifics of a module (name, version, location, etc.):
+
+    $ pip show <module-name>
 
 ## Using A requirements.txt File
 

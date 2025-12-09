@@ -3,7 +3,7 @@ title: Performance Of Various Asset Classes During Fed Policy Cycles
 description: How does the performance of stocks, bonds, and other asset classes vary during Fed policy cycles?
 slug: asset-class-performance-fed-policy-cycles
 date: 2025-11-29 00:00:01+0000
-lastmod: 2025-11-29 00:00:01+0000
+lastmod: 2025-12-04 00:00:01+0000
 image: asset-class-performance-fed-policy-cycles.png
 draft: false
 categories:
@@ -289,7 +289,7 @@ The first 5 rows are:
 |:--------------------|--------:|-------:|------:|-------:|------------:|-----------------:|
 | 2004-11-30 00:00:00 |   79.83 |  80.07 | 79.66 |  79.90 | 53685200.00 |           nan    |
 | 2004-12-31 00:00:00 |   82.23 |  82.77 | 82.19 |  82.53 | 28648800.00 |             0.03 |
-| 2005-01-31 00:00:00 |   80.39 |  80.45 | 80.08 |  80.25 | 52532700.00 |            -0.02 |
+| 2005-01-31 00:00:00 |   80.39 |  80.45 | 80.09 |  80.25 | 52532700.00 |            -0.02 |
 | 2005-02-28 00:00:00 |   82.07 |  82.53 | 81.67 |  82.43 | 69381300.00 |             0.02 |
 | 2005-03-31 00:00:00 |   80.57 |  80.91 | 80.51 |  80.73 | 64575400.00 |            -0.02 |
 
@@ -352,7 +352,7 @@ Which gives us:
 |  7 | Cycle 8  | 2020-04-01 | 2022-02-01 |       22 |               0.79 |                 79.13 |                   0.03 |                      2.78 |               0.37 |                 37.43 |         0.16 |             0.00 |                 3.00 |                   0.00 |                       1.64 | Cycle 8, 2020-04-01 to 2022-02-01  |
 |  8 | Cycle 9  | 2022-02-01 | 2023-08-01 |       18 |               0.04 |                  4.18 |                   0.00 |                      0.40 |               0.03 |                  2.77 |         0.21 |             0.05 |               525.00 |                   0.03 |                     350.00 | Cycle 9, 2022-02-01 to 2023-08-01  |
 |  9 | Cycle 10 | 2023-08-01 | 2024-08-01 |       12 |               0.22 |                 22.00 |                   0.02 |                      1.75 |               0.22 |                 22.00 |         0.15 |             0.00 |                 0.00 |                   0.00 |                       0.00 | Cycle 10, 2023-08-01 to 2024-08-01 |
-| 10 | Cycle 11 | 2024-08-01 | 2025-12-04 |       15 |               0.26 |                 25.72 |                   0.02 |                      1.59 |               0.20 |                 20.09 |         0.11 |            -0.01 |              -145.00 |                  -0.01 |                    -116.00 | Cycle 11, 2024-08-01 to 2025-12-04 |
+| 10 | Cycle 11 | 2024-08-01 | 2025-12-09 |       15 |               0.26 |                 25.72 |                   0.02 |                      1.59 |               0.20 |                 20.09 |         0.11 |            -0.01 |              -145.00 |                  -0.01 |                    -116.00 | Cycle 11, 2024-08-01 to 2025-12-09 |
 
 This gives us the following data points:
 
@@ -406,8 +406,8 @@ Which gives us the results of the OLS regression:
 Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.180
 Model:                             OLS   Adj. R-squared:                  0.089
 Method:                  Least Squares   F-statistic:                     1.973
-Date:                 Thu, 04 Dec 2025   Prob (F-statistic):              0.194
-Time:                         14:45:19   Log-Likelihood:                -47.173
+Date:                 Tue, 09 Dec 2025   Prob (F-statistic):              0.194
+Time:                         01:22:30   Log-Likelihood:                -47.173
 No. Observations:                   11   AIC:                             98.35
 Df Residuals:                        9   BIC:                             99.14
 Df Model:                            1                                         
@@ -580,7 +580,7 @@ Which gives us:
 |  7 | Cycle 8  | 2020-04-01 | 2022-02-01 |       22 |              -0.11 |                -11.33 |                  -0.00 |                     -0.50 |              -0.06 |                 -6.35 |         0.11 |             0.00 |                 3.00 |                   0.00 |                       1.64 | Cycle 8, 2020-04-01 to 2022-02-01  |
 |  8 | Cycle 9  | 2022-02-01 | 2023-08-01 |       18 |              -0.27 |                -26.96 |                  -0.02 |                     -1.62 |              -0.19 |                -18.90 |         0.17 |             0.05 |               525.00 |                   0.03 |                     350.00 | Cycle 9, 2022-02-01 to 2023-08-01  |
 |  9 | Cycle 10 | 2023-08-01 | 2024-08-01 |       12 |              -0.02 |                 -1.52 |                   0.00 |                      0.02 |              -0.02 |                 -1.52 |         0.20 |             0.00 |                 0.00 |                   0.00 |                       0.00 | Cycle 10, 2023-08-01 to 2024-08-01 |
-| 10 | Cycle 11 | 2024-08-01 | 2025-12-04 |       15 |               0.00 |                  0.42 |                   0.00 |                      0.08 |               0.00 |                  0.33 |         0.11 |            -0.01 |              -145.00 |                  -0.01 |                    -116.00 | Cycle 11, 2024-08-01 to 2025-12-04 |
+| 10 | Cycle 11 | 2024-08-01 | 2025-12-09 |       15 |               0.00 |                  0.42 |                   0.00 |                      0.08 |               0.00 |                  0.33 |         0.11 |            -0.01 |              -145.00 |                  -0.01 |                    -116.00 | Cycle 11, 2024-08-01 to 2025-12-09 |
 
 This gives us the following data points:
 
@@ -634,8 +634,8 @@ Which gives us the results of the OLS regression:
 Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.623
 Model:                             OLS   Adj. R-squared:                  0.582
 Method:                  Least Squares   F-statistic:                     14.90
-Date:                 Thu, 04 Dec 2025   Prob (F-statistic):            0.00385
-Time:                         14:45:23   Log-Likelihood:                -39.665
+Date:                 Tue, 09 Dec 2025   Prob (F-statistic):            0.00385
+Time:                         01:22:34   Log-Likelihood:                -39.665
 No. Observations:                   11   AIC:                             83.33
 Df Residuals:                        9   BIC:                             84.13
 Df Model:                            1                                         
@@ -808,7 +808,7 @@ Which gives us:
 |  7 | Cycle 8  | 2020-04-01 | 2022-02-01 |       22 |               0.14 |                 13.54 |                   0.01 |                      0.69 |               0.07 |                  7.17 |         0.16 |             0.00 |                 3.00 |                   0.00 |                       1.64 | Cycle 8, 2020-04-01 to 2022-02-01  |
 |  8 | Cycle 9  | 2022-02-01 | 2023-08-01 |       18 |               0.08 |                  8.48 |                   0.01 |                      0.53 |               0.06 |                  5.58 |         0.14 |             0.05 |               525.00 |                   0.03 |                     350.00 | Cycle 9, 2022-02-01 to 2023-08-01  |
 |  9 | Cycle 10 | 2023-08-01 | 2024-08-01 |       12 |               0.24 |                 24.24 |                   0.02 |                      1.89 |               0.24 |                 24.24 |         0.13 |             0.00 |                 0.00 |                   0.00 |                       0.00 | Cycle 10, 2023-08-01 to 2024-08-01 |
-| 10 | Cycle 11 | 2024-08-01 | 2025-12-04 |       15 |               0.62 |                 62.49 |                   0.03 |                      3.36 |               0.47 |                 47.46 |         0.14 |            -0.01 |              -145.00 |                  -0.01 |                    -116.00 | Cycle 11, 2024-08-01 to 2025-12-04 |
+| 10 | Cycle 11 | 2024-08-01 | 2025-12-09 |       15 |               0.62 |                 62.49 |                   0.03 |                      3.36 |               0.47 |                 47.46 |         0.14 |            -0.01 |              -145.00 |                  -0.01 |                    -116.00 | Cycle 11, 2024-08-01 to 2025-12-09 |
 
 This gives us the following data points:
 
@@ -862,8 +862,8 @@ Which gives us the results of the OLS regression:
 Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.084
 Model:                             OLS   Adj. R-squared:                 -0.018
 Method:                  Least Squares   F-statistic:                    0.8274
-Date:                 Thu, 04 Dec 2025   Prob (F-statistic):              0.387
-Time:                         14:45:27   Log-Likelihood:                -42.830
+Date:                 Tue, 09 Dec 2025   Prob (F-statistic):              0.387
+Time:                         01:22:37   Log-Likelihood:                -42.830
 No. Observations:                   11   AIC:                             89.66
 Df Residuals:                        9   BIC:                             90.46
 Df Model:                            1                                         
