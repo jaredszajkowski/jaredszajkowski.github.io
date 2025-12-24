@@ -255,9 +255,9 @@ token.json
 # \.pytest_cache/
 # ~$*
 
-# .doit.db
-# .doit.db.db
-# .doit-db.sqlite
+.doit.db
+.doit.db.db
+.doit-db.sqlite
 
 # src/z_scratch_project_template.ipynb
 

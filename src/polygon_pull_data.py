@@ -68,7 +68,8 @@ def polygon_pull_data(
 
     Returns:
     --------
-    None
+    pd.DataFrame
+        DataFrame containing the updated price data.
     """
 
     # Open client connection

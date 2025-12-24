@@ -6,16 +6,13 @@
         <description>Recent content in Arch Linux on Jared Szajkowski, P.E., PMP</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Thu, 30 Jan 2025 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/categories/arch-linux/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 09 Dec 2025 00:00:01 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/categories/arch-linux/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Using Python Virtual Environments</title>
         <link>https://www.jaredszajkowski.com/2024/12/02/using-python-virtual-environments/</link>
         <pubDate>Mon, 02 Dec 2024 00:00:01 +0000</pubDate>
         
         <guid>https://www.jaredszajkowski.com/2024/12/02/using-python-virtual-environments/</guid>
-        <description>&lt;img src="https://www.jaredszajkowski.com/2024/12/02/using-python-virtual-environments/using-python-virtual-environments_3_final.jpg" alt="Featured image of post Using Python Virtual Environments" /&gt;&lt;h2 id=&#34;post-updates&#34;&gt;Post Updates
-&lt;/h2&gt;&lt;p&gt;Update 1/12/2025: Updated section for use of requirements.txt file for dependency management.&lt;/br&gt;
-Update 1/30/2025: Added section for version specific python virtual environments.&lt;/p&gt;
-&lt;h2 id=&#34;python-module-management&#34;&gt;Python Module Management
+        <description>&lt;img src="https://www.jaredszajkowski.com/2024/12/02/using-python-virtual-environments/using-python-virtual-environments_3_final.jpg" alt="Featured image of post Using Python Virtual Environments" /&gt;&lt;h2 id=&#34;python-module-management&#34;&gt;Python Module Management
 &lt;/h2&gt;&lt;p&gt;As an Arch Linux user, the push is to utilize pacman and related tools to manage dependencies and package updates (including Python modules). In fact, &lt;a class=&#34;link&#34; href=&#34;https://wiki.archlinux.org/title/Python&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;the wiki itself&lt;/a&gt; explicitly states this (see 2.1), and the default Arch installation of Python disables python-pip.&lt;/p&gt;
 &lt;p&gt;Unfortunately, there are limited resources put into maintaining packages for modules and only the most common and popular modules are maintained, and they are updated promptly as is consistent within the Arch ecosystem.&lt;/p&gt;</description>

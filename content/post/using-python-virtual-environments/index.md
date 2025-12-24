@@ -3,7 +3,7 @@ title: Using Python Virtual Environments
 description: Managing virtual environments across multiple systems within Arch Linux.
 slug: using-python-virtual-environments
 date: 2024-12-02 00:00:01+0000
-lastmod: 2025-01-30 00:00:01+0000
+lastmod: 2025-12-09 00:00:01+0000
 image: using-python-virtual-environments_3_final.jpg
 draft: false
 categories:
@@ -16,11 +16,6 @@ categories:
 #     - Arch Linux
 # weight: 1       # You can add weight to some posts to override the default sorting (date descending)
 ---
-
-## Post Updates
-
-Update 1/12/2025: Updated section for use of requirements.txt file for dependency management.</br>
-Update 1/30/2025: Added section for version specific python virtual environments.
 
 ## Python Module Management
 
