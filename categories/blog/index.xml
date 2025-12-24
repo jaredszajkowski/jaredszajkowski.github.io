@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blog on Jared Szajkowski, P.E., PMP</title><link>https://www.jaredszajkowski.com/categories/blog/</link><description>Recent content in Blog on Jared Szajkowski, P.E., PMP</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 10 Dec 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/categories/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Hello World</title><link>https://www.jaredszajkowski.com/2023/09/26/hello-world/</link><pubDate>Tue, 26 Sep 2023 00:00:00 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/09/26/hello-world/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2023/09/26/hello-world/cover.jpg" alt="Featured image of post Hello World" /&gt;&lt;h2 id="hello-world"&gt;Hello World
+&lt;/h2&gt;&lt;p&gt;Welcome to my website. This is meant to serve as a place for me to publish various posts from my explorations into Arch Linux, data science, quant finance, and other topics.&lt;/p&gt;
+&lt;p&gt;The theme has been adopted from the &lt;a class="link" href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener"
+&gt;Hugo Theme Stack&lt;/a&gt; produced by Jimmy Cai.&lt;/p&gt;
+&lt;p&gt;This is the only theme that I have found that checks all of the following boxes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Theme for the static site generator Hugo&lt;/li&gt;
+&lt;li&gt;Includes modules for archives&lt;/li&gt;
+&lt;li&gt;Includes tags and topics/categories&lt;/li&gt;
+&lt;li&gt;Includes built-in search functionality&lt;/li&gt;
+&lt;li&gt;Simple interface that is easily navigable&lt;/li&gt;
+&lt;li&gt;Highly extensible including modules for image galleries, posts, comment capabilities, etc.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It is hosted on &lt;a class="link" href="https://pages.github.com/" target="_blank" rel="noopener"
+&gt;GitHub pages&lt;/a&gt;. I followed the install instructions that the theme author provided, including using GitHub codespace for editing in the cloud. There are only a few details that I ran into that he did not mention.&lt;/p&gt;</description></item></channel></rss>

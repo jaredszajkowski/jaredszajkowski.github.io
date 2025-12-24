@@ -1,0 +1,799 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="A full-stack approach using doit."><title>Automating Execution of Jupyter Notebook Files, Python Scripts, and Hugo Static Site Generation</title><link rel=canonical href=https://www.jaredszajkowski.com/2025/06/29/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation/><link rel=stylesheet href=/scss/style.min.ab654ead0c454176ba44ec329bf62a4d1b745135669635bcec871ef38e2b753b.css><meta property='og:title' content="Automating Execution of Jupyter Notebook Files, Python Scripts, and Hugo Static Site Generation"><meta property='og:description' content="A full-stack approach using doit."><meta property='og:url' content='https://www.jaredszajkowski.com/2025/06/29/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation/'><meta property='og:site_name' content='Jared Szajkowski, P.E., PMP'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:published_time' content='2025-06-29T00:00:01+00:00'><meta property='article:modified_time' content='2025-07-28T00:00:01+00:00'><meta property='og:image' content='https://www.jaredszajkowski.com/2025/06/29/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation_final.jpg'><meta name=twitter:title content="Automating Execution of Jupyter Notebook Files, Python Scripts, and Hugo Static Site Generation"><meta name=twitter:description content="A full-stack approach using doit."><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content='https://www.jaredszajkowski.com/2025/06/29/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation_final.jpg'><link rel="shortcut icon" href=/profile_pic.jpg></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/profile_pic_hu_881607cd4e70319a.jpg width=300 height=300 class=site-logo loading=lazy alt=Avatar></a></figure><div class=site-meta><h1 class=site-name><a href=/>Jared Szajkowski, P.E., PMP</a></h1><h2 class=site-description></h2></div></header><ol class=menu-social><li><a href=mailto:jared.szajkowski@gmail.com target=_blank title=Email rel=me><svg class="icon icon-tabler icon-tabler-mail" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/><path d="M3 7l9 6 9-6"/></svg></a></li><li><a href=https://github.com/jaredszajkowski target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://www.linkedin.com/in/jaredszajkowski/ target=_blank title=LinkedIn rel=me><svg class="icon icon-tabler icon-tabler-brand-linkedin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4m0 2a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M8 11v5"/><path d="M8 8v.01"/><path d="M12 16v-5"/><path d="M16 16v-3a2 2 0 00-4 0"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span></a></li><li><a href=/about-me/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About Me</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=/links/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Links</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#introduction>Introduction</a></li><li><a href=#motivation>Motivation</a></li><li><a href=#dodopy>dodo.py</a><ol><li><a href=#imports>Imports</a></li><li><a href=#print-pydoit-text-in-green>Print PyDoit Text in Green</a></li><li><a href=#set-directory-variables>Set Directory Variables</a></li><li><a href=#helper-functions>Helper Functions</a></li><li><a href=#tasks>Tasks</a></li></ol></li><li><a href=#executing-doit>Executing doit</a></li><li><a href=#references>References</a></li><li><a href=#code>Code</a></li></ol></nav></div></section></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/2025/06/29/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation/><img src=/2025/06/29/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation_final.jpg width=1920 height=800 loading=lazy alt="Featured image of post Automating Execution of Jupyter Notebook Files, Python Scripts, and Hugo Static Site Generation"></a></div><div class=article-details><header class=article-category><a href=/categories/hugo/ style=background-color:#fd0;color:>Hugo
+</a><a href=/categories/jupyter-notebook/ style=background-color:#a0a0a0;color:>Jupyter Notebook
+</a><a href=/categories/python/ style=background-color:#306998;color:>Python</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/2025/06/29/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation/>Automating Execution of Jupyter Notebook Files, Python Scripts, and Hugo Static Site Generation</a></h2><h3 class=article-subtitle>A full-stack approach using doit.</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published datetime=2025-06-29T00:00:01Z>June 29, 2025</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>12 minute read</time></div></footer></div></header><section class=article-content><h2 id=introduction>Introduction</h2><p>In this post, I&rsquo;ll cover the implementation of <a class=link href=https://pydoit.org/ target=_blank rel=noopener>doit</a> to automate the execution of Jupyter notebook files, Python scripts, and building the Hugo static site. Many of the concepts covered below were introduced recently in <a class=link href=https://finmath.uchicago.edu/curriculum/degree-concentrations/financial-computing/finm-32900/ target=_blank rel=noopener>FINM 32900 - Full-Stack Quantitative Finance</a>. This course emphasized the &ldquo;full stack&rdquo; approach, including the following:</p><ul><li>Use of GitHub</li><li>Virtual environments</li><li>Environment variables</li><li>Use of various data sources (particularly WRDS)</li><li>Processing/cleaning data</li><li>GitHub actions</li><li>Publishing data</li><li>Restricting access to GitHub hosted sites</li></ul><h2 id=motivation>Motivation</h2><p>The primary motivation for automation came from several realizations:</p><ol><li>Setting directory variables would avoid any issues with managing where the static files were stored locally</li><li>I wanted to be able to pull updated data, execute Jupyter notebooks, and update the posts within my Hugo site without a manual intervention and processes</li><li>I like to include the html and PDF exports of the Jupyter notebooks, which required copying the exports to the &ldquo;Public&rdquo; folder of the website</li><li>I needed a system to build the &ldquo;index.md&rdquo; files that are present in each post directory, and automatically include Python code and functions (again, without copying/pasting or manual processes)</li></ol><h2 id=dodopy>dodo.py</h2><p>The <code>dodo.py</code> file in the primary directory is referenced by <code>doit</code> and includes all imports, functions, environment variables, etc. as required to execute the desired code. My <code>dodo.py</code> is broken down as follows:</p><h3 id=imports>Imports</h3><p>The inital imports are as follows:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1>#######################################</span>
+</span></span><span class=line><span class=cl><span class=c1>## Import Libraries</span>
+</span></span><span class=line><span class=cl><span class=c1>#######################################</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>sys</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## Make sure the src folder is in the path</span>
+</span></span><span class=line><span class=cl><span class=n>sys</span><span class=o>.</span><span class=n>path</span><span class=o>.</span><span class=n>insert</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span> <span class=s2>&#34;./src/&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>re</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>shutil</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>subprocess</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>time</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>yaml</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>colorama</span> <span class=kn>import</span> <span class=n>Fore</span><span class=p>,</span> <span class=n>Style</span><span class=p>,</span> <span class=n>init</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>datetime</span> <span class=kn>import</span> <span class=n>datetime</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>os</span> <span class=kn>import</span> <span class=n>environ</span><span class=p>,</span> <span class=n>getcwd</span><span class=p>,</span> <span class=n>path</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>pathlib</span> <span class=kn>import</span> <span class=n>Path</span>
+</span></span></code></pre></td></tr></table></div></div><p>This first adds the <code>/src/</code> subdirectory to the path (required later on), and then imports any other required modules. I prefer to sort all imports alphabetically for easy reference and readability.</p><h3 id=print-pydoit-text-in-green>Print PyDoit Text in Green</h3><p>Next, I use the following code to help differentiate the various outputs in the termial when executing <code>doit</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1># Code from lines 29-75 referenced from the UChicago</span>
+</span></span><span class=line><span class=cl><span class=c1># FINM 32900 - Full-Stack Quantitative Finance course</span>
+</span></span><span class=line><span class=cl><span class=c1># Credit to Jeremy Bejarano</span>
+</span></span><span class=line><span class=cl><span class=c1># https://github.com/jmbejara</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>## Custom reporter: Print PyDoit Text in Green</span>
+</span></span><span class=line><span class=cl><span class=c1># This is helpful because some tasks write to sterr and pollute the output in</span>
+</span></span><span class=line><span class=cl><span class=c1># the console. I don&#39;t want to mute this output, because this can sometimes</span>
+</span></span><span class=line><span class=cl><span class=c1># cause issues when, for example, LaTeX hangs on an error and requires</span>
+</span></span><span class=line><span class=cl><span class=c1># presses on the keyboard before continuing. However, I want to be able</span>
+</span></span><span class=line><span class=cl><span class=c1># to easily see the task lines printed by PyDoit. I want them to stand out</span>
+</span></span><span class=line><span class=cl><span class=c1># from among all the other lines printed to the console.</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>doit.reporter</span> <span class=kn>import</span> <span class=n>ConsoleReporter</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>settings</span> <span class=kn>import</span> <span class=n>config</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#######################################</span>
+</span></span><span class=line><span class=cl><span class=c1>## Slurm Configuration</span>
+</span></span><span class=line><span class=cl><span class=c1>#######################################</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>try</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>in_slurm</span> <span class=o>=</span> <span class=n>environ</span><span class=p>[</span><span class=s2>&#34;SLURM_JOB_ID&#34;</span><span class=p>]</span> <span class=ow>is</span> <span class=ow>not</span> <span class=kc>None</span>
+</span></span><span class=line><span class=cl><span class=k>except</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>in_slurm</span> <span class=o>=</span> <span class=kc>False</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>class</span> <span class=nc>GreenReporter</span><span class=p>(</span><span class=n>ConsoleReporter</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>write</span><span class=p>(</span><span class=bp>self</span><span class=p>,</span> <span class=n>stuff</span><span class=p>,</span> <span class=o>**</span><span class=n>kwargs</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=n>doit_mark</span> <span class=o>=</span> <span class=n>stuff</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s2>&#34; &#34;</span><span class=p>)[</span><span class=mi>0</span><span class=p>]</span><span class=o>.</span><span class=n>ljust</span><span class=p>(</span><span class=mi>2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>task</span> <span class=o>=</span> <span class=s2>&#34; &#34;</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>stuff</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=s2>&#34; &#34;</span><span class=p>)[</span><span class=mi>1</span><span class=p>:])</span><span class=o>.</span><span class=n>strip</span><span class=p>()</span> <span class=o>+</span> <span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=n>output</span> <span class=o>=</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>            <span class=n>Fore</span><span class=o>.</span><span class=n>GREEN</span>
+</span></span><span class=line><span class=cl>            <span class=o>+</span> <span class=n>doit_mark</span>
+</span></span><span class=line><span class=cl>            <span class=o>+</span> <span class=sa>f</span><span class=s2>&#34; </span><span class=si>{</span><span class=n>path</span><span class=o>.</span><span class=n>basename</span><span class=p>(</span><span class=n>getcwd</span><span class=p>())</span><span class=si>}</span><span class=s2>: &#34;</span>
+</span></span><span class=line><span class=cl>            <span class=o>+</span> <span class=n>task</span>
+</span></span><span class=line><span class=cl>            <span class=o>+</span> <span class=n>Style</span><span class=o>.</span><span class=n>RESET_ALL</span>
+</span></span><span class=line><span class=cl>        <span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=bp>self</span><span class=o>.</span><span class=n>outstream</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=n>output</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=ow>not</span> <span class=n>in_slurm</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>DOIT_CONFIG</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;reporter&#34;</span><span class=p>:</span> <span class=n>GreenReporter</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=c1># other config here...</span>
+</span></span><span class=line><span class=cl>        <span class=c1># &#34;cleanforget&#34;: True, # Doit will forget about tasks that have been cleaned.</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;backend&#34;</span><span class=p>:</span> <span class=s2>&#34;sqlite3&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;dep_file&#34;</span><span class=p>:</span> <span class=s2>&#34;./.doit-db.sqlite&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>DOIT_CONFIG</span> <span class=o>=</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;backend&#34;</span><span class=p>:</span> <span class=s2>&#34;sqlite3&#34;</span><span class=p>,</span> 
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;dep_file&#34;</span><span class=p>:</span> <span class=s2>&#34;./.doit-db.sqlite&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=n>init</span><span class=p>(</span><span class=n>autoreset</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=set-directory-variables>Set Directory Variables</h3><p>Next, I establish the variables that reference some of the more important directories and subdirectories in the project:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1>#######################################</span>
+</span></span><span class=line><span class=cl><span class=c1>## Set directory variables</span>
+</span></span><span class=line><span class=cl><span class=c1>#######################################</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>BASE_DIR</span> <span class=o>=</span> <span class=n>config</span><span class=p>(</span><span class=s2>&#34;BASE_DIR&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>CONTENT_DIR</span> <span class=o>=</span> <span class=n>config</span><span class=p>(</span><span class=s2>&#34;CONTENT_DIR&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>POSTS_DIR</span> <span class=o>=</span> <span class=n>config</span><span class=p>(</span><span class=s2>&#34;POSTS_DIR&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>PAGES_DIR</span> <span class=o>=</span> <span class=n>config</span><span class=p>(</span><span class=s2>&#34;PAGES_DIR&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>PUBLIC_DIR</span> <span class=o>=</span> <span class=n>config</span><span class=p>(</span><span class=s2>&#34;PUBLIC_DIR&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>SOURCE_DIR</span> <span class=o>=</span> <span class=n>config</span><span class=p>(</span><span class=s2>&#34;SOURCE_DIR&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>DATA_DIR</span> <span class=o>=</span> <span class=n>config</span><span class=p>(</span><span class=s2>&#34;DATA_DIR&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>DATA_MANUAL_DIR</span> <span class=o>=</span> <span class=n>config</span><span class=p>(</span><span class=s2>&#34;DATA_MANUAL_DIR&#34;</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>These directory variables are set from the <code>settings.py</code> file in the <code>/src/</code> directory. Setting these directory variables allows me to reference them at any point later on in the <code>dodo.py</code> file.</p><h3 id=helper-functions>Helper Functions</h3><p>The following are several helper functions that are referenced in the tasks. These are somewhat self explanatory, and are used by the task functions in the next section below:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1>#######################################</span>
+</span></span><span class=line><span class=cl><span class=c1>## Helper functions</span>
+</span></span><span class=line><span class=cl><span class=c1>#######################################</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>copy_file</span><span class=p>(</span><span class=n>origin_path</span><span class=p>,</span> <span class=n>destination_path</span><span class=p>,</span> <span class=n>mkdir</span><span class=o>=</span><span class=kc>True</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;Create a Python action for copying a file.&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>_copy_file</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>        <span class=n>origin</span> <span class=o>=</span> <span class=n>Path</span><span class=p>(</span><span class=n>origin_path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>dest</span> <span class=o>=</span> <span class=n>Path</span><span class=p>(</span><span class=n>destination_path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>mkdir</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>dest</span><span class=o>.</span><span class=n>parent</span><span class=o>.</span><span class=n>mkdir</span><span class=p>(</span><span class=n>parents</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span> <span class=n>exist_ok</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>shutil</span><span class=o>.</span><span class=n>copy2</span><span class=p>(</span><span class=n>origin</span><span class=p>,</span> <span class=n>dest</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>_copy_file</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>extract_front_matter</span><span class=p>(</span><span class=n>index_path</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;Extract front matter as a dict from a Hugo index.md file.&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>text</span> <span class=o>=</span> <span class=n>index_path</span><span class=o>.</span><span class=n>read_text</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>    <span class=k>match</span> <span class=o>=</span> <span class=n>re</span><span class=o>.</span><span class=n>search</span><span class=p>(</span><span class=sa>r</span><span class=s2>&#34;(?s)^---(.*?)---&#34;</span><span class=p>,</span> <span class=n>text</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=k>match</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=n>yaml</span><span class=o>.</span><span class=n>safe_load</span><span class=p>(</span><span class=k>match</span><span class=o>.</span><span class=n>group</span><span class=p>(</span><span class=mi>1</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>{}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>notebook_source_hash</span><span class=p>(</span><span class=n>notebook_path</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;Compute a SHA-256 hash of the notebook&#39;s code and markdown cells. This includes all whitespace and comments.&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=kn>import</span> <span class=nn>nbformat</span>
+</span></span><span class=line><span class=cl>    <span class=kn>import</span> <span class=nn>hashlib</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=n>notebook_path</span><span class=p>,</span> <span class=s2>&#34;r&#34;</span><span class=p>,</span> <span class=n>encoding</span><span class=o>=</span><span class=s2>&#34;utf-8&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>f</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>nb</span> <span class=o>=</span> <span class=n>nbformat</span><span class=o>.</span><span class=n>read</span><span class=p>(</span><span class=n>f</span><span class=p>,</span> <span class=n>as_version</span><span class=o>=</span><span class=mi>4</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>relevant_cells</span> <span class=o>=</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>        <span class=n>cell</span><span class=p>[</span><span class=s2>&#34;source&#34;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>        <span class=k>for</span> <span class=n>cell</span> <span class=ow>in</span> <span class=n>nb</span><span class=o>.</span><span class=n>cells</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>cell</span><span class=o>.</span><span class=n>cell_type</span> <span class=ow>in</span> <span class=p>{</span><span class=s2>&#34;code&#34;</span><span class=p>,</span> <span class=s2>&#34;markdown&#34;</span><span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>]</span>
+</span></span><span class=line><span class=cl>    <span class=n>full_content</span> <span class=o>=</span> <span class=s2>&#34;</span><span class=se>\n</span><span class=s2>&#34;</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>relevant_cells</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>hashlib</span><span class=o>.</span><span class=n>sha256</span><span class=p>(</span><span class=n>full_content</span><span class=o>.</span><span class=n>encode</span><span class=p>(</span><span class=s2>&#34;utf-8&#34;</span><span class=p>))</span><span class=o>.</span><span class=n>hexdigest</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>clean_pdf_export_pngs</span><span class=p>(</span><span class=n>subdir</span><span class=p>,</span> <span class=n>notebook_name</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;Remove .png files created by nbconvert during PDF export.&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>pattern</span> <span class=o>=</span> <span class=sa>f</span><span class=s2>&#34;</span><span class=si>{</span><span class=n>notebook_name</span><span class=si>}</span><span class=s2>_*_*.png&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>deleted</span> <span class=o>=</span> <span class=kc>False</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>file</span> <span class=ow>in</span> <span class=n>subdir</span><span class=o>.</span><span class=n>glob</span><span class=p>(</span><span class=n>pattern</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;🧹 Removing nbconvert temp image: </span><span class=si>{</span><span class=n>file</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>file</span><span class=o>.</span><span class=n>unlink</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>        <span class=n>deleted</span> <span class=o>=</span> <span class=kc>True</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=ow>not</span> <span class=n>deleted</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;✅ No temp PNGs to remove for </span><span class=si>{</span><span class=n>notebook_name</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=tasks>Tasks</h3><p>Next, we will look at the individual tasks that are being executed by <code>doit</code>.</p><p>The config task creates the base directories for the Hugo site:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1>#######################################</span>
+</span></span><span class=line><span class=cl><span class=c1>## PyDoit tasks</span>
+</span></span><span class=line><span class=cl><span class=c1>#######################################</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>task_config</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;Create empty directories for content, page, post, and public if they don&#39;t exist&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;actions&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;ipython ./src/settings.py&#34;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;file_dep&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;./src/settings.py&#34;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;targets&#34;</span><span class=p>:</span> <span class=p>[</span><span class=n>CONTENT_DIR</span><span class=p>,</span> <span class=n>PAGES_DIR</span><span class=p>,</span> <span class=n>POSTS_DIR</span><span class=p>,</span> <span class=n>PUBLIC_DIR</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;verbosity&#34;</span><span class=p>:</span> <span class=mi>2</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;clean&#34;</span><span class=p>:</span> <span class=p>[],</span>  <span class=c1># Don&#39;t clean these files by default.</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>The <code>task_list_posts_subdirs</code> function is not really necessary, but was used as an initial starting point for when I began building the <code>dodo.py</code> file:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>task_list_posts_subdirs</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;Create a list of the subdirectories of the posts directory&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;actions&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;python ./src/list_posts_subdirs.py&#34;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;file_dep&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;./src/settings.py&#34;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>        <span class=c1># &#34;targets&#34;: [POSTS_DIR],</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;verbosity&#34;</span><span class=p>:</span> <span class=mi>2</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;clean&#34;</span><span class=p>:</span> <span class=p>[],</span>  <span class=c1># Don&#39;t clean these files by default.</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>The <code>task_run_post_notebooks</code> function performs the following actions:</p><ol><li>Finds all of the &ldquo;post&rdquo; subdirectories</li><li>In each &ldquo;post&rdquo; directory, it executes the jupyter notebook file (if found) that has the same name as the post</li><li>The hash of the non-markdown cells in the notebook is also checked, and if the hash has not changed since the last run, then it skips executing the notebook</li><li>After the notebook is executed (or not), the log is updated with the date and action</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>task_run_post_notebooks</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;Execute notebooks that match their subdirectory names and only when code or markdown content has changed&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>subdir</span> <span class=ow>in</span> <span class=n>POSTS_DIR</span><span class=o>.</span><span class=n>iterdir</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=ow>not</span> <span class=n>subdir</span><span class=o>.</span><span class=n>is_dir</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>            <span class=k>continue</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>notebook_path</span> <span class=o>=</span> <span class=n>subdir</span> <span class=o>/</span> <span class=sa>f</span><span class=s2>&#34;</span><span class=si>{</span><span class=n>subdir</span><span class=o>.</span><span class=n>name</span><span class=si>}</span><span class=s2>.ipynb&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=ow>not</span> <span class=n>notebook_path</span><span class=o>.</span><span class=n>exists</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>            <span class=k>continue</span>  <span class=c1># ✅ Skip subdirs with no matching notebook</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>hash_file</span> <span class=o>=</span> <span class=n>subdir</span> <span class=o>/</span> <span class=sa>f</span><span class=s2>&#34;</span><span class=si>{</span><span class=n>subdir</span><span class=o>.</span><span class=n>name</span><span class=si>}</span><span class=s2>.last_source_hash&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=n>log_file</span> <span class=o>=</span> <span class=n>subdir</span> <span class=o>/</span> <span class=sa>f</span><span class=s2>&#34;</span><span class=si>{</span><span class=n>subdir</span><span class=o>.</span><span class=n>name</span><span class=si>}</span><span class=s2>.log&#34;</span>
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>        <span class=k>def</span> <span class=nf>source_has_changed</span><span class=p>(</span><span class=n>path</span><span class=o>=</span><span class=n>notebook_path</span><span class=p>,</span> <span class=n>hash_path</span><span class=o>=</span><span class=n>hash_file</span><span class=p>,</span> <span class=n>log_path</span><span class=o>=</span><span class=n>log_file</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>            <span class=n>current_hash</span> <span class=o>=</span> <span class=n>notebook_source_hash</span><span class=p>(</span><span class=n>path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>timestamp</span> <span class=o>=</span> <span class=n>datetime</span><span class=o>.</span><span class=n>now</span><span class=p>()</span><span class=o>.</span><span class=n>strftime</span><span class=p>(</span><span class=s2>&#34;%Y-%m-</span><span class=si>%d</span><span class=s2> %H:%M:%S&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=n>hash_path</span><span class=o>.</span><span class=n>exists</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>                <span class=n>old_hash</span> <span class=o>=</span> <span class=n>hash_path</span><span class=o>.</span><span class=n>read_text</span><span class=p>()</span><span class=o>.</span><span class=n>strip</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>                <span class=k>if</span> <span class=n>current_hash</span> <span class=o>!=</span> <span class=n>old_hash</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                    <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;🔁 Change detected in </span><span class=si>{</span><span class=n>path</span><span class=o>.</span><span class=n>name</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                    <span class=k>return</span> <span class=kc>False</span>  <span class=c1># needs re-run</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                <span class=c1># ✅ No change → log as skipped</span>
+</span></span><span class=line><span class=cl>                <span class=k>with</span> <span class=n>log_path</span><span class=o>.</span><span class=n>open</span><span class=p>(</span><span class=s2>&#34;a&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>log</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                    <span class=n>log</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;[</span><span class=si>{</span><span class=n>timestamp</span><span class=si>}</span><span class=s2>] ⏩ Skipped (no changes): </span><span class=si>{</span><span class=n>path</span><span class=o>.</span><span class=n>name</span><span class=si>}</span><span class=se>\n</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;⏩ No change in hash for </span><span class=si>{</span><span class=n>path</span><span class=o>.</span><span class=n>name</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=k>return</span> <span class=kc>True</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=c1># 🆕 No previous hash → must run</span>
+</span></span><span class=line><span class=cl>            <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;🆕 No previous hash found for </span><span class=si>{</span><span class=n>path</span><span class=o>.</span><span class=n>name</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=kc>False</span>
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>        <span class=k>def</span> <span class=nf>run_and_log</span><span class=p>(</span><span class=n>path</span><span class=o>=</span><span class=n>notebook_path</span><span class=p>,</span> <span class=n>hash_path</span><span class=o>=</span><span class=n>hash_file</span><span class=p>,</span> <span class=n>log_path</span><span class=o>=</span><span class=n>log_file</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>            <span class=n>start_time</span> <span class=o>=</span> <span class=n>time</span><span class=o>.</span><span class=n>time</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>            <span class=n>subprocess</span><span class=o>.</span><span class=n>run</span><span class=p>([</span>
+</span></span><span class=line><span class=cl>                <span class=s2>&#34;jupyter&#34;</span><span class=p>,</span> <span class=s2>&#34;nbconvert&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=s2>&#34;--execute&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=s2>&#34;--to&#34;</span><span class=p>,</span> <span class=s2>&#34;notebook&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=s2>&#34;--inplace&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=s2>&#34;--log-level=ERROR&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=nb>str</span><span class=p>(</span><span class=n>path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=p>],</span> <span class=n>check</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>elapsed</span> <span class=o>=</span> <span class=nb>round</span><span class=p>(</span><span class=n>time</span><span class=o>.</span><span class=n>time</span><span class=p>()</span> <span class=o>-</span> <span class=n>start_time</span><span class=p>,</span> <span class=mi>2</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=n>new_hash</span> <span class=o>=</span> <span class=n>notebook_source_hash</span><span class=p>(</span><span class=n>path</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>hash_path</span><span class=o>.</span><span class=n>write_text</span><span class=p>(</span><span class=n>new_hash</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;✅ Saved new hash for </span><span class=si>{</span><span class=n>path</span><span class=o>.</span><span class=n>name</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=n>timestamp</span> <span class=o>=</span> <span class=n>datetime</span><span class=o>.</span><span class=n>now</span><span class=p>()</span><span class=o>.</span><span class=n>strftime</span><span class=p>(</span><span class=s2>&#34;%Y-%m-</span><span class=si>%d</span><span class=s2> %H:%M:%S&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>log_msg</span> <span class=o>=</span> <span class=sa>f</span><span class=s2>&#34;[</span><span class=si>{</span><span class=n>timestamp</span><span class=si>}</span><span class=s2>] ✅ Executed </span><span class=si>{</span><span class=n>path</span><span class=o>.</span><span class=n>name</span><span class=si>}</span><span class=s2> in </span><span class=si>{</span><span class=n>elapsed</span><span class=si>}</span><span class=s2>s</span><span class=se>\n</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>            <span class=k>with</span> <span class=n>log_path</span><span class=o>.</span><span class=n>open</span><span class=p>(</span><span class=s2>&#34;a&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>f</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=n>log_msg</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=nb>print</span><span class=p>(</span><span class=n>log_msg</span><span class=o>.</span><span class=n>strip</span><span class=p>())</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>yield</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;name&#34;</span><span class=p>:</span> <span class=n>subdir</span><span class=o>.</span><span class=n>name</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;actions&#34;</span><span class=p>:</span> <span class=p>[</span><span class=n>run_and_log</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;file_dep&#34;</span><span class=p>:</span> <span class=p>[</span><span class=n>notebook_path</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;uptodate&#34;</span><span class=p>:</span> <span class=p>[</span><span class=n>source_has_changed</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;verbosity&#34;</span><span class=p>:</span> <span class=mi>2</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>Next, the <code>task_export_post_notebooks</code> function exports the executed jupyter notebook to both HTML and PDF formats.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>task_export_post_notebooks</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;Export executed notebooks to HTML and PDF, and clean temp PNGs&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>subdir</span> <span class=ow>in</span> <span class=n>POSTS_DIR</span><span class=o>.</span><span class=n>iterdir</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=ow>not</span> <span class=n>subdir</span><span class=o>.</span><span class=n>is_dir</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>            <span class=k>continue</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>notebook_name</span> <span class=o>=</span> <span class=n>subdir</span><span class=o>.</span><span class=n>name</span>
+</span></span><span class=line><span class=cl>        <span class=n>notebook_path</span> <span class=o>=</span> <span class=n>subdir</span> <span class=o>/</span> <span class=sa>f</span><span class=s2>&#34;</span><span class=si>{</span><span class=n>notebook_name</span><span class=si>}</span><span class=s2>.ipynb&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=n>html_output</span> <span class=o>=</span> <span class=n>subdir</span> <span class=o>/</span> <span class=sa>f</span><span class=s2>&#34;</span><span class=si>{</span><span class=n>notebook_name</span><span class=si>}</span><span class=s2>.html&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=n>pdf_output</span> <span class=o>=</span> <span class=n>subdir</span> <span class=o>/</span> <span class=sa>f</span><span class=s2>&#34;</span><span class=si>{</span><span class=n>notebook_name</span><span class=si>}</span><span class=s2>.pdf&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=ow>not</span> <span class=n>notebook_path</span><span class=o>.</span><span class=n>exists</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>            <span class=k>continue</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>yield</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;name&#34;</span><span class=p>:</span> <span class=n>notebook_name</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;actions&#34;</span><span class=p>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>                <span class=sa>f</span><span class=s2>&#34;jupyter nbconvert --to=html --log-level=WARN --output=</span><span class=si>{</span><span class=n>html_output</span><span class=si>}</span><span class=s2> </span><span class=si>{</span><span class=n>notebook_path</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=sa>f</span><span class=s2>&#34;jupyter nbconvert --to=pdf --log-level=WARN --output=</span><span class=si>{</span><span class=n>pdf_output</span><span class=si>}</span><span class=s2> </span><span class=si>{</span><span class=n>notebook_path</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=p>(</span><span class=n>clean_pdf_export_pngs</span><span class=p>,</span> <span class=p>[</span><span class=n>subdir</span><span class=p>,</span> <span class=n>notebook_name</span><span class=p>])</span>
+</span></span><span class=line><span class=cl>            <span class=p>],</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;file_dep&#34;</span><span class=p>:</span> <span class=p>[</span><span class=n>notebook_path</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;targets&#34;</span><span class=p>:</span> <span class=p>[</span><span class=n>html_output</span><span class=p>,</span> <span class=n>pdf_output</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;verbosity&#34;</span><span class=p>:</span> <span class=mi>2</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>            <span class=s2>&#34;clean&#34;</span><span class=p>:</span> <span class=p>[],</span>  <span class=c1># Don&#39;t clean these files by default.</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>The <code>task_build_post_indices</code> builds each <code>index.md</code> file within each &ldquo;post&rdquo; directory. It looks for an <code>index_temp.md</code> and an <code>index_dep.txt</code> file, which contains the dependencies required to build the <code>index.md</code> file. The dependencies are established within the jupyter notebook for each post, and the <code>index_dep.txt</code> file is also updated when the notebook is executed.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>task_build_post_indices</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;Run build_index.py in each post subdirectory to generate index.md&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=n>script_path</span> <span class=o>=</span> <span class=n>SOURCE_DIR</span> <span class=o>/</span> <span class=s2>&#34;build_index.py&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>subdir</span> <span class=ow>in</span> <span class=n>POSTS_DIR</span><span class=o>.</span><span class=n>iterdir</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>subdir</span><span class=o>.</span><span class=n>is_dir</span><span class=p>()</span> <span class=ow>and</span> <span class=p>(</span><span class=n>subdir</span> <span class=o>/</span> <span class=s2>&#34;index_temp.md&#34;</span><span class=p>)</span><span class=o>.</span><span class=n>exists</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>            <span class=k>def</span> <span class=nf>run_script</span><span class=p>(</span><span class=n>subdir</span><span class=o>=</span><span class=n>subdir</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>                <span class=n>subprocess</span><span class=o>.</span><span class=n>run</span><span class=p>(</span>
+</span></span><span class=line><span class=cl>                    <span class=p>[</span><span class=s2>&#34;python&#34;</span><span class=p>,</span> <span class=nb>str</span><span class=p>(</span><span class=n>script_path</span><span class=p>)],</span>
+</span></span><span class=line><span class=cl>                    <span class=n>cwd</span><span class=o>=</span><span class=n>subdir</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                    <span class=n>check</span><span class=o>=</span><span class=kc>True</span>
+</span></span><span class=line><span class=cl>                <span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=k>yield</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=s2>&#34;name&#34;</span><span class=p>:</span> <span class=n>subdir</span><span class=o>.</span><span class=n>name</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=s2>&#34;actions&#34;</span><span class=p>:</span> <span class=p>[</span><span class=n>run_script</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>                <span class=s2>&#34;file_dep&#34;</span><span class=p>:</span> <span class=p>[</span>
+</span></span><span class=line><span class=cl>                    <span class=n>subdir</span> <span class=o>/</span> <span class=s2>&#34;index_temp.md&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                    <span class=n>subdir</span> <span class=o>/</span> <span class=s2>&#34;index_dep.txt&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                    <span class=n>script_path</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=p>],</span>
+</span></span><span class=line><span class=cl>                <span class=s2>&#34;targets&#34;</span><span class=p>:</span> <span class=p>[</span><span class=n>subdir</span> <span class=o>/</span> <span class=s2>&#34;index.md&#34;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>                <span class=s2>&#34;verbosity&#34;</span><span class=p>:</span> <span class=mi>2</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=s2>&#34;clean&#34;</span><span class=p>:</span> <span class=p>[],</span>  <span class=c1># Don&#39;t clean these files by default.</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>Here&rsquo;s an example of when the <code>index_dep.txt</code> file is generated, and then updated with a markdown file dependency is generated with the <a class=link href=/2025/02/02/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps><code>export_track_md_deps</code></a> function:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=c1># Create file to track markdown dependencies</span>
+</span></span><span class=line><span class=cl><span class=n>dep_file</span> <span class=o>=</span> <span class=n>Path</span><span class=p>(</span><span class=s2>&#34;index_dep.txt&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>dep_file</span><span class=o>.</span><span class=n>write_text</span><span class=p>(</span><span class=s2>&#34;&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Copy this &lt;!-- INSERT_01_VIX_Stats_By_Year_HERE --&gt; to index_temp.md</span>
+</span></span><span class=line><span class=cl><span class=n>export_track_md_deps</span><span class=p>(</span><span class=n>dep_file</span><span class=o>=</span><span class=n>dep_file</span><span class=p>,</span> <span class=n>md_filename</span><span class=o>=</span><span class=s2>&#34;01_VIX_Stats_By_Year.md&#34;</span><span class=p>,</span> <span class=n>content</span><span class=o>=</span><span class=n>vix_stats_by_year</span><span class=o>.</span><span class=n>to_markdown</span><span class=p>(</span><span class=n>floatfmt</span><span class=o>=</span><span class=s2>&#34;.2f&#34;</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Copy this &lt;!-- INSERT_02_VVIX_DF_Info_HERE --&gt; to index_temp.md</span>
+</span></span><span class=line><span class=cl><span class=n>export_track_md_deps</span><span class=p>(</span><span class=n>dep_file</span><span class=o>=</span><span class=n>dep_file</span><span class=p>,</span> <span class=n>md_filename</span><span class=o>=</span><span class=s2>&#34;02_VVIX_DF_Info.md&#34;</span><span class=p>,</span> <span class=n>content</span><span class=o>=</span><span class=n>df_info_markdown</span><span class=p>(</span><span class=n>vix</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Copy this &lt;!-- INSERT_11_Net_Profit_Percent_HERE --&gt; to index_temp.md</span>
+</span></span><span class=line><span class=cl><span class=n>export_track_md_deps</span><span class=p>(</span><span class=n>dep_file</span><span class=o>=</span><span class=n>dep_file</span><span class=p>,</span> <span class=n>md_filename</span><span class=o>=</span><span class=s2>&#34;11_Net_Profit_Percent.md&#34;</span><span class=p>,</span> <span class=n>content</span><span class=o>=</span><span class=n>net_profit_percent_str</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>Moving on, the <code>task_clean_public</code> removes the public directory within the static site. This is necessary to clean out any erroneous files or directories that are changed when the site is rebuilt.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>task_clean_public</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;Remove the Hugo public directory before rebuilding the site.&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>remove_public</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>PUBLIC_DIR</span><span class=o>.</span><span class=n>exists</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>            <span class=n>shutil</span><span class=o>.</span><span class=n>rmtree</span><span class=p>(</span><span class=n>PUBLIC_DIR</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;🧹 Deleted </span><span class=si>{</span><span class=n>PUBLIC_DIR</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;ℹ️  </span><span class=si>{</span><span class=n>PUBLIC_DIR</span><span class=si>}</span><span class=s2> does not exist, nothing to delete.&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;actions&#34;</span><span class=p>:</span> <span class=p>[</span><span class=n>remove_public</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;verbosity&#34;</span><span class=p>:</span> <span class=mi>2</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;clean&#34;</span><span class=p>:</span> <span class=p>[],</span>  <span class=c1># Don&#39;t clean these files by default.</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>The <code>task_build_site</code> builds the Hugo static site.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>task_build_site</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;Build the Hugo static site&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;actions&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;hugo&#34;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;task_dep&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;clean_public&#34;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;verbosity&#34;</span><span class=p>:</span> <span class=mi>2</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;clean&#34;</span><span class=p>:</span> <span class=p>[],</span>  <span class=c1># Don&#39;t clean these files by default.</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>The <code>task_copy_notebook_exports</code> copies the HTML and PDF exports generated above to the public folder. This is necessary due to how Hugo handles HTML and PDF files and excludes those when generating the static site public directories and files.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>task_copy_notebook_exports</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;Copy notebook HTML exports into the correct Hugo public/ date-based folders&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>subdir</span> <span class=ow>in</span> <span class=n>POSTS_DIR</span><span class=o>.</span><span class=n>iterdir</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=n>subdir</span><span class=o>.</span><span class=n>is_dir</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>            <span class=n>html_file</span> <span class=o>=</span> <span class=n>subdir</span> <span class=o>/</span> <span class=sa>f</span><span class=s2>&#34;</span><span class=si>{</span><span class=n>subdir</span><span class=o>.</span><span class=n>name</span><span class=si>}</span><span class=s2>.html&#34;</span>
+</span></span><span class=line><span class=cl>            <span class=n>index_md</span> <span class=o>=</span> <span class=n>subdir</span> <span class=o>/</span> <span class=s2>&#34;index.md&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=ow>not</span> <span class=n>html_file</span><span class=o>.</span><span class=n>exists</span><span class=p>()</span> <span class=ow>or</span> <span class=ow>not</span> <span class=n>index_md</span><span class=o>.</span><span class=n>exists</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>                <span class=k>continue</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=c1># Extract slug and date from front matter</span>
+</span></span><span class=line><span class=cl>            <span class=n>front_matter</span> <span class=o>=</span> <span class=n>extract_front_matter</span><span class=p>(</span><span class=n>index_md</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>slug</span> <span class=o>=</span> <span class=n>front_matter</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;slug&#34;</span><span class=p>,</span> <span class=n>subdir</span><span class=o>.</span><span class=n>name</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>date_str</span> <span class=o>=</span> <span class=n>front_matter</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s2>&#34;date&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=ow>not</span> <span class=n>date_str</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>                <span class=k>continue</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=c1># Format path like: public/YYYY/MM/DD/slug/</span>
+</span></span><span class=line><span class=cl>            <span class=n>date_obj</span> <span class=o>=</span> <span class=n>datetime</span><span class=o>.</span><span class=n>fromisoformat</span><span class=p>(</span><span class=n>date_str</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>public_path</span> <span class=o>=</span> <span class=n>PUBLIC_DIR</span> <span class=o>/</span> <span class=sa>f</span><span class=s2>&#34;</span><span class=si>{</span><span class=n>date_obj</span><span class=si>:</span><span class=s2>%Y/%m/%d</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>/</span> <span class=n>slug</span>
+</span></span><span class=line><span class=cl>            <span class=n>target_path</span> <span class=o>=</span> <span class=n>public_path</span> <span class=o>/</span> <span class=sa>f</span><span class=s2>&#34;</span><span class=si>{</span><span class=n>slug</span><span class=si>}</span><span class=s2>.html&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=k>def</span> <span class=nf>copy_html</span><span class=p>(</span><span class=n>src</span><span class=o>=</span><span class=n>html_file</span><span class=p>,</span> <span class=n>dest</span><span class=o>=</span><span class=n>target_path</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>                <span class=n>dest</span><span class=o>.</span><span class=n>parent</span><span class=o>.</span><span class=n>mkdir</span><span class=p>(</span><span class=n>parents</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span> <span class=n>exist_ok</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=n>shutil</span><span class=o>.</span><span class=n>copy2</span><span class=p>(</span><span class=n>src</span><span class=p>,</span> <span class=n>dest</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;✅ Copied </span><span class=si>{</span><span class=n>src</span><span class=si>}</span><span class=s2> → </span><span class=si>{</span><span class=n>dest</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=k>yield</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=s2>&#34;name&#34;</span><span class=p>:</span> <span class=n>subdir</span><span class=o>.</span><span class=n>name</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=s2>&#34;actions&#34;</span><span class=p>:</span> <span class=p>[</span><span class=n>copy_html</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>                <span class=s2>&#34;file_dep&#34;</span><span class=p>:</span> <span class=p>[</span><span class=n>html_file</span><span class=p>,</span> <span class=n>index_md</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>                <span class=s2>&#34;targets&#34;</span><span class=p>:</span> <span class=p>[</span><span class=n>target_path</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>                <span class=s2>&#34;task_dep&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;build_site&#34;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>                <span class=s2>&#34;verbosity&#34;</span><span class=p>:</span> <span class=mi>2</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=s2>&#34;clean&#34;</span><span class=p>:</span> <span class=p>[],</span>  <span class=c1># Don&#39;t clean these files by default.</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>The <code>task_create_schwab_callback</code> creates a simple HTML file that will read the authorization code when using oauth with the Schwab API.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>task_create_schwab_callback</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;Create a Schwab callback URL by creating /public/schwab_callback/index.html and placing the html code in it&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>create_callback</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>        <span class=n>callback_path</span> <span class=o>=</span> <span class=n>PUBLIC_DIR</span> <span class=o>/</span> <span class=s2>&#34;schwab_callback&#34;</span> <span class=o>/</span> <span class=s2>&#34;index.html&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=n>callback_path</span><span class=o>.</span><span class=n>parent</span><span class=o>.</span><span class=n>mkdir</span><span class=p>(</span><span class=n>parents</span><span class=o>=</span><span class=kc>True</span><span class=p>,</span> <span class=n>exist_ok</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>html</span> <span class=o>=</span> <span class=s2>&#34;&#34;&#34;&lt;!DOCTYPE html&gt;
+</span></span></span><span class=line><span class=cl><span class=s2>&lt;html lang=&#34;en&#34;&gt;
+</span></span></span><span class=line><span class=cl><span class=s2>&lt;head&gt;
+</span></span></span><span class=line><span class=cl><span class=s2>    &lt;meta charset=&#34;UTF-8&#34; /&gt;
+</span></span></span><span class=line><span class=cl><span class=s2>    &lt;title&gt;Schwab OAuth Code&lt;/title&gt;
+</span></span></span><span class=line><span class=cl><span class=s2>    &lt;script&gt;
+</span></span></span><span class=line><span class=cl><span class=s2>        const params = new URLSearchParams(window.location.search);
+</span></span></span><span class=line><span class=cl><span class=s2>        const code = params.get(&#34;code&#34;);
+</span></span></span><span class=line><span class=cl><span class=s2>        document.write(&#34;&lt;h1&gt;Authorization Code:&lt;/h1&gt;&lt;p&gt;&#34; + code + &#34;&lt;/p&gt;&#34;);
+</span></span></span><span class=line><span class=cl><span class=s2>    &lt;/script&gt;
+</span></span></span><span class=line><span class=cl><span class=s2>&lt;/head&gt;
+</span></span></span><span class=line><span class=cl><span class=s2>&lt;body&gt;&lt;/body&gt;
+</span></span></span><span class=line><span class=cl><span class=s2>&lt;/html&gt;&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>        <span class=k>with</span> <span class=nb>open</span><span class=p>(</span><span class=n>callback_path</span><span class=p>,</span> <span class=s2>&#34;w&#34;</span><span class=p>)</span> <span class=k>as</span> <span class=n>f</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>            <span class=n>f</span><span class=o>.</span><span class=n>write</span><span class=p>(</span><span class=n>html</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;✅ Created Schwab callback page at </span><span class=si>{</span><span class=n>callback_path</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;actions&#34;</span><span class=p>:</span> <span class=p>[</span><span class=n>create_callback</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;task_dep&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;copy_notebook_exports&#34;</span><span class=p>,</span> <span class=s2>&#34;clean_public&#34;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;verbosity&#34;</span><span class=p>:</span> <span class=mi>2</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;clean&#34;</span><span class=p>:</span> <span class=p>[],</span>  <span class=c1># Don&#39;t clean these files by default.</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>Finally, the <code>task_deploy_site</code> adds any new files, commits the changes, prompts for a message, and pushes the updates to GitHub.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>task_deploy_site</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>    <span class=s2>&#34;&#34;&#34;Prompt for a commit message and push to GitHub&#34;&#34;&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>def</span> <span class=nf>commit_and_push</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>        <span class=n>message</span> <span class=o>=</span> <span class=nb>input</span><span class=p>(</span><span class=s2>&#34;What is the commit message? &#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=ow>not</span> <span class=n>message</span><span class=o>.</span><span class=n>strip</span><span class=p>():</span>
+</span></span><span class=line><span class=cl>            <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;❌ Commit message cannot be empty.&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=mi>1</span>  <span class=c1># signal failure</span>
+</span></span><span class=line><span class=cl>        <span class=kn>import</span> <span class=nn>subprocess</span>
+</span></span><span class=line><span class=cl>        <span class=n>subprocess</span><span class=o>.</span><span class=n>run</span><span class=p>([</span><span class=s2>&#34;git&#34;</span><span class=p>,</span> <span class=s2>&#34;add&#34;</span><span class=p>,</span> <span class=s2>&#34;.&#34;</span><span class=p>],</span> <span class=n>check</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>subprocess</span><span class=o>.</span><span class=n>run</span><span class=p>([</span><span class=s2>&#34;git&#34;</span><span class=p>,</span> <span class=s2>&#34;commit&#34;</span><span class=p>,</span> <span class=s2>&#34;-am&#34;</span><span class=p>,</span> <span class=n>message</span><span class=p>],</span> <span class=n>check</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>subprocess</span><span class=o>.</span><span class=n>run</span><span class=p>([</span><span class=s2>&#34;git&#34;</span><span class=p>,</span> <span class=s2>&#34;push&#34;</span><span class=p>],</span> <span class=n>check</span><span class=o>=</span><span class=kc>True</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=nb>print</span><span class=p>(</span><span class=s2>&#34;✅ Pushed to GitHub.&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;actions&#34;</span><span class=p>:</span> <span class=p>[</span><span class=n>commit_and_push</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;task_dep&#34;</span><span class=p>:</span> <span class=p>[</span><span class=s2>&#34;create_schwab_callback&#34;</span><span class=p>],</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;verbosity&#34;</span><span class=p>:</span> <span class=mi>2</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>        <span class=s2>&#34;clean&#34;</span><span class=p>:</span> <span class=p>[],</span>  <span class=c1># Don&#39;t clean these files by default.</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>As (likely) expected, a good portion of the above code was generated by ChatGPT - somewhere ~ 50%-75%. The balance was generated by myself or modified using the base code provided. Importantly, the general idea of automating the entire process within Hugo and processing the post subdirectories is original (as far as I know).</p><p>Finally, the complete <code>dodo.py</code> and <code>settings.py</code> files are available in the jupyter notebook / HTML / PDF exports linked below.</p><h2 id=executing-doit>Executing doit</h2><p>To execute <code>doit</code>, simply run:</p><pre><code>$ doit
+</code></pre><p>in the terminal after changing to the high level directory.</p><p>Alternatively, you can list the individual tasks with:</p><pre><code>$ doit list
+</code></pre><p>and then execute individually, such as:</p><pre><code>$ doit build_post_indices
+</code></pre><p>And finally, <code>doit</code> can be forced to execute all tasks with:</p><pre><code>$ doit --always
+</code></pre><p>or an individual task with:</p><pre><code>$ doit --always build_post_indices
+</code></pre><h2 id=references>References</h2><ol><li><a class=link href=https://pydoit.org/ target=_blank rel=noopener>https://pydoit.org/</a></li><li><a class=link href=https://github.com/jmbejara target=_blank rel=noopener>https://github.com/jmbejara</a></li></ol><h2 id=code>Code</h2><p>The jupyter notebook with the functions and all other code is available <a class=link href=automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation.ipynb>here</a>.</br>The html export of the jupyter notebook is available <a class=link href=automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation.html>here</a>.</br>The pdf export of the jupyter notebook is available <a class=link href=automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation.pdf>here</a>.</p></section><footer class=article-footer><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section><section class=article-lastmod><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<span>Last updated on July 28, 2025</span></section></footer><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css integrity=sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV crossorigin=anonymous><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js integrity=sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8 crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js integrity=sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05 crossorigin=anonymous defer></script><script>window.addEventListener("DOMContentLoaded",()=>{const e=[".main-article",".widget--toc"];e.forEach(e=>{const t=document.querySelector(e);t&&renderMathInElement(t,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}],ignoredClasses:["gist"]})})})</script></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article class=has-image><a href=/2025/11/29/asset-class-performance-fed-policy-cycles/><div class=article-image><img src=/2025/11/29/asset-class-performance-fed-policy-cycles/asset-class-performance-fed-policy-cycles.80d1e3dba00bcbca2f291ef95f0b4e73.png width=1536 height=1024 loading=lazy alt="Featured image of post Performance Of Various Asset Classes During Fed Policy Cycles" data-key=asset-class-performance-fed-policy-cycles data-hash="md5-gNHj26ALy8ovKR75XwtOcw=="></div><div class=article-details><h2 class=article-title>Performance Of Various Asset Classes During Fed Policy Cycles</h2></div></a></article><article class=has-image><a href=/2025/08/10/data-pipelining-with-polygon/><div class=article-image><img src=/2025/08/10/data-pipelining-with-polygon/data-pipelining-with-polygon_original2.282db02a9a1d34f8f9e56ff26e35e2e3.png width=1536 height=1024 loading=lazy alt="Featured image of post Data Pipelining With Polygon" data-key=data-pipelining-with-polygon data-hash="md5-KC2wKpodNPj55W/ybjXi4w=="></div><div class=article-details><h2 class=article-title>Data Pipelining With Polygon</h2></div></a></article><article class=has-image><a href=/2025/07/06/data-pipelining-with-coinbase/><div class=article-image><img src=/2025/07/06/data-pipelining-with-coinbase/data-pipelining-with-coinbase.23405301a063b1b5afccbd3035f271ce.png width=1891 height=788 loading=lazy alt="Featured image of post Data Pipelining With Coinbase" data-key=data-pipelining-with-coinbase data-hash="md5-I0BTAaBjsbWvzL0wNfJxzg=="></div><div class=article-details><h2 class=article-title>Data Pipelining With Coinbase</h2></div></a></article><article class=has-image><a href=/2025/03/03/investigating-a-vix-trading-signal-part-3-trading/><div class=article-image><img src=/2025/03/03/investigating-a-vix-trading-signal-part-3-trading/cover.6c26bbaa157bd04e55552d08c0af8235.jpg width=1920 height=800 loading=lazy alt="Featured image of post Investigating A VIX Trading Signal, Part 3: Trading" data-key=investigating-a-vix-trading-signal-part-3-trading data-hash="md5-bCa7qhV70E5VVS0IwK+CNQ=="></div><div class=article-details><h2 class=article-title>Investigating A VIX Trading Signal, Part 3: Trading</h2></div></a></article><article class=has-image><a href=/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/><div class=article-image><img src=/2025/03/02/investigating-a-vix-trading-signal-part-2-finding-a-signal/cover.6c26bbaa157bd04e55552d08c0af8235.jpg width=1920 height=800 loading=lazy alt="Featured image of post Investigating A VIX Trading Signal, Part 2: Finding A Signal" data-key=investigating-a-vix-trading-signal-part-2-finding-a-signal data-hash="md5-bCa7qhV70E5VVS0IwK+CNQ=="></div><div class=article-details><h2 class=article-title>Investigating A VIX Trading Signal, Part 2: Finding A Signal</h2></div></a></article></div></div></aside><script src=https://giscus.app/client.js data-repo=jaredszajkowski/jaredszajkowski.github.io data-repo-id=R_kgDOKZLn5w data-category=Announcements data-category-id=DIC_kwDOKZLn584CaJwO data-mapping=title data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=top data-theme=light data-lang=en data-loading crossorigin=anonymous async></script><script>function setGiscusTheme(e){let t=document.querySelector("iframe.giscus-frame");t&&t.contentWindow.postMessage({giscus:{setConfig:{theme:e}}},"https://giscus.app")}(function(){addEventListener("message",t=>{if(event.origin!=="https://giscus.app")return;e()}),window.addEventListener("onColorSchemeChange",e);function e(){setGiscusTheme(document.documentElement.dataset.scheme==="light"?"light":"dark")}})()</script><footer class=site-footer><section class=copyright>&copy;
+2023 -
+2025 Jared Szajkowski, P.E., PMP</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.33.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.c922af694cc257bf1ecc41c0dd7b0430f9114ec280ccf67cd2c6ad55f5316c4e.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>
