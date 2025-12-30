@@ -34,7 +34,7 @@ def get_os():
     else:
         return "unknown"
 
-def if_relative_make_abs(path):
+def if_relative_make_abs(relative_dir, path):
     """If a relative path is given, make it absolute, assuming
     that it is relative to the project root directory (BASE_DIR)
 
@@ -52,7 +52,7 @@ def if_relative_make_abs(path):
     if path.is_absolute():
         abs_path = path.resolve()
     else:
-        abs_path = (d["BASE_DIR"] / path).resolve()
+        abs_path = (d[relative_dir] / path).resolve()
     return abs_path
 
 # Initialize the dictionary to hold all the settings
@@ -64,18 +64,26 @@ d["OS_TYPE"] = get_os()
 # Absolute path to root directory of the project
 d["BASE_DIR"] = Path(__file__).absolute().parent.parent
 
+# Get the "Websites" directory
+d["WEBSITES_DIR"] = d["BASE_DIR"].parent
+
 # fmt: off
 ## Other .evn variables
 d["ENV_PATH"] = Path.home() / "Cloud_Storage/Dropbox/.env"
 
 ## Paths
-d["CONTENT_DIR"] = if_relative_make_abs(_config('CONTENT_DIR', default=Path('content'), cast=Path))
-d["POSTS_DIR"] = if_relative_make_abs(_config('POSTS_DIR', default=Path('content/post'), cast=Path))
-d["PAGES_DIR"] = if_relative_make_abs(_config('PAGES_DIR', default=Path('content/page'), cast=Path))
-d["PUBLIC_DIR"] = if_relative_make_abs(_config('PUBLIC_DIR', default=Path('public'), cast=Path))
-d["SOURCE_DIR"] = if_relative_make_abs(_config('SOURCE_DIR', default=Path('src'), cast=Path))
-d["DATA_DIR"] = if_relative_make_abs(_config('DATA_DIR', default=Path('Data'), cast=Path))
-d["DATA_MANUAL_DIR"] = if_relative_make_abs(_config('DATA_MANUAL_DIR', default=Path('Data_Manual'), cast=Path))
+d["CONTENT_DIR"] = if_relative_make_abs(relative_dir="BASE_DIR", path=_config('CONTENT_DIR', default=Path('content'), cast=Path))
+d["POSTS_DIR"] = if_relative_make_abs(relative_dir="BASE_DIR", path=_config('POSTS_DIR', default=Path('content/post'), cast=Path))
+d["PAGES_DIR"] = if_relative_make_abs(relative_dir="BASE_DIR", path=_config('PAGES_DIR', default=Path('content/page'), cast=Path))
+d["PUBLIC_DIR"] = if_relative_make_abs(relative_dir="BASE_DIR", path=_config('PUBLIC_DIR', default=Path('public'), cast=Path))
+d["SOURCE_DIR"] = if_relative_make_abs(relative_dir="BASE_DIR", path=_config('SOURCE_DIR', default=Path('src'), cast=Path))
+d["DATA_DIR"] = if_relative_make_abs(relative_dir="WEBSITES_DIR", path=_config('DATA_DIR', default=Path('Data'), cast=Path))
+d["DATA_MANUAL_DIR"] = if_relative_make_abs(relative_dir="WEBSITES_DIR", path=_config('DATA_MANUAL_DIR', default=Path('Data_Manual'), cast=Path))
+
+# Old configuration that put DATA_DIR relative to BASE_DIR
+# d["DATA_DIR"] = if_relative_make_abs(_config('DATA_DIR', default=Path('Data'), cast=Path))
+# d["DATA_MANUAL_DIR"] = if_relative_make_abs(_config('DATA_MANUAL_DIR', default=Path('Data_Manual'), cast=Path))
+
 # fmt: on
 
 # # Print the dictionary to check the values
