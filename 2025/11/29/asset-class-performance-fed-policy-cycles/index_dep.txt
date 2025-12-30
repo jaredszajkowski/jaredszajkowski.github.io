@@ -1,0 +1,13 @@
+01_Fed_Funds_Monthly_Rate_Change.md
+01_Fed_Funds_Cycle_Change.md
+02_SPY_Monthly.md
+02_SPY_Cycle_DF.md
+02_SPY_Annualized_Regression.md
+03_TLT_Monthly.md
+03_TLT_Cycle_DF.md
+03_TLT_Annualized_Regression.md
+04_GLD_Monthly.md
+04_GLD_Cycle_DF.md
+04_GLD_Annualized_Regression.md
+05_Portfolio_DF.md
+05_Portfolio_Stats_DF.md

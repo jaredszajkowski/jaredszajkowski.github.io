@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on Jared Szajkowski, P.E., PMP</title><link>https://www.jaredszajkowski.com/categories/linux/</link><description>Recent content in Linux on Jared Szajkowski, P.E., PMP</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 12 Apr 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jaredszajkowski.com/categories/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>Simple Incremental Bash Backup Script</title><link>https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/</link><pubDate>Fri, 12 Jan 2024 00:00:01 +0000</pubDate><guid>https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/cover.jpg" alt="Featured image of post Simple Incremental Bash Backup Script" /&gt;&lt;h2 id="post-updates"&gt;Post Updates
+&lt;/h2&gt;&lt;p&gt;Update 4/12/2025: &lt;a class="link" href="https://www.jaredszajkowski.com/2024/01/12/simple-incremental-bash-backup-script/#updated-incremental-backup-script" target="_blank" rel="noopener"
+&gt;Revised script&lt;/a&gt; to accomodate a list of excluded directories.&lt;/p&gt;
+&lt;h2 id="introduction"&gt;Introduction
+&lt;/h2&gt;&lt;p&gt;While there are &lt;a class="link" href="https://wiki.archlinux.org/title/Synchronization_and_backup_programs" target="_blank" rel="noopener"
+&gt;numerous backup solutions available for Linux&lt;/a&gt;, many require extensive configuration and maintenance, and restoring from the backup is not always simple. Incremental backups are ideal because they maintain snapshots of the files and allow for access to previous versions of files.&lt;/p&gt;
+&lt;p&gt;Linux Journal recently &lt;a class="link" href="https://www.linuxjournal.com/content/exploring-rsync-tar-and-other-backup-solutions" target="_blank" rel="noopener"
+&gt;published an article on various backup solutions&lt;/a&gt;, and I thought I&amp;rsquo;d provide my incremental backup script that uses &lt;code&gt;rsync&lt;/code&gt; and &lt;code&gt;cp&lt;/code&gt;.&lt;/p&gt;</description></item><item><title>Arch Linux Install</title><link>https://www.jaredszajkowski.com/2023/09/29/arch-linux-install/</link><pubDate>Fri, 29 Sep 2023 00:00:01 +0000</pubDate><guid>https://www.jaredszajkowski.com/2023/09/29/arch-linux-install/</guid><description>&lt;img src="https://www.jaredszajkowski.com/2023/09/29/arch-linux-install/cover.jpg" alt="Featured image of post Arch Linux Install" /&gt;&lt;h2 id="introduction"&gt;Introduction
+&lt;/h2&gt;&lt;p&gt;This is the basic framework that I use to install Arch Linux, with a few changes catered to the Lenovo ThinkPad E15 Gen 2. I have found that this is a decent mid range laptop, excellent linux compatibility, great keyboard, and overall provides a good value.&lt;/p&gt;
+&lt;h2 id="getting-started"&gt;Getting started
+&lt;/h2&gt;&lt;p&gt;This tutorial assumes the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;You are booting from a USB drive with the Arch install ISO.&lt;/li&gt;
+&lt;li&gt;Wireless or wired network is detected and drivers are configured automatically.&lt;/li&gt;
+&lt;li&gt;You want drive encrytion on your root partition, but not on your boot/efi/swap partitions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="verify-uefi-boot-mode"&gt;Verify UEFI boot mode
+&lt;/h3&gt;&lt;p&gt;The following command should show directory without error:&lt;/p&gt;</description></item></channel></rss>
