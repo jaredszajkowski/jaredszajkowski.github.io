@@ -7,7 +7,7 @@
 
 #colorScheme = "custom_was_slate"
 #colorScheme = "custom_was_ocean"
-colorScheme = "ocean"
+colorScheme = "custom_was_slate"
 defaultThemeColor = "#FFFFFF"
 
 defaultAppearance = "light" # valid options: light or dark
