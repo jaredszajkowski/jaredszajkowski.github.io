@@ -82,7 +82,7 @@ def plot_timeseries(
         df_filtered = price_df[(price_df.index >= plot_start_date) & (price_df.index <= plot_end_date)]
 
     # Set plot figure size and background color
-    plt.figure(figsize=(12, 6), facecolor="#F5F5F5")
+    plt.figure(figsize=(10, 6), facecolor="#F5F5F5")
 
     # Plot data
     if plot_columns =="All":
@@ -108,8 +108,8 @@ def plot_timeseries(
     else:
         raise ValueError(f"Unrecognized x_format: {x_format}. Use 'Day', 'Week', 'Month', or 'Year'.")
 
-    plt.xlabel(x_label, fontsize=10)
-    plt.xticks(rotation=45, fontsize=8)
+    plt.xlabel(x_label, fontsize=12)
+    plt.xticks(rotation=45, fontsize=10)
 
     # Format Y axis
     if y_format == "Decimal":
@@ -124,11 +124,11 @@ def plot_timeseries(
         raise ValueError(f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', or 'Scientific'.")
     
     plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
-    plt.ylabel(y_label, fontsize=10)
-    plt.yticks(fontsize=8)
+    plt.ylabel(y_label, fontsize=12)
+    plt.yticks(fontsize=10)
 
     # Format title, layout, grid, and legend
-    plt.title(title, fontsize=12)
+    plt.title(title, fontsize=14, fontweight='bold')
     plt.tight_layout()
 
     if grid == True:

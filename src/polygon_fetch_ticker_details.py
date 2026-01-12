@@ -66,6 +66,7 @@ if __name__ == "__main__":
 
     etf_tickers = [
         # Put tickers here
+        "QQQ",
     ]
 
     # Create empty dictionary

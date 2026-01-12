@@ -87,8 +87,10 @@ for currency in cryptocurrencies:
 # Stock Data
 equities = {
     'AAPL': 'Apple Inc.', 
-    'AMZN': 'Amazon.Com Inc',
+    'AMZN': 'Amazon.Com Inc', 
+    'TSLA': 'Tesla, Inc. Common Stock'
 }
+
 
 # Iterate through each stock
 for stock in equities.keys():

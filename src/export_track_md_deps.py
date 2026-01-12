@@ -15,8 +15,8 @@ def export_track_md_deps(
     This is useful in workflows where Markdown fragments are later assembled 
     into a larger document (e.g., a Hugo `index.md`).
 
-    Parameters:
-    -----------
+    Parameters
+    ----------
     dep_file : Path
         Path to the dependency file that tracks Markdown fragment filenames.
     md_filename : str
@@ -26,12 +26,12 @@ def export_track_md_deps(
     text_or_python : str
         Indicates whether the content is plain text or Python code for proper formatting.
 
-    Returns:
-    --------
+    Returns
+    -------
     None
 
-    Example:
-    --------
+    Example
+    -------
     >>> export_track_md_deps(Path("index_dep.txt"), "01_intro.md", "# Introduction\n...")
     ✅ Exported and tracked: 01_intro.md
     """
