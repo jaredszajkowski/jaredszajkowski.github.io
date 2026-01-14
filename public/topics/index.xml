@@ -7,7 +7,7 @@
     <generator>Hugo</generator>
     <language>en</language>
     <copyright>Copyright © 2025 Jared Szajkowski. All rights reserved.</copyright>
-    <lastBuildDate>Thu, 04 Dec 2025 00:00:01 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Dec 2025 00:00:01 +0000</lastBuildDate>
     <atom:link href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/topics/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Federal Reserve Data</title>
@@ -75,8 +75,15 @@
     <item>
       <title>Arch Linux</title>
       <link>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/topics/arch-linux/</link>
-      <pubDate>Fri, 29 Sep 2023 00:00:01 +0000</pubDate>
+      <pubDate>Mon, 02 Dec 2024 00:00:01 +0000</pubDate>
       <guid>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/topics/arch-linux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Pip</title>
+      <link>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/topics/pip/</link>
+      <pubDate>Mon, 02 Dec 2024 00:00:01 +0000</pubDate>
+      <guid>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/topics/pip/</guid>
       <description></description>
     </item>
     <item>
