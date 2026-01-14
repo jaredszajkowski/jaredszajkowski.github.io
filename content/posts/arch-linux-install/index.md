@@ -4,7 +4,7 @@ description: A guide to Arch Linux install with customizations for the  Lenovo T
 summary: A guide to Arch Linux install with customizations for the  Lenovo ThinkPad E15 Gen 2.
 slug: arch-linux-install
 date: 2023-09-29 00:00:01+0000
-lastmod: 2023-11-07 00:00:00+0000
+lastmod: 2023-11-08 00:00:00+0000
 feature: lukas-uZkHtWsi2dE-unsplash.jpg
 coverCaption: Photo by <a href="https://unsplash.com/@lukash?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Lukas</a> on <a href="https://unsplash.com/photos/a-close-up-of-a-cell-phone-on-a-table-uZkHtWsi2dE?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
 draft: false
