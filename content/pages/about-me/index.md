@@ -31,7 +31,7 @@ Jared has completed the following graduate courses in the Univeristy of Chicago 
 * [**FINM 32600 - Computing for Finance in C++**](https://finmath.uchicago.edu/curriculum/degree-concentrations/financial-computing/finm-32600/)
 * [**FINM 32700 - Advanced Computing for Finance**](https://finmath.uchicago.edu/curriculum/degree-concentrations/financial-computing/finm-32700/)
 * [**FINM 33000 - Option Pricing**](https://finmath.uchicago.edu/curriculum/required-courses/finm-33000-mathematical-foundations-of-option-pricing/)
-* [**FINM 33150 - Quantitative Trading Strategy**](https://finmath.uchicago.edu/curriculum/degree-concentrations/trading/finm-33150/)</br>
+* [**FINM 33150 - Quantitative Trading Strategies**](https://finmath.uchicago.edu/curriculum/degree-concentrations/trading/finm-33150/)</br>
     Example coursework: The final group project consisted of developing a trading strategy incorporating the following:
     * Creating criteria and evaluating potential trades
     * Establishing position sizes, entry, and exit rules

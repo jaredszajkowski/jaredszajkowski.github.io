@@ -11,7 +11,7 @@
   guessSyntax = true
   lineNos = false
   lineNoStart = 1
-  lineNumbersInTable = true
+  lineNumbersInTable = false
   #style = "dracula"
   tabWidth = 4
 

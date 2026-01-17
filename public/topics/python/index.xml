@@ -45,6 +45,13 @@
       <description>Managing virtual environments across multiple systems within Arch Linux.</description>
     </item>
     <item>
+      <title>Nasdaq Data Link Tables API Data Retrieval</title>
+      <link>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/</link>
+      <pubDate>Sun, 24 Dec 2023 00:00:01 +0000</pubDate>
+      <guid>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/</guid>
+      <description>A python function to pull data from Nasdaq Data Link using the tables API and then complete the data for ease of use.</description>
+    </item>
+    <item>
       <title>Cleaning A Bloomberg Data Excel Export</title>
       <link>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/cleaning-bloomberg-excel-export/</link>
       <pubDate>Wed, 15 Nov 2023 00:00:01 +0000</pubDate>

@@ -16,5 +16,12 @@
       <guid>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/reusable-extensible-python-functions-financial-data-analysis/</guid>
       <description>A list of common functions used for data acquisition, cleaning, analysis, etc.</description>
     </item>
+    <item>
+      <title>Nasdaq Data Link Tables API Data Retrieval</title>
+      <link>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/</link>
+      <pubDate>Sun, 24 Dec 2023 00:00:01 +0000</pubDate>
+      <guid>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/</guid>
+      <description>A python function to pull data from Nasdaq Data Link using the tables API and then complete the data for ease of use.</description>
+    </item>
   </channel>
 </rss>
