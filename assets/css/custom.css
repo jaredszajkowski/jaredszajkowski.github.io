@@ -1,10 +1,10 @@
 /* Add border around code blocks */
 .prose pre {
-  border: 1px solid rgba(var(--color-neutral-300), 1);
+  border: 2px solid rgba(var(--color-neutral-300), 1);
   border-radius: 0.5rem;
 }
 
 /* For dark mode */
 .dark .prose pre {
-  border: 1px solid rgba(var(--color-neutral-700), 1);
+  border: 2px solid rgba(var(--color-neutral-300), 1);
 }
