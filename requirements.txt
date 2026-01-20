@@ -11,6 +11,7 @@ numpy
 openpyxl
 optuna
 pandas
+pandas-datareader
 pip-autoremove
 plotly
 python-calamine

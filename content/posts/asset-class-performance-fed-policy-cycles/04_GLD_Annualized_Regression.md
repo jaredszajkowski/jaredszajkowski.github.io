@@ -4,8 +4,8 @@
 Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.093
 Model:                             OLS   Adj. R-squared:                 -0.008
 Method:                  Least Squares   F-statistic:                    0.9214
-Date:                 Mon, 12 Jan 2026   Prob (F-statistic):              0.362
-Time:                         11:10:08   Log-Likelihood:                -42.778
+Date:                 Tue, 20 Jan 2026   Prob (F-statistic):              0.362
+Time:                         04:07:03   Log-Likelihood:                -42.778
 No. Observations:                   11   AIC:                             89.56
 Df Residuals:                        9   BIC:                             90.35
 Df Model:                            1                                         
