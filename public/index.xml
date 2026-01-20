@@ -24,6 +24,13 @@
       <description>Acquiring and managing minute, hour, and daily equity and ETF data from Polygon.io.</description>
     </item>
     <item>
+      <title>Data Pipelining With Coinbase</title>
+      <link>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/</link>
+      <pubDate>Sun, 06 Jul 2025 00:00:01 +0000</pubDate>
+      <guid>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/</guid>
+      <description>Acquiring and managing minute, hour, and daily crypto data from Coinbase.</description>
+    </item>
+    <item>
       <title>Automating Execution of Jupyter Notebook Files, Python Scripts, and Hugo Static Site Generation</title>
       <link>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation/</link>
       <pubDate>Sun, 29 Jun 2025 00:00:01 +0000</pubDate>

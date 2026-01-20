@@ -16,7 +16,7 @@ topics: [
 ---
 ## Introduction
 
-Similar to the recent post about [how I collect and store crypto asset data from Coinbase](http://localhost:1313/2025/07/06/data-pipelining-with-coinbase/), the scripts below pull minute, hour, and daily data for equities and ETFs from [Polygon.io](polygon.io).
+Similar to the recent post about [how I collect and store crypto asset data from Coinbase](/posts/data-pipelining-with-coinbase/), the scripts below pull minute, hour, and daily data for equities and ETFs from [Polygon.io](polygon.io).
 
 The scripts check for an existing data record, and if found then the existing record is updated to include the most recent data. If there is not an existing data record, then the complete historical record from Polygon is pulled and stored.
 
