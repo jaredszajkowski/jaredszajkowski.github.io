@@ -1,21 +1,29 @@
 /* Add border around code blocks */
 .prose pre {
-  border: 1.5px solid rgba(var(--color-neutral-300), 1);
+  border: 2px solid rgba(var(--color-neutral-300), 1);
   border-radius: 0.5rem;
+  overflow: visible;
+  padding-bottom: 0.5rem;
+}
+
+.prose pre code {
+  display: block;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
 }
 
 /* For dark mode */
 .dark .prose pre {
-  border: 1.5px solid rgba(var(--color-neutral-500), 1);
+  border: 2px solid rgba(var(--color-neutral-500), 1);
 }
 
 /* Add border around images in post content */
 .prose img {
-  border: 1.5px solid rgba(var(--color-neutral-300), 1);
+  border: 2px solid rgba(var(--color-neutral-300), 1);
   border-radius: 0.5rem;
 }
 
 /* For dark mode */
 .dark .prose img {
-  border: 1.5px solid rgba(var(--color-neutral-500), 1);
+  border: 2px solid rgba(var(--color-neutral-500), 1);
 }
