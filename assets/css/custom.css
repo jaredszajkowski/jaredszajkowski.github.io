@@ -8,3 +8,14 @@
 .dark .prose pre {
   border: 1.5px solid rgba(var(--color-neutral-500), 1);
 }
+
+/* Add border around images in post content */
+.prose img {
+  border: 1.5px solid rgba(var(--color-neutral-300), 1);
+  border-radius: 0.5rem;
+}
+
+/* For dark mode */
+.dark .prose img {
+  border: 1.5px solid rgba(var(--color-neutral-500), 1);
+}
