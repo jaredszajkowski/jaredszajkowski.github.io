@@ -111,15 +111,40 @@ By passing `None` as the `base_currency` and/or the `quote_currency`, the script
 
 The example above pulls the data for BTC-USD, and stores it in the following system directory:
 
-**BASE_DIR/DATA_DIR/Coinbase/Cryptocurrencies/Minute**
+**DATA_DIR/Coinbase/Cryptocurrencies/Minute**
 
-And here are a few screenshots of the filesystem:
+And here is the filesystem tree output for the `Coinbase` directory:
 
-![Coinbase Directory](01_Coinbase.png)
-![Cryptocurrencies Directory](02_Cryptocurrencies.png)
-![Daily Data Directory](03_Daily.png)
-![Hourly Data Directory](04_Hourly.png)
-![Minute Data Directory](05_Minute.png)
+```bash
+$ tree Coinbase/
+Coinbase/
+└── Cryptocurrencies
+    ├── Daily
+    │   ├── BTC-USD.pkl
+    │   ├── BTC-USD.xlsx
+    │   ├── ETH-USD.pkl
+    │   ├── ETH-USD.xlsx
+    │   ├── SOL-USD.pkl
+    │   ├── SOL-USD.xlsx
+    │   ├── XRP-USD.pkl
+    │   └── XRP-USD.xlsx
+    ├── Hourly
+    │   ├── BTC-USD.pkl
+    │   ├── BTC-USD.xlsx
+    │   ├── ETH-USD.pkl
+    │   ├── ETH-USD.xlsx
+    │   ├── SOL-USD.pkl
+    │   ├── SOL-USD.xlsx
+    │   ├── XRP-USD.pkl
+    │   └── XRP-USD.xlsx
+    └── Minute
+        ├── BTC-USD.pkl
+        ├── ETH-USD.pkl
+        ├── SOL-USD.pkl
+        └── XRP-USD.pkl
+
+5 directories, 20 files
+```
 
 ## References
 

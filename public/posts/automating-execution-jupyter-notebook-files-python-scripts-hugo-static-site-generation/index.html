@@ -143,7 +143,7 @@
     
     
     "mainEntityOfPage": "true",
-    "wordCount": "2177"
+    "wordCount": "2168"
   }
   </script>
     
@@ -590,7 +590,7 @@
   <div class="flex flex-row flex-wrap items-center">
     
     
-      <time datetime="2025-06-29 00:00:01 &#43;0000 &#43;0000">June 29, 2025</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2025-07-28 00:00:01 &#43;0000 &#43;0000">Updated: July 28, 2025</time><span class="px-2 text-primary-500">&middot;</span><span>2177 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">11 mins</span>
+      <time datetime="2025-06-29 00:00:01 &#43;0000 &#43;0000">June 29, 2025</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2025-07-28 00:00:01 &#43;0000 &#43;0000">Updated: July 28, 2025</time><span class="px-2 text-primary-500">&middot;</span><span>2168 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">11 mins</span>
     
 
     
@@ -711,6 +711,9 @@
     <li><a href="#dodopy">dodo.py</a>
       <ul>
         <li><a href="#imports">Imports</a></li>
+        <li><a href="#print-pydoit-text-in-green">Print PyDoit Text in Green</a></li>
+        <li><a href="#set-directory-variables">Set Directory Variables</a></li>
+        <li><a href="#helper-functions">Helper Functions</a></li>
         <li><a href="#tasks">Tasks</a></li>
       </ul>
     </li>
@@ -746,98 +749,84 @@
 </ol>
 <h2 id="dodopy" class="relative group">dodo.py <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#dodopy" aria-label="Anchor">#</a></span></h2><p>The <code>dodo.py</code> file in the primary directory is referenced by <code>doit</code> and includes all imports, functions, environment variables, etc. as required to execute the desired code. My <code>dodo.py</code> is broken down as follows:</p>
 <h3 id="imports" class="relative group">Imports <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#imports" aria-label="Anchor">#</a></span></h3><p>The inital imports are as follows:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">```python
-</span></span><span class="line"><span class="cl">#######################################
-</span></span><span class="line"><span class="cl">## Import Libraries
-</span></span><span class="line"><span class="cl">#######################################
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#######################################</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## Import Libraries</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#######################################</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">import sys
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">## Make sure the src folder is in the path
-</span></span><span class="line"><span class="cl">sys.path.insert(1, &#34;./src/&#34;)
+</span></span><span class="line"><span class="cl"><span class="c1">## Make sure the src folder is in the path</span>
+</span></span><span class="line"><span class="cl"><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&#34;./src/&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">import re
-</span></span><span class="line"><span class="cl">import shutil
-</span></span><span class="line"><span class="cl">import subprocess
-</span></span><span class="line"><span class="cl">import time
-</span></span><span class="line"><span class="cl">import yaml
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">re</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">shutil</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">subprocess</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">yaml</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">from colorama import Fore, Style, init
-</span></span><span class="line"><span class="cl">from datetime import datetime
-</span></span><span class="line"><span class="cl">from os import environ, getcwd, path
-</span></span><span class="line"><span class="cl">from pathlib import Path
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="n">This</span><span class="w"> </span><span class="n">first</span><span class="w"> </span><span class="n">adds</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="o">`/</span><span class="n">src</span><span class="o">/`</span><span class="w"> </span><span class="n">subdirectory</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="nf">path</span><span class="w"> </span><span class="p">(</span><span class="n">required</span><span class="w"> </span><span class="n">later</span><span class="w"> </span><span class="k">on</span><span class="p">),</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="n">imports</span><span class="w"> </span><span class="n">any</span><span class="w"> </span><span class="n">other</span><span class="w"> </span><span class="n">required</span><span class="w"> </span><span class="n">modules</span><span class="p">.</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="n">prefer</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">sort</span><span class="w"> </span><span class="k">all</span><span class="w"> </span><span class="n">imports</span><span class="w"> </span><span class="n">alphabetically</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">easy</span><span class="w"> </span><span class="n">reference</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">readability</span><span class="p">.</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="c1">### Print PyDoit Text in Green
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="n">Next</span><span class="p">,</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="k">use</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">following</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">help</span><span class="w"> </span><span class="n">differentiate</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">various</span><span class="w"> </span><span class="n">outputs</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">termial</span><span class="w"> </span><span class="k">when</span><span class="w"> </span><span class="n">executing</span><span class="w"> </span><span class="o">`</span><span class="n">doit</span><span class="o">`</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="o">```</span><span class="kt">text</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="o">```</span><span class="n">python</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="c1"># Code from lines 29-75 referenced from the UChicago
-</span></span></span><span class="line"><span class="cl"><span class="c1"># FINM 32900 - Full-Stack Quantitative Finance course
-</span></span></span><span class="line"><span class="cl"><span class="c1"># Credit to Jeremy Bejarano
-</span></span></span><span class="line"><span class="cl"><span class="c1"># https://github.com/jmbejara
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="c1">## Custom reporter: Print PyDoit Text in Green
-</span></span></span><span class="line"><span class="cl"><span class="c1"># This is helpful because some tasks write to sterr and pollute the output in
-</span></span></span><span class="line"><span class="cl"><span class="c1"># the console. I don&#39;t want to mute this output, because this can sometimes
-</span></span></span><span class="line"><span class="cl"><span class="c1"># cause issues when, for example, LaTeX hangs on an error and requires
-</span></span></span><span class="line"><span class="cl"><span class="c1"># presses on the keyboard before continuing. However, I want to be able
-</span></span></span><span class="line"><span class="cl"><span class="c1"># to easily see the task lines printed by PyDoit. I want them to stand out
-</span></span></span><span class="line"><span class="cl"><span class="c1"># from among all the other lines printed to the console.
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">from</span><span class="w"> </span><span class="n">doit</span><span class="p">.</span><span class="n">reporter</span><span class="w"> </span><span class="n">import</span><span class="w"> </span><span class="n">ConsoleReporter</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">from</span><span class="w"> </span><span class="n">settings</span><span class="w"> </span><span class="n">import</span><span class="w"> </span><span class="n">config</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="c1">#######################################
-</span></span></span><span class="line"><span class="cl"><span class="c1">## Slurm Configuration
-</span></span></span><span class="line"><span class="cl"><span class="c1">#######################################
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="n">try</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">in_slurm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">environ</span><span class="p">[</span><span class="s2">&#34;SLURM_JOB_ID&#34;</span><span class="p">]</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">None</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="n">except</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">in_slurm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">False</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="n">class</span><span class="w"> </span><span class="nf">GreenReporter</span><span class="p">(</span><span class="n">ConsoleReporter</span><span class="p">):</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="k">write</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">stuff</span><span class="p">,</span><span class="w"> </span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">doit_mark</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stuff</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">&#34; &#34;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nf">ljust</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">task</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&#34; &#34;</span><span class="p">.</span><span class="k">join</span><span class="p">(</span><span class="n">stuff</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">&#34; &#34;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]).</span><span class="nf">strip</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&#34;
-</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Fore</span><span class="p">.</span><span class="n">GREEN</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="o">+</span><span class="w"> </span><span class="n">doit_mark</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="o">+</span><span class="w"> </span><span class="n">f</span><span class="s2">&#34; {path.basename(getcwd())}: &#34;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="o">+</span><span class="w"> </span><span class="n">task</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="o">+</span><span class="w"> </span><span class="n">Style</span><span class="p">.</span><span class="n">RESET_ALL</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">outstream</span><span class="p">.</span><span class="k">write</span><span class="p">(</span><span class="n">output</span><span class="p">)</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">if</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">in_slurm</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">DOIT_CONFIG</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;reporter&#34;</span><span class="p">:</span><span class="w"> </span><span class="n">GreenReporter</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1"># other config here...
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1"># &#34;cleanforget&#34;: True, # Doit will forget about tasks that have been cleaned.
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;backend&#34;</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;sqlite3&#34;</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;dep_file&#34;</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;./.doit-db.sqlite&#34;</span><span class="p">,</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="err">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">DOIT_CONFIG</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;backend&#34;</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;sqlite3&#34;</span><span class="p">,</span><span class="w"> 
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="s2">&#34;dep_file&#34;</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;./.doit-db.sqlite&#34;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="err">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="nf">init</span><span class="p">(</span><span class="n">autoreset</span><span class="o">=</span><span class="no">True</span><span class="p">)</span><span class="w">
-</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">### Set Directory Variables</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">colorama</span> <span class="kn">import</span> <span class="n">Fore</span><span class="p">,</span> <span class="n">Style</span><span class="p">,</span> <span class="n">init</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">environ</span><span class="p">,</span> <span class="n">getcwd</span><span class="p">,</span> <span class="n">path</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+</span></span></code></pre></div><p>This first adds the <code>/src/</code> subdirectory to the path (required later on), and then imports any other required modules. I prefer to sort all imports alphabetically for easy reference and readability.</p>
+<h3 id="print-pydoit-text-in-green" class="relative group">Print PyDoit Text in Green <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#print-pydoit-text-in-green" aria-label="Anchor">#</a></span></h3><p>Next, I use the following code to help differentiate the various outputs in the termial when executing <code>doit</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Code from lines 29-75 referenced from the UChicago</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># FINM 32900 - Full-Stack Quantitative Finance course</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Credit to Jeremy Bejarano</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># https://github.com/jmbejara</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">Next</span><span class="p">,</span> <span class="n">I</span> <span class="n">establish</span> <span class="n">the</span> <span class="n">variables</span> <span class="n">that</span> <span class="n">reference</span> <span class="n">some</span> <span class="n">of</span> <span class="n">the</span> <span class="n">more</span> <span class="n">important</span> <span class="n">directories</span> <span class="ow">and</span> <span class="n">subdirectories</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">project</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## Custom reporter: Print PyDoit Text in Green</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># This is helpful because some tasks write to sterr and pollute the output in</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># the console. I don&#39;t want to mute this output, because this can sometimes</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># cause issues when, for example, LaTeX hangs on an error and requires</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># presses on the keyboard before continuing. However, I want to be able</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># to easily see the task lines printed by PyDoit. I want them to stand out</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># from among all the other lines printed to the console.</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="err">```</span><span class="n">text</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">doit.reporter</span> <span class="kn">import</span> <span class="n">ConsoleReporter</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">settings</span> <span class="kn">import</span> <span class="n">config</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="err">```</span><span class="n">python</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#######################################</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## Slurm Configuration</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#######################################</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">in_slurm</span> <span class="o">=</span> <span class="n">environ</span><span class="p">[</span><span class="s2">&#34;SLURM_JOB_ID&#34;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+</span></span><span class="line"><span class="cl"><span class="k">except</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">in_slurm</span> <span class="o">=</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">GreenReporter</span><span class="p">(</span><span class="n">ConsoleReporter</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stuff</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">doit_mark</span> <span class="o">=</span> <span class="n">stuff</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34; &#34;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">task</span> <span class="o">=</span> <span class="s2">&#34; &#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">stuff</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&#34; &#34;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">output</span> <span class="o">=</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Fore</span><span class="o">.</span><span class="n">GREEN</span>
+</span></span><span class="line"><span class="cl">            <span class="o">+</span> <span class="n">doit_mark</span>
+</span></span><span class="line"><span class="cl">            <span class="o">+</span> <span class="sa">f</span><span class="s2">&#34; </span><span class="si">{</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">getcwd</span><span class="p">())</span><span class="si">}</span><span class="s2">: &#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">+</span> <span class="n">task</span>
+</span></span><span class="line"><span class="cl">            <span class="o">+</span> <span class="n">Style</span><span class="o">.</span><span class="n">RESET_ALL</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="bp">self</span><span class="o">.</span><span class="n">outstream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="ow">not</span> <span class="n">in_slurm</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">DOIT_CONFIG</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;reporter&#34;</span><span class="p">:</span> <span class="n">GreenReporter</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># other config here...</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># &#34;cleanforget&#34;: True, # Doit will forget about tasks that have been cleaned.</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;backend&#34;</span><span class="p">:</span> <span class="s2">&#34;sqlite3&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;dep_file&#34;</span><span class="p">:</span> <span class="s2">&#34;./.doit-db.sqlite&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">DOIT_CONFIG</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;backend&#34;</span><span class="p">:</span> <span class="s2">&#34;sqlite3&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;dep_file&#34;</span><span class="p">:</span> <span class="s2">&#34;./.doit-db.sqlite&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">init</span><span class="p">(</span><span class="n">autoreset</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span></code></pre></div><h3 id="set-directory-variables" class="relative group">Set Directory Variables <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#set-directory-variables" aria-label="Anchor">#</a></span></h3><p>Next, I establish the variables that reference some of the more important directories and subdirectories in the project:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">#######################################</span>
 </span></span><span class="line"><span class="cl"><span class="c1">## Set directory variables</span>
 </span></span><span class="line"><span class="cl"><span class="c1">#######################################</span>
@@ -850,26 +839,20 @@
 </span></span><span class="line"><span class="cl"><span class="n">SOURCE_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">&#34;SOURCE_DIR&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">DATA_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">&#34;DATA_DIR&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">DATA_MANUAL_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">&#34;DATA_MANUAL_DIR&#34;</span><span class="p">)</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">These</span> <span class="n">directory</span> <span class="n">variables</span> <span class="n">are</span> <span class="n">set</span> <span class="n">from</span> <span class="n">the</span> <span class="err">`</span><span class="n">settings</span><span class="o">.</span><span class="n">py</span><span class="err">`</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">the</span> <span class="err">`</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="err">`</span> <span class="n">directory</span><span class="o">.</span> <span class="n">Setting</span> <span class="n">these</span> <span class="n">directory</span> <span class="n">variables</span> <span class="n">allows</span> <span class="n">me</span> <span class="n">to</span> <span class="n">reference</span> <span class="n">them</span> <span class="n">at</span> <span class="n">any</span> <span class="n">point</span> <span class="n">later</span> <span class="n">on</span> <span class="ow">in</span> <span class="n">the</span> <span class="err">`</span><span class="n">dodo</span><span class="o">.</span><span class="n">py</span><span class="err">`</span> <span class="n">file</span><span class="o">.</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">### Helper Functions</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">The</span> <span class="n">following</span> <span class="n">are</span> <span class="n">several</span> <span class="n">helper</span> <span class="n">functions</span> <span class="n">that</span> <span class="n">are</span> <span class="n">referenced</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">tasks</span><span class="o">.</span> <span class="n">These</span> <span class="n">are</span> <span class="n">somewhat</span> <span class="bp">self</span> <span class="n">explanatory</span><span class="p">,</span> <span class="ow">and</span> <span class="n">are</span> <span class="n">used</span> <span class="n">by</span> <span class="n">the</span> <span class="n">task</span> <span class="n">functions</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">next</span> <span class="n">section</span> <span class="n">below</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="err">```</span><span class="n">python</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#######################################</span>
+</span></span></code></pre></div><p>These directory variables are set from the <code>settings.py</code> file in the <code>/src/</code> directory. Setting these directory variables allows me to reference them at any point later on in the <code>dodo.py</code> file.</p>
+<h3 id="helper-functions" class="relative group">Helper Functions <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#helper-functions" aria-label="Anchor">#</a></span></h3><p>The following are several helper functions that are referenced in the tasks. These are somewhat self explanatory, and are used by the task functions in the next section below:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1">#######################################</span>
 </span></span><span class="line"><span class="cl"><span class="c1">## Helper functions</span>
 </span></span><span class="line"><span class="cl"><span class="c1">#######################################</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">copy_file</span><span class="p">(</span><span class="n">origin_path</span><span class="p">,</span> <span class="n">destination_path</span><span class="p">,</span> <span class="n">mkdir</span><span class="o">=</span><span class="n">True</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">copy_file</span><span class="p">(</span><span class="n">origin_path</span><span class="p">,</span> <span class="n">destination_path</span><span class="p">,</span> <span class="n">mkdir</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Create a Python action for copying a file.&#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">def</span> <span class="nf">_copy_file</span><span class="p">():</span>
-</span></span><span class="line"><span class="cl">        <span class="n">origin</span> <span class="o">=</span> <span class="ne">Path</span><span class="p">(</span><span class="n">origin_path</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="n">dest</span> <span class="o">=</span> <span class="ne">Path</span><span class="p">(</span><span class="n">destination_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">origin</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">origin_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">dest</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">destination_path</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">mkdir</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="n">dest</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="n">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="n">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">dest</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">dest</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">_copy_file</span>
@@ -877,17 +860,17 @@
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">extract_front_matter</span><span class="p">(</span><span class="n">index_path</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Extract front matter as a dict from a Hugo index.md file.&#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">text</span> <span class="o">=</span> <span class="n">index_path</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&#34;(?s)^---(.*?)---&#34;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&#34;(?s)^---(.*?)---&#34;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="k">match</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="k">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">notebook_source_hash</span><span class="p">(</span><span class="n">notebook_path</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Compute a SHA-256 hash of the notebook&#39;s code and markdown cells. This includes all whitespace and comments.&#34;&#34;&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">import</span> <span class="n">nbformat</span>
-</span></span><span class="line"><span class="cl">    <span class="n">import</span> <span class="n">hashlib</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">import</span> <span class="nn">nbformat</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">import</span> <span class="nn">hashlib</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">with</span> <span class="n">open</span><span class="p">(</span><span class="n">notebook_path</span><span class="p">,</span> <span class="s2">&#34;r&#34;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&#34;utf-8&#34;</span><span class="p">)</span> <span class="n">as</span> <span class="n">f</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">notebook_path</span><span class="p">,</span> <span class="s2">&#34;r&#34;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&#34;utf-8&#34;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="n">nb</span> <span class="o">=</span> <span class="n">nbformat</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">as_version</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="n">relevant_cells</span> <span class="o">=</span> <span class="p">[</span>
@@ -900,14 +883,14 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">clean_pdf_export_pngs</span><span class="p">(</span><span class="n">subdir</span><span class="p">,</span> <span class="n">notebook_name</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Remove .png files created by nbconvert during PDF export.&#34;&#34;&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">pattern</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&#34;{notebook_name}_*_*.png&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="n">deleted</span> <span class="o">=</span> <span class="n">False</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pattern</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">notebook_name</span><span class="si">}</span><span class="s2">_*_*.png&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">deleted</span> <span class="o">=</span> <span class="kc">False</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">subdir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">pattern</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&#34;🧹 Removing nbconvert temp image: {file}&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;🧹 Removing nbconvert temp image: </span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="n">file</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">        <span class="n">deleted</span> <span class="o">=</span> <span class="n">True</span>
+</span></span><span class="line"><span class="cl">        <span class="n">deleted</span> <span class="o">=</span> <span class="kc">True</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">deleted</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&#34;✅ No temp PNGs to remove for {notebook_name}&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;✅ No temp PNGs to remove for </span><span class="si">{</span><span class="n">notebook_name</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
 </span></span></code></pre></div><h3 id="tasks" class="relative group">Tasks <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#tasks" aria-label="Anchor">#</a></span></h3><p>Next, we will look at the individual tasks that are being executed by <code>doit</code>.</p>
 <p>The config task creates the base directories for the Hugo site:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1">#######################################</span>

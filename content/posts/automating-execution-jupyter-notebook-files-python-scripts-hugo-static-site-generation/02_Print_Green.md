@@ -1,6 +1,5 @@
-```text
-
 ```python
+
 # Code from lines 29-75 referenced from the UChicago
 # FINM 32900 - Full-Stack Quantitative Finance course
 # Credit to Jeremy Bejarano
@@ -54,6 +53,5 @@ else:
         "dep_file": "./.doit-db.sqlite"
     }
 init(autoreset=True)
-```
 
 ```

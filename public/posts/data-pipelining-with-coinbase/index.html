@@ -143,7 +143,7 @@
     
     
     "mainEntityOfPage": "true",
-    "wordCount": "14346"
+    "wordCount": "14420"
   }
   </script>
     
@@ -590,7 +590,7 @@
   <div class="flex flex-row flex-wrap items-center">
     
     
-      <time datetime="2025-07-06 00:00:01 &#43;0000 &#43;0000">July 6, 2025</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2025-07-28 00:00:01 &#43;0000 &#43;0000">Updated: July 28, 2025</time><span class="px-2 text-primary-500">&middot;</span><span>14346 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">68 mins</span>
+      <time datetime="2025-07-06 00:00:01 &#43;0000 &#43;0000">July 6, 2025</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2025-07-28 00:00:01 &#43;0000 &#43;0000">Updated: July 28, 2025</time><span class="px-2 text-primary-500">&middot;</span><span>14420 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">68 mins</span>
     
 
     
@@ -1185,344 +1185,37 @@
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
 </span></span></code></pre></div><p>By passing <code>None</code> as the <code>base_currency</code> and/or the <code>quote_currency</code>, the script will use the <code>coinbase_fetch_available_products</code> function to pull the list of all the available products, and then pulls data for all assets in that list. This functionality is incredibly useful, and makes acquiring data very straightforward, especially for a set of products for a specific <code>base_currency</code> or <code>quote_currency</code>.</p>
 <p>The example above pulls the data for BTC-USD, and stores it in the following system directory:</p>
-<p><strong>BASE_DIR/DATA_DIR/Coinbase/Cryptocurrencies/Minute</strong></p>
-<p>And here are a few screenshots of the filesystem:</p>
-<p>
-
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/01_Coinbase_hu_e8235cb44e6ce19b.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/01_Coinbase_hu_8dce840c03f7bf9d.webp 660w
-            
-              
-                ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/01_Coinbase_hu_49931f53533f292c.webp 1020w
-              
-            
-            
-              
-                ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/01_Coinbase_hu_49931f53533f292c.webp 1020w
-              
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="1020"
-        height="808"
-        class="mx-auto my-0 rounded-md"
-        alt="Coinbase Directory"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/01_Coinbase_hu_8a5fcfe8f2ad7602.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/01_Coinbase_hu_f6e8523e48035aab.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/01_Coinbase_hu_8a5fcfe8f2ad7602.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/01_Coinbase.png 1020w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/01_Coinbase.png 1020w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
-
-
-
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/02_Cryptocurrencies_hu_5389c26f36065a5e.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/02_Cryptocurrencies_hu_e40920c9f0f145ec.webp 660w
-            
-              
-                ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/02_Cryptocurrencies_hu_da4f163ef9e7f2fd.webp 1020w
-              
-            
-            
-              
-                ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/02_Cryptocurrencies_hu_da4f163ef9e7f2fd.webp 1020w
-              
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="1020"
-        height="808"
-        class="mx-auto my-0 rounded-md"
-        alt="Cryptocurrencies Directory"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/02_Cryptocurrencies_hu_ed12ccc4f11f0802.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/02_Cryptocurrencies_hu_b4a7b219c629846.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/02_Cryptocurrencies_hu_ed12ccc4f11f0802.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/02_Cryptocurrencies.png 1020w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/02_Cryptocurrencies.png 1020w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
-
-
-
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/03_Daily_hu_4c2c9db3a9d9a6e9.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/03_Daily_hu_c7b04d08ab3565c4.webp 660w
-            
-              
-                ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/03_Daily_hu_6d9c1452e40b9a60.webp 1020w
-              
-            
-            
-              
-                ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/03_Daily_hu_6d9c1452e40b9a60.webp 1020w
-              
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="1020"
-        height="808"
-        class="mx-auto my-0 rounded-md"
-        alt="Daily Data Directory"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/03_Daily_hu_e37eaef9436cf81a.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/03_Daily_hu_e438613257ef93e3.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/03_Daily_hu_e37eaef9436cf81a.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/03_Daily.png 1020w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/03_Daily.png 1020w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
-
-
-
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/04_Hourly_hu_3aedf48932211f48.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/04_Hourly_hu_bc60a8b6e0e3faa2.webp 660w
-            
-              
-                ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/04_Hourly_hu_212dcf367ba556a7.webp 1020w
-              
-            
-            
-              
-                ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/04_Hourly_hu_212dcf367ba556a7.webp 1020w
-              
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="1020"
-        height="808"
-        class="mx-auto my-0 rounded-md"
-        alt="Hourly Data Directory"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/04_Hourly_hu_6f0be463066490d3.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/04_Hourly_hu_559a5b10e67d98a5.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/04_Hourly_hu_6f0be463066490d3.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/04_Hourly.png 1020w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/04_Hourly.png 1020w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
-
-
-
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/05_Minute_hu_a1f6c6a6e354638c.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/05_Minute_hu_ce1b66027240933b.webp 660w
-            
-              
-                ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/05_Minute_hu_c437ad4dae3c6b24.webp 1020w
-              
-            
-            
-              
-                ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/05_Minute_hu_c437ad4dae3c6b24.webp 1020w
-              
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="1020"
-        height="808"
-        class="mx-auto my-0 rounded-md"
-        alt="Minute Data Directory"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/05_Minute_hu_d8d380c8862f9261.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/05_Minute_hu_8601725d603a4414.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/05_Minute_hu_d8d380c8862f9261.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/05_Minute.png 1020w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-coinbase/05_Minute.png 1020w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
-</p>
-<h2 id="references" class="relative group">References <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#references" aria-label="Anchor">#</a></span></h2><ol>
+<p><strong>DATA_DIR/Coinbase/Cryptocurrencies/Minute</strong></p>
+<p>And here is the filesystem tree output for the <code>Coinbase</code> directory:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ tree Coinbase/
+</span></span><span class="line"><span class="cl">Coinbase/
+</span></span><span class="line"><span class="cl">└── Cryptocurrencies
+</span></span><span class="line"><span class="cl">    ├── Daily
+</span></span><span class="line"><span class="cl">    │   ├── BTC-USD.pkl
+</span></span><span class="line"><span class="cl">    │   ├── BTC-USD.xlsx
+</span></span><span class="line"><span class="cl">    │   ├── ETH-USD.pkl
+</span></span><span class="line"><span class="cl">    │   ├── ETH-USD.xlsx
+</span></span><span class="line"><span class="cl">    │   ├── SOL-USD.pkl
+</span></span><span class="line"><span class="cl">    │   ├── SOL-USD.xlsx
+</span></span><span class="line"><span class="cl">    │   ├── XRP-USD.pkl
+</span></span><span class="line"><span class="cl">    │   └── XRP-USD.xlsx
+</span></span><span class="line"><span class="cl">    ├── Hourly
+</span></span><span class="line"><span class="cl">    │   ├── BTC-USD.pkl
+</span></span><span class="line"><span class="cl">    │   ├── BTC-USD.xlsx
+</span></span><span class="line"><span class="cl">    │   ├── ETH-USD.pkl
+</span></span><span class="line"><span class="cl">    │   ├── ETH-USD.xlsx
+</span></span><span class="line"><span class="cl">    │   ├── SOL-USD.pkl
+</span></span><span class="line"><span class="cl">    │   ├── SOL-USD.xlsx
+</span></span><span class="line"><span class="cl">    │   ├── XRP-USD.pkl
+</span></span><span class="line"><span class="cl">    │   └── XRP-USD.xlsx
+</span></span><span class="line"><span class="cl">    └── Minute
+</span></span><span class="line"><span class="cl">        ├── BTC-USD.pkl
+</span></span><span class="line"><span class="cl">        ├── ETH-USD.pkl
+</span></span><span class="line"><span class="cl">        ├── SOL-USD.pkl
+</span></span><span class="line"><span class="cl">        └── XRP-USD.pkl
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="m">5</span> directories, <span class="m">20</span> files
+</span></span></code></pre></div><h2 id="references" class="relative group">References <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#references" aria-label="Anchor">#</a></span></h2><ol>
 <li><a href="https://www.coinbase.com/" target="_blank" rel="noreferrer">https://www.coinbase.com/</a></li>
 </ol>
 <h2 id="code" class="relative group">Code <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#code" aria-label="Anchor">#</a></span></h2>The Jupyter notebook with the functions and all other code is available <a href="data-pipelining-with-coinbase.ipynb">here</a>.<br>

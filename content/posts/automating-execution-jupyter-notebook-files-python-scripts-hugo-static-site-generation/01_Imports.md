@@ -1,6 +1,5 @@
-```text
-
 ```python
+
 #######################################
 ## Import Libraries
 #######################################
@@ -20,6 +19,5 @@ from colorama import Fore, Style, init
 from datetime import datetime
 from os import environ, getcwd, path
 from pathlib import Path
-```
 
 ```

@@ -7541,37 +7541,37 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Standard Library</span>
-<span class="kn">import</span> <span class="nn">datetime</span>
-<span class="kn">import</span> <span class="nn">io</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
 <span class="c1"># Data Handling</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="c1"># Data Visualization</span>
-<span class="kn">import</span> <span class="nn">matplotlib.dates</span> <span class="k">as</span> <span class="nn">mdates</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">matplotlib.ticker</span> <span class="k">as</span> <span class="nn">mtick</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">from</span> <span class="nn">matplotlib.ticker</span> <span class="kn">import</span> <span class="n">FormatStrFormatter</span><span class="p">,</span> <span class="n">FuncFormatter</span><span class="p">,</span> <span class="n">MultipleLocator</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.dates</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mdates</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.ticker</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mtick</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.ticker</span><span class="w"> </span><span class="kn">import</span> <span class="n">FormatStrFormatter</span><span class="p">,</span> <span class="n">FuncFormatter</span><span class="p">,</span> <span class="n">MultipleLocator</span>
 
 <span class="c1"># Data Sources</span>
-<span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
-<span class="kn">import</span> <span class="nn">pandas_datareader.data</span> <span class="k">as</span> <span class="nn">web</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">yfinance</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">yf</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas_datareader.data</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">web</span>
 
 <span class="c1"># Statistical Analysis</span>
-<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
 
 <span class="c1"># Machine Learning</span>
-<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
 
 <span class="c1"># Suppress warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">"ignore"</span><span class="p">)</span>
@@ -7606,7 +7606,7 @@ a.anchor-link {
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">src_directory</span><span class="p">))</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">src_directory</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span> <span class="k">else</span> <span class="kc">None</span>
 
 <span class="c1"># Import settings.py</span>
-<span class="kn">from</span> <span class="nn">settings</span> <span class="kn">import</span> <span class="n">config</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">settings</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
 
 <span class="c1"># Add configured directories from config to path</span>
 <span class="n">SOURCE_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">"SOURCE_DIR"</span><span class="p">)</span>
@@ -7641,8 +7641,8 @@ a.anchor-link {
 1: /usr/lib/python3.13
 2: /usr/lib/python3.13/lib-dynload
 3: 
-4: /home/jared/python-virtual-envs/general_313/lib/python3.13/site-packages
-5: /home/jared/python-virtual-envs/general_313/lib/python3.13/site-packages/setuptools/_vendor
+4: /home/jared/python-virtual-envs/general-venv-p313/lib/python3.13/site-packages
+5: /home/jared/python-virtual-envs/general-venv-p313/lib/python3.13/site-packages/setuptools/_vendor
 6: /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io_congo/src
 </pre>
 </div>
@@ -7707,7 +7707,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">export_track_md_deps</span> <span class="kn">import</span> <span class="n">export_track_md_deps</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">export_track_md_deps</span><span class="w"> </span><span class="kn">import</span> <span class="n">export_track_md_deps</span>
 </pre></div>
 </div>
 </div>
@@ -7733,9 +7733,11 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Copy this &lt;!-- INSERT_01_Import_HERE --&gt; to index_temp.md</span>
-<span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"01_Imports.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span>
+<span class="n">export_track_md_deps</span><span class="p">(</span>
+    <span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> 
+    <span class="n">md_filename</span><span class="o">=</span><span class="s2">"01_Imports.md"</span><span class="p">,</span> 
+    <span class="n">content</span><span class="o">=</span>
 <span class="sd">"""</span>
-<span class="sd">```python</span>
 <span class="sd">#######################################</span>
 <span class="sd">## Import Libraries</span>
 <span class="sd">#######################################</span>
@@ -7755,8 +7757,9 @@ a.anchor-link {
 <span class="sd">from datetime import datetime</span>
 <span class="sd">from os import environ, getcwd, path</span>
 <span class="sd">from pathlib import Path</span>
-<span class="sd">```</span>
-<span class="sd">"""</span><span class="p">)</span>
+<span class="sd">"""</span><span class="p">,</span>
+    <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"python"</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -7784,9 +7787,11 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Copy this &lt;!-- INSERT_02_Print_Green_HERE --&gt; to index_temp.md</span>
-<span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"02_Print_Green.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span>
+<span class="n">export_track_md_deps</span><span class="p">(</span>
+    <span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> 
+    <span class="n">md_filename</span><span class="o">=</span><span class="s2">"02_Print_Green.md"</span><span class="p">,</span> 
+    <span class="n">content</span><span class="o">=</span>
 <span class="sd">"""</span>
-<span class="sd">```python</span>
 <span class="sd"># Code from lines 29-75 referenced from the UChicago</span>
 <span class="sd"># FINM 32900 - Full-Stack Quantitative Finance course</span>
 <span class="sd"># Credit to Jeremy Bejarano</span>
@@ -7839,8 +7844,9 @@ a.anchor-link {
 <span class="sd">        "dep_file": "./.doit-db.sqlite"</span>
 <span class="sd">    }</span>
 <span class="sd">init(autoreset=True)</span>
-<span class="sd">```</span>
-<span class="sd">"""</span><span class="p">)</span>
+<span class="sd">"""</span><span class="p">,</span>
+    <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"python"</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -7868,9 +7874,11 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Copy this &lt;!-- INSERT_03_Directory_Variables_HERE --&gt; to index_temp.md</span>
-<span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"03_Directory_Variables.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span>
+<span class="n">export_track_md_deps</span><span class="p">(</span>
+    <span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> 
+    <span class="n">md_filename</span><span class="o">=</span><span class="s2">"03_Directory_Variables.md"</span><span class="p">,</span> 
+    <span class="n">content</span><span class="o">=</span>
 <span class="sd">"""</span>
-<span class="sd">```python</span>
 <span class="sd">#######################################</span>
 <span class="sd">## Set directory variables</span>
 <span class="sd">#######################################</span>
@@ -7883,8 +7891,9 @@ a.anchor-link {
 <span class="sd">SOURCE_DIR = config("SOURCE_DIR")</span>
 <span class="sd">DATA_DIR = config("DATA_DIR")</span>
 <span class="sd">DATA_MANUAL_DIR = config("DATA_MANUAL_DIR")</span>
-<span class="sd">```</span>
-<span class="sd">"""</span><span class="p">)</span>
+<span class="sd">"""</span><span class="p">,</span>
+    <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"python"</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -7927,21 +7936,21 @@ a.anchor-link {
 <span class="c1">## Import Libraries</span>
 <span class="c1">#######################################</span>
 
-<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
 <span class="c1">## Make sure the src folder is in the path</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"./src/"</span><span class="p">)</span>
 
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">shutil</span>
-<span class="kn">import</span> <span class="nn">subprocess</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">yaml</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
 
-<span class="kn">from</span> <span class="nn">colorama</span> <span class="kn">import</span> <span class="n">Fore</span><span class="p">,</span> <span class="n">Style</span><span class="p">,</span> <span class="n">init</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">environ</span><span class="p">,</span> <span class="n">getcwd</span><span class="p">,</span> <span class="n">path</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">colorama</span><span class="w"> </span><span class="kn">import</span> <span class="n">Fore</span><span class="p">,</span> <span class="n">Style</span><span class="p">,</span> <span class="n">init</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">os</span><span class="w"> </span><span class="kn">import</span> <span class="n">environ</span><span class="p">,</span> <span class="n">getcwd</span><span class="p">,</span> <span class="n">path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
 <span class="c1"># Code from lines 29-75 referenced from the UChicago</span>
 <span class="c1"># FINM 32900 - Full-Stack Quantitative Finance course</span>
@@ -7956,8 +7965,8 @@ a.anchor-link {
 <span class="c1"># to easily see the task lines printed by PyDoit. I want them to stand out</span>
 <span class="c1"># from among all the other lines printed to the console.</span>
 
-<span class="kn">from</span> <span class="nn">doit.reporter</span> <span class="kn">import</span> <span class="n">ConsoleReporter</span>
-<span class="kn">from</span> <span class="nn">settings</span> <span class="kn">import</span> <span class="n">config</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">doit.reporter</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConsoleReporter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">settings</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
 
 <span class="c1">#######################################</span>
 <span class="c1">## Slurm Configuration</span>
@@ -7968,8 +7977,8 @@ a.anchor-link {
 <span class="k">except</span><span class="p">:</span>
     <span class="n">in_slurm</span> <span class="o">=</span> <span class="kc">False</span>
 
-<span class="k">class</span> <span class="nc">GreenReporter</span><span class="p">(</span><span class="n">ConsoleReporter</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stuff</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GreenReporter</span><span class="p">(</span><span class="n">ConsoleReporter</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stuff</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">doit_mark</span> <span class="o">=</span> <span class="n">stuff</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">" "</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">task</span> <span class="o">=</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">stuff</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">" "</span><span class="p">)[</span><span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">+</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
         <span class="n">output</span> <span class="o">=</span> <span class="p">(</span>
@@ -8013,10 +8022,10 @@ a.anchor-link {
 <span class="c1">## Helper functions</span>
 <span class="c1">#######################################</span>
 
-<span class="k">def</span> <span class="nf">copy_file</span><span class="p">(</span><span class="n">origin_path</span><span class="p">,</span> <span class="n">destination_path</span><span class="p">,</span> <span class="n">mkdir</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">copy_file</span><span class="p">(</span><span class="n">origin_path</span><span class="p">,</span> <span class="n">destination_path</span><span class="p">,</span> <span class="n">mkdir</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Create a Python action for copying a file."""</span>
 
-    <span class="k">def</span> <span class="nf">_copy_file</span><span class="p">():</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_copy_file</span><span class="p">():</span>
         <span class="n">origin</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">origin_path</span><span class="p">)</span>
         <span class="n">dest</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">destination_path</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">mkdir</span><span class="p">:</span>
@@ -8025,7 +8034,7 @@ a.anchor-link {
 
     <span class="k">return</span> <span class="n">_copy_file</span>
 
-<span class="k">def</span> <span class="nf">extract_front_matter</span><span class="p">(</span><span class="n">index_path</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_front_matter</span><span class="p">(</span><span class="n">index_path</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Extract front matter as a dict from a Hugo index.md file."""</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">index_path</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
     <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"(?s)^---(.*?)---"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
@@ -8033,10 +8042,10 @@ a.anchor-link {
         <span class="k">return</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
     <span class="k">return</span> <span class="p">{}</span>
 
-<span class="k">def</span> <span class="nf">notebook_source_hash</span><span class="p">(</span><span class="n">notebook_path</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">notebook_source_hash</span><span class="p">(</span><span class="n">notebook_path</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Compute a SHA-256 hash of the notebook's code and markdown cells. This includes all whitespace and comments."""</span>
-    <span class="kn">import</span> <span class="nn">nbformat</span>
-    <span class="kn">import</span> <span class="nn">hashlib</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">nbformat</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
 
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">notebook_path</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">nb</span> <span class="o">=</span> <span class="n">nbformat</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">as_version</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
@@ -8049,7 +8058,7 @@ a.anchor-link {
     <span class="n">full_content</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">relevant_cells</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">full_content</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
 
-<span class="k">def</span> <span class="nf">clean_pdf_export_pngs</span><span class="p">(</span><span class="n">subdir</span><span class="p">,</span> <span class="n">notebook_name</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">clean_pdf_export_pngs</span><span class="p">(</span><span class="n">subdir</span><span class="p">,</span> <span class="n">notebook_name</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Remove .png files created by nbconvert during PDF export."""</span>
     <span class="n">pattern</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">notebook_name</span><span class="si">}</span><span class="s2">_*_*.png"</span>
     <span class="n">deleted</span> <span class="o">=</span> <span class="kc">False</span>
@@ -8064,7 +8073,7 @@ a.anchor-link {
 <span class="c1">## PyDoit tasks</span>
 <span class="c1">#######################################</span>
 
-<span class="k">def</span> <span class="nf">task_config</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">task_config</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">"""Create empty directories for content, page, post, and public if they don't exist"""</span>
     <span class="k">return</span> <span class="p">{</span>
         <span class="s2">"actions"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"ipython ./src/settings.py"</span><span class="p">],</span>
@@ -8075,7 +8084,7 @@ a.anchor-link {
     <span class="p">}</span>
 
 
-<span class="k">def</span> <span class="nf">task_list_posts_subdirs</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">task_list_posts_subdirs</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">"""Create a list of the subdirectories of the posts directory"""</span>
     <span class="k">return</span> <span class="p">{</span>
         <span class="s2">"actions"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"python ./src/list_posts_subdirs.py"</span><span class="p">],</span>
@@ -8085,7 +8094,7 @@ a.anchor-link {
         <span class="s2">"clean"</span><span class="p">:</span> <span class="p">[],</span>  <span class="c1"># Don't clean these files by default.</span>
     <span class="p">}</span>
 
-<span class="k">def</span> <span class="nf">task_run_post_notebooks</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">task_run_post_notebooks</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">"""Execute notebooks that match their subdirectory names and only when code or markdown content has changed"""</span>
     <span class="k">for</span> <span class="n">subdir</span> <span class="ow">in</span> <span class="n">POSTS_DIR</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">subdir</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
@@ -8098,7 +8107,7 @@ a.anchor-link {
         <span class="n">hash_file</span> <span class="o">=</span> <span class="n">subdir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">subdir</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">.last_source_hash"</span>
         <span class="n">log_file</span> <span class="o">=</span> <span class="n">subdir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">subdir</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">.log"</span>
         
-        <span class="k">def</span> <span class="nf">source_has_changed</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">notebook_path</span><span class="p">,</span> <span class="n">hash_path</span><span class="o">=</span><span class="n">hash_file</span><span class="p">,</span> <span class="n">log_path</span><span class="o">=</span><span class="n">log_file</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">source_has_changed</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">notebook_path</span><span class="p">,</span> <span class="n">hash_path</span><span class="o">=</span><span class="n">hash_file</span><span class="p">,</span> <span class="n">log_path</span><span class="o">=</span><span class="n">log_file</span><span class="p">):</span>
             <span class="n">current_hash</span> <span class="o">=</span> <span class="n">notebook_source_hash</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
             <span class="n">timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S"</span><span class="p">)</span>
 
@@ -8118,7 +8127,7 @@ a.anchor-link {
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"🆕 No previous hash found for </span><span class="si">{</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
         
-        <span class="k">def</span> <span class="nf">run_and_log</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">notebook_path</span><span class="p">,</span> <span class="n">hash_path</span><span class="o">=</span><span class="n">hash_file</span><span class="p">,</span> <span class="n">log_path</span><span class="o">=</span><span class="n">log_file</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">run_and_log</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">notebook_path</span><span class="p">,</span> <span class="n">hash_path</span><span class="o">=</span><span class="n">hash_file</span><span class="p">,</span> <span class="n">log_path</span><span class="o">=</span><span class="n">log_file</span><span class="p">):</span>
             <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
             <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span>
                 <span class="s2">"jupyter"</span><span class="p">,</span> <span class="s2">"nbconvert"</span><span class="p">,</span>
@@ -8149,7 +8158,7 @@ a.anchor-link {
             <span class="s2">"verbosity"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
         <span class="p">}</span>
 
-<span class="k">def</span> <span class="nf">task_export_post_notebooks</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">task_export_post_notebooks</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">"""Export executed notebooks to HTML and PDF, and clean temp PNGs"""</span>
     <span class="k">for</span> <span class="n">subdir</span> <span class="ow">in</span> <span class="n">POSTS_DIR</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">subdir</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
@@ -8176,13 +8185,13 @@ a.anchor-link {
             <span class="s2">"clean"</span><span class="p">:</span> <span class="p">[],</span>  <span class="c1"># Don't clean these files by default.</span>
         <span class="p">}</span>
 
-<span class="k">def</span> <span class="nf">task_build_post_indices</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">task_build_post_indices</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">"""Run build_index.py in each post subdirectory to generate index.md"""</span>
     <span class="n">script_path</span> <span class="o">=</span> <span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"build_index.py"</span>
 
     <span class="k">for</span> <span class="n">subdir</span> <span class="ow">in</span> <span class="n">POSTS_DIR</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">subdir</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()</span> <span class="ow">and</span> <span class="p">(</span><span class="n">subdir</span> <span class="o">/</span> <span class="s2">"index_temp.md"</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
-            <span class="k">def</span> <span class="nf">run_script</span><span class="p">(</span><span class="n">subdir</span><span class="o">=</span><span class="n">subdir</span><span class="p">):</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">run_script</span><span class="p">(</span><span class="n">subdir</span><span class="o">=</span><span class="n">subdir</span><span class="p">):</span>
                 <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
                     <span class="p">[</span><span class="s2">"python"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">script_path</span><span class="p">)],</span>
                     <span class="n">cwd</span><span class="o">=</span><span class="n">subdir</span><span class="p">,</span>
@@ -8202,9 +8211,9 @@ a.anchor-link {
                 <span class="s2">"clean"</span><span class="p">:</span> <span class="p">[],</span>  <span class="c1"># Don't clean these files by default.</span>
             <span class="p">}</span>
 
-<span class="k">def</span> <span class="nf">task_clean_public</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">task_clean_public</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">"""Remove the Hugo public directory before rebuilding the site."""</span>
-    <span class="k">def</span> <span class="nf">remove_public</span><span class="p">():</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_public</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">PUBLIC_DIR</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
             <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">PUBLIC_DIR</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"🧹 Deleted </span><span class="si">{</span><span class="n">PUBLIC_DIR</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
@@ -8216,7 +8225,7 @@ a.anchor-link {
         <span class="s2">"clean"</span><span class="p">:</span> <span class="p">[],</span>  <span class="c1"># Don't clean these files by default.</span>
     <span class="p">}</span>
 
-<span class="k">def</span> <span class="nf">task_build_site</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">task_build_site</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">"""Build the Hugo static site"""</span>
     <span class="k">return</span> <span class="p">{</span>
         <span class="s2">"actions"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"hugo"</span><span class="p">],</span>
@@ -8225,7 +8234,7 @@ a.anchor-link {
         <span class="s2">"clean"</span><span class="p">:</span> <span class="p">[],</span>  <span class="c1"># Don't clean these files by default.</span>
     <span class="p">}</span>
 
-<span class="k">def</span> <span class="nf">task_copy_notebook_exports</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">task_copy_notebook_exports</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">"""Copy notebook HTML exports into the correct Hugo public/ date-based folders"""</span>
     <span class="k">for</span> <span class="n">subdir</span> <span class="ow">in</span> <span class="n">POSTS_DIR</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">subdir</span><span class="o">.</span><span class="n">is_dir</span><span class="p">():</span>
@@ -8254,7 +8263,7 @@ a.anchor-link {
             <span class="n">public_path</span> <span class="o">=</span> <span class="n">PUBLIC_DIR</span> <span class="o">/</span> <span class="s2">"posts"</span> <span class="o">/</span> <span class="n">slug</span>
             <span class="n">target_path</span> <span class="o">=</span> <span class="n">public_path</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">slug</span><span class="si">}</span><span class="s2">.html"</span>
 
-            <span class="k">def</span> <span class="nf">copy_html</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="n">html_file</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="n">target_path</span><span class="p">):</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">copy_html</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="n">html_file</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="n">target_path</span><span class="p">):</span>
                 <span class="n">dest</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
                 <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dest</span><span class="p">)</span>
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✅ Copied </span><span class="si">{</span><span class="n">src</span><span class="si">}</span><span class="s2"> → </span><span class="si">{</span><span class="n">dest</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
@@ -8269,7 +8278,7 @@ a.anchor-link {
                 <span class="s2">"clean"</span><span class="p">:</span> <span class="p">[],</span>  <span class="c1"># Don't clean these files by default.</span>
             <span class="p">}</span>
 
-<span class="k">def</span> <span class="nf">task_copy_about_me_exports</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">task_copy_about_me_exports</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">"""Copy all HTML files from the about-me page to the Hugo public/ folder"""</span>
     <span class="n">src_dir</span> <span class="o">=</span> <span class="n">PAGES_DIR</span> <span class="o">/</span> <span class="s2">"about-me"</span>
     <span class="n">dest_dir</span> <span class="o">=</span> <span class="n">PUBLIC_DIR</span> <span class="o">/</span> <span class="s2">"about-me"</span>
@@ -8278,7 +8287,7 @@ a.anchor-link {
     <span class="k">if</span> <span class="ow">not</span> <span class="n">html_files</span><span class="p">:</span>
         <span class="k">return</span>  <span class="c1"># Skip if no HTML files found</span>
 
-    <span class="k">def</span> <span class="nf">copy_all_html</span><span class="p">():</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">copy_all_html</span><span class="p">():</span>
         <span class="n">dest_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">html_file</span> <span class="ow">in</span> <span class="n">html_files</span><span class="p">:</span>
             <span class="n">dest_path</span> <span class="o">=</span> <span class="n">dest_dir</span> <span class="o">/</span> <span class="n">html_file</span><span class="o">.</span><span class="n">name</span>
@@ -8294,9 +8303,9 @@ a.anchor-link {
         <span class="s2">"clean"</span><span class="p">:</span> <span class="p">[],</span>  <span class="c1"># Don't clean these files by default.</span>
     <span class="p">}</span>
 
-<span class="k">def</span> <span class="nf">task_create_schwab_callback</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">task_create_schwab_callback</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">"""Create a Schwab callback URL by creating /public/schwab_callback/index.html and placing the html code in it"""</span>
-    <span class="k">def</span> <span class="nf">create_callback</span><span class="p">():</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_callback</span><span class="p">():</span>
         <span class="n">callback_path</span> <span class="o">=</span> <span class="n">PUBLIC_DIR</span> <span class="o">/</span> <span class="s2">"schwab_callback"</span> <span class="o">/</span> <span class="s2">"index.html"</span>
         <span class="n">callback_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">html</span> <span class="o">=</span> <span class="s2">"""&lt;!DOCTYPE html&gt;</span>
@@ -8323,9 +8332,9 @@ a.anchor-link {
         <span class="s2">"clean"</span><span class="p">:</span> <span class="p">[],</span>  <span class="c1"># Don't clean these files by default.</span>
     <span class="p">}</span>
 
-<span class="k">def</span> <span class="nf">task_deploy_site</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">task_deploy_site</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">"""Prompt for a commit message and push to GitHub"""</span>
-    <span class="k">def</span> <span class="nf">commit_and_push</span><span class="p">():</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">commit_and_push</span><span class="p">():</span>
         <span class="n">message</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">"What is the commit message? "</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">message</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">"❌ Commit message cannot be empty."</span><span class="p">)</span>
@@ -8402,12 +8411,12 @@ a.anchor-link {
 <span class="sd">over to the other configuration, for example.</span>
 <span class="sd">"""</span>
 
-<span class="kn">from</span> <span class="nn">decouple</span> <span class="kn">import</span> <span class="n">config</span> <span class="k">as</span> <span class="n">_config</span>
-<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">to_datetime</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">platform</span> <span class="kn">import</span> <span class="n">system</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">decouple</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span> <span class="k">as</span> <span class="n">_config</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="kn">import</span> <span class="n">to_datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">platform</span><span class="w"> </span><span class="kn">import</span> <span class="n">system</span>
 
-<span class="k">def</span> <span class="nf">get_os</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_os</span><span class="p">():</span>
     <span class="n">os_name</span> <span class="o">=</span> <span class="n">system</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">os_name</span> <span class="o">==</span> <span class="s2">"Windows"</span><span class="p">:</span>
         <span class="k">return</span> <span class="s2">"windows"</span>
@@ -8418,7 +8427,7 @@ a.anchor-link {
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="s2">"unknown"</span>
 
-<span class="k">def</span> <span class="nf">if_relative_make_abs</span><span class="p">(</span><span class="n">relative_dir</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">if_relative_make_abs</span><span class="p">(</span><span class="n">relative_dir</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""If a relative path is given, make it absolute, assuming</span>
 <span class="sd">    that it is relative to the project root directory (BASE_DIR)</span>
 
@@ -8482,7 +8491,7 @@ a.anchor-link {
 <span class="k">else</span><span class="p">:</span>
     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Unknown OS type"</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">config</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">config</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="n">key</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">default</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"default"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="n">cast</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"cast"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
@@ -8514,7 +8523,7 @@ a.anchor-link {
 <span class="c1"># print(f"Test directory: {test_dir}")</span>
 <span class="c1"># print(f"Test directory type: {type(test_dir)}")</span>
 
-<span class="k">def</span> <span class="nf">create_dirs</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_dirs</span><span class="p">():</span>
     <span class="c1">## If they don't exist, create the _data and _output directories</span>
     <span class="n">d</span><span class="p">[</span><span class="s2">"CONTENT_DIR"</span><span class="p">]</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">d</span><span class="p">[</span><span class="s2">"PAGES_DIR"</span><span class="p">]</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -8532,6 +8541,16 @@ a.anchor-link {
 </div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c9c8debb">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=28604505">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>

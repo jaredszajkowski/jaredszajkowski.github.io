@@ -351,7 +351,7 @@ Which gives us:
 |  7 | Cycle 8  | 2020-04-01 | 2022-02-01 |       22 |               0.79 |                 79.13 |                   0.03 |                      2.78 |               0.37 |                 37.43 |         0.16 |             0.00 |                 3.00 |                   0.00 |                       1.64 | Cycle 8, 2020-04-01 to 2022-02-01  |
 |  8 | Cycle 9  | 2022-02-01 | 2023-08-01 |       18 |               0.04 |                  4.18 |                   0.00 |                      0.40 |               0.03 |                  2.77 |         0.21 |             0.05 |               525.00 |                   0.03 |                     350.00 | Cycle 9, 2022-02-01 to 2023-08-01  |
 |  9 | Cycle 10 | 2023-08-01 | 2024-08-01 |       12 |               0.22 |                 22.00 |                   0.02 |                      1.75 |               0.22 |                 22.00 |         0.15 |             0.00 |                 0.00 |                   0.00 |                       0.00 | Cycle 10, 2023-08-01 to 2024-08-01 |
-| 10 | Cycle 11 | 2024-08-01 | 2026-01-12 |       15 |               0.26 |                 25.72 |                   0.02 |                      1.59 |               0.20 |                 20.09 |         0.11 |            -0.02 |              -161.00 |                  -0.01 |                    -128.80 | Cycle 11, 2024-08-01 to 2026-01-12 |
+| 10 | Cycle 11 | 2024-08-01 | 2026-01-20 |       15 |               0.26 |                 25.72 |                   0.02 |                      1.59 |               0.20 |                 20.09 |         0.11 |            -0.02 |              -161.00 |                  -0.01 |                    -128.80 | Cycle 11, 2024-08-01 to 2026-01-20 |
 ```
 
 This gives us the following data points:
@@ -406,8 +406,8 @@ Which gives us the results of the OLS regression:
 Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.176
 Model:                             OLS   Adj. R-squared:                  0.085
 Method:                  Least Squares   F-statistic:                     1.928
-Date:                 Mon, 12 Jan 2026   Prob (F-statistic):              0.198
-Time:                         11:10:01   Log-Likelihood:                -47.196
+Date:                 Tue, 20 Jan 2026   Prob (F-statistic):              0.198
+Time:                         05:12:17   Log-Likelihood:                -47.196
 No. Observations:                   11   AIC:                             98.39
 Df Residuals:                        9   BIC:                             99.19
 Df Model:                            1                                         
@@ -581,7 +581,7 @@ Which gives us:
 |  7 | Cycle 8  | 2020-04-01 | 2022-02-01 |       22 |              -0.11 |                -11.33 |                  -0.00 |                     -0.50 |              -0.06 |                 -6.35 |         0.11 |             0.00 |                 3.00 |                   0.00 |                       1.64 | Cycle 8, 2020-04-01 to 2022-02-01  |
 |  8 | Cycle 9  | 2022-02-01 | 2023-08-01 |       18 |              -0.27 |                -26.96 |                  -0.02 |                     -1.62 |              -0.19 |                -18.90 |         0.17 |             0.05 |               525.00 |                   0.03 |                     350.00 | Cycle 9, 2022-02-01 to 2023-08-01  |
 |  9 | Cycle 10 | 2023-08-01 | 2024-08-01 |       12 |              -0.02 |                 -1.52 |                   0.00 |                      0.02 |              -0.02 |                 -1.52 |         0.20 |             0.00 |                 0.00 |                   0.00 |                       0.00 | Cycle 10, 2023-08-01 to 2024-08-01 |
-| 10 | Cycle 11 | 2024-08-01 | 2026-01-12 |       15 |               0.00 |                  0.42 |                   0.00 |                      0.08 |               0.00 |                  0.33 |         0.11 |            -0.02 |              -161.00 |                  -0.01 |                    -128.80 | Cycle 11, 2024-08-01 to 2026-01-12 |
+| 10 | Cycle 11 | 2024-08-01 | 2026-01-20 |       15 |               0.00 |                  0.42 |                   0.00 |                      0.08 |               0.00 |                  0.33 |         0.11 |            -0.02 |              -161.00 |                  -0.01 |                    -128.80 | Cycle 11, 2024-08-01 to 2026-01-20 |
 ```
 
 This gives us the following data points:
@@ -636,8 +636,8 @@ Which gives us the results of the OLS regression:
 Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.615
 Model:                             OLS   Adj. R-squared:                  0.573
 Method:                  Least Squares   F-statistic:                     14.39
-Date:                 Mon, 12 Jan 2026   Prob (F-statistic):            0.00426
-Time:                         11:10:04   Log-Likelihood:                -39.782
+Date:                 Tue, 20 Jan 2026   Prob (F-statistic):            0.00426
+Time:                         05:12:21   Log-Likelihood:                -39.782
 No. Observations:                   11   AIC:                             83.56
 Df Residuals:                        9   BIC:                             84.36
 Df Model:                            1                                         
@@ -811,7 +811,7 @@ Which gives us:
 |  7 | Cycle 8  | 2020-04-01 | 2022-02-01 |       22 |               0.14 |                 13.54 |                   0.01 |                      0.69 |               0.07 |                  7.17 |         0.16 |             0.00 |                 3.00 |                   0.00 |                       1.64 | Cycle 8, 2020-04-01 to 2022-02-01  |
 |  8 | Cycle 9  | 2022-02-01 | 2023-08-01 |       18 |               0.08 |                  8.48 |                   0.01 |                      0.53 |               0.06 |                  5.58 |         0.14 |             0.05 |               525.00 |                   0.03 |                     350.00 | Cycle 9, 2022-02-01 to 2023-08-01  |
 |  9 | Cycle 10 | 2023-08-01 | 2024-08-01 |       12 |               0.24 |                 24.24 |                   0.02 |                      1.89 |               0.24 |                 24.24 |         0.13 |             0.00 |                 0.00 |                   0.00 |                       0.00 | Cycle 10, 2023-08-01 to 2024-08-01 |
-| 10 | Cycle 11 | 2024-08-01 | 2026-01-12 |       15 |               0.62 |                 62.49 |                   0.03 |                      3.36 |               0.47 |                 47.46 |         0.14 |            -0.02 |              -161.00 |                  -0.01 |                    -128.80 | Cycle 11, 2024-08-01 to 2026-01-12 |
+| 10 | Cycle 11 | 2024-08-01 | 2026-01-20 |       15 |               0.62 |                 62.49 |                   0.03 |                      3.36 |               0.47 |                 47.46 |         0.14 |            -0.02 |              -161.00 |                  -0.01 |                    -128.80 | Cycle 11, 2024-08-01 to 2026-01-20 |
 ```
 
 This gives us the following data points:
@@ -866,8 +866,8 @@ Which gives us the results of the OLS regression:
 Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.093
 Model:                             OLS   Adj. R-squared:                 -0.008
 Method:                  Least Squares   F-statistic:                    0.9214
-Date:                 Mon, 12 Jan 2026   Prob (F-statistic):              0.362
-Time:                         11:10:08   Log-Likelihood:                -42.778
+Date:                 Tue, 20 Jan 2026   Prob (F-statistic):              0.362
+Time:                         05:12:26   Log-Likelihood:                -42.778
 No. Observations:                   11   AIC:                             89.56
 Df Residuals:                        9   BIC:                             90.35
 Df Model:                            1                                         

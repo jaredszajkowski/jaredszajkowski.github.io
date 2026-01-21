@@ -4,7 +4,7 @@ import time
 
 from datetime import datetime, timedelta
 from load_api_keys import load_api_keys
-from polygon import RESTClient
+from massive import RESTClient
 from settings import config
 
 # Load API keys from the environment

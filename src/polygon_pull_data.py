@@ -5,7 +5,7 @@ import time
 from datetime import datetime, timedelta
 from IPython.display import display
 from load_api_keys import load_api_keys
-from polygon import RESTClient
+from massive import RESTClient
 from polygon_fetch_full_history import polygon_fetch_full_history
 from settings import config
 

@@ -7541,36 +7541,36 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Standard Library</span>
-<span class="kn">import</span> <span class="nn">datetime</span>
-<span class="kn">import</span> <span class="nn">io</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
 <span class="c1"># Data Handling</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="c1"># Data Visualization</span>
-<span class="kn">import</span> <span class="nn">matplotlib.dates</span> <span class="k">as</span> <span class="nn">mdates</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">matplotlib.ticker</span> <span class="k">as</span> <span class="nn">mtick</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">from</span> <span class="nn">matplotlib.ticker</span> <span class="kn">import</span> <span class="n">FormatStrFormatter</span><span class="p">,</span> <span class="n">FuncFormatter</span><span class="p">,</span> <span class="n">MultipleLocator</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.dates</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mdates</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.ticker</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mtick</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.ticker</span><span class="w"> </span><span class="kn">import</span> <span class="n">FormatStrFormatter</span><span class="p">,</span> <span class="n">FuncFormatter</span><span class="p">,</span> <span class="n">MultipleLocator</span>
 
 <span class="c1"># Data Sources</span>
-<span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">yfinance</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">yf</span>
 
 <span class="c1"># Statistical Analysis</span>
-<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
 
 <span class="c1"># Machine Learning</span>
-<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
 
 <span class="c1"># Suppress warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">"ignore"</span><span class="p">)</span>
@@ -7605,7 +7605,7 @@ a.anchor-link {
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">src_directory</span><span class="p">))</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">src_directory</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span> <span class="k">else</span> <span class="kc">None</span>
 
 <span class="c1"># Import settings.py</span>
-<span class="kn">from</span> <span class="nn">settings</span> <span class="kn">import</span> <span class="n">config</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">settings</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
 
 <span class="c1"># Add configured directories from config to path</span>
 <span class="n">SOURCE_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">"SOURCE_DIR"</span><span class="p">)</span>
@@ -7640,7 +7640,7 @@ a.anchor-link {
 1: /usr/lib/python3.13
 2: /usr/lib/python3.13/lib-dynload
 3: 
-4: /home/jared/python-virtual-envs/general_313/lib/python3.13/site-packages
+4: /home/jared/python-virtual-envs/general-venv-p313/lib/python3.13/site-packages
 5: /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io_congo/src
 </pre>
 </div>
@@ -7705,7 +7705,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">export_track_md_deps</span> <span class="kn">import</span> <span class="n">export_track_md_deps</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">export_track_md_deps</span><span class="w"> </span><span class="kn">import</span> <span class="n">export_track_md_deps</span>
 </pre></div>
 </div>
 </div>
@@ -7719,7 +7719,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">bb_clean_data</span> <span class="kn">import</span> <span class="n">bb_clean_data</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">bb_clean_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">bb_clean_data</span>
 <span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"bb_clean_data.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
 <span class="c1"># Copy this &lt;!-- INSERT_bb_clean_data_HERE --&gt; to index_temp.md</span>
 <span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"bb_clean_data.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"python"</span><span class="p">)</span>
@@ -7749,7 +7749,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">build_index</span> <span class="kn">import</span> <span class="n">build_index</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">build_index</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_index</span>
 <span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"build_index.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
 <span class="c1"># Copy this &lt;!-- INSERT_build_index_HERE --&gt; to index_temp.md</span>
 <span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"build_index.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"python"</span><span class="p">)</span>
@@ -7779,7 +7779,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">calc_fed_cycle_asset_performance</span> <span class="kn">import</span> <span class="n">calc_fed_cycle_asset_performance</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">calc_fed_cycle_asset_performance</span><span class="w"> </span><span class="kn">import</span> <span class="n">calc_fed_cycle_asset_performance</span>
 <span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"calc_fed_cycle_asset_performance.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
 <span class="c1"># Copy this &lt;!-- INSERT_calc_fed_cycle_asset_performance_HERE --&gt; to index_temp.md</span>
 <span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"calc_fed_cycle_asset_performance.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"python"</span><span class="p">)</span>
@@ -7809,7 +7809,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">calc_vix_trade_pnl</span> <span class="kn">import</span> <span class="n">calc_vix_trade_pnl</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">calc_vix_trade_pnl</span><span class="w"> </span><span class="kn">import</span> <span class="n">calc_vix_trade_pnl</span>
 <span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"calc_vix_trade_pnl.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
 <span class="c1"># Copy this &lt;!-- INSERT_calc_vix_trade_pnl_HERE --&gt; to index_temp.md</span>
 <span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"calc_vix_trade_pnl.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"python"</span><span class="p">)</span>
@@ -7839,7 +7839,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">coinbase_fetch_available_products</span> <span class="kn">import</span> <span class="n">coinbase_fetch_available_products</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_fetch_available_products</span><span class="w"> </span><span class="kn">import</span> <span class="n">coinbase_fetch_available_products</span>
 <span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"coinbase_fetch_available_products.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
 <span class="c1"># Copy this &lt;!-- INSERT_coinbase_fetch_available_products_HERE --&gt; to index_temp.md</span>
 <span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"coinbase_fetch_available_products.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"python"</span><span class="p">)</span>
@@ -7869,7 +7869,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">coinbase_fetch_full_history</span> <span class="kn">import</span> <span class="n">coinbase_fetch_full_history</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_fetch_full_history</span><span class="w"> </span><span class="kn">import</span> <span class="n">coinbase_fetch_full_history</span>
 <span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"coinbase_fetch_full_history.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
 <span class="c1"># Copy this &lt;!-- INSERT_coinbase_fetch_full_history_HERE --&gt; to index_temp.md</span>
 <span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"coinbase_fetch_full_history.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"python"</span><span class="p">)</span>
@@ -7899,7 +7899,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">coinbase_fetch_historical_candles</span> <span class="kn">import</span> <span class="n">coinbase_fetch_historical_candles</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_fetch_historical_candles</span><span class="w"> </span><span class="kn">import</span> <span class="n">coinbase_fetch_historical_candles</span>
 <span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"coinbase_fetch_historical_candles.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
 <span class="c1"># Copy this &lt;!-- INSERT_coinbase_fetch_historical_candles_HERE --&gt; to index_temp.md</span>
 <span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"coinbase_fetch_historical_candles.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"python"</span><span class="p">)</span>
@@ -7929,7 +7929,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">coinbase_pull_data</span> <span class="kn">import</span> <span class="n">coinbase_pull_data</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_pull_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">coinbase_pull_data</span>
 <span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"coinbase_pull_data.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
 <span class="c1"># Copy this &lt;!-- INSERT_coinbase_pull_data_HERE --&gt; to index_temp.md</span>
 <span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"coinbase_pull_data.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"python"</span><span class="p">)</span>
@@ -7959,7 +7959,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">df_info</span> <span class="kn">import</span> <span class="n">df_info</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">df_info</span><span class="w"> </span><span class="kn">import</span> <span class="n">df_info</span>
 <span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"df_info.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
 <span class="c1"># Copy this &lt;!-- INSERT_df_info_HERE --&gt; to index_temp.md</span>
 <span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"df_info.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"python"</span><span class="p">)</span>
@@ -7989,7 +7989,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">df_info_markdown</span> <span class="kn">import</span> <span class="n">df_info_markdown</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">df_info_markdown</span><span class="w"> </span><span class="kn">import</span> <span class="n">df_info_markdown</span>
 <span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"df_info_markdown.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
 <span class="c1"># Copy this &lt;!-- INSERT_df_info_markdown_HERE --&gt; to index_temp.md</span>
 <span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"df_info_markdown.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"python"</span><span class="p">)</span>
@@ -8019,7 +8019,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">export_track_md_deps</span> <span class="kn">import</span> <span class="n">export_track_md_deps</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">export_track_md_deps</span><span class="w"> </span><span class="kn">import</span> <span class="n">export_track_md_deps</span>
 <span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"export_track_md_deps.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
 <span class="c1"># Copy this &lt;!-- INSERT_export_track_md_deps_HERE --&gt; to index_temp.md</span>
 <span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"export_track_md_deps.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"python"</span><span class="p">)</span>
@@ -8049,7 +8049,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">load_api_keys</span> <span class="kn">import</span> <span class="n">load_api_keys</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">load_api_keys</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_api_keys</span>
 <span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"load_api_keys.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
 <span class="c1"># Copy this &lt;!-- INSERT_load_api_keys_HERE --&gt; to index_temp.md</span>
 <span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"load_api_keys.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"python"</span><span class="p">)</span>
@@ -8079,7 +8079,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">load_data</span> <span class="kn">import</span> <span class="n">load_data</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">load_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_data</span>
 <span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"load_data.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
 <span class="c1"># Copy this &lt;!-- INSERT_load_data_HERE --&gt; to index_temp.md</span>
 <span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"load_data.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"python"</span><span class="p">)</span>
@@ -8109,7 +8109,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pandas_set_decimal_places</span> <span class="kn">import</span> <span class="n">pandas_set_decimal_places</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pandas_set_decimal_places</span><span class="w"> </span><span class="kn">import</span> <span class="n">pandas_set_decimal_places</span>
 <span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"pandas_set_decimal_places.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
 <span class="c1"># Copy this &lt;!-- INSERT_pandas_set_decimal_places_HERE --&gt; to index_temp.md</span>
 <span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"pandas_set_decimal_places.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"python"</span><span class="p">)</span>
@@ -8139,7 +8139,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">plot_timeseries</span> <span class="kn">import</span> <span class="n">plot_timeseries</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">plot_timeseries</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_timeseries</span>
 <span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"plot_timeseries.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
 <span class="c1"># Copy this &lt;!-- INSERT_plot_timeseries_HERE --&gt; to index_temp.md</span>
 <span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"plot_timerseries.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"python"</span><span class="p">)</span>
@@ -8169,7 +8169,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">plot_stats</span> <span class="kn">import</span> <span class="n">plot_stats</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">plot_stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_stats</span>
 <span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"plot_stats.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
 <span class="c1"># Copy this &lt;!-- INSERT_plot_stats_HERE --&gt; to index_temp.md</span>
 <span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"plot_stats.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"python"</span><span class="p">)</span>
@@ -8199,7 +8199,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">plot_vix_with_trades</span> <span class="kn">import</span> <span class="n">plot_vix_with_trades</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">plot_vix_with_trades</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_vix_with_trades</span>
 <span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"plot_vix_with_trades.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
 <span class="c1"># Copy this &lt;!-- INSERT_plot_vix_with_trades_HERE --&gt; to index_temp.md</span>
 <span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"plot_vix_with_trades.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"python"</span><span class="p">)</span>
@@ -8229,7 +8229,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">polygon_fetch_full_history</span> <span class="kn">import</span> <span class="n">polygon_fetch_full_history</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">polygon_fetch_full_history</span><span class="w"> </span><span class="kn">import</span> <span class="n">polygon_fetch_full_history</span>
 <span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"polygon_fetch_full_history.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
 <span class="c1"># Copy this &lt;!-- INSERT_polygon_fetch_full_history_HERE --&gt; to index_temp.md</span>
 <span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"polygon_fetch_full_history.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"python"</span><span class="p">)</span>
@@ -8259,7 +8259,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [23]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">polygon_pull_data</span> <span class="kn">import</span> <span class="n">polygon_pull_data</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">polygon_pull_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">polygon_pull_data</span>
 <span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"polygon_pull_data.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
 <span class="c1"># Copy this &lt;!-- INSERT_polygon_pull_data_HERE --&gt; to index_temp.md</span>
 <span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"polygon_pull_data.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"python"</span><span class="p">)</span>
@@ -8289,7 +8289,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [24]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">strategy_harry_brown_perm_port</span> <span class="kn">import</span> <span class="n">strategy_harry_brown_perm_port</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">strategy_harry_brown_perm_port</span><span class="w"> </span><span class="kn">import</span> <span class="n">strategy_harry_brown_perm_port</span>
 <span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"strategy_harry_brown_perm_port.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
 <span class="c1"># Copy this &lt;!-- INSERT_strategy_harry_brown_perm_port_HERE --&gt; to index_temp.md</span>
 <span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"strategy_harry_brown_perm_port.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"python"</span><span class="p">)</span>
@@ -8319,7 +8319,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [25]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">summary_stats</span> <span class="kn">import</span> <span class="n">summary_stats</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">summary_stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">summary_stats</span>
 <span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"summary_stats.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
 <span class="c1"># Copy this &lt;!-- INSERT_summary_stats_HERE --&gt; to index_temp.md</span>
 <span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"summary_stats.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"python"</span><span class="p">)</span>
@@ -8349,7 +8349,7 @@ a.anchor-link {
 <div class="jp-InputPrompt jp-InputArea-prompt">In [26]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">yf_pull_data</span> <span class="kn">import</span> <span class="n">yf_pull_data</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">yf_pull_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">yf_pull_data</span>
 <span class="n">code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span> <span class="o">/</span> <span class="s2">"yf_pull_data.py"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
 <span class="c1"># Copy this &lt;!-- INSERT_yf_pull_data_HERE --&gt; to index_temp.md</span>
 <span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"yf_pull_data.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"python"</span><span class="p">)</span>

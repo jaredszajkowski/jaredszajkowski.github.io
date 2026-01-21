@@ -44,9 +44,8 @@ The `dodo.py` file in the primary directory is referenced by `doit` and includes
 
 The inital imports are as follows:
 
-```text
-
 ```python
+
 #######################################
 ## Import Libraries
 #######################################
@@ -66,7 +65,6 @@ from colorama import Fore, Style, init
 from datetime import datetime
 from os import environ, getcwd, path
 from pathlib import Path
-```
 
 ```
 
@@ -76,9 +74,8 @@ This first adds the `/src/` subdirectory to the path (required later on), and th
 
 Next, I use the following code to help differentiate the various outputs in the termial when executing `doit`:
 
-```text
-
 ```python
+
 # Code from lines 29-75 referenced from the UChicago
 # FINM 32900 - Full-Stack Quantitative Finance course
 # Credit to Jeremy Bejarano
@@ -132,7 +129,6 @@ else:
         "dep_file": "./.doit-db.sqlite"
     }
 init(autoreset=True)
-```
 
 ```
 
@@ -140,9 +136,8 @@ init(autoreset=True)
 
 Next, I establish the variables that reference some of the more important directories and subdirectories in the project:
 
-```text
-
 ```python
+
 #######################################
 ## Set directory variables
 #######################################
@@ -155,7 +150,6 @@ PUBLIC_DIR = config("PUBLIC_DIR")
 SOURCE_DIR = config("SOURCE_DIR")
 DATA_DIR = config("DATA_DIR")
 DATA_MANUAL_DIR = config("DATA_MANUAL_DIR")
-```
 
 ```
 

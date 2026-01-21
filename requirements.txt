@@ -5,6 +5,7 @@ black
 colorama
 doit
 jupyter
+massive
 matplotlib
 nasdaq-data-link
 numpy
@@ -20,6 +21,7 @@ python-dotenv
 scikit-learn
 scipy
 seaborn
+setuptools
 statsmodels
 tabulate
 wrds

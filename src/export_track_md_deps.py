@@ -40,8 +40,10 @@ def export_track_md_deps(
         Path(md_filename).write_text(f"```python\n{content}\n```")
     elif text_or_python == "text":
         Path(md_filename).write_text(f"```text\n{content}\n```")
+    elif text_or_python == "markdown":
+        Path(md_filename).write_text(f"{content}")
     else:
-        raise ValueError("text_or_python must be either 'text' or 'python'")
+        raise ValueError("text_or_python must be either 'text', 'python', or 'markdown'.")
 
     with dep_file.open("a") as f:
         f.write(md_filename + "\n")
