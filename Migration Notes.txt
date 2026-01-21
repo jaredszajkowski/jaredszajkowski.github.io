@@ -1,5 +1,0 @@
-- In index.md:
-	* For all posts, rename "image" to "feature"
-	* For all posts, duplicate "description" to "summary"
-
-
