@@ -4,7 +4,7 @@ def export_track_md_deps(
     dep_file: Path, 
     md_filename: str, 
     content: str,
-    output_type: str,
+    output_type: str = "text",
 ) -> None:
     """
     Export Markdown content to a file and track it as a dependency.
@@ -24,9 +24,9 @@ def export_track_md_deps(
         The name of the Markdown file to export.
     content : str
         The Markdown-formatted content to write to the file.
-    output_type : str
+    output_type : str, optional
         Indicates whether the content is plain text, Python code, 
-        or markdown for proper formatting.
+        or markdown for proper formatting (default: "text").
 
     Returns
     -------

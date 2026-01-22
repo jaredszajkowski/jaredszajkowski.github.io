@@ -5,7 +5,6 @@ def df_info_markdown(
     df: pd.DataFrame,
     decimal_places: int = 2,
 ) -> str:
-    
     """
     Generate a Markdown-formatted summary of a pandas DataFrame.
 
