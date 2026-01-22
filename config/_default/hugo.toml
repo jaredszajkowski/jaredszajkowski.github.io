@@ -45,7 +45,3 @@ summaryLength = 0
 [caches]
   [caches.images]
     dir = ':cacheDir/images'
-
-# Disable compression 
-[imaging]
-  quality = 100
