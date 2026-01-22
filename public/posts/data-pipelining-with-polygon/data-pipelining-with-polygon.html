@@ -7832,13 +7832,7 @@ a.anchor-link {
 
 [122 rows x 9 columns]
 Combined data:
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>                   Date     open     high      low   close       volume  \
+                   Date     open     high      low   close       volume  \
 0   2025-01-02 05:00:00  222.030  225.150  218.190  220.22   33956579.0   
 1   2025-01-03 05:00:00  222.505  225.360  221.620  224.19   27515606.0   
 2   2025-01-06 05:00:00  226.780  228.835  224.840  227.61   31849831.0   
@@ -7875,13 +7869,7 @@ Sleeping for 12 seconds to avoid hitting API rate limits...
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Pulling day data for 2025-06-29 04:00:00 thru 2025-12-26 04:00:00 for AMZN...
 
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>New data:
+New data:
                    Date     open     high     low   close      volume  \
 0   2025-06-30 04:00:00  223.520  223.820  219.12  219.39  58887780.0   
 1   2025-07-01 04:00:00  219.500  221.875  217.93  220.46  39256830.0   
@@ -7947,13 +7935,7 @@ Sleeping for 12 seconds to avoid hitting API rate limits...
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Pulling day data for 2025-12-23 05:00:00 thru 2026-06-21 05:00:00 for AMZN...
 
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>New data:
+New data:
                   Date     open     high     low   close      volume  \
 0  2025-12-23 05:00:00  229.055  232.445  228.73  232.14  29230233.0   
 1  2025-12-24 05:00:00  232.130  232.950  231.33  232.38  11420543.0   
@@ -7973,6 +7955,7 @@ Sleeping for 12 seconds to avoid hitting API rate limits...
 15 2026-01-15 05:00:00  239.310  240.650  236.63  238.18  43003571.0   
 16 2026-01-16 05:00:00  239.085  239.570  236.41  239.12  45888283.0   
 17 2026-01-20 05:00:00  233.760  235.090  229.34  231.00  47532847.0   
+18 2026-01-21 05:00:00  231.085  232.300  226.88  231.31  47848005.0   
 
         vwap  transactions   otc  
 0   231.3567        435724  None  
@@ -7993,6 +7976,7 @@ Sleeping for 12 seconds to avoid hitting API rate limits...
 15  238.3037        567069  None  
 16  238.4963        424842  None  
 17  231.9394        745098  None  
+18  230.2857        648356  None  
 Combined data:
                    Date     open     high     low   close      volume  \
 0   2025-01-02 05:00:00  222.030  225.150  218.19  220.22  33956579.0   
@@ -8001,11 +7985,11 @@ Combined data:
 3   2025-01-07 05:00:00  227.900  228.381  221.46  222.11  28084164.0   
 4   2025-01-08 05:00:00  223.185  223.520  220.20  222.13  25033292.0   
 ..                  ...      ...      ...     ...     ...         ...   
-257 2026-01-13 05:00:00  246.530  247.660  240.25  242.60  38371778.0   
 258 2026-01-14 05:00:00  241.150  241.280  236.22  236.65  41410578.0   
 259 2026-01-15 05:00:00  239.310  240.650  236.63  238.18  43003571.0   
 260 2026-01-16 05:00:00  239.085  239.570  236.41  239.12  45888283.0   
 261 2026-01-20 05:00:00  233.760  235.090  229.34  231.00  47532847.0   
+262 2026-01-21 05:00:00  231.085  232.300  226.88  231.31  47848005.0   
 
          vwap  transactions   otc  
 0    221.2745        449631  None  
@@ -8014,13 +7998,13 @@ Combined data:
 3    223.4033        379570  None  
 4    222.0414        325539  None  
 ..        ...           ...   ...  
-257  243.3866        559247  None  
 258  237.6446        582230  None  
 259  238.3037        567069  None  
 260  238.4963        424842  None  
 261  231.9394        745098  None  
+262  230.2857        648356  None  
 
-[262 rows x 9 columns]
+[263 rows x 9 columns]
 </pre>
 </div>
 </div>
@@ -8039,7 +8023,7 @@ Combined data:
     <span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> 
     <span class="n">md_filename</span><span class="o">=</span><span class="s2">"polygon_fetch_full_history.md"</span><span class="p">,</span> 
     <span class="n">content</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">floatfmt</span><span class="o">=</span><span class="s2">".5f"</span><span class="p">),</span>
-    <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"text"</span><span class="p">,</span>
+    <span class="n">output_type</span><span class="o">=</span><span class="s2">"text"</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -8145,7 +8129,7 @@ Existing data:
 Last date in existing data: 2026-01-20 05:00:00
 Number of rows in existing data: 622
 Forcing check of existing data...
-Pulling day data for 2024-01-21 00:00:00 thru 2024-07-19 00:00:00 for AMZN...
+Pulling day data for 2024-01-22 00:00:00 thru 2024-07-20 00:00:00 for AMZN...
 
 </pre>
 </div>
@@ -8155,32 +8139,32 @@ Pulling day data for 2024-01-21 00:00:00 thru 2024-07-19 00:00:00 for AMZN...
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>New data:
                    Date    open     high       low   close      volume  \
-0   2024-01-22 05:00:00  156.89  157.050  153.9000  154.78  43687468.0   
-1   2024-01-23 05:00:00  154.85  156.210  153.9300  156.02  37986039.0   
-2   2024-01-24 05:00:00  157.80  158.510  156.4800  156.87  48547315.0   
-3   2024-01-25 05:00:00  156.95  158.505  154.5501  157.75  43638592.0   
-4   2024-01-26 05:00:00  158.42  160.720  157.9100  159.12  51047353.0   
+0   2024-01-23 05:00:00  154.85  156.210  153.9300  156.02  37986039.0   
+1   2024-01-24 05:00:00  157.80  158.510  156.4800  156.87  48547315.0   
+2   2024-01-25 05:00:00  156.95  158.505  154.5501  157.75  43638592.0   
+3   2024-01-26 05:00:00  158.42  160.720  157.9100  159.12  51047353.0   
+4   2024-01-29 05:00:00  159.34  161.290  158.9000  161.26  45270385.0   
 ..                  ...     ...      ...       ...     ...         ...   
-120 2024-07-15 04:00:00  194.56  196.190  190.8300  192.72  40683227.0   
-121 2024-07-16 04:00:00  195.59  196.620  192.2400  193.02  33994714.0   
-122 2024-07-17 04:00:00  191.35  191.580  185.9900  187.93  48076139.0   
-123 2024-07-18 04:00:00  189.59  189.680  181.4480  183.75  51043626.0   
-124 2024-07-19 04:00:00  181.14  184.930  180.1100  183.13  43081829.0   
+119 2024-07-15 04:00:00  194.56  196.190  190.8300  192.72  40683227.0   
+120 2024-07-16 04:00:00  195.59  196.620  192.2400  193.02  33994714.0   
+121 2024-07-17 04:00:00  191.35  191.580  185.9900  187.93  48076139.0   
+122 2024-07-18 04:00:00  189.59  189.680  181.4480  183.75  51043626.0   
+123 2024-07-19 04:00:00  181.14  184.930  180.1100  183.13  43081829.0   
 
          vwap  transactions   otc  
-0    154.9418        427992  None  
-1    155.3239        353578  None  
-2    157.4001        435422  None  
-3    157.1518        455334  None  
-4    159.1848        426676  None  
+0    155.3239        353578  None  
+1    157.4001        435422  None  
+2    157.1518        455334  None  
+3    159.1848        426676  None  
+4    160.2769        447373  None  
 ..        ...           ...   ...  
-120  193.0188        571566  None  
-121  193.6997        449302  None  
-122  187.6363        682876  None  
-123  184.4092        672039  None  
-124  182.8750        482540  None  
+119  193.0188        571566  None  
+120  193.6997        449302  None  
+121  187.6363        682876  None  
+122  184.4092        672039  None  
+123  182.8750        482540  None  
 
-[125 rows x 9 columns]
+[124 rows x 9 columns]
 Combined data:
                    Date     open    high       low   close      volume  \
 0   2023-07-28 04:00:00  129.690  133.01  129.3300  132.21  46269781.0   
@@ -8219,13 +8203,7 @@ Sleeping for 12 seconds to avoid hitting API rate limits...
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Pulling day data for 2024-07-18 04:00:00 thru 2025-01-14 04:00:00 for AMZN...
 
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>New data:
+New data:
                    Date     open     high      low   close      volume  \
 0   2024-07-18 04:00:00  189.590  189.680  181.448  183.75  51043626.0   
 1   2024-07-19 04:00:00  181.140  184.930  180.110  183.13  43081829.0   
@@ -8357,13 +8335,7 @@ Sleeping for 12 seconds to avoid hitting API rate limits...
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Pulling day data for 2025-07-10 04:00:00 thru 2026-01-06 04:00:00 for AMZN...
 
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>New data:
+New data:
                    Date     open      high      low   close      volume  \
 0   2025-07-10 04:00:00  221.550  222.7900  219.700  222.26  30370591.0   
 1   2025-07-11 04:00:00  223.580  226.6799  222.370  225.02  50518307.0   
@@ -8429,13 +8401,7 @@ Sleeping for 12 seconds to avoid hitting API rate limits...
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Pulling day data for 2026-01-04 05:00:00 thru 2026-07-03 05:00:00 for AMZN...
 
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>New data:
+New data:
                   Date     open    high     low   close      volume      vwap  \
 0  2026-01-05 05:00:00  228.840  234.00  227.18  233.06  49733348.0  232.1786   
 1  2026-01-06 05:00:00  232.100  243.18  232.07  240.93  53764677.0  239.6475   
@@ -8448,6 +8414,7 @@ Sleeping for 12 seconds to avoid hitting API rate limits...
 8  2026-01-15 05:00:00  239.310  240.65  236.63  238.18  43003571.0  238.3037   
 9  2026-01-16 05:00:00  239.085  239.57  236.41  239.12  45888283.0  238.4963   
 10 2026-01-20 05:00:00  233.760  235.09  229.34  231.00  47532847.0  231.9394   
+11 2026-01-21 05:00:00  231.085  232.30  226.88  231.31  47848005.0  230.2857   
 
     transactions   otc  
 0         678867  None  
@@ -8461,6 +8428,7 @@ Sleeping for 12 seconds to avoid hitting API rate limits...
 8         567069  None  
 9         424842  None  
 10        745098  None  
+11        648356  None  
 Combined data:
                    Date     open    high       low   close      volume  \
 0   2023-07-28 04:00:00  129.690  133.01  129.3300  132.21  46269781.0   
@@ -8469,11 +8437,11 @@ Combined data:
 3   2023-08-02 04:00:00  130.154  130.23  126.8200  128.21  50988614.0   
 4   2023-08-03 04:00:00  127.480  129.84  126.4100  128.91  90855736.0   
 ..                  ...      ...     ...       ...     ...         ...   
-617 2026-01-13 05:00:00  246.530  247.66  240.2500  242.60  38371778.0   
 618 2026-01-14 05:00:00  241.150  241.28  236.2200  236.65  41410578.0   
 619 2026-01-15 05:00:00  239.310  240.65  236.6300  238.18  43003571.0   
 620 2026-01-16 05:00:00  239.085  239.57  236.4100  239.12  45888283.0   
 621 2026-01-20 05:00:00  233.760  235.09  229.3400  231.00  47532847.0   
+622 2026-01-21 05:00:00  231.085  232.30  226.8800  231.31  47848005.0   
 
          vwap  transactions   otc  
 0    131.8837        413438  None  
@@ -8482,15 +8450,21 @@ Combined data:
 3    128.3973        532942  None  
 4    131.4941        746639  None  
 ..        ...           ...   ...  
-617  243.3866        559247  None  
 618  237.6446        582230  None  
 619  238.3037        567069  None  
 620  238.4963        424842  None  
 621  231.9394        745098  None  
+622  230.2857        648356  None  
 
-[622 rows x 9 columns]
+[623 rows x 9 columns]
 Exporting AMZN day data to Excel...
-Exporting AMZN day data to Pickle...
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Exporting AMZN day data to Pickle...
 The first and last date of day data for AMZN is: 
 </pre>
 </div>
@@ -8579,15 +8553,15 @@ The first and last date of day data for AMZN is:
 </thead>
 <tbody>
 <tr>
-<th>621</th>
-<td>2026-01-20 05:00:00</td>
-<td>233.76</td>
-<td>235.09</td>
-<td>229.34</td>
-<td>231.0</td>
-<td>47532847.0</td>
-<td>231.9394</td>
-<td>745098</td>
+<th>622</th>
+<td>2026-01-21 05:00:00</td>
+<td>231.085</td>
+<td>232.3</td>
+<td>226.88</td>
+<td>231.31</td>
+<td>47848005.0</td>
+<td>230.2857</td>
+<td>648356</td>
 <td>None</td>
 </tr>
 </tbody>
@@ -8598,8 +8572,8 @@ The first and last date of day data for AMZN is:
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Number of rows after data update: 622
-Number of rows added during update: 0
+<pre>Number of rows after data update: 623
+Number of rows added during update: 1
 Polygon data complete for AMZN day data.
 --------------------
 </pre>
@@ -8620,7 +8594,7 @@ Polygon data complete for AMZN day data.
     <span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> 
     <span class="n">md_filename</span><span class="o">=</span><span class="s2">"polygon_pull_data.md"</span><span class="p">,</span> 
     <span class="n">content</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">floatfmt</span><span class="o">=</span><span class="s2">".5f"</span><span class="p">),</span>
-    <span class="n">text_or_python</span><span class="o">=</span><span class="s2">"text"</span><span class="p">,</span>
+    <span class="n">output_type</span><span class="o">=</span><span class="s2">"text"</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>

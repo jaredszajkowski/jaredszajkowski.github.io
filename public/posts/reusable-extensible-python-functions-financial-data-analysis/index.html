@@ -145,7 +145,7 @@
     
     
     "mainEntityOfPage": "true",
-    "wordCount": "8255"
+    "wordCount": "8260"
   }
   </script>
     
@@ -592,7 +592,7 @@
   <div class="flex flex-row flex-wrap items-center">
     
     
-      <time datetime="2025-02-02 00:00:01 &#43;0000 &#43;0000">February 2, 2025</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2025-07-28 00:00:01 &#43;0000 &#43;0000">Updated: July 28, 2025</time><span class="px-2 text-primary-500">&middot;</span><span>8255 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">39 mins</span>
+      <time datetime="2025-02-02 00:00:01 &#43;0000 &#43;0000">February 2, 2025</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2025-07-28 00:00:01 &#43;0000 &#43;0000">Updated: July 28, 2025</time><span class="px-2 text-primary-500">&middot;</span><span>8260 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">39 mins</span>
     
 
     
@@ -1914,8 +1914,8 @@
 </span></span></span><span class="line"><span class="cl"><span class="s2">    This is useful in workflows where Markdown fragments are later assembled 
 </span></span></span><span class="line"><span class="cl"><span class="s2">    into a larger document (e.g., a Hugo `index.md`).
 </span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
-</span></span></span><span class="line"><span class="cl"><span class="s2">    -----------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ----------
 </span></span></span><span class="line"><span class="cl"><span class="s2">    dep_file : Path
 </span></span></span><span class="line"><span class="cl"><span class="s2">        Path to the dependency file that tracks Markdown fragment filenames.
 </span></span></span><span class="line"><span class="cl"><span class="s2">    md_filename : str
@@ -1925,12 +1925,12 @@
 </span></span></span><span class="line"><span class="cl"><span class="s2">    text_or_python : str
 </span></span></span><span class="line"><span class="cl"><span class="s2">        Indicates whether the content is plain text or Python code for proper formatting.
 </span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
-</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns
+</span></span></span><span class="line"><span class="cl"><span class="s2">    -------
 </span></span></span><span class="line"><span class="cl"><span class="s2">    None
 </span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">    Example:
-</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Example
+</span></span></span><span class="line"><span class="cl"><span class="s2">    -------
 </span></span></span><span class="line"><span class="cl"><span class="s2">    &gt;&gt;&gt; export_track_md_deps(Path(&#34;index_dep.txt&#34;), &#34;01_intro.md&#34;, &#34;# Introduction</span><span class="se">\n</span><span class="s2">...&#34;)
 </span></span></span><span class="line"><span class="cl"><span class="s2">    ✅ Exported and tracked: 01_intro.md
 </span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
@@ -1939,6 +1939,8 @@
 </span></span><span class="line"><span class="cl">        <span class="n">Path</span><span class="p">(</span><span class="n">md_filename</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;```python</span><span class="se">\n</span><span class="si">{</span><span class="n">content</span><span class="si">}</span><span class="se">\n</span><span class="s2">```&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">text_or_python</span> <span class="o">==</span> <span class="s2">&#34;text&#34;</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="n">Path</span><span class="p">(</span><span class="n">md_filename</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;```text</span><span class="se">\n</span><span class="si">{</span><span class="n">content</span><span class="si">}</span><span class="se">\n</span><span class="s2">```&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">text_or_python</span> <span class="o">==</span> <span class="s2">&#34;markdown&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Path</span><span class="p">(</span><span class="n">md_filename</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">content</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&#34;text_or_python must be either &#39;text&#39; or &#39;python&#39;&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
@@ -2290,7 +2292,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">load_api_keys</span> <span class="kn">import</span> <span class="n">load_api_keys</span>
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">polygon</span> <span class="kn">import</span> <span class="n">RESTClient</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">massive</span> <span class="kn">import</span> <span class="n">RESTClient</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">settings</span> <span class="kn">import</span> <span class="n">config</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Load API keys from the environment</span>
@@ -2539,7 +2541,7 @@
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">load_api_keys</span> <span class="kn">import</span> <span class="n">load_api_keys</span>
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">polygon</span> <span class="kn">import</span> <span class="n">RESTClient</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">massive</span> <span class="kn">import</span> <span class="n">RESTClient</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">polygon_fetch_full_history</span> <span class="kn">import</span> <span class="n">polygon_fetch_full_history</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">settings</span> <span class="kn">import</span> <span class="n">config</span>
 </span></span><span class="line"><span class="cl">
