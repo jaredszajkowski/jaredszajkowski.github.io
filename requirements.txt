@@ -1,4 +1,5 @@
-# Dependencies from this file can be installed with the following command:
+# Dependencies from this file can be installed
+# with the following command:
 # pip install -r requirements.txt
 
 black
