@@ -91,3 +91,9 @@ fingerprintAlgorithm = "sha256"
   # bing = ""
   # pinterest = ""
   # yandex = ""
+
+[imageProcessing.cover]
+enabled = false
+
+[imageProcessing.content]
+enabled = false
