@@ -1,6 +1,7 @@
 /* Slate scheme */
 :root {
-  --color-neutral: 245, 243, 239; /* was 255, 255, 255 */
+  /* --color-neutral: 245, 243, 239; */
+  --color-neutral: 255, 255, 255;
   /* Gray */
   --color-neutral-50: 249, 250, 251;
   /* --color-neutral-50: 243, 243, 243; new colors for code block */
