@@ -787,8 +787,8 @@ It's interesting to see that there really aren't any significant up or down year
 
 Overall, this is an interesting case study and Browne's idea behind the Permanent Portfolio is certainly compelling. There might be more investigation to be done with respect to the following:
 
-* Investigate the extent to which the rebalancing date effects the portfolio performance
-* Vary the weights of the asset classes to see if there is a meanful change in the results
+* Investigate the extent to which the rebalancing date effects the portfolio performance.
+* Vary the weights of the asset classes to see if there is a meanful change in the results.
 * Experiment with leverage (i.e., simulating 1.2x leverage with a portfolio with weights of 30, 30, 30, 10 for stocks, bonds, gold, cash respectively.)
 * Use ETFs instead of Bloomberg index data, and verify the results are similar. ETF data is much more available than the Bloomberg index.
 

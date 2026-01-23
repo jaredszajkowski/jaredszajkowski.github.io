@@ -7,8 +7,6 @@ showReadingTime: false
 showWordCount: false
 showComments: false
 ---
-{{< profile align="center" >}}
-
 ## Profile
 
 Jared is a seasoned civil engineer with extensive experience in infrastructure design and construction, specifically within the heavy highway and telecommunications sectors. With a strong foundation in field operations, contract administration, and project cost forecasting, Jared has consistently demonstrated the ability to drive projects to success through aggressive problem-solving and meticulous planning.
