@@ -7957,7 +7957,12 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Copy this &lt;!-- INSERT_01_Bonds_Data_Head_HERE --&gt; to index_temp.md</span>
-<span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"01_Bonds_Data_Head.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">bonds_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">floatfmt</span><span class="o">=</span><span class="s2">".3f"</span><span class="p">))</span>
+<span class="n">export_track_md_deps</span><span class="p">(</span>
+    <span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> 
+    <span class="n">md_filename</span><span class="o">=</span><span class="s2">"01_Bonds_Data_Head.md"</span><span class="p">,</span> 
+    <span class="n">content</span><span class="o">=</span><span class="n">bonds_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">floatfmt</span><span class="o">=</span><span class="s2">".3f"</span><span class="p">),</span>
+    <span class="n">output_type</span><span class="o">=</span><span class="s2">"markdown"</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -8190,7 +8195,12 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Copy this &lt;!-- INSERT_01_Stocks_Data_Head_HERE --&gt; to index_temp.md</span>
-<span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"01_Stocks_Data_Head.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">stocks_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">floatfmt</span><span class="o">=</span><span class="s2">".3f"</span><span class="p">))</span>
+<span class="n">export_track_md_deps</span><span class="p">(</span>
+    <span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> 
+    <span class="n">md_filename</span><span class="o">=</span><span class="s2">"01_Stocks_Data_Head.md"</span><span class="p">,</span> 
+    <span class="n">content</span><span class="o">=</span><span class="n">stocks_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">floatfmt</span><span class="o">=</span><span class="s2">".3f"</span><span class="p">),</span>
+    <span class="n">output_type</span><span class="o">=</span><span class="s2">"markdown"</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -8423,7 +8433,12 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Copy this &lt;!-- INSERT_01_Gold_Data_Head_HERE --&gt; to index_temp.md</span>
-<span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"01_Gold_Data_Head.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">gold_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">floatfmt</span><span class="o">=</span><span class="s2">".3f"</span><span class="p">))</span>
+<span class="n">export_track_md_deps</span><span class="p">(</span>
+    <span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> 
+    <span class="n">md_filename</span><span class="o">=</span><span class="s2">"01_Gold_Data_Head.md"</span><span class="p">,</span> 
+    <span class="n">content</span><span class="o">=</span><span class="n">gold_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">floatfmt</span><span class="o">=</span><span class="s2">".3f"</span><span class="p">),</span>
+    <span class="n">output_type</span><span class="o">=</span><span class="s2">"markdown"</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -8863,7 +8878,12 @@ The first 5 rows are:
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Copy this &lt;!-- INSERT_02_Perm_Port_DF_Info_HERE --&gt; to index_temp.md</span>
-<span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"02_Perm_Port_DF_Info.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">df_info_markdown</span><span class="p">(</span><span class="n">perm_port</span><span class="p">))</span>
+<span class="n">export_track_md_deps</span><span class="p">(</span>
+    <span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> 
+    <span class="n">md_filename</span><span class="o">=</span><span class="s2">"02_Perm_Port_DF_Info.md"</span><span class="p">,</span> 
+    <span class="n">content</span><span class="o">=</span><span class="n">df_info_markdown</span><span class="p">(</span><span class="n">perm_port</span><span class="p">),</span>
+    <span class="n">output_type</span><span class="o">=</span><span class="s2">"markdown"</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -9419,7 +9439,12 @@ The first 5 rows are:
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Copy this &lt;!-- INSERT_03_Strategy_HERE --&gt; to index_temp.md</span>
-<span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"03_Strategy.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">df_info_markdown</span><span class="p">(</span><span class="n">strat</span><span class="p">))</span>
+<span class="n">export_track_md_deps</span><span class="p">(</span>
+    <span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> 
+    <span class="n">md_filename</span><span class="o">=</span><span class="s2">"03_Strategy.md"</span><span class="p">,</span> 
+    <span class="n">content</span><span class="o">=</span><span class="n">df_info_markdown</span><span class="p">(</span><span class="n">strat</span><span class="p">),</span>
+    <span class="n">output_type</span><span class="o">=</span><span class="s2">"markdown"</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -9668,7 +9693,12 @@ Summary stats complete for Stocks_Bonds_Gold_Cash
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Copy this &lt;!-- INSERT_04_Summary_Stats_HERE --&gt; to index_temp.md</span>
-<span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"04_Summary_Stats.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">all_sum_stats</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">floatfmt</span><span class="o">=</span><span class="s2">".3f"</span><span class="p">))</span>
+<span class="n">export_track_md_deps</span><span class="p">(</span>
+    <span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> 
+    <span class="n">md_filename</span><span class="o">=</span><span class="s2">"04_Summary_Stats.md"</span><span class="p">,</span> 
+    <span class="n">content</span><span class="o">=</span><span class="n">all_sum_stats</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">floatfmt</span><span class="o">=</span><span class="s2">".3f"</span><span class="p">),</span>
+    <span class="n">output_type</span><span class="o">=</span><span class="s2">"markdown"</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -9903,7 +9933,12 @@ Summary stats complete for Stocks_Bonds_Gold_Cash
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Copy this &lt;!-- INSERT_05_Annual_Returns_HERE --&gt; to index_temp.md</span>
-<span class="n">export_track_md_deps</span><span class="p">(</span><span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> <span class="n">md_filename</span><span class="o">=</span><span class="s2">"05_Annual_Returns.md"</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">strat_annual_returns_df</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">floatfmt</span><span class="o">=</span><span class="s2">".3f"</span><span class="p">))</span>
+<span class="n">export_track_md_deps</span><span class="p">(</span>
+    <span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> 
+    <span class="n">md_filename</span><span class="o">=</span><span class="s2">"05_Annual_Returns.md"</span><span class="p">,</span> 
+    <span class="n">content</span><span class="o">=</span><span class="n">strat_annual_returns_df</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">floatfmt</span><span class="o">=</span><span class="s2">".3f"</span><span class="p">),</span>
+    <span class="n">output_type</span><span class="o">=</span><span class="s2">"markdown"</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>

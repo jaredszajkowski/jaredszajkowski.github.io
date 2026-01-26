@@ -69,8 +69,8 @@ Data columns (total 2 columns):
  1   FedFunds_Change  251 non-null    float64
 dtypes: float64(2)
 memory usage: 5.9 KB
-```
 
+```
 
 The first 5 rows are:
 
@@ -200,7 +200,6 @@ fed_changes_df = pd.DataFrame({
 
 Which gives us the following cycles and cumulative change in rate per cycle:
 
-```text
 |    | Cycle    |   FedFunds_Change |
 |---:|:---------|------------------:|
 |  0 | Cycle 1  |            0.0331 |
@@ -214,7 +213,6 @@ Which gives us the following cycles and cumulative change in rate per cycle:
 |  8 | Cycle 9  |            0.0525 |
 |  9 | Cycle 10 |            0.0000 |
 | 10 | Cycle 11 |           -0.0161 |
-```
 
 ## Return Performance By Fed Policy Cycle
 
@@ -278,8 +276,8 @@ Data columns (total 6 columns):
  5   Monthly_Return  251 non-null    float64
 dtypes: float64(5), int64(1)
 memory usage: 13.8 KB
-```
 
+```
 
 The first 5 rows are:
 
@@ -338,7 +336,6 @@ spy_cycle_df = calc_fed_cycle_asset_performance(
 
 Which gives us:
 
-```text
 |    | Cycle    | Start      | End        |   Months |   CumulativeReturn |   CumulativeReturnPct |   AverageMonthlyReturn |   AverageMonthlyReturnPct |   AnnualizedReturn |   AnnualizedReturnPct |   Volatility |   FedFundsChange |   FedFundsChange_bps |   FFR_AnnualizedChange |   FFR_AnnualizedChange_bps | Label                              |
 |---:|:---------|:-----------|:-----------|---------:|-------------------:|----------------------:|-----------------------:|--------------------------:|-------------------:|----------------------:|-------------:|-----------------:|---------------------:|-----------------------:|---------------------------:|:-----------------------------------|
 |  0 | Cycle 1  | 2004-11-01 | 2006-07-01 |       20 |               0.11 |                 11.32 |                   0.01 |                      0.59 |               0.07 |                  6.64 |         0.08 |             0.03 |               331.00 |                   0.02 |                     198.60 | Cycle 1, 2004-11-01 to 2006-07-01  |
@@ -351,8 +348,7 @@ Which gives us:
 |  7 | Cycle 8  | 2020-04-01 | 2022-02-01 |       22 |               0.79 |                 79.13 |                   0.03 |                      2.78 |               0.37 |                 37.43 |         0.16 |             0.00 |                 3.00 |                   0.00 |                       1.64 | Cycle 8, 2020-04-01 to 2022-02-01  |
 |  8 | Cycle 9  | 2022-02-01 | 2023-08-01 |       18 |               0.04 |                  4.18 |                   0.00 |                      0.40 |               0.03 |                  2.77 |         0.21 |             0.05 |               525.00 |                   0.03 |                     350.00 | Cycle 9, 2022-02-01 to 2023-08-01  |
 |  9 | Cycle 10 | 2023-08-01 | 2024-08-01 |       12 |               0.22 |                 22.00 |                   0.02 |                      1.75 |               0.22 |                 22.00 |         0.15 |             0.00 |                 0.00 |                   0.00 |                       0.00 | Cycle 10, 2023-08-01 to 2024-08-01 |
-| 10 | Cycle 11 | 2024-08-01 | 2026-01-21 |       15 |               0.26 |                 25.72 |                   0.02 |                      1.59 |               0.20 |                 20.09 |         0.11 |            -0.02 |              -161.00 |                  -0.01 |                    -128.80 | Cycle 11, 2024-08-01 to 2026-01-21 |
-```
+| 10 | Cycle 11 | 2024-08-01 | 2026-01-26 |       15 |               0.26 |                 25.72 |                   0.02 |                      1.59 |               0.20 |                 20.09 |         0.11 |            -0.02 |              -161.00 |                  -0.01 |                    -128.80 | Cycle 11, 2024-08-01 to 2026-01-26 |
 
 This gives us the following data points:
 
@@ -406,8 +402,8 @@ Which gives us the results of the OLS regression:
 Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.176
 Model:                             OLS   Adj. R-squared:                  0.085
 Method:                  Least Squares   F-statistic:                     1.928
-Date:                 Wed, 21 Jan 2026   Prob (F-statistic):              0.198
-Time:                         13:22:34   Log-Likelihood:                -47.196
+Date:                 Mon, 26 Jan 2026   Prob (F-statistic):              0.198
+Time:                         12:06:34   Log-Likelihood:                -47.196
 No. Observations:                   11   AIC:                             98.39
 Df Residuals:                        9   BIC:                             99.19
 Df Model:                            1                                         
@@ -509,6 +505,7 @@ Data columns (total 6 columns):
 dtypes: float64(5), int64(1)
 memory usage: 13.8 KB
 
+```
 
 The first 5 rows are:
 
@@ -529,7 +526,6 @@ The last 5 rows are:
 | 2025-08-31 00:00:00 |   85.03 |  85.28 | 84.87 |  85.18 | 41686400.00 |             0.00 |
 | 2025-09-30 00:00:00 |   88.08 |  88.74 | 87.92 |  88.37 | 38584000.00 |             0.04 |
 | 2025-10-31 00:00:00 |   89.30 |  89.66 | 89.21 |  89.56 | 38247300.00 |             0.01 |
-```
 
 Next, we can plot the price history before calculating the cycle performance:
 
@@ -568,7 +564,6 @@ tlt_cycle_df = calc_fed_cycle_asset_performance(
 
 Which gives us:
 
-```text
 |    | Cycle    | Start      | End        |   Months |   CumulativeReturn |   CumulativeReturnPct |   AverageMonthlyReturn |   AverageMonthlyReturnPct |   AnnualizedReturn |   AnnualizedReturnPct |   Volatility |   FedFundsChange |   FedFundsChange_bps |   FFR_AnnualizedChange |   FFR_AnnualizedChange_bps | Label                              |
 |---:|:---------|:-----------|:-----------|---------:|-------------------:|----------------------:|-----------------------:|--------------------------:|-------------------:|----------------------:|-------------:|-----------------:|---------------------:|-----------------------:|---------------------------:|:-----------------------------------|
 |  0 | Cycle 1  | 2004-11-01 | 2006-07-01 |       20 |               0.04 |                  4.23 |                   0.00 |                      0.25 |               0.03 |                  2.51 |         0.09 |             0.03 |               331.00 |                   0.02 |                     198.60 | Cycle 1, 2004-11-01 to 2006-07-01  |
@@ -581,8 +576,7 @@ Which gives us:
 |  7 | Cycle 8  | 2020-04-01 | 2022-02-01 |       22 |              -0.11 |                -11.33 |                  -0.00 |                     -0.50 |              -0.06 |                 -6.35 |         0.11 |             0.00 |                 3.00 |                   0.00 |                       1.64 | Cycle 8, 2020-04-01 to 2022-02-01  |
 |  8 | Cycle 9  | 2022-02-01 | 2023-08-01 |       18 |              -0.27 |                -26.96 |                  -0.02 |                     -1.62 |              -0.19 |                -18.90 |         0.17 |             0.05 |               525.00 |                   0.03 |                     350.00 | Cycle 9, 2022-02-01 to 2023-08-01  |
 |  9 | Cycle 10 | 2023-08-01 | 2024-08-01 |       12 |              -0.02 |                 -1.52 |                   0.00 |                      0.02 |              -0.02 |                 -1.52 |         0.20 |             0.00 |                 0.00 |                   0.00 |                       0.00 | Cycle 10, 2023-08-01 to 2024-08-01 |
-| 10 | Cycle 11 | 2024-08-01 | 2026-01-21 |       15 |               0.00 |                  0.42 |                   0.00 |                      0.08 |               0.00 |                  0.33 |         0.11 |            -0.02 |              -161.00 |                  -0.01 |                    -128.80 | Cycle 11, 2024-08-01 to 2026-01-21 |
-```
+| 10 | Cycle 11 | 2024-08-01 | 2026-01-26 |       15 |               0.00 |                  0.42 |                   0.00 |                      0.08 |               0.00 |                  0.33 |         0.11 |            -0.02 |              -161.00 |                  -0.01 |                    -128.80 | Cycle 11, 2024-08-01 to 2026-01-26 |
 
 This gives us the following data points:
 
@@ -636,8 +630,8 @@ Which gives us the results of the OLS regression:
 Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.615
 Model:                             OLS   Adj. R-squared:                  0.573
 Method:                  Least Squares   F-statistic:                     14.39
-Date:                 Wed, 21 Jan 2026   Prob (F-statistic):            0.00426
-Time:                         13:22:39   Log-Likelihood:                -39.782
+Date:                 Mon, 26 Jan 2026   Prob (F-statistic):            0.00426
+Time:                         12:06:37   Log-Likelihood:                -39.782
 No. Observations:                   11   AIC:                             83.56
 Df Residuals:                        9   BIC:                             84.36
 Df Model:                            1                                         
@@ -739,6 +733,7 @@ Data columns (total 6 columns):
 dtypes: float64(5), int64(1)
 memory usage: 13.8 KB
 
+```
 
 The first 5 rows are:
 
@@ -759,7 +754,6 @@ The last 5 rows are:
 | 2025-08-31 00:00:00 |  318.07 | 318.09 | 314.64 | 314.72 | 15642600.00 |             0.05 |
 | 2025-09-30 00:00:00 |  355.47 | 355.57 | 350.87 | 351.13 | 13312400.00 |             0.12 |
 | 2025-10-31 00:00:00 |  368.12 | 370.66 | 365.50 | 370.47 | 11077900.00 |             0.04 |
-```
 
 Next, we can plot the price history before calculating the cycle performance:
 
@@ -798,7 +792,6 @@ gld_cycle_df = calc_fed_cycle_asset_performance(
 
 Which gives us:
 
-```text
 |    | Cycle    | Start      | End        |   Months |   CumulativeReturn |   CumulativeReturnPct |   AverageMonthlyReturn |   AverageMonthlyReturnPct |   AnnualizedReturn |   AnnualizedReturnPct |   Volatility |   FedFundsChange |   FedFundsChange_bps |   FFR_AnnualizedChange |   FFR_AnnualizedChange_bps | Label                              |
 |---:|:---------|:-----------|:-----------|---------:|-------------------:|----------------------:|-----------------------:|--------------------------:|-------------------:|----------------------:|-------------:|-----------------:|---------------------:|-----------------------:|---------------------------:|:-----------------------------------|
 |  0 | Cycle 1  | 2004-11-01 | 2006-07-01 |       20 |               0.36 |                 35.70 |                   0.02 |                      1.73 |               0.20 |                 20.10 |         0.17 |             0.03 |               331.00 |                   0.02 |                     198.60 | Cycle 1, 2004-11-01 to 2006-07-01  |
@@ -811,8 +804,7 @@ Which gives us:
 |  7 | Cycle 8  | 2020-04-01 | 2022-02-01 |       22 |               0.14 |                 13.54 |                   0.01 |                      0.69 |               0.07 |                  7.17 |         0.16 |             0.00 |                 3.00 |                   0.00 |                       1.64 | Cycle 8, 2020-04-01 to 2022-02-01  |
 |  8 | Cycle 9  | 2022-02-01 | 2023-08-01 |       18 |               0.08 |                  8.48 |                   0.01 |                      0.53 |               0.06 |                  5.58 |         0.14 |             0.05 |               525.00 |                   0.03 |                     350.00 | Cycle 9, 2022-02-01 to 2023-08-01  |
 |  9 | Cycle 10 | 2023-08-01 | 2024-08-01 |       12 |               0.24 |                 24.24 |                   0.02 |                      1.89 |               0.24 |                 24.24 |         0.13 |             0.00 |                 0.00 |                   0.00 |                       0.00 | Cycle 10, 2023-08-01 to 2024-08-01 |
-| 10 | Cycle 11 | 2024-08-01 | 2026-01-21 |       15 |               0.62 |                 62.49 |                   0.03 |                      3.36 |               0.47 |                 47.46 |         0.14 |            -0.02 |              -161.00 |                  -0.01 |                    -128.80 | Cycle 11, 2024-08-01 to 2026-01-21 |
-```
+| 10 | Cycle 11 | 2024-08-01 | 2026-01-26 |       15 |               0.62 |                 62.49 |                   0.03 |                      3.36 |               0.47 |                 47.46 |         0.14 |            -0.02 |              -161.00 |                  -0.01 |                    -128.80 | Cycle 11, 2024-08-01 to 2026-01-26 |
 
 This gives us the following data points:
 
@@ -866,8 +858,8 @@ Which gives us the results of the OLS regression:
 Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.093
 Model:                             OLS   Adj. R-squared:                 -0.008
 Method:                  Least Squares   F-statistic:                    0.9214
-Date:                 Wed, 21 Jan 2026   Prob (F-statistic):              0.362
-Time:                         13:22:44   Log-Likelihood:                -42.778
+Date:                 Mon, 26 Jan 2026   Prob (F-statistic):              0.362
+Time:                         12:06:40   Log-Likelihood:                -42.778
 No. Observations:                   11   AIC:                             89.56
 Df Residuals:                        9   BIC:                             90.35
 Df Model:                            1                                         
@@ -1020,6 +1012,7 @@ Data columns (total 9 columns):
 dtypes: float64(9)
 memory usage: 19.7 KB
 
+```
 
 The first 5 rows are:
 
@@ -1040,7 +1033,6 @@ The last 5 rows are:
 | 2025-08-31 00:00:00 |                      0.000 |                        18.778 |               -0.082 |                0.021 |                   7.058 |          0.000 |                0.000 |                   0.941 |         -0.415 |
 | 2025-09-30 00:00:00 |                      0.036 |                        19.489 |               -0.049 |                0.036 |                   7.345 |          0.000 |                0.036 |                   1.011 |         -0.394 |
 | 2025-10-31 00:00:00 |                      0.014 |                        19.772 |               -0.036 |                0.024 |                   7.544 |          0.000 |                0.014 |                   1.039 |         -0.385 |
-```
 
 Next, we'll look at performance for the assets and portfolio.
 
@@ -1096,13 +1088,11 @@ sum_stats = port_sum_stats.combine_first(spy_sum_stats).combine_first(tlt_sum_st
 
 Which gives us:
 
-```text
 |                          |   Annualized Mean |   Annualized Volatility |   Annualized Sharpe Ratio |   CAGR |   Monthly Max Return | Monthly Max Return (Date)   |   Monthly Min Return | Monthly Min Return (Date)   |   Max Drawdown | Peak                | Trough              | Recovery Date       |   Days to Recover |   MAR Ratio |
 |:-------------------------|------------------:|------------------------:|--------------------------:|-------:|---------------------:|:----------------------------|---------------------:|:----------------------------|---------------:|:--------------------|:--------------------|:--------------------|------------------:|------------:|
 | Portfolio_Monthly_Return |             0.156 |                   0.140 |                     1.111 |  0.155 |                0.143 | 2008-11-30 00:00:00         |               -0.107 | 2009-02-28 00:00:00         |         -0.239 | 2021-12-31 00:00:00 | 2022-09-30 00:00:00 | 2023-12-31 00:00:00 |           457.000 |       0.650 |
 | SPY_Monthly_Return       |             0.114 |                   0.148 |                     0.769 |  0.108 |                0.127 | 2020-04-30 00:00:00         |               -0.165 | 2008-10-31 00:00:00         |         -0.508 | 2007-10-31 00:00:00 | 2009-02-28 00:00:00 | 2012-03-31 00:00:00 |          1127.000 |       0.212 |
 | TLT_Monthly_Return       |             0.043 |                   0.137 |                     0.316 |  0.035 |                0.143 | 2008-11-30 00:00:00         |               -0.131 | 2009-01-31 00:00:00         |         -0.476 | 2020-07-31 00:00:00 | 2023-10-31 00:00:00 | NaT                 |           nan     |       0.072 |
-```
 
 Based on the above, our hybrid portfolio outperforms both stocks and bonds, and by a wide margin.
 

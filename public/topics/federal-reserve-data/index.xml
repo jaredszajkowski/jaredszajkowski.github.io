@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Federal Reserve Data on Jared Szajkowski</title>
-    <link>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/topics/federal-reserve-data/</link>
+    <link>https://www.jaredszajkowski.com/topics/federal-reserve-data/</link>
     <description>Recent content in Federal Reserve Data on Jared Szajkowski</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Thu, 04 Dec 2025 00:00:01 +0000</lastBuildDate>
-    <atom:link href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/topics/federal-reserve-data/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www.jaredszajkowski.com/topics/federal-reserve-data/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Performance Of Various Asset Classes During Fed Policy Cycles</title>
-      <link>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/</link>
+      <link>https://www.jaredszajkowski.com/posts/asset-class-performance-fed-policy-cycles/</link>
       <pubDate>Sat, 29 Nov 2025 00:00:01 +0000</pubDate>
-      <guid>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/</guid>
+      <guid>https://www.jaredszajkowski.com/posts/asset-class-performance-fed-policy-cycles/</guid>
       <description>How does the performance of stocks, bonds, and other asset classes vary during Fed policy cycles?</description>
     </item>
   </channel>

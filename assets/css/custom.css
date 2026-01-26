@@ -1,4 +1,4 @@
-/* Add border around code blocks */
+/* Add border around code blocks 
 .prose pre {
   border: 2px solid rgba(var(--color-neutral-300), 1);
   border-radius: 0.5rem;
@@ -12,31 +12,32 @@
   padding-bottom: 0.5rem;
 }
 
-/* For dark mode */
+.dark .prose pre {
+  border: 2px solid rgba(var(--color-neutral-500), 1);
+} */
+
+/* Border with 2px width */
+.prose pre {
+  border: 2px solid rgba(var(--color-neutral-300), 1);
+  border-radius: 0.5rem;
+}
+
 .dark .prose pre {
   border: 2px solid rgba(var(--color-neutral-500), 1);
 }
 
-/* Add border around images in post content */
+/* Add border around images */
 .prose img {
   border: 2px solid rgba(var(--color-neutral-300), 1);
   border-radius: 0.5rem;
+  /* padding: 0.65rem; */
 }
 
-/* For dark mode */
 .dark .prose img {
   border: 2px solid rgba(var(--color-neutral-500), 1);
 }
 
-/* Make tables scrollable horizontally */
-.prose table {
-  display: block;
-  max-width: 100%;
-  overflow-x: auto;
-  white-space: nowrap;
-}
-
-/* Optional: Add border to match your code blocks/images */
+/* Make tables scrollable horizontally with border and padding */
 .prose table {
   display: block;
   max-width: 100%;
@@ -44,6 +45,10 @@
   white-space: nowrap;
   border: 2px solid rgba(var(--color-neutral-300), 1);
   border-radius: 0.5rem;
+  padding-top: 0.65rem;
+  padding-bottom: 0.15rem;
+  padding-left: 1.05rem;
+  padding-right: 1.05rem;
 }
 
 .dark .prose table {

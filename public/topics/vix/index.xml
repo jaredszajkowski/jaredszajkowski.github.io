@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>VIX on Jared Szajkowski</title>
-    <link>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/topics/vix/</link>
+    <link>https://www.jaredszajkowski.com/topics/vix/</link>
     <description>Recent content in VIX on Jared Szajkowski</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Mon, 21 Jul 2025 00:00:01 +0000</lastBuildDate>
-    <atom:link href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/topics/vix/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www.jaredszajkowski.com/topics/vix/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Investigating A VIX Trading Signal, Part 3: Trading</title>
-      <link>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/investigating-a-vix-trading-signal-part-3-trading/</link>
+      <link>https://www.jaredszajkowski.com/posts/investigating-a-vix-trading-signal-part-3-trading/</link>
       <pubDate>Mon, 03 Mar 2025 00:00:01 +0000</pubDate>
-      <guid>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/investigating-a-vix-trading-signal-part-3-trading/</guid>
+      <guid>https://www.jaredszajkowski.com/posts/investigating-a-vix-trading-signal-part-3-trading/</guid>
       <description>A brief look at finding a trading signal based on moving averages of the VIX.</description>
     </item>
     <item>
       <title>Investigating A VIX Trading Signal, Part 2: Finding A Signal</title>
-      <link>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/investigating-a-vix-trading-signal-part-2-finding-a-signal/</link>
+      <link>https://www.jaredszajkowski.com/posts/investigating-a-vix-trading-signal-part-2-finding-a-signal/</link>
       <pubDate>Sun, 02 Mar 2025 00:00:01 +0000</pubDate>
-      <guid>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/investigating-a-vix-trading-signal-part-2-finding-a-signal/</guid>
+      <guid>https://www.jaredszajkowski.com/posts/investigating-a-vix-trading-signal-part-2-finding-a-signal/</guid>
       <description>A brief look at finding a trading signal based on moving averages of the VIX.</description>
     </item>
     <item>
       <title>Investigating A VIX Trading Signal, Part 1: VIX And VVIX</title>
-      <link>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/investigating-a-vix-trading-signal-part-1-vix-and-vvix/</link>
+      <link>https://www.jaredszajkowski.com/posts/investigating-a-vix-trading-signal-part-1-vix-and-vvix/</link>
       <pubDate>Sat, 01 Mar 2025 00:00:01 +0000</pubDate>
-      <guid>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/investigating-a-vix-trading-signal-part-1-vix-and-vvix/</guid>
+      <guid>https://www.jaredszajkowski.com/posts/investigating-a-vix-trading-signal-part-1-vix-and-vvix/</guid>
       <description>A brief look at finding a trading signal based on moving averages of the VIX.</description>
     </item>
   </channel>

@@ -125,7 +125,6 @@ display(bonds_data.head())
 
 The following is the output:
 
-```text
 | Date                |   Bonds_Close |   Bonds_Daily_Return |   Bonds_Total_Return |
 |:--------------------|--------------:|---------------------:|---------------------:|
 | 1990-01-02 00:00:00 |        99.972 |              nan     |              nan     |
@@ -133,7 +132,6 @@ The following is the output:
 | 1990-01-04 00:00:00 |        99.813 |                0.001 |                0.998 |
 | 1990-01-05 00:00:00 |        99.769 |               -0.000 |                0.998 |
 | 1990-01-08 00:00:00 |        99.681 |               -0.001 |                0.997 |
-```
 
 Then for stocks:
 
@@ -168,7 +166,6 @@ display(stocks_data.head())
 
 The following is the output:
 
-```text
 | Date                |   Stocks_Close |   Stocks_Daily_Return |   Stocks_Total_Return |
 |:--------------------|---------------:|----------------------:|----------------------:|
 | 1990-01-01 00:00:00 |        nan     |               nan     |               nan     |
@@ -176,7 +173,6 @@ The following is the output:
 | 1990-01-03 00:00:00 |        385.170 |                -0.003 |                 0.997 |
 | 1990-01-04 00:00:00 |        382.020 |                -0.008 |                 0.989 |
 | 1990-01-05 00:00:00 |        378.300 |                -0.010 |                 0.980 |
-```
 
 And finally, gold:
 
@@ -211,7 +207,6 @@ display(gold_data.head())
 
 The following is the output:
 
-```text
 | Date                |   Gold_Close |   Gold_Daily_Return |   Gold_Total_Return |
 |:--------------------|-------------:|--------------------:|--------------------:|
 | 1990-01-02 00:00:00 |      399.000 |             nan     |             nan     |
@@ -219,7 +214,6 @@ The following is the output:
 | 1990-01-04 00:00:00 |      396.500 |               0.004 |               0.994 |
 | 1990-01-05 00:00:00 |      405.000 |               0.021 |               1.015 |
 | 1990-01-08 00:00:00 |      404.600 |              -0.001 |               1.014 |
-```
 
 ### Combine Data
 
@@ -276,6 +270,7 @@ Data columns (total 4 columns):
 dtypes: float64(3), int64(1)
 memory usage: 331.2 KB
 
+```
 
 The first 5 rows are:
 
@@ -296,7 +291,6 @@ The last 5 rows are:
 | 2023-12-27 00:00:00 |       10351.60 |        609.36 |      2077.49 |         1.00 |
 | 2023-12-28 00:00:00 |       10356.59 |        606.83 |      2065.61 |         1.00 |
 | 2023-12-29 00:00:00 |       10327.83 |        606.18 |      2062.98 |         1.00 |
-```
 
 We can see that we have daily close price data for all 4 asset classes from the beginning of 1990 to the end of 2023.
 
@@ -386,6 +380,7 @@ Data columns (total 34 columns):
 dtypes: float64(31), int64(2), object(1)
 memory usage: 2.3+ MB
 
+```
 
 The first 5 rows are:
 
@@ -406,7 +401,6 @@ The last 5 rows are:
 | 2023-12-27 00:00:00 |       10351.60 |        609.36 |      2077.49 |            1 |               1.81 |               18702.89 |               0.29 |             25.03 |              15254.36 |              0.23 |             8.00 |             16621.42 |             0.25 |         14717.17 |             14717.17 |             0.23 |              65295.84 |              0 | No          |               1.81 |               18702.89 |               0.29 |             25.03 |              15254.36 |              0.23 |             8.00 |             16621.42 |             0.25 |         14717.17 |             14717.17 |             0.23 |              65295.84 |     0.00 |                6.53 |
 | 2023-12-28 00:00:00 |       10356.59 |        606.83 |      2065.61 |            1 |               1.81 |               18711.90 |               0.29 |             25.03 |              15191.10 |              0.23 |             8.00 |             16526.37 |             0.25 |         14717.17 |             14717.17 |             0.23 |              65146.54 |              0 | No          |               1.81 |               18711.90 |               0.29 |             25.03 |              15191.10 |              0.23 |             8.00 |             16526.37 |             0.25 |         14717.17 |             14717.17 |             0.23 |              65146.54 |    -0.00 |                6.51 |
 | 2023-12-29 00:00:00 |       10327.83 |        606.18 |      2062.98 |            1 |               1.81 |               18659.94 |               0.29 |             25.03 |              15175.01 |              0.23 |             8.00 |             16505.33 |             0.25 |         14717.17 |             14717.17 |             0.23 |              65057.44 |              0 | No          |               1.81 |               18659.94 |               0.29 |             25.03 |              15175.01 |              0.23 |             8.00 |             16505.33 |             0.25 |         14717.17 |             14717.17 |             0.23 |              65057.44 |    -0.00 |                6.51 |
-```
 
 From the above, we can see that there are all columns for before/after re-balancing, including the shares, asset values, percentages, etc. for the four different asset classes.
 
@@ -471,14 +465,12 @@ display(all_sum_stats)
 
 Which gives us:
 
-```text
 |             |   Annualized Mean |   Annualized Volatility |   Annualized Sharpe Ratio |   CAGR |   Daily Max Return | Daily Max Return (Date)   |   Daily Min Return | Daily Min Return (Date)   |   Max Drawdown | Peak                | Trough              | Recovery Date       |   Days to Recover |   MAR Ratio |
 |:------------|------------------:|------------------------:|--------------------------:|-------:|-------------------:|:--------------------------|-------------------:|:--------------------------|---------------:|:--------------------|:--------------------|:--------------------|------------------:|------------:|
 | 1990 - 2023 |             0.057 |                   0.060 |                     0.957 |  0.057 |              0.029 | 2020-03-24 00:00:00       |             -0.030 | 2020-03-12 00:00:00       |         -0.154 | 2008-03-18 00:00:00 | 2008-11-12 00:00:00 | 2009-10-06 00:00:00 |               328 |       0.372 |
 | Pre 1999    |             0.060 |                   0.050 |                     1.207 |  0.061 |              0.022 | 1999-09-28 00:00:00       |             -0.018 | 1993-08-05 00:00:00       |         -0.062 | 1998-07-20 00:00:00 | 1998-08-31 00:00:00 | 1998-11-05 00:00:00 |                66 |       0.982 |
 | Post 1999   |             0.056 |                   0.064 |                     0.883 |  0.056 |              0.029 | 2020-03-24 00:00:00       |             -0.030 | 2020-03-12 00:00:00       |         -0.154 | 2008-03-18 00:00:00 | 2008-11-12 00:00:00 | 2009-10-06 00:00:00 |               328 |       0.362 |
 | Post 2009   |             0.056 |                   0.060 |                     0.927 |  0.056 |              0.029 | 2020-03-24 00:00:00       |             -0.030 | 2020-03-12 00:00:00       |         -0.127 | 2021-12-27 00:00:00 | 2022-10-20 00:00:00 | 2023-12-01 00:00:00 |               407 |       0.437 |
-```
 
 Since the book was published in 1999, let's look specifically at the summary stats for below and after 1999.
 
@@ -488,7 +480,6 @@ The mean annualized return is approximately 0.4% lower for the pre 1999 vs post 
 
 Here's the annual returns:
 
-```text
 |   Year |   Return |
 |-------:|---------:|
 |   1991 |    0.102 |
@@ -524,7 +515,6 @@ Here's the annual returns:
 |   2021 |    0.057 |
 |   2022 |   -0.082 |
 |   2023 |    0.109 |
-```
 
 Since the strategy, summary statistics, and annual returns are all exported as excel files, they can be found at the following locations:
 

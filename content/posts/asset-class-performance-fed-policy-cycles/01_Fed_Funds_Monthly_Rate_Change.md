@@ -12,6 +12,7 @@ Data columns (total 2 columns):
 dtypes: float64(2)
 memory usage: 5.9 KB
 
+```
 
 The first 5 rows are:
 
@@ -32,4 +33,3 @@ The last 5 rows are:
 | 2025-08-31 00:00:00 |     0.0433 |            0.0000 |
 | 2025-09-30 00:00:00 |     0.0422 |           -0.0011 |
 | 2025-10-31 00:00:00 |     0.0409 |           -0.0013 |
-```

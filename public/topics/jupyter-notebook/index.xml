@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Jupyter Notebook on Jared Szajkowski</title>
-    <link>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/topics/jupyter-notebook/</link>
+    <link>https://www.jaredszajkowski.com/topics/jupyter-notebook/</link>
     <description>Recent content in Jupyter Notebook on Jared Szajkowski</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Mon, 28 Jul 2025 00:00:01 +0000</lastBuildDate>
-    <atom:link href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/topics/jupyter-notebook/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www.jaredszajkowski.com/topics/jupyter-notebook/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Automating Execution of Jupyter Notebook Files, Python Scripts, and Hugo Static Site Generation</title>
-      <link>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation/</link>
+      <link>https://www.jaredszajkowski.com/posts/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation/</link>
       <pubDate>Sun, 29 Jun 2025 00:00:01 +0000</pubDate>
-      <guid>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation/</guid>
+      <guid>https://www.jaredszajkowski.com/posts/automating-execution-jupyter-notebook-files-python-scripts-hugo-static-site-generation/</guid>
       <description>A full-stack approach using doit.</description>
     </item>
   </channel>

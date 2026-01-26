@@ -1147,6 +1147,18 @@ def df_info_markdown(
     head_str = df.head().to_markdown(floatfmt=f".{decimal_places}f")
     tail_str = df.tail().to_markdown(floatfmt=f".{decimal_places}f")
 
+    markdown = [
+        "```text",
+        "The columns, shape, and data types are:\n",
+        info_str,
+        "```",
+        "\nThe first 5 rows are:\n",
+        # "The first 5 rows are:\n",
+        head_str,
+        "\nThe last 5 rows are:\n",
+        tail_str
+    ]
+
     # markdown = [
     #     "```text",
     #     "The columns, shape, and data types are:\n",
@@ -1158,14 +1170,15 @@ def df_info_markdown(
     #     "```"
     # ]
 
-    markdown = [
-        "The columns, shape, and data types are:\n",
-        info_str,
-        "\nThe first 5 rows are:\n",
-        head_str,
-        "\nThe last 5 rows are:\n",
-        tail_str
-    ]
+    # markdown = [
+    #     "The columns, shape, and data types are:\n",
+    #     info_str,
+    #     # "\nThe first 5 rows are:\n",
+    #     "The first 5 rows are:\n",
+    #     head_str,
+    #     "\nThe last 5 rows are:\n",
+    #     tail_str
+    # ]
 
     return "\n".join(markdown)
 ```
@@ -1179,7 +1192,7 @@ def export_track_md_deps(
     dep_file: Path, 
     md_filename: str, 
     content: str,
-    output_type: str = "text",
+    output_type: str = "markdown",
 ) -> None:
     """
     Export Markdown content to a file and track it as a dependency.
@@ -1213,7 +1226,7 @@ def export_track_md_deps(
     elif output_type == "text":
         Path(md_filename).write_text(f"```text\n{content}\n```")
     elif output_type == "markdown":
-        Path(md_filename).write_text(f"{content}")
+        Path(md_filename).write_text(content)
     else:
         raise ValueError("'output_type' must be either 'text', 'python', or 'markdown'.")
 
@@ -1518,7 +1531,7 @@ import matplotlib.dates as mdates
 import matplotlib.ticker as mtick
 import pandas as pd
 
-from matplotlib.ticker import FormatStrFormatter, MultipleLocator
+from matplotlib.ticker import FormatStrFormatter, MultipleLocator, PercentFormatter
 
 def plot_timeseries(
     price_df: pd.DataFrame,
@@ -1636,7 +1649,7 @@ def plot_timeseries(
     if y_format == "Decimal":
         plt.gca().yaxis.set_major_formatter(FormatStrFormatter(f"%.{y_format_decimal_places}f"))
     elif y_format == "Percentage":
-        plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter(xmax=1, decimals=y_format_decimal_places))
+        plt.gca().yaxis.set_major_formatter(PercentFormatter(xmax=1, decimals=y_format_decimal_places))
     elif y_format == "Scientific":
         plt.gca().yaxis.set_major_formatter(FormatStrFormatter(f"%.{y_format_decimal_places}e"))
     elif y_format == "Log":

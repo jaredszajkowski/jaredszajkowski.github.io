@@ -2,17 +2,18 @@
 The columns, shape, and data types are:
 
 <class 'pandas.core.frame.DataFrame'>
-DatetimeIndex: 4784 entries, 2007-01-03 to 2026-01-21
+DatetimeIndex: 4786 entries, 2007-01-03 to 2026-01-23
 Data columns (total 4 columns):
  #   Column                   Non-Null Count  Dtype  
 ---  ------                   --------------  -----  
- 0   Close_VIX_to_VVIX_Ratio  4784 non-null   float64
- 1   High_VIX_to_VVIX_Ratio   4784 non-null   float64
- 2   Low_VIX_to_VVIX_Ratio    4784 non-null   float64
- 3   Open_VIX_to_VVIX_Ratio   4784 non-null   float64
+ 0   Close_VIX_to_VVIX_Ratio  4786 non-null   float64
+ 1   High_VIX_to_VVIX_Ratio   4786 non-null   float64
+ 2   Low_VIX_to_VVIX_Ratio    4786 non-null   float64
+ 3   Open_VIX_to_VVIX_Ratio   4786 non-null   float64
 dtypes: float64(4)
-memory usage: 186.9 KB
+memory usage: 187.0 KB
 
+```
 
 The first 5 rows are:
 
@@ -28,9 +29,8 @@ The last 5 rows are:
 
 | Date                |   Close_VIX_to_VVIX_Ratio |   High_VIX_to_VVIX_Ratio |   Low_VIX_to_VVIX_Ratio |   Open_VIX_to_VVIX_Ratio |
 |:--------------------|--------------------------:|-------------------------:|------------------------:|-------------------------:|
-| 2026-01-14 00:00:00 |                      0.16 |                     0.16 |                    0.16 |                     0.15 |
-| 2026-01-15 00:00:00 |                      0.16 |                     0.16 |                    0.16 |                     0.17 |
 | 2026-01-16 00:00:00 |                      0.16 |                     0.16 |                    0.15 |                     0.15 |
 | 2026-01-20 00:00:00 |                      0.17 |                     0.17 |                    0.17 |                     0.17 |
 | 2026-01-21 00:00:00 |                      0.16 |                     0.18 |                    0.16 |                     0.17 |
-```
+| 2026-01-22 00:00:00 |                      0.16 |                     0.16 |                    0.16 |                     0.17 |
+| 2026-01-23 00:00:00 |                      0.16 |                     0.16 |                    0.16 |                     0.16 |

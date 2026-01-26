@@ -2,45 +2,45 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Yahoo Finance on Jared Szajkowski</title>
-    <link>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/topics/yahoo-finance/</link>
+    <link>https://www.jaredszajkowski.com/topics/yahoo-finance/</link>
     <description>Recent content in Yahoo Finance on Jared Szajkowski</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Thu, 04 Dec 2025 00:00:01 +0000</lastBuildDate>
-    <atom:link href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/topics/yahoo-finance/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www.jaredszajkowski.com/topics/yahoo-finance/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Performance Of Various Asset Classes During Fed Policy Cycles</title>
-      <link>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/</link>
+      <link>https://www.jaredszajkowski.com/posts/asset-class-performance-fed-policy-cycles/</link>
       <pubDate>Sat, 29 Nov 2025 00:00:01 +0000</pubDate>
-      <guid>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/</guid>
+      <guid>https://www.jaredszajkowski.com/posts/asset-class-performance-fed-policy-cycles/</guid>
       <description>How does the performance of stocks, bonds, and other asset classes vary during Fed policy cycles?</description>
     </item>
     <item>
       <title>Investigating A VIX Trading Signal, Part 3: Trading</title>
-      <link>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/investigating-a-vix-trading-signal-part-3-trading/</link>
+      <link>https://www.jaredszajkowski.com/posts/investigating-a-vix-trading-signal-part-3-trading/</link>
       <pubDate>Mon, 03 Mar 2025 00:00:01 +0000</pubDate>
-      <guid>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/investigating-a-vix-trading-signal-part-3-trading/</guid>
+      <guid>https://www.jaredszajkowski.com/posts/investigating-a-vix-trading-signal-part-3-trading/</guid>
       <description>A brief look at finding a trading signal based on moving averages of the VIX.</description>
     </item>
     <item>
       <title>Investigating A VIX Trading Signal, Part 2: Finding A Signal</title>
-      <link>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/investigating-a-vix-trading-signal-part-2-finding-a-signal/</link>
+      <link>https://www.jaredszajkowski.com/posts/investigating-a-vix-trading-signal-part-2-finding-a-signal/</link>
       <pubDate>Sun, 02 Mar 2025 00:00:01 +0000</pubDate>
-      <guid>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/investigating-a-vix-trading-signal-part-2-finding-a-signal/</guid>
+      <guid>https://www.jaredszajkowski.com/posts/investigating-a-vix-trading-signal-part-2-finding-a-signal/</guid>
       <description>A brief look at finding a trading signal based on moving averages of the VIX.</description>
     </item>
     <item>
       <title>Investigating A VIX Trading Signal, Part 1: VIX And VVIX</title>
-      <link>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/investigating-a-vix-trading-signal-part-1-vix-and-vvix/</link>
+      <link>https://www.jaredszajkowski.com/posts/investigating-a-vix-trading-signal-part-1-vix-and-vvix/</link>
       <pubDate>Sat, 01 Mar 2025 00:00:01 +0000</pubDate>
-      <guid>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/investigating-a-vix-trading-signal-part-1-vix-and-vvix/</guid>
+      <guid>https://www.jaredszajkowski.com/posts/investigating-a-vix-trading-signal-part-1-vix-and-vvix/</guid>
       <description>A brief look at finding a trading signal based on moving averages of the VIX.</description>
     </item>
     <item>
       <title>Reusable And Extensible Python Functions For Financial Data Analysis</title>
-      <link>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/reusable-extensible-python-functions-financial-data-analysis/</link>
+      <link>https://www.jaredszajkowski.com/posts/reusable-extensible-python-functions-financial-data-analysis/</link>
       <pubDate>Sun, 02 Feb 2025 00:00:01 +0000</pubDate>
-      <guid>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/reusable-extensible-python-functions-financial-data-analysis/</guid>
+      <guid>https://www.jaredszajkowski.com/posts/reusable-extensible-python-functions-financial-data-analysis/</guid>
       <description>A list of common functions used for data acquisition, cleaning, analysis, etc.</description>
     </item>
   </channel>

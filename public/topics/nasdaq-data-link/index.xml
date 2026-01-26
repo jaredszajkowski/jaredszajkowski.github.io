@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Nasdaq Data Link on Jared Szajkowski</title>
-    <link>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/topics/nasdaq-data-link/</link>
+    <link>https://www.jaredszajkowski.com/topics/nasdaq-data-link/</link>
     <description>Recent content in Nasdaq Data Link on Jared Szajkowski</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Mon, 28 Jul 2025 00:00:01 +0000</lastBuildDate>
-    <atom:link href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/topics/nasdaq-data-link/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www.jaredszajkowski.com/topics/nasdaq-data-link/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Reusable And Extensible Python Functions For Financial Data Analysis</title>
-      <link>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/reusable-extensible-python-functions-financial-data-analysis/</link>
+      <link>https://www.jaredszajkowski.com/posts/reusable-extensible-python-functions-financial-data-analysis/</link>
       <pubDate>Sun, 02 Feb 2025 00:00:01 +0000</pubDate>
-      <guid>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/reusable-extensible-python-functions-financial-data-analysis/</guid>
+      <guid>https://www.jaredszajkowski.com/posts/reusable-extensible-python-functions-financial-data-analysis/</guid>
       <description>A list of common functions used for data acquisition, cleaning, analysis, etc.</description>
     </item>
     <item>
       <title>Nasdaq Data Link Tables API Data Retrieval</title>
-      <link>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/</link>
+      <link>https://www.jaredszajkowski.com/posts/nasdaq-data-link-tables-api-data-retrieval/</link>
       <pubDate>Sun, 24 Dec 2023 00:00:01 +0000</pubDate>
-      <guid>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/</guid>
+      <guid>https://www.jaredszajkowski.com/posts/nasdaq-data-link-tables-api-data-retrieval/</guid>
       <description>A python function to pull data from Nasdaq Data Link using the tables API and then complete the data for ease of use.</description>
     </item>
   </channel>

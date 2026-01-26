@@ -4,7 +4,7 @@ def export_track_md_deps(
     dep_file: Path, 
     md_filename: str, 
     content: str,
-    output_type: str = "text",
+    output_type: str = "markdown",
 ) -> None:
     """
     Export Markdown content to a file and track it as a dependency.
@@ -38,7 +38,7 @@ def export_track_md_deps(
     elif output_type == "text":
         Path(md_filename).write_text(f"```text\n{content}\n```")
     elif output_type == "markdown":
-        Path(md_filename).write_text(f"{content}")
+        Path(md_filename).write_text(content)
     else:
         raise ValueError("'output_type' must be either 'text', 'python', or 'markdown'.")
 

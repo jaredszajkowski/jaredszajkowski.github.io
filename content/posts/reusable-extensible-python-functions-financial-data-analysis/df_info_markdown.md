@@ -50,6 +50,18 @@ def df_info_markdown(
     head_str = df.head().to_markdown(floatfmt=f".{decimal_places}f")
     tail_str = df.tail().to_markdown(floatfmt=f".{decimal_places}f")
 
+    markdown = [
+        "```text",
+        "The columns, shape, and data types are:\n",
+        info_str,
+        "```",
+        "\nThe first 5 rows are:\n",
+        # "The first 5 rows are:\n",
+        head_str,
+        "\nThe last 5 rows are:\n",
+        tail_str
+    ]
+
     # markdown = [
     #     "```text",
     #     "The columns, shape, and data types are:\n",
@@ -61,15 +73,15 @@ def df_info_markdown(
     #     "```"
     # ]
 
-    markdown = [
-        "The columns, shape, and data types are:\n",
-        info_str,
-        # "\nThe first 5 rows are:\n",
-        "The first 5 rows are:\n",
-        head_str,
-        "\nThe last 5 rows are:\n",
-        tail_str
-    ]
+    # markdown = [
+    #     "The columns, shape, and data types are:\n",
+    #     info_str,
+    #     # "\nThe first 5 rows are:\n",
+    #     "The first 5 rows are:\n",
+    #     head_str,
+    #     "\nThe last 5 rows are:\n",
+    #     tail_str
+    # ]
 
     return "\n".join(markdown)
 ```

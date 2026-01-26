@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Polygon on Jared Szajkowski</title>
-    <link>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/topics/polygon/</link>
+    <link>https://www.jaredszajkowski.com/topics/polygon/</link>
     <description>Recent content in Polygon on Jared Szajkowski</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Sun, 10 Aug 2025 00:00:01 +0000</lastBuildDate>
-    <atom:link href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/topics/polygon/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www.jaredszajkowski.com/topics/polygon/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Data Pipelining With Polygon</title>
-      <link>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-polygon/</link>
+      <link>https://www.jaredszajkowski.com/posts/data-pipelining-with-polygon/</link>
       <pubDate>Sun, 10 Aug 2025 00:00:01 +0000</pubDate>
-      <guid>https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/data-pipelining-with-polygon/</guid>
+      <guid>https://www.jaredszajkowski.com/posts/data-pipelining-with-polygon/</guid>
       <description>Acquiring and managing minute, hour, and daily equity and ETF data from Polygon.io.</description>
     </item>
   </channel>

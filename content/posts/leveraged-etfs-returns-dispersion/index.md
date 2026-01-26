@@ -80,17 +80,19 @@ This gives us:
 The columns, shape, and data types are:
 
 <class 'pandas.core.frame.DataFrame'>
-DatetimeIndex: 6760 entries, 1999-03-10 to 2026-01-22
+DatetimeIndex: 6761 entries, 1999-03-10 to 2026-01-23
 Data columns (total 5 columns):
  #   Column      Non-Null Count  Dtype  
 ---  ------      --------------  -----  
- 0   QQQ_Close   6760 non-null   float64
- 1   QQQ_High    6760 non-null   float64
- 2   QQQ_Low     6760 non-null   float64
- 3   QQQ_Open    6760 non-null   float64
- 4   QQQ_Volume  6760 non-null   int64  
+ 0   QQQ_Close   6761 non-null   float64
+ 1   QQQ_High    6761 non-null   float64
+ 2   QQQ_Low     6761 non-null   float64
+ 3   QQQ_Open    6761 non-null   float64
+ 4   QQQ_Volume  6761 non-null   int64  
 dtypes: float64(4), int64(1)
 memory usage: 316.9 KB
+
+```
 
 The first 5 rows are:
 
@@ -106,12 +108,11 @@ The last 5 rows are:
 
 | Date                |   QQQ_Close |   QQQ_High |   QQQ_Low |   QQQ_Open |   QQQ_Volume |
 |:--------------------|------------:|-----------:|----------:|-----------:|-------------:|
-| 2026-01-15 00:00:00 |      621.78 |     630.00 |    620.75 |     626.60 |  53934900.00 |
 | 2026-01-16 00:00:00 |      621.26 |     626.08 |    618.88 |     625.50 |  61058100.00 |
 | 2026-01-20 00:00:00 |      608.06 |     615.06 |    607.05 |     610.53 |  81988900.00 |
 | 2026-01-21 00:00:00 |      616.28 |     620.42 |    607.86 |     609.47 |  79837900.00 |
 | 2026-01-22 00:00:00 |      620.76 |     622.46 |    617.78 |     622.35 |  42254800.00 |
-```
+| 2026-01-23 00:00:00 |      622.72 |     625.40 |    618.65 |     619.73 |  43603500.00 |
 
 And the plot:
 
@@ -178,17 +179,19 @@ This gives us:
 The columns, shape, and data types are:
 
 <class 'pandas.core.frame.DataFrame'>
-DatetimeIndex: 6760 entries, 1999-03-10 to 2026-01-22
+DatetimeIndex: 6761 entries, 1999-03-10 to 2026-01-23
 Data columns (total 5 columns):
  #   Column      Non-Null Count  Dtype  
 ---  ------      --------------  -----  
- 0   QQQ_Close   6760 non-null   float64
- 1   QQQ_High    6760 non-null   float64
- 2   QQQ_Low     6760 non-null   float64
- 3   QQQ_Open    6760 non-null   float64
- 4   QQQ_Volume  6760 non-null   int64  
+ 0   QQQ_Close   6761 non-null   float64
+ 1   QQQ_High    6761 non-null   float64
+ 2   QQQ_Low     6761 non-null   float64
+ 3   QQQ_Open    6761 non-null   float64
+ 4   QQQ_Volume  6761 non-null   int64  
 dtypes: float64(4), int64(1)
 memory usage: 316.9 KB
+
+```
 
 The first 5 rows are:
 
@@ -204,12 +207,11 @@ The last 5 rows are:
 
 | Date                |   QQQ_Close |   QQQ_High |   QQQ_Low |   QQQ_Open |   QQQ_Volume |
 |:--------------------|------------:|-----------:|----------:|-----------:|-------------:|
-| 2026-01-15 00:00:00 |      621.78 |     630.00 |    620.75 |     626.60 |  53934900.00 |
 | 2026-01-16 00:00:00 |      621.26 |     626.08 |    618.88 |     625.50 |  61058100.00 |
 | 2026-01-20 00:00:00 |      608.06 |     615.06 |    607.05 |     610.53 |  81988900.00 |
 | 2026-01-21 00:00:00 |      616.28 |     620.42 |    607.86 |     609.47 |  79837900.00 |
 | 2026-01-22 00:00:00 |      620.76 |     622.46 |    617.78 |     622.35 |  42254800.00 |
-```
+| 2026-01-23 00:00:00 |      622.72 |     625.40 |    618.65 |     619.73 |  43603500.00 |
 
 And the plot:
 

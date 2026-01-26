@@ -33,7 +33,6 @@ The executed trades, closed positions, and open positions listed below are all a
 
 Here are the trades executed to date, with any comments related to execution, market sentiment, reason for opening/closing position, VIX level, etc.
 
-```text
 | Trade_Date          | Action        | Symbol                 |   Quantity |   Price |   Fees & Comm |   Amount |   Approx_VIX_Level | Comments                                                                                      |
 |:--------------------|:--------------|:-----------------------|-----------:|--------:|--------------:|---------:|-------------------:|:----------------------------------------------------------------------------------------------|
 | 2024-08-05 00:00:00 | Buy to Open   | VIX 09/18/2024 34.00 P |          1 |   10.95 |          1.08 |  1096.08 |              34.33 | nan                                                                                           |
@@ -100,7 +99,6 @@ Here are the trades executed to date, with any comments related to execution, ma
 | 2025-10-08 00:00:00 | Sell to Close | VIX 11/19/2025 21.00 C |         10 |    1.83 |          9.31 |  1820.69 |             nan    | nan                                                                                           |
 | 2025-09-11 00:00:00 | Buy to Open   | VIX 12/17/2025 17.00 C |         10 |    3.90 |         10.81 |  3910.81 |             nan    | nan                                                                                           |
 | 2025-10-10 00:00:00 | Sell to Close | VIX 12/17/2025 17.00 C |         10 |    4.60 |         10.81 |  4589.19 |             nan    | nan                                                                                           |
-```
 
 #### Volatility In August 2024
 
@@ -110,34 +108,22 @@ Plot with VIX high/low, trade side, VIX option, and VIX level at trade date/time
 
 Closed positions:
 
-```text
 | Symbol                 |   Amount_Buy |   Quantity_Buy |   Amount_Sell |   Quantity_Sell |   Realized_PnL |   Percent_PnL |
 |:-----------------------|-------------:|---------------:|--------------:|----------------:|---------------:|--------------:|
 | VIX 09/18/2024 34.00 P |      1096.08 |              1 |       1793.92 |               1 |         697.84 |          0.64 |
 | VIX 10/16/2024 40.00 P |      1636.08 |              1 |       2152.92 |               1 |         516.84 |          0.32 |
 | VIX 11/20/2024 25.00 P |      1182.16 |              2 |       1217.84 |               2 |          35.68 |          0.03 |
 | VIX 12/18/2024 30.00 P |      1026.08 |              1 |       1493.92 |               1 |         467.84 |          0.46 |
-```
 
 Open positions:
 
-```text
 | Symbol   | Amount_Buy   | Quantity_Buy   |
 |----------|--------------|----------------|
-```
 
-Total Opened Position Market Value: ```text
-$4,940.40
-```</br>
-Total Closed Position Market Value: ```text
-$6,658.60
-```</br>
-Net Profit/Loss: ```text
-$1,718.20
-```</br>
-Percent Profit/Loss: ```text
-34.78%
-```
+Total Opened Position Market Value: $4,940.40</br>
+Total Closed Position Market Value: $6,658.60</br>
+Net Profit/Loss: $1,718.20</br>
+Percent Profit/Loss: 34.78%
 
 #### Volatility In March 2025
 
@@ -147,31 +133,19 @@ Plot with VIX high/low, trade side, VIX option, and VIX level at trade date/time
 
 Closed positions:
 
-```text
 | Symbol                 |   Amount_Buy |   Quantity_Buy |   Amount_Sell |   Quantity_Sell |   Realized_PnL |   Percent_PnL |
 |:-----------------------|-------------:|---------------:|--------------:|----------------:|---------------:|--------------:|
 | VIX 04/16/2025 25.00 P |      2830.40 |              5 |       3494.60 |               5 |         664.20 |          0.23 |
-```
 
 Open positions:
 
-```text
 | Symbol   | Amount_Buy   | Quantity_Buy   |
 |----------|--------------|----------------|
-```
 
-Total Opened Position Market Value: ```text
-$2,830.40
-```</br>
-Total Closed Position Market Value: ```text
-$3,494.60
-```</br>
-Net Profit/Loss: ```text
-$664.20
-```</br>
-Percent Profit/Loss: ```text
-23.47%
-```
+Total Opened Position Market Value: $2,830.40</br>
+Total Closed Position Market Value: $3,494.60</br>
+Net Profit/Loss: $664.20</br>
+Percent Profit/Loss: 23.47%
 
 #### Volatility In April 2025
 
@@ -181,7 +155,6 @@ Plot with VIX high/low, trade side, VIX option, and VIX level at trade date/time
 
 Closed positions:
 
-```text
 | Symbol                 |   Amount_Buy |   Quantity_Buy |   Amount_Sell |   Quantity_Sell |   Realized_PnL |   Percent_PnL |
 |:-----------------------|-------------:|---------------:|--------------:|----------------:|---------------:|--------------:|
 | VIX 05/21/2025 26.00 P |      7666.21 |             15 |       5593.79 |              15 |       -2072.42 |         -0.27 |
@@ -194,27 +167,16 @@ Closed positions:
 | VIX 07/16/2025 36.00 P |      4143.24 |              3 |       5076.76 |               3 |         933.52 |          0.23 |
 | VIX 07/16/2025 45.00 P |      4312.16 |              2 |       5127.84 |               2 |         815.68 |          0.19 |
 | VIX 08/20/2025 45.00 P |      4352.16 |              2 |       5077.84 |               2 |         725.68 |          0.17 |
-```
 
 Open positions:
 
-```text
 | Symbol   | Amount_Buy   | Quantity_Buy   |
 |----------|--------------|----------------|
-```
 
-Total Opened Position Market Value: ```text
-$48,217.94
-```</br>
-Total Closed Position Market Value: ```text
-$54,017.05
-```</br>
-Net Profit/Loss: ```text
-$5,799.11
-```</br>
-Percent Profit/Loss: ```text
-12.03%
-```
+Total Opened Position Market Value: $48,217.94</br>
+Total Closed Position Market Value: $54,017.05</br>
+Net Profit/Loss: $5,799.11</br>
+Percent Profit/Loss: 12.03%
 
 #### Low Volatility In June, July, August 2025
 
@@ -224,7 +186,6 @@ Plot with VIX high/low, trade side, VIX option, and VIX level at trade date/time
 
 Closed positions:
 
-```text
 | Symbol                 |   Amount_Buy |   Quantity_Buy |   Amount_Sell |   Quantity_Sell |   Realized_PnL |   Percent_PnL |
 |:-----------------------|-------------:|---------------:|--------------:|----------------:|---------------:|--------------:|
 | VIX 09/17/2025 20.00 C |      5892.13 |             35 |       4688.63 |              35 |       -1203.50 |         -0.20 |
@@ -238,42 +199,23 @@ Closed positions:
 | VIX 11/19/2025 20.00 C |      3270.81 |             10 |       2069.19 |              10 |       -1201.62 |         -0.37 |
 | VIX 11/19/2025 21.00 C |      3010.81 |             10 |       1820.69 |              10 |       -1190.12 |         -0.40 |
 | VIX 12/17/2025 17.00 C |      3910.81 |             10 |       4589.19 |              10 |         678.38 |          0.17 |
-```
 
 Open positions:
 
-```text
 | Symbol   | Amount_Buy   | Quantity_Buy   |
 |----------|--------------|----------------|
-```
 
-Total Opened Position Market Value: ```text
-$36,760.23
-```</br>
-Total Closed Position Market Value: ```text
-$28,420.63
-```</br>
-Net Profit/Loss: ```text
-$-8,339.60
-```</br>
-Percent Profit/Loss: ```text
--22.69%
-```
+Total Opened Position Market Value: $36,760.23</br>
+Total Closed Position Market Value: $28,420.63</br>
+Net Profit/Loss: $-8,339.60</br>
+Percent Profit/Loss: -22.69%
 
 #### Complete Trade History (Closed Positions)
 
-Total Opened Position Market Value: ```text
-$92,748.97
-```</br>
-Total Closed Position Market Value: ```text
-$92,590.88
-```</br>
-Net Profit/Loss: ```text
-$-158.09
-```</br>
-Percent Profit/Loss: ```text
--0.17%
-```
+Total Opened Position Market Value: $92,748.97</br>
+Total Closed Position Market Value: $92,590.88</br>
+Net Profit/Loss: $-158.09</br>
+Percent Profit/Loss: -0.17%
 
 ## References
 

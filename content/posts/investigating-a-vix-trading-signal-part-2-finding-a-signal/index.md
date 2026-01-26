@@ -100,7 +100,6 @@ display(spike_count_SMA)
 
 Which gives us the following:
 
-```text
 |   Year |   False |   True |
 |-------:|--------:|-------:|
 |   1990 |     248 |      5 |
@@ -139,8 +138,7 @@ Which gives us the following:
 |   2023 |     246 |      4 |
 |   2024 |     237 |     15 |
 |   2025 |     231 |     19 |
-|   2026 |      12 |      1 |
-```
+|   2026 |      14 |      1 |
 
 And the plot to aid with visualization. Based on the plot, it seems as though volatility has increased since the early 2000's:
 
