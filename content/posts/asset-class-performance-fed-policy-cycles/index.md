@@ -278,6 +278,7 @@ Data columns (total 6 columns):
  5   Monthly_Return  251 non-null    float64
 dtypes: float64(5), int64(1)
 memory usage: 13.8 KB
+```
 
 
 The first 5 rows are:
@@ -299,7 +300,6 @@ The last 5 rows are:
 | 2025-08-31 00:00:00 |  641.37 | 644.15 | 639.47 | 643.78 |  74522200.00 |             0.02 |
 | 2025-09-30 00:00:00 |  664.22 | 664.69 | 659.66 | 660.98 |  86288000.00 |             0.04 |
 | 2025-10-31 00:00:00 |  680.05 | 683.06 | 677.24 | 683.02 |  87164100.00 |             0.02 |
-```
 
 Next, we can plot the price history before calculating the cycle performance:
 
