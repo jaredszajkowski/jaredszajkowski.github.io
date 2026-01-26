@@ -42,8 +42,8 @@
   <link
     type="text/css"
     rel="stylesheet"
-    href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/css/main.bundle.min.346c9b3fdd6329c92b0d0057e44f2770b29602e8f0309ccbf60cb043e0905eff.css"
-    integrity="sha256-NGybP91jKckrDQBX5E8ncLKWAujwMJzL9gywQ&#43;CQXv8="
+    href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/css/main.bundle.min.990aa1f98e56c728a9a0d4402b1a7e35bacb80b86e1c4433a2243dcf1d693ed7.css"
+    integrity="sha256-mQqh&#43;Y5WxyipoNRAKxp&#43;NbrLgLhuHEQzoiQ9zx1pPtc="
   />
   
     
@@ -736,136 +736,12 @@
 <p><a href="https://www.nasdaq.com/nasdaq-data-link" target="_blank" rel="noreferrer">Nasdaq Data Link</a> is a provider of numerous different types of financial data from many different asset classes. It provides API&rsquo;s that allow access from Python, R, Excel, and other methods. It is available to <a href="https://data.nasdaq.com/institutional-investors" target="_blank" rel="noreferrer">institutional investors</a> as well as <a href="https://data.nasdaq.com/individual-users" target="_blank" rel="noreferrer">individual retail investors</a>.</p>
 <h2 id="nasdaq-data-link-initial-data-retrieval" class="relative group">Nasdaq Data Link Initial Data Retrieval <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#nasdaq-data-link-initial-data-retrieval" aria-label="Anchor">#</a></span></h2><p>We will use the data for AAPL for this example. This will give us a data set that requires some thought as to how the splits need to be handled as well as the dividends.</p>
 <p>We&rsquo;ll start with pulling the initial data set, with the first 10 rows shown as follows from the pandas dataframe:</p>
-<p>
+<p><img src="01_AAPL_data_first_10_rows.png" alt="AAPL Data - First 10 Rows" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows_hu_e96d4dd4e81482b5.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows_hu_74f2a989fefb25e1.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows_hu_30618e478f4791a5.webp 1024w
-            
-            
-              
-                ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows_hu_4def7fef5649a181.webp 1067w
-              
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="1067"
-        height="320"
-        class="mx-auto my-0 rounded-md"
-        alt="AAPL Data - First 10 Rows"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows_hu_10981a2347e518e.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows_hu_34c1ffc07202d071.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows_hu_10981a2347e518e.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows_hu_1a7476efb601a285.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows.png 1067w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <p>And the last 10 rows:</p>
-<p>
+<p><img src="02_AAPL_data_last_10_rows.png" alt="AAPL Data - Last 10 Rows" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/02_AAPL_data_last_10_rows_hu_aaa8df78cb8803ba.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/02_AAPL_data_last_10_rows_hu_5b90ff66a572d260.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/02_AAPL_data_last_10_rows_hu_8d7a5f7edfdbebd5.webp 1024w
-            
-            
-              
-                ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/02_AAPL_data_last_10_rows_hu_bca276e0e20f3a09.webp 1038w
-              
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="1038"
-        height="317"
-        class="mx-auto my-0 rounded-md"
-        alt="AAPL Data - Last 10 Rows"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/02_AAPL_data_last_10_rows_hu_98a0eb0b6c2337ba.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/02_AAPL_data_last_10_rows_hu_ccb9719af57d38eb.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/02_AAPL_data_last_10_rows_hu_98a0eb0b6c2337ba.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/02_AAPL_data_last_10_rows_hu_125150cd93f3f0a5.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/02_AAPL_data_last_10_rows.png 1038w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <p>From left to right, we have the following columns:</p>
 <ol>
@@ -998,70 +874,8 @@
 <pre><code>df.head(10)
 </code></pre>
 <p>Gives us:</p>
-<p>
+<p><img src="01_AAPL_data_first_10_rows.png" alt="AAPL Data - First 10 Rows" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows_hu_e96d4dd4e81482b5.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows_hu_74f2a989fefb25e1.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows_hu_30618e478f4791a5.webp 1024w
-            
-            
-              
-                ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows_hu_4def7fef5649a181.webp 1067w
-              
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="1067"
-        height="320"
-        class="mx-auto my-0 rounded-md"
-        alt="AAPL Data - First 10 Rows"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows_hu_10981a2347e518e.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows_hu_34c1ffc07202d071.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows_hu_10981a2347e518e.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows_hu_1a7476efb601a285.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/01_AAPL_data_first_10_rows.png 1067w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <h2 id="sort-columns-by-date" class="relative group">Sort columns by date <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#sort-columns-by-date" aria-label="Anchor">#</a></span></h2><p>Next, we will sort the columns by date ascending. By default, the dataframe is created with the data sorted by descending date, and we want to change that:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Sort columns by date ascending</span>
@@ -1071,70 +885,8 @@
 <pre><code>df.head(10)
 </code></pre>
 <p>Gives us:</p>
-<p>
+<p><img src="03_Sorted_by_date_ascending.png" alt="Data sorted by ascending date" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/03_Sorted_by_date_ascending_hu_e6af01d3828e37b5.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/03_Sorted_by_date_ascending_hu_826c17da4e85b9bf.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/03_Sorted_by_date_ascending_hu_10f8bb826750f22d.webp 1024w
-            
-            
-              
-                ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/03_Sorted_by_date_ascending_hu_ba3d13b155be55a5.webp 1039w
-              
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="1039"
-        height="321"
-        class="mx-auto my-0 rounded-md"
-        alt="Data sorted by ascending date"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/03_Sorted_by_date_ascending_hu_f2825275cc76aec2.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/03_Sorted_by_date_ascending_hu_7bf0fda7f7daabce.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/03_Sorted_by_date_ascending_hu_f2825275cc76aec2.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/03_Sorted_by_date_ascending_hu_38a8b48e53ba4929.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/03_Sorted_by_date_ascending.png 1039w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <h2 id="setting-the-date-as-the-index" class="relative group">Setting the date as the index <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#setting-the-date-as-the-index" aria-label="Anchor">#</a></span></h2><p>Next, we will rename the <code>date</code> column from &lsquo;date&rsquo; to &lsquo;Date&rsquo;, and set the index to be the <code>Date</code> column:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Rename date column</span>
@@ -1146,72 +898,8 @@
 <pre><code>df.head(10)
 </code></pre>
 <p>Gives us:</p>
-<p>
+<p><img src="04_Date_as_the_index.png" alt="Indexed by the &lsquo;Date&rsquo; column" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/04_Date_as_the_index_hu_f586b4625a4227d1.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/04_Date_as_the_index_hu_26a4e53899aefc12.webp 660w
-            
-              
-                ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/04_Date_as_the_index_hu_c0186e211ea605d8.webp 986w
-              
-            
-            
-              
-                ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/04_Date_as_the_index_hu_c0186e211ea605d8.webp 986w
-              
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="986"
-        height="321"
-        class="mx-auto my-0 rounded-md"
-        alt="Indexed by the &lsquo;Date&rsquo; column"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/04_Date_as_the_index_hu_e13f46bc7ab3f791.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/04_Date_as_the_index_hu_90d21e11d4ae61e7.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/04_Date_as_the_index_hu_e13f46bc7ab3f791.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/04_Date_as_the_index.png 986w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/04_Date_as_the_index.png 986w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <h2 id="calculating-splits" class="relative group">Calculating splits <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#calculating-splits" aria-label="Anchor">#</a></span></h2><p>The next sections deal with the split column. So far we have only seen a split value of 1.0 in the data, but we&rsquo;ve only looked at the first 10 and last 10 rows. Are there any other values? Let&rsquo;s check by running:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df_not_1_split</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="mf">1.0</span><span class="p">]</span>
@@ -1219,141 +907,15 @@
 <pre><code>df_not_1_split.head(10)
 </code></pre>
 <p>Gives us:</p>
-<p>
+<p><img src="05_Actual_splits.png" alt="Split values" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/05_Actual_splits_hu_876b6ead4786c880.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/05_Actual_splits_hu_e479461d07a5d778.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/05_Actual_splits_hu_a9401aa08adf15f.webp 1024w
-            
-            
-              
-                ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/05_Actual_splits_hu_899932bbd57352ae.webp 1059w
-              
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="1059"
-        height="192"
-        class="mx-auto my-0 rounded-md"
-        alt="Split values"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/05_Actual_splits_hu_f7718d5151a2ad6b.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/05_Actual_splits_hu_64aa714092c19c55.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/05_Actual_splits_hu_f7718d5151a2ad6b.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/05_Actual_splits_hu_11f953649287bced.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/05_Actual_splits.png 1059w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <p>So we now know that the stock did in fact split several times. Next, we will replace all of the <code>1.0</code> split values - because they are really meaningless - and then create a new dataframe to deal with the splits.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Replace all split values of 1.0 with NaN</span>
 </span></span><span class="line"><span class="cl"><span class="n">df</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
 </span></span></code></pre></div><p>This gives us:</p>
-<p>
+<p><img src="06_Splits_replaced.png" alt="Split values replaced with NaN" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/06_Splits_replaced_hu_c7303fb295b3fdba.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/06_Splits_replaced_hu_d1bfafe9f1a23dcd.webp 660w
-            
-              
-                ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/06_Splits_replaced_hu_5856d59da1518d74.webp 988w
-              
-            
-            
-              
-                ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/06_Splits_replaced_hu_5856d59da1518d74.webp 988w
-              
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="988"
-        height="316"
-        class="mx-auto my-0 rounded-md"
-        alt="Split values replaced with NaN"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/06_Splits_replaced_hu_f5e64be8b19d7a13.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/06_Splits_replaced_hu_73ca1657e9de2dc3.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/06_Splits_replaced_hu_f5e64be8b19d7a13.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/06_Splits_replaced.png 988w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/06_Splits_replaced.png 988w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <p>We will now create a dataframe with only the split values:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Create a new data frame with split values only</span>
@@ -1361,169 +923,22 @@
 </span></span><span class="line"><span class="cl">                               <span class="s1">&#39;dividend&#39;</span><span class="p">,</span> <span class="s1">&#39;adj_open&#39;</span><span class="p">,</span> <span class="s1">&#39;adj_high&#39;</span><span class="p">,</span> <span class="s1">&#39;adj_low&#39;</span><span class="p">,</span> 
 </span></span><span class="line"><span class="cl">                               <span class="s1">&#39;adj_close&#39;</span><span class="p">,</span> <span class="s1">&#39;adj_volume&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
 </span></span></code></pre></div><p>Which gives us:</p>
-<p>
+<p><img src="07_Dataframe_with_split_values_only.png" alt="Dataframe with split values only" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            
-              srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/07_Dataframe_with_split_values_only_hu_70ab1202f916fad1.webp"
-            
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="156"
-        height="195"
-        class="mx-auto my-0 rounded-md"
-        alt="Dataframe with split values only"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/07_Dataframe_with_split_values_only.png"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <p>Creating a column for the cumulative split will provide an accurate perspective on the stock price. We can do that with the following:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Create a new column for cumulative split</span>
 </span></span><span class="line"><span class="cl"><span class="n">df_splits</span><span class="p">[</span><span class="s1">&#39;Cum_Split&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_splits</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cumprod</span><span class="p">()</span>
 </span></span></code></pre></div><p>Which gives us:</p>
-<p>
+<p><img src="08_Dataframe_with_cumulative_split_column.png" alt="Dataframe with split and cumulative split values" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            
-              srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/08_Dataframe_with_cumulative_split_column_hu_b2ed3b32c21a4476.webp"
-            
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="234"
-        height="195"
-        class="mx-auto my-0 rounded-md"
-        alt="Dataframe with split and cumulative split values"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/08_Dataframe_with_cumulative_split_column.png"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <p>We will then drop the original <code>split</code> column before combining the split data frame with the original data frame, as follows:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Drop original split column before combining dataframes</span>
 </span></span><span class="line"><span class="cl"><span class="n">df_splits</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;split&#39;</span><span class="p">},</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 </span></span></code></pre></div><p>Which gives us:</p>
-<p>
+<p><img src="09_Dataframe_with_only_cumulative_split_column.png" alt="Dataframe with only cumulative split values" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            
-              srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/09_Dataframe_with_only_cumulative_split_column_hu_993b2519e22c77c.webp"
-            
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="194"
-        height="193"
-        class="mx-auto my-0 rounded-md"
-        alt="Dataframe with only cumulative split values"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/09_Dataframe_with_only_cumulative_split_column.png"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <h2 id="combining-dataframes" class="relative group">Combining dataframes <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#combining-dataframes" aria-label="Anchor">#</a></span></h2><p>Now we will merge the <code>df_split</code> dataframe with the original <code>df</code> dataframe so that the cumulative split column is part of the original dataframe. We will call this data frame <code>df_comp</code>:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Merge df and df_split dataframes</span>
@@ -1533,70 +948,8 @@
 <pre><code>df_comp.head(10)
 </code></pre>
 <p>Gives us:</p>
-<p>
+<p><img src="10_Complete_dataframe_including_cumulative_split.png" alt="Complete dataframe incluidng the cumulative split values" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/10_Complete_dataframe_including_cumulative_split_hu_5b9678b982cedbdc.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/10_Complete_dataframe_including_cumulative_split_hu_c2d8cb6259671064.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/10_Complete_dataframe_including_cumulative_split_hu_5b3aca03af5b539e.webp 1024w
-            
-            
-              
-                ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/10_Complete_dataframe_including_cumulative_split_hu_5f6fdeb4ba175238.webp 1060w
-              
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="1060"
-        height="317"
-        class="mx-auto my-0 rounded-md"
-        alt="Complete dataframe incluidng the cumulative split values"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/10_Complete_dataframe_including_cumulative_split_hu_c1fdcc1165ef0718.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/10_Complete_dataframe_including_cumulative_split_hu_542b9fd63127a2f4.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/10_Complete_dataframe_including_cumulative_split_hu_c1fdcc1165ef0718.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/10_Complete_dataframe_including_cumulative_split_hu_eadf12a25a703618.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/10_Complete_dataframe_including_cumulative_split.png 1060w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <h2 id="forward-filling-cumulative-split-values" class="relative group">Forward filling cumulative split values <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#forward-filling-cumulative-split-values" aria-label="Anchor">#</a></span></h2><p>From here, we want to fill in the rest of the <code>split</code> and <code>Cum_Split</code> values. This is done using the forward fill function, which for all cells that have a value of <code>NaN</code> will fill in the previous valid value until another value is encountered. Here&rsquo;s the code:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Forward fill for all cumulative split values</span>
@@ -1605,139 +958,15 @@
 <pre><code>df_comp.head(10)
 </code></pre>
 <p>Gives us:</p>
-<p>
+<p><img src="11_Complete_dataframe_ffill_split_values_first_10_rows.png" alt="First 10 rows of complete dataframe with split values" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/11_Complete_dataframe_ffill_split_values_first_10_rows_hu_9f593918643cad3c.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/11_Complete_dataframe_ffill_split_values_first_10_rows_hu_b2cdd775af2e396c.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/11_Complete_dataframe_ffill_split_values_first_10_rows_hu_4aba27c314d4f995.webp 1024w
-            
-            
-              
-                ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/11_Complete_dataframe_ffill_split_values_first_10_rows_hu_cf1cb2e65d31926d.webp 1029w
-              
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="1029"
-        height="344"
-        class="mx-auto my-0 rounded-md"
-        alt="First 10 rows of complete dataframe with split values"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/11_Complete_dataframe_ffill_split_values_first_10_rows_hu_f7f104ca7a7e89b5.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/11_Complete_dataframe_ffill_split_values_first_10_rows_hu_50aa77a5f8f30921.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/11_Complete_dataframe_ffill_split_values_first_10_rows_hu_f7f104ca7a7e89b5.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/11_Complete_dataframe_ffill_split_values_first_10_rows_hu_4aa6e3da2cb45b7.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/11_Complete_dataframe_ffill_split_values_first_10_rows.png 1029w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <p>At first glance, it doesn&rsquo;t look like anything changed. That&rsquo;s because there wasn&rsquo;t any ffill action taken on the initial values until pandas encountered a valid value to then forward fill. However, checking the last 10 rows:</p>
 <pre><code>df_comp.tail(10)
 </code></pre>
 <p>Gives us:</p>
-<p>
+<p><img src="12_Complete_dataframe_ffill_split_values_last_10_rows.png" alt="Last 10 rows of complete dataframe with split values" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/12_Complete_dataframe_ffill_split_values_last_10_rows_hu_5272a44bbce928a1.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/12_Complete_dataframe_ffill_split_values_last_10_rows_hu_70a0c8e61f779b3b.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/12_Complete_dataframe_ffill_split_values_last_10_rows_hu_ccab5eb6a812e5f0.webp 1024w
-            
-            
-              
-                ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/12_Complete_dataframe_ffill_split_values_last_10_rows_hu_193d1004a9f35ee6.webp 1086w
-              
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="1086"
-        height="341"
-        class="mx-auto my-0 rounded-md"
-        alt="Last 10 rows of complete dataframe with split values"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/12_Complete_dataframe_ffill_split_values_last_10_rows_hu_4f846ee702597dac.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/12_Complete_dataframe_ffill_split_values_last_10_rows_hu_2a5d8545beac833e.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/12_Complete_dataframe_ffill_split_values_last_10_rows_hu_4f846ee702597dac.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/12_Complete_dataframe_ffill_split_values_last_10_rows_hu_368f41d4386498f9.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/12_Complete_dataframe_ffill_split_values_last_10_rows.png 1086w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <p>Which is the result that we were expecting. But, what about the first rows from 12/12/1980 to 6/15/1987? We can fill those <code>split</code> and <code>Cum_Split</code> values with the following code:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Replace all split and cumulative split values of NaN with 1.0 to have complete split values</span>
@@ -1747,70 +976,8 @@
 <pre><code>df_comp.head(10)
 </code></pre>
 <p>Gives us:</p>
-<p>
+<p><img src="13_Complete_dataframe_ffill_split_values_first_10_rows.png" alt="First 10 rows of complete dataframe with split values" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/13_Complete_dataframe_ffill_split_values_first_10_rows_hu_baae8c24a0ebc1e8.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/13_Complete_dataframe_ffill_split_values_first_10_rows_hu_4e8a98f2f0e29d7.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/13_Complete_dataframe_ffill_split_values_first_10_rows_hu_ffa4056f8ed3fad0.webp 1024w
-            
-            
-              
-                ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/13_Complete_dataframe_ffill_split_values_first_10_rows_hu_ac53d3d6b4c36619.webp 1068w
-              
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="1068"
-        height="317"
-        class="mx-auto my-0 rounded-md"
-        alt="First 10 rows of complete dataframe with split values"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/13_Complete_dataframe_ffill_split_values_first_10_rows_hu_c36962e0663f5576.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/13_Complete_dataframe_ffill_split_values_first_10_rows_hu_4558a260e2d9a883.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/13_Complete_dataframe_ffill_split_values_first_10_rows_hu_c36962e0663f5576.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/13_Complete_dataframe_ffill_split_values_first_10_rows_hu_ae1e4fef1fabb1fa.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/13_Complete_dataframe_ffill_split_values_first_10_rows.png 1068w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <p>With this data, we now know for every day in the data set the following pieces of information:</p>
 <ol>
@@ -1839,68 +1006,8 @@
 </span></span><span class="line"><span class="cl"><span class="n">file</span> <span class="o">=</span> <span class="n">fund</span> <span class="o">+</span> <span class="s2">&#34;_NDL.xlsx&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="n">df_comp</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
 </span></span></code></pre></div><p>And verify the output is as expected:</p>
-<p>
+<p><img src="14_Excel_export.png" alt="Excel export" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/14_Excel_export_hu_87d6c47e1c6da941.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/14_Excel_export_hu_286f85280892e10f.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/14_Excel_export_hu_a598b795503ee683.webp 1024w
-            
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/14_Excel_export_hu_7e457391414cfbf2.webp 1320w
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="3491"
-        height="220"
-        class="mx-auto my-0 rounded-md"
-        alt="Excel export"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/14_Excel_export_hu_c2db301af371764b.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/14_Excel_export_hu_4732ca2c183d53a2.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/14_Excel_export_hu_c2db301af371764b.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/14_Excel_export_hu_54f9d0f1264e7866.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/14_Excel_export_hu_792b36f6386c9610.png 1320w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <h2 id="output-confirmation" class="relative group">Output confirmation <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#output-confirmation" aria-label="Anchor">#</a></span></h2><p>Finally, we want to print a confirmation that the process succeeded along withe last date we have for data:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Output confirmation</span>
@@ -1909,57 +1016,8 @@
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;NDL data updater complete for </span><span class="si">{</span><span class="n">fund</span><span class="si">}</span><span class="s2"> data&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;--------------------&#34;</span><span class="p">)</span>
 </span></span></code></pre></div><p>And confirming the output:</p>
-<p>
+<p><img src="15_Output_confirmation.png" alt="Output confirmation" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            
-              srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/15_Output_confirmation_hu_6f2b0b64935da90c.webp"
-            
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="643"
-        height="470"
-        class="mx-auto my-0 rounded-md"
-        alt="Output confirmation"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/nasdaq-data-link-tables-api-data-retrieval/15_Output_confirmation.png"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <h2 id="references" class="relative group">References <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#references" aria-label="Anchor">#</a></span></h2><ol>
 <li><a href="https://docs.data.nasdaq.com/docs" target="_blank" rel="noreferrer">https://docs.data.nasdaq.com/docs</a></li>
@@ -2276,7 +1334,9 @@
       
       
         <p class="text-sm text-neutral-500 dark:text-neutral-400">
-            Copyright © 2025 Jared Szajkowski. All rights reserved.
+            &copy;
+            2026
+            Jared Szajkowski
         </p>
       
       

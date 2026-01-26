@@ -3,7 +3,7 @@ import matplotlib.dates as mdates
 import matplotlib.ticker as mtick
 import pandas as pd
 
-from matplotlib.ticker import FormatStrFormatter, MultipleLocator
+from matplotlib.ticker import FormatStrFormatter, MultipleLocator, PercentFormatter
 
 def plot_timeseries(
     price_df: pd.DataFrame,
@@ -121,7 +121,7 @@ def plot_timeseries(
     if y_format == "Decimal":
         plt.gca().yaxis.set_major_formatter(FormatStrFormatter(f"%.{y_format_decimal_places}f"))
     elif y_format == "Percentage":
-        plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter(xmax=1, decimals=y_format_decimal_places))
+        plt.gca().yaxis.set_major_formatter(PercentFormatter(xmax=1, decimals=y_format_decimal_places))
     elif y_format == "Scientific":
         plt.gca().yaxis.set_major_formatter(FormatStrFormatter(f"%.{y_format_decimal_places}e"))
     elif y_format == "Log":

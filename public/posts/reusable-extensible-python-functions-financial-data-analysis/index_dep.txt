@@ -12,7 +12,9 @@ export_track_md_deps.md
 load_api_keys.md
 load_data.md
 pandas_set_decimal_places.md
-plot_timerseries.md
+plot_bar_returns_ffr_change.md
+plot_scatter_regression_ffr_vs_returns.md
+plot_timeseries.md
 plot_stats.md
 plot_vix_with_trades.md
 polygon_fetch_full_history.md

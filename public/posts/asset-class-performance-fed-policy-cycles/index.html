@@ -42,8 +42,8 @@
   <link
     type="text/css"
     rel="stylesheet"
-    href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/css/main.bundle.min.346c9b3fdd6329c92b0d0057e44f2770b29602e8f0309ccbf60cb043e0905eff.css"
-    integrity="sha256-NGybP91jKckrDQBX5E8ncLKWAujwMJzL9gywQ&#43;CQXv8="
+    href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/css/main.bundle.min.990aa1f98e56c728a9a0d4402b1a7e35bacb80b86e1c4433a2243dcf1d693ed7.css"
+    integrity="sha256-mQqh&#43;Y5WxyipoNRAKxp&#43;NbrLgLhuHEQzoiQ9zx1pPtc="
   />
   
     
@@ -748,27 +748,31 @@
         <h2 id="introduction" class="relative group">Introduction <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#introduction" aria-label="Anchor">#</a></span></h2><p>In this post, we will look into the Fed Funds cycles and evaluate asset class performance during loosening and tightening of monetary policy.</p>
 <h2 id="python-functions" class="relative group">Python Functions <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#python-functions" aria-label="Anchor">#</a></span></h2><p>Here are the functions needed for this project:</p>
 <ul>
-<li>calc_fed_cycle_asset_performance: Calculates the performance of various asset classes during the Fed Funds cycles.</br></li>
 <li>
       
-    <a href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/reusable-extensible-python-functions-financial-data-analysis/#df_info">df_info</a>: A simple function to display the information about a DataFrame and the first five rows and last five rows.</br></li>
+    <a href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/reusable-extensible-python-functions-financial-data-analysis/#calc_fed_cycle_asset_performance">calc_fed_cycle_asset_performance</a>: Calculates metrics for an asset based on a specified Fed tightening/loosening cycle.</li>
 <li>
       
-    <a href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/reusable-extensible-python-functions-financial-data-analysis/#df_info_markdown">df_info_markdown</a>: Similar to the <code>df_info</code> function above, except that it coverts the output to markdown.</br></li>
+    <a href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/reusable-extensible-python-functions-financial-data-analysis/#df_info">df_info</a>: A simple function to display the information about a DataFrame and the first five rows and last five rows.</li>
 <li>
       
-    <a href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps">export_track_md_deps</a>: Exports various text outputs to markdown files, which are included in the <code>index.md</code> file created when building the site with Hugo.</br></li>
+    <a href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/reusable-extensible-python-functions-financial-data-analysis/#df_info_markdown">df_info_markdown</a>: Similar to the <code>df_info</code> function above, except that it coverts the output to markdown.</li>
 <li>
       
-    <a href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/reusable-extensible-python-functions-financial-data-analysis/#load_data">load_data</a>: Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.</br></li>
+    <a href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps">export_track_md_deps</a>: Exports various text outputs to markdown files, which are included in the <code>index.md</code> file created when building the site with Hugo.</li>
 <li>
       
-    <a href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places">pandas_set_decimal_places</a>: Set the number of decimal places displayed for floating-point numbers in pandas.</br></li>
-<li>plot_bar_returns_ffr_change: Plot the bar chart of the cumulative or annualized returns for the asset class along with the change in the Fed Funds Rate.</br></li>
+    <a href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/reusable-extensible-python-functions-financial-data-analysis/#load_data">load_data</a>: Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.</li>
 <li>
       
-    <a href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_timeseries">plot_timeseries</a>: Plot the timeseries data from a DataFrame for a specified date range and columns.</br></li>
-<li>plot_scatter_regression_ffr_vs_returns: Plot the scatter plot and regression of the annualized return for the asset class along with the annualized change in the Fed Funds Rate.</br></li>
+    <a href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places">pandas_set_decimal_places</a>: Set the number of decimal places displayed for floating-point numbers in pandas.</li>
+<li>plot_bar_returns_ffr_change: Plot the bar chart of the cumulative or annualized returns for the asset class along with the change in the Fed Funds Rate.</li>
+<li>
+      
+    <a href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_scatter_regression_ffr_vs_returns">plot_scatter_regression_ffr_vs_returns</a>: Plot the scatter plot and regression of the annualized return for the asset class along with the annualized change in the Fed Funds Rate.</li>
+<li>
+      
+    <a href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_timeseries">plot_timeseries</a>: Plot the timeseries data from a DataFrame for a specified date range and columns.</li>
 <li>
       
     <a href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/reusable-extensible-python-functions-financial-data-analysis/#yf_pull_data">yf_pull_data</a>: Download daily price data from Yahoo Finance and export it.</li>
@@ -837,68 +841,8 @@
 </span></span><span class="line"><span class="cl">    <span class="n">export_plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_file_name</span><span class="o">=</span><span class="s2">&#34;01_Fed_Funds_Rate&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><p>
+</span></span></code></pre></div><p><img src="01_Fed_Funds_Rate.png" alt="Fed Funds Rate" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/01_Fed_Funds_Rate_hu_4dab9a8b2fb2bf10.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/01_Fed_Funds_Rate_hu_4ef7dc216362bd9f.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/01_Fed_Funds_Rate_hu_f7893db0b8f30ab8.webp 1024w
-            
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/01_Fed_Funds_Rate_hu_9dc298d4fc6dda78.webp 1320w
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="2970"
-        height="1769"
-        class="mx-auto my-0 rounded-md"
-        alt="Fed Funds Rate"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/01_Fed_Funds_Rate_hu_7f909b6abef6ffff.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/01_Fed_Funds_Rate_hu_1db6af8d9c9630d9.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/01_Fed_Funds_Rate_hu_7f909b6abef6ffff.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/01_Fed_Funds_Rate_hu_f241ac1819abbfc.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/01_Fed_Funds_Rate_hu_cddce7f49b47875b.png 1320w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <p>And then the change in FFR from month-to-month:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">plot_timeseries</span><span class="p">(</span>
@@ -918,68 +862,8 @@
 </span></span><span class="line"><span class="cl">    <span class="n">export_plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_file_name</span><span class="o">=</span><span class="s2">&#34;01_Fed_Funds_Change_In_Rate&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><p>
+</span></span></code></pre></div><p><img src="01_Fed_Funds_Change_In_Rate.png" alt="Change In Fed Funds Rate" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/01_Fed_Funds_Change_In_Rate_hu_506f36d7a7daedef.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/01_Fed_Funds_Change_In_Rate_hu_88e5a467647a8f48.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/01_Fed_Funds_Change_In_Rate_hu_12bdfaf2a8049954.webp 1024w
-            
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/01_Fed_Funds_Change_In_Rate_hu_6b926368775adfdb.webp 1320w
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="2971"
-        height="1769"
-        class="mx-auto my-0 rounded-md"
-        alt="Change In Fed Funds Rate"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/01_Fed_Funds_Change_In_Rate_hu_396305c8391eb72e.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/01_Fed_Funds_Change_In_Rate_hu_165115f46c005930.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/01_Fed_Funds_Change_In_Rate_hu_396305c8391eb72e.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/01_Fed_Funds_Change_In_Rate_hu_881a6a4ba4dbdeac.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/01_Fed_Funds_Change_In_Rate_hu_19c43c4ffdc967d.png 1320w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <p>This plot, in particular, makes it easy to show the monthly increase and decrease in the FFR, as well as the magnitude of the change (i.e. slow, drawn-out increases or decreases or abrupt large increases or decreases).</p>
 <h3 id="define-fed-policy-cycles" class="relative group">Define Fed Policy Cycles <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#define-fed-policy-cycles" aria-label="Anchor">#</a></span></h3><p>Next, we will define the Fed policy tightening and loosening cycles. This is done via visual inspection of the FFR plot and establishing some timeframes for when the cycles started and ended. Here&rsquo;s the list of cycles:</p>
@@ -1128,68 +1012,8 @@
 </span></span><span class="line"><span class="cl">    <span class="n">plot_file_name</span><span class="o">=</span><span class="s2">&#34;02_SPY_Price&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">y_format_decimal_places</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><p>
+</span></span></code></pre></div><p><img src="02_SPY_Price.png" alt="SPY Price History" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Price_hu_25c5313d3ec4ced9.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Price_hu_411e4544a33ae6f6.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Price_hu_9ba5a5c33de2c558.webp 1024w
-            
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Price_hu_e0279752912bf63b.webp 1320w
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="2970"
-        height="1769"
-        class="mx-auto my-0 rounded-md"
-        alt="SPY Price History"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Price_hu_bbe2416258923705.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Price_hu_ab062dc50f6bae41.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Price_hu_bbe2416258923705.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Price_hu_1afbe796c8490044.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Price_hu_5f7e88f002dd3f05.png 1320w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <p>Next, we will calculate the performance for SPY based on the pre-defined Fed cycles:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">spy_cycle_df</span> <span class="o">=</span> <span class="n">calc_fed_cycle_asset_performance</span><span class="p">(</span>
@@ -1225,132 +1049,12 @@
 <li>Annualized change in FFR during the cycle (decimal and basis points)</li>
 </ul>
 <p>From the above DataFrame, we can then plot the cumulative and annualized returns for each cycle in a bar chart. First, the cumulative returns along with the cumulative change in FFR:</p>
-<p>
+<p><img src="02_SPY_Cumulative_Returns_FFR_Change.png" alt="SPY Cumulative Returns" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Cumulative_Returns_FFR_Change_hu_be2be9913bf6d8a5.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Cumulative_Returns_FFR_Change_hu_59dfb28ed465623c.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Cumulative_Returns_FFR_Change_hu_6fd9c00651249ef9.webp 1024w
-            
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Cumulative_Returns_FFR_Change_hu_fcc65aaf6f71225d.webp 1320w
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="3208"
-        height="2372"
-        class="mx-auto my-0 rounded-md"
-        alt="SPY Cumulative Returns"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Cumulative_Returns_FFR_Change_hu_66019a335c14dc0b.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Cumulative_Returns_FFR_Change_hu_5775dfae7d8f269f.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Cumulative_Returns_FFR_Change_hu_66019a335c14dc0b.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Cumulative_Returns_FFR_Change_hu_d8556c5c87113039.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Cumulative_Returns_FFR_Change_hu_c76fbb2a78c841e3.png 1320w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <p>And then the annualized returns along with the annualized change in FFR:</p>
-<p>
+<p><img src="02_SPY_Annualized_Returns_FFR_Change.png" alt="SPY Annualized Returns" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Annualized_Returns_FFR_Change_hu_a2a2e8342be41817.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Annualized_Returns_FFR_Change_hu_d2a008996ffcc1fd.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Annualized_Returns_FFR_Change_hu_c087204449fd45b5.webp 1024w
-            
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Annualized_Returns_FFR_Change_hu_643aebc0558b009a.webp 1320w
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="3184"
-        height="2372"
-        class="mx-auto my-0 rounded-md"
-        alt="SPY Annualized Returns"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Annualized_Returns_FFR_Change_hu_53e1722b66b0e9c9.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Annualized_Returns_FFR_Change_hu_9f770feeede41c12.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Annualized_Returns_FFR_Change_hu_53e1722b66b0e9c9.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Annualized_Returns_FFR_Change_hu_f27a76d6c85ae3cf.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Annualized_Returns_FFR_Change_hu_63bfcce4f8379e07.png 1320w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <p>The cumulative returns plot is not particularly insightful, but there are some interesting observations to be gained from the annualized returns plot. During the past two (2) rate cutting cycles (cycles 3 and 7), stocks have exhibited negative returns during the rate cutting cycle. However, after the rate cutting cycle was complete, returns during the following cycle (when rates were usually flat) were quite strong and higher than the historical mean return for the S&amp;P 500. The economic intuition for this behavior is valid; as the economy weakens, investors are concerned about the pricing of equities, the returns become negative, and the Fed responds with cutting rates. The exact timing of when the Fed begins cutting rates is one of the unknowns; the Fed could be ahead of the curve, cutting rates as economic data begins to prompt that action, or behind the curve, where the ecomony rolls over rapidly and even the Fed&rsquo;s actions are not enough to halt the economic contraction.</p>
 <p>Finally, we can run an OLS regression to check fit:</p>
@@ -1408,68 +1112,8 @@
 </span></span><span class="line"><span class="cl">    <span class="n">slope</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
 </span></span></code></pre></div><p>Which gives us:</p>
-<p>
+<p><img src="02_SPY_Regression_FFR_vs_Returns.png" alt="SPY Regression - Annualized Returns On Annualized Change In FFR" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Regression_FFR_vs_Returns_hu_38108d4c4ff7226f.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Regression_FFR_vs_Returns_hu_33cc408bffdf5d5d.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Regression_FFR_vs_Returns_hu_92093e81be9a5913.webp 1024w
-            
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Regression_FFR_vs_Returns_hu_d864d4a24d3bb16b.webp 1320w
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="2957"
-        height="1768"
-        class="mx-auto my-0 rounded-md"
-        alt="SPY Regression - Annualized Returns On Annualized Change In FFR"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Regression_FFR_vs_Returns_hu_52a9a6518227faa6.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Regression_FFR_vs_Returns_hu_8a7034f2075461ec.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Regression_FFR_vs_Returns_hu_52a9a6518227faa6.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Regression_FFR_vs_Returns_hu_494e6acb77915fe6.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Regression_FFR_vs_Returns_hu_551daa1b5b680f5c.png 1320w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <p>Here we can see the data points for cycles 3 and 7 as mentioned above. Ignoring the data points where the annualized change in FFR is roughly zero (cycles 2, 4, 6, 8, and 10), cycles 1, 5, and 9 fit the economic thesis above, and cycle 11 (which is the current rate cutting cycle), stands as an outlier. Of course, the book is not yet finished for cycle 11, and we could certainly see a bear market in stocks over the next several years.</p>
 <h3 id="bonds-tlt" class="relative group">Bonds (TLT) <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#bonds-tlt" aria-label="Anchor">#</a></span></h3><p>Next, we&rsquo;ll run a similar process for long term bonds using TLT as the proxy.</p>
@@ -1558,68 +1202,8 @@
 </span></span><span class="line"><span class="cl">    <span class="n">export_plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_file_name</span><span class="o">=</span><span class="s2">&#34;03_TLT_Price&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><p>
+</span></span></code></pre></div><p><img src="03_TLT_Price.png" alt="TLT Price History" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Price_hu_88e2f709a9932cd5.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Price_hu_fdee7d068d2c68ed.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Price_hu_84d3f44495777ddf.webp 1024w
-            
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Price_hu_4c9e16addfbb480d.webp 1320w
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="2970"
-        height="1769"
-        class="mx-auto my-0 rounded-md"
-        alt="TLT Price History"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Price_hu_ad591c449e1949d2.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Price_hu_e96c8272259bfc01.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Price_hu_ad591c449e1949d2.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Price_hu_1cb9aef59762b28d.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Price_hu_d087d52ab0230ae9.png 1320w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <p>Next, we will calculate the performance for SPY based on the pre-defined Fed cycles:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">tlt_cycle_df</span> <span class="o">=</span> <span class="n">calc_fed_cycle_asset_performance</span><span class="p">(</span>
@@ -1655,132 +1239,12 @@
 <li>Annualized change in FFR during the cycle (decimal and basis points)</li>
 </ul>
 <p>From the above DataFrame, we can then plot the cumulative and annualized returns for each cycle in a bar chart. First, the cumulative returns:</p>
-<p>
+<p><img src="03_TLT_Cumulative_Returns_FFR_Change.png" alt="TLT Cumulative Returns" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Cumulative_Returns_FFR_Change_hu_5053630795beef06.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Cumulative_Returns_FFR_Change_hu_c8c162374e0811c2.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Cumulative_Returns_FFR_Change_hu_ce591650f0a4ecf.webp 1024w
-            
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Cumulative_Returns_FFR_Change_hu_945005695f3128de.webp 1320w
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="3202"
-        height="2372"
-        class="mx-auto my-0 rounded-md"
-        alt="TLT Cumulative Returns"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Cumulative_Returns_FFR_Change_hu_b1934af4863f1198.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Cumulative_Returns_FFR_Change_hu_f83a2ff3e5ed5e6.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Cumulative_Returns_FFR_Change_hu_b1934af4863f1198.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Cumulative_Returns_FFR_Change_hu_58853a73c0681e75.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Cumulative_Returns_FFR_Change_hu_afdd61580b6bc392.png 1320w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <p>And then the annualized returns:</p>
-<p>
+<p><img src="03_TLT_Annualized_Returns_FFR_Change.png" alt="TLT Annualized Returns" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Annualized_Returns_FFR_Change_hu_7cd197c89d6427e.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Annualized_Returns_FFR_Change_hu_57d5f59c3eab2871.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Annualized_Returns_FFR_Change_hu_b892883543016970.webp 1024w
-            
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Annualized_Returns_FFR_Change_hu_64ffc4c29c8ab46a.webp 1320w
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="3178"
-        height="2372"
-        class="mx-auto my-0 rounded-md"
-        alt="TLT Annualized Returns"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Annualized_Returns_FFR_Change_hu_116b8ffbcc21127d.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Annualized_Returns_FFR_Change_hu_d3a115285450dd5f.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Annualized_Returns_FFR_Change_hu_116b8ffbcc21127d.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Annualized_Returns_FFR_Change_hu_2763e75f83e5cb11.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Annualized_Returns_FFR_Change_hu_5142a92d8b796b32.png 1320w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <p>Let&rsquo;s focus our analysis on the plot comparing the annualized returns for TLT to the change in FFR. We can see that during cycles 3 and 7, the returns were very strong along with a rapid pace in cutting rates. During cycle 9, we see the opposite behavior, where as rates were increased the bond returns were very poor. The question for cycle 11, where bond returns have been essentially flat - is the pace of rate cuts not significant enough to benefit the bond market? Are there other factors at play that are influencing the long term bond returns? Keep in mind that we are also working with 20 year treasuries as well, but we could consider running analysis on investment grade or high yield corporate bonds.</p>
 <p>Finally, we can run an OLS regression with the following code:</p>
@@ -1838,68 +1302,8 @@
 </span></span><span class="line"><span class="cl">    <span class="n">slope</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
 </span></span></code></pre></div><p>Which gives us:</p>
-<p>
+<p><img src="03_TLT_Regression_FFR_vs_Returns.png" alt="TLT Regression - Annualized Returns On Annualized Change In FFR" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Regression_FFR_vs_Returns_hu_ff16c4a1cef4136a.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Regression_FFR_vs_Returns_hu_e5eda959bde82063.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Regression_FFR_vs_Returns_hu_9e28f3983453510d.webp 1024w
-            
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Regression_FFR_vs_Returns_hu_92dc49ef22b0d9fb.webp 1320w
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="2957"
-        height="1768"
-        class="mx-auto my-0 rounded-md"
-        alt="TLT Regression - Annualized Returns On Annualized Change In FFR"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Regression_FFR_vs_Returns_hu_b76bbf667a916db3.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Regression_FFR_vs_Returns_hu_258c8bd419e35a43.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Regression_FFR_vs_Returns_hu_b76bbf667a916db3.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Regression_FFR_vs_Returns_hu_c33b617496f080d4.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Regression_FFR_vs_Returns_hu_54f4a9b8fc403c53.png 1320w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <p>The above plot is intriguing because of how well the OLS regression appears to fit the data. It certainly appears that during rate-cutting cycles, bonds are an asset that performs well.</p>
 <h3 id="gold-gld" class="relative group">Gold (GLD) <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#gold-gld" aria-label="Anchor">#</a></span></h3><p>Lastly, we&rsquo;ll look at the returns on gold, using the GLD ETF as a proxy.</p>
@@ -1988,68 +1392,8 @@
 </span></span><span class="line"><span class="cl">    <span class="n">export_plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_file_name</span><span class="o">=</span><span class="s2">&#34;04_GLD_Price&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><p>
+</span></span></code></pre></div><p><img src="04_GLD_Price.png" alt="GLD Price History" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Price_hu_5cf1b4feeeceb33e.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Price_hu_89723620fd55c141.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Price_hu_c74fbbf7beca2c6f.webp 1024w
-            
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Price_hu_43ac1a3a756356e4.webp 1320w
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="2970"
-        height="1769"
-        class="mx-auto my-0 rounded-md"
-        alt="GLD Price History"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Price_hu_549f1470b4333a65.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Price_hu_d4879d4e306f5854.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Price_hu_549f1470b4333a65.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Price_hu_e7889580f3950259.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Price_hu_dbd5bc2a89f954b6.png 1320w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <p>Next, we will calculate the performance for SPY based on the pre-defined Fed cycles:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">gld_cycle_df</span> <span class="o">=</span> <span class="n">calc_fed_cycle_asset_performance</span><span class="p">(</span>
@@ -2085,132 +1429,12 @@
 <li>Annualized change in FFR during the cycle (decimal and basis points)</li>
 </ul>
 <p>From the above DataFrame, we can then plot the cumulative and annualized returns for each cycle in a bar chart. First, the cumulative returns:</p>
-<p>
+<p><img src="04_GLD_Cumulative_Returns_FFR_Change.png" alt="GLD Cumulative Returns" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Cumulative_Returns_FFR_Change_hu_8e26f197c2c51de1.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Cumulative_Returns_FFR_Change_hu_e18fe6c81de8de06.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Cumulative_Returns_FFR_Change_hu_1a10b7cb587d73ee.webp 1024w
-            
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Cumulative_Returns_FFR_Change_hu_c62e88e5ef741dae.webp 1320w
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="3217"
-        height="2372"
-        class="mx-auto my-0 rounded-md"
-        alt="GLD Cumulative Returns"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Cumulative_Returns_FFR_Change_hu_efefb6d08b0183e9.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Cumulative_Returns_FFR_Change_hu_2074a57e190146cb.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Cumulative_Returns_FFR_Change_hu_efefb6d08b0183e9.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Cumulative_Returns_FFR_Change_hu_12593a8381d5d855.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Cumulative_Returns_FFR_Change_hu_40adaabeaa033fa7.png 1320w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <p>And then the annualized returns:</p>
-<p>
+<p><img src="04_GLD_Annualized_Returns_FFR_Change.png" alt="GLD Annualized Returns" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Annualized_Returns_FFR_Change_hu_70ecee26a70286d3.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Annualized_Returns_FFR_Change_hu_fa3e2c3c1a207c66.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Annualized_Returns_FFR_Change_hu_44767b89caf073fb.webp 1024w
-            
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Annualized_Returns_FFR_Change_hu_5ec6bbc91c351558.webp 1320w
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="3193"
-        height="2372"
-        class="mx-auto my-0 rounded-md"
-        alt="GLD Annualized Returns"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Annualized_Returns_FFR_Change_hu_76657dbc121685da.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Annualized_Returns_FFR_Change_hu_d1c6f934c7f39c6a.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Annualized_Returns_FFR_Change_hu_76657dbc121685da.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Annualized_Returns_FFR_Change_hu_3cfeaddf0ef6f867.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Annualized_Returns_FFR_Change_hu_7619690869156087.png 1320w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <p>We see strong returns for gold across several different Fed cycles, so it is difficult to draw any kind of initial conclusion based on the bar charts.</p>
 <p>Finally, we can run an OLS regression with the following code:</p>
@@ -2268,260 +1492,20 @@
 </span></span><span class="line"><span class="cl">    <span class="n">slope</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
 </span></span></code></pre></div><p>Which gives us:</p>
-<p>
+<p><img src="04_GLD_Regression_FFR_vs_Returns.png" alt="GLD Regression - Annualized Returns On Annualized Change In FFR" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Regression_FFR_vs_Returns_hu_1b2518311a00e588.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Regression_FFR_vs_Returns_hu_84ee7a6cb0ae4c0.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Regression_FFR_vs_Returns_hu_2d7ef791d42c3a02.webp 1024w
-            
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Regression_FFR_vs_Returns_hu_12584ebf9aa162fb.webp 1320w
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="2955"
-        height="1768"
-        class="mx-auto my-0 rounded-md"
-        alt="GLD Regression - Annualized Returns On Annualized Change In FFR"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Regression_FFR_vs_Returns_hu_b65595365cd85f10.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Regression_FFR_vs_Returns_hu_588c24587a465bc7.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Regression_FFR_vs_Returns_hu_b65595365cd85f10.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Regression_FFR_vs_Returns_hu_9b1fc9e88e0afdc.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Regression_FFR_vs_Returns_hu_6e177c8ad48fd862.png 1320w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <p>It&rsquo;s difficult to draw any strong conclusions with the above plot. Gold has traditionally been considered a hedge for inflation, and while one of the Fed&rsquo;s mandates is to manage inflation, there may not be a conclusion to draw in relationship to the historical returns that gold has exhibited.</p>
 <h2 id="hybrid-portfolio" class="relative group">Hybrid Portfolio <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#hybrid-portfolio" aria-label="Anchor">#</a></span></h2><p>With the above analysis (somewhat) complete, let&rsquo;s look at the optimal allocation for a portfolio based on the data and the hypythetical historical results.</p>
 <p>Recall the plots for annualized returns vs annualized change in FFR for stocks, bonds, and gold:</p>
-<p>
+<p><img src="02_SPY_Annualized_Returns_FFR_Change.png" alt="SPY Annualized Returns" title="" />
 
 
+<img src="03_TLT_Annualized_Returns_FFR_Change.png" alt="TLT Annualized Returns" title="" />
 
 
+<img src="04_GLD_Annualized_Returns_FFR_Change.png" alt="GLD Annualized Returns" title="" />
 
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Annualized_Returns_FFR_Change_hu_a2a2e8342be41817.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Annualized_Returns_FFR_Change_hu_d2a008996ffcc1fd.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Annualized_Returns_FFR_Change_hu_c087204449fd45b5.webp 1024w
-            
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Annualized_Returns_FFR_Change_hu_643aebc0558b009a.webp 1320w
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="3184"
-        height="2372"
-        class="mx-auto my-0 rounded-md"
-        alt="SPY Annualized Returns"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Annualized_Returns_FFR_Change_hu_53e1722b66b0e9c9.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Annualized_Returns_FFR_Change_hu_9f770feeede41c12.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Annualized_Returns_FFR_Change_hu_53e1722b66b0e9c9.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Annualized_Returns_FFR_Change_hu_f27a76d6c85ae3cf.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/02_SPY_Annualized_Returns_FFR_Change_hu_63bfcce4f8379e07.png 1320w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
-
-
-
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Annualized_Returns_FFR_Change_hu_7cd197c89d6427e.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Annualized_Returns_FFR_Change_hu_57d5f59c3eab2871.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Annualized_Returns_FFR_Change_hu_b892883543016970.webp 1024w
-            
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Annualized_Returns_FFR_Change_hu_64ffc4c29c8ab46a.webp 1320w
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="3178"
-        height="2372"
-        class="mx-auto my-0 rounded-md"
-        alt="TLT Annualized Returns"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Annualized_Returns_FFR_Change_hu_116b8ffbcc21127d.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Annualized_Returns_FFR_Change_hu_d3a115285450dd5f.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Annualized_Returns_FFR_Change_hu_116b8ffbcc21127d.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Annualized_Returns_FFR_Change_hu_2763e75f83e5cb11.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/03_TLT_Annualized_Returns_FFR_Change_hu_5142a92d8b796b32.png 1320w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
-
-
-
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Annualized_Returns_FFR_Change_hu_70ecee26a70286d3.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Annualized_Returns_FFR_Change_hu_fa3e2c3c1a207c66.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Annualized_Returns_FFR_Change_hu_44767b89caf073fb.webp 1024w
-            
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Annualized_Returns_FFR_Change_hu_5ec6bbc91c351558.webp 1320w
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="3193"
-        height="2372"
-        class="mx-auto my-0 rounded-md"
-        alt="GLD Annualized Returns"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Annualized_Returns_FFR_Change_hu_76657dbc121685da.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Annualized_Returns_FFR_Change_hu_d1c6f934c7f39c6a.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Annualized_Returns_FFR_Change_hu_76657dbc121685da.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Annualized_Returns_FFR_Change_hu_3cfeaddf0ef6f867.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/04_GLD_Annualized_Returns_FFR_Change_hu_7619690869156087.png 1320w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <h3 id="asset-allocation" class="relative group">Asset Allocation <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#asset-allocation" aria-label="Anchor">#</a></span></h3><p>We have to be careful with our criteria for when to hold stocks, bonds, or gold, as hindsight bias is certainly possible. So, without overanalyzing the results, let&rsquo;s assume that we hold stocks as the default position, and then hold bonds when the Fed starts cutting rates, and then resume holding stocks when the Fed stops cutting rates. If there is not any change in FFR, then we still hold stocks. That gives us:</p>
 <ul>
@@ -2639,196 +1623,16 @@
 </span></span><span class="line"><span class="cl">| 2025-10-31 00:00:00 |                      0.014 |                        19.772 |               -0.036 |                0.024 |                   7.544 |          0.000 |                0.014 |                   1.039 |         -0.385 |
 </span></span></code></pre></div><p>Next, we&rsquo;ll look at performance for the assets and portfolio.</p>
 <h3 id="performance-statistics" class="relative group">Performance Statistics <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#performance-statistics" aria-label="Anchor">#</a></span></h3><p>We can then plot the monthly returns:</p>
-<p>
+<p><img src="05_Monthly_Returns.png" alt="Monthly Returns" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Monthly_Returns_hu_6442e3354b1fa474.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Monthly_Returns_hu_3d49528972ac1a1f.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Monthly_Returns_hu_c2c6da8ab5af7b86.webp 1024w
-            
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Monthly_Returns_hu_e14da93f74728d34.webp 1320w
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="2970"
-        height="1769"
-        class="mx-auto my-0 rounded-md"
-        alt="Monthly Returns"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Monthly_Returns_hu_48bb9fea11591816.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Monthly_Returns_hu_139b11bd1a919fc7.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Monthly_Returns_hu_48bb9fea11591816.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Monthly_Returns_hu_d6a7f93b62550747.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Monthly_Returns_hu_6ba8a848128eff82.png 1320w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <p>And cumulative returns:</p>
-<p>
+<p><img src="05_Cumulative_Returns.png" alt="Cumulative Returns" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Cumulative_Returns_hu_7385750aeed6f6ab.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Cumulative_Returns_hu_8f5cf4d55c0630ac.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Cumulative_Returns_hu_69c1cb0358423c6b.webp 1024w
-            
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Cumulative_Returns_hu_34424d1d771efe.webp 1320w
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="2969"
-        height="1769"
-        class="mx-auto my-0 rounded-md"
-        alt="Cumulative Returns"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Cumulative_Returns_hu_489186d5f1c89183.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Cumulative_Returns_hu_489a52a486df9dd4.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Cumulative_Returns_hu_489186d5f1c89183.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Cumulative_Returns_hu_5aa39d9f7b4cf539.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Cumulative_Returns_hu_147416b488f9943b.png 1320w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <p>And drawdowns:</p>
-<p>
+<p><img src="05_Drawdowns.png" alt="Drawdowns" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Drawdowns_hu_a30e945423b57fa3.webp 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Drawdowns_hu_fa0220f7bd2505a1.webp 660w
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Drawdowns_hu_27b1f3aa65e9f9a4.webp 1024w
-            
-            
-              ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Drawdowns_hu_ba4fc2579bad9145.webp 1320w
-            "
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="2970"
-        height="1769"
-        class="mx-auto my-0 rounded-md"
-        alt="Drawdowns"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Drawdowns_hu_3ae239b075d07297.png" srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Drawdowns_hu_8b97e7b8939f4c4b.png 330w,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Drawdowns_hu_3ae239b075d07297.png 660w
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Drawdowns_hu_f8d9867a6084883c.png 1024w
-          
-          
-            ,https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/asset-class-performance-fed-policy-cycles/05_Drawdowns_hu_c1df2a79c4cf89ef.png 1320w
-          "
-          sizes="100vw"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <p>Finally, we can run the stats on the hybrid portfolio, SPY, and TLT with the following code:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">port_sum_stats</span> <span class="o">=</span> <span class="n">summary_stats</span><span class="p">(</span>
@@ -3172,7 +1976,9 @@ The PDF export of the jupyter notebook is available <a href="asset-class-perform
       
       
         <p class="text-sm text-neutral-500 dark:text-neutral-400">
-            Copyright © 2025 Jared Szajkowski. All rights reserved.
+            &copy;
+            2026
+            Jared Szajkowski
         </p>
       
       

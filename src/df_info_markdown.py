@@ -63,7 +63,8 @@ def df_info_markdown(
     markdown = [
         "The columns, shape, and data types are:\n",
         info_str,
-        "\nThe first 5 rows are:\n",
+        # "\nThe first 5 rows are:\n",
+        "The first 5 rows are:\n",
         head_str,
         "\nThe last 5 rows are:\n",
         tail_str

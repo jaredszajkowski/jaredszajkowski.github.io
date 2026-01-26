@@ -42,8 +42,8 @@
   <link
     type="text/css"
     rel="stylesheet"
-    href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/css/main.bundle.min.346c9b3fdd6329c92b0d0057e44f2770b29602e8f0309ccbf60cb043e0905eff.css"
-    integrity="sha256-NGybP91jKckrDQBX5E8ncLKWAujwMJzL9gywQ&#43;CQXv8="
+    href="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/css/main.bundle.min.990aa1f98e56c728a9a0d4402b1a7e35bacb80b86e1c4433a2243dcf1d693ed7.css"
+    integrity="sha256-mQqh&#43;Y5WxyipoNRAKxp&#43;NbrLgLhuHEQzoiQ9zx1pPtc="
   />
   
     
@@ -736,57 +736,8 @@
       <div class="min-h-0 min-w-0 max-w-prose grow">
         <h2 id="introduction" class="relative group">Introduction <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#introduction" aria-label="Anchor">#</a></span></h2><p>In this tutorial, we will write a python function that imports an excel export from Bloomberg, removes ancillary rows and columns, and leaves the data in a format where it can then be used in time series analysis.</p>
 <h2 id="example-of-a-bloomberg-excel-export" class="relative group">Example of a Bloomberg excel export <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#example-of-a-bloomberg-excel-export" aria-label="Anchor">#</a></span></h2><p>We will use the SPX index data in this example. Exporting the data from Bloomberg using the excel Bloomberg add-on yields data in the following format:</p>
-<p>
+<p><img src="Format_of_data_in_excel_export_from_Bloomberg.png" alt="Format of data in excel export from Bloomberg" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            
-              srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/cleaning-bloomberg-excel-export/Format_of_data_in_excel_export_from_Bloomberg_hu_c4178ddd9d122227.webp"
-            
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="295"
-        height="455"
-        class="mx-auto my-0 rounded-md"
-        alt="Format of data in excel export from Bloomberg"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/cleaning-bloomberg-excel-export/Format_of_data_in_excel_export_from_Bloomberg.png"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <h2 id="data-modifications" class="relative group">Data modifications <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#data-modifications" aria-label="Anchor">#</a></span></h2><p>The above format isn&rsquo;t horrible, but we want to perform the following modifications:</p>
 <ol>
@@ -865,57 +816,8 @@
 <pre><code>df.head(10)
 </code></pre>
 <p>Gives us:</p>
-<p>
+<p><img src="Dataframe_excel_import.png" alt="Dataframe excel import" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            
-              srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/cleaning-bloomberg-excel-export/Dataframe_excel_import_hu_a8038cab7a54f97e.webp"
-            
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="367"
-        height="302"
-        class="mx-auto my-0 rounded-md"
-        alt="Dataframe excel import"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/cleaning-bloomberg-excel-export/Dataframe_excel_import.png"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <h2 id="set-column-headings" class="relative group">Set column headings <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#set-column-headings" aria-label="Anchor">#</a></span></h2><p>Next, set the column heading:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Set the column headings from row 5 (which is physically row 6)</span>
@@ -924,57 +826,8 @@
 <pre><code>df.head(10)
 </code></pre>
 <p>Gives us:</p>
-<p>
+<p><img src="Set_column_headings.png" alt="Set column headings" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            
-              srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/cleaning-bloomberg-excel-export/Set_column_headings_hu_741780a8d8cfc32a.webp"
-            
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="376"
-        height="296"
-        class="mx-auto my-0 rounded-md"
-        alt="Set column headings"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/cleaning-bloomberg-excel-export/Set_column_headings.png"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <h2 id="remove-index-heading" class="relative group">Remove index heading <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#remove-index-heading" aria-label="Anchor">#</a></span></h2><p>Next, remove the column heading from the index column:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Set the column heading for the index to be &#34;None&#34;</span>
@@ -984,57 +837,8 @@
 <pre><code>df.head(10)
 </code></pre>
 <p>Gives us:</p>
-<p>
+<p><img src="Remove_index_heading.png" alt="Remove index heading" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            
-              srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/cleaning-bloomberg-excel-export/Remove_index_heading_hu_4729e7ff619600ee.webp"
-            
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="373"
-        height="299"
-        class="mx-auto my-0 rounded-md"
-        alt="Remove index heading"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/cleaning-bloomberg-excel-export/Remove_index_heading.png"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <h2 id="drop-rows" class="relative group">Drop rows <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#drop-rows" aria-label="Anchor">#</a></span></h2><p>Next, we want to remove the first 6 rows that have unneeded data:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Drop the first 6 rows, 0 - 5</span>
@@ -1044,57 +848,8 @@
 <pre><code>df.head(10)
 </code></pre>
 <p>Gives us:</p>
-<p>
+<p><img src="Remove_rows.png" alt="Remove rows" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            
-              srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/cleaning-bloomberg-excel-export/Remove_rows_hu_62a8521f82c2f48a.webp"
-            
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="323"
-        height="298"
-        class="mx-auto my-0 rounded-md"
-        alt="Remove rows"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/cleaning-bloomberg-excel-export/Remove_rows.png"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <h2 id="set-index" class="relative group">Set index <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#set-index" aria-label="Anchor">#</a></span></h2><p>Next, we want to set the date column as the index:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Set the date column as the index</span>
@@ -1103,57 +858,8 @@
 <pre><code>df.head(10)
 </code></pre>
 <p>Gives us:</p>
-<p>
+<p><img src="Set_index.png" alt="Set index" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            
-              srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/cleaning-bloomberg-excel-export/Set_index_hu_5523302fcffa5273.webp"
-            
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="244"
-        height="318"
-        class="mx-auto my-0 rounded-md"
-        alt="Set index"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/cleaning-bloomberg-excel-export/Set_index.png"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <h2 id="drop-the-px_volume-column" class="relative group">Drop the &ldquo;PX_VOLUME&rdquo; column <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#drop-the-px_volume-column" aria-label="Anchor">#</a></span></h2><p>Next, we want to drop the volume column:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Drop the volume column</span>
@@ -1166,57 +872,8 @@
 <pre><code>df.head(10)
 </code></pre>
 <p>Gives us:</p>
-<p>
+<p><img src="Drop_volume.png" alt="Drop volume" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            
-              srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/cleaning-bloomberg-excel-export/Drop_volume_hu_5f1fd5e35d5fa2b4.webp"
-            
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="163"
-        height="320"
-        class="mx-auto my-0 rounded-md"
-        alt="Drop volume"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/cleaning-bloomberg-excel-export/Drop_volume.png"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <h2 id="rename-the-px_last-column" class="relative group">Rename the &ldquo;PX_LAST&rdquo; column <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#rename-the-px_last-column" aria-label="Anchor">#</a></span></h2><p>Next, we want to rename the &ldquo;PX_LAST&rdquo; column as &ldquo;Close&rdquo;:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Rename column</span>
@@ -1225,57 +882,8 @@
 <pre><code>df.head(10)
 </code></pre>
 <p>Gives us:</p>
-<p>
+<p><img src="Rename_column.png" alt="Rename column" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            
-              srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/cleaning-bloomberg-excel-export/Rename_column_hu_d0fe635c96cb1336.webp"
-            
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="156"
-        height="319"
-        class="mx-auto my-0 rounded-md"
-        alt="Rename column"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/cleaning-bloomberg-excel-export/Rename_column.png"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <h2 id="sort-data" class="relative group">Sort data <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#sort-data" aria-label="Anchor">#</a></span></h2><p>Next, we want to sort the data starting with the oldest date:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Sort by date</span>
@@ -1284,114 +892,16 @@
 <pre><code>df.head(10)
 </code></pre>
 <p>Gives us:</p>
-<p>
+<p><img src="Sort_by_date.png" alt="Sort by date" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            
-              srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/cleaning-bloomberg-excel-export/Sort_by_date_hu_a6bf7c86200adef4.webp"
-            
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="136"
-        height="317"
-        class="mx-auto my-0 rounded-md"
-        alt="Sort by date"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/cleaning-bloomberg-excel-export/Sort_by_date.png"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <h2 id="export-data" class="relative group">Export data <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#export-data" aria-label="Anchor">#</a></span></h2><p>Next, we want to export the data to an excel file, for easy viewing and reference later:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Export data to excel</span>
 </span></span><span class="line"><span class="cl"><span class="n">file</span> <span class="o">=</span> <span class="n">fund</span> <span class="o">+</span> <span class="s2">&#34;.xlsx&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
 </span></span></code></pre></div><p>And verify the output is as expected:</p>
-<p>
+<p><img src="Excel_export.png" alt="Excel export" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            
-              srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/cleaning-bloomberg-excel-export/Excel_export_hu_1256d2384bbff50.webp"
-            
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="278"
-        height="380"
-        class="mx-auto my-0 rounded-md"
-        alt="Excel export"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/cleaning-bloomberg-excel-export/Excel_export.png"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <h2 id="output-confirmation" class="relative group">Output confirmation <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#output-confirmation" aria-label="Anchor">#</a></span></h2><p>Finally, we want to print a confirmation that the process succeeded along withe last date we have for data:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Output confirmation</span>
@@ -1400,57 +910,8 @@
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Bloomberg data conversion complete for </span><span class="si">{</span><span class="n">fund</span><span class="si">}</span><span class="s2"> data&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;--------------------&#34;</span><span class="p">)</span>
 </span></span></code></pre></div><p>And confirming the output:</p>
-<p>
+<p><img src="Output_confirmation.png" alt="Output confirmation" title="" />
 
-
-
-
-
-<figure>
-    
-    
-
-
-
-
-
-
-
-
-  
-    <picture
-      class="mx-auto my-0 rounded-md"
-      
-    >
-      
-      
-      
-      
-        <source
-          
-            
-              srcset="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/cleaning-bloomberg-excel-export/Output_confirmation_hu_1bc09835f22806ea.webp"
-            
-          
-          sizes="100vw"
-          type="image/webp"
-        />
-      
-      <img
-        width="417"
-        height="116"
-        class="mx-auto my-0 rounded-md"
-        alt="Output confirmation"
-        loading="lazy" decoding="async"
-        
-          src="https://jaredszajkowski.github.io/jaredszajkowski.github.io_congo/posts/cleaning-bloomberg-excel-export/Output_confirmation.PNG"
-        
-      />
-    </picture>
-  
-
-
-</figure>
 </p>
 <h2 id="references" class="relative group">References <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#references" aria-label="Anchor">#</a></span></h2><ol>
 <li><a href="https://www.bloomberg.com/professional/support/software-updates/" target="_blank" rel="noreferrer">https://www.bloomberg.com/professional/support/software-updates/</a></li>
@@ -1764,7 +1225,9 @@
       
       
         <p class="text-sm text-neutral-500 dark:text-neutral-400">
-            Copyright © 2025 Jared Szajkowski. All rights reserved.
+            &copy;
+            2026
+            Jared Szajkowski
         </p>
       
       

@@ -4,7 +4,7 @@ languageDirection = "ltr"
 weight = 1
 
 title = "Jared Szajkowski"
-copyright = "Copyright © 2025 Jared Szajkowski. All rights reserved."
+# copyright = "Copyright © 2026 Jared Szajkowski. All rights reserved."
 
 [params]
   dateFormat = "January 2, 2006"

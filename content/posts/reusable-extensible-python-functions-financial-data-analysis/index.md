@@ -22,26 +22,27 @@ This post intends to provide the code for all of the python functions that I use
 
 ## Function Index
 
-* [bb_clean_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#bb_clean_data): Takes an Excel export from Bloomberg, removes the miscellaneous headings/rows, and returns a DataFrame.</br>
-* [build_index](/posts/reusable-extensible-python-functions-financial-data-analysis/#build_index): Reads the `index_temp.md` markdown file, inserts the markdown dependencies where indicated, and then saves the file as `index.md`.</br>
-* [calc_fed_cycle_asset_performance](/posts/reusable-extensible-python-functions-financial-data-analysis/#calc_fed_cycle_asset_performance): Calculates metrics for an asset based on a specified Fed tightening/loosening cycle.</br>
-* [calc_vix_trade_pnl](/posts/reusable-extensible-python-functions-financial-data-analysis/#calc_vix_trade_pnl): Calculates the profit/loss from VIX options trades.</br>
-* [coinbase_fetch_available_products](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_available_products): Fetch available products from Coinbase Exchange API.</br>
-* [coinbase_fetch_full_history](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_full_history): Fetch full historical data for a given product from Coinbase Exchange API.</br>
-* [coinbase_fetch_historical_candles](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_historical_candles): Fetch historical candle data for a given product from Coinbase Exchange API.</br>
-* [coinbase_pull_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_pull_data): Update existing record or pull full historical data for a given product from Coinbase Exchange API.</br>
-* [df_info](/posts/reusable-extensible-python-functions-financial-data-analysis/#df_info): A simple function to display the information about a DataFrame and the first five rows and last five rows.</br>
-* [df_info_markdown](/posts/reusable-extensible-python-functions-financial-data-analysis/#df_info_markdown): Similar to the `df_info` function above, except that it coverts the output to markdown.</br>
-* [export_track_md_deps](/posts/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps): Exports various text outputs to markdown files, which are included in the `index.md` file created when building the site with Hugo.</br>
-* [load_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#load_data): Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.</br>
-* [pandas_set_decimal_places](/posts/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places): Set the number of decimal places displayed for floating-point numbers in pandas.</br>
-* [plot_timeseries](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_timeseries): Plot the price data from a DataFrame for a specified date range and columns.</br>
-* [plot_stats](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_stats): Generate a scatter plot for the mean OHLC prices.</br>
-* [plot_vix_with_trades](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_vix_with_trades): Plot the VIX daily high and low prices, along with the VIX spikes, and trades.</br>
-* [polygon_fetch_full_history](/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_fetch_full_history): Fetch full historical data for a given product from Polygon API.</br>
-* [polygon_pull_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_pull_data): Read existing data file, download price data from Polygon, and export data.</br>
-* [strategy_harry_brown_perm_port](/posts/reusable-extensible-python-functions-financial-data-analysis/#strategy_harry_brown_perm_port): Execute the strategy for the Harry Brown permanent portfolio.</br>
-* [summary_stats](/posts/reusable-extensible-python-functions-financial-data-analysis/#summary_stats): Generate summary statistics for a series of returns.</br>
+* [bb_clean_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#bb_clean_data): Takes an Excel export from Bloomberg, removes the miscellaneous headings/rows, and returns a DataFrame.
+* [build_index](/posts/reusable-extensible-python-functions-financial-data-analysis/#build_index): Reads the `index_temp.md` markdown file, inserts the markdown dependencies where indicated, and then saves the file as `index.md`.
+* [calc_fed_cycle_asset_performance](/posts/reusable-extensible-python-functions-financial-data-analysis/#calc_fed_cycle_asset_performance): Calculates metrics for an asset based on a specified Fed tightening/loosening cycle.
+* [calc_vix_trade_pnl](/posts/reusable-extensible-python-functions-financial-data-analysis/#calc_vix_trade_pnl): Calculates the profit/loss from VIX options trades.
+* [coinbase_fetch_available_products](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_available_products): Fetch available products from Coinbase Exchange API.
+* [coinbase_fetch_full_history](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_full_history): Fetch full historical data for a given product from Coinbase Exchange API.
+* [coinbase_fetch_historical_candles](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_historical_candles): Fetch historical candle data for a given product from Coinbase Exchange API.
+* [coinbase_pull_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_pull_data): Update existing record or pull full historical data for a given product from Coinbase Exchange API.
+* [df_info](/posts/reusable-extensible-python-functions-financial-data-analysis/#df_info): A simple function to display the information about a DataFrame and the first five rows and last five rows.
+* [df_info_markdown](/posts/reusable-extensible-python-functions-financial-data-analysis/#df_info_markdown): Similar to the `df_info` function above, except that it coverts the output to markdown.
+* [export_track_md_deps](/posts/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps): Exports various text outputs to markdown files, which are included in the `index.md` file created when building the site with Hugo.
+* [load_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#load_data): Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.
+* [pandas_set_decimal_places](/posts/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places): Set the number of decimal places displayed for floating-point numbers in pandas.
+* [plot_timeseries](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_timeseries): Plot the price data from a DataFrame for a specified date range and columns.
+* [plot_bar_returns_ffr_change](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_bar_returns_ffr_change): Plot the bar chart of the cumulative or annualized returns for the asset class along with the change in the Fed Funds Rate.
+* [plot_stats](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_stats): Generate a scatter plot for the mean OHLC prices.
+* [plot_vix_with_trades](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_vix_with_trades): Plot the VIX daily high and low prices, along with the VIX spikes, and trades.
+* [polygon_fetch_full_history](/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_fetch_full_history): Fetch full historical data for a given product from Polygon API.
+* [polygon_pull_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_pull_data): Read existing data file, download price data from Polygon, and export data.
+* [strategy_harry_brown_perm_port](/posts/reusable-extensible-python-functions-financial-data-analysis/#strategy_harry_brown_perm_port): Execute the strategy for the Harry Brown permanent portfolio.
+* [summary_stats](/posts/reusable-extensible-python-functions-financial-data-analysis/#summary_stats): Generate summary statistics for a series of returns.
 * [yf_pull_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#yf_pull_data): Download daily price data from Yahoo Finance and export it.
 
 ## Python Functions
@@ -1102,7 +1103,6 @@ def df_info_markdown(
     df: pd.DataFrame,
     decimal_places: int = 2,
 ) -> str:
-    
     """
     Generate a Markdown-formatted summary of a pandas DataFrame.
 
@@ -1179,46 +1179,43 @@ def export_track_md_deps(
     dep_file: Path, 
     md_filename: str, 
     content: str,
-    text_or_python: str,
+    output_type: str = "text",
 ) -> None:
-    
     """
     Export Markdown content to a file and track it as a dependency.
 
-    This function writes the provided content to the specified Markdown file and 
-    appends the filename to the given dependency file (typically `index_dep.txt`).
-    This is useful in workflows where Markdown fragments are later assembled 
-    into a larger document (e.g., a Hugo `index.md`).
+    This function writes the provided content to the specified 
+    Markdown file and appends the filename to the given dependency 
+    file (typically `index_dep.txt`). This is useful in workflows 
+    where Markdown fragments are later assembled into a larger 
+    document (e.g., a Hugo `index.md`).
 
     Parameters
     ----------
     dep_file : Path
-        Path to the dependency file that tracks Markdown fragment filenames.
+        Path to the dependency file that tracks Markdown fragment 
+        filenames.
     md_filename : str
         The name of the Markdown file to export.
     content : str
         The Markdown-formatted content to write to the file.
-    text_or_python : str
-        Indicates whether the content is plain text or Python code for proper formatting.
+    output_type : str, optional
+        Indicates whether the content is plain text, Python code, 
+        or markdown for proper formatting (default: "text").
 
     Returns
     -------
     None
-
-    Example
-    -------
-    >>> export_track_md_deps(Path("index_dep.txt"), "01_intro.md", "# Introduction\n...")
-    ✅ Exported and tracked: 01_intro.md
     """
     
-    if text_or_python == "python":
+    if output_type == "python":
         Path(md_filename).write_text(f"```python\n{content}\n```")
-    elif text_or_python == "text":
+    elif output_type == "text":
         Path(md_filename).write_text(f"```text\n{content}\n```")
-    elif text_or_python == "markdown":
+    elif output_type == "markdown":
         Path(md_filename).write_text(f"{content}")
     else:
-        raise ValueError("text_or_python must be either 'text' or 'python'")
+        raise ValueError("'output_type' must be either 'text', 'python', or 'markdown'.")
 
     with dep_file.open("a") as f:
         f.write(md_filename + "\n")
@@ -1389,9 +1386,287 @@ def pandas_set_decimal_places(
     pd.set_option('display.float_format', lambda x: f'%.{decimal_places}f' % x)
 ```
 
+### plot_bar_returns_ffr_change
+
+```python
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+
+
+def plot_bar_returns_ffr_change(
+    cycle_df: pd.DataFrame,
+    asset_label: str,
+    annualized_or_cumulative: str,
+    index_num: str,
+) -> None:
+
+    plt.figure(figsize=(10, 8))
+
+    if annualized_or_cumulative == "Cumulative":
+
+        # Create bar plot for cumulative returns
+        barplot = sns.barplot(
+            data=cycle_df,
+            x="Label",
+            y="CumulativeReturnPct",
+            palette="coolwarm"
+        )
+
+        # Annotate each bar with cumulative return and Fed rate change
+        for i, row in cycle_df.iterrows():
+            barplot.text(
+                i,
+                row["CumulativeReturnPct"] + 1,
+                f"{row['CumulativeReturnPct']:.1f}%\nΔFFR: {row['FedFundsChange_bps']:.0f}bps",
+                color="black",
+                ha="center",
+                fontsize=10
+            )
+
+    elif annualized_or_cumulative == "Annualized":    
+        
+        # Create bar plot for annualized returns
+        barplot = sns.barplot(
+            data=cycle_df,
+            x="Label",  # Date range labels from earlier
+            y="AnnualizedReturnPct",
+            palette="coolwarm"
+        )
+
+        # Annotate each bar with annualized return + annualized FFR change
+        for i, row in cycle_df.iterrows():
+            barplot.text(
+                i,
+                row["AnnualizedReturnPct"] + 1,
+                f"{row['AnnualizedReturnPct']:.1f}%\nΔFFR: {row['FFR_AnnualizedChange_bps']:.0f}bps/yr",
+                color="black",
+                ha="center",
+                fontsize=10
+            )
+
+    plt.ylabel(f"{asset_label} {annualized_or_cumulative} Return (%)", fontsize=14)
+    plt.yticks(fontsize=12)
+    plt.xlabel("Fed Policy Cycle (Date Range)", fontsize=14)
+    plt.xticks(rotation=45, ha="right", fontsize=12)
+    plt.title(f"{asset_label} {annualized_or_cumulative} Return by Fed Policy Cycle With {annualized_or_cumulative} Change in Fed Funds Rate", fontsize=16)
+    plt.tight_layout()
+    plt.savefig(f"{index_num}_{asset_label}_{annualized_or_cumulative}_Returns_FFR_Change.png", dpi=300, bbox_inches="tight")
+    plt.show()
+```
+
+### plot_scatter_regression_ffr_vs_returns
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import statsmodels.api as sm
+
+
+def plot_scatter_regression_ffr_vs_returns(
+    cycle_df: pd.DataFrame,
+    asset_label: str,
+    index_num: str,
+    x_vals: np.ndarray,
+    y_vals: np.ndarray,
+    intercept: float,
+    slope: float,
+) -> None:
+
+    plt.figure(figsize=(10, 6))
+
+    sns.scatterplot(
+        data=cycle_df,
+        x="FFR_AnnualizedChange_bps",
+        y="AnnualizedReturnPct",
+        s=100,
+        color="blue"
+    )
+
+    # Annotate each point with the cycle number or date range, annualized returns and FFR
+    for i, row in cycle_df.iterrows():
+        plt.text(
+            row["FFR_AnnualizedChange_bps"] + 5,  # small x-offset
+            row["AnnualizedReturnPct"],
+            row["Cycle"],
+            fontsize=10,
+            color="black"
+        )
+
+    plt.plot(x_vals, y_vals, color="red", linestyle="--", label=f"OLS Fit: y = {intercept:.1f} + {slope:.2f}x")
+    plt.axhline(0, color="gray", linestyle="--", linewidth=0.8)
+    plt.axvline(0, color="gray", linestyle="--", linewidth=0.8)
+    plt.title(f"{asset_label} Annualized Return vs Annualized Change in Fed Funds Rate by Policy Cycle", fontsize=16)
+    plt.xlabel("Annualized Change In Fed Funds Rate (bps)", fontsize=14)
+    plt.xticks(fontsize=12)
+    plt.ylabel(f"{asset_label} Annualized Return (%)", fontsize=14)
+    plt.yticks(fontsize=12)
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    plt.savefig(f"{index_num}_{asset_label}_Regression_FFR_vs_Returns.png", dpi=300, bbox_inches="tight")
+    plt.show()
+```
+
 ### plot_timeseries
 
-<!-- INSERT_plot_timeseries_HERE -->
+```python
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+import matplotlib.ticker as mtick
+import pandas as pd
+
+from matplotlib.ticker import FormatStrFormatter, MultipleLocator
+
+def plot_timeseries(
+    price_df: pd.DataFrame,
+    plot_start_date: str,
+    plot_end_date: str,
+    plot_columns,
+    title: str,
+    x_label: str,
+    x_format: str,
+    y_label: str,
+    y_format: str,
+    y_format_decimal_places: int,
+    y_tick_spacing: int,
+    grid: bool,
+    legend: bool,
+    export_plot: bool,
+    plot_file_name: str,
+    x_tick_rotation: int = 0,
+
+) -> None:
+
+    """
+    Plot the price data from a DataFrame for a specified date range and columns.
+
+    Parameters:
+    -----------
+    df : pd.DataFrame
+        DataFrame containing the price data to plot.
+    plot_start_date : str
+        Start date for the plot in 'YYYY-MM-DD' format.
+    plot_end_date : str
+        End date for the plot in 'YYYY-MM-DD' format.
+    plot_columns : str OR list
+        List of columns to plot from the DataFrame. If none, all columns will be plotted.
+    title : str
+        Title of the plot.
+    x_label : str
+        Label for the x-axis.
+    x_format : str
+        Format for the x-axis date labels.
+    x_tick_rotation : int, optional
+        Rotation angle for the x-axis tick labels (default: 0).
+    y_label : str
+        Label for the y-axis.
+    y_format : str
+        Format for the y-axis labels.
+    y_format_decimal_places : int
+        Number of decimal places for y-axis labels.
+    y_tick_spacing : int
+        Spacing for the y-axis ticks.
+    grid : bool
+        Whether to display a grid on the plot.
+    legend : bool
+        Whether to display a legend on the plot.
+    export_plot : bool
+        Whether to save the figure as a PNG file.
+    plot_file_name : str
+        File name for saving the figure (if save_fig is True).
+    
+
+    Returns:
+    --------
+    None
+    """
+
+    # If start date and end date are None, use the entire DataFrame
+    if plot_start_date is None and plot_end_date is None:
+        df_filtered = price_df
+
+    # If only end date is specified, filter by end date
+    elif plot_start_date is None and plot_end_date is not None:
+        df_filtered = price_df[(price_df.index <= plot_end_date)]
+
+    # If only start date is specified, filter by start date
+    elif plot_start_date is not None and plot_end_date is None:
+        df_filtered = price_df[(price_df.index >= plot_start_date)]
+
+    # If both start date and end date are specified, filter by both
+    else:
+        df_filtered = price_df[(price_df.index >= plot_start_date) & (price_df.index <= plot_end_date)]
+
+    # Set plot figure size and background color
+    # plt.figure(figsize=(10, 6), facecolor="#F5F5F5")
+    # plt.figure(figsize=(10, 6), facecolor=(249/255, 250/255, 251/255))
+    plt.figure(figsize=(10, 6))
+
+    # Plot data
+    if plot_columns =="All":
+        for col in df_filtered.columns:
+            plt.plot(df_filtered.index, df_filtered[col], label=col, linestyle='-', linewidth=1.5)
+    else:
+        for col in plot_columns:
+            plt.plot(df_filtered.index, df_filtered[col], label=col, linestyle='-', linewidth=1.5)
+
+    # Format X axis
+    if x_format == "Day":
+        plt.gca().xaxis.set_major_locator(mdates.DayLocator())
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
+    elif x_format == "Week":
+        plt.gca().xaxis.set_major_locator(mdates.WeekdayLocator())
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
+    elif x_format == "Month":
+        plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
+    elif x_format == "Year":
+        plt.gca().xaxis.set_major_locator(mdates.YearLocator())
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+    else:
+        raise ValueError(f"Unrecognized x_format: {x_format}. Use 'Day', 'Week', 'Month', or 'Year'.")
+
+    plt.xlabel(x_label, fontsize=14)
+    plt.xticks(rotation=x_tick_rotation, fontsize=12)
+
+    # Format Y axis
+    if y_format == "Decimal":
+        plt.gca().yaxis.set_major_formatter(FormatStrFormatter(f"%.{y_format_decimal_places}f"))
+    elif y_format == "Percentage":
+        plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter(xmax=1, decimals=y_format_decimal_places))
+    elif y_format == "Scientific":
+        plt.gca().yaxis.set_major_formatter(FormatStrFormatter(f"%.{y_format_decimal_places}e"))
+    elif y_format == "Log":
+        plt.yscale("log")
+    else:
+        raise ValueError(f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', or 'Scientific'.")
+    
+    plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
+    plt.ylabel(y_label, fontsize=14)
+    plt.yticks(fontsize=12)
+
+    # Format title, layout, grid, and legend
+    plt.title(title, fontsize=16)
+    plt.tight_layout()
+
+    if grid == True:
+        plt.grid(True, linestyle='--', alpha=0.7)
+
+    if legend == True:
+        plt.legend(fontsize=9)
+
+    # Save figure and display plot
+    if export_plot == True:
+        plt.savefig(f"{plot_file_name}.png", dpi=300, bbox_inches="tight")
+
+    # Display the plot
+    plt.show()
+
+    return None
+```
 
 ### plot_stats
 
