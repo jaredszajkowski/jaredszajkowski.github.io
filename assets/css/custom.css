@@ -27,3 +27,25 @@
 .dark .prose img {
   border: 2px solid rgba(var(--color-neutral-500), 1);
 }
+
+/* Make tables scrollable horizontally */
+.prose table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+/* Optional: Add border to match your code blocks/images */
+.prose table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+  border: 2px solid rgba(var(--color-neutral-300), 1);
+  border-radius: 0.5rem;
+}
+
+.dark .prose table {
+  border: 2px solid rgba(var(--color-neutral-500), 1);
+}
