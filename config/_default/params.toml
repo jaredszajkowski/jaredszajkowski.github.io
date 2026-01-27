@@ -7,7 +7,8 @@
 
 #colorScheme = "custom_was_slate"
 #colorScheme = "custom_was_ocean"
-colorScheme = "custom_slate_indigo"
+#colorScheme = "custom_slate_indigo"
+colorScheme = "custom_slate_blue"
 defaultThemeColor = "#FFFFFF"
 
 defaultAppearance = "light" # valid options: light or dark

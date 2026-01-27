@@ -7,7 +7,8 @@ date: 2026-01-08 00:00:01+0000
 lastmod: 2026-01-08 00:00:01+0000
 feature: tyler-prahm-AWI17F-ocGM-unsplash.jpg
 coverCaption: Photo by <a href="https://unsplash.com/@tprahm?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Tyler Prahm</a> on <a href="https://unsplash.com/photos/a-close-up-of-a-clock-with-numbers-on-it-AWI17F-ocGM?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-draft: true
+draft: false
+
 topics: [
     "Exchange Traded Funds",
     "Pandas",

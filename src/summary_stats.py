@@ -14,15 +14,15 @@ def summary_stats(
     """
     Calculate summary statistics for the given fund list and return data.
 
-    Parameters:
-    -----------
-    fund_list (str):
+    Parameters
+    ----------
+    fund_list : list[str]
         List of funds. This is used below in the excel/pickle export but not in the analysis.. Funds are strings in the form "BTC-USD".
-    df (pd.DataFrame):
+    df : pd.DataFrame
         Dataframe with return data. Assumes returns are in decimal format (e.g., 0.05 for 5%), and assumes there is only 1 column.
-    period (str):
+    period : str
         Period for which to calculate statistics. Options are "Monthly", "Weekly", "Daily".
-    use_calendar_days (bool):
+    use_calendar_days : bool
         If True, use calendar days for calculations. If False, use trading days.
     excel_export : bool
         If True, export data to Excel format.
@@ -31,10 +31,10 @@ def summary_stats(
     output_confirmation : bool
         If True, print confirmation message.
 
-    Returns:
-    --------
-    df_stats (pd.DataFrame):
-        pd.DataFrame: DataFrame containing various portfolio statistics.
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame containing various portfolio statistics.
     """
 
     # Get the period in proper format
