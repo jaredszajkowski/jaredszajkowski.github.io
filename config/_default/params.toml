@@ -17,7 +17,7 @@ autoSwitchAppearance = true
 enableSearch = true
 enableCodeCopy = true
 enableImageLazyLoading = true
-enableImageWebp = true
+enableImageWebp = false
 enableQuicklink = true
 
 # robots = ""

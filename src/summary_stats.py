@@ -53,9 +53,9 @@ def summary_stats(
         raise ValueError(f"Invalid period: {period}. Must be one of {list(period_to_timeframe.keys())}")
 
     df_stats = pd.DataFrame(df.mean(axis=0) * timeframe) # annualized
-    df_stats.columns = ['Annualized Mean']
+    df_stats.columns = ['Arithmetic Annual Mean Return']
     df_stats['Annualized Volatility'] = df.std() * np.sqrt(timeframe) # annualized
-    df_stats['Annualized Sharpe Ratio'] = df_stats['Annualized Mean'] / df_stats['Annualized Volatility']
+    df_stats['Annualized Sharpe Ratio'] = df_stats['Arithmetic Annual Mean Return'] / df_stats['Annualized Volatility']
 
     df_cagr = (1 + df[df.columns[0]]).cumprod()
     cagr = (df_cagr.iloc[-1] / 1) ** ( 1 / (len(df_cagr) / timeframe)) - 1

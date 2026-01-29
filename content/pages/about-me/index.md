@@ -3,6 +3,7 @@ title: "About Me"
 showDate: false
 showDateUpdated: false
 slug: "about-me"
+showPagination: false
 showReadingTime: false
 showWordCount: false
 showComments: false
