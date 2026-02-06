@@ -5,7 +5,6 @@ showDateUpdated: false
 slug: "projects-research"
 showPagination: false
 showReadingTime: false
-showTableOfContents: true
 showWordCount: false
 showComments: false
 ---

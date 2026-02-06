@@ -420,20 +420,3 @@ def task_deploy_site():
         "verbosity": 2,
         "clean": [],  # Don't clean these files by default.
     }
-
-# Uncomment the following to create a single task that runs all steps in order
-# def task_build_all():
-#     return {
-#         "actions": None,
-#         "task_dep": [
-#             "run_post_notebooks",
-#             "export_post_notebooks",
-#             "build_post_indices",
-#             "clean_public",
-#             "build_site",
-#             "copy_notebook_exports",
-#             "copy_about_me_exports",
-#             "create_schwab_callback",
-#             "deploy_site",
-#         ]
-#     }
