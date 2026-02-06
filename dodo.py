@@ -346,10 +346,10 @@ def task_copy_notebook_exports():
                 "clean": [],  # Don't clean these files by default.
             }
 
-def task_copy_about_me_exports():
-    """Copy all HTML files from the about-me page to the Hugo public/ folder"""
-    src_dir = PAGES_DIR / "about-me"
-    dest_dir = PUBLIC_DIR / "about-me"
+def task_copy_projects_research_exports():
+    """Copy all HTML files from the projects-research page to the Hugo public/ folder"""
+    src_dir = PAGES_DIR / "projects-research"
+    dest_dir = PUBLIC_DIR / "projects-research"
 
     html_files = list(src_dir.glob("*.html"))
     if not html_files:
