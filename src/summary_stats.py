@@ -53,13 +53,13 @@ def summary_stats(
         raise ValueError(f"Invalid period: {period}. Must be one of {list(period_to_timeframe.keys())}")
 
     df_stats = pd.DataFrame(df.mean(axis=0) * timeframe) # annualized
-    df_stats.columns = ['Arithmetic Annual Mean Return']
+    df_stats.columns = ['Annual Mean Return (Arithmetic)']
     df_stats['Annualized Volatility'] = df.std() * np.sqrt(timeframe) # annualized
-    df_stats['Annualized Sharpe Ratio'] = df_stats['Arithmetic Annual Mean Return'] / df_stats['Annualized Volatility']
+    df_stats['Annualized Sharpe Ratio'] = df_stats['Annual Mean Return (Arithmetic)'] / df_stats['Annualized Volatility']
 
     df_cagr = (1 + df[df.columns[0]]).cumprod()
     cagr = (df_cagr.iloc[-1] / 1) ** ( 1 / (len(df_cagr) / timeframe)) - 1
-    df_stats['CAGR'] = cagr
+    df_stats['CAGR (Geometric)'] = cagr
 
     df_stats[f'{period} Max Return'] = df.max()
     df_stats[f'{period} Max Return (Date)'] = df.idxmax().values[0]
@@ -80,8 +80,8 @@ def summary_stats(
         recovery_wealth = pd.DataFrame([wealth_index[col][drawdowns[col].idxmin():]]).T
         recovery_date.append(recovery_wealth[recovery_wealth[col] >= prev_max].index.min())
     df_stats['Recovery Date'] = recovery_date
-    df_stats['Days to Recover'] = (df_stats['Recovery Date'] - df_stats['Trough']).dt.days
-    df_stats['MAR Ratio'] = df_stats['CAGR'] / -df_stats['Max Drawdown']
+    df_stats['Days to Recovery'] = (df_stats['Recovery Date'] - df_stats['Trough']).dt.days
+    df_stats['MAR Ratio'] = df_stats['CAGR (Geometric)'] / -df_stats['Max Drawdown']
 
     plan_name = '_'.join(fund_list)
 

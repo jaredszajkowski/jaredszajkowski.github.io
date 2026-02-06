@@ -1,25 +1,25 @@
 ```text
                              OLS Regression Results                            
 ===============================================================================
-Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.093
-Model:                             OLS   Adj. R-squared:                 -0.008
-Method:                  Least Squares   F-statistic:                    0.9214
-Date:                 Wed, 28 Jan 2026   Prob (F-statistic):              0.362
-Time:                         19:50:08   Log-Likelihood:                -42.778
-No. Observations:                   11   AIC:                             89.56
-Df Residuals:                        9   BIC:                             90.35
+Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.097
+Model:                             OLS   Adj. R-squared:                 -0.003
+Method:                  Least Squares   F-statistic:                    0.9703
+Date:                 Fri, 06 Feb 2026   Prob (F-statistic):              0.350
+Time:                         09:05:25   Log-Likelihood:                -42.751
+No. Observations:                   11   AIC:                             89.50
+Df Residuals:                        9   BIC:                             90.30
 Df Model:                            1                                         
 Covariance Type:             nonrobust                                         
 ============================================================================================
                                coef    std err          t      P>|t|      [0.025      0.975]
 --------------------------------------------------------------------------------------------
-const                       15.1586      3.955      3.833      0.004       6.213      24.104
-FFR_AnnualizedChange_bps    -0.0196      0.020     -0.960      0.362      -0.066       0.027
+const                       15.1400      3.946      3.837      0.004       6.214      24.066
+FFR_AnnualizedChange_bps    -0.0201      0.020     -0.985      0.350      -0.066       0.026
 ==============================================================================
-Omnibus:                        7.682   Durbin-Watson:                   0.913
-Prob(Omnibus):                  0.021   Jarque-Bera (JB):                3.504
-Skew:                           1.305   Prob(JB):                        0.173
-Kurtosis:                       3.912   Cond. No.                         194.
+Omnibus:                        7.499   Durbin-Watson:                   0.912
+Prob(Omnibus):                  0.024   Jarque-Bera (JB):                3.411
+Skew:                           1.293   Prob(JB):                        0.182
+Kurtosis:                       3.870   Cond. No.                         195.
 ==============================================================================
 
 Notes:

@@ -2,16 +2,16 @@
 The columns, shape, and data types are:
 
 <class 'pandas.core.frame.DataFrame'>
-DatetimeIndex: 9083 entries, 1990-01-02 to 2026-01-26
+DatetimeIndex: 9091 entries, 1990-01-02 to 2026-02-05
 Data columns (total 4 columns):
  #   Column  Non-Null Count  Dtype  
 ---  ------  --------------  -----  
- 0   Close   9083 non-null   float64
- 1   High    9083 non-null   float64
- 2   Low     9083 non-null   float64
- 3   Open    9083 non-null   float64
+ 0   Close   9091 non-null   float64
+ 1   High    9091 non-null   float64
+ 2   Low     9091 non-null   float64
+ 3   Open    9091 non-null   float64
 dtypes: float64(4)
-memory usage: 354.8 KB
+memory usage: 355.1 KB
 
 ```
 
@@ -29,8 +29,8 @@ The last 5 rows are:
 
 | Date                |   Close |   High |   Low |   Open |
 |:--------------------|--------:|-------:|------:|-------:|
-| 2026-01-20 00:00:00 |   20.09 |  20.99 | 18.64 |  19.94 |
-| 2026-01-21 00:00:00 |   16.90 |  20.81 | 16.67 |  19.31 |
-| 2026-01-22 00:00:00 |   15.64 |  16.67 | 15.27 |  16.65 |
-| 2026-01-23 00:00:00 |   16.09 |  16.21 | 15.30 |  15.68 |
-| 2026-01-26 00:00:00 |   16.15 |  17.39 | 15.80 |  16.90 |
+| 2026-01-30 00:00:00 |   17.44 |  19.27 | 16.67 |  18.72 |
+| 2026-02-02 00:00:00 |   16.34 |  19.96 | 16.08 |  19.95 |
+| 2026-02-03 00:00:00 |   18.00 |  20.37 | 16.05 |  16.16 |
+| 2026-02-04 00:00:00 |   18.64 |  21.24 | 17.47 |  17.63 |
+| 2026-02-05 00:00:00 |   21.77 |  23.10 | 19.06 |  19.24 |

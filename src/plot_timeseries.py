@@ -9,7 +9,7 @@ def plot_timeseries(
     price_df: pd.DataFrame,
     plot_start_date: str,
     plot_end_date: str,
-    plot_columns,
+    plot_columns: str | list[str],
     title: str,
     x_label: str,
     x_format: str,

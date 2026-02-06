@@ -15,15 +15,15 @@ def summary_stats(
     """
     Calculate summary statistics for the given fund list and return data.
 
-    Parameters:
-    -----------
-    fund_list (str):
+    Parameters
+    ----------
+    fund_list : list[str]
         List of funds. This is used below in the excel/pickle export but not in the analysis.. Funds are strings in the form "BTC-USD".
-    df (pd.DataFrame):
+    df : pd.DataFrame
         Dataframe with return data. Assumes returns are in decimal format (e.g., 0.05 for 5%), and assumes there is only 1 column.
-    period (str):
+    period : str
         Period for which to calculate statistics. Options are "Monthly", "Weekly", "Daily".
-    use_calendar_days (bool):
+    use_calendar_days : bool
         If True, use calendar days for calculations. If False, use trading days.
     excel_export : bool
         If True, export data to Excel format.
@@ -32,10 +32,10 @@ def summary_stats(
     output_confirmation : bool
         If True, print confirmation message.
 
-    Returns:
-    --------
-    df_stats (pd.DataFrame):
-        pd.DataFrame: DataFrame containing various portfolio statistics.
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame containing various portfolio statistics.
     """
 
     # Get the period in proper format
@@ -54,13 +54,13 @@ def summary_stats(
         raise ValueError(f"Invalid period: {period}. Must be one of {list(period_to_timeframe.keys())}")
 
     df_stats = pd.DataFrame(df.mean(axis=0) * timeframe) # annualized
-    df_stats.columns = ['Annualized Mean']
+    df_stats.columns = ['Annual Mean Return (Arithmetic)']
     df_stats['Annualized Volatility'] = df.std() * np.sqrt(timeframe) # annualized
-    df_stats['Annualized Sharpe Ratio'] = df_stats['Annualized Mean'] / df_stats['Annualized Volatility']
+    df_stats['Annualized Sharpe Ratio'] = df_stats['Annual Mean Return (Arithmetic)'] / df_stats['Annualized Volatility']
 
     df_cagr = (1 + df[df.columns[0]]).cumprod()
     cagr = (df_cagr.iloc[-1] / 1) ** ( 1 / (len(df_cagr) / timeframe)) - 1
-    df_stats['CAGR'] = cagr
+    df_stats['CAGR (Geometric)'] = cagr
 
     df_stats[f'{period} Max Return'] = df.max()
     df_stats[f'{period} Max Return (Date)'] = df.idxmax().values[0]
@@ -81,8 +81,8 @@ def summary_stats(
         recovery_wealth = pd.DataFrame([wealth_index[col][drawdowns[col].idxmin():]]).T
         recovery_date.append(recovery_wealth[recovery_wealth[col] >= prev_max].index.min())
     df_stats['Recovery Date'] = recovery_date
-    df_stats['Days to Recover'] = (df_stats['Recovery Date'] - df_stats['Trough']).dt.days
-    df_stats['MAR Ratio'] = df_stats['CAGR'] / -df_stats['Max Drawdown']
+    df_stats['Days to Recovery'] = (df_stats['Recovery Date'] - df_stats['Trough']).dt.days
+    df_stats['MAR Ratio'] = df_stats['CAGR (Geometric)'] / -df_stats['Max Drawdown']
 
     plan_name = '_'.join(fund_list)
 

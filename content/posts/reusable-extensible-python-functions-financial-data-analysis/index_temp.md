@@ -35,9 +35,11 @@ This post intends to provide the code for all of the python functions that I use
 * [export_track_md_deps](/posts/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps): Exports various text outputs to markdown files, which are included in the `index.md` file created when building the site with Hugo.
 * [load_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#load_data): Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.
 * [pandas_set_decimal_places](/posts/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places): Set the number of decimal places displayed for floating-point numbers in pandas.
-* [plot_timeseries](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_timeseries): Plot the price data from a DataFrame for a specified date range and columns.
 * [plot_bar_returns_ffr_change](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_bar_returns_ffr_change): Plot the bar chart of the cumulative or annualized returns for the asset class along with the change in the Fed Funds Rate.
+* [plot_histogram](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_histogram): Plot the histogram of a data set from a DataFrame.
+* [plot_scatter](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_scatter): Plot the data from a DataFrame for a specified date range and columns.
 * [plot_stats](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_stats): Generate a scatter plot for the mean OHLC prices.
+* [plot_timeseries](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_timeseries): Plot the timeseries data from a DataFrame for a specified date range and columns.
 * [plot_vix_with_trades](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_vix_with_trades): Plot the VIX daily high and low prices, along with the VIX spikes, and trades.
 * [polygon_fetch_full_history](/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_fetch_full_history): Fetch full historical data for a given product from Polygon API.
 * [polygon_pull_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_pull_data): Read existing data file, download price data from Polygon, and export data.
@@ -107,17 +109,25 @@ This post intends to provide the code for all of the python functions that I use
 
 <!-- INSERT_plot_bar_returns_ffr_change_HERE -->
 
+### plot_histogram
+
+<!-- INSERT_plot_histogram_HERE -->
+
+### plot_scatter
+
+<!-- INSERT_plot_scatter_HERE -->
+
 ### plot_scatter_regression_ffr_vs_returns
 
 <!-- INSERT_plot_scatter_regression_ffr_vs_returns_HERE -->
 
-### plot_timeseries
-
-<!-- INSERT_plot_timeseries_HERE -->
-
 ### plot_stats
 
 <!-- INSERT_plot_stats_HERE -->
+
+### plot_timeseries
+
+<!-- INSERT_plot_timeseries_HERE -->
 
 ### plot_vix_with_trades
 

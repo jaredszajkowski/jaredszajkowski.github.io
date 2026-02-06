@@ -2,17 +2,17 @@
 The columns, shape, and data types are:
 
 <class 'pandas.core.frame.DataFrame'>
-DatetimeIndex: 6763 entries, 1999-03-10 to 2026-01-27
+DatetimeIndex: 6769 entries, 1999-03-10 to 2026-02-04
 Data columns (total 5 columns):
  #   Column      Non-Null Count  Dtype  
 ---  ------      --------------  -----  
- 0   QQQ_Close   6763 non-null   float64
- 1   QQQ_High    6763 non-null   float64
- 2   QQQ_Low     6763 non-null   float64
- 3   QQQ_Open    6763 non-null   float64
- 4   QQQ_Volume  6763 non-null   int64  
+ 0   QQQ_Close   6769 non-null   float64
+ 1   QQQ_High    6769 non-null   float64
+ 2   QQQ_Low     6769 non-null   float64
+ 3   QQQ_Open    6769 non-null   float64
+ 4   QQQ_Volume  6769 non-null   int64  
 dtypes: float64(4), int64(1)
-memory usage: 317.0 KB
+memory usage: 317.3 KB
 
 ```
 
@@ -30,8 +30,8 @@ The last 5 rows are:
 
 | Date                |   QQQ_Close |   QQQ_High |   QQQ_Low |   QQQ_Open |   QQQ_Volume |
 |:--------------------|------------:|-----------:|----------:|-----------:|-------------:|
-| 2026-01-21 00:00:00 |      616.28 |     620.42 |    607.86 |     609.47 |  79837900.00 |
-| 2026-01-22 00:00:00 |      620.76 |     622.46 |    617.78 |     622.35 |  42254800.00 |
-| 2026-01-23 00:00:00 |      622.72 |     625.40 |    618.65 |     619.73 |  43645800.00 |
-| 2026-01-26 00:00:00 |      625.46 |     627.61 |    622.12 |     623.21 |  35983000.00 |
-| 2026-01-27 00:00:00 |      631.13 |     632.04 |    627.34 |     628.91 |  38997200.00 |
+| 2026-01-29 00:00:00 |      629.43 |     633.67 |    618.27 |     632.65 |  79944000.00 |
+| 2026-01-30 00:00:00 |      621.87 |     628.26 |    619.30 |     625.71 |  65650700.00 |
+| 2026-02-02 00:00:00 |      626.14 |     628.49 |    618.66 |     618.70 |  49020300.00 |
+| 2026-02-03 00:00:00 |      616.52 |     629.98 |    610.96 |     628.30 |  81234000.00 |
+| 2026-02-04 00:00:00 |      605.75 |     615.10 |    600.47 |     615.02 |  81850700.00 |

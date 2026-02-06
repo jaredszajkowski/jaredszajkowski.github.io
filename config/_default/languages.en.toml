@@ -14,8 +14,8 @@ title = "Jared Szajkowski"
 [params.author]
   name = "Jared Szajkowski"
   image = "img/profile_pic.jpg"
-  headline = "An Engineer Studying Quant Finance"
-  bio = "An Engineer Studying Quant Finance"
+  #headline = "An Engineer Studying Quant Finance"
+  #bio = "An Engineer Studying Quant Finance"
   links = [
     { email = "mailto:jared.szajkowski@gmail.com" },
   #   { link = "https://link-to-some-website.com/" },

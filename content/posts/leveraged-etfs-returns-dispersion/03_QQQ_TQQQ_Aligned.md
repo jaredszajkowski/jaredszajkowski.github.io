@@ -1,0 +1,68 @@
+```text
+The columns, shape, and data types are:
+
+<class 'pandas.core.frame.DataFrame'>
+DatetimeIndex: 4020 entries, 2010-02-11 to 2026-02-04
+Data columns (total 36 columns):
+ #   Column                  Non-Null Count  Dtype  
+---  ------                  --------------  -----  
+ 0   TQQQ_Close              4020 non-null   float64
+ 1   TQQQ_High               4020 non-null   float64
+ 2   TQQQ_Low                4020 non-null   float64
+ 3   TQQQ_Open               4020 non-null   float64
+ 4   TQQQ_Volume             4020 non-null   int64  
+ 5   QQQ_Close               4020 non-null   float64
+ 6   QQQ_High                4020 non-null   float64
+ 7   QQQ_Low                 4020 non-null   float64
+ 8   QQQ_Open                4020 non-null   float64
+ 9   QQQ_Volume              4020 non-null   int64  
+ 10  QQQ_Return              4019 non-null   float64
+ 11  QQQ_Cumulative_Return   4019 non-null   float64
+ 12  QQQ_Drawdown            4019 non-null   float64
+ 13  TQQQ_Return             4019 non-null   float64
+ 14  TQQQ_Cumulative_Return  4019 non-null   float64
+ 15  TQQQ_Drawdown           4019 non-null   float64
+ 16  QQQ_Rolling_Return_1d   4019 non-null   float64
+ 17  QQQ_Rolling_Return_1w   4015 non-null   float64
+ 18  QQQ_Rolling_Return_1m   3999 non-null   float64
+ 19  QQQ_Rolling_Return_3m   3957 non-null   float64
+ 20  QQQ_Rolling_Return_6m   3894 non-null   float64
+ 21  QQQ_Rolling_Return_1y   3768 non-null   float64
+ 22  QQQ_Rolling_Return_2y   3516 non-null   float64
+ 23  QQQ_Rolling_Return_3y   3264 non-null   float64
+ 24  QQQ_Rolling_Return_4y   3012 non-null   float64
+ 25  QQQ_Rolling_Return_5y   2760 non-null   float64
+ 26  TQQQ_Rolling_Return_1d  4019 non-null   float64
+ 27  TQQQ_Rolling_Return_1w  4015 non-null   float64
+ 28  TQQQ_Rolling_Return_1m  3999 non-null   float64
+ 29  TQQQ_Rolling_Return_3m  3957 non-null   float64
+ 30  TQQQ_Rolling_Return_6m  3894 non-null   float64
+ 31  TQQQ_Rolling_Return_1y  3768 non-null   float64
+ 32  TQQQ_Rolling_Return_2y  3516 non-null   float64
+ 33  TQQQ_Rolling_Return_3y  3264 non-null   float64
+ 34  TQQQ_Rolling_Return_4y  3012 non-null   float64
+ 35  TQQQ_Rolling_Return_5y  2760 non-null   float64
+dtypes: float64(34), int64(2)
+memory usage: 1.1 MB
+
+```
+
+The first 5 rows are:
+
+| Date                |   TQQQ_Close |   TQQQ_High |   TQQQ_Low |   TQQQ_Open |   TQQQ_Volume |   QQQ_Close |   QQQ_High |   QQQ_Low |   QQQ_Open |   QQQ_Volume |   QQQ_Return |   QQQ_Cumulative_Return |   QQQ_Drawdown |   TQQQ_Return |   TQQQ_Cumulative_Return |   TQQQ_Drawdown |   QQQ_Rolling_Return_1d |   QQQ_Rolling_Return_1w |   QQQ_Rolling_Return_1m |   QQQ_Rolling_Return_3m |   QQQ_Rolling_Return_6m |   QQQ_Rolling_Return_1y |   QQQ_Rolling_Return_2y |   QQQ_Rolling_Return_3y |   QQQ_Rolling_Return_4y |   QQQ_Rolling_Return_5y |   TQQQ_Rolling_Return_1d |   TQQQ_Rolling_Return_1w |   TQQQ_Rolling_Return_1m |   TQQQ_Rolling_Return_3m |   TQQQ_Rolling_Return_6m |   TQQQ_Rolling_Return_1y |   TQQQ_Rolling_Return_2y |   TQQQ_Rolling_Return_3y |   TQQQ_Rolling_Return_4y |   TQQQ_Rolling_Return_5y |
+|:--------------------|-------------:|------------:|-----------:|------------:|--------------:|------------:|-----------:|----------:|-----------:|-------------:|-------------:|------------------------:|---------------:|--------------:|-------------------------:|----------------:|------------------------:|------------------------:|------------------------:|------------------------:|------------------------:|------------------------:|------------------------:|------------------------:|------------------------:|------------------------:|-------------------------:|-------------------------:|-------------------------:|-------------------------:|-------------------------:|-------------------------:|-------------------------:|-------------------------:|-------------------------:|-------------------------:|
+| 2010-02-11 00:00:00 |         0.21 |        0.21 |       0.19 |        0.19 |    6912000.00 |       37.95 |      38.06 |     37.16 |      37.40 |  93050800.00 |       nan    |                  nan    |         nan    |        nan    |                   nan    |          nan    |                  nan    |                     nan |                     nan |                     nan |                     nan |                     nan |                     nan |                     nan |                     nan |                     nan |                   nan    |                      nan |                      nan |                      nan |                      nan |                      nan |                      nan |                      nan |                      nan |                      nan |
+| 2010-02-12 00:00:00 |         0.21 |        0.21 |       0.20 |        0.20 |   17203200.00 |       38.03 |      38.13 |     37.51 |      37.61 |  93938500.00 |         0.00 |                    0.00 |           0.00 |          0.00 |                     0.00 |            0.00 |                    0.00 |                     nan |                     nan |                     nan |                     nan |                     nan |                     nan |                     nan |                     nan |                     nan |                     0.00 |                      nan |                      nan |                      nan |                      nan |                      nan |                      nan |                      nan |                      nan |                      nan |
+| 2010-02-16 00:00:00 |         0.22 |        0.22 |       0.21 |        0.21 |   19238400.00 |       38.52 |      38.54 |     38.11 |      38.31 |  83861400.00 |         0.01 |                    0.01 |           0.00 |          0.04 |                     0.04 |            0.00 |                    0.01 |                     nan |                     nan |                     nan |                     nan |                     nan |                     nan |                     nan |                     nan |                     nan |                     0.04 |                      nan |                      nan |                      nan |                      nan |                      nan |                      nan |                      nan |                      nan |                      nan |
+| 2010-02-17 00:00:00 |         0.22 |        0.22 |       0.21 |        0.22 |   38361600.00 |       38.73 |      38.73 |     38.46 |      38.69 |  82691700.00 |         0.01 |                    0.02 |           0.00 |          0.02 |                     0.06 |            0.00 |                    0.01 |                     nan |                     nan |                     nan |                     nan |                     nan |                     nan |                     nan |                     nan |                     nan |                     0.02 |                      nan |                      nan |                      nan |                      nan |                      nan |                      nan |                      nan |                      nan |                      nan |
+| 2010-02-18 00:00:00 |         0.22 |        0.22 |       0.22 |        0.22 |   77721600.00 |       38.98 |      39.05 |     38.63 |      38.71 |  65752600.00 |         0.01 |                    0.03 |           0.00 |          0.02 |                     0.08 |            0.00 |                    0.01 |                     nan |                     nan |                     nan |                     nan |                     nan |                     nan |                     nan |                     nan |                     nan |                     0.02 |                      nan |                      nan |                      nan |                      nan |                      nan |                      nan |                      nan |                      nan |                      nan |
+
+The last 5 rows are:
+
+| Date                |   TQQQ_Close |   TQQQ_High |   TQQQ_Low |   TQQQ_Open |   TQQQ_Volume |   QQQ_Close |   QQQ_High |   QQQ_Low |   QQQ_Open |   QQQ_Volume |   QQQ_Return |   QQQ_Cumulative_Return |   QQQ_Drawdown |   TQQQ_Return |   TQQQ_Cumulative_Return |   TQQQ_Drawdown |   QQQ_Rolling_Return_1d |   QQQ_Rolling_Return_1w |   QQQ_Rolling_Return_1m |   QQQ_Rolling_Return_3m |   QQQ_Rolling_Return_6m |   QQQ_Rolling_Return_1y |   QQQ_Rolling_Return_2y |   QQQ_Rolling_Return_3y |   QQQ_Rolling_Return_4y |   QQQ_Rolling_Return_5y |   TQQQ_Rolling_Return_1d |   TQQQ_Rolling_Return_1w |   TQQQ_Rolling_Return_1m |   TQQQ_Rolling_Return_3m |   TQQQ_Rolling_Return_6m |   TQQQ_Rolling_Return_1y |   TQQQ_Rolling_Return_2y |   TQQQ_Rolling_Return_3y |   TQQQ_Rolling_Return_4y |   TQQQ_Rolling_Return_5y |
+|:--------------------|-------------:|------------:|-----------:|------------:|--------------:|------------:|-----------:|----------:|-----------:|-------------:|-------------:|------------------------:|---------------:|--------------:|-------------------------:|----------------:|------------------------:|------------------------:|------------------------:|------------------------:|------------------------:|------------------------:|------------------------:|------------------------:|------------------------:|------------------------:|-------------------------:|-------------------------:|-------------------------:|-------------------------:|-------------------------:|-------------------------:|-------------------------:|-------------------------:|-------------------------:|-------------------------:|
+| 2026-01-29 00:00:00 |        56.04 |       57.21 |      53.06 |       56.95 |  122642300.00 |      629.43 |     633.67 |    618.27 |     632.65 |  79944000.00 |        -0.01 |                   15.59 |          -0.01 |         -0.02 |                   270.52 |           -0.07 |                   -0.01 |                    0.01 |                    0.01 |                   -0.00 |                    0.11 |                    0.21 |                    0.49 |                    1.22 |                    0.84 |                    0.99 |                    -0.02 |                     0.04 |                     0.03 |                    -0.06 |                     0.25 |                     0.37 |                     1.03 |                     4.40 |                     1.07 |                     1.33 |
+| 2026-01-30 00:00:00 |        54.00 |       55.71 |      53.32 |       55.02 |  110170700.00 |      621.87 |     628.26 |    619.30 |     625.71 |  65650700.00 |        -0.01 |                   15.39 |          -0.02 |         -0.04 |                   260.63 |           -0.10 |                   -0.01 |                   -0.00 |                    0.00 |                   -0.02 |                    0.10 |                    0.20 |                    0.48 |                    1.20 |                    0.81 |                    0.95 |                    -0.04 |                    -0.01 |                    -0.00 |                    -0.10 |                     0.23 |                     0.33 |                     0.99 |                     4.24 |                     0.96 |                     1.19 |
+| 2026-02-02 00:00:00 |        55.10 |       55.71 |      53.15 |       53.16 |   74665800.00 |      626.14 |     628.49 |    618.66 |     618.70 |  49020300.00 |         0.01 |                   15.50 |          -0.01 |          0.02 |                   265.96 |           -0.08 |                    0.01 |                    0.00 |                    0.02 |                    0.00 |                    0.13 |                    0.20 |                    0.48 |                    1.17 |                    0.86 |                    0.96 |                     0.02 |                     0.00 |                     0.05 |                    -0.04 |                     0.33 |                     0.34 |                     0.97 |                     4.05 |                     1.16 |                     1.23 |
+| 2026-02-03 00:00:00 |        52.52 |       55.76 |      51.08 |       55.64 |  129992200.00 |      616.52 |     629.98 |    610.96 |     628.30 |  81234000.00 |        -0.02 |                   15.24 |          -0.03 |         -0.05 |                   253.46 |           -0.13 |                   -0.02 |                   -0.02 |                    0.01 |                   -0.02 |                    0.10 |                    0.19 |                    0.47 |                    1.12 |                    0.83 |                    0.99 |                    -0.05 |                    -0.07 |                     0.00 |                    -0.10 |                     0.20 |                     0.28 |                     0.92 |                     3.68 |                     1.07 |                     1.31 |
+| 2026-02-04 00:00:00 |        49.76 |       52.15 |      48.43 |       52.14 |  142536200.00 |      605.75 |     615.10 |    600.47 |     615.02 |  81850700.00 |        -0.02 |                   14.96 |          -0.05 |         -0.05 |                   240.09 |           -0.17 |                   -0.02 |                   -0.04 |                   -0.02 |                   -0.04 |                    0.08 |                    0.18 |                    0.47 |                    1.12 |                    0.82 |                    0.94 |                    -0.05 |                    -0.13 |                    -0.07 |                    -0.16 |                     0.17 |                     0.24 |                     0.93 |                     3.72 |                     1.02 |                     1.16 |

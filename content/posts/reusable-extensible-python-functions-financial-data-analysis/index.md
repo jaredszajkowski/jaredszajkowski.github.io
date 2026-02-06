@@ -35,9 +35,11 @@ This post intends to provide the code for all of the python functions that I use
 * [export_track_md_deps](/posts/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps): Exports various text outputs to markdown files, which are included in the `index.md` file created when building the site with Hugo.
 * [load_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#load_data): Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.
 * [pandas_set_decimal_places](/posts/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places): Set the number of decimal places displayed for floating-point numbers in pandas.
-* [plot_timeseries](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_timeseries): Plot the price data from a DataFrame for a specified date range and columns.
 * [plot_bar_returns_ffr_change](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_bar_returns_ffr_change): Plot the bar chart of the cumulative or annualized returns for the asset class along with the change in the Fed Funds Rate.
+* [plot_histogram](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_histogram): Plot the histogram of a data set from a DataFrame.
+* [plot_scatter](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_scatter): Plot the data from a DataFrame for a specified date range and columns.
 * [plot_stats](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_stats): Generate a scatter plot for the mean OHLC prices.
+* [plot_timeseries](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_timeseries): Plot the timeseries data from a DataFrame for a specified date range and columns.
 * [plot_vix_with_trades](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_vix_with_trades): Plot the VIX daily high and low prices, along with the VIX spikes, and trades.
 * [polygon_fetch_full_history](/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_fetch_full_history): Fetch full historical data for a given product from Polygon API.
 * [polygon_pull_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_pull_data): Read existing data file, download price data from Polygon, and export data.
@@ -1468,6 +1470,336 @@ def plot_bar_returns_ffr_change(
     plt.show()
 ```
 
+### plot_histogram
+
+```python
+import math
+import matplotlib.pyplot as plt
+import pandas as pd
+
+from matplotlib.ticker import MultipleLocator
+
+
+def round_to_nice_value(value):
+    """Round a value to a 'nice' number for tick spacing (1, 2, 5 × 10^n)."""
+    if value <= 0:
+        return value
+
+    # Find order of magnitude
+    exp = math.floor(math.log10(value))
+    magnitude = 10 ** exp
+
+    # Get mantissa (value normalized to [1, 10))
+    mantissa = value / magnitude
+
+    # Round mantissa to 1, 2, or 5
+    if mantissa <= 1.5:
+        nice_mantissa = 1
+    elif mantissa <= 3:
+        nice_mantissa = 2
+    elif mantissa <= 7:
+        nice_mantissa = 5
+    else:
+        nice_mantissa = 10
+
+    return nice_mantissa * magnitude
+
+
+def plot_histogram(
+    df: pd.DataFrame,
+    plot_columns: str | list[str],
+    title: str,
+    x_label: str,
+    x_tick_spacing: int,
+    x_tick_rotation: int,
+    y_label: str,
+    y_tick_spacing: int,
+    grid: bool,
+    legend: bool,
+    export_plot: bool,
+    plot_file_name: str,
+) -> None:
+
+    """
+    Plot the price data from a DataFrame for a specified date range and columns.
+
+    Parameters:
+    -----------
+    df : pd.DataFrame
+        DataFrame containing the price data to plot.
+    plot_columns : str OR list
+        List of columns to plot from the DataFrame. If none, all columns will be plotted.
+    title : str
+        Title of the plot.
+    x_label : str
+        Label for the x-axis.
+    x_tick_spacing : int
+        Spacing for the x-axis ticks.
+    x_tick_rotation : int
+        Rotation angle for the x-axis tick labels.
+    y_label : str
+        Label for the y-axis.
+    y_tick_spacing : int
+        Spacing for the y-axis ticks.
+    grid : bool
+        Whether to display a grid on the plot.
+    legend : bool
+        Whether to display a legend on the plot.
+    export_plot : bool
+        Whether to save the figure as a PNG file.
+    plot_file_name : str
+        File name for saving the figure (if save_fig is True).
+    
+
+    Returns:
+    --------
+    None
+    """
+
+    # Set plot figure size and background color
+    plt.figure(figsize=(10, 6))
+
+    # Plot data
+    if plot_columns == "All":
+        for col in df.columns:
+            mean = df[col].mean()
+            std = df[col].std()
+            # Create histogram first to get its color
+            n, bins, patches = plt.hist(df[col], label=col, bins=200, edgecolor='black', alpha=0.5)
+            hist_color = patches[0].get_facecolor()
+            # Use histogram color for vertical lines
+            plt.axvline(mean, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean: {mean:.3f}')
+            plt.axvline(mean + std, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean + 1 std: {mean + std:.3f}')
+            plt.axvline(mean - std, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean - 1 std: {mean - std:.3f}')
+            plt.axvline(mean + 2 * std, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean + 2 std: {mean + 2 * std:.3f}')
+            plt.axvline(mean - 2 * std, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean - 2 std: {mean - 2 * std:.3f}')
+    else:
+        for col in plot_columns:
+            mean = df[col].mean()
+            std = df[col].std()
+            # Create histogram first to get its color
+            n, bins, patches = plt.hist(df[col], label=col, bins=200, edgecolor='black', alpha=0.5)
+            hist_color = patches[0].get_facecolor()
+            # Use histogram color for vertical lines
+            plt.axvline(mean, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean: {mean:.3f}')
+            plt.axvline(mean + std, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean + 1 std: {mean + std:.3f}')
+            plt.axvline(mean - std, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean - 1 std: {mean - std:.3f}')
+            plt.axvline(mean + 2 * std, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean + 2 std: {mean + 2 * std:.3f}')
+            plt.axvline(mean - 2 * std, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean - 2 std: {mean - 2 * std:.3f}')
+
+    # Format X axis
+    if x_tick_spacing == "Auto":
+        raw_x_spacing = (bins[-1] - bins[0]) / 20
+        x_tick_spacing = round_to_nice_value(raw_x_spacing)
+    else:
+        x_tick_spacing = x_tick_spacing
+    plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
+    plt.xlabel(x_label, fontsize=14)
+    plt.xticks(rotation=x_tick_rotation, fontsize=12)
+
+    # Format Y axis
+    if y_tick_spacing == "Auto":
+        raw_y_spacing = (n.max() - n.min()) / 10
+        y_tick_spacing = round_to_nice_value(raw_y_spacing)
+    else:
+        y_tick_spacing = y_tick_spacing
+    plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
+    plt.ylabel(y_label, fontsize=14)
+    plt.yticks(fontsize=12)
+
+    # Format title, layout, grid, and legend
+    plt.title(title, fontsize=16)
+    plt.tight_layout()
+
+    if grid == True:
+        plt.grid(True, linestyle='--', alpha=0.7)
+
+    if legend == True:
+        plt.legend(fontsize=9)
+
+    # Save figure and display plot
+    if export_plot == True:
+        plt.savefig(f"{plot_file_name}.png", dpi=300, bbox_inches="tight")
+
+    # Display the plot
+    plt.show()
+
+    return None
+```
+
+### plot_scatter
+
+```python
+import math
+import matplotlib.pyplot as plt
+import pandas as pd
+
+from matplotlib.ticker import MultipleLocator, PercentFormatter
+
+
+def round_to_nice_value(value):
+    """Round a value to a 'nice' number for tick spacing (1, 2, 5 × 10^n)."""
+    if value <= 0:
+        return value
+
+    # Find order of magnitude
+    exp = math.floor(math.log10(value))
+    magnitude = 10 ** exp
+
+    # Get mantissa (value normalized to [1, 10))
+    mantissa = value / magnitude
+
+    # Round mantissa to 1, 2, or 5
+    if mantissa <= 1.5:
+        nice_mantissa = 1
+    elif mantissa <= 3:
+        nice_mantissa = 2
+    elif mantissa <= 7:
+        nice_mantissa = 5
+    else:
+        nice_mantissa = 10
+
+    return nice_mantissa * magnitude
+
+
+def plot_scatter(
+    df: pd.DataFrame,
+    plot_columns: str | list[str],
+    title: str,
+    x_label: str,
+    x_format: str,
+    x_tick_spacing: int,
+    x_tick_rotation: int,
+    y_label: str,
+    y_format: str,
+    y_format_decimal_places: int,
+    y_tick_spacing: int,
+    grid: bool,
+    legend: bool,
+    export_plot: bool,
+    plot_file_name: str,
+) -> None:
+
+    """
+    Plot the price data from a DataFrame for a specified date range and columns.
+
+    Parameters:
+    -----------
+    df : pd.DataFrame
+        DataFrame containing the price data to plot.
+    plot_columns : str OR list
+        List of columns to plot from the DataFrame. If none, all columns will be plotted.
+    title : str
+        Title of the plot.
+    x_label : str
+        Label for the x-axis.
+    x_format : str
+        Format for the x-axis date labels.
+    x_tick_spacing : int
+        Spacing for the x-axis ticks.
+    x_tick_rotation : int, optional
+        Rotation angle for the x-axis tick labels (default: 0).
+    y_label : str
+        Label for the y-axis.
+    y_format : str
+        Format for the y-axis labels.
+    y_format_decimal_places : int
+        Number of decimal places for y-axis labels.
+    y_tick_spacing : int
+        Spacing for the y-axis ticks.
+    grid : bool
+        Whether to display a grid on the plot.
+    legend : bool
+        Whether to display a legend on the plot.
+    export_plot : bool
+        Whether to save the figure as a PNG file.
+    plot_file_name : str
+        File name for saving the figure (if save_fig is True).
+    
+
+    Returns:
+    --------
+    None
+    """
+
+    # Set plot figure size and background color
+    plt.figure(figsize=(10, 6))
+
+    # Plot data
+    if plot_columns == "All":
+        for col in df.columns:
+            plt.scatter(df.index, df[col], label=col, alpha=0.75)
+    else:
+        for col in plot_columns:
+            plt.scatter(df.index, df[col], label=col, alpha=0.75)
+
+    # Format X axis
+    if x_format == "Day":
+        plt.gca().xaxis.set_major_locator(mdates.DayLocator())
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
+    elif x_format == "Week":
+        plt.gca().xaxis.set_major_locator(mdates.WeekdayLocator())
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
+    elif x_format == "Month":
+        plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
+    elif x_format == "Year":
+        plt.gca().xaxis.set_major_locator(mdates.YearLocator())
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+    else:
+        raise ValueError(f"Unrecognized x_format: {x_format}. Use 'Day', 'Week', 'Month', or 'Year'.")
+
+    if x_tick_spacing == "Auto":
+        raw_x_spacing = (df.index[-1] - df.index[0]).days / 20
+        x_tick_spacing = round_to_nice_value(raw_x_spacing)
+    else:
+        x_tick_spacing = x_tick_spacing
+    plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
+    plt.xlabel(x_label, fontsize=14)
+    plt.xticks(rotation=x_tick_rotation, fontsize=12)
+
+    # Format Y axis
+    if y_format == "Decimal":
+        plt.gca().yaxis.set_major_formatter(FormatStrFormatter(f"%.{y_format_decimal_places}f"))
+    elif y_format == "Percentage":
+        plt.gca().yaxis.set_major_formatter(PercentFormatter(xmax=1, decimals=y_format_decimal_places))
+    elif y_format == "Scientific":
+        plt.gca().yaxis.set_major_formatter(FormatStrFormatter(f"%.{y_format_decimal_places}e"))
+    elif y_format == "Log":
+        plt.yscale("log")
+    else:
+        raise ValueError(f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', or 'Scientific'.")
+    
+
+    if y_tick_spacing == "Auto":
+        raw_y_spacing = (df[plot_columns].max().max() - df[plot_columns].min().min()) / 10
+        y_tick_spacing = round_to_nice_value(raw_y_spacing)
+    else:
+        y_tick_spacing = y_tick_spacing
+    plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
+    plt.ylabel(y_label, fontsize=14)
+    plt.yticks(fontsize=12)
+
+    # Format title, layout, grid, and legend
+    plt.title(title, fontsize=16)
+    plt.tight_layout()
+
+    if grid == True:
+        plt.grid(True, linestyle='--', alpha=0.7)
+
+    if legend == True:
+        plt.legend(fontsize=9)
+
+    # Save figure and display plot
+    if export_plot == True:
+        plt.savefig(f"{plot_file_name}.png", dpi=300, bbox_inches="tight")
+
+    # Display the plot
+    plt.show()
+
+    return None
+```
+
 ### plot_scatter_regression_ffr_vs_returns
 
 ```python
@@ -1523,6 +1855,110 @@ def plot_scatter_regression_ffr_vs_returns(
     plt.show()
 ```
 
+### plot_stats
+
+```python
+import matplotlib.pyplot as plt
+import pandas as pd
+
+from matplotlib.ticker import MultipleLocator
+
+
+def plot_stats(
+    stats_df: pd.DataFrame,
+    plot_columns,
+    title: str,
+    x_label: str,
+    x_rotation: int,
+    x_tick_spacing: int,
+    y_label: str,
+    y_tick_spacing: int,
+    grid: bool,
+    legend: bool,
+    export_plot: bool,
+    plot_file_name: str,
+) -> None:
+    """
+    Plot the price data from a DataFrame for a specified date range and columns.
+
+    Parameters:
+    -----------
+    stats_df : pd.DataFrame
+        DataFrame containing the price data to plot.
+    plot_columns : str OR list
+        List of columns to plot from the DataFrame. If none, all columns will be plotted.
+    title : str
+        Title of the plot.
+    x_label : str
+        Label for the x-axis.
+    x_rotation : int
+        Rotation angle for the x-axis date labels.
+    x_tick_spacing : int
+        Spacing for the x-axis ticks.
+    y_label : str
+        Label for the y-axis.
+    y_tick_spacing : int
+        Spacing for the y-axis ticks.
+    grid : bool
+        Whether to display a grid on the plot.
+    legend : bool
+        Whether to display a legend on the plot.
+    export_plot : bool
+        Whether to save the figure as a PNG file.
+    plot_file_name : str
+        File name for saving the figure (if save_fig is True).
+
+    Returns:
+    --------
+    None
+    """
+
+    # Set plot figure size and background color
+    plt.figure(figsize=(12, 6), facecolor="#F5F5F5")
+
+    # Plot data
+    if plot_columns == "All":
+        for col in stats_df.columns:
+            plt.scatter(
+                stats_df.index, stats_df[col], label=col, linestyle="-", linewidth=1.5
+            )
+    else:
+        for col in plot_columns:
+            plt.scatter(
+                stats_df.index, stats_df[col], label=col, linestyle="-", linewidth=1.5
+            )
+
+    # Format X axis
+    plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
+    plt.xlabel(x_label, fontsize=10)
+    plt.xticks(rotation=x_rotation, fontsize=8)
+
+    # Format Y axis
+    plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
+    plt.ylabel(y_label, fontsize=10)
+    plt.yticks(fontsize=8)
+
+    # Format title, layout, grid, and legend
+    plt.title(title, fontsize=12)
+    plt.tight_layout()
+
+    if grid == True:
+        plt.grid(True, linestyle="--", alpha=0.7)
+
+    if legend == True:
+        plt.legend(fontsize=9)
+
+    # Save figure and display plot
+    if export_plot == True:
+        plt.savefig(f"{plot_file_name}.png", dpi=300, bbox_inches="tight")
+
+    # Display the plot
+    plt.show()
+
+    return None
+
+```
+
 ### plot_timeseries
 
 ```python
@@ -1537,7 +1973,7 @@ def plot_timeseries(
     price_df: pd.DataFrame,
     plot_start_date: str,
     plot_end_date: str,
-    plot_columns,
+    plot_columns: str | list[str],
     title: str,
     x_label: str,
     x_format: str,
@@ -1679,110 +2115,6 @@ def plot_timeseries(
     plt.show()
 
     return None
-```
-
-### plot_stats
-
-```python
-import matplotlib.pyplot as plt
-import pandas as pd
-
-from matplotlib.ticker import MultipleLocator
-
-
-def plot_stats(
-    stats_df: pd.DataFrame,
-    plot_columns,
-    title: str,
-    x_label: str,
-    x_rotation: int,
-    x_tick_spacing: int,
-    y_label: str,
-    y_tick_spacing: int,
-    grid: bool,
-    legend: bool,
-    export_plot: bool,
-    plot_file_name: str,
-) -> None:
-    """
-    Plot the price data from a DataFrame for a specified date range and columns.
-
-    Parameters:
-    -----------
-    stats_df : pd.DataFrame
-        DataFrame containing the price data to plot.
-    plot_columns : str OR list
-        List of columns to plot from the DataFrame. If none, all columns will be plotted.
-    title : str
-        Title of the plot.
-    x_label : str
-        Label for the x-axis.
-    x_rotation : int
-        Rotation angle for the x-axis date labels.
-    x_tick_spacing : int
-        Spacing for the x-axis ticks.
-    y_label : str
-        Label for the y-axis.
-    y_tick_spacing : int
-        Spacing for the y-axis ticks.
-    grid : bool
-        Whether to display a grid on the plot.
-    legend : bool
-        Whether to display a legend on the plot.
-    export_plot : bool
-        Whether to save the figure as a PNG file.
-    plot_file_name : str
-        File name for saving the figure (if save_fig is True).
-
-    Returns:
-    --------
-    None
-    """
-
-    # Set plot figure size and background color
-    plt.figure(figsize=(12, 6), facecolor="#F5F5F5")
-
-    # Plot data
-    if plot_columns == "All":
-        for col in stats_df.columns:
-            plt.scatter(
-                stats_df.index, stats_df[col], label=col, linestyle="-", linewidth=1.5
-            )
-    else:
-        for col in plot_columns:
-            plt.scatter(
-                stats_df.index, stats_df[col], label=col, linestyle="-", linewidth=1.5
-            )
-
-    # Format X axis
-    plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
-    plt.xlabel(x_label, fontsize=10)
-    plt.xticks(rotation=x_rotation, fontsize=8)
-
-    # Format Y axis
-    plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
-    plt.ylabel(y_label, fontsize=10)
-    plt.yticks(fontsize=8)
-
-    # Format title, layout, grid, and legend
-    plt.title(title, fontsize=12)
-    plt.tight_layout()
-
-    if grid == True:
-        plt.grid(True, linestyle="--", alpha=0.7)
-
-    if legend == True:
-        plt.legend(fontsize=9)
-
-    # Save figure and display plot
-    if export_plot == True:
-        plt.savefig(f"{plot_file_name}.png", dpi=300, bbox_inches="tight")
-
-    # Display the plot
-    plt.show()
-
-    return None
-
 ```
 
 ### plot_vix_with_trades
@@ -2643,15 +2975,15 @@ def summary_stats(
     """
     Calculate summary statistics for the given fund list and return data.
 
-    Parameters:
-    -----------
-    fund_list (str):
+    Parameters
+    ----------
+    fund_list : list[str]
         List of funds. This is used below in the excel/pickle export but not in the analysis.. Funds are strings in the form "BTC-USD".
-    df (pd.DataFrame):
+    df : pd.DataFrame
         Dataframe with return data. Assumes returns are in decimal format (e.g., 0.05 for 5%), and assumes there is only 1 column.
-    period (str):
+    period : str
         Period for which to calculate statistics. Options are "Monthly", "Weekly", "Daily".
-    use_calendar_days (bool):
+    use_calendar_days : bool
         If True, use calendar days for calculations. If False, use trading days.
     excel_export : bool
         If True, export data to Excel format.
@@ -2660,10 +2992,10 @@ def summary_stats(
     output_confirmation : bool
         If True, print confirmation message.
 
-    Returns:
-    --------
-    df_stats (pd.DataFrame):
-        pd.DataFrame: DataFrame containing various portfolio statistics.
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame containing various portfolio statistics.
     """
 
     # Get the period in proper format
@@ -2682,13 +3014,13 @@ def summary_stats(
         raise ValueError(f"Invalid period: {period}. Must be one of {list(period_to_timeframe.keys())}")
 
     df_stats = pd.DataFrame(df.mean(axis=0) * timeframe) # annualized
-    df_stats.columns = ['Annualized Mean']
+    df_stats.columns = ['Annual Mean Return (Arithmetic)']
     df_stats['Annualized Volatility'] = df.std() * np.sqrt(timeframe) # annualized
-    df_stats['Annualized Sharpe Ratio'] = df_stats['Annualized Mean'] / df_stats['Annualized Volatility']
+    df_stats['Annualized Sharpe Ratio'] = df_stats['Annual Mean Return (Arithmetic)'] / df_stats['Annualized Volatility']
 
     df_cagr = (1 + df[df.columns[0]]).cumprod()
     cagr = (df_cagr.iloc[-1] / 1) ** ( 1 / (len(df_cagr) / timeframe)) - 1
-    df_stats['CAGR'] = cagr
+    df_stats['CAGR (Geometric)'] = cagr
 
     df_stats[f'{period} Max Return'] = df.max()
     df_stats[f'{period} Max Return (Date)'] = df.idxmax().values[0]
@@ -2709,8 +3041,8 @@ def summary_stats(
         recovery_wealth = pd.DataFrame([wealth_index[col][drawdowns[col].idxmin():]]).T
         recovery_date.append(recovery_wealth[recovery_wealth[col] >= prev_max].index.min())
     df_stats['Recovery Date'] = recovery_date
-    df_stats['Days to Recover'] = (df_stats['Recovery Date'] - df_stats['Trough']).dt.days
-    df_stats['MAR Ratio'] = df_stats['CAGR'] / -df_stats['Max Drawdown']
+    df_stats['Days to Recovery'] = (df_stats['Recovery Date'] - df_stats['Trough']).dt.days
+    df_stats['MAR Ratio'] = df_stats['CAGR (Geometric)'] / -df_stats['Max Drawdown']
 
     plan_name = '_'.join(fund_list)
 
