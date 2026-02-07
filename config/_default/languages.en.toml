@@ -30,7 +30,7 @@ title = "Jared Szajkowski"
   #   { flickr = "https://www.flickr.com/photos/username/" },
   #   { foursquare = "https://foursquare.com/username" },
     { github = "https://github.com/jaredszajkowski" },
-  #   { gitlab = "https://gitlab.com/username" },
+    { gitlab = "https://gitlab.com/jaredszajkowski" },
   #   { google = "https://www.google.com/" },
   #   { google-scholar = "https://scholar.google.com/citations?user=user-id" },
   #   { hashnode = "https://username.hashnode.dev" },
