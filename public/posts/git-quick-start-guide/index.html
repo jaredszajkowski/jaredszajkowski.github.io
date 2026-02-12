@@ -143,7 +143,7 @@
     
     
     "mainEntityOfPage": "true",
-    "wordCount": "469"
+    "wordCount": "511"
   }
   </script>
     
@@ -625,7 +625,7 @@
   <div class="flex flex-row flex-wrap items-center">
     
     
-      <time datetime="2023-10-16 00:00:00 &#43;0000 &#43;0000">October 16, 2023</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2025-06-10 00:00:00 &#43;0000 &#43;0000">Updated: June 10, 2025</time><span class="px-2 text-primary-500">&middot;</span><span>469 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">3 mins</span>
+      <time datetime="2023-10-16 00:00:00 &#43;0000 &#43;0000">October 16, 2023</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2025-06-10 00:00:00 &#43;0000 &#43;0000">Updated: June 10, 2025</time><span class="px-2 text-primary-500">&middot;</span><span>511 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">3 mins</span>
     
 
     
@@ -723,12 +723,13 @@
   <ul>
     <li><a href="#introduction">Introduction</a></li>
     <li><a href="#installation">Installation</a></li>
-    <li><a href="#initial-configuration">Initial configuration</a></li>
-    <li><a href="#store-credentials">Store credentials</a></li>
-    <li><a href="#cloning-repositories">Cloning repositories</a></li>
-    <li><a href="#updating-repositories">Updating repositories</a></li>
-    <li><a href="#adding-committing-and-pushing">Adding, committing, and pushing</a></li>
-    <li><a href="#stashing-changes">Stashing changes</a></li>
+    <li><a href="#initial-configuration">Initial Configuration</a></li>
+    <li><a href="#store-credentials">Store Credentials</a></li>
+    <li><a href="#cloning-repositories">Cloning Repositories</a></li>
+    <li><a href="#updating-repositories">Updating Repositories</a></li>
+    <li><a href="#adding-committing-and-pushing-files--folders">Adding, Committing, and Pushing Files / Folders</a></li>
+    <li><a href="#stashing-changes">Stashing Changes</a></li>
+    <li><a href="#viewing--changing-branches">Viewing / Changing Branches</a></li>
     <li><a href="#references">References</a></li>
   </ul>
 </nav>
@@ -747,7 +748,7 @@
 <pre><code>$ yay git
 </code></pre>
 <p>Pacman will include all required depencies.</p>
-<h2 id="initial-configuration" class="relative group">Initial configuration <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#initial-configuration" aria-label="Anchor">#</a></span></h2><p>First, set your name and email address:</p>
+<h2 id="initial-configuration" class="relative group">Initial Configuration <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#initial-configuration" aria-label="Anchor">#</a></span></h2><p>First, set your name and email address:</p>
 <pre><code>$ git config --global user.name &quot;Firstname Lastname&quot;
 $ git config --global user.email &quot;email@address.com&quot;
 </code></pre>
@@ -760,19 +761,19 @@ $ git config --global user.email &quot;email@address.com&quot;
 <p>Alternatively, you can edit the git configuration directly with:</p>
 <pre><code>$ git config --global --edit
 </code></pre>
-<h2 id="store-credentials" class="relative group">Store credentials <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#store-credentials" aria-label="Anchor">#</a></span></h2><p>In 2021, GitHub disabled authentication via password and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in <code>~/.git-credentials</code>:</p>
+<h2 id="store-credentials" class="relative group">Store Credentials <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#store-credentials" aria-label="Anchor">#</a></span></h2><p>In 2021, GitHub disabled authentication via password and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in <code>~/.git-credentials</code>:</p>
 <pre><code>$ git config --global credential.helper store
 </code></pre>
 <p>After you log in during a <code>git push</code> with your username and token, the username or email address and token will be stored in the above location.</p>
 <p>Note: The token is stored in plain text, so use caution if that is a concern.</p>
-<h2 id="cloning-repositories" class="relative group">Cloning repositories <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#cloning-repositories" aria-label="Anchor">#</a></span></h2><p>Repositories can be cloned with the following:</p>
+<h2 id="cloning-repositories" class="relative group">Cloning Repositories <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#cloning-repositories" aria-label="Anchor">#</a></span></h2><p>Repositories can be cloned with the following:</p>
 <pre><code>$ git clone https://github.com/&lt;username&gt;/&lt;repository&gt;.git
 </code></pre>
-<h2 id="updating-repositories" class="relative group">Updating repositories <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#updating-repositories" aria-label="Anchor">#</a></span></h2><p>The local record of a repository can be updated with the following command:</p>
+<h2 id="updating-repositories" class="relative group">Updating Repositories <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#updating-repositories" aria-label="Anchor">#</a></span></h2><p>The local record of a repository can be updated with the following command:</p>
 <pre><code>$ cd &lt;repository&gt;/
 $ git pull
 </code></pre>
-<h2 id="adding-committing-and-pushing" class="relative group">Adding, committing, and pushing <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#adding-committing-and-pushing" aria-label="Anchor">#</a></span></h2><p>Any files or directories that have been added, modified, or removed can be add to the list of changes to be pushed with the following command:</p>
+<h2 id="adding-committing-and-pushing-files--folders" class="relative group">Adding, Committing, and Pushing Files / Folders <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#adding-committing-and-pushing-files--folders" aria-label="Anchor">#</a></span></h2><p>Any files or directories that have been added, modified, or removed can be add to the list of changes to be pushed with the following command:</p>
 <pre><code>$ git add .
 </code></pre>
 <p>This function stages files that have been modified and deleted but new files that you have not added are not affected:</p>
@@ -794,7 +795,7 @@ $ git pull
 <p>These commands can be chained together with the AND operator:</p>
 <pre><code>$ git add . &amp;&amp; git commit -am &quot;Add your commit message here&quot; &amp;&amp; git push
 </code></pre>
-<h2 id="stashing-changes" class="relative group">Stashing changes <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#stashing-changes" aria-label="Anchor">#</a></span></h2><p>If you forget to update a repository before making changes, you can &ldquo;stash&rdquo; those changes and then re-apply them after running <code>git pull</code>.</p>
+<h2 id="stashing-changes" class="relative group">Stashing Changes <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#stashing-changes" aria-label="Anchor">#</a></span></h2><p>If you forget to update a repository before making changes, you can &ldquo;stash&rdquo; those changes and then re-apply them after running <code>git pull</code>.</p>
 <p>First, stash the changes:</p>
 <pre><code>$ git stash
 </code></pre>
@@ -805,6 +806,12 @@ $ git pull
 <pre><code>$ git stash apply
 </code></pre>
 <p>This has proven to be very useful for me when I forget to update a repository before making edits to the code.</p>
+<h2 id="viewing--changing-branches" class="relative group">Viewing / Changing Branches <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#viewing--changing-branches" aria-label="Anchor">#</a></span></h2><p>You can view the branches of a repository with the following command:</p>
+<pre><code>$ git branch
+</code></pre>
+<p>The current branch will be denoted with an asterisk. To change branches, use the following command:</p>
+<pre><code>$ git checkout &lt;branch&gt;
+</code></pre>
 <h2 id="references" class="relative group">References <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#references" aria-label="Anchor">#</a></span></h2><ol>
 <li><a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" target="_blank" rel="noreferrer">https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens</a></li>
 <li><a href="https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup#_first_time" target="_blank" rel="noreferrer">https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup#_first_time</a></li>

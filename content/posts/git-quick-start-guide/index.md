@@ -29,7 +29,7 @@ Or
 
 Pacman will include all required depencies.
 
-## Initial configuration
+## Initial Configuration
 
 First, set your name and email address:
 
@@ -48,7 +48,7 @@ Alternatively, you can edit the git configuration directly with:
 
     $ git config --global --edit
 
-## Store credentials
+## Store Credentials
 
 In 2021, GitHub disabled authentication via password and now requires authentication with a token. The following command sets up the credential helper, where it will store your token in `~/.git-credentials`:
 
@@ -58,20 +58,20 @@ After you log in during a `git push` with your username and token, the username 
 
 Note: The token is stored in plain text, so use caution if that is a concern.
 
-## Cloning repositories
+## Cloning Repositories
 
 Repositories can be cloned with the following:
 
     $ git clone https://github.com/<username>/<repository>.git
 
-## Updating repositories
+## Updating Repositories
 
 The local record of a repository can be updated with the following command:
 
     $ cd <repository>/
     $ git pull
 
-## Adding, committing, and pushing
+## Adding, Committing, and Pushing Files / Folders
 
 Any files or directories that have been added, modified, or removed can be add to the list of changes to be pushed with the following command:
 
@@ -103,7 +103,7 @@ These commands can be chained together with the AND operator:
 
     $ git add . && git commit -am "Add your commit message here" && git push
 
-## Stashing changes
+## Stashing Changes
 
 If you forget to update a repository before making changes, you can "stash" those changes and then re-apply them after running `git pull`.
 
@@ -120,6 +120,16 @@ Finally, re-apply the changes you previously made:
     $ git stash apply
 
 This has proven to be very useful for me when I forget to update a repository before making edits to the code.
+
+## Viewing / Changing Branches
+
+You can view the branches of a repository with the following command:
+
+    $ git branch
+
+The current branch will be denoted with an asterisk. To change branches, use the following command:
+
+    $ git checkout <branch>
 
 ## References
 
