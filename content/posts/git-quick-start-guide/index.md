@@ -4,7 +4,7 @@ description: Commonly used commands and functionality for git.
 summary: Commonly used commands and functionality for git.
 slug: git-quick-start-guide
 date: 2023-10-16 00:00:00+0000
-lastmod: 2025-06-10 00:00:00+0000
+lastmod: 2026-02-13 00:00:00+0000
 feature: yancy-min-842ofHC6MaI-unsplash.jpg
 coverCaption: Photo by <a href="https://unsplash.com/@yancymin?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Yancy Min</a> on <a href="https://unsplash.com/photos/a-close-up-of-a-text-description-on-a-computer-screen-842ofHC6MaI?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
 draft: false
@@ -123,13 +123,27 @@ This has proven to be very useful for me when I forget to update a repository be
 
 ## Viewing / Changing Branches
 
-You can view the branches of a repository with the following command:
+You can view the local branches of a repository with the following command:
 
     $ git branch
+
+Or teh remote branches with:
+
+    $ git branch -r
+
+Or all branches (local and remote) with:
+
+    $ git branch -a
 
 The current branch will be denoted with an asterisk. To change branches, use the following command:
 
     $ git checkout <branch>
+
+If you have made changes and want to create a new branch with those changes, you can use the following command:
+
+    $ git checkout -b <branch>
+
+And then add, commit, and push as normal.
 
 ## References
 
