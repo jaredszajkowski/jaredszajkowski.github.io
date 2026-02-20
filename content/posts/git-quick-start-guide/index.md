@@ -145,6 +145,20 @@ If you have made changes and want to create a new branch with those changes, you
 
 And then add, commit, and push as normal.
 
+## Deleting Branches
+
+If a local branch has been merged, it can be deleted with:
+
+    $ git branch -d <branch>
+
+If it has not been merged, but you still want to delete it, you can use the following command:
+
+    $ git branch -D <branch>
+
+A remote branch can be deleted with:
+
+    $ git push origin --delete <branch> 
+
 ## References
 
 1. https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
