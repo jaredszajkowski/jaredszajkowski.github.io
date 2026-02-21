@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GitLab on Jared Szajkowski</title>
+    <link>https://www.jaredszajkowski.com/topics/gitlab/</link>
+    <description>Recent content in GitLab on Jared Szajkowski</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 20 Feb 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://www.jaredszajkowski.com/topics/gitlab/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>arch-sync</title>
+      <link>https://www.jaredszajkowski.com/posts/arch-sync/</link>
+      <pubDate>Fri, 20 Feb 2026 00:00:01 +0000</pubDate>
+      <guid>https://www.jaredszajkowski.com/posts/arch-sync/</guid>
+      <description>A template repository for syncing Arch Linux packages and configurations across multiple machines.</description>
+    </item>
+  </channel>
+</rss>

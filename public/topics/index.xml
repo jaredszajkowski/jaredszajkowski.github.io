@@ -6,8 +6,29 @@
     <description>Recent content in Topics on Jared Szajkowski</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 13 Feb 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Feb 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://www.jaredszajkowski.com/topics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Arch Linux</title>
+      <link>https://www.jaredszajkowski.com/topics/arch-linux/</link>
+      <pubDate>Fri, 20 Feb 2026 00:00:01 +0000</pubDate>
+      <guid>https://www.jaredszajkowski.com/topics/arch-linux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Git</title>
+      <link>https://www.jaredszajkowski.com/topics/git/</link>
+      <pubDate>Fri, 20 Feb 2026 00:00:01 +0000</pubDate>
+      <guid>https://www.jaredszajkowski.com/topics/git/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>GitLab</title>
+      <link>https://www.jaredszajkowski.com/topics/gitlab/</link>
+      <pubDate>Fri, 20 Feb 2026 00:00:01 +0000</pubDate>
+      <guid>https://www.jaredszajkowski.com/topics/gitlab/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Federal Reserve Data</title>
       <link>https://www.jaredszajkowski.com/topics/federal-reserve-data/</link>
@@ -93,13 +114,6 @@
       <description></description>
     </item>
     <item>
-      <title>Arch Linux</title>
-      <link>https://www.jaredszajkowski.com/topics/arch-linux/</link>
-      <pubDate>Mon, 02 Dec 2024 00:00:01 +0000</pubDate>
-      <guid>https://www.jaredszajkowski.com/topics/arch-linux/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>Pip</title>
       <link>https://www.jaredszajkowski.com/topics/pip/</link>
       <pubDate>Mon, 02 Dec 2024 00:00:01 +0000</pubDate>
@@ -125,13 +139,6 @@
       <link>https://www.jaredszajkowski.com/topics/linux/</link>
       <pubDate>Fri, 12 Jan 2024 00:00:01 +0000</pubDate>
       <guid>https://www.jaredszajkowski.com/topics/linux/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Git</title>
-      <link>https://www.jaredszajkowski.com/topics/git/</link>
-      <pubDate>Mon, 16 Oct 2023 00:00:00 +0000</pubDate>
-      <guid>https://www.jaredszajkowski.com/topics/git/</guid>
       <description></description>
     </item>
     <item>

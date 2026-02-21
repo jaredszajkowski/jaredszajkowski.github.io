@@ -6,8 +6,15 @@
     <description>Recent content in Arch Linux on Jared Szajkowski</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 09 Dec 2025 00:00:01 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 20 Feb 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://www.jaredszajkowski.com/topics/arch-linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>arch-sync</title>
+      <link>https://www.jaredszajkowski.com/posts/arch-sync/</link>
+      <pubDate>Fri, 20 Feb 2026 00:00:01 +0000</pubDate>
+      <guid>https://www.jaredszajkowski.com/posts/arch-sync/</guid>
+      <description>A template repository for syncing Arch Linux packages and configurations across multiple machines.</description>
+    </item>
     <item>
       <title>Using Python Virtual Environments</title>
       <link>https://www.jaredszajkowski.com/posts/using-python-virtual-environments/</link>
