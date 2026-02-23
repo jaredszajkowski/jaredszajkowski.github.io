@@ -14,11 +14,17 @@ topics: [
     "GitLab",
 ]
 ---
-I recently released the [arch-sync](https://gitlab.com/jaredszajkowski/arch-sync) repository, which provides a template for syncing packages and configuration files across multiple Arch Linux installations.
+## Introduction
 
-The motivation is simple -- to maintain a consistent setup across multiple machines with minimal effort and simplify the overall management of the installations.
+I recently released the [arch-sync](https://gitlab.com/jaredszajkowski/arch-sync) repository. From the README:
 
-With this script, and the following workflow, I can maintain systems with a few simple commands:
+> This is a template repository for syncing packages and configurations across multiple Arch Linux installations. It includes a script to automate the installation and removal of packages and the synchronization of configuration files.
+
+## Motivation
+
+The motivation is simple -- to maintain a consistent setup across systems with minimal effort and simplify the overall management of the installations.
+
+With this script, and the following workflow, I can maintain Arch Linux systems with a few simple commands:
 
 ```bash
 $ yay               # this runs yay -Syu by default
@@ -27,4 +33,4 @@ $ yay -Sc           # clears the pacman cache and locally cached files from the 
 $ yay -Yc           # removes unneeded dependencies
 ```
 
-Regardless of how recently (or not) a system has been updated, the above commands ensure that all machines are in sync.
+Regardless of how recently a system has been updated, the above commands ensure that all machines are in sync.

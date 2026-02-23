@@ -16,34 +16,34 @@
   border: 2px solid rgba(var(--color-neutral-500), 1);
 } */
 
-/* Border with 2px width */
+/* Add border around code blocks */
 .prose pre {
-  border: 2px solid rgba(var(--color-neutral-300), 1);
+  border: 1.5px solid rgba(var(--color-neutral-300), 1);
   border-radius: 0.5rem;
 }
 
 .dark .prose pre {
-  border: 2px solid rgba(var(--color-neutral-500), 1);
+  border: 1.5px solid rgba(var(--color-neutral-500), 1);
 }
 
 /* Add border around images */
 .prose img {
-  border: 2px solid rgba(var(--color-neutral-300), 1);
+  border: 1.5px solid rgba(var(--color-neutral-300), 1);
   border-radius: 0.5rem;
   /* padding: 0.65rem; */
 }
 
 .dark .prose img {
-  border: 2px solid rgba(var(--color-neutral-500), 1);
+  border: 1.5px solid rgba(var(--color-neutral-500), 1);
 }
 
-/* Make tables scrollable horizontally with border and padding */
+/* Add border around tables and make tables scrollable horizontally with padding */
 .prose table {
   display: block;
   max-width: 100%;
   overflow-x: auto;
   white-space: nowrap;
-  border: 2px solid rgba(var(--color-neutral-300), 1);
+  border: 1.5px solid rgba(var(--color-neutral-300), 1);
   border-radius: 0.5rem;
   padding-top: 0.65rem;
   padding-bottom: 0.15rem;
@@ -52,5 +52,5 @@
 }
 
 .dark .prose table {
-  border: 2px solid rgba(var(--color-neutral-500), 1);
+  border: 1.5px solid rgba(var(--color-neutral-500), 1);
 }
