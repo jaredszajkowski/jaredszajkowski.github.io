@@ -748,9 +748,9 @@
   <div class="border-s border-dotted border-neutral-300 py-2 ps-5 dark:border-neutral-600">
     <nav id="TableOfContents">
   <ul>
+    <li><a href="#introduction">Introduction</a></li>
     <li><a href="#python-imports">Python Imports</a></li>
     <li><a href="#add-directories-to-path">Add Directories To Path</a></li>
-    <li><a href="#introduction">Introduction</a></li>
     <li><a href="#python-functions">Python Functions</a></li>
     <li><a href="#data-overview">Data Overview</a>
       <ul>
@@ -784,7 +784,8 @@
         </div>
       
       <div class="min-h-0 min-w-0 max-w-prose grow">
-        <h2 id="python-imports" class="relative group">Python Imports <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#python-imports" aria-label="Anchor">#</a></span></h2><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Standard Library</span>
+        <h2 id="introduction" class="relative group">Introduction <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#introduction" aria-label="Anchor">#</a></span></h2><p>In this post, we will look into the Fed Funds cycles and evaluate asset class performance during loosening and tightening of monetary policy.</p>
+<h2 id="python-imports" class="relative group">Python Imports <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#python-imports" aria-label="Anchor">#</a></span></h2><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Standard Library</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">datetime</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">io</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
@@ -841,8 +842,7 @@
 </span></span><span class="line"><span class="cl"><span class="n">SOURCE_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">&#34;SOURCE_DIR&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">DATA_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">&#34;DATA_DIR&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">DATA_MANUAL_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">&#34;DATA_MANUAL_DIR&#34;</span><span class="p">)</span>
-</span></span></code></pre></div><h2 id="introduction" class="relative group">Introduction <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#introduction" aria-label="Anchor">#</a></span></h2><p>In this post, we will look into the Fed Funds cycles and evaluate asset class performance during loosening and tightening of monetary policy.</p>
-<h2 id="python-functions" class="relative group">Python Functions <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#python-functions" aria-label="Anchor">#</a></span></h2><p>Here are the functions needed for this project:</p>
+</span></span></code></pre></div><h2 id="python-functions" class="relative group">Python Functions <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#python-functions" aria-label="Anchor">#</a></span></h2><p>Here are the functions needed for this project:</p>
 <ul>
 <li>
       
@@ -2846,7 +2846,7 @@ Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.017
 Model:                             OLS   Adj. R-squared:                 -0.018
 Method:                  Least Squares   F-statistic:                    0.4786
 Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.495
-Time:                         00:51:03   Log-Likelihood:                -132.24
+Time:                         01:21:28   Log-Likelihood:                -132.24
 No. Observations:                   30   AIC:                             268.5
 Df Residuals:                       28   BIC:                             271.3
 Df Model:                            1                                         
@@ -3840,7 +3840,7 @@ Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.050
 Model:                             OLS   Adj. R-squared:                  0.016
 Method:                  Least Squares   F-statistic:                     1.462
 Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.237
-Time:                         00:51:06   Log-Likelihood:                -103.64
+Time:                         01:21:30   Log-Likelihood:                -103.64
 No. Observations:                   30   AIC:                             211.3
 Df Residuals:                       28   BIC:                             214.1
 Df Model:                            1                                         
@@ -4833,7 +4833,7 @@ Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.004
 Model:                             OLS   Adj. R-squared:                 -0.031
 Method:                  Least Squares   F-statistic:                    0.1171
 Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.735
-Time:                         00:51:08   Log-Likelihood:                -110.57
+Time:                         01:21:32   Log-Likelihood:                -110.57
 No. Observations:                   30   AIC:                             225.1
 Df Residuals:                       28   BIC:                             227.9
 Df Model:                            1                                         
@@ -5826,7 +5826,7 @@ Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.064
 Model:                             OLS   Adj. R-squared:                  0.030
 Method:                  Least Squares   F-statistic:                     1.900
 Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.179
-Time:                         00:51:11   Log-Likelihood:                -140.03
+Time:                         01:21:35   Log-Likelihood:                -140.03
 No. Observations:                   30   AIC:                             284.1
 Df Residuals:                       28   BIC:                             286.9
 Df Model:                            1                                         

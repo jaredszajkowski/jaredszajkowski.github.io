@@ -17,6 +17,10 @@ topics: [
 ]
 ---
 
+## Introduction
+
+In this post, we will look into the Fed Funds cycles and evaluate asset class performance during loosening and tightening of monetary policy.
+
 ## Python Imports
 
 
@@ -85,10 +89,6 @@ SOURCE_DIR = config("SOURCE_DIR")
 DATA_DIR = config("DATA_DIR")
 DATA_MANUAL_DIR = config("DATA_MANUAL_DIR")
 ```
-
-## Introduction
-
-In this post, we will look into the Fed Funds cycles and evaluate asset class performance during loosening and tightening of monetary policy.
 
 ## Python Functions
 
@@ -2208,7 +2208,7 @@ Y_vals = model.params[0] + model.params[1] * X_vals
     Model:                             OLS   Adj. R-squared:                 -0.018
     Method:                  Least Squares   F-statistic:                    0.4786
     Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.495
-    Time:                         00:51:03   Log-Likelihood:                -132.24
+    Time:                         01:21:28   Log-Likelihood:                -132.24
     No. Observations:                   30   AIC:                             268.5
     Df Residuals:                       28   BIC:                             271.3
     Df Model:                            1                                         
@@ -3279,7 +3279,7 @@ Y_vals = model.params[0] + model.params[1] * X_vals
     Model:                             OLS   Adj. R-squared:                  0.016
     Method:                  Least Squares   F-statistic:                     1.462
     Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.237
-    Time:                         00:51:06   Log-Likelihood:                -103.64
+    Time:                         01:21:30   Log-Likelihood:                -103.64
     No. Observations:                   30   AIC:                             211.3
     Df Residuals:                       28   BIC:                             214.1
     Df Model:                            1                                         
@@ -4348,7 +4348,7 @@ Y_vals = model.params[0] + model.params[1] * X_vals
     Model:                             OLS   Adj. R-squared:                 -0.031
     Method:                  Least Squares   F-statistic:                    0.1171
     Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.735
-    Time:                         00:51:08   Log-Likelihood:                -110.57
+    Time:                         01:21:32   Log-Likelihood:                -110.57
     No. Observations:                   30   AIC:                             225.1
     Df Residuals:                       28   BIC:                             227.9
     Df Model:                            1                                         
@@ -5417,7 +5417,7 @@ Y_vals = model.params[0] + model.params[1] * X_vals
     Model:                             OLS   Adj. R-squared:                  0.030
     Method:                  Least Squares   F-statistic:                     1.900
     Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.179
-    Time:                         00:51:11   Log-Likelihood:                -140.03
+    Time:                         01:21:35   Log-Likelihood:                -140.03
     No. Observations:                   30   AIC:                             284.1
     Df Residuals:                       28   BIC:                             286.9
     Df Model:                            1                                         

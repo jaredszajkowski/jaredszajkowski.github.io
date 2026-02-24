@@ -14,24 +14,103 @@ topics: [
     "Python", 
 ]
 ---
+
 ## Introduction
 
 This is a quick post to illustrate how I collect and store crypto asset data from Coinbase. Essentially, the scripts below pull minute, hour, and daily data for the specified assets and if there is an existing data record, then the existing record is updated to include the most recent data. If there is not an existing data record, then the complete historical record from coinbase is pulled and stored.
+
+## Python Imports
+
+
+```python
+# Standard Library
+import datetime
+import io
+import os
+import random
+import sys
+import warnings
+
+from datetime import datetime, timedelta
+from pathlib import Path
+
+# Data Handling
+import numpy as np
+import pandas as pd
+
+# Data Visualization
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
+import matplotlib.ticker as mtick
+import seaborn as sns
+from matplotlib.ticker import FormatStrFormatter, FuncFormatter, MultipleLocator
+
+# Data Sources
+import yfinance as yf
+
+# Statistical Analysis
+import statsmodels.api as sm
+
+# Machine Learning
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+
+# Suppress warnings
+warnings.filterwarnings("ignore")
+```
+
+## Add Directories To Path
+
+
+```python
+# Add the source subdirectory to the system path to allow import config from settings.py
+current_directory = Path(os.getcwd())
+website_base_directory = current_directory.parent.parent.parent
+src_directory = website_base_directory / "src"
+sys.path.append(str(src_directory)) if str(src_directory) not in sys.path else None
+
+# Import settings.py
+from settings import config
+
+# Add configured directories from config to path
+SOURCE_DIR = config("SOURCE_DIR")
+sys.path.append(str(Path(SOURCE_DIR))) if str(Path(SOURCE_DIR)) not in sys.path else None
+
+# Add other configured directories
+BASE_DIR = config("BASE_DIR")
+CONTENT_DIR = config("CONTENT_DIR")
+POSTS_DIR = config("POSTS_DIR")
+PAGES_DIR = config("PAGES_DIR")
+PUBLIC_DIR = config("PUBLIC_DIR")
+SOURCE_DIR = config("SOURCE_DIR")
+DATA_DIR = config("DATA_DIR")
+DATA_MANUAL_DIR = config("DATA_MANUAL_DIR")
+```
 
 ## Python Functions
 
 Here are the functions needed for this project:
 
-* [coinbase_fetch_available_products](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_available_products): Fetch available products from Coinbase Exchange API.</br>
-* [coinbase_fetch_full_history](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_full_history): Fetch full historical data for a given product from Coinbase Exchange API.</br>
-* [coinbase_fetch_historical_candles](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_historical_candles): Fetch historical candle data for a given product from Coinbase Exchange API.</br>
-* [coinbase_pull_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_pull_data): Update existing record or pull full historical data for a given product from Coinbase Exchange API.</br>
+* [coinbase_fetch_available_products](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_available_products): Fetch available products from Coinbase Exchange API.
+* [coinbase_fetch_full_history](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_full_history): Fetch full historical data for a given product from Coinbase Exchange API.
+* [coinbase_fetch_historical_candles](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_historical_candles): Fetch historical candle data for a given product from Coinbase Exchange API.
+* [coinbase_pull_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_pull_data): Update existing record or pull full historical data for a given product from Coinbase Exchange API.
+
+
+```python
+from coinbase_fetch_available_products import coinbase_fetch_available_products
+from coinbase_fetch_full_history import coinbase_fetch_full_history
+from coinbase_fetch_historical_candles import coinbase_fetch_historical_candles
+from coinbase_pull_data import coinbase_pull_data
+from export_track_md_deps import export_track_md_deps
+```
 
 ## Function Usage
 
 ### Coinbase Fetch Available Products
 
 This script pulls the list of available assets based on the inputs for base and quote currency. Here's an example:
+
 
 ```python
 df = coinbase_fetch_available_products(
@@ -43,373 +122,292 @@ df = coinbase_fetch_available_products(
 
 In this example, the `quote_currency` is provided as "USD". This script checks all available assets that are priced against USD and returns a dataframe listing all available assets:
 
-|     | id             | base_currency   | quote_currency   |   quote_increment |   base_increment | display_name   |   min_market_funds | margin_enabled   | post_only   | limit_only   | cancel_only   | status   | status_message   | trading_disabled   | fx_stablecoin   |   max_slippage_percentage | auction_mode   | high_bid_limit_percentage   |
-|----:|:---------------|:----------------|:-----------------|------------------:|-----------------:|:---------------|-------------------:|:-----------------|:------------|:-------------|:--------------|:---------|:-----------------|:-------------------|:----------------|--------------------------:|:---------------|:----------------------------|
-| 209 | 00-USD         | 00              | USD              |           0.00010 |          0.01000 | 00-USD         |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 110 | 1INCH-USD      | 1INCH           | USD              |           0.00100 |          0.01000 | 1INCH-USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 551 | 2Z-USD         | 2Z              | USD              |           0.00001 |          0.01000 | 2Z/USD         |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 204 | A8-USD         | A8              | USD              |           0.00010 |          0.01000 | A8/USD         |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 252 | AAVE-USD       | AAVE            | USD              |           0.01000 |          0.00100 | AAVE-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 408 | ABT-USD        | ABT             | USD              |           0.00010 |          0.10000 | ABT-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 455 | ACH-USD        | ACH             | USD              |           0.00000 |          0.10000 | ACH-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 633 | ACS-USD        | ACS             | USD              |           0.00000 |          1.00000 | ACS-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 558 | ACX-USD        | ACX             | USD              |           0.00010 |          0.10000 | ACX/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 456 | ADA-USD        | ADA             | USD              |           0.00010 |          0.00000 | ADA-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 316 | AERGO-USD      | AERGO           | USD              |           0.00010 |          0.10000 | AERGO-USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 557 | AERO-USD       | AERO            | USD              |           0.00001 |          0.10000 | AERO-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 329 | AGLD-USD       | AGLD            | USD              |           0.00010 |          0.01000 | AGLD-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 457 | AIOZ-USD       | AIOZ            | USD              |           0.00010 |          0.10000 | AIOZ-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  67 | AKT-USD        | AKT             | USD              |           0.00100 |          0.01000 | AKT/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 242 | ALCX-USD       | ALCX            | USD              |           0.01000 |          0.00010 | ALCX-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 520 | ALEO-USD       | ALEO            | USD              |           0.00010 |          0.01000 | ALEO/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 428 | ALEPH-USD      | ALEPH           | USD              |           0.00010 |          0.10000 | ALEPH-USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 203 | ALGO-USD       | ALGO            | USD              |           0.00010 |          0.10000 | ALGO-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 618 | ALICE-USD      | ALICE           | USD              |           0.00100 |          0.00100 | ALICE-USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 143 | ALLO-USD       | ALLO            | USD              |           0.00010 |          0.01000 | ALLO/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 635 | ALT-USD        | ALT             | USD              |           0.00001 |          1.00000 | ALT/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 632 | AMP-USD        | AMP             | USD              |           0.00001 |          1.00000 | AMP-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 254 | ANKR-USD       | ANKR            | USD              |           0.00001 |          1.00000 | ANKR-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  93 | APE-USD        | APE             | USD              |           0.00100 |          0.01000 | APE-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 499 | API3-USD       | API3            | USD              |           0.00100 |          0.01000 | API3-USD       |                  5 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  28 | APR-USD        | APR             | USD              |           0.00010 |          0.10000 | APR/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 248 | APT-USD        | APT             | USD              |           0.00010 |          0.00100 | APT-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 396 | ARB-USD        | ARB             | USD              |           0.00010 |          0.01000 | ARB-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 229 | ARKM-USD       | ARKM            | USD              |           0.00100 |          0.01000 | ARKM/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 534 | ARPA-USD       | ARPA            | USD              |           0.00010 |          0.10000 | ARPA-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 594 | ASM-USD        | ASM             | USD              |           0.00001 |          1.00000 | ASM-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 276 | AST-USD        | AST             | USD              |           0.00010 |          0.10000 | AST-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 757 | ASTER-USD      | ASTER           | USD              |           0.00100 |          0.01000 | ASTER/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  47 | ATH-USD        | ATH             | USD              |           0.00001 |          1.00000 | ATH/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 121 | ATOM-USD       | ATOM            | USD              |           0.00100 |          0.01000 | ATOM-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 568 | AUCTION-USD    | AUCTION         | USD              |           0.01000 |          0.00100 | AUCTION-USD    |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 358 | AUDIO-USD      | AUDIO           | USD              |           0.00010 |          0.10000 | AUDIO-USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 109 | AURORA-USD     | AURORA          | USD              |           0.00010 |          0.01000 | AURORA-USD     |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 308 | AVAX-USD       | AVAX            | USD              |           0.01000 |          0.00000 | AVAX-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 161 | AVNT-USD       | AVNT            | USD              |           0.00010 |          0.10000 | AVNT/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 600 | AVT-USD        | AVT             | USD              |           0.01000 |          0.01000 | AVT-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.05000 | False          |                             |
-|  98 | AWE-USD        | AWE             | USD              |           0.00001 |          0.10000 | AWE/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 564 | AXL-USD        | AXL             | USD              |           0.00010 |          0.10000 | AXL-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 171 | AXS-USD        | AXS             | USD              |           0.00100 |          0.00100 | AXS-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 593 | B3-USD         | B3              | USD              |           0.00000 |          1.00000 | B3/USD         |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 636 | BADGER-USD     | BADGER          | USD              |           0.00010 |          0.00100 | BADGER-USD     |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  12 | BAL-USD        | BAL             | USD              |           0.00010 |          0.00100 | BAL-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 257 | BAND-USD       | BAND            | USD              |           0.00100 |          0.01000 | BAND-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 619 | BARD-USD       | BARD            | USD              |           0.00010 |          0.01000 | BARD/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 708 | BAT-USD        | BAT             | USD              |           0.00001 |          0.01000 | BAT-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 502 | BCH-USD        | BCH             | USD              |           0.01000 |          0.00000 | BCH-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 411 | BEAM-USD       | BEAM            | USD              |           0.00000 |          1.00000 | BEAM/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 693 | BERA-USD       | BERA            | USD              |           0.00100 |          0.01000 | BERA/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 630 | BICO-USD       | BICO            | USD              |           0.00010 |          0.01000 | BICO-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 251 | BIGTIME-USD    | BIGTIME         | USD              |           0.00001 |          1.00000 | BIGTIME-USD    |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 530 | BIO-USD        | BIO             | USD              |           0.00001 |          0.10000 | BIO/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 763 | BLAST-USD      | BLAST           | USD              |           0.00001 |          1.00000 | BLAST/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 685 | BLUR-USD       | BLUR            | USD              |           0.00010 |          0.10000 | BLUR-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 321 | BLZ-USD        | BLZ             | USD              |           0.00010 |          0.10000 | BLZ-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 117 | BNB-USD        | BNB             | USD              |           0.01000 |          0.00001 | BNB/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 175 | BNKR-USD       | BNKR            | USD              |           0.00000 |          1.00000 | BNKR/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 648 | BNT-USD        | BNT             | USD              |           0.00010 |          0.00000 | BNT-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 152 | BOBA-USD       | BOBA            | USD              |           0.00010 |          0.10000 | BOBA-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 118 | BOBBOB-USD     | BOBBOB          | USD              |           0.00001 |          1.00000 | BOBBOB/USD     |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 741 | BONK-USD       | BONK            | USD              |           0.00000 |          1.00000 | BONK-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 412 | BREV-USD       | BREV            | USD              |           0.00010 |          0.10000 | BREV/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 471 | BTC-USD        | BTC             | USD              |           0.01000 |          0.00000 | BTC-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.02000 | False          |                             |
-| 626 | BTRST-USD      | BTRST           | USD              |           0.00100 |          0.01000 | BTRST-USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 514 | C98-USD        | C98             | USD              |           0.00010 |          0.01000 | C98-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 307 | CAKE-USD       | CAKE            | USD              |           0.00100 |          0.01000 | CAKE/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 770 | CBETH-USD      | CBETH           | USD              |           0.01000 |          0.00001 | cbETH-USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 176 | CELR-USD       | CELR            | USD              |           0.00001 |          1.00000 | CELR-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  80 | CFG-USD        | CFG             | USD              |           0.00010 |          0.10000 | CFG/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 379 | CGLD-USD       | CGLD            | USD              |           0.00010 |          0.01000 | CGLD-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 450 | CHZ-USD        | CHZ             | USD              |           0.00010 |          0.10000 | CHZ-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 125 | CLANKER-USD    | CLANKER         | USD              |           0.01000 |          0.00010 | CLANKER/USD    |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 213 | COMP-USD       | COMP            | USD              |           0.01000 |          0.00100 | COMP-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 700 | COOKIE-USD     | COOKIE          | USD              |           0.00001 |          0.10000 | COOKIE/USD     |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 366 | CORECHAIN-USD  | CORECHAIN       | USD              |           0.00010 |          0.01000 | CORECHAIN/USD  |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 765 | COSMOSDYDX-USD | COSMOSDYDX      | USD              |           0.00010 |          0.01000 | COSMOSDYDX/USD |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 631 | COTI-USD       | COTI            | USD              |           0.00010 |          0.10000 | COTI-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 160 | COW-USD        | COW             | USD              |           0.00010 |          0.10000 | COW/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 442 | CRO-USD        | CRO             | USD              |           0.00001 |          0.10000 | CRO-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 247 | CRV-USD        | CRV             | USD              |           0.00010 |          0.01000 | CRV-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 517 | CTSI-USD       | CTSI            | USD              |           0.00010 |          0.10000 | CTSI-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 225 | CTX-USD        | CTX             | USD              |           0.00010 |          0.00100 | CTX-USD        |                  5 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.05000 | False          |                             |
-|  26 | CVC-USD        | CVC             | USD              |           0.00010 |          0.10000 | CVC-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 750 | CVX-USD        | CVX             | USD              |           0.00100 |          0.00100 | CVX-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 402 | DAI-USD        | DAI             | USD              |           0.00010 |          0.00001 | DAI-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | True            |                   0.01000 | False          | 0.03000000                  |
-| 461 | DASH-USD       | DASH            | USD              |           0.01000 |          0.00000 | DASH-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  42 | DBR-USD        | DBR             | USD              |           0.00001 |          1.00000 | DBR/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  49 | DEGEN-USD      | DEGEN           | USD              |           0.00000 |          1.00000 | DEGEN/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 510 | DEXT-USD       | DEXT            | USD              |           0.00010 |          0.10000 | DEXT-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.05000 | False          |                             |
-| 106 | DIA-USD        | DIA             | USD              |           0.00001 |          0.01000 | DIA-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 378 | DIMO-USD       | DIMO            | USD              |           0.00001 |          0.10000 | DIMO-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 129 | DNT-USD        | DNT             | USD              |           0.00010 |          0.10000 | DNT-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.05000 | False          |                             |
-| 260 | DOGE-USD       | DOGE            | USD              |           0.00001 |          0.10000 | DOGE-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 190 | DOGINME-USD    | DOGINME         | USD              |           0.00000 |          1.00000 | DOGINME/USD    |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 614 | DOLO-USD       | DOLO            | USD              |           0.00001 |          0.10000 | DOLO/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 669 | DOT-USD        | DOT             | USD              |           0.00100 |          0.00000 | DOT-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 451 | DRIFT-USD      | DRIFT           | USD              |           0.00100 |          0.01000 | DRIFT/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 194 | EDGE-USD       | EDGE            | USD              |           0.00001 |          0.10000 | EDGE/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 186 | EGLD-USD       | EGLD            | USD              |           0.01000 |          0.00100 | EGLD-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 718 | EIGEN-USD      | EIGEN           | USD              |           0.00100 |          0.01000 | EIGEN/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 394 | ELA-USD        | ELA             | USD              |           0.00100 |          0.01000 | ELA-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 677 | ELSA-USD       | ELSA            | USD              |           0.00010 |          0.10000 | ELSA/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  31 | ENA-USD        | ENA             | USD              |           0.00010 |          0.10000 | ENA/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 400 | ENS-USD        | ENS             | USD              |           0.01000 |          0.00100 | ENS-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  41 | ERA-USD        | ERA             | USD              |           0.00010 |          0.01000 | ERA/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 422 | ETC-USD        | ETC             | USD              |           0.01000 |          0.00000 | ETC-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  43 | ETH-USD        | ETH             | USD              |           0.01000 |          0.00000 | ETH-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.02000 | False          |                             |
-| 355 | ETHFI-USD      | ETHFI           | USD              |           0.00100 |          0.01000 | ETHFI/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 717 | EUL-USD        | EUL             | USD              |           0.00100 |          0.00100 | EUL/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 550 | FAI-USD        | FAI             | USD              |           0.00001 |          1.00000 | FAI/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 506 | FARM-USD       | FARM            | USD              |           0.01000 |          0.00100 | FARM-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 541 | FARTCOIN-USD   | FARTCOIN        | USD              |           0.00010 |          0.01000 | FARTCOIN/USD   |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 484 | FET-USD        | FET             | USD              |           0.00010 |          0.10000 | FET-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 357 | FIDA-USD       | FIDA            | USD              |           0.00010 |          0.01000 | FIDA-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 217 | FIGHT-USD      | FIGHT           | USD              |           0.00001 |          1.00000 | FIGHT/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 480 | FIL-USD        | FIL             | USD              |           0.00100 |          0.00100 | FIL-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 679 | FIS-USD        | FIS             | USD              |           0.00010 |          0.10000 | FIS-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 656 | FLOCK-USD      | FLOCK           | USD              |           0.00010 |          0.10000 | FLOCK/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 578 | FLOKI-USD      | FLOKI           | USD              |           0.00000 |          1.00000 | FLOKI/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  57 | FLOW-USD       | FLOW            | USD              |           0.00100 |          0.00100 | FLOW-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 101 | FLR-USD        | FLR             | USD              |           0.00001 |          1.00000 | FLR-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  50 | FLUID-USD      | FLUID           | USD              |           0.00100 |          0.01000 | FLUID/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 747 | FORT-USD       | FORT            | USD              |           0.00010 |          0.01000 | FORT-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 350 | FORTH-USD      | FORTH           | USD              |           0.00010 |          0.00100 | FORTH-USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 158 | FOX-USD        | FOX             | USD              |           0.00001 |          0.10000 | FOX-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 446 | FUN1-USD       | FUN1            | USD              |           0.00001 |          0.10000 | FUN1/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 314 | G-USD          | G               | USD              |           0.00001 |          1.00000 | G/USD          |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 598 | GFI-USD        | GFI             | USD              |           0.00010 |          0.01000 | GFI-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 607 | GHST-USD       | GHST            | USD              |           0.00100 |          0.01000 | GHST-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  34 | GIGA-USD       | GIGA            | USD              |           0.00001 |          0.10000 | GIGA/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 617 | GLM-USD        | GLM             | USD              |           0.00010 |          0.10000 | GLM-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 535 | GMT-USD        | GMT             | USD              |           0.00010 |          0.01000 | GMT-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 376 | GNO-USD        | GNO             | USD              |           0.01000 |          0.00010 | GNO-USD        |                  1 | False            | False       | True         | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 737 | GODS-USD       | GODS            | USD              |           0.00001 |          0.01000 | GODS-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 192 | GRT-USD        | GRT             | USD              |           0.00010 |          0.01000 | GRT-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 655 | GST-USD        | GST             | USD              |           0.00000 |          0.01000 | GST-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 692 | GTC-USD        | GTC             | USD              |           0.00010 |          0.01000 | GTC-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.05000 | False          |                             |
-| 331 | HBAR-USD       | HBAR            | USD              |           0.00001 |          0.10000 | HBAR-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 282 | HFT-USD        | HFT             | USD              |           0.00010 |          0.01000 | HFT-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 622 | HIGH-USD       | HIGH            | USD              |           0.00100 |          0.01000 | HIGH-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 362 | HNT-USD        | HNT             | USD              |           0.00100 |          0.01000 | HNT-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 653 | HOME-USD       | HOME            | USD              |           0.00001 |          1.00000 | HOME/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 243 | HONEY-USD      | HONEY           | USD              |           0.00010 |          0.10000 | HONEY-USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 547 | HOPR-USD       | HOPR            | USD              |           0.00010 |          0.10000 | HOPR-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 734 | HYPER-USD      | HYPER           | USD              |           0.00010 |          0.10000 | HYPER/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 705 | ICP-USD        | ICP             | USD              |           0.00100 |          0.00010 | ICP-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  40 | IDEX-USD       | IDEX            | USD              |           0.00010 |          0.10000 | IDEX-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 232 | ILV-USD        | ILV             | USD              |           0.01000 |          0.00010 | ILV-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 552 | IMU-USD        | IMU             | USD              |           0.00001 |          1.00000 | IMU/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 368 | IMX-USD        | IMX             | USD              |           0.00010 |          0.01000 | IMX-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  17 | INDEX-USD      | INDEX           | USD              |           0.01000 |          0.00100 | INDEX-USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 433 | INJ-USD        | INJ             | USD              |           0.00100 |          0.01000 | INJ-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 265 | INV-USD        | INV             | USD              |           0.01000 |          0.00010 | INV-USD        |                  1 | False            | False       | True         | False         | online   |                  | False              | False           |                   0.05000 | False          |                             |
-| 153 | IO-USD         | IO              | USD              |           0.00100 |          0.01000 | IO/USD         |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 223 | IOTX-USD       | IOTX            | USD              |           0.00001 |          1.00000 | IOTX-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 210 | IP-USD         | IP              | USD              |           0.00100 |          0.01000 | IP/USD         |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 472 | IRYS-USD       | IRYS            | USD              |           0.00001 |          1.00000 | IRYS/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 560 | JASMY-USD      | JASMY           | USD              |           0.00001 |          1.00000 | JASMY-USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 487 | JITOSOL-USD    | JITOSOL         | USD              |           0.01000 |          0.00010 | JITOSOL/USD    |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 754 | JTO-USD        | JTO             | USD              |           0.00010 |          0.10000 | JTO-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  21 | JUPITER-USD    | JUPITER         | USD              |           0.00010 |          0.10000 | JUPITER/USD    |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  33 | KAITO-USD      | KAITO           | USD              |           0.00010 |          0.01000 | KAITO/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 304 | KARRAT-USD     | KARRAT          | USD              |           0.00010 |          0.01000 | KARRAT/USD     |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 595 | KAVA-USD       | KAVA            | USD              |           0.00010 |          0.01000 | KAVA-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 449 | KERNEL-USD     | KERNEL          | USD              |           0.00010 |          0.01000 | KERNEL/USD     |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 533 | KEYCAT-USD     | KEYCAT          | USD              |           0.00000 |          1.00000 | KEYCAT/USD     |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 454 | KITE-USD       | KITE            | USD              |           0.00001 |          0.10000 | KITE/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 500 | KMNO-USD       | KMNO            | USD              |           0.00001 |          0.10000 | KMNO/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 438 | KNC-USD        | KNC             | USD              |           0.00010 |          0.10000 | KNC-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 298 | KRL-USD        | KRL             | USD              |           0.00010 |          0.10000 | KRL-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.05000 | False          |                             |
-| 682 | KSM-USD        | KSM             | USD              |           0.01000 |          0.00010 | KSM-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 128 | KTA-USD        | KTA             | USD              |           0.00010 |          0.10000 | KTA/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 566 | L3-USD         | L3              | USD              |           0.00001 |          0.10000 | L3/USD         |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 740 | LA-USD         | LA              | USD              |           0.00010 |          0.10000 | LA/USD         |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 367 | LAYER-USD      | LAYER           | USD              |           0.00010 |          0.01000 | LAYER/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 702 | LCX-USD        | LCX             | USD              |           0.00010 |          0.10000 | LCX-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 238 | LDO-USD        | LDO             | USD              |           0.00100 |          0.01000 | LDO-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 202 | LIGHTER-USD    | LIGHTER         | USD              |           0.00100 |          0.01000 | LIGHTER/USD    |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  83 | LINEA-USD      | LINEA           | USD              |           0.00001 |          1.00000 | LINEA/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 283 | LINK-USD       | LINK            | USD              |           0.00100 |          0.01000 | LINK-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 189 | LPT-USD        | LPT             | USD              |           0.01000 |          0.00100 | LPT-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  88 | LQTY-USD       | LQTY            | USD              |           0.00010 |          0.01000 | LQTY-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 286 | LRC-USD        | LRC             | USD              |           0.00010 |          0.00000 | LRC-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 198 | LRDS-USD       | LRDS            | USD              |           0.00010 |          0.01000 | LRDS/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 208 | LSETH-USD      | LSETH           | USD              |           0.01000 |          0.00001 | LSETH-USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 605 | LTC-USD        | LTC             | USD              |           0.01000 |          0.00000 | LTC-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 131 | MAGIC-USD      | MAGIC           | USD              |           0.00010 |          0.01000 | MAGIC-USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 660 | MAMO-USD       | MAMO            | USD              |           0.00001 |          0.10000 | MAMO/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 513 | MANA-USD       | MANA            | USD              |           0.00010 |          0.01000 | MANA-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 474 | MANTLE-USD     | MANTLE          | USD              |           0.00010 |          0.01000 | MANTLE/USD     |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 674 | MASK-USD       | MASK            | USD              |           0.01000 |          0.01000 | MASK-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.05000 | False          |                             |
-| 762 | MATH-USD       | MATH            | USD              |           0.00010 |          0.10000 | MATH-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 713 | MDT-USD        | MDT             | USD              |           0.00001 |          1.00000 | MDT-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 270 | ME-USD         | ME              | USD              |           0.00010 |          0.01000 | ME/USD         |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 658 | MET-USD        | MET             | USD              |           0.00010 |          0.01000 | MET/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 113 | METIS-USD      | METIS           | USD              |           0.01000 |          0.00100 | METIS-USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 764 | MINA-USD       | MINA            | USD              |           0.00010 |          0.00100 | MINA-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 387 | MLN-USD        | MLN             | USD              |           0.01000 |          0.00100 | MLN-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 663 | MNDE-USD       | MNDE            | USD              |           0.00001 |          0.10000 | MNDE-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 351 | MOG-USD        | MOG             | USD              |           0.00000 |          1.00000 | MOG/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 205 | MON-USD        | MON             | USD              |           0.00001 |          1.00000 | MON/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 234 | MOODENG-USD    | MOODENG         | USD              |           0.00010 |          0.01000 | MOODENG/USD    |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  61 | MORPHO-USD     | MORPHO          | USD              |           0.00010 |          0.01000 | MORPHO/USD     |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 395 | MPLX-USD       | MPLX            | USD              |           0.00010 |          0.10000 | MPLX/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 570 | MSOL-USD       | MSOL            | USD              |           0.01000 |          0.00100 | MSOL-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 538 | NCT-USD        | NCT             | USD              |           0.00001 |          1.00000 | NCT-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 582 | NEAR-USD       | NEAR            | USD              |           0.00100 |          0.00100 | NEAR-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|   0 | NEON-USD       | NEON            | USD              |           0.00001 |          0.01000 | NEON/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 733 | NEWT-USD       | NEWT            | USD              |           0.00010 |          0.01000 | NEWT/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  45 | NKN-USD        | NKN             | USD              |           0.00010 |          0.10000 | NKN-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 250 | NMR-USD        | NMR             | USD              |           0.01000 |          0.00100 | NMR-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  35 | NOICE-USD      | NOICE           | USD              |           0.00000 |          1.00000 | NOICE/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 255 | NOM-USD        | NOM             | USD              |           0.00001 |          1.00000 | NOM/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 403 | OCEAN-USD      | OCEAN           | USD              |           0.00010 |          0.10000 | OCEAN-USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 760 | OGN-USD        | OGN             | USD              |           0.00001 |          0.01000 | OGN-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 604 | OMNI-USD       | OMNI            | USD              |           0.00100 |          0.01000 | OMNI/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 429 | ONDO-USD       | ONDO            | USD              |           0.00001 |          0.01000 | ONDO-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 601 | OP-USD         | OP              | USD              |           0.00100 |          0.01000 | OP-USD         |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 697 | ORCA-USD       | ORCA            | USD              |           0.00010 |          0.01000 | ORCA-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 423 | OSMO-USD       | OSMO            | USD              |           0.00010 |          0.01000 | OSMO-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 123 | OXT-USD        | OXT             | USD              |           0.00010 |          1.00000 | OXT-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 418 | PAX-USD        | PAX             | USD              |           0.00010 |          0.01000 | PAX-USD        |                  1 | False            | False       | True         | False         | online   |                  | False              | True            |                   0.01000 | False          | 0.03000000                  |
-| 443 | PAXG-USD       | PAXG            | USD              |           0.01000 |          0.00001 | PAXG-USD       |                  1 | False            | False       | True         | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 603 | PENDLE-USD     | PENDLE          | USD              |           0.00100 |          0.01000 | PENDLE/USD     |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 435 | PENGU-USD      | PENGU           | USD              |           0.00000 |          1.00000 | PENGU/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 173 | PEPE-USD       | PEPE            | USD              |           0.00000 |          1.00000 | PEPE/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 178 | PERP-USD       | PERP            | USD              |           0.00010 |          0.00100 | PERP-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 739 | PIRATE-USD     | PIRATE          | USD              |           0.00010 |          0.10000 | PIRATE/USD     |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 136 | PLU-USD        | PLU             | USD              |           0.00001 |          0.01000 | PLU-USD        |                  1 | False            | False       | True         | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  90 | PLUME-USD      | PLUME           | USD              |           0.00001 |          1.00000 | PLUME/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 686 | PNG-USD        | PNG             | USD              |           0.00001 |          1.00000 | PNG-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.05000 | False          |                             |
-| 342 | PNUT-USD       | PNUT            | USD              |           0.00010 |          0.01000 | PNUT/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  86 | POL-USD        | POL             | USD              |           0.00010 |          0.01000 | POL/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 769 | POLS-USD       | POLS            | USD              |           0.00010 |          0.01000 | POLS-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 577 | POND-USD       | POND            | USD              |           0.00001 |          1.00000 | POND-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 652 | POPCAT-USD     | POPCAT          | USD              |           0.00010 |          0.01000 | POPCAT/USD     |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 704 | POWR-USD       | POWR            | USD              |           0.00010 |          0.10000 | POWR-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 369 | PRCL-USD       | PRCL            | USD              |           0.00010 |          0.10000 | PRCL/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 527 | PRIME-USD      | PRIME           | USD              |           0.00100 |          0.01000 | PRIME-USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 721 | PRO-USD        | PRO             | USD              |           0.00010 |          0.01000 | PRO-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.05000 | False          |                             |
-| 388 | PROMPT-USD     | PROMPT          | USD              |           0.00001 |          0.10000 | PROMPT/USD     |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 256 | PROVE-USD      | PROVE           | USD              |           0.00010 |          0.01000 | PROVE/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  69 | PUMP-USD       | PUMP            | USD              |           0.00000 |          1.00000 | PUMP/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 148 | PUNDIX-USD     | PUNDIX          | USD              |           0.00010 |          0.01000 | PUNDIX-USD     |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 339 | PYR-USD        | PYR             | USD              |           0.00100 |          0.01000 | PYR-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 775 | PYTH-USD       | PYTH            | USD              |           0.00010 |          0.10000 | PYTH/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 772 | QI-USD         | QI              | USD              |           0.00000 |          1.00000 | QI-USD         |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 608 | QNT-USD        | QNT             | USD              |           0.01000 |          0.00100 | QNT-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 334 | RAD-USD        | RAD             | USD              |           0.00100 |          0.01000 | RAD-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 642 | RARE-USD       | RARE            | USD              |           0.00010 |          0.10000 | RARE-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 287 | RARI-USD       | RARI            | USD              |           0.00010 |          0.00100 | RARI-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 235 | RAY-USD        | RAY             | USD              |           0.00010 |          0.01000 | RAY-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 244 | RECALL-USD     | RECALL          | USD              |           0.00010 |          0.01000 | RECALL/USD     |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 699 | RED-USD        | RED             | USD              |           0.00010 |          0.01000 | RED/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 337 | RENDER-USD     | RENDER          | USD              |           0.00100 |          0.01000 | RENDER/USD     |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 505 | REQ-USD        | REQ             | USD              |           0.00010 |          1.00000 | REQ-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 264 | REZ-USD        | REZ             | USD              |           0.00001 |          1.00000 | REZ/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  39 | RLC-USD        | RLC             | USD              |           0.00010 |          0.01000 | RLC-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 529 | RLS-USD        | RLS             | USD              |           0.00001 |          1.00000 | RLS/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 305 | RONIN-USD      | RONIN           | USD              |           0.00100 |          0.01000 | RONIN/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 124 | ROSE-USD       | ROSE            | USD              |           0.00001 |          0.10000 | ROSE-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 659 | RPL-USD        | RPL             | USD              |           0.01000 |          0.00100 | RPL-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.05000 | False          |                             |
-|  54 | RSC-USD        | RSC             | USD              |           0.00010 |          0.01000 | RSC-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 301 | RSR-USD        | RSR             | USD              |           0.00000 |          1.00000 | RSR/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 193 | S-USD          | S               | USD              |           0.00001 |          0.10000 | S/USD          |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 641 | SAFE-USD       | SAFE            | USD              |           0.00010 |          0.01000 | SAFE/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 320 | SAND-USD       | SAND            | USD              |           0.00010 |          0.01000 | SAND-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 432 | SAPIEN-USD     | SAPIEN          | USD              |           0.00001 |          0.10000 | SAPIEN/USD     |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 102 | SD-USD         | SD              | USD              |           0.00010 |          0.01000 | SD/USD         |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 445 | SEAM-USD       | SEAM            | USD              |           0.00010 |          0.10000 | SEAM-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 426 | SEI-USD        | SEI             | USD              |           0.00001 |          0.10000 | SEI-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 313 | SENT-USD       | SENT            | USD              |           0.00001 |          1.00000 | SENT/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  23 | SHDW-USD       | SHDW            | USD              |           0.00100 |          0.01000 | SHDW/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 292 | SHIB-USD       | SHIB            | USD              |           0.00000 |          1.00000 | SHIB-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 392 | SHPING-USD     | SHPING          | USD              |           0.00000 |          1.00000 | SHPING-USD     |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 724 | SKL-USD        | SKL             | USD              |           0.00010 |          0.10000 | SKL-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 703 | SKR-USD        | SKR             | USD              |           0.00001 |          1.00000 | SKR/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  78 | SKY-USD        | SKY             | USD              |           0.00001 |          0.10000 | SKY/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 108 | SNX-USD        | SNX             | USD              |           0.00100 |          0.00100 | SNX-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 401 | SOL-USD        | SOL             | USD              |           0.01000 |          0.00000 | SOL-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  29 | SPA-USD        | SPA             | USD              |           0.00000 |          1.00000 | SPA-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 493 | SPELL-USD      | SPELL           | USD              |           0.00000 |          1.00000 | SPELL-USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 611 | SPK-USD        | SPK             | USD              |           0.00001 |          0.10000 | SPK/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 743 | SPX-USD        | SPX             | USD              |           0.00010 |          0.01000 | SPX/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 683 | SQD-USD        | SQD             | USD              |           0.00010 |          0.10000 | SQD/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 405 | STG-USD        | STG             | USD              |           0.00010 |          0.10000 | STG-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 521 | STORJ-USD      | STORJ           | USD              |           0.00010 |          0.01000 | STORJ-USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 138 | STRK-USD       | STRK            | USD              |           0.00100 |          0.01000 | STRK/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 736 | STX-USD        | STX             | USD              |           0.00010 |          0.01000 | STX-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 504 | SUI-USD        | SUI             | USD              |           0.00010 |          0.10000 | SUI-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 508 | SUKU-USD       | SUKU            | USD              |           0.00010 |          0.10000 | SUKU-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 715 | SUP-USD        | SUP             | USD              |           0.00001 |          0.10000 | SUP/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 586 | SUPER-USD      | SUPER           | USD              |           0.00001 |          0.01000 | SUPER-USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  73 | SUSHI-USD      | SUSHI           | USD              |           0.00010 |          0.01000 | SUSHI-USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 149 | SWELL-USD      | SWELL           | USD              |           0.00001 |          1.00000 | SWELL/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 127 | SWFTC-USD      | SWFTC           | USD              |           0.00000 |          1.00000 | SWFTC-USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 259 | SXT-USD        | SXT             | USD              |           0.00010 |          0.10000 | SXT/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 188 | SYND-USD       | SYND            | USD              |           0.00010 |          0.01000 | SYND/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 335 | SYRUP-USD      | SYRUP           | USD              |           0.00010 |          0.10000 | SYRUP/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 414 | T-USD          | T               | USD              |           0.00001 |          1.00000 | T-USD          |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 479 | TAO-USD        | TAO             | USD              |           0.01000 |          0.00010 | TAO/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 460 | THQ-USD        | THQ             | USD              |           0.00001 |          0.10000 | THQ/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 467 | TIA-USD        | TIA             | USD              |           0.00010 |          0.01000 | TIA-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 100 | TIME-USD       | TIME            | USD              |           0.01000 |          0.00100 | TIME-USD       |                  1 | False            | False       | True         | False         | online   |                  | False              | False           |                   0.05000 | False          |                             |
-|  79 | TNSR-USD       | TNSR            | USD              |           0.00100 |          0.01000 | TNSR/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  95 | TON-USD        | TON             | USD              |           0.00100 |          0.01000 | TON/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 711 | TOSHI-USD      | TOSHI           | USD              |           0.00000 |          1.00000 | TOSHI/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 103 | TOWNS-USD      | TOWNS           | USD              |           0.00001 |          0.10000 | TOWNS/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 172 | TRAC-USD       | TRAC            | USD              |           0.00010 |          0.10000 | TRAC-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 306 | TRB-USD        | TRB             | USD              |           0.01000 |          0.00100 | TRB-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  25 | TREE-USD       | TREE            | USD              |           0.00010 |          0.01000 | TREE/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 768 | TROLL-USD      | TROLL           | USD              |           0.00001 |          0.10000 | TROLL/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  65 | TRU-USD        | TRU             | USD              |           0.00010 |          0.10000 | TRU-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 325 | TRUMP-USD      | TRUMP           | USD              |           0.01000 |          0.00100 | TRUMP/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 107 | TRUST-USD      | TRUST           | USD              |           0.00001 |          0.10000 | TRUST/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 526 | TURBO-USD      | TURBO           | USD              |           0.00000 |          1.00000 | TURBO/USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 620 | UMA-USD        | UMA             | USD              |           0.00100 |          0.00100 | UMA-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 195 | UNI-USD        | UNI             | USD              |           0.00100 |          0.00000 | UNI-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 372 | USD1-USD       | USD1            | USD              |           0.00010 |          0.01000 | USD1/USD       |                  1 | False            | False       | True         | False         | online   |                  | False              | True            |                   0.01000 | False          | 0.03000000                  |
-| 249 | USDS-USD       | USDS            | USD              |           0.00010 |          0.01000 | USDS/USD       |                  1 | False            | False       | True         | False         | online   |                  | False              | True            |                   0.01000 | False          | 0.03000000                  |
-| 524 | USDT-USD       | USDT            | USD              |           0.00001 |          0.01000 | USDT-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.01000 | False          | 0.03000000                  |
-| 290 | USELESS-USD    | USELESS         | USD              |           0.00010 |          0.10000 | USELESS/USD    |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 233 | VARA-USD       | VARA            | USD              |           0.00001 |          1.00000 | VARA-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 494 | VELO-USD       | VELO            | USD              |           0.00001 |          0.10000 | VELO-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 182 | VET-USD        | VET             | USD              |           0.00001 |          1.00000 | VET-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 489 | VOXEL-USD      | VOXEL           | USD              |           0.00010 |          0.01000 | VOXEL-USD      |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|   6 | VTHO-USD       | VTHO            | USD              |           0.00000 |          1.00000 | VTHO-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  91 | VVV-USD        | VVV             | USD              |           0.00010 |          0.00100 | VVV-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 657 | W-USD          | W               | USD              |           0.00001 |          0.01000 | W/USD          |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 384 | WAXL-USD       | WAXL            | USD              |           0.00010 |          0.01000 | WAXL-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 637 | WCT-USD        | WCT             | USD              |           0.00010 |          0.10000 | WCT/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  99 | WELL-USD       | WELL            | USD              |           0.00000 |          1.00000 | WELL/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 381 | WET-USD        | WET             | USD              |           0.00010 |          0.10000 | WET/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 588 | WIF-USD        | WIF             | USD              |           0.00100 |          0.01000 | WIF/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 144 | WLD-USD        | WLD             | USD              |           0.00010 |          0.01000 | WLD/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 645 | WLFI-USD       | WLFI            | USD              |           0.00001 |          0.10000 | WLFI/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 184 | WMTX-USD       | WMTX            | USD              |           0.00001 |          0.10000 | WMTX/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 230 | XAN-USD        | XAN             | USD              |           0.00001 |          0.10000 | XAN/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 215 | XCN-USD        | XCN             | USD              |           0.00001 |          0.10000 | XCN-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 561 | XLM-USD        | XLM             | USD              |           0.00000 |          0.00000 | XLM-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 483 | XPL-USD        | XPL             | USD              |           0.00010 |          0.10000 | XPL/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 116 | XRP-USD        | XRP             | USD              |           0.00010 |          0.00000 | XRP-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.05000 | False          |                             |
-| 364 | XTZ-USD        | XTZ             | USD              |           0.00010 |          0.01000 | XTZ-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 575 | XYO-USD        | XYO             | USD              |           0.00001 |          0.10000 | XYO-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 284 | YB-USD         | YB              | USD              |           0.00010 |          0.01000 | YB/USD         |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 629 | YFI-USD        | YFI             | USD              |           0.01000 |          0.00000 | YFI-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-|  85 | ZEC-USD        | ZEC             | USD              |           0.01000 |          0.00000 | ZEC-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 115 | ZEN-USD        | ZEN             | USD              |           0.00100 |          0.00100 | ZEN-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 621 | ZETA-USD       | ZETA            | USD              |           0.00010 |          0.10000 | ZETA-USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 544 | ZETACHAIN-USD  | ZETACHAIN       | USD              |           0.00010 |          0.01000 | ZETACHAIN/USD  |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 163 | ZK-USD         | ZK              | USD              |           0.00001 |          0.10000 | ZK/USD         |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 716 | ZKC-USD        | ZKC             | USD              |           0.00010 |          0.01000 | ZKC/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 468 | ZKP-USD        | ZKP             | USD              |           0.00001 |          0.10000 | ZKP/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 122 | ZORA-USD       | ZORA            | USD              |           0.00001 |          1.00000 | ZORA/USD       |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 348 | ZRO-USD        | ZRO             | USD              |           0.00100 |          0.01000 | ZRO/USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
-| 231 | ZRX-USD        | ZRX             | USD              |           0.00000 |          0.00001 | ZRX-USD        |                  1 | False            | False       | False        | False         | online   |                  | False              | False           |                   0.03000 | False          |                             |
+
+```python
+display(df)
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>base_currency</th>
+      <th>quote_currency</th>
+      <th>quote_increment</th>
+      <th>base_increment</th>
+      <th>display_name</th>
+      <th>min_market_funds</th>
+      <th>margin_enabled</th>
+      <th>post_only</th>
+      <th>limit_only</th>
+      <th>cancel_only</th>
+      <th>status</th>
+      <th>status_message</th>
+      <th>trading_disabled</th>
+      <th>fx_stablecoin</th>
+      <th>max_slippage_percentage</th>
+      <th>auction_mode</th>
+      <th>high_bid_limit_percentage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>749</th>
+      <td>00-USD</td>
+      <td>00</td>
+      <td>USD</td>
+      <td>0.0001</td>
+      <td>0.01</td>
+      <td>00-USD</td>
+      <td>1</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>online</td>
+      <td></td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.03000000</td>
+      <td>False</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>227</th>
+      <td>1INCH-USD</td>
+      <td>1INCH</td>
+      <td>USD</td>
+      <td>0.001</td>
+      <td>0.01</td>
+      <td>1INCH-USD</td>
+      <td>1</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>online</td>
+      <td></td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.03000000</td>
+      <td>False</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>646</th>
+      <td>2Z-USD</td>
+      <td>2Z</td>
+      <td>USD</td>
+      <td>0.00001</td>
+      <td>0.01</td>
+      <td>2Z/USD</td>
+      <td>1</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>online</td>
+      <td></td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.03000000</td>
+      <td>False</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>93</th>
+      <td>A8-USD</td>
+      <td>A8</td>
+      <td>USD</td>
+      <td>0.0001</td>
+      <td>0.01</td>
+      <td>A8/USD</td>
+      <td>1</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>online</td>
+      <td></td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.03000000</td>
+      <td>False</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>329</th>
+      <td>AAVE-USD</td>
+      <td>AAVE</td>
+      <td>USD</td>
+      <td>0.01</td>
+      <td>0.001</td>
+      <td>AAVE-USD</td>
+      <td>1</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>online</td>
+      <td></td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.03000000</td>
+      <td>False</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>112</th>
+      <td>ZKC-USD</td>
+      <td>ZKC</td>
+      <td>USD</td>
+      <td>0.0001</td>
+      <td>0.01</td>
+      <td>ZKC/USD</td>
+      <td>1</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>online</td>
+      <td></td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.03000000</td>
+      <td>False</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>302</th>
+      <td>ZKP-USD</td>
+      <td>ZKP</td>
+      <td>USD</td>
+      <td>0.00001</td>
+      <td>0.1</td>
+      <td>ZKP/USD</td>
+      <td>1</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>online</td>
+      <td></td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.03000000</td>
+      <td>False</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>405</th>
+      <td>ZORA-USD</td>
+      <td>ZORA</td>
+      <td>USD</td>
+      <td>0.00001</td>
+      <td>1</td>
+      <td>ZORA/USD</td>
+      <td>1</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>online</td>
+      <td></td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.03000000</td>
+      <td>False</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>337</th>
+      <td>ZRO-USD</td>
+      <td>ZRO</td>
+      <td>USD</td>
+      <td>0.001</td>
+      <td>0.01</td>
+      <td>ZRO/USD</td>
+      <td>1</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>online</td>
+      <td></td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.03000000</td>
+      <td>False</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>357</th>
+      <td>ZRX-USD</td>
+      <td>ZRX</td>
+      <td>USD</td>
+      <td>0.000001</td>
+      <td>0.00001</td>
+      <td>ZRX-USD</td>
+      <td>1</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>online</td>
+      <td></td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.03000000</td>
+      <td>False</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+<p>375 rows × 18 columns</p>
+</div>
+
 
 ### Coinbase Fetch Historical Candles
 
 This script pulls the historical candles:
+
 
 ```python
 df = coinbase_fetch_historical_candles(
@@ -422,13 +420,57 @@ df = coinbase_fetch_historical_candles(
 
 Specifically, the date/time, open, high, low, close, and volume levels:
 
-|    | time                |         low |        high |        open |       close |     volume |
-|---:|:--------------------|------------:|------------:|------------:|------------:|-----------:|
-|  0 | 2025-01-01 00:00:00 | 92743.63000 | 94960.91000 | 93347.59000 | 94383.59000 | 6871.73848 |
+
+```python
+display(df)
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>low</th>
+      <th>high</th>
+      <th>open</th>
+      <th>close</th>
+      <th>volume</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2025-01-01</td>
+      <td>92743.63</td>
+      <td>94960.91</td>
+      <td>93347.59</td>
+      <td>94383.59</td>
+      <td>6871.738482</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
 
 ### Coinbase Fetch Full History
 
 This script pulls the full history for a specified asset:
+
 
 ```python
 df = coinbase_fetch_full_history(
@@ -441,39 +483,322 @@ df = coinbase_fetch_full_history(
 
 The example above pulls the daily data for 1 month, but can handle data ranges of years because it uses the `coinbase_fetch_historical_candles` to pull 300 candles at a time to ensure that the API is not overloaded and drops data. Here's the results for the above:
 
-|    | time                |          low |         high |         open |        close |      volume |
-|---:|:--------------------|-------------:|-------------:|-------------:|-------------:|------------:|
-|  0 | 2025-01-01 00:00:00 |  92743.63000 |  94960.91000 |  93347.59000 |  94383.59000 |  6871.73848 |
-|  1 | 2025-01-02 00:00:00 |  94177.00000 |  97776.99000 |  94383.59000 |  96903.19000 | 10912.47384 |
-|  2 | 2025-01-03 00:00:00 |  96016.63000 |  98969.92000 |  96905.48000 |  98136.51000 |  9021.88538 |
-|  3 | 2025-01-04 00:00:00 |  97516.65000 |  98761.02000 |  98139.85000 |  98209.85000 |  2742.08961 |
-|  4 | 2025-01-05 00:00:00 |  97250.00000 |  98814.00000 |  98209.85000 |  98345.33000 |  2377.92176 |
-|  5 | 2025-01-06 00:00:00 |  97900.00000 | 102500.00000 |  98347.65000 | 102279.41000 | 15173.55607 |
-|  6 | 2025-01-07 00:00:00 |  96105.11000 | 102735.99000 | 102279.41000 |  96941.98000 | 16587.28692 |
-|  7 | 2025-01-08 00:00:00 |  92500.00000 |  97254.35000 |  96941.98000 |  95036.63000 | 14182.29739 |
-|  8 | 2025-01-09 00:00:00 |  91187.00000 |  95363.26000 |  95033.18000 |  92547.44000 |  9712.37853 |
-|  9 | 2025-01-10 00:00:00 |  92209.25000 |  95862.92000 |  92547.44000 |  94701.18000 | 12634.03408 |
-| 10 | 2025-01-11 00:00:00 |  93804.05000 |  94983.65000 |  94701.48000 |  94565.02000 |  2638.69957 |
-| 11 | 2025-01-12 00:00:00 |  93670.30000 |  95383.84000 |  94569.91000 |  94509.62000 |  2025.81613 |
-| 12 | 2025-01-13 00:00:00 |  89028.64000 |  95900.00000 |  94507.24000 |  94506.45000 | 13094.86359 |
-| 13 | 2025-01-14 00:00:00 |  94311.36000 |  97353.29000 |  94507.35000 |  96534.96000 | 11210.74227 |
-| 14 | 2025-01-15 00:00:00 |  96400.00000 | 100716.45000 |  96534.97000 | 100510.23000 | 13610.74729 |
-| 15 | 2025-01-16 00:00:00 |  97277.58000 | 100880.00000 | 100504.27000 |  99981.78000 | 12312.37367 |
-| 16 | 2025-01-17 00:00:00 |  99937.81000 | 105970.00000 |  99981.46000 | 104107.00000 | 20518.30949 |
-| 17 | 2025-01-18 00:00:00 | 102233.45000 | 104933.15000 | 104107.00000 | 104435.00000 |  7835.29992 |
-| 18 | 2025-01-19 00:00:00 |  99518.00000 | 106314.44000 | 104435.01000 | 101211.13000 | 13312.63686 |
-| 19 | 2025-01-20 00:00:00 |  99416.27000 | 109358.01000 | 101217.78000 | 102145.43000 | 32342.18311 |
-| 20 | 2025-01-21 00:00:00 | 100051.00000 | 107291.10000 | 102145.42000 | 106159.26000 | 19411.23489 |
-| 21 | 2025-01-22 00:00:00 | 103100.00000 | 106431.34000 | 106159.27000 | 103667.11000 | 10730.01896 |
-| 22 | 2025-01-23 00:00:00 | 101200.01000 | 106870.87000 | 103659.60000 | 103926.36000 | 25064.86500 |
-| 23 | 2025-01-24 00:00:00 | 102751.92000 | 107200.00000 | 103926.36000 | 104850.27000 | 12921.99361 |
-| 24 | 2025-01-25 00:00:00 | 104104.00000 | 105294.00000 | 104866.13000 | 104733.56000 |  3404.85308 |
-| 25 | 2025-01-26 00:00:00 | 102452.24000 | 105478.80000 | 104729.92000 | 102563.00000 |  4575.36612 |
-| 26 | 2025-01-27 00:00:00 |  97715.03000 | 103228.46000 | 102565.28000 | 102062.42000 | 23647.14112 |
-| 27 | 2025-01-28 00:00:00 | 100213.80000 | 103770.85000 | 102063.92000 | 101290.00000 |  9488.53429 |
-| 28 | 2025-01-29 00:00:00 | 101275.60000 | 104829.64000 | 101290.01000 | 103747.25000 | 11403.20279 |
-| 29 | 2025-01-30 00:00:00 | 103289.74000 | 106484.77000 | 103747.25000 | 104742.64000 | 13061.34881 |
-| 30 | 2025-01-31 00:00:00 | 101506.00000 | 106090.00000 | 104742.63000 | 102411.26000 | 13313.68104 |
+
+```python
+display(df)
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>low</th>
+      <th>high</th>
+      <th>open</th>
+      <th>close</th>
+      <th>volume</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2025-01-01</td>
+      <td>92743.63</td>
+      <td>94960.91</td>
+      <td>93347.59</td>
+      <td>94383.59</td>
+      <td>6871.738482</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2025-01-02</td>
+      <td>94177.00</td>
+      <td>97776.99</td>
+      <td>94383.59</td>
+      <td>96903.19</td>
+      <td>10912.473840</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2025-01-03</td>
+      <td>96016.63</td>
+      <td>98969.92</td>
+      <td>96905.48</td>
+      <td>98136.51</td>
+      <td>9021.885382</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2025-01-04</td>
+      <td>97516.65</td>
+      <td>98761.02</td>
+      <td>98139.85</td>
+      <td>98209.85</td>
+      <td>2742.089606</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2025-01-05</td>
+      <td>97250.00</td>
+      <td>98814.00</td>
+      <td>98209.85</td>
+      <td>98345.33</td>
+      <td>2377.921759</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2025-01-06</td>
+      <td>97900.00</td>
+      <td>102500.00</td>
+      <td>98347.65</td>
+      <td>102279.41</td>
+      <td>15173.556068</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2025-01-07</td>
+      <td>96105.11</td>
+      <td>102735.99</td>
+      <td>102279.41</td>
+      <td>96941.98</td>
+      <td>16587.286922</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2025-01-08</td>
+      <td>92500.00</td>
+      <td>97254.35</td>
+      <td>96941.98</td>
+      <td>95036.63</td>
+      <td>14182.297395</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2025-01-09</td>
+      <td>91187.00</td>
+      <td>95363.26</td>
+      <td>95033.18</td>
+      <td>92547.44</td>
+      <td>9712.378532</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2025-01-10</td>
+      <td>92209.25</td>
+      <td>95862.92</td>
+      <td>92547.44</td>
+      <td>94701.18</td>
+      <td>12634.034078</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2025-01-11</td>
+      <td>93804.05</td>
+      <td>94983.65</td>
+      <td>94701.48</td>
+      <td>94565.02</td>
+      <td>2638.699568</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2025-01-12</td>
+      <td>93670.30</td>
+      <td>95383.84</td>
+      <td>94569.91</td>
+      <td>94509.62</td>
+      <td>2025.816130</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2025-01-13</td>
+      <td>89028.64</td>
+      <td>95900.00</td>
+      <td>94507.24</td>
+      <td>94506.45</td>
+      <td>13094.863595</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2025-01-14</td>
+      <td>94311.36</td>
+      <td>97353.29</td>
+      <td>94507.35</td>
+      <td>96534.96</td>
+      <td>11210.742267</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2025-01-15</td>
+      <td>96400.00</td>
+      <td>100716.45</td>
+      <td>96534.97</td>
+      <td>100510.23</td>
+      <td>13610.747294</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>2025-01-16</td>
+      <td>97277.58</td>
+      <td>100880.00</td>
+      <td>100504.27</td>
+      <td>99981.78</td>
+      <td>12312.373669</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>2025-01-17</td>
+      <td>99937.81</td>
+      <td>105970.00</td>
+      <td>99981.46</td>
+      <td>104107.00</td>
+      <td>20518.309493</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>2025-01-18</td>
+      <td>102233.45</td>
+      <td>104933.15</td>
+      <td>104107.00</td>
+      <td>104435.00</td>
+      <td>7835.299918</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>2025-01-19</td>
+      <td>99518.00</td>
+      <td>106314.44</td>
+      <td>104435.01</td>
+      <td>101211.13</td>
+      <td>13312.636856</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>2025-01-20</td>
+      <td>99416.27</td>
+      <td>109358.01</td>
+      <td>101217.78</td>
+      <td>102145.43</td>
+      <td>32342.183113</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>2025-01-21</td>
+      <td>100051.00</td>
+      <td>107291.10</td>
+      <td>102145.42</td>
+      <td>106159.26</td>
+      <td>19411.234890</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>2025-01-22</td>
+      <td>103100.00</td>
+      <td>106431.34</td>
+      <td>106159.27</td>
+      <td>103667.11</td>
+      <td>10730.018962</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>2025-01-23</td>
+      <td>101200.01</td>
+      <td>106870.87</td>
+      <td>103659.60</td>
+      <td>103926.36</td>
+      <td>25064.864999</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>2025-01-24</td>
+      <td>102751.92</td>
+      <td>107200.00</td>
+      <td>103926.36</td>
+      <td>104850.27</td>
+      <td>12921.993614</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>2025-01-25</td>
+      <td>104104.00</td>
+      <td>105294.00</td>
+      <td>104866.13</td>
+      <td>104733.56</td>
+      <td>3404.853083</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>2025-01-26</td>
+      <td>102452.24</td>
+      <td>105478.80</td>
+      <td>104729.92</td>
+      <td>102563.00</td>
+      <td>4575.366115</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>2025-01-27</td>
+      <td>97715.03</td>
+      <td>103228.46</td>
+      <td>102565.28</td>
+      <td>102062.42</td>
+      <td>23647.141119</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>2025-01-28</td>
+      <td>100213.80</td>
+      <td>103770.85</td>
+      <td>102063.92</td>
+      <td>101290.00</td>
+      <td>9488.534295</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>2025-01-29</td>
+      <td>101275.60</td>
+      <td>104829.64</td>
+      <td>101290.01</td>
+      <td>103747.25</td>
+      <td>11403.202789</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>2025-01-30</td>
+      <td>103289.74</td>
+      <td>106484.77</td>
+      <td>103747.25</td>
+      <td>104742.64</td>
+      <td>13061.348812</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>2025-01-31</td>
+      <td>101506.00</td>
+      <td>106090.00</td>
+      <td>104742.63</td>
+      <td>102411.26</td>
+      <td>13313.681045</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
 
 ### Coinbase Pull Data
 
