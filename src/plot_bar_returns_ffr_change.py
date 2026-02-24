@@ -7,7 +7,6 @@ def plot_bar_returns_ffr_change(
     cycle_df: pd.DataFrame,
     asset_label: str,
     annualized_or_cumulative: str,
-    index_num: str,
 ) -> None:
 
     plt.figure(figsize=(10, 8))
@@ -60,5 +59,4 @@ def plot_bar_returns_ffr_change(
     plt.xticks(rotation=45, ha="right", fontsize=12)
     plt.title(f"{asset_label} {annualized_or_cumulative} Return by Fed Policy Cycle With {annualized_or_cumulative} Change in Fed Funds Rate", fontsize=16)
     plt.tight_layout()
-    plt.savefig(f"{index_num}_{asset_label}_{annualized_or_cumulative}_Returns_FFR_Change.png", dpi=300, bbox_inches="tight")
     plt.show()

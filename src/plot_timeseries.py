@@ -3,7 +3,7 @@ import matplotlib.dates as mdates
 import matplotlib.ticker as mtick
 import pandas as pd
 
-from matplotlib.ticker import FormatStrFormatter, MultipleLocator, PercentFormatter
+from matplotlib.ticker import FormatStrFormatter, FuncFormatter, MultipleLocator, PercentFormatter
 
 def plot_timeseries(
     price_df: pd.DataFrame,
@@ -21,8 +21,8 @@ def plot_timeseries(
     legend: bool,
     export_plot: bool,
     plot_file_name: str,
+    x_tick_spacing: int = 1,
     x_tick_rotation: int = 0,
-
 ) -> None:
 
     """
@@ -44,6 +44,8 @@ def plot_timeseries(
         Label for the x-axis.
     x_format : str
         Format for the x-axis date labels.
+    x_tick_spacing : int, optional
+        Spacing for the x-axis ticks.
     x_tick_rotation : int, optional
         Rotation angle for the x-axis tick labels (default: 0).
     y_label : str
@@ -109,7 +111,7 @@ def plot_timeseries(
         plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
         plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
     elif x_format == "Year":
-        plt.gca().xaxis.set_major_locator(mdates.YearLocator())
+        plt.gca().xaxis.set_major_locator(mdates.YearLocator(base=x_tick_spacing))
         plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
     else:
         raise ValueError(f"Unrecognized x_format: {x_format}. Use 'Day', 'Week', 'Month', or 'Year'.")
@@ -119,15 +121,15 @@ def plot_timeseries(
 
     # Format Y axis
     if y_format == "Decimal":
-        plt.gca().yaxis.set_major_formatter(FormatStrFormatter(f"%.{y_format_decimal_places}f"))
+        plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f"{x:,.{y_format_decimal_places}f}"))
     elif y_format == "Percentage":
         plt.gca().yaxis.set_major_formatter(PercentFormatter(xmax=1, decimals=y_format_decimal_places))
     elif y_format == "Scientific":
-        plt.gca().yaxis.set_major_formatter(FormatStrFormatter(f"%.{y_format_decimal_places}e"))
+        plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f"{x:.{y_format_decimal_places}e}"))
     elif y_format == "Log":
         plt.yscale("log")
     else:
-        raise ValueError(f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', or 'Scientific'.")
+        raise ValueError(f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', 'Scientific', or 'Log'.")
     
     plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
     plt.ylabel(y_label, fontsize=14)

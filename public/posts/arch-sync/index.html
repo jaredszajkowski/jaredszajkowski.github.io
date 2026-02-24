@@ -4,7 +4,6 @@
 
 
 
-
 <!doctype html>
 <html
   lang="en"
@@ -42,8 +41,8 @@
   <link
     type="text/css"
     rel="stylesheet"
-    href="https://www.jaredszajkowski.com/css/main.bundle.min.3043850020e613c736c3599535e396ad78ad909ffdb6c713cdbb4e9ac988a817.css"
-    integrity="sha256-MEOFACDmE8c2w1mVNeOWrXitkJ/9tscTzbtOmsmIqBc="
+    href="https://www.jaredszajkowski.com/css/main.bundle.min.4cd97d4ccee14be91e750a023a978f50bdeae14e826e7f27011fc8fffac23db6.css"
+    integrity="sha256-TNl9TM7hS&#43;kedQoCOpePUL3q4U6Cbn8nAR/I//rCPbY="
   />
   
     
@@ -143,7 +142,7 @@
     
     
     "mainEntityOfPage": "true",
-    "wordCount": "121"
+    "wordCount": "143"
   }
   </script>
     
@@ -633,7 +632,7 @@
   <div class="flex flex-row flex-wrap items-center">
     
     
-      <time datetime="2026-02-20 00:00:01 &#43;0000 &#43;0000">February 20, 2026</time><span class="px-2 text-primary-500">&middot;</span><span>121 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">1 min</span>
+      <time datetime="2026-02-20 00:00:01 &#43;0000 &#43;0000">February 20, 2026</time><span class="px-2 text-primary-500">&middot;</span><span>143 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">1 min</span>
     
 
     
@@ -717,15 +716,39 @@
     </header>
     <section class="prose mt-0 flex max-w-full flex-col dark:prose-invert lg:flex-row">
       
+        <div class="order-first px-0 lg:order-last lg:max-w-xs lg:ps-8">
+          <div class="toc pe-5 lg:sticky lg:top-10 print:hidden">
+            <details open class="-ms-5 mt-0 overflow-hidden rounded-lg ps-5">
+  <summary
+    class="block cursor-pointer bg-neutral-100 py-1 ps-5 text-lg font-semibold text-neutral-800 dark:bg-neutral-700 dark:text-neutral-100 lg:hidden"
+  >
+    Table of Contents
+  </summary>
+  <div class="border-s border-dotted border-neutral-300 py-2 ps-5 dark:border-neutral-600">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#motivation">Motivation</a></li>
+  </ul>
+</nav>
+  </div>
+</details>
+
+          </div>
+        </div>
+      
       <div class="min-h-0 min-w-0 max-w-prose grow">
-        <p>I recently released the <a href="https://gitlab.com/jaredszajkowski/arch-sync" target="_blank" rel="noreferrer">arch-sync</a> repository, which provides a template for syncing packages and configuration files across multiple Arch Linux installations.</p>
-<p>The motivation is simple &ndash; to maintain a consistent setup across multiple machines with minimal effort and simplify the overall management of the installations.</p>
-<p>With this script, and the following workflow, I can maintain systems with a few simple commands:</p>
+        <h2 id="introduction" class="relative group">Introduction <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#introduction" aria-label="Anchor">#</a></span></h2><p>I recently released the <a href="https://gitlab.com/jaredszajkowski/arch-sync" target="_blank" rel="noreferrer">arch-sync</a> repository. From the README:</p>
+<blockquote>
+<p>This is a template repository for syncing packages and configurations across multiple Arch Linux installations. It includes a script to automate the installation and removal of packages and the synchronization of configuration files.</p>
+</blockquote>
+<h2 id="motivation" class="relative group">Motivation <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#motivation" aria-label="Anchor">#</a></span></h2><p>The motivation is simple &ndash; to maintain a consistent setup across systems with minimal effort and simplify the overall management of the installations.</p>
+<p>With this script, and the following workflow, I can maintain Arch Linux systems with a few simple commands:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ yay               <span class="c1"># this runs yay -Syu by default</span>
 </span></span><span class="line"><span class="cl">$ ./arch-sync.sh    <span class="c1"># the arch-sync script referenced above</span>
 </span></span><span class="line"><span class="cl">$ yay -Sc           <span class="c1"># clears the pacman cache and locally cached files from the AUR</span>
 </span></span><span class="line"><span class="cl">$ yay -Yc           <span class="c1"># removes unneeded dependencies</span>
-</span></span></code></pre></div><p>Regardless of how recently (or not) a system has been updated, the above commands ensure that all machines are in sync.</p>
+</span></span></code></pre></div><p>Regardless of how recently a system has been updated, the above commands ensure that all machines are in sync.</p>
 
       </div>
     </section>

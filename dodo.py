@@ -137,6 +137,15 @@ def clean_pdf_export_pngs(subdir, notebook_name):
     if not deleted:
         print(f"✅ No temp PNGs to remove for {notebook_name}")
 
+def clean_notebook_md_files(subdir, notebook_name):
+    """Remove the _files directory created by nbconvert during Markdown export."""
+    files_dir = subdir / f"{notebook_name}_files"
+    if files_dir.exists():
+        shutil.rmtree(files_dir)
+        print(f"🧹 Removed {files_dir}")
+    else:
+        print(f"✅ No _files directory to remove for {notebook_name}")
+
 #######################################
 ## PyDoit tasks
 #######################################
@@ -227,7 +236,7 @@ def task_run_post_notebooks():
         }
 
 def task_export_post_notebooks():
-    """Export executed notebooks to HTML and PDF, and clean temp PNGs"""
+    """Export executed notebooks to HTML, PDF, and Markdown and clean temp PNGs"""
     for subdir in POSTS_DIR.iterdir():
         if not subdir.is_dir():
             continue
@@ -236,45 +245,74 @@ def task_export_post_notebooks():
         notebook_path = subdir / f"{notebook_name}.ipynb"
         html_output = subdir / f"{notebook_name}.html"
         pdf_output = subdir / f"{notebook_name}.pdf"
-
+        md_output = subdir / f"{notebook_name}.md"
+        
         if not notebook_path.exists():
             continue
 
         yield {
             "name": notebook_name,
             "actions": [
-                f"jupyter nbconvert --to=html --log-level=WARN --output={html_output} {notebook_path}",
-                f"jupyter nbconvert --to=pdf --log-level=WARN --output={pdf_output} {notebook_path}",
+                # f"jupyter nbconvert --to=html --log-level=WARN --output={html_output} {notebook_path}",
+                # f"jupyter nbconvert --to=pdf --log-level=WARN --output={pdf_output} {notebook_path}",
+                # f"jupyter nbconvert --to=markdown --log-level=WARN --output={notebook_name} --output-dir={subdir} {notebook_path}",
+                f"jupyter nbconvert --to=html --log-level=WARN --output={notebook_name} --output-dir={subdir} {notebook_path}",
+                f"jupyter nbconvert --to=pdf --log-level=WARN --output={notebook_name} --output-dir={subdir} {notebook_path}",
+                (clean_notebook_md_files, [subdir, notebook_name]),
+                f"jupyter nbconvert --to=markdown --log-level=WARN --output={notebook_name} --output-dir={subdir} {notebook_path}",
                 (clean_pdf_export_pngs, [subdir, notebook_name])
             ],
             "file_dep": [notebook_path],
-            "targets": [html_output, pdf_output],
+            "targets": [html_output, pdf_output, md_output],
             "verbosity": 2,
             "clean": [],  # Don't clean these files by default.
         }
 
-def task_build_post_indices():
-    """Run build_index.py in each post subdirectory to generate index.md"""
-    script_path = SOURCE_DIR / "build_index.py"
+# def task_build_post_indices():
+#     """Run build_index.py in each post subdirectory to generate index.md"""
+#     script_path = SOURCE_DIR / "build_index.py"
 
+#     for subdir in POSTS_DIR.iterdir():
+#         if subdir.is_dir() and (subdir / "index_temp.md").exists():
+#             def run_script(subdir=subdir):
+#                 subprocess.run(
+#                     ["python", str(script_path)],
+#                     cwd=subdir,
+#                     check=True
+#                 )
+
+#             yield {
+#                 "name": subdir.name,
+#                 "actions": [run_script],
+#                 "file_dep": [
+#                     subdir / "index_temp.md",
+#                     subdir / "index_dep.txt",
+#                     script_path,
+#                 ],
+#                 "targets": [subdir / "index.md"],
+#                 "verbosity": 2,
+#                 "clean": [],  # Don't clean these files by default.
+#             }
+
+def task_build_post_indices():
+    """Combine the Jupyter notebook Markdown export with the frontmatter.md file in each post subdirectory to generate index.md."""
     for subdir in POSTS_DIR.iterdir():
-        if subdir.is_dir() and (subdir / "index_temp.md").exists():
-            def run_script(subdir=subdir):
-                subprocess.run(
-                    ["python", str(script_path)],
-                    cwd=subdir,
-                    check=True
-                )
+        if subdir.is_dir() and (subdir / "frontmatter.md").exists():
+            frontmatter_path = subdir / "frontmatter.md"
+            nb_md_path = subdir / f"{subdir.name}.md"
+            index_path = subdir / "index.md"
+
+            def build_index(frontmatter=frontmatter_path, nb_md=nb_md_path, index=index_path):
+                content = frontmatter.read_text().rstrip() + "\n\n" + nb_md.read_text().lstrip()
+                content = content.rstrip() + "\n\n## Code\n\n{{< post-files >}}\n"
+                index.write_text(content)
 
             yield {
                 "name": subdir.name,
-                "actions": [run_script],
-                "file_dep": [
-                    subdir / "index_temp.md",
-                    subdir / "index_dep.txt",
-                    script_path,
-                ],
-                "targets": [subdir / "index.md"],
+                "actions": [build_index],
+                "file_dep": [frontmatter_path, nb_md_path],
+                "targets": [index_path],
+                "task_dep": [f"export_post_notebooks:{subdir.name}"],
                 "verbosity": 2,
                 "clean": [],  # Don't clean these files by default.
             }
@@ -289,6 +327,7 @@ def task_clean_public():
             print(f"ℹ️  {PUBLIC_DIR} does not exist, nothing to delete.")
     return {
         "actions": [remove_public],
+        "task_dep": ["build_post_indices"],
         "verbosity": 2,
         "clean": [],  # Don't clean these files by default.
     }
@@ -366,7 +405,7 @@ def task_copy_projects_research_exports():
         "actions": [copy_all_html],
         "file_dep": html_files,
         "targets": [dest_dir / f.name for f in html_files],
-        "task_dep": ["build_site"],
+        "task_dep": ["copy_notebook_exports"],
         "verbosity": 2,
         "clean": [],  # Don't clean these files by default.
     }
@@ -395,7 +434,7 @@ def task_create_schwab_callback():
 
     return {
         "actions": [create_callback],
-        "task_dep": ["copy_notebook_exports", "clean_public"],
+        "task_dep": ["copy_projects_research_exports"],
         "verbosity": 2,
         "clean": [],  # Don't clean these files by default.
     }

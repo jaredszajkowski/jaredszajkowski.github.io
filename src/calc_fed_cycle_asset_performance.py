@@ -2,20 +2,21 @@ import numpy as np
 import pandas as pd
 
 def calc_fed_cycle_asset_performance(
-    fed_cycles: list,
-    cycle_labels: list,
-    fed_changes: list,
-    monthly_df: pd.DataFrame,
+    start_date: pd.Series,
+    end_date: pd.Series,
+    label: pd.Series,
+    fed_funds_change: pd.Series,
+    monthly_returns: pd.DataFrame,
 ) -> pd.DataFrame:
 
     results = []
 
-    for (start, end), label in zip(fed_cycles, cycle_labels):
+    for start, end, label, fed_change in zip(start_date, end_date, label, fed_funds_change):
         start = pd.to_datetime(start)
         end = pd.to_datetime(end)
 
-        # Filter TLT returns for the cycle period
-        returns = monthly_df.loc[start:end, "Monthly_Return"]
+        # Filter returns for the cycle period
+        returns = monthly_returns.loc[start:end, "Monthly_Return"]
 
         if len(returns) == 0:
             continue
@@ -51,8 +52,8 @@ def calc_fed_cycle_asset_performance(
     ]]
 
     # Merge Fed changes into cycle_df
-    cycle_df["FedFundsChange"] = fed_changes
-    cycle_df["FedFundsChange_bps"] = cycle_df["FedFundsChange"] * 10000  # in basis
+    cycle_df["FedFundsChange"] = fed_funds_change
+    cycle_df["FedFundsChange_bps"] = cycle_df["FedFundsChange"] * 10000  # in basis points
 
     # Add annualized change in FFR in basis points
     cycle_df["FFR_AnnualizedChange"] = (cycle_df["FedFundsChange"] / cycle_df["Months"]) * 12

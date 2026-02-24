@@ -6,8 +6,15 @@
     <description>Recent content in Bloomberg on Jared Szajkowski</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 28 Jul 2025 00:00:01 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 23 Feb 2026 00:00:01 +0000</lastBuildDate>
     <atom:link href="https://www.jaredszajkowski.com/topics/bloomberg/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Performance Of Various Asset Classes During Fed Policy Cycles</title>
+      <link>https://www.jaredszajkowski.com/posts/asset-class-performance-fed-policy-cycles/</link>
+      <pubDate>Sat, 29 Nov 2025 00:00:01 +0000</pubDate>
+      <guid>https://www.jaredszajkowski.com/posts/asset-class-performance-fed-policy-cycles/</guid>
+      <description>How does the performance of stocks, bonds, and other asset classes vary during Fed policy cycles?</description>
+    </item>
     <item>
       <title>Reusable And Extensible Python Functions For Financial Data Analysis</title>
       <link>https://www.jaredszajkowski.com/posts/reusable-extensible-python-functions-financial-data-analysis/</link>

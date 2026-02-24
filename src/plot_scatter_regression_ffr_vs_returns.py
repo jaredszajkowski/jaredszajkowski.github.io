@@ -8,7 +8,6 @@ import statsmodels.api as sm
 def plot_scatter_regression_ffr_vs_returns(
     cycle_df: pd.DataFrame,
     asset_label: str,
-    index_num: str,
     x_vals: np.ndarray,
     y_vals: np.ndarray,
     intercept: float,
@@ -46,5 +45,4 @@ def plot_scatter_regression_ffr_vs_returns(
     plt.legend()
     plt.grid(True)
     plt.tight_layout()
-    plt.savefig(f"{index_num}_{asset_label}_Regression_FFR_vs_Returns.png", dpi=300, bbox_inches="tight")
     plt.show()
