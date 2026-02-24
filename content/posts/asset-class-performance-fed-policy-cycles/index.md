@@ -1099,7 +1099,7 @@ display(cycle_ranges)
 </div>
 
 
-## Return Performance By Fed Policy Cycle
+## Asset Class Performance By Fed Policy Cycle
 
 Moving on, we will now look at the performance of four (4) different asset classes during each Fed cycle. We'll use the following Bloomberg indices:
 
@@ -1971,7 +1971,7 @@ Y_vals = model.params[0] + model.params[1] * X_vals
     Model:                             OLS   Adj. R-squared:                 -0.018
     Method:                  Least Squares   F-statistic:                    0.4786
     Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.495
-    Time:                         13:51:24   Log-Likelihood:                -132.24
+    Time:                         14:11:31   Log-Likelihood:                -132.24
     No. Observations:                   30   AIC:                             268.5
     Df Residuals:                       28   BIC:                             271.3
     Df Model:                            1                                         
@@ -2880,7 +2880,7 @@ Y_vals = model.params[0] + model.params[1] * X_vals
     Model:                             OLS   Adj. R-squared:                  0.016
     Method:                  Least Squares   F-statistic:                     1.462
     Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.237
-    Time:                         13:51:27   Log-Likelihood:                -103.64
+    Time:                         14:11:34   Log-Likelihood:                -103.64
     No. Observations:                   30   AIC:                             211.3
     Df Residuals:                       28   BIC:                             214.1
     Df Model:                            1                                         
@@ -3787,7 +3787,7 @@ Y_vals = model.params[0] + model.params[1] * X_vals
     Model:                             OLS   Adj. R-squared:                 -0.031
     Method:                  Least Squares   F-statistic:                    0.1171
     Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.735
-    Time:                         13:51:29   Log-Likelihood:                -110.57
+    Time:                         14:11:36   Log-Likelihood:                -110.57
     No. Observations:                   30   AIC:                             225.1
     Df Residuals:                       28   BIC:                             227.9
     Df Model:                            1                                         
@@ -4694,7 +4694,7 @@ Y_vals = model.params[0] + model.params[1] * X_vals
     Model:                             OLS   Adj. R-squared:                  0.030
     Method:                  Least Squares   F-statistic:                     1.900
     Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.179
-    Time:                         13:51:32   Log-Likelihood:                -140.03
+    Time:                         14:11:39   Log-Likelihood:                -140.03
     No. Observations:                   30   AIC:                             284.1
     Df Residuals:                       28   BIC:                             286.9
     Df Model:                            1                                         
@@ -4738,11 +4738,9 @@ plot_scatter_regression_ffr_vs_returns(
 
 It's difficult to draw any strong conclusions with the above plot. Gold has traditionally been considered a hedge for inflation, and while one of the Fed's mandates is to manage inflation, there may not be a conclusion to draw in relationship to the historical returns that gold has exhibited.
 
-## Hybrid Portfolio
+## Asset Allocation
 
 With the above analysis (somewhat) complete, let's look at the optimal allocation for a portfolio based on the data and the hypythetical historical results.
-
-### Asset Allocation
 
 We have to be careful with our criteria for when to hold stocks, bonds, or gold, as hindsight bias is certainly possible. So, without overanalyzing the results, let's assume that we hold stocks as the default position during tightening cycles, and then hold bonds during easing cycles when the Fed starts cutting rates, and then resume holding stocks when the Fed stops cutting rates. If there is not any change in FFR, then we still hold stocks.
 
@@ -5762,7 +5760,7 @@ display(portfolio_monthly)
 
 Next, we'll look at performance for the assets and portfolio.
 
-### Performance Statistics
+## Performance Statistics
 
 We can then plot the monthly returns:
 
@@ -5791,7 +5789,7 @@ plot_timeseries(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_90_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_87_0.png)
     
 
 
@@ -5822,7 +5820,7 @@ plot_timeseries(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_92_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_89_0.png)
     
 
 
@@ -5853,11 +5851,11 @@ plot_timeseries(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_94_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_91_0.png)
     
 
 
-Finally, we can run the stats on the hybrid portfolio, SPY, and TLT with the following code:
+Finally, we can run the summary statistics on the strategy portfolio, SPY, and TLT with the following code:
 
 
 ```python
@@ -5990,7 +5988,7 @@ sum_stats
 
 
 
-Based on the above, our hybrid portfolio outperforms both stocks and bonds, with lower drawdowns.
+Based on the above, our strategy portfolio outperforms both stocks and bonds, with lower drawdowns.
 
 ## Conclusions
 
@@ -6001,7 +5999,7 @@ This was a interesting exercise to evaluate the performance of different asset c
 A couple of ideas sound intriguing for future investigation:
 
 * Does a commodity index (such as GSCI) exhibit differing behavior than gold?
-* How does leverage affect the returns that are observed for the hybrid portfolio, stocks, and bonds?
+* How does leverage affect the returns that are observed for the strategy portfolio, stocks, and bonds?
 * Do other Fed tightening/loosening cycles exhibit the same behavior for returns?
 
 ## References

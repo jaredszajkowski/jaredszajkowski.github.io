@@ -7542,35 +7542,12 @@ a.anchor-link {
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Standard Library</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-
-<span class="c1"># Data Handling</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-
-<span class="c1"># Data Visualization</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.dates</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mdates</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.ticker</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mtick</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.ticker</span><span class="w"> </span><span class="kn">import</span> <span class="n">FormatStrFormatter</span><span class="p">,</span> <span class="n">FuncFormatter</span><span class="p">,</span> <span class="n">MultipleLocator</span>
-
-<span class="c1"># Data Sources</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">yfinance</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">yf</span>
-
-<span class="c1"># Statistical Analysis</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
-
-<span class="c1"># Machine Learning</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
 
 <span class="c1"># Suppress warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">"ignore"</span><span class="p">)</span>
@@ -7654,7 +7631,6 @@ a.anchor-link {
 <span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_fetch_full_history</span><span class="w"> </span><span class="kn">import</span> <span class="n">coinbase_fetch_full_history</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_fetch_historical_candles</span><span class="w"> </span><span class="kn">import</span> <span class="n">coinbase_fetch_historical_candles</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_pull_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">coinbase_pull_data</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">export_track_md_deps</span><span class="w"> </span><span class="kn">import</span> <span class="n">export_track_md_deps</span>
 </pre></div>
 </div>
 </div>
@@ -7761,7 +7737,7 @@ a.anchor-link {
 </thead>
 <tbody>
 <tr>
-<th>749</th>
+<th>24</th>
 <td>00-USD</td>
 <td>00</td>
 <td>USD</td>
@@ -7782,7 +7758,7 @@ a.anchor-link {
 <td></td>
 </tr>
 <tr>
-<th>227</th>
+<th>342</th>
 <td>1INCH-USD</td>
 <td>1INCH</td>
 <td>USD</td>
@@ -7803,7 +7779,7 @@ a.anchor-link {
 <td></td>
 </tr>
 <tr>
-<th>646</th>
+<th>534</th>
 <td>2Z-USD</td>
 <td>2Z</td>
 <td>USD</td>
@@ -7824,7 +7800,7 @@ a.anchor-link {
 <td></td>
 </tr>
 <tr>
-<th>93</th>
+<th>713</th>
 <td>A8-USD</td>
 <td>A8</td>
 <td>USD</td>
@@ -7845,7 +7821,7 @@ a.anchor-link {
 <td></td>
 </tr>
 <tr>
-<th>329</th>
+<th>115</th>
 <td>AAVE-USD</td>
 <td>AAVE</td>
 <td>USD</td>
@@ -7887,7 +7863,7 @@ a.anchor-link {
 <td>...</td>
 </tr>
 <tr>
-<th>112</th>
+<th>442</th>
 <td>ZKC-USD</td>
 <td>ZKC</td>
 <td>USD</td>
@@ -7908,7 +7884,7 @@ a.anchor-link {
 <td></td>
 </tr>
 <tr>
-<th>302</th>
+<th>352</th>
 <td>ZKP-USD</td>
 <td>ZKP</td>
 <td>USD</td>
@@ -7929,7 +7905,7 @@ a.anchor-link {
 <td></td>
 </tr>
 <tr>
-<th>405</th>
+<th>88</th>
 <td>ZORA-USD</td>
 <td>ZORA</td>
 <td>USD</td>
@@ -7950,7 +7926,7 @@ a.anchor-link {
 <td></td>
 </tr>
 <tr>
-<th>337</th>
+<th>467</th>
 <td>ZRO-USD</td>
 <td>ZRO</td>
 <td>USD</td>
@@ -7971,7 +7947,7 @@ a.anchor-link {
 <td></td>
 </tr>
 <tr>
-<th>357</th>
+<th>610</th>
 <td>ZRX-USD</td>
 <td>ZRX</td>
 <td>USD</td>

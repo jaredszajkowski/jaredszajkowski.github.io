@@ -8,35 +8,12 @@ This is a quick post to illustrate how I collect and store crypto asset data fro
 ```python
 # Standard Library
 import datetime
-import io
 import os
-import random
 import sys
 import warnings
 
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
-
-# Data Handling
-import numpy as np
-import pandas as pd
-
-# Data Visualization
-import matplotlib.dates as mdates
-import matplotlib.pyplot as plt
-import matplotlib.ticker as mtick
-import seaborn as sns
-from matplotlib.ticker import FormatStrFormatter, FuncFormatter, MultipleLocator
-
-# Data Sources
-import yfinance as yf
-
-# Statistical Analysis
-import statsmodels.api as sm
-
-# Machine Learning
-from sklearn.decomposition import PCA
-from sklearn.preprocessing import StandardScaler
 
 # Suppress warnings
 warnings.filterwarnings("ignore")
@@ -85,7 +62,6 @@ from coinbase_fetch_available_products import coinbase_fetch_available_products
 from coinbase_fetch_full_history import coinbase_fetch_full_history
 from coinbase_fetch_historical_candles import coinbase_fetch_historical_candles
 from coinbase_pull_data import coinbase_pull_data
-from export_track_md_deps import export_track_md_deps
 ```
 
 ## Function Usage
@@ -151,7 +127,7 @@ display(df)
   </thead>
   <tbody>
     <tr>
-      <th>749</th>
+      <th>24</th>
       <td>00-USD</td>
       <td>00</td>
       <td>USD</td>
@@ -172,7 +148,7 @@ display(df)
       <td></td>
     </tr>
     <tr>
-      <th>227</th>
+      <th>342</th>
       <td>1INCH-USD</td>
       <td>1INCH</td>
       <td>USD</td>
@@ -193,7 +169,7 @@ display(df)
       <td></td>
     </tr>
     <tr>
-      <th>646</th>
+      <th>534</th>
       <td>2Z-USD</td>
       <td>2Z</td>
       <td>USD</td>
@@ -214,7 +190,7 @@ display(df)
       <td></td>
     </tr>
     <tr>
-      <th>93</th>
+      <th>713</th>
       <td>A8-USD</td>
       <td>A8</td>
       <td>USD</td>
@@ -235,7 +211,7 @@ display(df)
       <td></td>
     </tr>
     <tr>
-      <th>329</th>
+      <th>115</th>
       <td>AAVE-USD</td>
       <td>AAVE</td>
       <td>USD</td>
@@ -277,7 +253,7 @@ display(df)
       <td>...</td>
     </tr>
     <tr>
-      <th>112</th>
+      <th>442</th>
       <td>ZKC-USD</td>
       <td>ZKC</td>
       <td>USD</td>
@@ -298,7 +274,7 @@ display(df)
       <td></td>
     </tr>
     <tr>
-      <th>302</th>
+      <th>352</th>
       <td>ZKP-USD</td>
       <td>ZKP</td>
       <td>USD</td>
@@ -319,7 +295,7 @@ display(df)
       <td></td>
     </tr>
     <tr>
-      <th>405</th>
+      <th>88</th>
       <td>ZORA-USD</td>
       <td>ZORA</td>
       <td>USD</td>
@@ -340,7 +316,7 @@ display(df)
       <td></td>
     </tr>
     <tr>
-      <th>337</th>
+      <th>467</th>
       <td>ZRO-USD</td>
       <td>ZRO</td>
       <td>USD</td>
@@ -361,7 +337,7 @@ display(df)
       <td></td>
     </tr>
     <tr>
-      <th>357</th>
+      <th>610</th>
       <td>ZRX-USD</td>
       <td>ZRX</td>
       <td>USD</td>

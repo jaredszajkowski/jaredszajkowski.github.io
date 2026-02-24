@@ -8821,7 +8821,7 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Return-Performance-By-Fed-Policy-Cycle">Return Performance By Fed Policy Cycle<a class="anchor-link" href="#Return-Performance-By-Fed-Policy-Cycle">¶</a></h2><p>Moving on, we will now look at the performance of four (4) different asset classes during each Fed cycle. We'll use the following Bloomberg indices:</p>
+<h2 id="Asset-Class-Performance-By-Fed-Policy-Cycle">Asset Class Performance By Fed Policy Cycle<a class="anchor-link" href="#Asset-Class-Performance-By-Fed-Policy-Cycle">¶</a></h2><p>Moving on, we will now look at the performance of four (4) different asset classes during each Fed cycle. We'll use the following Bloomberg indices:</p>
 <ul>
 <li>SPXT_S&amp;P 500 Total Return Index (Stocks)</li>
 <li>SPBDU10T_S&amp;P US Treasury Bond 7-10 Year Total Return Index (Bonds)</li>
@@ -9840,7 +9840,7 @@ Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.017
 Model:                             OLS   Adj. R-squared:                 -0.018
 Method:                  Least Squares   F-statistic:                    0.4786
 Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.495
-Time:                         13:51:24   Log-Likelihood:                -132.24
+Time:                         14:11:31   Log-Likelihood:                -132.24
 No. Observations:                   30   AIC:                             268.5
 Df Residuals:                       28   BIC:                             271.3
 Df Model:                            1                                         
@@ -10930,7 +10930,7 @@ Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.050
 Model:                             OLS   Adj. R-squared:                  0.016
 Method:                  Least Squares   F-statistic:                     1.462
 Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.237
-Time:                         13:51:27   Log-Likelihood:                -103.64
+Time:                         14:11:34   Log-Likelihood:                -103.64
 No. Observations:                   30   AIC:                             211.3
 Df Residuals:                       28   BIC:                             214.1
 Df Model:                            1                                         
@@ -12009,7 +12009,7 @@ Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.004
 Model:                             OLS   Adj. R-squared:                 -0.031
 Method:                  Least Squares   F-statistic:                    0.1171
 Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.735
-Time:                         13:51:29   Log-Likelihood:                -110.57
+Time:                         14:11:36   Log-Likelihood:                -110.57
 No. Observations:                   30   AIC:                             225.1
 Df Residuals:                       28   BIC:                             227.9
 Df Model:                            1                                         
@@ -13088,7 +13088,7 @@ Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.064
 Model:                             OLS   Adj. R-squared:                  0.030
 Method:                  Least Squares   F-statistic:                     1.900
 Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.179
-Time:                         13:51:32   Log-Likelihood:                -140.03
+Time:                         14:11:39   Log-Likelihood:                -140.03
 No. Observations:                   30   AIC:                             284.1
 Df Residuals:                       28   BIC:                             286.9
 Df Model:                            1                                         
@@ -13175,18 +13175,8 @@ Intercept: 11.467013480569243, Slope: -0.056974234027166226
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Hybrid-Portfolio">Hybrid Portfolio<a class="anchor-link" href="#Hybrid-Portfolio">¶</a></h2><p>With the above analysis (somewhat) complete, let's look at the optimal allocation for a portfolio based on the data and the hypythetical historical results.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5f762754">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Asset-Allocation">Asset Allocation<a class="anchor-link" href="#Asset-Allocation">¶</a></h3><p>We have to be careful with our criteria for when to hold stocks, bonds, or gold, as hindsight bias is certainly possible. So, without overanalyzing the results, let's assume that we hold stocks as the default position during tightening cycles, and then hold bonds during easing cycles when the Fed starts cutting rates, and then resume holding stocks when the Fed stops cutting rates. If there is not any change in FFR, then we still hold stocks.</p>
+<h2 id="Asset-Allocation">Asset Allocation<a class="anchor-link" href="#Asset-Allocation">¶</a></h2><p>With the above analysis (somewhat) complete, let's look at the optimal allocation for a portfolio based on the data and the hypythetical historical results.</p>
+<p>We have to be careful with our criteria for when to hold stocks, bonds, or gold, as hindsight bias is certainly possible. So, without overanalyzing the results, let's assume that we hold stocks as the default position during tightening cycles, and then hold bonds during easing cycles when the Fed starts cutting rates, and then resume holding stocks when the Fed stops cutting rates. If there is not any change in FFR, then we still hold stocks.</p>
 <p>We can then combine the return series based on the above with the following:</p>
 </div>
 </div>
@@ -14305,28 +14295,7 @@ Intercept: 11.467013480569243, Slope: -0.056974234027166226
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Next, we'll look at performance for the assets and portfolio.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8328ca5b">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Performance-Statistics">Performance Statistics<a class="anchor-link" href="#Performance-Statistics">¶</a></h3>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b29c95ed">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>We can then plot the monthly returns:</p>
+<h2 id="Performance-Statistics">Performance Statistics<a class="anchor-link" href="#Performance-Statistics">¶</a></h2><p>We can then plot the monthly returns:</p>
 </div>
 </div>
 </div>
@@ -14491,7 +14460,7 @@ Intercept: 11.467013480569243, Slope: -0.056974234027166226
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Finally, we can run the stats on the hybrid portfolio, SPY, and TLT with the following code:</p>
+<p>Finally, we can run the summary statistics on the strategy portfolio, SPY, and TLT with the following code:</p>
 </div>
 </div>
 </div>
@@ -14647,12 +14616,12 @@ Intercept: 11.467013480569243, Slope: -0.056974234027166226
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Based on the above, our hybrid portfolio outperforms both stocks and bonds, with lower drawdowns.</p>
+<p>Based on the above, our strategy portfolio outperforms both stocks and bonds, with lower drawdowns.</p>
 <h2 id="Conclusions">Conclusions<a class="anchor-link" href="#Conclusions">¶</a></h2><p>This was a interesting exercise to evaluate the performance of different asset classes during Fed tightening and easing cycles. The results are not particularly surprising, but it is interesting to see the data and plots to confirm the economic intuition that stocks perform well during tightening cycles (economic strength) and bonds perform well during easing cycles (economic weakness). The results are certainly dependent on the specific time period or regime, and also on the assumption made for how to handle the periods of neutral policy (i.e. no change in FFR).</p>
 <h2 id="Future-Investigation">Future Investigation<a class="anchor-link" href="#Future-Investigation">¶</a></h2><p>A couple of ideas sound intriguing for future investigation:</p>
 <ul>
 <li>Does a commodity index (such as GSCI) exhibit differing behavior than gold?</li>
-<li>How does leverage affect the returns that are observed for the hybrid portfolio, stocks, and bonds?</li>
+<li>How does leverage affect the returns that are observed for the strategy portfolio, stocks, and bonds?</li>
 <li>Do other Fed tightening/loosening cycles exhibit the same behavior for returns?</li>
 </ul>
 <h2 id="References">References<a class="anchor-link" href="#References">¶</a></h2><ol>

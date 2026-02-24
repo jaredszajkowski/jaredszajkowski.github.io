@@ -142,7 +142,7 @@
     
     
     "mainEntityOfPage": "true",
-    "wordCount": "1280"
+    "wordCount": "1210"
   }
   </script>
     
@@ -634,7 +634,7 @@
   <div class="flex flex-row flex-wrap items-center">
     
     
-      <time datetime="2025-07-06 00:00:01 &#43;0000 &#43;0000">July 6, 2025</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2025-07-28 00:00:01 &#43;0000 &#43;0000">Updated: July 28, 2025</time><span class="px-2 text-primary-500">&middot;</span><span>1280 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">7 mins</span>
+      <time datetime="2025-07-06 00:00:01 &#43;0000 &#43;0000">July 6, 2025</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2025-07-28 00:00:01 &#43;0000 &#43;0000">Updated: July 28, 2025</time><span class="px-2 text-primary-500">&middot;</span><span>1210 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">6 mins</span>
     
 
     
@@ -762,35 +762,12 @@
         <h2 id="introduction" class="relative group">Introduction <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#introduction" aria-label="Anchor">#</a></span></h2><p>This is a quick post to illustrate how I collect and store crypto asset data from Coinbase. Essentially, the scripts below pull minute, hour, and daily data for the specified assets and if there is an existing data record, then the existing record is updated to include the most recent data. If there is not an existing data record, then the complete historical record from coinbase is pulled and stored.</p>
 <h2 id="python-imports" class="relative group">Python Imports <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#python-imports" aria-label="Anchor">#</a></span></h2><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Standard Library</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">datetime</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">io</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">random</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">warnings</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Data Handling</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Data Visualization</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib.dates</span> <span class="k">as</span> <span class="nn">mdates</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib.ticker</span> <span class="k">as</span> <span class="nn">mtick</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">matplotlib.ticker</span> <span class="kn">import</span> <span class="n">FormatStrFormatter</span><span class="p">,</span> <span class="n">FuncFormatter</span><span class="p">,</span> <span class="n">MultipleLocator</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Data Sources</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Statistical Analysis</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Machine Learning</span>
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Suppress warnings</span>
 </span></span><span class="line"><span class="cl"><span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&#34;ignore&#34;</span><span class="p">)</span>
@@ -835,7 +812,6 @@
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">coinbase_fetch_full_history</span> <span class="kn">import</span> <span class="n">coinbase_fetch_full_history</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">coinbase_fetch_historical_candles</span> <span class="kn">import</span> <span class="n">coinbase_fetch_historical_candles</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">coinbase_pull_data</span> <span class="kn">import</span> <span class="n">coinbase_pull_data</span>
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">export_track_md_deps</span> <span class="kn">import</span> <span class="n">export_track_md_deps</span>
 </span></span></code></pre></div><h2 id="function-usage" class="relative group">Function Usage <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#function-usage" aria-label="Anchor">#</a></span></h2><h3 id="coinbase-fetch-available-products" class="relative group">Coinbase Fetch Available Products <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#coinbase-fetch-available-products" aria-label="Anchor">#</a></span></h3><p>This script pulls the list of available assets based on the inputs for base and quote currency. Here&rsquo;s an example:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span> <span class="o">=</span> <span class="n">coinbase_fetch_available_products</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">    <span class="n">base_currency</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -884,7 +860,7 @@
   </thead>
   <tbody>
     <tr>
-      <th>749</th>
+      <th>24</th>
       <td>00-USD</td>
       <td>00</td>
       <td>USD</td>
@@ -905,7 +881,7 @@
       <td></td>
     </tr>
     <tr>
-      <th>227</th>
+      <th>342</th>
       <td>1INCH-USD</td>
       <td>1INCH</td>
       <td>USD</td>
@@ -926,7 +902,7 @@
       <td></td>
     </tr>
     <tr>
-      <th>646</th>
+      <th>534</th>
       <td>2Z-USD</td>
       <td>2Z</td>
       <td>USD</td>
@@ -947,7 +923,7 @@
       <td></td>
     </tr>
     <tr>
-      <th>93</th>
+      <th>713</th>
       <td>A8-USD</td>
       <td>A8</td>
       <td>USD</td>
@@ -968,7 +944,7 @@
       <td></td>
     </tr>
     <tr>
-      <th>329</th>
+      <th>115</th>
       <td>AAVE-USD</td>
       <td>AAVE</td>
       <td>USD</td>
@@ -1010,7 +986,7 @@
       <td>...</td>
     </tr>
     <tr>
-      <th>112</th>
+      <th>442</th>
       <td>ZKC-USD</td>
       <td>ZKC</td>
       <td>USD</td>
@@ -1031,7 +1007,7 @@
       <td></td>
     </tr>
     <tr>
-      <th>302</th>
+      <th>352</th>
       <td>ZKP-USD</td>
       <td>ZKP</td>
       <td>USD</td>
@@ -1052,7 +1028,7 @@
       <td></td>
     </tr>
     <tr>
-      <th>405</th>
+      <th>88</th>
       <td>ZORA-USD</td>
       <td>ZORA</td>
       <td>USD</td>
@@ -1073,7 +1049,7 @@
       <td></td>
     </tr>
     <tr>
-      <th>337</th>
+      <th>467</th>
       <td>ZRO-USD</td>
       <td>ZRO</td>
       <td>USD</td>
@@ -1094,7 +1070,7 @@
       <td></td>
     </tr>
     <tr>
-      <th>357</th>
+      <th>610</th>
       <td>ZRX-USD</td>
       <td>ZRX</td>
       <td>USD</td>
@@ -1818,18 +1794,21 @@ The PDF export of the jupyter notebook is available <a href="data-pipelining-wit
             <div class="pt-3">
               
 
+
+
 <script src="https://giscus.app/client.js"
-        data-repo="jaredszajkowski/jaredszajkowski.github.io"
+        data-repo="jaredszajkowski/stack"
         data-repo-id="R_kgDOKZLn5w"
         data-category="Announcements"
         data-category-id="DIC_kwDOKZLn584CaJwO"
         data-mapping="title"
         data-strict="0"
         data-reactions-enabled="1"
-        data-emit-metadata="0"
+        data-emit-metadata="1"
         data-input-position="top"
         data-theme="preferred_color_scheme"
         data-lang="en"
+        data-loading="lazy"
         crossorigin="anonymous"
         async>
 </script>
