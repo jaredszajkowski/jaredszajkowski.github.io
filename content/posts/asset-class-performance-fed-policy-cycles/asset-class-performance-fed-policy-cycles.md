@@ -1,6 +1,6 @@
 ## Introduction
 
-In this post, we will look into the Fed Funds cycles and evaluate asset class performance during loosening and tightening of monetary policy.
+In this post, we will look into the Fed Funds cycles and evaluate asset class performance during tightening and easing of monetary policy.
 
 ## Python Imports
 
@@ -8,28 +8,18 @@ In this post, we will look into the Fed Funds cycles and evaluate asset class pe
 ```python
 # Standard Library
 import datetime
-import io
 import os
-import random
 import sys
 import warnings
 
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
 
 # Data Handling
 import numpy as np
 import pandas as pd
 
-# Data Visualization
-import matplotlib.dates as mdates
-import matplotlib.pyplot as plt
-import matplotlib.ticker as mtick
-import seaborn as sns
-from matplotlib.ticker import FormatStrFormatter, FuncFormatter, MultipleLocator
-
 # Data Sources
-import yfinance as yf
 import pandas_datareader.data as web
 
 # Statistical Analysis
@@ -77,31 +67,23 @@ Here are the functions needed for this project:
 
 * [bb_clean_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#bb_clean_data): Takes an Excel export from Bloomberg, removes the miscellaneous headings/rows, and returns a DataFrame.
 * [calc_fed_cycle_asset_performance](/posts/reusable-extensible-python-functions-financial-data-analysis/#calc_fed_cycle_asset_performance): Calculates metrics for an asset based on a specified Fed tightening/loosening cycle.
-* [df_info](/posts/reusable-extensible-python-functions-financial-data-analysis/#df_info): A simple function to display the information about a DataFrame and the first five rows and last five rows.
-* [df_info_markdown](/posts/reusable-extensible-python-functions-financial-data-analysis/#df_info_markdown): Similar to the `df_info` function above, except that it coverts the output to markdown.
-* [export_track_md_deps](/posts/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps): Exports various text outputs to markdown files, which are included in the `index.md` file created when building the site with Hugo.
 * [load_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#load_data): Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.
 * [pandas_set_decimal_places](/posts/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places): Set the number of decimal places displayed for floating-point numbers in pandas.
 * [plot_bar_returns_ffr_change](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_bar_returns_ffr_change): Plot the bar chart of the cumulative or annualized returns for the asset class along with the change in the Fed Funds Rate.
 * [plot_scatter_regression_ffr_vs_returns](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_scatter_regression_ffr_vs_returns): Plot the scatter plot and regression of the annualized return for the asset class along with the annualized change in the Fed Funds Rate.
 * [plot_timeseries](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_timeseries): Plot the timeseries data from a DataFrame for a specified date range and columns.
-* [yf_pull_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#yf_pull_data): Download daily price data from Yahoo Finance and export it.
+* [summary_stats](/posts/reusable-extensible-python-functions-financial-data-analysis/#summary_stats): Generate summary statistics for a series of returns.
 
 
 ```python
 from bb_clean_data import bb_clean_data
 from calc_fed_cycle_asset_performance import calc_fed_cycle_asset_performance
-from df_info import df_info
-from df_info_markdown import df_info_markdown
-from export_track_md_deps import export_track_md_deps
 from load_data import load_data
 from pandas_set_decimal_places import pandas_set_decimal_places
 from plot_bar_returns_ffr_change import plot_bar_returns_ffr_change
-from plot_timeseries import plot_timeseries
 from plot_scatter_regression_ffr_vs_returns import plot_scatter_regression_ffr_vs_returns
-from sm_ols_summary_markdown import sm_ols_summary_markdown
+from plot_timeseries import plot_timeseries
 from summary_stats import summary_stats
-from yf_pull_data import yf_pull_data
 ```
 
 ## Data Overview
@@ -1120,228 +1102,9 @@ bb_clean_data(
     asset_class="Indices",
     excel_export=True,
     pickle_export=True,
-    output_confirmation=True,
+    output_confirmation=False,
 )
-```
 
-    The first and last date of data for SPXT_S&P 500 Total Return Index is: 
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Close</th>
-      <th>Open</th>
-      <th>High</th>
-      <th>Low</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1989-09-11</th>
-      <td>369.55000</td>
-      <td>369.55000</td>
-      <td>369.55000</td>
-      <td>369.55000</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Close</th>
-      <th>Open</th>
-      <th>High</th>
-      <th>Low</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>2026-01-30</th>
-      <td>15441.15000</td>
-      <td>15459.48000</td>
-      <td>15496.54000</td>
-      <td>15340.40000</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-    Bloomberg data cleaning complete for SPXT_S&P 500 Total Return Index
-    --------------------
-
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Close</th>
-      <th>Open</th>
-      <th>High</th>
-      <th>Low</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1989-09-11</th>
-      <td>369.55000</td>
-      <td>369.55000</td>
-      <td>369.55000</td>
-      <td>369.55000</td>
-    </tr>
-    <tr>
-      <th>1989-09-12</th>
-      <td>370.68000</td>
-      <td>370.68000</td>
-      <td>370.68000</td>
-      <td>370.68000</td>
-    </tr>
-    <tr>
-      <th>1989-09-13</th>
-      <td>367.25000</td>
-      <td>367.25000</td>
-      <td>367.25000</td>
-      <td>367.25000</td>
-    </tr>
-    <tr>
-      <th>1989-09-14</th>
-      <td>364.83000</td>
-      <td>364.83000</td>
-      <td>364.83000</td>
-      <td>364.83000</td>
-    </tr>
-    <tr>
-      <th>1989-09-15</th>
-      <td>366.86000</td>
-      <td>366.86000</td>
-      <td>366.86000</td>
-      <td>366.86000</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>2026-01-26</th>
-      <td>15464.66000</td>
-      <td>15404.58000</td>
-      <td>15496.46000</td>
-      <td>15401.62000</td>
-    </tr>
-    <tr>
-      <th>2026-01-27</th>
-      <td>15527.82000</td>
-      <td>15499.71000</td>
-      <td>15550.56000</td>
-      <td>15484.32000</td>
-    </tr>
-    <tr>
-      <th>2026-01-28</th>
-      <td>15526.69000</td>
-      <td>15580.04000</td>
-      <td>15580.59000</td>
-      <td>15494.28000</td>
-    </tr>
-    <tr>
-      <th>2026-01-29</th>
-      <td>15506.84000</td>
-      <td>15526.27000</td>
-      <td>15558.50000</td>
-      <td>15288.34000</td>
-    </tr>
-    <tr>
-      <th>2026-01-30</th>
-      <td>15441.15000</td>
-      <td>15459.48000</td>
-      <td>15496.54000</td>
-      <td>15340.40000</td>
-    </tr>
-  </tbody>
-</table>
-<p>9169 rows × 4 columns</p>
-</div>
-
-
-
-
-```python
 spxt = load_data(
     base_directory=DATA_DIR,
     ticker="SPXT_S&P 500 Total Return Index_Clean",
@@ -1482,7 +1245,7 @@ plot_timeseries(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_25_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_24_0.png)
     
 
 
@@ -2139,7 +1902,7 @@ plot_bar_returns_ffr_change(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_29_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_28_0.png)
     
 
 
@@ -2156,7 +1919,7 @@ plot_bar_returns_ffr_change(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_31_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_30_0.png)
     
 
 
@@ -2189,7 +1952,7 @@ Y_vals = model.params[0] + model.params[1] * X_vals
     Model:                             OLS   Adj. R-squared:                 -0.018
     Method:                  Least Squares   F-statistic:                    0.4786
     Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.495
-    Time:                         01:21:28   Log-Likelihood:                -132.24
+    Time:                         13:51:24   Log-Likelihood:                -132.24
     No. Observations:                   30   AIC:                             268.5
     Df Residuals:                       28   BIC:                             271.3
     Df Model:                            1                                         
@@ -2227,7 +1990,7 @@ plot_scatter_regression_ffr_vs_returns(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_35_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_34_0.png)
     
 
 
@@ -2248,171 +2011,9 @@ bb_clean_data(
     asset_class="Indices",
     excel_export=True,
     pickle_export=True,
-    output_confirmation=True,
+    output_confirmation=False,
 )
-```
 
-    The first and last date of data for SPBDU10T_S&P US Treasury Bond 7-10 Year Total Return Index is: 
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Close</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1989-12-29</th>
-      <td>100</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Close</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>2026-01-30</th>
-      <td>650.16900</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-    Bloomberg data cleaning complete for SPBDU10T_S&P US Treasury Bond 7-10 Year Total Return Index
-    --------------------
-
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Close</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1989-12-29</th>
-      <td>100</td>
-    </tr>
-    <tr>
-      <th>1990-01-02</th>
-      <td>99.97200</td>
-    </tr>
-    <tr>
-      <th>1990-01-03</th>
-      <td>99.73300</td>
-    </tr>
-    <tr>
-      <th>1990-01-04</th>
-      <td>99.81300</td>
-    </tr>
-    <tr>
-      <th>1990-01-05</th>
-      <td>99.76900</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>2026-01-26</th>
-      <td>651.26800</td>
-    </tr>
-    <tr>
-      <th>2026-01-27</th>
-      <td>650.55800</td>
-    </tr>
-    <tr>
-      <th>2026-01-28</th>
-      <td>650.04300</td>
-    </tr>
-    <tr>
-      <th>2026-01-29</th>
-      <td>650.77900</td>
-    </tr>
-    <tr>
-      <th>2026-01-30</th>
-      <td>650.16900</td>
-    </tr>
-  </tbody>
-</table>
-<p>9047 rows × 1 columns</p>
-</div>
-
-
-
-
-```python
 treas_10y = load_data(
     base_directory=DATA_DIR,
     ticker="SPBDU10T_S&P US Treasury Bond 7-10 Year Total Return Index_Clean",
@@ -2553,7 +2154,7 @@ plot_timeseries(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_41_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_39_0.png)
     
 
 
@@ -3210,7 +2811,7 @@ plot_bar_returns_ffr_change(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_45_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_43_0.png)
     
 
 
@@ -3227,7 +2828,7 @@ plot_bar_returns_ffr_change(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_47_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_45_0.png)
     
 
 
@@ -3260,7 +2861,7 @@ Y_vals = model.params[0] + model.params[1] * X_vals
     Model:                             OLS   Adj. R-squared:                  0.016
     Method:                  Least Squares   F-statistic:                     1.462
     Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.237
-    Time:                         01:21:30   Log-Likelihood:                -103.64
+    Time:                         13:51:27   Log-Likelihood:                -103.64
     No. Observations:                   30   AIC:                             211.3
     Df Residuals:                       28   BIC:                             214.1
     Df Model:                            1                                         
@@ -3298,7 +2899,7 @@ plot_scatter_regression_ffr_vs_returns(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_51_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_49_0.png)
     
 
 
@@ -3319,171 +2920,9 @@ bb_clean_data(
     asset_class="Indices",
     excel_export=True,
     pickle_export=True,
-    output_confirmation=True,
+    output_confirmation=False,
 )
-```
 
-    The first and last date of data for LF98TRUU_Bloomberg US Corporate High Yield Total Return Index Value Unhedged USD is: 
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Close</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1983-07-29</th>
-      <td>98.21000</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Close</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>2026-01-30</th>
-      <td>2929.32000</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-    Bloomberg data cleaning complete for LF98TRUU_Bloomberg US Corporate High Yield Total Return Index Value Unhedged USD
-    --------------------
-
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Close</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1983-07-29</th>
-      <td>98.21000</td>
-    </tr>
-    <tr>
-      <th>1983-08-31</th>
-      <td>99.41000</td>
-    </tr>
-    <tr>
-      <th>1983-09-30</th>
-      <td>101.94000</td>
-    </tr>
-    <tr>
-      <th>1983-10-31</th>
-      <td>102.91000</td>
-    </tr>
-    <tr>
-      <th>1983-11-30</th>
-      <td>103.62000</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>2026-01-26</th>
-      <td>2935.20000</td>
-    </tr>
-    <tr>
-      <th>2026-01-27</th>
-      <td>2934.79000</td>
-    </tr>
-    <tr>
-      <th>2026-01-28</th>
-      <td>2932.35000</td>
-    </tr>
-    <tr>
-      <th>2026-01-29</th>
-      <td>2929.31000</td>
-    </tr>
-    <tr>
-      <th>2026-01-30</th>
-      <td>2929.32000</td>
-    </tr>
-  </tbody>
-</table>
-<p>7081 rows × 1 columns</p>
-</div>
-
-
-
-
-```python
 hy_bonds = load_data(
     base_directory=DATA_DIR,
     ticker="LF98TRUU_Bloomberg US Corporate High Yield Total Return Index Value Unhedged USD_Clean",
@@ -3624,7 +3063,7 @@ plot_timeseries(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_56_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_53_0.png)
     
 
 
@@ -4281,7 +3720,7 @@ plot_bar_returns_ffr_change(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_60_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_57_0.png)
     
 
 
@@ -4298,7 +3737,7 @@ plot_bar_returns_ffr_change(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_62_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_59_0.png)
     
 
 
@@ -4329,7 +3768,7 @@ Y_vals = model.params[0] + model.params[1] * X_vals
     Model:                             OLS   Adj. R-squared:                 -0.031
     Method:                  Least Squares   F-statistic:                    0.1171
     Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.735
-    Time:                         01:21:32   Log-Likelihood:                -110.57
+    Time:                         13:51:29   Log-Likelihood:                -110.57
     No. Observations:                   30   AIC:                             225.1
     Df Residuals:                       28   BIC:                             227.9
     Df Model:                            1                                         
@@ -4367,7 +3806,7 @@ plot_scatter_regression_ffr_vs_returns(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_66_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_63_0.png)
     
 
 
@@ -4386,171 +3825,9 @@ bb_clean_data(
     asset_class="Commodities",
     excel_export=True,
     pickle_export=True,
-    output_confirmation=True,
+    output_confirmation=False,
 )
-```
 
-    The first and last date of data for XAU_Gold USD Spot is: 
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Close</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1975-01-02</th>
-      <td>175</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Close</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>2026-02-02</th>
-      <td>4664.05000</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-    Bloomberg data cleaning complete for XAU_Gold USD Spot
-    --------------------
-
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Close</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1975-01-02</th>
-      <td>175</td>
-    </tr>
-    <tr>
-      <th>1975-01-03</th>
-      <td>174</td>
-    </tr>
-    <tr>
-      <th>1975-01-06</th>
-      <td>173.50000</td>
-    </tr>
-    <tr>
-      <th>1975-01-07</th>
-      <td>169.50000</td>
-    </tr>
-    <tr>
-      <th>1975-01-08</th>
-      <td>180</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>2026-01-27</th>
-      <td>5180.16000</td>
-    </tr>
-    <tr>
-      <th>2026-01-28</th>
-      <td>5417.21000</td>
-    </tr>
-    <tr>
-      <th>2026-01-29</th>
-      <td>5375.24000</td>
-    </tr>
-    <tr>
-      <th>2026-01-30</th>
-      <td>4894.23000</td>
-    </tr>
-    <tr>
-      <th>2026-02-02</th>
-      <td>4664.05000</td>
-    </tr>
-  </tbody>
-</table>
-<p>13113 rows × 1 columns</p>
-</div>
-
-
-
-
-```python
 gold = load_data(
     base_directory=DATA_DIR,
     ticker="XAU_Gold USD Spot_Clean",
@@ -4691,7 +3968,7 @@ plot_timeseries(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_71_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_67_0.png)
     
 
 
@@ -5348,7 +4625,7 @@ plot_bar_returns_ffr_change(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_75_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_71_0.png)
     
 
 
@@ -5365,7 +4642,7 @@ plot_bar_returns_ffr_change(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_77_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_73_0.png)
     
 
 
@@ -5398,7 +4675,7 @@ Y_vals = model.params[0] + model.params[1] * X_vals
     Model:                             OLS   Adj. R-squared:                  0.030
     Method:                  Least Squares   F-statistic:                     1.900
     Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.179
-    Time:                         01:21:35   Log-Likelihood:                -140.03
+    Time:                         13:51:32   Log-Likelihood:                -140.03
     No. Observations:                   30   AIC:                             284.1
     Df Residuals:                       28   BIC:                             286.9
     Df Model:                            1                                         
@@ -5436,7 +4713,7 @@ plot_scatter_regression_ffr_vs_returns(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_81_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_77_0.png)
     
 
 
@@ -6231,104 +5508,6 @@ display(strategy.head(20))
 
 
 ```python
-spxt_monthly
-```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Close</th>
-      <th>Monthly_Return</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1990-01-31</th>
-      <td>353.94000</td>
-      <td>-0.06713</td>
-    </tr>
-    <tr>
-      <th>1990-02-28</th>
-      <td>358.50000</td>
-      <td>0.01288</td>
-    </tr>
-    <tr>
-      <th>1990-03-31</th>
-      <td>368</td>
-      <td>0.02650</td>
-    </tr>
-    <tr>
-      <th>1990-04-30</th>
-      <td>358.81000</td>
-      <td>-0.02497</td>
-    </tr>
-    <tr>
-      <th>1990-05-31</th>
-      <td>393.80000</td>
-      <td>0.09752</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>2025-09-30</th>
-      <td>14826.80000</td>
-      <td>0.03650</td>
-    </tr>
-    <tr>
-      <th>2025-10-31</th>
-      <td>15173.95000</td>
-      <td>0.02341</td>
-    </tr>
-    <tr>
-      <th>2025-11-30</th>
-      <td>15211.14000</td>
-      <td>0.00245</td>
-    </tr>
-    <tr>
-      <th>2025-12-31</th>
-      <td>15220.45000</td>
-      <td>0.00061</td>
-    </tr>
-    <tr>
-      <th>2026-01-31</th>
-      <td>15441.15000</td>
-      <td>0.01450</td>
-    </tr>
-  </tbody>
-</table>
-<p>433 rows × 2 columns</p>
-</div>
-
-
-
-
-```python
 # Calculate cumulative returns and drawdown for spxt
 spxt_monthly['Cumulative_Return'] = (1 + spxt_monthly['Monthly_Return']).cumprod() - 1
 spxt_monthly['Cumulative_Return_Plus_One'] = 1 + spxt_monthly['Cumulative_Return']
@@ -6342,10 +5521,6 @@ treas_10y_monthly['Cumulative_Return_Plus_One'] = 1 + treas_10y_monthly['Cumulat
 treas_10y_monthly['Rolling_Max'] = treas_10y_monthly['Cumulative_Return_Plus_One'].cummax()
 treas_10y_monthly['Drawdown'] = treas_10y_monthly['Cumulative_Return_Plus_One'] / treas_10y_monthly['Rolling_Max'] - 1
 treas_10y_monthly.drop(columns=['Cumulative_Return_Plus_One', 'Rolling_Max'], inplace=True)
-
-# Isolate the returns for spxt and treas_10y
-# spxt_ret = spxt_monthly['Monthly_Return']
-# treas_10y_ret = treas_10y_monthly['Monthly_Return']
 
 # Convert to DataFrame
 portfolio_monthly = strategy[['Date', 'strategy_return']].copy().set_index('Date')
@@ -6597,7 +5772,7 @@ plot_timeseries(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_95_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_90_0.png)
     
 
 
@@ -6628,7 +5803,7 @@ plot_timeseries(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_97_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_92_0.png)
     
 
 
@@ -6652,14 +5827,14 @@ plot_timeseries(
     y_tick_spacing=0.05,
     grid=True,
     legend=True,
-    export_plot=True,
-    plot_file_name="05_Drawdowns",
+    export_plot=False,
+    plot_file_name=None,
 )
 ```
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_99_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_94_0.png)
     
 
 
@@ -6797,6 +5972,10 @@ sum_stats
 
 
 Based on the above, our hybrid portfolio outperforms both stocks and bonds, with lower drawdowns.
+
+## Conclusions
+
+This was a interesting exercise to evaluate the performance of different asset classes during Fed tightening and easing cycles. The results are not particularly surprising, but it is interesting to see the data and plots to confirm the economic intuition that stocks perform well during tightening cycles (economic strength) and bonds perform well during easing cycles (economic weakness). The results are certainly dependent on the specific time period or regime, and also on the assumption made for how to handle the periods of neutral policy (i.e. no change in FFR).
 
 ## Future Investigation
 

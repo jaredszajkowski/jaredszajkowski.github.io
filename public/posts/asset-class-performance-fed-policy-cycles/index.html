@@ -142,7 +142,7 @@
     
     
     "mainEntityOfPage": "true",
-    "wordCount": "8931"
+    "wordCount": "8539"
   }
   </script>
     
@@ -634,7 +634,7 @@
   <div class="flex flex-row flex-wrap items-center">
     
     
-      <time datetime="2025-11-29 00:00:01 &#43;0000 &#43;0000">November 29, 2025</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2026-02-23 00:00:01 &#43;0000 &#43;0000">Updated: February 23, 2026</time><span class="px-2 text-primary-500">&middot;</span><span>8931 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">42 mins</span>
+      <time datetime="2025-11-29 00:00:01 &#43;0000 &#43;0000">November 29, 2025</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2026-02-23 00:00:01 &#43;0000 &#43;0000">Updated: February 23, 2026</time><span class="px-2 text-primary-500">&middot;</span><span>8539 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">41 mins</span>
     
 
     
@@ -772,6 +772,7 @@
         <li><a href="#performance-statistics">Performance Statistics</a></li>
       </ul>
     </li>
+    <li><a href="#conclusions">Conclusions</a></li>
     <li><a href="#future-investigation">Future Investigation</a></li>
     <li><a href="#references">References</a></li>
     <li><a href="#code">Code</a></li>
@@ -784,31 +785,21 @@
         </div>
       
       <div class="min-h-0 min-w-0 max-w-prose grow">
-        <h2 id="introduction" class="relative group">Introduction <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#introduction" aria-label="Anchor">#</a></span></h2><p>In this post, we will look into the Fed Funds cycles and evaluate asset class performance during loosening and tightening of monetary policy.</p>
+        <h2 id="introduction" class="relative group">Introduction <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#introduction" aria-label="Anchor">#</a></span></h2><p>In this post, we will look into the Fed Funds cycles and evaluate asset class performance during tightening and easing of monetary policy.</p>
 <h2 id="python-imports" class="relative group">Python Imports <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#python-imports" aria-label="Anchor">#</a></span></h2><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Standard Library</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">datetime</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">io</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">random</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">warnings</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Data Handling</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Data Visualization</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib.dates</span> <span class="k">as</span> <span class="nn">mdates</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib.ticker</span> <span class="k">as</span> <span class="nn">mtick</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">matplotlib.ticker</span> <span class="kn">import</span> <span class="n">FormatStrFormatter</span><span class="p">,</span> <span class="n">FuncFormatter</span><span class="p">,</span> <span class="n">MultipleLocator</span>
-</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Data Sources</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas_datareader.data</span> <span class="k">as</span> <span class="nn">web</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Statistical Analysis</span>
@@ -852,15 +843,6 @@
     <a href="https://www.jaredszajkowski.com/posts/reusable-extensible-python-functions-financial-data-analysis/#calc_fed_cycle_asset_performance">calc_fed_cycle_asset_performance</a>: Calculates metrics for an asset based on a specified Fed tightening/loosening cycle.</li>
 <li>
       
-    <a href="https://www.jaredszajkowski.com/posts/reusable-extensible-python-functions-financial-data-analysis/#df_info">df_info</a>: A simple function to display the information about a DataFrame and the first five rows and last five rows.</li>
-<li>
-      
-    <a href="https://www.jaredszajkowski.com/posts/reusable-extensible-python-functions-financial-data-analysis/#df_info_markdown">df_info_markdown</a>: Similar to the <code>df_info</code> function above, except that it coverts the output to markdown.</li>
-<li>
-      
-    <a href="https://www.jaredszajkowski.com/posts/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps">export_track_md_deps</a>: Exports various text outputs to markdown files, which are included in the <code>index.md</code> file created when building the site with Hugo.</li>
-<li>
-      
     <a href="https://www.jaredszajkowski.com/posts/reusable-extensible-python-functions-financial-data-analysis/#load_data">load_data</a>: Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.</li>
 <li>
       
@@ -876,21 +858,16 @@
     <a href="https://www.jaredszajkowski.com/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_timeseries">plot_timeseries</a>: Plot the timeseries data from a DataFrame for a specified date range and columns.</li>
 <li>
       
-    <a href="https://www.jaredszajkowski.com/posts/reusable-extensible-python-functions-financial-data-analysis/#yf_pull_data">yf_pull_data</a>: Download daily price data from Yahoo Finance and export it.</li>
+    <a href="https://www.jaredszajkowski.com/posts/reusable-extensible-python-functions-financial-data-analysis/#summary_stats">summary_stats</a>: Generate summary statistics for a series of returns.</li>
 </ul>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">bb_clean_data</span> <span class="kn">import</span> <span class="n">bb_clean_data</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">calc_fed_cycle_asset_performance</span> <span class="kn">import</span> <span class="n">calc_fed_cycle_asset_performance</span>
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">df_info</span> <span class="kn">import</span> <span class="n">df_info</span>
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">df_info_markdown</span> <span class="kn">import</span> <span class="n">df_info_markdown</span>
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">export_track_md_deps</span> <span class="kn">import</span> <span class="n">export_track_md_deps</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">load_data</span> <span class="kn">import</span> <span class="n">load_data</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pandas_set_decimal_places</span> <span class="kn">import</span> <span class="n">pandas_set_decimal_places</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">plot_bar_returns_ffr_change</span> <span class="kn">import</span> <span class="n">plot_bar_returns_ffr_change</span>
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">plot_timeseries</span> <span class="kn">import</span> <span class="n">plot_timeseries</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">plot_scatter_regression_ffr_vs_returns</span> <span class="kn">import</span> <span class="n">plot_scatter_regression_ffr_vs_returns</span>
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sm_ols_summary_markdown</span> <span class="kn">import</span> <span class="n">sm_ols_summary_markdown</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">plot_timeseries</span> <span class="kn">import</span> <span class="n">plot_timeseries</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">summary_stats</span> <span class="kn">import</span> <span class="n">summary_stats</span>
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">yf_pull_data</span> <span class="kn">import</span> <span class="n">yf_pull_data</span>
 </span></span></code></pre></div><h2 id="data-overview" class="relative group">Data Overview <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#data-overview" aria-label="Anchor">#</a></span></h2><h3 id="acquire--plot-fed-funds-data" class="relative group">Acquire &amp; Plot Fed Funds Data <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#acquire--plot-fed-funds-data" aria-label="Anchor">#</a></span></h3><p>First, let&rsquo;s get the data for the Fed Funds target rate (FFR). This data is found in 3 different datasets from FRED.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Set decimal places</span>
 </span></span><span class="line"><span class="cl"><span class="n">pandas_set_decimal_places</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
@@ -1838,211 +1815,10 @@
 </span></span><span class="line"><span class="cl">    <span class="n">asset_class</span><span class="o">=</span><span class="s2">&#34;Indices&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">excel_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">pickle_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="n">output_confirmation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">output_confirmation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><pre><code>The first and last date of data for SPXT_S&amp;P 500 Total Return Index is: 
-</code></pre>
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-<pre><code>.dataframe tbody tr th {
-    vertical-align: top;
-}
-
-.dataframe thead th {
-    text-align: right;
-}
-</code></pre>
-<p></style></p>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Close</th>
-      <th>Open</th>
-      <th>High</th>
-      <th>Low</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1989-09-11</th>
-      <td>369.55000</td>
-      <td>369.55000</td>
-      <td>369.55000</td>
-      <td>369.55000</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-<pre><code>.dataframe tbody tr th {
-    vertical-align: top;
-}
-
-.dataframe thead th {
-    text-align: right;
-}
-</code></pre>
-<p></style></p>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Close</th>
-      <th>Open</th>
-      <th>High</th>
-      <th>Low</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>2026-01-30</th>
-      <td>15441.15000</td>
-      <td>15459.48000</td>
-      <td>15496.54000</td>
-      <td>15340.40000</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-<pre><code>Bloomberg data cleaning complete for SPXT_S&amp;P 500 Total Return Index
---------------------
-</code></pre>
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-<pre><code>.dataframe tbody tr th {
-    vertical-align: top;
-}
-
-.dataframe thead th {
-    text-align: right;
-}
-</code></pre>
-<p></style></p>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Close</th>
-      <th>Open</th>
-      <th>High</th>
-      <th>Low</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1989-09-11</th>
-      <td>369.55000</td>
-      <td>369.55000</td>
-      <td>369.55000</td>
-      <td>369.55000</td>
-    </tr>
-    <tr>
-      <th>1989-09-12</th>
-      <td>370.68000</td>
-      <td>370.68000</td>
-      <td>370.68000</td>
-      <td>370.68000</td>
-    </tr>
-    <tr>
-      <th>1989-09-13</th>
-      <td>367.25000</td>
-      <td>367.25000</td>
-      <td>367.25000</td>
-      <td>367.25000</td>
-    </tr>
-    <tr>
-      <th>1989-09-14</th>
-      <td>364.83000</td>
-      <td>364.83000</td>
-      <td>364.83000</td>
-      <td>364.83000</td>
-    </tr>
-    <tr>
-      <th>1989-09-15</th>
-      <td>366.86000</td>
-      <td>366.86000</td>
-      <td>366.86000</td>
-      <td>366.86000</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>2026-01-26</th>
-      <td>15464.66000</td>
-      <td>15404.58000</td>
-      <td>15496.46000</td>
-      <td>15401.62000</td>
-    </tr>
-    <tr>
-      <th>2026-01-27</th>
-      <td>15527.82000</td>
-      <td>15499.71000</td>
-      <td>15550.56000</td>
-      <td>15484.32000</td>
-    </tr>
-    <tr>
-      <th>2026-01-28</th>
-      <td>15526.69000</td>
-      <td>15580.04000</td>
-      <td>15580.59000</td>
-      <td>15494.28000</td>
-    </tr>
-    <tr>
-      <th>2026-01-29</th>
-      <td>15506.84000</td>
-      <td>15526.27000</td>
-      <td>15558.50000</td>
-      <td>15288.34000</td>
-    </tr>
-    <tr>
-      <th>2026-01-30</th>
-      <td>15441.15000</td>
-      <td>15459.48000</td>
-      <td>15496.54000</td>
-      <td>15340.40000</td>
-    </tr>
-  </tbody>
-</table>
-<p>9169 rows × 4 columns</p>
-</div>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">spxt</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">spxt</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">    <span class="n">base_directory</span><span class="o">=</span><span class="n">DATA_DIR</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">ticker</span><span class="o">=</span><span class="s2">&#34;SPXT_S&amp;P 500 Total Return Index_Clean&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">source</span><span class="o">=</span><span class="s2">&#34;Bloomberg&#34;</span><span class="p">,</span> 
@@ -2170,7 +1946,7 @@
 </span></span><span class="line"><span class="cl">    <span class="n">export_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_file_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_25_0.png" alt="png" title="" />
+</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_24_0.png" alt="png" title="" />
 
 </p>
 <p>Next, we will calculate the performance for SPY based on the pre-defined Fed cycles:</p>
@@ -2811,7 +2587,7 @@
 </span></span><span class="line"><span class="cl">    <span class="n">asset_label</span><span class="o">=</span><span class="s2">&#34;SPXT&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">annualized_or_cumulative</span><span class="o">=</span><span class="s2">&#34;Cumulative&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_29_0.png" alt="png" title="" />
+</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_28_0.png" alt="png" title="" />
 
 </p>
 <p>And then the annualized returns along with the annualized change in FFR:</p>
@@ -2820,7 +2596,7 @@
 </span></span><span class="line"><span class="cl">    <span class="n">asset_label</span><span class="o">=</span><span class="s2">&#34;SPXT&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">annualized_or_cumulative</span><span class="o">=</span><span class="s2">&#34;Annualized&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_31_0.png" alt="png" title="" />
+</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_30_0.png" alt="png" title="" />
 
 </p>
 <p>The cumulative returns plot is not particularly insightful, but there are some interesting observations to be gained from the annualized returns plot. During the past two (2) rate cutting cycles (cycles 11/12/13/14 and 18), stocks have exhibited negative returns during the rate cutting cycle. However, after the rate cutting cycle was complete, returns during the following cycle (when rates were usually flat) were quite strong and higher than the historical mean return for the S&amp;P 500. The economic intuition for this behavior is valid; as the economy weakens, investors are concerned about the pricing of equities, the returns become negative, and the Fed responds with cutting rates. The exact timing of when the Fed begins cutting rates is one of the unknowns; the Fed could be ahead of the curve, cutting rates as economic data begins to prompt that action, or behind the curve, where the ecomony rolls over rapidly and even the Fed&rsquo;s actions are not enough to halt the economic contraction.</p>
@@ -2846,7 +2622,7 @@ Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.017
 Model:                             OLS   Adj. R-squared:                 -0.018
 Method:                  Least Squares   F-statistic:                    0.4786
 Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.495
-Time:                         01:21:28   Log-Likelihood:                -132.24
+Time:                         13:51:24   Log-Likelihood:                -132.24
 No. Observations:                   30   AIC:                             268.5
 Df Residuals:                       28   BIC:                             271.3
 Df Model:                            1                                         
@@ -2876,7 +2652,7 @@ Intercept: 13.076015539043272, Slope: 0.022056651501767076
 </span></span><span class="line"><span class="cl">    <span class="n">intercept</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
 </span></span><span class="line"><span class="cl">    <span class="n">slope</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_35_0.png" alt="png" title="" />
+</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_34_0.png" alt="png" title="" />
 
 </p>
 <p>Here we can see the data points for cycles 11/12/13/14 and 18 as mentioned above. Interestingly, cycles 28/29/30 (which is the current rate cutting cycle) appears to be an outlier. Of course, the book is not yet finished for cycles 28/29/30, and we could certainly see a bear market in stocks over the next several years.</p>
@@ -2889,154 +2665,10 @@ Intercept: 13.076015539043272, Slope: 0.022056651501767076
 </span></span><span class="line"><span class="cl">    <span class="n">asset_class</span><span class="o">=</span><span class="s2">&#34;Indices&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">excel_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">pickle_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="n">output_confirmation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">output_confirmation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><pre><code>The first and last date of data for SPBDU10T_S&amp;P US Treasury Bond 7-10 Year Total Return Index is: 
-</code></pre>
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-<pre><code>.dataframe tbody tr th {
-    vertical-align: top;
-}
-
-.dataframe thead th {
-    text-align: right;
-}
-</code></pre>
-<p></style></p>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Close</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1989-12-29</th>
-      <td>100</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-<pre><code>.dataframe tbody tr th {
-    vertical-align: top;
-}
-
-.dataframe thead th {
-    text-align: right;
-}
-</code></pre>
-<p></style></p>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Close</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>2026-01-30</th>
-      <td>650.16900</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-<pre><code>Bloomberg data cleaning complete for SPBDU10T_S&amp;P US Treasury Bond 7-10 Year Total Return Index
---------------------
-</code></pre>
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-<pre><code>.dataframe tbody tr th {
-    vertical-align: top;
-}
-
-.dataframe thead th {
-    text-align: right;
-}
-</code></pre>
-<p></style></p>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Close</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1989-12-29</th>
-      <td>100</td>
-    </tr>
-    <tr>
-      <th>1990-01-02</th>
-      <td>99.97200</td>
-    </tr>
-    <tr>
-      <th>1990-01-03</th>
-      <td>99.73300</td>
-    </tr>
-    <tr>
-      <th>1990-01-04</th>
-      <td>99.81300</td>
-    </tr>
-    <tr>
-      <th>1990-01-05</th>
-      <td>99.76900</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>2026-01-26</th>
-      <td>651.26800</td>
-    </tr>
-    <tr>
-      <th>2026-01-27</th>
-      <td>650.55800</td>
-    </tr>
-    <tr>
-      <th>2026-01-28</th>
-      <td>650.04300</td>
-    </tr>
-    <tr>
-      <th>2026-01-29</th>
-      <td>650.77900</td>
-    </tr>
-    <tr>
-      <th>2026-01-30</th>
-      <td>650.16900</td>
-    </tr>
-  </tbody>
-</table>
-<p>9047 rows × 1 columns</p>
-</div>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">treas_10y</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">treas_10y</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">    <span class="n">base_directory</span><span class="o">=</span><span class="n">DATA_DIR</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">ticker</span><span class="o">=</span><span class="s2">&#34;SPBDU10T_S&amp;P US Treasury Bond 7-10 Year Total Return Index_Clean&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">source</span><span class="o">=</span><span class="s2">&#34;Bloomberg&#34;</span><span class="p">,</span> 
@@ -3164,7 +2796,7 @@ Intercept: 13.076015539043272, Slope: 0.022056651501767076
 </span></span><span class="line"><span class="cl">    <span class="n">export_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_file_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_41_0.png" alt="png" title="" />
+</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_39_0.png" alt="png" title="" />
 
 </p>
 <p>Next, we will calculate the performance for SPY based on the pre-defined Fed cycles:</p>
@@ -3805,7 +3437,7 @@ Intercept: 13.076015539043272, Slope: 0.022056651501767076
 </span></span><span class="line"><span class="cl">    <span class="n">asset_label</span><span class="o">=</span><span class="s2">&#34;TREAS_10Y&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">annualized_or_cumulative</span><span class="o">=</span><span class="s2">&#34;Cumulative&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_45_0.png" alt="png" title="" />
+</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_43_0.png" alt="png" title="" />
 
 </p>
 <p>And then the annualized returns along with the annualized change in FFR:</p>
@@ -3814,7 +3446,7 @@ Intercept: 13.076015539043272, Slope: 0.022056651501767076
 </span></span><span class="line"><span class="cl">    <span class="n">asset_label</span><span class="o">=</span><span class="s2">&#34;TREAS_10Y&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">annualized_or_cumulative</span><span class="o">=</span><span class="s2">&#34;Annualized&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_47_0.png" alt="png" title="" />
+</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_45_0.png" alt="png" title="" />
 
 </p>
 <p>For this dataset, we have cycles 11/12/13/14 exhibiting strong returns, which is consistent with the economic intuition that bonds should perform well during periods of economic weakness and rate cuts. We also see this outcome with cycle 18. It becomes a little more interesting during cycles 25 and 26, where the correlations of stocks and bond returns seemed to align, so we see negative bond returns there. Finally, cycles 28/29/30 also exhibit positive bond returns, which is consistent with our thesis that bonds should perform well during periods of economic weakness and rate cuts.</p>
@@ -3840,7 +3472,7 @@ Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.050
 Model:                             OLS   Adj. R-squared:                  0.016
 Method:                  Least Squares   F-statistic:                     1.462
 Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.237
-Time:                         01:21:30   Log-Likelihood:                -103.64
+Time:                         13:51:27   Log-Likelihood:                -103.64
 No. Observations:                   30   AIC:                             211.3
 Df Residuals:                       28   BIC:                             214.1
 Df Model:                            1                                         
@@ -3870,7 +3502,7 @@ Intercept: 6.745718627069434, Slope: -0.01486255000436152
 </span></span><span class="line"><span class="cl">    <span class="n">intercept</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
 </span></span><span class="line"><span class="cl">    <span class="n">slope</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_51_0.png" alt="png" title="" />
+</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_49_0.png" alt="png" title="" />
 
 </p>
 <p>The above plot is intriguing because of how well the OLS regression appears to fit the data. It certainly appears that during rate-cutting cycles, bonds are an asset that performs well.</p>
@@ -3883,154 +3515,10 @@ Intercept: 6.745718627069434, Slope: -0.01486255000436152
 </span></span><span class="line"><span class="cl">    <span class="n">asset_class</span><span class="o">=</span><span class="s2">&#34;Indices&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">excel_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">pickle_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="n">output_confirmation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">output_confirmation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><pre><code>The first and last date of data for LF98TRUU_Bloomberg US Corporate High Yield Total Return Index Value Unhedged USD is: 
-</code></pre>
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-<pre><code>.dataframe tbody tr th {
-    vertical-align: top;
-}
-
-.dataframe thead th {
-    text-align: right;
-}
-</code></pre>
-<p></style></p>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Close</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1983-07-29</th>
-      <td>98.21000</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-<pre><code>.dataframe tbody tr th {
-    vertical-align: top;
-}
-
-.dataframe thead th {
-    text-align: right;
-}
-</code></pre>
-<p></style></p>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Close</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>2026-01-30</th>
-      <td>2929.32000</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-<pre><code>Bloomberg data cleaning complete for LF98TRUU_Bloomberg US Corporate High Yield Total Return Index Value Unhedged USD
---------------------
-</code></pre>
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-<pre><code>.dataframe tbody tr th {
-    vertical-align: top;
-}
-
-.dataframe thead th {
-    text-align: right;
-}
-</code></pre>
-<p></style></p>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Close</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1983-07-29</th>
-      <td>98.21000</td>
-    </tr>
-    <tr>
-      <th>1983-08-31</th>
-      <td>99.41000</td>
-    </tr>
-    <tr>
-      <th>1983-09-30</th>
-      <td>101.94000</td>
-    </tr>
-    <tr>
-      <th>1983-10-31</th>
-      <td>102.91000</td>
-    </tr>
-    <tr>
-      <th>1983-11-30</th>
-      <td>103.62000</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>2026-01-26</th>
-      <td>2935.20000</td>
-    </tr>
-    <tr>
-      <th>2026-01-27</th>
-      <td>2934.79000</td>
-    </tr>
-    <tr>
-      <th>2026-01-28</th>
-      <td>2932.35000</td>
-    </tr>
-    <tr>
-      <th>2026-01-29</th>
-      <td>2929.31000</td>
-    </tr>
-    <tr>
-      <th>2026-01-30</th>
-      <td>2929.32000</td>
-    </tr>
-  </tbody>
-</table>
-<p>7081 rows × 1 columns</p>
-</div>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">hy_bonds</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">hy_bonds</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">    <span class="n">base_directory</span><span class="o">=</span><span class="n">DATA_DIR</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">ticker</span><span class="o">=</span><span class="s2">&#34;LF98TRUU_Bloomberg US Corporate High Yield Total Return Index Value Unhedged USD_Clean&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">source</span><span class="o">=</span><span class="s2">&#34;Bloomberg&#34;</span><span class="p">,</span> 
@@ -4158,7 +3646,7 @@ Intercept: 6.745718627069434, Slope: -0.01486255000436152
 </span></span><span class="line"><span class="cl">    <span class="n">export_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_file_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_56_0.png" alt="png" title="" />
+</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_53_0.png" alt="png" title="" />
 
 </p>
 <p>Next, we will calculate the performance of high yield bonds based on the pre-defined Fed cycles:</p>
@@ -4799,7 +4287,7 @@ Intercept: 6.745718627069434, Slope: -0.01486255000436152
 </span></span><span class="line"><span class="cl">    <span class="n">asset_label</span><span class="o">=</span><span class="s2">&#34;HY_BONDS&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">annualized_or_cumulative</span><span class="o">=</span><span class="s2">&#34;Cumulative&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_60_0.png" alt="png" title="" />
+</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_57_0.png" alt="png" title="" />
 
 </p>
 <p>And then the annualized returns along with the annualized change in FFR:</p>
@@ -4808,7 +4296,7 @@ Intercept: 6.745718627069434, Slope: -0.01486255000436152
 </span></span><span class="line"><span class="cl">    <span class="n">asset_label</span><span class="o">=</span><span class="s2">&#34;HY_BONDS&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">annualized_or_cumulative</span><span class="o">=</span><span class="s2">&#34;Annualized&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_62_0.png" alt="png" title="" />
+</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_59_0.png" alt="png" title="" />
 
 </p>
 <p>Finally, we can run an OLS regression to check fit:</p>
@@ -4833,7 +4321,7 @@ Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.004
 Model:                             OLS   Adj. R-squared:                 -0.031
 Method:                  Least Squares   F-statistic:                    0.1171
 Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.735
-Time:                         01:21:32   Log-Likelihood:                -110.57
+Time:                         13:51:29   Log-Likelihood:                -110.57
 No. Observations:                   30   AIC:                             225.1
 Df Residuals:                       28   BIC:                             227.9
 Df Model:                            1                                         
@@ -4863,7 +4351,7 @@ Intercept: 6.611340605920211, Slope: -0.005299161729553994
 </span></span><span class="line"><span class="cl">    <span class="n">intercept</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
 </span></span><span class="line"><span class="cl">    <span class="n">slope</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_66_0.png" alt="png" title="" />
+</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_63_0.png" alt="png" title="" />
 
 </p>
 <h3 id="gold" class="relative group">Gold <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#gold" aria-label="Anchor">#</a></span></h3><p>Finally, we&rsquo;ll run a similar process for gold using XAU_Gold USD Spot.</p>
@@ -4875,154 +4363,10 @@ Intercept: 6.611340605920211, Slope: -0.005299161729553994
 </span></span><span class="line"><span class="cl">    <span class="n">asset_class</span><span class="o">=</span><span class="s2">&#34;Commodities&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">excel_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">pickle_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="n">output_confirmation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">output_confirmation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><pre><code>The first and last date of data for XAU_Gold USD Spot is: 
-</code></pre>
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-<pre><code>.dataframe tbody tr th {
-    vertical-align: top;
-}
-
-.dataframe thead th {
-    text-align: right;
-}
-</code></pre>
-<p></style></p>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Close</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1975-01-02</th>
-      <td>175</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-<pre><code>.dataframe tbody tr th {
-    vertical-align: top;
-}
-
-.dataframe thead th {
-    text-align: right;
-}
-</code></pre>
-<p></style></p>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Close</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>2026-02-02</th>
-      <td>4664.05000</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-<pre><code>Bloomberg data cleaning complete for XAU_Gold USD Spot
---------------------
-</code></pre>
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-<pre><code>.dataframe tbody tr th {
-    vertical-align: top;
-}
-
-.dataframe thead th {
-    text-align: right;
-}
-</code></pre>
-<p></style></p>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Close</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1975-01-02</th>
-      <td>175</td>
-    </tr>
-    <tr>
-      <th>1975-01-03</th>
-      <td>174</td>
-    </tr>
-    <tr>
-      <th>1975-01-06</th>
-      <td>173.50000</td>
-    </tr>
-    <tr>
-      <th>1975-01-07</th>
-      <td>169.50000</td>
-    </tr>
-    <tr>
-      <th>1975-01-08</th>
-      <td>180</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>2026-01-27</th>
-      <td>5180.16000</td>
-    </tr>
-    <tr>
-      <th>2026-01-28</th>
-      <td>5417.21000</td>
-    </tr>
-    <tr>
-      <th>2026-01-29</th>
-      <td>5375.24000</td>
-    </tr>
-    <tr>
-      <th>2026-01-30</th>
-      <td>4894.23000</td>
-    </tr>
-    <tr>
-      <th>2026-02-02</th>
-      <td>4664.05000</td>
-    </tr>
-  </tbody>
-</table>
-<p>13113 rows × 1 columns</p>
-</div>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">gold</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">gold</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">    <span class="n">base_directory</span><span class="o">=</span><span class="n">DATA_DIR</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">ticker</span><span class="o">=</span><span class="s2">&#34;XAU_Gold USD Spot_Clean&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">source</span><span class="o">=</span><span class="s2">&#34;Bloomberg&#34;</span><span class="p">,</span> 
@@ -5150,7 +4494,7 @@ Intercept: 6.611340605920211, Slope: -0.005299161729553994
 </span></span><span class="line"><span class="cl">    <span class="n">export_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_file_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_71_0.png" alt="png" title="" />
+</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_67_0.png" alt="png" title="" />
 
 </p>
 <p>Next, we will calculate the performance of gold based on the pre-defined Fed cycles:</p>
@@ -5791,7 +5135,7 @@ Intercept: 6.611340605920211, Slope: -0.005299161729553994
 </span></span><span class="line"><span class="cl">    <span class="n">asset_label</span><span class="o">=</span><span class="s2">&#34;GOLD&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">annualized_or_cumulative</span><span class="o">=</span><span class="s2">&#34;Cumulative&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_75_0.png" alt="png" title="" />
+</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_71_0.png" alt="png" title="" />
 
 </p>
 <p>And then the annualized returns along with the annualized change in FFR:</p>
@@ -5800,7 +5144,7 @@ Intercept: 6.611340605920211, Slope: -0.005299161729553994
 </span></span><span class="line"><span class="cl">    <span class="n">asset_label</span><span class="o">=</span><span class="s2">&#34;GOLD&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">annualized_or_cumulative</span><span class="o">=</span><span class="s2">&#34;Annualized&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_77_0.png" alt="png" title="" />
+</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_73_0.png" alt="png" title="" />
 
 </p>
 <p>We see strong returns for gold across several different Fed cycles, so it is difficult to draw any kind of initial conclusion based on the bar charts.</p>
@@ -5826,7 +5170,7 @@ Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.064
 Model:                             OLS   Adj. R-squared:                  0.030
 Method:                  Least Squares   F-statistic:                     1.900
 Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.179
-Time:                         01:21:35   Log-Likelihood:                -140.03
+Time:                         13:51:32   Log-Likelihood:                -140.03
 No. Observations:                   30   AIC:                             284.1
 Df Residuals:                       28   BIC:                             286.9
 Df Model:                            1                                         
@@ -5856,7 +5200,7 @@ Intercept: 11.467013480569243, Slope: -0.056974234027166226
 </span></span><span class="line"><span class="cl">    <span class="n">intercept</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
 </span></span><span class="line"><span class="cl">    <span class="n">slope</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_81_0.png" alt="png" title="" />
+</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_77_0.png" alt="png" title="" />
 
 </p>
 <p>It&rsquo;s difficult to draw any strong conclusions with the above plot. Gold has traditionally been considered a hedge for inflation, and while one of the Fed&rsquo;s mandates is to manage inflation, there may not be a conclusion to draw in relationship to the historical returns that gold has exhibited.</p>
@@ -6612,94 +5956,6 @@ Intercept: 11.467013480569243, Slope: -0.056974234027166226
   </tbody>
 </table>
 </div>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">spxt_monthly</span>
-</span></span></code></pre></div><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-<pre><code>.dataframe tbody tr th {
-    vertical-align: top;
-}
-
-.dataframe thead th {
-    text-align: right;
-}
-</code></pre>
-<p></style></p>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Close</th>
-      <th>Monthly_Return</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1990-01-31</th>
-      <td>353.94000</td>
-      <td>-0.06713</td>
-    </tr>
-    <tr>
-      <th>1990-02-28</th>
-      <td>358.50000</td>
-      <td>0.01288</td>
-    </tr>
-    <tr>
-      <th>1990-03-31</th>
-      <td>368</td>
-      <td>0.02650</td>
-    </tr>
-    <tr>
-      <th>1990-04-30</th>
-      <td>358.81000</td>
-      <td>-0.02497</td>
-    </tr>
-    <tr>
-      <th>1990-05-31</th>
-      <td>393.80000</td>
-      <td>0.09752</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>2025-09-30</th>
-      <td>14826.80000</td>
-      <td>0.03650</td>
-    </tr>
-    <tr>
-      <th>2025-10-31</th>
-      <td>15173.95000</td>
-      <td>0.02341</td>
-    </tr>
-    <tr>
-      <th>2025-11-30</th>
-      <td>15211.14000</td>
-      <td>0.00245</td>
-    </tr>
-    <tr>
-      <th>2025-12-31</th>
-      <td>15220.45000</td>
-      <td>0.00061</td>
-    </tr>
-    <tr>
-      <th>2026-01-31</th>
-      <td>15441.15000</td>
-      <td>0.01450</td>
-    </tr>
-  </tbody>
-</table>
-<p>433 rows × 2 columns</p>
-</div>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Calculate cumulative returns and drawdown for spxt</span>
 </span></span><span class="line"><span class="cl"><span class="n">spxt_monthly</span><span class="p">[</span><span class="s1">&#39;Cumulative_Return&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">spxt_monthly</span><span class="p">[</span><span class="s1">&#39;Monthly_Return&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">cumprod</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span>
 </span></span><span class="line"><span class="cl"><span class="n">spxt_monthly</span><span class="p">[</span><span class="s1">&#39;Cumulative_Return_Plus_One&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">spxt_monthly</span><span class="p">[</span><span class="s1">&#39;Cumulative_Return&#39;</span><span class="p">]</span>
@@ -6713,10 +5969,6 @@ Intercept: 11.467013480569243, Slope: -0.056974234027166226
 </span></span><span class="line"><span class="cl"><span class="n">treas_10y_monthly</span><span class="p">[</span><span class="s1">&#39;Rolling_Max&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">treas_10y_monthly</span><span class="p">[</span><span class="s1">&#39;Cumulative_Return_Plus_One&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cummax</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="n">treas_10y_monthly</span><span class="p">[</span><span class="s1">&#39;Drawdown&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">treas_10y_monthly</span><span class="p">[</span><span class="s1">&#39;Cumulative_Return_Plus_One&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">treas_10y_monthly</span><span class="p">[</span><span class="s1">&#39;Rolling_Max&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
 </span></span><span class="line"><span class="cl"><span class="n">treas_10y_monthly</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Cumulative_Return_Plus_One&#39;</span><span class="p">,</span> <span class="s1">&#39;Rolling_Max&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Isolate the returns for spxt and treas_10y</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># spxt_ret = spxt_monthly[&#39;Monthly_Return&#39;]</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># treas_10y_ret = treas_10y_monthly[&#39;Monthly_Return&#39;]</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Convert to DataFrame</span>
 </span></span><span class="line"><span class="cl"><span class="n">portfolio_monthly</span> <span class="o">=</span> <span class="n">strategy</span><span class="p">[[</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="s1">&#39;strategy_return&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">)</span>
@@ -6949,7 +6201,7 @@ Intercept: 11.467013480569243, Slope: -0.056974234027166226
 </span></span><span class="line"><span class="cl">    <span class="n">export_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_file_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_95_0.png" alt="png" title="" />
+</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_90_0.png" alt="png" title="" />
 
 </p>
 <p>And cumulative returns:</p>
@@ -6972,7 +6224,7 @@ Intercept: 11.467013480569243, Slope: -0.056974234027166226
 </span></span><span class="line"><span class="cl">    <span class="n">export_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_file_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_97_0.png" alt="png" title="" />
+</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_92_0.png" alt="png" title="" />
 
 </p>
 <p>And drawdowns:</p>
@@ -6992,10 +6244,10 @@ Intercept: 11.467013480569243, Slope: -0.056974234027166226
 </span></span><span class="line"><span class="cl">    <span class="n">y_tick_spacing</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="n">export_plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="n">plot_file_name</span><span class="o">=</span><span class="s2">&#34;05_Drawdowns&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">export_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plot_file_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_99_0.png" alt="png" title="" />
+</span></span></code></pre></div><p><img src="asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_94_0.png" alt="png" title="" />
 
 </p>
 <p>Finally, we can run the stats on the hybrid portfolio, SPY, and TLT with the following code:</p>
@@ -7121,6 +6373,7 @@ Intercept: 11.467013480569243, Slope: -0.056974234027166226
 </table>
 </div>
 <p>Based on the above, our hybrid portfolio outperforms both stocks and bonds, with lower drawdowns.</p>
+<h2 id="conclusions" class="relative group">Conclusions <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#conclusions" aria-label="Anchor">#</a></span></h2><p>This was a interesting exercise to evaluate the performance of different asset classes during Fed tightening and easing cycles. The results are not particularly surprising, but it is interesting to see the data and plots to confirm the economic intuition that stocks perform well during tightening cycles (economic strength) and bonds perform well during easing cycles (economic weakness). The results are certainly dependent on the specific time period or regime, and also on the assumption made for how to handle the periods of neutral policy (i.e. no change in FFR).</p>
 <h2 id="future-investigation" class="relative group">Future Investigation <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#future-investigation" aria-label="Anchor">#</a></span></h2><p>A couple of ideas sound intriguing for future investigation:</p>
 <ul>
 <li>Does a commodity index (such as GSCI) exhibit differing behavior than gold?</li>

@@ -268,35 +268,34 @@ def task_export_post_notebooks():
             "clean": [],  # Don't clean these files by default.
         }
 
-# def task_build_post_indices():
-#     """Run build_index.py in each post subdirectory to generate index.md"""
-#     script_path = SOURCE_DIR / "build_index.py"
-
-#     for subdir in POSTS_DIR.iterdir():
-#         if subdir.is_dir() and (subdir / "index_temp.md").exists():
-#             def run_script(subdir=subdir):
-#                 subprocess.run(
-#                     ["python", str(script_path)],
-#                     cwd=subdir,
-#                     check=True
-#                 )
-
-#             yield {
-#                 "name": subdir.name,
-#                 "actions": [run_script],
-#                 "file_dep": [
-#                     subdir / "index_temp.md",
-#                     subdir / "index_dep.txt",
-#                     script_path,
-#                 ],
-#                 "targets": [subdir / "index.md"],
-#                 "verbosity": 2,
-#                 "clean": [],  # Don't clean these files by default.
-#             }
-
 def task_build_post_indices():
-    """Combine the Jupyter notebook Markdown export with the frontmatter.md file in each post subdirectory to generate index.md."""
     for subdir in POSTS_DIR.iterdir():
+        """Run build_index.py in each post subdirectory to generate index.md."""
+        if subdir.is_dir() and (subdir / "index_temp.md").exists():
+
+            script_path = SOURCE_DIR / "build_index.py"
+
+            def run_script(subdir=subdir):
+                subprocess.run(
+                    ["python", str(script_path)],
+                    cwd=subdir,
+                    check=True
+                )
+
+            yield {
+                "name": subdir.name,
+                "actions": [run_script],
+                "file_dep": [
+                    subdir / "index_temp.md",
+                    subdir / "index_dep.txt",
+                    script_path,
+                ],
+                "targets": [subdir / "index.md"],
+                "verbosity": 2,
+                "clean": [],  # Don't clean these files by default.
+            }
+
+        """Combine the Jupyter notebook Markdown export with the frontmatter.md file in each post subdirectory to generate index.md."""
         if subdir.is_dir() and (subdir / "frontmatter.md").exists():
             frontmatter_path = subdir / "frontmatter.md"
             nb_md_path = subdir / f"{subdir.name}.md"

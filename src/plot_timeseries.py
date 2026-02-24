@@ -116,8 +116,10 @@ def plot_timeseries(
     else:
         raise ValueError(f"Unrecognized x_format: {x_format}. Use 'Day', 'Week', 'Month', or 'Year'.")
 
-    plt.xlabel(x_label, fontsize=14)
-    plt.xticks(rotation=x_tick_rotation, fontsize=12)
+    # plt.xlabel(x_label, fontsize=14)
+    plt.xlabel(x_label)
+    # plt.xticks(rotation=x_tick_rotation, fontsize=12)
+    plt.xticks(rotation=x_tick_rotation)
 
     # Format Y axis
     if y_format == "Decimal":
@@ -132,18 +134,22 @@ def plot_timeseries(
         raise ValueError(f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', 'Scientific', or 'Log'.")
     
     plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
-    plt.ylabel(y_label, fontsize=14)
-    plt.yticks(fontsize=12)
+    # plt.ylabel(y_label, fontsize=14)
+    plt.ylabel(y_label)
+    # plt.yticks(fontsize=12)
+    plt.yticks()
 
     # Format title, layout, grid, and legend
-    plt.title(title, fontsize=16)
+    # plt.title(title, fontsize=16)
+    plt.title(title)
     plt.tight_layout()
 
     if grid == True:
         plt.grid(True, linestyle='--', alpha=0.7)
 
     if legend == True:
-        plt.legend(fontsize=9)
+        # plt.legend(fontsize=9)
+        plt.legend()
 
     # Save figure and display plot
     if export_plot == True:
