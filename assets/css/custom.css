@@ -18,23 +18,23 @@
 
 /* Add border around code blocks */
 .prose pre {
-  border: 1.5px solid rgba(var(--color-neutral-300), 1);
-  border-radius: 0.5rem;
+  border: 1px solid rgba(var(--color-neutral-300), 1);
+  border-radius: 0.25rem;
 }
 
 .dark .prose pre {
-  border: 1.5px solid rgba(var(--color-neutral-500), 1);
+  border: 1px solid rgba(var(--color-neutral-500), 1);
 }
 
 /* Add border around images */
 .prose img {
-  border: 1.5px solid rgba(var(--color-neutral-300), 1);
-  border-radius: 0.5rem;
+  border: 1px solid rgba(var(--color-neutral-300), 1);
+  border-radius: 0.25rem;
   /* padding: 0.65rem; */
 }
 
 .dark .prose img {
-  border: 1.5px solid rgba(var(--color-neutral-500), 1);
+  border: 1px solid rgba(var(--color-neutral-500), 1);
 }
 
 /* Add border around tables and make tables scrollable horizontally with padding */
@@ -43,8 +43,8 @@
   max-width: 100%;
   overflow-x: auto;
   white-space: nowrap;
-  border: 1.5px solid rgba(var(--color-neutral-300), 1);
-  border-radius: 0.5rem;
+  border: 1px solid rgba(var(--color-neutral-300), 1);
+  border-radius: 0.25rem;
   padding-top: 0.65rem;
   padding-bottom: 0.15rem;
   padding-left: 1.05rem;
@@ -52,5 +52,5 @@
 }
 
 .dark .prose table {
-  border: 1.5px solid rgba(var(--color-neutral-500), 1);
+  border: 1px solid rgba(var(--color-neutral-500), 1);
 }
