@@ -36,7 +36,6 @@ import pandas as pd
 
 # Suppress warnings
 warnings.filterwarnings("ignore")
-
 ```
 
  ## Add Directories To Path
@@ -201,7 +200,7 @@ display(qqq)
     </tr>
     <tr>
       <th>1999-03-11</th>
-      <td>43.339813</td>
+      <td>43.339809</td>
       <td>51.312500</td>
       <td>51.734375</td>
       <td>50.312500</td>
@@ -210,7 +209,7 @@ display(qqq)
     </tr>
     <tr>
       <th>1999-03-12</th>
-      <td>42.284019</td>
+      <td>42.284039</td>
       <td>50.062500</td>
       <td>51.156250</td>
       <td>49.656250</td>
@@ -219,7 +218,7 @@ display(qqq)
     </tr>
     <tr>
       <th>1999-03-15</th>
-      <td>43.498158</td>
+      <td>43.498177</td>
       <td>51.500000</td>
       <td>51.562500</td>
       <td>49.906250</td>
@@ -228,7 +227,7 @@ display(qqq)
     </tr>
     <tr>
       <th>1999-03-16</th>
-      <td>43.867683</td>
+      <td>43.867699</td>
       <td>51.937500</td>
       <td>52.156250</td>
       <td>51.156250</td>
@@ -362,7 +361,6 @@ tqqq = tqqq.rename(columns={
     "Open": "TQQQ_Open", 
     "Volume": "TQQQ_Volume"
 })
-
 ```
 
     
@@ -595,7 +593,6 @@ for etf in etfs:
         qqq_tqqq_aligned[f"{etf}_Rolling_Return_{period_name}"] = (
             qqq_tqqq_aligned[f"{etf}_Close"].pct_change(periods=window)
         )
-
 ```
 
 
@@ -702,7 +699,7 @@ display(qqq_tqqq_aligned)
       <td>0.209167</td>
       <td>0.210391</td>
       <td>17203200</td>
-      <td>38.029922</td>
+      <td>38.029903</td>
       <td>43.759998</td>
       <td>43.880001</td>
       <td>43.160000</td>
@@ -750,7 +747,7 @@ display(qqq_tqqq_aligned)
       <td>0.225156</td>
       <td>0.228594</td>
       <td>38361600</td>
-      <td>38.733849</td>
+      <td>38.733829</td>
       <td>44.570000</td>
       <td>44.570000</td>
       <td>44.259998</td>
@@ -964,7 +961,6 @@ plot_timeseries(
     export_plot=False,
     plot_file_name=None,
 )
-
 ```
 
 
@@ -997,7 +993,6 @@ plot_timeseries(
     export_plot=False,
     plot_file_name=None,
 )
-
 ```
 
 
@@ -1178,7 +1173,7 @@ print(model.summary())
     Model:                            OLS   Adj. R-squared:                  0.997
     Method:                 Least Squares   F-statistic:                 1.492e+06
     Date:                Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                        13:41:39   Log-Likelihood:                 19405.
+    Time:                        14:26:00   Log-Likelihood:                 19405.
     No. Observations:                4045   AIC:                        -3.881e+04
     Df Residuals:                    4043   BIC:                        -3.879e+04
     Df Model:                           1                                         
@@ -1509,7 +1504,6 @@ plot_timeseries(
     export_plot=False,
     plot_file_name=None,
 )
-
 ```
 
 
@@ -1540,7 +1534,6 @@ plot_timeseries(
     export_plot=False,
     plot_file_name=None,
 )
-
 ```
 
 
@@ -1702,7 +1695,7 @@ for period_name, window in rolling_windows.items():
     Model:                                OLS   Adj. R-squared:                  0.999
     Method:                     Least Squares   F-statistic:                 7.215e+06
     Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            13:41:41   Log-Likelihood:                 34352.
+    Time:                            14:26:03   Log-Likelihood:                 34352.
     No. Observations:                    6794   AIC:                        -6.870e+04
     Df Residuals:                        6792   BIC:                        -6.869e+04
     Df Model:                               1                                         
@@ -1741,7 +1734,7 @@ for period_name, window in rolling_windows.items():
     Model:                                OLS   Adj. R-squared:                  0.994
     Method:                     Least Squares   F-statistic:                 1.116e+06
     Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            13:41:43   Log-Likelihood:                 23152.
+    Time:                            14:26:04   Log-Likelihood:                 23152.
     No. Observations:                    6790   AIC:                        -4.630e+04
     Df Residuals:                        6788   BIC:                        -4.629e+04
     Df Model:                               1                                         
@@ -1780,7 +1773,7 @@ for period_name, window in rolling_windows.items():
     Model:                                OLS   Adj. R-squared:                  0.982
     Method:                     Least Squares   F-statistic:                 3.695e+05
     Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            13:41:44   Log-Likelihood:                 14852.
+    Time:                            14:26:05   Log-Likelihood:                 14852.
     No. Observations:                    6774   AIC:                        -2.970e+04
     Df Residuals:                        6772   BIC:                        -2.969e+04
     Df Model:                               1                                         
@@ -1819,7 +1812,7 @@ for period_name, window in rolling_windows.items():
     Model:                                OLS   Adj. R-squared:                  0.958
     Method:                     Least Squares   F-statistic:                 1.549e+05
     Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            13:41:45   Log-Likelihood:                 7946.0
+    Time:                            14:26:06   Log-Likelihood:                 7946.0
     No. Observations:                    6732   AIC:                        -1.589e+04
     Df Residuals:                        6730   BIC:                        -1.587e+04
     Df Model:                               1                                         
@@ -1858,7 +1851,7 @@ for period_name, window in rolling_windows.items():
     Model:                                OLS   Adj. R-squared:                  0.916
     Method:                     Least Squares   F-statistic:                 7.247e+04
     Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            13:41:46   Log-Likelihood:                 2610.3
+    Time:                            14:26:08   Log-Likelihood:                 2610.3
     No. Observations:                    6669   AIC:                            -5217.
     Df Residuals:                        6667   BIC:                            -5203.
     Df Model:                               1                                         
@@ -1897,7 +1890,7 @@ for period_name, window in rolling_windows.items():
     Model:                                OLS   Adj. R-squared:                  0.880
     Method:                     Least Squares   F-statistic:                 4.785e+04
     Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            13:41:47   Log-Likelihood:                -892.54
+    Time:                            14:26:09   Log-Likelihood:                -892.54
     No. Observations:                    6543   AIC:                             1789.
     Df Residuals:                        6541   BIC:                             1803.
     Df Model:                               1                                         
@@ -1936,7 +1929,7 @@ for period_name, window in rolling_windows.items():
     Model:                                OLS   Adj. R-squared:                  0.848
     Method:                     Least Squares   F-statistic:                 3.522e+04
     Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            13:41:48   Log-Likelihood:                -4421.2
+    Time:                            14:26:10   Log-Likelihood:                -4421.2
     No. Observations:                    6291   AIC:                             8846.
     Df Residuals:                        6289   BIC:                             8860.
     Df Model:                               1                                         
@@ -1975,7 +1968,7 @@ for period_name, window in rolling_windows.items():
     Model:                                OLS   Adj. R-squared:                  0.804
     Method:                     Least Squares   F-statistic:                 2.481e+04
     Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            13:41:50   Log-Likelihood:                -6691.5
+    Time:                            14:26:11   Log-Likelihood:                -6691.5
     No. Observations:                    6039   AIC:                         1.339e+04
     Df Residuals:                        6037   BIC:                         1.340e+04
     Df Model:                               1                                         
@@ -2014,7 +2007,7 @@ for period_name, window in rolling_windows.items():
     Model:                                OLS   Adj. R-squared:                  0.781
     Method:                     Least Squares   F-statistic:                 2.068e+04
     Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            13:41:51   Log-Likelihood:                -8782.4
+    Time:                            14:26:12   Log-Likelihood:                -8782.4
     No. Observations:                    5787   AIC:                         1.757e+04
     Df Residuals:                        5785   BIC:                         1.758e+04
     Df Model:                               1                                         
@@ -2053,7 +2046,7 @@ for period_name, window in rolling_windows.items():
     Model:                                OLS   Adj. R-squared:                  0.743
     Method:                     Least Squares   F-statistic:                 1.599e+04
     Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            13:41:52   Log-Likelihood:                -12071.
+    Time:                            14:26:13   Log-Likelihood:                -12071.
     No. Observations:                    5535   AIC:                         2.415e+04
     Df Residuals:                        5533   BIC:                         2.416e+04
     Df Model:                               1                                         
@@ -2691,7 +2684,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.999
     Method:                            Least Squares   F-statistic:                 6.825e+06
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:41:54   Log-Likelihood:                 33542.
+    Time:                                   14:26:15   Log-Likelihood:                 33542.
     No. Observations:                           6648   AIC:                        -6.708e+04
     Df Residuals:                               6646   BIC:                        -6.707e+04
     Df Model:                                      1                                         
@@ -2730,7 +2723,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.994
     Method:                            Least Squares   F-statistic:                 1.088e+06
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:41:55   Log-Likelihood:                 22709.
+    Time:                                   14:26:16   Log-Likelihood:                 22709.
     No. Observations:                           6644   AIC:                        -4.541e+04
     Df Residuals:                               6642   BIC:                        -4.540e+04
     Df Model:                                      1                                         
@@ -2769,7 +2762,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.982
     Method:                            Least Squares   F-statistic:                 3.703e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:41:56   Log-Likelihood:                 14696.
+    Time:                                   14:26:17   Log-Likelihood:                 14696.
     No. Observations:                           6628   AIC:                        -2.939e+04
     Df Residuals:                               6626   BIC:                        -2.937e+04
     Df Model:                                      1                                         
@@ -2808,7 +2801,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.957
     Method:                            Least Squares   F-statistic:                 1.458e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:41:57   Log-Likelihood:                 7947.5
+    Time:                                   14:26:18   Log-Likelihood:                 7947.5
     No. Observations:                           6586   AIC:                        -1.589e+04
     Df Residuals:                               6584   BIC:                        -1.588e+04
     Df Model:                                      1                                         
@@ -2847,7 +2840,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.921
     Method:                            Least Squares   F-statistic:                 7.566e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:41:59   Log-Likelihood:                 3154.5
+    Time:                                   14:26:20   Log-Likelihood:                 3154.5
     No. Observations:                           6523   AIC:                            -6305.
     Df Residuals:                               6521   BIC:                            -6291.
     Df Model:                                      1                                         
@@ -2886,7 +2879,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.893
     Method:                            Least Squares   F-statistic:                 5.326e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:00   Log-Likelihood:                -135.51
+    Time:                                   14:26:21   Log-Likelihood:                -135.51
     No. Observations:                           6397   AIC:                             275.0
     Df Residuals:                               6395   BIC:                             288.6
     Df Model:                                      1                                         
@@ -2925,7 +2918,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.848
     Method:                            Least Squares   F-statistic:                 3.426e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:01   Log-Likelihood:                -4260.2
+    Time:                                   14:26:22   Log-Likelihood:                -4260.2
     No. Observations:                           6145   AIC:                             8524.
     Df Residuals:                               6143   BIC:                             8538.
     Df Model:                                      1                                         
@@ -2964,7 +2957,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.811
     Method:                            Least Squares   F-statistic:                 2.522e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:02   Log-Likelihood:                -6367.9
+    Time:                                   14:26:23   Log-Likelihood:                -6367.9
     No. Observations:                           5893   AIC:                         1.274e+04
     Df Residuals:                               5891   BIC:                         1.275e+04
     Df Model:                                      1                                         
@@ -3003,7 +2996,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.783
     Method:                            Least Squares   F-statistic:                 2.039e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:03   Log-Likelihood:                -8491.0
+    Time:                                   14:26:24   Log-Likelihood:                -8491.0
     No. Observations:                           5641   AIC:                         1.699e+04
     Df Residuals:                               5639   BIC:                         1.700e+04
     Df Model:                                      1                                         
@@ -3042,7 +3035,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.745
     Method:                            Least Squares   F-statistic:                 1.578e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:05   Log-Likelihood:                -11719.
+    Time:                                   14:26:25   Log-Likelihood:                -11719.
     No. Observations:                           5389   AIC:                         2.344e+04
     Df Residuals:                               5387   BIC:                         2.345e+04
     Df Model:                                      1                                         
@@ -3081,7 +3074,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.999
     Method:                            Least Squares   F-statistic:                 6.602e+06
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:06   Log-Likelihood:                 33115.
+    Time:                                   14:26:27   Log-Likelihood:                 33115.
     No. Observations:                           6571   AIC:                        -6.623e+04
     Df Residuals:                               6569   BIC:                        -6.621e+04
     Df Model:                                      1                                         
@@ -3120,7 +3113,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.994
     Method:                            Least Squares   F-statistic:                 1.069e+06
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:07   Log-Likelihood:                 22453.
+    Time:                                   14:26:28   Log-Likelihood:                 22453.
     No. Observations:                           6567   AIC:                        -4.490e+04
     Df Residuals:                               6565   BIC:                        -4.489e+04
     Df Model:                                      1                                         
@@ -3159,7 +3152,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.983
     Method:                            Least Squares   F-statistic:                 3.703e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:08   Log-Likelihood:                 14653.
+    Time:                                   14:26:29   Log-Likelihood:                 14653.
     No. Observations:                           6551   AIC:                        -2.930e+04
     Df Residuals:                               6549   BIC:                        -2.929e+04
     Df Model:                                      1                                         
@@ -3198,7 +3191,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.960
     Method:                            Least Squares   F-statistic:                 1.544e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:09   Log-Likelihood:                 8321.1
+    Time:                                   14:26:30   Log-Likelihood:                 8321.1
     No. Observations:                           6509   AIC:                        -1.664e+04
     Df Residuals:                               6507   BIC:                        -1.662e+04
     Df Model:                                      1                                         
@@ -3237,7 +3230,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.926
     Method:                            Least Squares   F-statistic:                 8.102e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:10   Log-Likelihood:                 3779.1
+    Time:                                   14:26:32   Log-Likelihood:                 3779.1
     No. Observations:                           6446   AIC:                            -7554.
     Df Residuals:                               6444   BIC:                            -7541.
     Df Model:                                      1                                         
@@ -3276,7 +3269,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.898
     Method:                            Least Squares   F-statistic:                 5.551e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:11   Log-Likelihood:                 115.86
+    Time:                                   14:26:33   Log-Likelihood:                 115.86
     No. Observations:                           6320   AIC:                            -227.7
     Df Residuals:                               6318   BIC:                            -214.2
     Df Model:                                      1                                         
@@ -3315,7 +3308,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.847
     Method:                            Least Squares   F-statistic:                 3.365e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:13   Log-Likelihood:                -4181.2
+    Time:                                   14:26:34   Log-Likelihood:                -4181.2
     No. Observations:                           6068   AIC:                             8366.
     Df Residuals:                               6066   BIC:                             8380.
     Df Model:                                      1                                         
@@ -3354,7 +3347,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.814
     Method:                            Least Squares   F-statistic:                 2.547e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:14   Log-Likelihood:                -6191.6
+    Time:                                   14:26:35   Log-Likelihood:                -6191.6
     No. Observations:                           5816   AIC:                         1.239e+04
     Df Residuals:                               5814   BIC:                         1.240e+04
     Df Model:                                      1                                         
@@ -3393,7 +3386,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.784
     Method:                            Least Squares   F-statistic:                 2.024e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:15   Log-Likelihood:                -8333.7
+    Time:                                   14:26:36   Log-Likelihood:                -8333.7
     No. Observations:                           5564   AIC:                         1.667e+04
     Df Residuals:                               5562   BIC:                         1.668e+04
     Df Model:                                      1                                         
@@ -3432,7 +3425,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.747
     Method:                            Least Squares   F-statistic:                 1.566e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:16   Log-Likelihood:                -11532.
+    Time:                                   14:26:37   Log-Likelihood:                -11532.
     No. Observations:                           5312   AIC:                         2.307e+04
     Df Residuals:                               5310   BIC:                         2.308e+04
     Df Model:                                      1                                         
@@ -3471,7 +3464,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.999
     Method:                            Least Squares   F-statistic:                 6.433e+06
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:17   Log-Likelihood:                 32894.
+    Time:                                   14:26:39   Log-Likelihood:                 32894.
     No. Observations:                           6531   AIC:                        -6.578e+04
     Df Residuals:                               6529   BIC:                        -6.577e+04
     Df Model:                                      1                                         
@@ -3510,7 +3503,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.994
     Method:                            Least Squares   F-statistic:                 1.119e+06
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:18   Log-Likelihood:                 22520.
+    Time:                                   14:26:40   Log-Likelihood:                 22520.
     No. Observations:                           6527   AIC:                        -4.504e+04
     Df Residuals:                               6525   BIC:                        -4.502e+04
     Df Model:                                      1                                         
@@ -3549,7 +3542,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.983
     Method:                            Least Squares   F-statistic:                 3.675e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:19   Log-Likelihood:                 14623.
+    Time:                                   14:26:41   Log-Likelihood:                 14623.
     No. Observations:                           6511   AIC:                        -2.924e+04
     Df Residuals:                               6509   BIC:                        -2.923e+04
     Df Model:                                      1                                         
@@ -3588,7 +3581,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.961
     Method:                            Least Squares   F-statistic:                 1.585e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:21   Log-Likelihood:                 8457.5
+    Time:                                   14:26:42   Log-Likelihood:                 8457.5
     No. Observations:                           6469   AIC:                        -1.691e+04
     Df Residuals:                               6467   BIC:                        -1.690e+04
     Df Model:                                      1                                         
@@ -3627,7 +3620,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.929
     Method:                            Least Squares   F-statistic:                 8.378e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:22   Log-Likelihood:                 4128.3
+    Time:                                   14:26:43   Log-Likelihood:                 4128.3
     No. Observations:                           6406   AIC:                            -8253.
     Df Residuals:                               6404   BIC:                            -8239.
     Df Model:                                      1                                         
@@ -3666,7 +3659,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.902
     Method:                            Least Squares   F-statistic:                 5.754e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:23   Log-Likelihood:                 291.84
+    Time:                                   14:26:45   Log-Likelihood:                 291.84
     No. Observations:                           6280   AIC:                            -579.7
     Df Residuals:                               6278   BIC:                            -566.2
     Df Model:                                      1                                         
@@ -3705,7 +3698,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.847
     Method:                            Least Squares   F-statistic:                 3.331e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:24   Log-Likelihood:                -4141.4
+    Time:                                   14:26:46   Log-Likelihood:                -4141.4
     No. Observations:                           6028   AIC:                             8287.
     Df Residuals:                               6026   BIC:                             8300.
     Df Model:                                      1                                         
@@ -3744,7 +3737,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.816
     Method:                            Least Squares   F-statistic:                 2.566e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:25   Log-Likelihood:                -6094.3
+    Time:                                   14:26:47   Log-Likelihood:                -6094.3
     No. Observations:                           5776   AIC:                         1.219e+04
     Df Residuals:                               5774   BIC:                         1.221e+04
     Df Model:                                      1                                         
@@ -3783,7 +3776,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.785
     Method:                            Least Squares   F-statistic:                 2.017e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:27   Log-Likelihood:                -8250.6
+    Time:                                   14:26:48   Log-Likelihood:                -8250.6
     No. Observations:                           5524   AIC:                         1.651e+04
     Df Residuals:                               5522   BIC:                         1.652e+04
     Df Model:                                      1                                         
@@ -3822,7 +3815,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.747
     Method:                            Least Squares   F-statistic:                 1.560e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:28   Log-Likelihood:                -11434.
+    Time:                                   14:26:49   Log-Likelihood:                -11434.
     No. Observations:                           5272   AIC:                         2.287e+04
     Df Residuals:                               5270   BIC:                         2.288e+04
     Df Model:                                      1                                         
@@ -3861,7 +3854,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.999
     Method:                            Least Squares   F-statistic:                 6.385e+06
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:29   Log-Likelihood:                 32833.
+    Time:                                   14:26:50   Log-Likelihood:                 32833.
     No. Observations:                           6520   AIC:                        -6.566e+04
     Df Residuals:                               6518   BIC:                        -6.565e+04
     Df Model:                                      1                                         
@@ -3900,7 +3893,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.994
     Method:                            Least Squares   F-statistic:                 1.118e+06
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:30   Log-Likelihood:                 22527.
+    Time:                                   14:26:52   Log-Likelihood:                 22527.
     No. Observations:                           6516   AIC:                        -4.505e+04
     Df Residuals:                               6514   BIC:                        -4.504e+04
     Df Model:                                      1                                         
@@ -3939,7 +3932,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.983
     Method:                            Least Squares   F-statistic:                 3.661e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:31   Log-Likelihood:                 14619.
+    Time:                                   14:26:53   Log-Likelihood:                 14619.
     No. Observations:                           6500   AIC:                        -2.923e+04
     Df Residuals:                               6498   BIC:                        -2.922e+04
     Df Model:                                      1                                         
@@ -3978,7 +3971,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.961
     Method:                            Least Squares   F-statistic:                 1.591e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:32   Log-Likelihood:                 8471.5
+    Time:                                   14:26:54   Log-Likelihood:                 8471.5
     No. Observations:                           6458   AIC:                        -1.694e+04
     Df Residuals:                               6456   BIC:                        -1.693e+04
     Df Model:                                      1                                         
@@ -4017,7 +4010,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.931
     Method:                            Least Squares   F-statistic:                 8.656e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:34   Log-Likelihood:                 4305.0
+    Time:                                   14:26:55   Log-Likelihood:                 4305.0
     No. Observations:                           6395   AIC:                            -8606.
     Df Residuals:                               6393   BIC:                            -8593.
     Df Model:                                      1                                         
@@ -4056,7 +4049,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.902
     Method:                            Least Squares   F-statistic:                 5.795e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:35   Log-Likelihood:                 326.09
+    Time:                                   14:26:57   Log-Likelihood:                 326.09
     No. Observations:                           6269   AIC:                            -648.2
     Df Residuals:                               6267   BIC:                            -634.7
     Df Model:                                      1                                         
@@ -4095,7 +4088,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.847
     Method:                            Least Squares   F-statistic:                 3.333e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:36   Log-Likelihood:                -4121.6
+    Time:                                   14:26:58   Log-Likelihood:                -4121.6
     No. Observations:                           6017   AIC:                             8247.
     Df Residuals:                               6015   BIC:                             8261.
     Df Model:                                      1                                         
@@ -4134,7 +4127,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.817
     Method:                            Least Squares   F-statistic:                 2.581e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:37   Log-Likelihood:                -6058.9
+    Time:                                   14:26:59   Log-Likelihood:                -6058.9
     No. Observations:                           5765   AIC:                         1.212e+04
     Df Residuals:                               5763   BIC:                         1.214e+04
     Df Model:                                      1                                         
@@ -4173,7 +4166,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.786
     Method:                            Least Squares   F-statistic:                 2.019e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:38   Log-Likelihood:                -8223.4
+    Time:                                   14:27:00   Log-Likelihood:                -8223.4
     No. Observations:                           5513   AIC:                         1.645e+04
     Df Residuals:                               5511   BIC:                         1.646e+04
     Df Model:                                      1                                         
@@ -4212,7 +4205,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.748
     Method:                            Least Squares   F-statistic:                 1.562e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:39   Log-Likelihood:                -11403.
+    Time:                                   14:27:01   Log-Likelihood:                -11403.
     No. Observations:                           5261   AIC:                         2.281e+04
     Df Residuals:                               5259   BIC:                         2.282e+04
     Df Model:                                      1                                         
@@ -4251,7 +4244,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.999
     Method:                            Least Squares   F-statistic:                 6.255e+06
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:40   Log-Likelihood:                 32495.
+    Time:                                   14:27:03   Log-Likelihood:                 32495.
     No. Observations:                           6457   AIC:                        -6.499e+04
     Df Residuals:                               6455   BIC:                        -6.497e+04
     Df Model:                                      1                                         
@@ -4290,7 +4283,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.994
     Method:                            Least Squares   F-statistic:                 1.109e+06
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:41   Log-Likelihood:                 22311.
+    Time:                                   14:27:04   Log-Likelihood:                 22311.
     No. Observations:                           6453   AIC:                        -4.462e+04
     Df Residuals:                               6451   BIC:                        -4.461e+04
     Df Model:                                      1                                         
@@ -4329,7 +4322,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.983
     Method:                            Least Squares   F-statistic:                 3.615e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:43   Log-Likelihood:                 14455.
+    Time:                                   14:27:05   Log-Likelihood:                 14455.
     No. Observations:                           6437   AIC:                        -2.891e+04
     Df Residuals:                               6435   BIC:                        -2.889e+04
     Df Model:                                      1                                         
@@ -4368,7 +4361,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.961
     Method:                            Least Squares   F-statistic:                 1.589e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:44   Log-Likelihood:                 8428.1
+    Time:                                   14:27:06   Log-Likelihood:                 8428.1
     No. Observations:                           6424   AIC:                        -1.685e+04
     Df Residuals:                               6422   BIC:                        -1.684e+04
     Df Model:                                      1                                         
@@ -4407,7 +4400,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.931
     Method:                            Least Squares   F-statistic:                 8.673e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:45   Log-Likelihood:                 4311.8
+    Time:                                   14:27:07   Log-Likelihood:                 4311.8
     No. Observations:                           6392   AIC:                            -8620.
     Df Residuals:                               6390   BIC:                            -8606.
     Df Model:                                      1                                         
@@ -4446,7 +4439,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.903
     Method:                            Least Squares   F-statistic:                 5.801e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:46   Log-Likelihood:                 333.68
+    Time:                                   14:27:09   Log-Likelihood:                 333.68
     No. Observations:                           6266   AIC:                            -663.4
     Df Residuals:                               6264   BIC:                            -649.9
     Df Model:                                      1                                         
@@ -4485,7 +4478,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.847
     Method:                            Least Squares   F-statistic:                 3.336e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:47   Log-Likelihood:                -4114.4
+    Time:                                   14:27:10   Log-Likelihood:                -4114.4
     No. Observations:                           6014   AIC:                             8233.
     Df Residuals:                               6012   BIC:                             8246.
     Df Model:                                      1                                         
@@ -4524,7 +4517,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.818
     Method:                            Least Squares   F-statistic:                 2.588e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:48   Log-Likelihood:                -6046.1
+    Time:                                   14:27:11   Log-Likelihood:                -6046.1
     No. Observations:                           5762   AIC:                         1.210e+04
     Df Residuals:                               5760   BIC:                         1.211e+04
     Df Model:                                      1                                         
@@ -4563,7 +4556,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.786
     Method:                            Least Squares   F-statistic:                 2.021e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:49   Log-Likelihood:                -8214.5
+    Time:                                   14:27:12   Log-Likelihood:                -8214.5
     No. Observations:                           5510   AIC:                         1.643e+04
     Df Residuals:                               5508   BIC:                         1.645e+04
     Df Model:                                      1                                         
@@ -4602,7 +4595,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.748
     Method:                            Least Squares   F-statistic:                 1.563e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:51   Log-Likelihood:                -11393.
+    Time:                                   14:27:13   Log-Likelihood:                -11393.
     No. Observations:                           5258   AIC:                         2.279e+04
     Df Residuals:                               5256   BIC:                         2.280e+04
     Df Model:                                      1                                         
@@ -4641,7 +4634,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.999
     Method:                            Least Squares   F-statistic:                 5.999e+06
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:52   Log-Likelihood:                 31532.
+    Time:                                   14:27:15   Log-Likelihood:                 31532.
     No. Observations:                           6280   AIC:                        -6.306e+04
     Df Residuals:                               6278   BIC:                        -6.305e+04
     Df Model:                                      1                                         
@@ -4680,7 +4673,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.994
     Method:                            Least Squares   F-statistic:                 1.076e+06
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:53   Log-Likelihood:                 21675.
+    Time:                                   14:27:16   Log-Likelihood:                 21675.
     No. Observations:                           6280   AIC:                        -4.335e+04
     Df Residuals:                               6278   BIC:                        -4.333e+04
     Df Model:                                      1                                         
@@ -4719,7 +4712,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.982
     Method:                            Least Squares   F-statistic:                 3.507e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:54   Log-Likelihood:                 14068.
+    Time:                                   14:27:17   Log-Likelihood:                 14068.
     No. Observations:                           6280   AIC:                        -2.813e+04
     Df Residuals:                               6278   BIC:                        -2.812e+04
     Df Model:                                      1                                         
@@ -4758,7 +4751,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.961
     Method:                            Least Squares   F-statistic:                 1.566e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:55   Log-Likelihood:                 8264.2
+    Time:                                   14:27:18   Log-Likelihood:                 8264.2
     No. Observations:                           6280   AIC:                        -1.652e+04
     Df Residuals:                               6278   BIC:                        -1.651e+04
     Df Model:                                      1                                         
@@ -4797,7 +4790,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.932
     Method:                            Least Squares   F-statistic:                 8.613e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:56   Log-Likelihood:                 4282.1
+    Time:                                   14:27:19   Log-Likelihood:                 4282.1
     No. Observations:                           6280   AIC:                            -8560.
     Df Residuals:                               6278   BIC:                            -8547.
     Df Model:                                      1                                         
@@ -4836,7 +4829,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.904
     Method:                            Least Squares   F-statistic:                 5.852e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:57   Log-Likelihood:                 404.91
+    Time:                                   14:27:20   Log-Likelihood:                 404.91
     No. Observations:                           6199   AIC:                            -805.8
     Df Residuals:                               6197   BIC:                            -792.3
     Df Model:                                      1                                         
@@ -4875,7 +4868,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.851
     Method:                            Least Squares   F-statistic:                 3.401e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:42:59   Log-Likelihood:                -4010.4
+    Time:                                   14:27:22   Log-Likelihood:                -4010.4
     No. Observations:                           5977   AIC:                             8025.
     Df Residuals:                               5975   BIC:                             8038.
     Df Model:                                      1                                         
@@ -4914,7 +4907,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.821
     Method:                            Least Squares   F-statistic:                 2.631e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:00   Log-Likelihood:                -5943.8
+    Time:                                   14:27:23   Log-Likelihood:                -5943.8
     No. Observations:                           5725   AIC:                         1.189e+04
     Df Residuals:                               5723   BIC:                         1.190e+04
     Df Model:                                      1                                         
@@ -4953,7 +4946,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.789
     Method:                            Least Squares   F-statistic:                 2.045e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:01   Log-Likelihood:                -8114.6
+    Time:                                   14:27:24   Log-Likelihood:                -8114.6
     No. Observations:                           5473   AIC:                         1.623e+04
     Df Residuals:                               5471   BIC:                         1.625e+04
     Df Model:                                      1                                         
@@ -4992,7 +4985,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.750
     Method:                            Least Squares   F-statistic:                 1.574e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:02   Log-Likelihood:                -11327.
+    Time:                                   14:27:25   Log-Likelihood:                -11327.
     No. Observations:                           5238   AIC:                         2.266e+04
     Df Residuals:                               5236   BIC:                         2.267e+04
     Df Model:                                      1                                         
@@ -5031,7 +5024,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.999
     Method:                            Least Squares   F-statistic:                 5.379e+06
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:03   Log-Likelihood:                 29443.
+    Time:                                   14:27:26   Log-Likelihood:                 29443.
     No. Observations:                           5890   AIC:                        -5.888e+04
     Df Residuals:                               5888   BIC:                        -5.887e+04
     Df Model:                                      1                                         
@@ -5070,7 +5063,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.994
     Method:                            Least Squares   F-statistic:                 1.008e+06
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:04   Log-Likelihood:                 20303.
+    Time:                                   14:27:27   Log-Likelihood:                 20303.
     No. Observations:                           5890   AIC:                        -4.060e+04
     Df Residuals:                               5888   BIC:                        -4.059e+04
     Df Model:                                      1                                         
@@ -5109,7 +5102,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.983
     Method:                            Least Squares   F-statistic:                 3.372e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:06   Log-Likelihood:                 13210.
+    Time:                                   14:27:29   Log-Likelihood:                 13210.
     No. Observations:                           5890   AIC:                        -2.642e+04
     Df Residuals:                               5888   BIC:                        -2.640e+04
     Df Model:                                      1                                         
@@ -5148,7 +5141,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.962
     Method:                            Least Squares   F-statistic:                 1.509e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:07   Log-Likelihood:                 7799.9
+    Time:                                   14:27:30   Log-Likelihood:                 7799.9
     No. Observations:                           5890   AIC:                        -1.560e+04
     Df Residuals:                               5888   BIC:                        -1.558e+04
     Df Model:                                      1                                         
@@ -5187,7 +5180,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.934
     Method:                            Least Squares   F-statistic:                 8.379e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:08   Log-Likelihood:                 4198.9
+    Time:                                   14:27:31   Log-Likelihood:                 4198.9
     No. Observations:                           5890   AIC:                            -8394.
     Df Residuals:                               5888   BIC:                            -8380.
     Df Model:                                      1                                         
@@ -5226,7 +5219,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.912
     Method:                            Least Squares   F-statistic:                 6.073e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:09   Log-Likelihood:                 715.33
+    Time:                                   14:27:32   Log-Likelihood:                 715.33
     No. Observations:                           5852   AIC:                            -1427.
     Df Residuals:                               5850   BIC:                            -1413.
     Df Model:                                      1                                         
@@ -5265,7 +5258,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.865
     Method:                            Least Squares   F-statistic:                 3.714e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:10   Log-Likelihood:                -3517.9
+    Time:                                   14:27:33   Log-Likelihood:                -3517.9
     No. Observations:                           5784   AIC:                             7040.
     Df Residuals:                               5782   BIC:                             7053.
     Df Model:                                      1                                         
@@ -5304,7 +5297,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.838
     Method:                            Least Squares   F-statistic:                 2.855e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:11   Log-Likelihood:                -5444.7
+    Time:                                   14:27:34   Log-Likelihood:                -5444.7
     No. Observations:                           5532   AIC:                         1.089e+04
     Df Residuals:                               5530   BIC:                         1.091e+04
     Df Model:                                      1                                         
@@ -5343,7 +5336,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.806
     Method:                            Least Squares   F-statistic:                 2.190e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:13   Log-Likelihood:                -7596.8
+    Time:                                   14:27:36   Log-Likelihood:                -7596.8
     No. Observations:                           5280   AIC:                         1.520e+04
     Df Residuals:                               5278   BIC:                         1.521e+04
     Df Model:                                      1                                         
@@ -5382,7 +5375,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.759
     Method:                            Least Squares   F-statistic:                 1.625e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:14   Log-Likelihood:                -11052.
+    Time:                                   14:27:37   Log-Likelihood:                -11052.
     No. Observations:                           5158   AIC:                         2.211e+04
     Df Residuals:                               5156   BIC:                         2.212e+04
     Df Model:                                      1                                         
@@ -5421,7 +5414,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.999
     Method:                            Least Squares   F-statistic:                 4.764e+06
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:15   Log-Likelihood:                 27156.
+    Time:                                   14:27:38   Log-Likelihood:                 27156.
     No. Observations:                           5448   AIC:                        -5.431e+04
     Df Residuals:                               5446   BIC:                        -5.429e+04
     Df Model:                                      1                                         
@@ -5460,7 +5453,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.994
     Method:                            Least Squares   F-statistic:                 9.352e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:16   Log-Likelihood:                 18848.
+    Time:                                   14:27:39   Log-Likelihood:                 18848.
     No. Observations:                           5448   AIC:                        -3.769e+04
     Df Residuals:                               5446   BIC:                        -3.768e+04
     Df Model:                                      1                                         
@@ -5499,7 +5492,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.982
     Method:                            Least Squares   F-statistic:                 3.034e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:17   Log-Likelihood:                 12185.
+    Time:                                   14:27:40   Log-Likelihood:                 12185.
     No. Observations:                           5448   AIC:                        -2.437e+04
     Df Residuals:                               5446   BIC:                        -2.435e+04
     Df Model:                                      1                                         
@@ -5538,7 +5531,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.961
     Method:                            Least Squares   F-statistic:                 1.351e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:18   Log-Likelihood:                 7156.4
+    Time:                                   14:27:41   Log-Likelihood:                 7156.4
     No. Observations:                           5448   AIC:                        -1.431e+04
     Df Residuals:                               5446   BIC:                        -1.430e+04
     Df Model:                                      1                                         
@@ -5577,7 +5570,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.937
     Method:                            Least Squares   F-statistic:                 8.113e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:20   Log-Likelihood:                 4025.3
+    Time:                                   14:27:43   Log-Likelihood:                 4025.3
     No. Observations:                           5448   AIC:                            -8047.
     Df Residuals:                               5446   BIC:                            -8033.
     Df Model:                                      1                                         
@@ -5616,7 +5609,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.917
     Method:                            Least Squares   F-statistic:                 5.978e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:21   Log-Likelihood:                 790.32
+    Time:                                   14:27:44   Log-Likelihood:                 790.32
     No. Observations:                           5444   AIC:                            -1577.
     Df Residuals:                               5442   BIC:                            -1563.
     Df Model:                                      1                                         
@@ -5655,7 +5648,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.876
     Method:                            Least Squares   F-statistic:                 3.833e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:22   Log-Likelihood:                -3103.9
+    Time:                                   14:27:45   Log-Likelihood:                -3103.9
     No. Observations:                           5444   AIC:                             6212.
     Df Residuals:                               5442   BIC:                             6225.
     Df Model:                                      1                                         
@@ -5694,7 +5687,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.850
     Method:                            Least Squares   F-statistic:                 2.988e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:23   Log-Likelihood:                -5021.0
+    Time:                                   14:27:46   Log-Likelihood:                -5021.0
     No. Observations:                           5289   AIC:                         1.005e+04
     Df Residuals:                               5287   BIC:                         1.006e+04
     Df Model:                                      1                                         
@@ -5733,7 +5726,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.820
     Method:                            Least Squares   F-statistic:                 2.303e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:24   Log-Likelihood:                -7126.5
+    Time:                                   14:27:47   Log-Likelihood:                -7126.5
     No. Observations:                           5068   AIC:                         1.426e+04
     Df Residuals:                               5066   BIC:                         1.427e+04
     Df Model:                                      1                                         
@@ -5772,7 +5765,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.766
     Method:                            Least Squares   F-statistic:                 1.659e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:26   Log-Likelihood:                -10800.
+    Time:                                   14:27:48   Log-Likelihood:                -10800.
     No. Observations:                           5068   AIC:                         2.160e+04
     Df Residuals:                               5066   BIC:                         2.162e+04
     Df Model:                                      1                                         
@@ -6277,7 +6270,6 @@ upro = upro.rename(columns={
     "Open": "UPRO_Open", 
     "Volume": "UPRO_Volume"
 })
-
 ```
 
     
@@ -6510,7 +6502,6 @@ for etf in etfs:
         spy_upro_aligned[f"{etf}_Rolling_Return_{period_name}"] = (
             spy_upro_aligned[f"{etf}_Close"].pct_change(periods=window)
         )
-
 ```
 
 
@@ -6665,7 +6656,7 @@ display(spy_upro_aligned)
       <td>1.176</td>
       <td>1.233</td>
       <td>17128800</td>
-      <td>68.292</td>
+      <td>68.293</td>
       <td>91.950</td>
       <td>93.060</td>
       <td>91.270</td>
@@ -6879,7 +6870,6 @@ plot_timeseries(
     export_plot=False,
     plot_file_name=None,
 )
-
 ```
 
 
@@ -6912,7 +6902,6 @@ plot_timeseries(
     export_plot=False,
     plot_file_name=None,
 )
-
 ```
 
 
@@ -7087,7 +7076,7 @@ print(model.summary())
     Model:                            OLS   Adj. R-squared:                  0.994
     Method:                 Least Squares   F-statistic:                 6.745e+05
     Date:                Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                        13:43:30   Log-Likelihood:                 19150.
+    Time:                        14:27:52   Log-Likelihood:                 19150.
     No. Observations:                4204   AIC:                        -3.830e+04
     Df Residuals:                    4202   BIC:                        -3.828e+04
     Df Model:                           1                                         
@@ -7418,7 +7407,6 @@ plot_timeseries(
     export_plot=False,
     plot_file_name=None,
 )
-
 ```
 
 
@@ -7449,7 +7437,6 @@ plot_timeseries(
     export_plot=False,
     plot_file_name=None,
 )
-
 ```
 
 
@@ -7611,7 +7598,7 @@ for period_name, window in rolling_windows.items():
     Model:                                OLS   Adj. R-squared:                  0.997
     Method:                     Least Squares   F-statistic:                 3.117e+06
     Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            13:43:32   Log-Likelihood:                 40824.
+    Time:                            14:27:55   Log-Likelihood:                 40824.
     No. Observations:                    8336   AIC:                        -8.164e+04
     Df Residuals:                        8334   BIC:                        -8.163e+04
     Df Model:                               1                                         
@@ -7650,7 +7637,7 @@ for period_name, window in rolling_windows.items():
     Model:                                OLS   Adj. R-squared:                  0.994
     Method:                     Least Squares   F-statistic:                 1.404e+06
     Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            13:43:34   Log-Likelihood:                 31594.
+    Time:                            14:27:56   Log-Likelihood:                 31594.
     No. Observations:                    8332   AIC:                        -6.318e+04
     Df Residuals:                        8330   BIC:                        -6.317e+04
     Df Model:                               1                                         
@@ -7689,7 +7676,7 @@ for period_name, window in rolling_windows.items():
     Model:                                OLS   Adj. R-squared:                  0.988
     Method:                     Least Squares   F-statistic:                 6.653e+05
     Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            13:43:35   Log-Likelihood:                 23130.
+    Time:                            14:27:58   Log-Likelihood:                 23130.
     No. Observations:                    8316   AIC:                        -4.626e+04
     Df Residuals:                        8314   BIC:                        -4.624e+04
     Df Model:                               1                                         
@@ -7728,7 +7715,7 @@ for period_name, window in rolling_windows.items():
     Model:                                OLS   Adj. R-squared:                  0.979
     Method:                     Least Squares   F-statistic:                 3.832e+05
     Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            13:43:36   Log-Likelihood:                 16419.
+    Time:                            14:27:59   Log-Likelihood:                 16419.
     No. Observations:                    8274   AIC:                        -3.283e+04
     Df Residuals:                        8272   BIC:                        -3.282e+04
     Df Model:                               1                                         
@@ -7767,7 +7754,7 @@ for period_name, window in rolling_windows.items():
     Model:                                OLS   Adj. R-squared:                  0.957
     Method:                     Least Squares   F-statistic:                 1.830e+05
     Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            13:43:37   Log-Likelihood:                 10161.
+    Time:                            14:28:00   Log-Likelihood:                 10161.
     No. Observations:                    8211   AIC:                        -2.032e+04
     Df Residuals:                        8209   BIC:                        -2.030e+04
     Df Model:                               1                                         
@@ -7806,7 +7793,7 @@ for period_name, window in rolling_windows.items():
     Model:                                OLS   Adj. R-squared:                  0.927
     Method:                     Least Squares   F-statistic:                 1.024e+05
     Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            13:43:38   Log-Likelihood:                 3932.3
+    Time:                            14:28:01   Log-Likelihood:                 3932.3
     No. Observations:                    8085   AIC:                            -7861.
     Df Residuals:                        8083   BIC:                            -7847.
     Df Model:                               1                                         
@@ -7845,7 +7832,7 @@ for period_name, window in rolling_windows.items():
     Model:                                OLS   Adj. R-squared:                  0.897
     Method:                     Least Squares   F-statistic:                 6.796e+04
     Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            13:43:40   Log-Likelihood:                -2121.4
+    Time:                            14:28:02   Log-Likelihood:                -2121.4
     No. Observations:                    7833   AIC:                             4247.
     Df Residuals:                        7831   BIC:                             4261.
     Df Model:                               1                                         
@@ -7884,7 +7871,7 @@ for period_name, window in rolling_windows.items():
     Model:                                OLS   Adj. R-squared:                  0.867
     Method:                     Least Squares   F-statistic:                 4.922e+04
     Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            13:43:41   Log-Likelihood:                -7016.3
+    Time:                            14:28:04   Log-Likelihood:                -7016.3
     No. Observations:                    7581   AIC:                         1.404e+04
     Df Residuals:                        7579   BIC:                         1.405e+04
     Df Model:                               1                                         
@@ -7923,7 +7910,7 @@ for period_name, window in rolling_windows.items():
     Model:                                OLS   Adj. R-squared:                  0.863
     Method:                     Least Squares   F-statistic:                 4.605e+04
     Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            13:43:42   Log-Likelihood:                -10251.
+    Time:                            14:28:05   Log-Likelihood:                -10251.
     No. Observations:                    7329   AIC:                         2.051e+04
     Df Residuals:                        7327   BIC:                         2.052e+04
     Df Model:                               1                                         
@@ -7962,7 +7949,7 @@ for period_name, window in rolling_windows.items():
     Model:                                OLS   Adj. R-squared:                  0.850
     Method:                     Least Squares   F-statistic:                 4.018e+04
     Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            13:43:43   Log-Likelihood:                -12776.
+    Time:                            14:28:06   Log-Likelihood:                -12776.
     No. Observations:                    7077   AIC:                         2.556e+04
     Df Residuals:                        7075   BIC:                         2.557e+04
     Df Model:                               1                                         
@@ -8574,7 +8561,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.997
     Method:                            Least Squares   F-statistic:                 2.285e+06
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:45   Log-Likelihood:                 29859.
+    Time:                                   14:28:07   Log-Likelihood:                 29859.
     No. Observations:                           6221   AIC:                        -5.971e+04
     Df Residuals:                               6219   BIC:                        -5.970e+04
     Df Model:                                      1                                         
@@ -8613,7 +8600,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.994
     Method:                            Least Squares   F-statistic:                 9.665e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:46   Log-Likelihood:                 22872.
+    Time:                                   14:28:09   Log-Likelihood:                 22872.
     No. Observations:                           6219   AIC:                        -4.574e+04
     Df Residuals:                               6217   BIC:                        -4.573e+04
     Df Model:                                      1                                         
@@ -8652,7 +8639,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.988
     Method:                            Least Squares   F-statistic:                 4.994e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:47   Log-Likelihood:                 16962.
+    Time:                                   14:28:10   Log-Likelihood:                 16962.
     No. Observations:                           6218   AIC:                        -3.392e+04
     Df Residuals:                               6216   BIC:                        -3.391e+04
     Df Model:                                      1                                         
@@ -8691,7 +8678,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.978
     Method:                            Least Squares   F-statistic:                 2.716e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:49   Log-Likelihood:                 11917.
+    Time:                                   14:28:11   Log-Likelihood:                 11917.
     No. Observations:                           6218   AIC:                        -2.383e+04
     Df Residuals:                               6216   BIC:                        -2.382e+04
     Df Model:                                      1                                         
@@ -8730,7 +8717,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.961
     Method:                            Least Squares   F-statistic:                 1.537e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:50   Log-Likelihood:                 7698.5
+    Time:                                   14:28:12   Log-Likelihood:                 7698.5
     No. Observations:                           6214   AIC:                        -1.539e+04
     Df Residuals:                               6212   BIC:                        -1.538e+04
     Df Model:                                      1                                         
@@ -8769,7 +8756,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.934
     Method:                            Least Squares   F-statistic:                 8.620e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:51   Log-Likelihood:                 3064.8
+    Time:                                   14:28:13   Log-Likelihood:                 3064.8
     No. Observations:                           6141   AIC:                            -6126.
     Df Residuals:                               6139   BIC:                            -6112.
     Df Model:                                      1                                         
@@ -8808,7 +8795,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.892
     Method:                            Least Squares   F-statistic:                 4.980e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:52   Log-Likelihood:                -1446.2
+    Time:                                   14:28:14   Log-Likelihood:                -1446.2
     No. Observations:                           6061   AIC:                             2896.
     Df Residuals:                               6059   BIC:                             2910.
     Df Model:                                      1                                         
@@ -8847,7 +8834,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.861
     Method:                            Least Squares   F-statistic:                 3.592e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:54   Log-Likelihood:                -4707.3
+    Time:                                   14:28:16   Log-Likelihood:                -4707.3
     No. Observations:                           5809   AIC:                             9419.
     Df Residuals:                               5807   BIC:                             9432.
     Df Model:                                      1                                         
@@ -8886,7 +8873,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.849
     Method:                            Least Squares   F-statistic:                 3.112e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:55   Log-Likelihood:                -7257.5
+    Time:                                   14:28:17   Log-Likelihood:                -7257.5
     No. Observations:                           5557   AIC:                         1.452e+04
     Df Residuals:                               5555   BIC:                         1.453e+04
     Df Model:                                      1                                         
@@ -8925,7 +8912,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.838
     Method:                            Least Squares   F-statistic:                 2.842e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:56   Log-Likelihood:                -9617.9
+    Time:                                   14:28:18   Log-Likelihood:                -9617.9
     No. Observations:                           5508   AIC:                         1.924e+04
     Df Residuals:                               5506   BIC:                         1.925e+04
     Df Model:                                      1                                         
@@ -8964,7 +8951,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.997
     Method:                            Least Squares   F-statistic:                 1.837e+06
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:57   Log-Likelihood:                 25121.
+    Time:                                   14:28:19   Log-Likelihood:                 25121.
     No. Observations:                           5293   AIC:                        -5.024e+04
     Df Residuals:                               5291   BIC:                        -5.023e+04
     Df Model:                                      1                                         
@@ -9003,7 +8990,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.993
     Method:                            Least Squares   F-statistic:                 7.714e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:43:58   Log-Likelihood:                 19160.
+    Time:                                   14:28:20   Log-Likelihood:                 19160.
     No. Observations:                           5293   AIC:                        -3.832e+04
     Df Residuals:                               5291   BIC:                        -3.830e+04
     Df Model:                                      1                                         
@@ -9042,7 +9029,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.987
     Method:                            Least Squares   F-statistic:                 4.024e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:00   Log-Likelihood:                 14137.
+    Time:                                   14:28:21   Log-Likelihood:                 14137.
     No. Observations:                           5293   AIC:                        -2.827e+04
     Df Residuals:                               5291   BIC:                        -2.826e+04
     Df Model:                                      1                                         
@@ -9081,7 +9068,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.977
     Method:                            Least Squares   F-statistic:                 2.274e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:01   Log-Likelihood:                 9942.2
+    Time:                                   14:28:23   Log-Likelihood:                 9942.2
     No. Observations:                           5293   AIC:                        -1.988e+04
     Df Residuals:                               5291   BIC:                        -1.987e+04
     Df Model:                                      1                                         
@@ -9120,7 +9107,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.960
     Method:                            Least Squares   F-statistic:                 1.281e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:03   Log-Likelihood:                 6392.3
+    Time:                                   14:28:24   Log-Likelihood:                 6392.3
     No. Observations:                           5293   AIC:                        -1.278e+04
     Df Residuals:                               5291   BIC:                        -1.277e+04
     Df Model:                                      1                                         
@@ -9159,7 +9146,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.937
     Method:                            Least Squares   F-statistic:                 7.757e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:04   Log-Likelihood:                 2737.3
+    Time:                                   14:28:25   Log-Likelihood:                 2737.3
     No. Observations:                           5248   AIC:                            -5471.
     Df Residuals:                               5246   BIC:                            -5457.
     Df Model:                                      1                                         
@@ -9198,7 +9185,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.895
     Method:                            Least Squares   F-statistic:                 4.481e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:06   Log-Likelihood:                -840.74
+    Time:                                   14:28:26   Log-Likelihood:                -840.74
     No. Observations:                           5235   AIC:                             1685.
     Df Residuals:                               5233   BIC:                             1699.
     Df Model:                                      1                                         
@@ -9237,7 +9224,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.885
     Method:                            Least Squares   F-statistic:                 3.849e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:07   Log-Likelihood:                -2524.0
+    Time:                                   14:28:27   Log-Likelihood:                -2524.0
     No. Observations:                           4998   AIC:                             5052.
     Df Residuals:                               4996   BIC:                             5065.
     Df Model:                                      1                                         
@@ -9276,7 +9263,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.862
     Method:                            Least Squares   F-statistic:                 2.963e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:08   Log-Likelihood:                -4784.4
+    Time:                                   14:28:28   Log-Likelihood:                -4784.4
     No. Observations:                           4757   AIC:                             9573.
     Df Residuals:                               4755   BIC:                             9586.
     Df Model:                                      1                                         
@@ -9315,7 +9302,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.842
     Method:                            Least Squares   F-statistic:                 2.529e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:10   Log-Likelihood:                -6916.8
+    Time:                                   14:28:30   Log-Likelihood:                -6916.8
     No. Observations:                           4736   AIC:                         1.384e+04
     Df Residuals:                               4734   BIC:                         1.385e+04
     Df Model:                                      1                                         
@@ -9354,7 +9341,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.997
     Method:                            Least Squares   F-statistic:                 1.595e+06
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:11   Log-Likelihood:                 22509.
+    Time:                                   14:28:31   Log-Likelihood:                 22509.
     No. Observations:                           4774   AIC:                        -4.501e+04
     Df Residuals:                               4772   BIC:                        -4.500e+04
     Df Model:                                      1                                         
@@ -9393,7 +9380,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.993
     Method:                            Least Squares   F-statistic:                 6.655e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:12   Log-Likelihood:                 17170.
+    Time:                                   14:28:32   Log-Likelihood:                 17170.
     No. Observations:                           4774   AIC:                        -3.434e+04
     Df Residuals:                               4772   BIC:                        -3.432e+04
     Df Model:                                      1                                         
@@ -9432,7 +9419,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.987
     Method:                            Least Squares   F-statistic:                 3.515e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:13   Log-Likelihood:                 12680.
+    Time:                                   14:28:33   Log-Likelihood:                 12680.
     No. Observations:                           4774   AIC:                        -2.536e+04
     Df Residuals:                               4772   BIC:                        -2.534e+04
     Df Model:                                      1                                         
@@ -9471,7 +9458,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.978
     Method:                            Least Squares   F-statistic:                 2.123e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:15   Log-Likelihood:                 8982.1
+    Time:                                   14:28:34   Log-Likelihood:                 8982.1
     No. Observations:                           4774   AIC:                        -1.796e+04
     Df Residuals:                               4772   BIC:                        -1.795e+04
     Df Model:                                      1                                         
@@ -9510,7 +9497,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.960
     Method:                            Least Squares   F-statistic:                 1.138e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:16   Log-Likelihood:                 5697.0
+    Time:                                   14:28:36   Log-Likelihood:                 5697.0
     No. Observations:                           4774   AIC:                        -1.139e+04
     Df Residuals:                               4772   BIC:                        -1.138e+04
     Df Model:                                      1                                         
@@ -9549,7 +9536,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.937
     Method:                            Least Squares   F-statistic:                 7.059e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:17   Log-Likelihood:                 2483.5
+    Time:                                   14:28:37   Log-Likelihood:                 2483.5
     No. Observations:                           4753   AIC:                            -4963.
     Df Residuals:                               4751   BIC:                            -4950.
     Df Model:                                      1                                         
@@ -9588,7 +9575,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.901
     Method:                            Least Squares   F-statistic:                 4.347e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:18   Log-Likelihood:                -568.49
+    Time:                                   14:28:38   Log-Likelihood:                -568.49
     No. Observations:                           4753   AIC:                             1141.
     Df Residuals:                               4751   BIC:                             1154.
     Df Model:                                      1                                         
@@ -9627,7 +9614,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.904
     Method:                            Least Squares   F-statistic:                 4.265e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:19   Log-Likelihood:                -1581.0
+    Time:                                   14:28:39   Log-Likelihood:                -1581.0
     No. Observations:                           4545   AIC:                             3166.
     Df Residuals:                               4543   BIC:                             3179.
     Df Model:                                      1                                         
@@ -9666,7 +9653,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.916
     Method:                            Least Squares   F-statistic:                 4.728e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:21   Log-Likelihood:                -2622.0
+    Time:                                   14:28:40   Log-Likelihood:                -2622.0
     No. Observations:                           4319   AIC:                             5248.
     Df Residuals:                               4317   BIC:                             5261.
     Df Model:                                      1                                         
@@ -9705,7 +9692,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.887
     Method:                            Least Squares   F-statistic:                 3.391e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:22   Log-Likelihood:                -4969.9
+    Time:                                   14:28:42   Log-Likelihood:                -4969.9
     No. Observations:                           4317   AIC:                             9944.
     Df Residuals:                               4315   BIC:                             9957.
     Df Model:                                      1                                         
@@ -9744,7 +9731,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.997
     Method:                            Least Squares   F-statistic:                 1.488e+06
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:23   Log-Likelihood:                 21081.
+    Time:                                   14:28:43   Log-Likelihood:                 21081.
     No. Observations:                           4464   AIC:                        -4.216e+04
     Df Residuals:                               4462   BIC:                        -4.214e+04
     Df Model:                                      1                                         
@@ -9783,7 +9770,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.993
     Method:                            Least Squares   F-statistic:                 6.179e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:24   Log-Likelihood:                 16080.
+    Time:                                   14:28:44   Log-Likelihood:                 16080.
     No. Observations:                           4464   AIC:                        -3.216e+04
     Df Residuals:                               4462   BIC:                        -3.214e+04
     Df Model:                                      1                                         
@@ -9822,7 +9809,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.986
     Method:                            Least Squares   F-statistic:                 3.225e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:25   Log-Likelihood:                 11851.
+    Time:                                   14:28:45   Log-Likelihood:                 11851.
     No. Observations:                           4464   AIC:                        -2.370e+04
     Df Residuals:                               4462   BIC:                        -2.368e+04
     Df Model:                                      1                                         
@@ -9861,7 +9848,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.978
     Method:                            Least Squares   F-statistic:                 2.007e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:26   Log-Likelihood:                 8451.5
+    Time:                                   14:28:46   Log-Likelihood:                 8451.5
     No. Observations:                           4464   AIC:                        -1.690e+04
     Df Residuals:                               4462   BIC:                        -1.689e+04
     Df Model:                                      1                                         
@@ -9900,7 +9887,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.959
     Method:                            Least Squares   F-statistic:                 1.039e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:27   Log-Likelihood:                 5314.4
+    Time:                                   14:28:48   Log-Likelihood:                 5314.4
     No. Observations:                           4464   AIC:                        -1.062e+04
     Df Residuals:                               4462   BIC:                        -1.061e+04
     Df Model:                                      1                                         
@@ -9939,7 +9926,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.936
     Method:                            Least Squares   F-statistic:                 6.492e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:29   Log-Likelihood:                 2334.7
+    Time:                                   14:28:49   Log-Likelihood:                 2334.7
     No. Observations:                           4456   AIC:                            -4665.
     Df Residuals:                               4454   BIC:                            -4653.
     Df Model:                                      1                                         
@@ -9978,7 +9965,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.907
     Method:                            Least Squares   F-statistic:                 4.354e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:30   Log-Likelihood:                -457.07
+    Time:                                   14:28:50   Log-Likelihood:                -457.07
     No. Observations:                           4456   AIC:                             918.1
     Df Residuals:                               4454   BIC:                             930.9
     Df Model:                                      1                                         
@@ -10017,7 +10004,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.907
     Method:                            Least Squares   F-statistic:                 4.210e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:31   Log-Likelihood:                -1442.5
+    Time:                                   14:28:51   Log-Likelihood:                -1442.5
     No. Observations:                           4323   AIC:                             2889.
     Df Residuals:                               4321   BIC:                             2902.
     Df Model:                                      1                                         
@@ -10056,7 +10043,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.926
     Method:                            Least Squares   F-statistic:                 5.187e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:32   Log-Likelihood:                -2273.5
+    Time:                                   14:28:52   Log-Likelihood:                -2273.5
     No. Observations:                           4126   AIC:                             4551.
     Df Residuals:                               4124   BIC:                             4564.
     Df Model:                                      1                                         
@@ -10095,7 +10082,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.896
     Method:                            Least Squares   F-statistic:                 3.555e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:33   Log-Likelihood:                -4610.6
+    Time:                                   14:28:54   Log-Likelihood:                -4610.6
     No. Observations:                           4126   AIC:                             9225.
     Df Residuals:                               4124   BIC:                             9238.
     Df Model:                                      1                                         
@@ -10134,7 +10121,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.997
     Method:                            Least Squares   F-statistic:                 1.317e+06
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:34   Log-Likelihood:                 18256.
+    Time:                                   14:28:55   Log-Likelihood:                 18256.
     No. Observations:                           3871   AIC:                        -3.651e+04
     Df Residuals:                               3869   BIC:                        -3.650e+04
     Df Model:                                      1                                         
@@ -10173,7 +10160,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.992
     Method:                            Least Squares   F-statistic:                 5.116e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:35   Log-Likelihood:                 13825.
+    Time:                                   14:28:56   Log-Likelihood:                 13825.
     No. Observations:                           3871   AIC:                        -2.765e+04
     Df Residuals:                               3869   BIC:                        -2.763e+04
     Df Model:                                      1                                         
@@ -10212,7 +10199,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.986
     Method:                            Least Squares   F-statistic:                 2.738e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:37   Log-Likelihood:                 10219.
+    Time:                                   14:28:57   Log-Likelihood:                 10219.
     No. Observations:                           3871   AIC:                        -2.043e+04
     Df Residuals:                               3869   BIC:                        -2.042e+04
     Df Model:                                      1                                         
@@ -10251,7 +10238,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.978
     Method:                            Least Squares   F-statistic:                 1.701e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:38   Log-Likelihood:                 7306.6
+    Time:                                   14:28:58   Log-Likelihood:                 7306.6
     No. Observations:                           3871   AIC:                        -1.461e+04
     Df Residuals:                               3869   BIC:                        -1.460e+04
     Df Model:                                      1                                         
@@ -10290,7 +10277,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.957
     Method:                            Least Squares   F-statistic:                 8.590e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:39   Log-Likelihood:                 4532.3
+    Time:                                   14:29:00   Log-Likelihood:                 4532.3
     No. Observations:                           3871   AIC:                            -9061.
     Df Residuals:                               3869   BIC:                            -9048.
     Df Model:                                      1                                         
@@ -10329,7 +10316,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.933
     Method:                            Least Squares   F-statistic:                 5.409e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:40   Log-Likelihood:                 1958.2
+    Time:                                   14:29:01   Log-Likelihood:                 1958.2
     No. Observations:                           3871   AIC:                            -3912.
     Df Residuals:                               3869   BIC:                            -3900.
     Df Model:                                      1                                         
@@ -10368,7 +10355,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.912
     Method:                            Least Squares   F-statistic:                 4.022e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:42   Log-Likelihood:                -377.53
+    Time:                                   14:29:02   Log-Likelihood:                -377.53
     No. Observations:                           3871   AIC:                             759.1
     Df Residuals:                               3869   BIC:                             771.6
     Df Model:                                      1                                         
@@ -10407,7 +10394,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.911
     Method:                            Least Squares   F-statistic:                 3.909e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:43   Log-Likelihood:                -1292.1
+    Time:                                   14:29:03   Log-Likelihood:                -1292.1
     No. Observations:                           3832   AIC:                             2588.
     Df Residuals:                               3830   BIC:                             2601.
     Df Model:                                      1                                         
@@ -10446,7 +10433,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.940
     Method:                            Least Squares   F-statistic:                 5.811e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:44   Log-Likelihood:                -1764.0
+    Time:                                   14:29:04   Log-Likelihood:                -1764.0
     No. Observations:                           3696   AIC:                             3532.
     Df Residuals:                               3694   BIC:                             3544.
     Df Model:                                      1                                         
@@ -10485,7 +10472,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.907
     Method:                            Least Squares   F-statistic:                 3.594e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:45   Log-Likelihood:                -3996.6
+    Time:                                   14:29:05   Log-Likelihood:                -3996.6
     No. Observations:                           3696   AIC:                             7997.
     Df Residuals:                               3694   BIC:                             8010.
     Df Model:                                      1                                         
@@ -10524,7 +10511,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.997
     Method:                            Least Squares   F-statistic:                 1.059e+06
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:47   Log-Likelihood:                 14432.
+    Time:                                   14:29:07   Log-Likelihood:                 14432.
     No. Observations:                           3070   AIC:                        -2.886e+04
     Df Residuals:                               3068   BIC:                        -2.885e+04
     Df Model:                                      1                                         
@@ -10563,7 +10550,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.992
     Method:                            Least Squares   F-statistic:                 3.762e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:48   Log-Likelihood:                 10750.
+    Time:                                   14:29:08   Log-Likelihood:                 10750.
     No. Observations:                           3070   AIC:                        -2.150e+04
     Df Residuals:                               3068   BIC:                        -2.148e+04
     Df Model:                                      1                                         
@@ -10602,7 +10589,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.986
     Method:                            Least Squares   F-statistic:                 2.086e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:49   Log-Likelihood:                 7938.3
+    Time:                                   14:29:09   Log-Likelihood:                 7938.3
     No. Observations:                           3070   AIC:                        -1.587e+04
     Df Residuals:                               3068   BIC:                        -1.586e+04
     Df Model:                                      1                                         
@@ -10641,7 +10628,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.977
     Method:                            Least Squares   F-statistic:                 1.313e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:50   Log-Likelihood:                 5610.5
+    Time:                                   14:29:10   Log-Likelihood:                 5610.5
     No. Observations:                           3070   AIC:                        -1.122e+04
     Df Residuals:                               3068   BIC:                        -1.121e+04
     Df Model:                                      1                                         
@@ -10680,7 +10667,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.956
     Method:                            Least Squares   F-statistic:                 6.658e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:51   Log-Likelihood:                 3373.6
+    Time:                                   14:29:11   Log-Likelihood:                 3373.6
     No. Observations:                           3070   AIC:                            -6743.
     Df Residuals:                               3068   BIC:                            -6731.
     Df Model:                                      1                                         
@@ -10719,7 +10706,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.932
     Method:                            Least Squares   F-statistic:                 4.197e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:52   Log-Likelihood:                 1581.2
+    Time:                                   14:29:12   Log-Likelihood:                 1581.2
     No. Observations:                           3070   AIC:                            -3158.
     Df Residuals:                               3068   BIC:                            -3146.
     Df Model:                                      1                                         
@@ -10758,7 +10745,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.932
     Method:                            Least Squares   F-statistic:                 4.210e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:53   Log-Likelihood:                 230.85
+    Time:                                   14:29:14   Log-Likelihood:                 230.85
     No. Observations:                           3070   AIC:                            -457.7
     Df Residuals:                               3068   BIC:                            -445.6
     Df Model:                                      1                                         
@@ -10797,7 +10784,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.906
     Method:                            Least Squares   F-statistic:                 2.942e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:54   Log-Likelihood:                -1092.7
+    Time:                                   14:29:15   Log-Likelihood:                -1092.7
     No. Observations:                           3070   AIC:                             2189.
     Df Residuals:                               3068   BIC:                             2201.
     Df Model:                                      1                                         
@@ -10836,7 +10823,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.942
     Method:                            Least Squares   F-statistic:                 4.920e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:56   Log-Likelihood:                -1478.5
+    Time:                                   14:29:16   Log-Likelihood:                -1478.5
     No. Observations:                           3055   AIC:                             2961.
     Df Residuals:                               3053   BIC:                             2973.
     Df Model:                                      1                                         
@@ -10875,7 +10862,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.919
     Method:                            Least Squares   F-statistic:                 3.475e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:57   Log-Likelihood:                -3195.7
+    Time:                                   14:29:17   Log-Likelihood:                -3195.7
     No. Observations:                           3055   AIC:                             6395.
     Df Residuals:                               3053   BIC:                             6407.
     Df Model:                                      1                                         
@@ -10914,7 +10901,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.997
     Method:                            Least Squares   F-statistic:                 7.538e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:58   Log-Likelihood:                 10930.
+    Time:                                   14:29:18   Log-Likelihood:                 10930.
     No. Observations:                           2365   AIC:                        -2.186e+04
     Df Residuals:                               2363   BIC:                        -2.184e+04
     Df Model:                                      1                                         
@@ -10953,7 +10940,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.991
     Method:                            Least Squares   F-statistic:                 2.714e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:44:59   Log-Likelihood:                 8089.2
+    Time:                                   14:29:19   Log-Likelihood:                 8089.2
     No. Observations:                           2365   AIC:                        -1.617e+04
     Df Residuals:                               2363   BIC:                        -1.616e+04
     Df Model:                                      1                                         
@@ -10992,7 +10979,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.984
     Method:                            Least Squares   F-statistic:                 1.475e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:45:00   Log-Likelihood:                 5932.1
+    Time:                                   14:29:20   Log-Likelihood:                 5932.1
     No. Observations:                           2365   AIC:                        -1.186e+04
     Df Residuals:                               2363   BIC:                        -1.185e+04
     Df Model:                                      1                                         
@@ -11031,7 +11018,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.976
     Method:                            Least Squares   F-statistic:                 9.454e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:45:01   Log-Likelihood:                 4110.7
+    Time:                                   14:29:21   Log-Likelihood:                 4110.7
     No. Observations:                           2365   AIC:                            -8217.
     Df Residuals:                               2363   BIC:                            -8206.
     Df Model:                                      1                                         
@@ -11070,7 +11057,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.954
     Method:                            Least Squares   F-statistic:                 4.945e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:45:02   Log-Likelihood:                 2608.8
+    Time:                                   14:29:23   Log-Likelihood:                 2608.8
     No. Observations:                           2365   AIC:                            -5214.
     Df Residuals:                               2363   BIC:                            -5202.
     Df Model:                                      1                                         
@@ -11109,7 +11096,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.941
     Method:                            Least Squares   F-statistic:                 3.754e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:45:04   Log-Likelihood:                 1607.4
+    Time:                                   14:29:24   Log-Likelihood:                 1607.4
     No. Observations:                           2365   AIC:                            -3211.
     Df Residuals:                               2363   BIC:                            -3199.
     Df Model:                                      1                                         
@@ -11148,7 +11135,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.947
     Method:                            Least Squares   F-statistic:                 4.184e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:45:05   Log-Likelihood:                 728.41
+    Time:                                   14:29:25   Log-Likelihood:                 728.41
     No. Observations:                           2365   AIC:                            -1453.
     Df Residuals:                               2363   BIC:                            -1441.
     Df Model:                                      1                                         
@@ -11187,7 +11174,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.901
     Method:                            Least Squares   F-statistic:                 2.158e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:45:06   Log-Likelihood:                -648.58
+    Time:                                   14:29:26   Log-Likelihood:                -648.58
     No. Observations:                           2365   AIC:                             1301.
     Df Residuals:                               2363   BIC:                             1313.
     Df Model:                                      1                                         
@@ -11226,7 +11213,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.925
     Method:                            Least Squares   F-statistic:                 2.909e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:45:07   Log-Likelihood:                -1339.2
+    Time:                                   14:29:27   Log-Likelihood:                -1339.2
     No. Observations:                           2365   AIC:                             2682.
     Df Residuals:                               2363   BIC:                             2694.
     Df Model:                                      1                                         
@@ -11265,7 +11252,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.917
     Method:                            Least Squares   F-statistic:                 2.615e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:45:08   Log-Likelihood:                -2565.1
+    Time:                                   14:29:28   Log-Likelihood:                -2565.1
     No. Observations:                           2365   AIC:                             5134.
     Df Residuals:                               2363   BIC:                             5146.
     Df Model:                                      1                                         
@@ -11304,7 +11291,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.997
     Method:                            Least Squares   F-statistic:                 4.362e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:45:09   Log-Likelihood:                 6607.2
+    Time:                                   14:29:29   Log-Likelihood:                 6607.2
     No. Observations:                           1479   AIC:                        -1.321e+04
     Df Residuals:                               1477   BIC:                        -1.320e+04
     Df Model:                                      1                                         
@@ -11343,7 +11330,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.990
     Method:                            Least Squares   F-statistic:                 1.475e+05
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:45:10   Log-Likelihood:                 4779.3
+    Time:                                   14:29:31   Log-Likelihood:                 4779.3
     No. Observations:                           1479   AIC:                            -9555.
     Df Residuals:                               1477   BIC:                            -9544.
     Df Model:                                      1                                         
@@ -11382,7 +11369,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.983
     Method:                            Least Squares   F-statistic:                 8.452e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:45:12   Log-Likelihood:                 3588.8
+    Time:                                   14:29:32   Log-Likelihood:                 3588.8
     No. Observations:                           1479   AIC:                            -7174.
     Df Residuals:                               1477   BIC:                            -7163.
     Df Model:                                      1                                         
@@ -11421,7 +11408,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.980
     Method:                            Least Squares   F-statistic:                 7.182e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:45:13   Log-Likelihood:                 2749.5
+    Time:                                   14:29:33   Log-Likelihood:                 2749.5
     No. Observations:                           1479   AIC:                            -5495.
     Df Residuals:                               1477   BIC:                            -5484.
     Df Model:                                      1                                         
@@ -11460,7 +11447,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.971
     Method:                            Least Squares   F-statistic:                 4.873e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:45:14   Log-Likelihood:                 1996.2
+    Time:                                   14:29:34   Log-Likelihood:                 1996.2
     No. Observations:                           1479   AIC:                            -3988.
     Df Residuals:                               1477   BIC:                            -3978.
     Df Model:                                      1                                         
@@ -11499,7 +11486,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.945
     Method:                            Least Squares   F-statistic:                 2.531e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:45:15   Log-Likelihood:                 1208.7
+    Time:                                   14:29:35   Log-Likelihood:                 1208.7
     No. Observations:                           1479   AIC:                            -2413.
     Df Residuals:                               1477   BIC:                            -2403.
     Df Model:                                      1                                         
@@ -11538,7 +11525,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.940
     Method:                            Least Squares   F-statistic:                 2.322e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:45:16   Log-Likelihood:                 417.22
+    Time:                                   14:29:36   Log-Likelihood:                 417.22
     No. Observations:                           1479   AIC:                            -830.4
     Df Residuals:                               1477   BIC:                            -819.8
     Df Model:                                      1                                         
@@ -11577,7 +11564,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.884
     Method:                            Least Squares   F-statistic:                 1.128e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:45:17   Log-Likelihood:                -268.54
+    Time:                                   14:29:37   Log-Likelihood:                -268.54
     No. Observations:                           1479   AIC:                             541.1
     Df Residuals:                               1477   BIC:                             551.7
     Df Model:                                      1                                         
@@ -11616,7 +11603,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.876
     Method:                            Least Squares   F-statistic:                 1.049e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:45:18   Log-Likelihood:                -460.04
+    Time:                                   14:29:38   Log-Likelihood:                -460.04
     No. Observations:                           1479   AIC:                             924.1
     Df Residuals:                               1477   BIC:                             934.7
     Df Model:                                      1                                         
@@ -11655,7 +11642,7 @@ for drawdown in drawdown_levels:
     Model:                                       OLS   Adj. R-squared:                  0.895
     Method:                            Least Squares   F-statistic:                 1.258e+04
     Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   13:45:20   Log-Likelihood:                -1478.3
+    Time:                                   14:29:39   Log-Likelihood:                -1478.3
     No. Observations:                           1479   AIC:                             2961.
     Df Residuals:                               1477   BIC:                             2971.
     Df Model:                                      1                                         
@@ -11894,11 +11881,6 @@ This plot summarizes the future rolling returns well. Similar as to QQQ/TQQQ, fo
 As we extend the time horizon, out to the 2y, 3y, 4y, and 5y mark, the percentage of positive rolling returns following an 80% drawdown increases significantly, and is greater than *95%*. This suggests that while the volatility decay effect is present for UPRO, it may not be as severe as that of TQQQ, which could be due to the less extreme return profile of SPY compared to QQQ.
 
 As an investor, this suggests that the optimal time to buy UPRO would be following a drawdown of 50% or more, and holding for at least 2 years. One could dollar cost average into UPRO following a drawdown of 50% or more, and continue to add to the position with a consistent contribution schedule until all capital has been allocated.
-
-
-```python
-
-```
 
 ## Code
 
