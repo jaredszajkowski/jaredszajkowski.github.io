@@ -8,6 +8,7 @@ from IPython.display import display
 def yf_pull_data(
     base_directory,
     ticker: str,
+    adjusted: bool,
     source: str,
     asset_class: str,
     excel_export: bool,
@@ -42,7 +43,7 @@ def yf_pull_data(
     """
     
     # Download data from YF
-    df = yf.download(ticker, start="1900-01-01")
+    df = yf.download(ticker, start="1900-01-01", auto_adjust=adjusted)
 
     # Drop the column level with the ticker symbol
     df.columns = df.columns.droplevel(1)
@@ -59,7 +60,7 @@ def yf_pull_data(
     # Set 'Date' column as index
     df = df.set_index('Date', drop=True)
 
-    # Drop data from last day because it's not accrate until end of day
+    # Drop data from last day because it's not accurate until end of day
     df = df.drop(df.index[-1])
     
     # Create directory

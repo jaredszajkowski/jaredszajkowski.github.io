@@ -24,7 +24,7 @@ This post intends to provide the code for all of the python functions that I use
 
 * [bb_clean_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#bb_clean_data): Takes an Excel export from Bloomberg, removes the miscellaneous headings/rows, and returns a DataFrame.
 * [build_index](/posts/reusable-extensible-python-functions-financial-data-analysis/#build_index): Reads the `index_temp.md` markdown file, inserts the markdown dependencies where indicated, and then saves the file as `index.md`.
-* [calc_fed_cycle_asset_performance](/posts/reusable-extensible-python-functions-financial-data-analysis/#calc_fed_cycle_asset_performance): Calculates metrics for an asset based on a specified Fed tightening/loosening cycle.
+* [calc_fed_cycle_asset_performance](/posts/reusable-extensible-python-functions-financial-data-analysis/#calc_fed_cycle_asset_performance): Calculates metrics for an asset based on a specified Fed tightening/easing cycle.
 * [calc_vix_trade_pnl](/posts/reusable-extensible-python-functions-financial-data-analysis/#calc_vix_trade_pnl): Calculates the profit/loss from VIX options trades.
 * [coinbase_fetch_available_products](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_available_products): Fetch available products from Coinbase Exchange API.
 * [coinbase_fetch_full_history](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_full_history): Fetch full historical data for a given product from Coinbase Exchange API.
@@ -43,6 +43,7 @@ This post intends to provide the code for all of the python functions that I use
 * [plot_vix_with_trades](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_vix_with_trades): Plot the VIX daily high and low prices, along with the VIX spikes, and trades.
 * [polygon_fetch_full_history](/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_fetch_full_history): Fetch full historical data for a given product from Polygon API.
 * [polygon_pull_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_pull_data): Read existing data file, download price data from Polygon, and export data.
+* [run_linear_regression](/posts/reusable-extensible-python-functions-financial-data-analysis/#run_linear_regression): Run a linear regression using statsmodels OLS and return the results.
 * [strategy_harry_brown_perm_port](/posts/reusable-extensible-python-functions-financial-data-analysis/#strategy_harry_brown_perm_port): Execute the strategy for the Harry Brown permanent portfolio.
 * [summary_stats](/posts/reusable-extensible-python-functions-financial-data-analysis/#summary_stats): Generate summary statistics for a series of returns.
 * [yf_pull_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#yf_pull_data): Download daily price data from Yahoo Finance and export it.
@@ -75,7 +76,7 @@ def bb_clean_data(
     ----------
     base_directory : str
         Root path to store downloaded data.
-    fund : str
+    fund_ticker_name : str
         The fund to clean the data from.
     source : str
         Name of the data source (e.g., 'Bloomberg').
@@ -122,7 +123,13 @@ def bb_clean_data(
         pass
 
     # Rename column
-    df.rename(columns={"PX_LAST": "Close"}, inplace=True)
+    try:
+        df.rename(columns={"PX_LAST": "Close"}, inplace=True)
+        df.rename(columns={"PX_OPEN": "Open"}, inplace=True)
+        df.rename(columns={"PX_HIGH": "High"}, inplace=True)
+        df.rename(columns={"PX_LOW": "Low"}, inplace=True)
+    except KeyError:
+        pass
 
     # Sort by date
     df.sort_values(by=["Date"], inplace=True)
@@ -245,20 +252,21 @@ import numpy as np
 import pandas as pd
 
 def calc_fed_cycle_asset_performance(
-    fed_cycles: list,
-    cycle_labels: list,
-    fed_changes: list,
-    monthly_df: pd.DataFrame,
+    start_date: pd.Series,
+    end_date: pd.Series,
+    label: pd.Series,
+    fed_funds_change: pd.Series,
+    monthly_returns: pd.DataFrame,
 ) -> pd.DataFrame:
 
     results = []
 
-    for (start, end), label in zip(fed_cycles, cycle_labels):
+    for start, end, label, fed_change in zip(start_date, end_date, label, fed_funds_change):
         start = pd.to_datetime(start)
         end = pd.to_datetime(end)
 
-        # Filter TLT returns for the cycle period
-        returns = monthly_df.loc[start:end, "Monthly_Return"]
+        # Filter returns for the cycle period
+        returns = monthly_returns.loc[start:end, "Monthly_Return"]
 
         if len(returns) == 0:
             continue
@@ -294,8 +302,8 @@ def calc_fed_cycle_asset_performance(
     ]]
 
     # Merge Fed changes into cycle_df
-    cycle_df["FedFundsChange"] = fed_changes
-    cycle_df["FedFundsChange_bps"] = cycle_df["FedFundsChange"] * 10000  # in basis
+    cycle_df["FedFundsChange"] = fed_funds_change
+    cycle_df["FedFundsChange_bps"] = cycle_df["FedFundsChange"] * 10000  # in basis points
 
     # Add annualized change in FFR in basis points
     cycle_df["FFR_AnnualizedChange"] = (cycle_df["FedFundsChange"] / cycle_df["Months"]) * 12
@@ -1413,7 +1421,6 @@ def plot_bar_returns_ffr_change(
     cycle_df: pd.DataFrame,
     asset_label: str,
     annualized_or_cumulative: str,
-    index_num: str,
 ) -> None:
 
     plt.figure(figsize=(10, 8))
@@ -1436,7 +1443,7 @@ def plot_bar_returns_ffr_change(
                 f"{row['CumulativeReturnPct']:.1f}%\nΔFFR: {row['FedFundsChange_bps']:.0f}bps",
                 color="black",
                 ha="center",
-                fontsize=10
+                # fontsize=10,
             )
 
     elif annualized_or_cumulative == "Annualized":    
@@ -1457,16 +1464,20 @@ def plot_bar_returns_ffr_change(
                 f"{row['AnnualizedReturnPct']:.1f}%\nΔFFR: {row['FFR_AnnualizedChange_bps']:.0f}bps/yr",
                 color="black",
                 ha="center",
-                fontsize=10
+                # fontsize=10,
             )
 
-    plt.ylabel(f"{asset_label} {annualized_or_cumulative} Return (%)", fontsize=14)
-    plt.yticks(fontsize=12)
-    plt.xlabel("Fed Policy Cycle (Date Range)", fontsize=14)
-    plt.xticks(rotation=45, ha="right", fontsize=12)
-    plt.title(f"{asset_label} {annualized_or_cumulative} Return by Fed Policy Cycle With {annualized_or_cumulative} Change in Fed Funds Rate", fontsize=16)
+    # plt.ylabel(f"{asset_label} {annualized_or_cumulative} Return (%)", fontsize=14)
+    plt.ylabel(f"{asset_label} {annualized_or_cumulative} Return (%)")
+    # plt.yticks(fontsize=12)
+    plt.yticks()
+    # plt.xlabel("Fed Policy Cycle (Date Range)", fontsize=14)
+    plt.xlabel("Fed Policy Cycle (Date Range)")
+    # plt.xticks(rotation=45, ha="right", fontsize=12)
+    plt.xticks(rotation=45, ha="right")
+    # plt.title(f"{asset_label} {annualized_or_cumulative} Return by Fed Policy Cycle With {annualized_or_cumulative} Change in Fed Funds Rate", fontsize=16)
+    plt.title(f"{asset_label} {annualized_or_cumulative} Return by Fed Policy Cycle With {annualized_or_cumulative} Change in Fed Funds Rate")
     plt.tight_layout()
-    plt.savefig(f"{index_num}_{asset_label}_{annualized_or_cumulative}_Returns_FFR_Change.png", dpi=300, bbox_inches="tight")
     plt.show()
 ```
 
@@ -1514,6 +1525,7 @@ def plot_histogram(
     x_tick_rotation: int,
     y_label: str,
     y_tick_spacing: int,
+    y_tick_rotation: int,
     grid: bool,
     legend: bool,
     export_plot: bool,
@@ -1521,12 +1533,12 @@ def plot_histogram(
 ) -> None:
 
     """
-    Plot the price data from a DataFrame for a specified date range and columns.
+    Plot the histogram for a dataset from a DataFrame for a specified date range and columns.
 
     Parameters:
     -----------
     df : pd.DataFrame
-        DataFrame containing the price data to plot.
+        DataFrame containing the data to plot.
     plot_columns : str OR list
         List of columns to plot from the DataFrame. If none, all columns will be plotted.
     title : str
@@ -1541,6 +1553,8 @@ def plot_histogram(
         Label for the y-axis.
     y_tick_spacing : int
         Spacing for the y-axis ticks.
+    y_tick_rotation : int
+        Rotation angle for the y-axis tick labels.
     grid : bool
         Whether to display a grid on the plot.
     legend : bool
@@ -1565,7 +1579,7 @@ def plot_histogram(
             mean = df[col].mean()
             std = df[col].std()
             # Create histogram first to get its color
-            n, bins, patches = plt.hist(df[col], label=col, bins=200, edgecolor='black', alpha=0.5)
+            n, bins, patches = plt.hist(df[col], label=col, bins=200, edgecolor='black', alpha=0.7)
             hist_color = patches[0].get_facecolor()
             # Use histogram color for vertical lines
             plt.axvline(mean, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean: {mean:.3f}')
@@ -1578,7 +1592,7 @@ def plot_histogram(
             mean = df[col].mean()
             std = df[col].std()
             # Create histogram first to get its color
-            n, bins, patches = plt.hist(df[col], label=col, bins=200, edgecolor='black', alpha=0.5)
+            n, bins, patches = plt.hist(df[col], label=col, bins=200, edgecolor='black', alpha=0.7)
             hist_color = patches[0].get_facecolor()
             # Use histogram color for vertical lines
             plt.axvline(mean, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean: {mean:.3f}')
@@ -1593,9 +1607,10 @@ def plot_histogram(
         x_tick_spacing = round_to_nice_value(raw_x_spacing)
     else:
         x_tick_spacing = x_tick_spacing
+
     plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
-    plt.xlabel(x_label, fontsize=14)
-    plt.xticks(rotation=x_tick_rotation, fontsize=12)
+    plt.xlabel(x_label)
+    plt.xticks(rotation=x_tick_rotation)
 
     # Format Y axis
     if y_tick_spacing == "Auto":
@@ -1603,19 +1618,22 @@ def plot_histogram(
         y_tick_spacing = round_to_nice_value(raw_y_spacing)
     else:
         y_tick_spacing = y_tick_spacing
+
     plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
-    plt.ylabel(y_label, fontsize=14)
-    plt.yticks(fontsize=12)
+    plt.ylabel(y_label)
+    plt.yticks(rotation=y_tick_rotation)
 
     # Format title, layout, grid, and legend
-    plt.title(title, fontsize=16)
+    plt.title(title)
     plt.tight_layout()
 
+    # Grid
     if grid == True:
         plt.grid(True, linestyle='--', alpha=0.7)
 
+    # Legend
     if legend == True:
-        plt.legend(fontsize=9)
+        plt.legend()
 
     # Save figure and display plot
     if export_plot == True:
@@ -1630,15 +1648,269 @@ def plot_histogram(
 ### plot_scatter
 
 ```python
+# import math
+# import matplotlib.pyplot as plt
+# import numpy as np
+# import pandas as pd
+
+# from matplotlib.ticker import MultipleLocator, PercentFormatter, FormatStrFormatter
+
+# from run_linear_regression import run_linear_regression
+
+# def round_to_nice_value(value):
+#     """Round a value to a 'nice' number for tick spacing (1, 2, 5 × 10^n)."""
+#     if value <= 0:
+#         return value
+
+#     # Find order of magnitude
+#     exp = math.floor(math.log10(value))
+#     magnitude = 10 ** exp
+
+#     # Get mantissa (value normalized to [1, 10))
+#     mantissa = value / magnitude
+
+#     # Round mantissa to 1, 2, or 5
+#     if mantissa <= 1.5:
+#         nice_mantissa = 1
+#     elif mantissa <= 3:
+#         nice_mantissa = 2
+#     elif mantissa <= 7:
+#         nice_mantissa = 5
+#     else:
+#         nice_mantissa = 10
+
+#     return nice_mantissa * magnitude
+
+
+# def plot_scatter(
+#     df: pd.DataFrame,
+#     x_plot_column: str,
+#     y_plot_columns: list,
+#     title: str,
+#     x_label: str,
+#     x_format: str,
+#     x_format_decimal_places: int,
+#     x_tick_spacing: int,
+#     x_tick_rotation: int,
+#     y_label: str,
+#     y_format: str,
+#     y_format_decimal_places: int,
+#     y_tick_spacing: int,
+#     plot_OLS_regression_line: bool,
+#     plot_Ridge_regression_line: bool,
+#     plot_RidgeCV_regression_line: bool,
+#     regression_constant: bool,
+#     grid: bool,
+#     legend: bool,
+#     export_plot: bool,
+#     plot_file_name: str,
+# ) -> None:
+#     """
+#     Plot the price data from a DataFrame for a specified date range and columns.
+
+#     Parameters
+#     ----------
+#     df : pd.DataFrame
+#         DataFrame containing the price data to plot.
+#     x_plot_column : str
+#         Column to plot on the x-axis from the DataFrame.
+#     y_plot_columns : list
+#         Columns to plot on the y-axis from the DataFrame.
+#     title : str
+#         Title of the plot.
+#     x_label : str
+#         Label for the x-axis.
+#     x_format : str
+#         Format for the x-axis date labels.
+#     x_tick_spacing : int
+#         Spacing for the x-axis ticks.
+#     x_tick_rotation : int, optional
+#         Rotation angle for the x-axis tick labels (default: 0).
+#     y_label : str
+#         Label for the y-axis.
+#     y_format : str
+#         Format for the y-axis labels.
+#     y_format_decimal_places : int
+#         Number of decimal places for y-axis labels.
+#     y_tick_spacing : int
+#         Spacing for the y-axis ticks.
+#     plot_OLS_regression_line : bool
+#         Whether to plot an OLS regression line on the scatter plot.
+#     plot_Ridge_regression_line : bool
+#         Whether to plot a Ridge regression line on the scatter plot.
+#     plot_RidgeCV_regression_line : bool
+#         Whether to plot a RidgeCV regression line on the scatter plot.
+#     regression_constant : bool
+#         Whether to include a constant term in the regression models.
+#     grid : bool
+#         Whether to display a grid on the plot.
+#     legend : bool
+#         Whether to display a legend on the plot.
+#     export_plot : bool
+#         Whether to save the figure as a PNG file.
+#     plot_file_name : str
+#         File name for saving the figure (if save_fig is True).
+    
+#     Returns
+#     -------
+#     None
+#     """
+
+#     # Set plot figure size and background color
+#     plt.figure(figsize=(10, 6))
+
+#     # Plot data
+#     for col in y_plot_columns:
+#         plt.scatter(df[x_plot_column], df[col])
+
+#     # Format X axis
+#     if x_format == "Decimal":
+#         plt.gca().xaxis.set_major_formatter(FormatStrFormatter(f"%.{x_format_decimal_places}f"))
+#     elif x_format == "Percentage":
+#         plt.gca().xaxis.set_major_formatter(PercentFormatter(xmax=1, decimals=x_format_decimal_places))
+#     elif x_format == "Scientific":
+#         plt.gca().xaxis.set_major_formatter(FormatStrFormatter(f"%.{x_format_decimal_places}e"))
+#     elif x_format == "Log":
+#         plt.xscale("log")
+#     elif x_format == "String":
+#         pass  # No special formatting for string x-axis
+#     else:
+#         raise ValueError(f"Unrecognized x_format: {x_format}. Use 'Decimal', 'Percentage', or 'Scientific'.")
+    
+#     if x_tick_spacing == "Auto":
+#         raw_x_spacing = (df[x_plot_column].max() - df[x_plot_column].min()) / 20
+#         x_tick_spacing = round_to_nice_value(raw_x_spacing)
+#     else:
+#         x_tick_spacing = x_tick_spacing
+
+#     plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
+#     # plt.xlabel(x_label, fontsize=14)
+#     plt.xlabel(x_label)
+#     # plt.xticks(rotation=x_tick_rotation, fontsize=12)
+#     plt.xticks(rotation=x_tick_rotation)
+
+#     # Format Y axis
+#     if y_format == "Decimal":
+#         plt.gca().yaxis.set_major_formatter(FormatStrFormatter(f"%.{y_format_decimal_places}f"))
+#     elif y_format == "Percentage":
+#         plt.gca().yaxis.set_major_formatter(PercentFormatter(xmax=1, decimals=y_format_decimal_places))
+#     elif y_format == "Scientific":
+#         plt.gca().yaxis.set_major_formatter(FormatStrFormatter(f"%.{y_format_decimal_places}e"))
+#     elif y_format == "Log":
+#         plt.yscale("log")
+#     else:
+#         raise ValueError(f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', or 'Scientific'.")
+    
+#     if y_tick_spacing == "Auto":
+#         raw_y_spacing = (df[y_plot_column].max() - df[y_plot_column].min()) / 10
+#         y_tick_spacing = round_to_nice_value(raw_y_spacing)
+#     else:
+#         y_tick_spacing = y_tick_spacing
+
+#     plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
+#     # plt.ylabel(y_label, fontsize=14)
+#     plt.ylabel(y_label)
+#     # plt.yticks(fontsize=12)
+#     plt.yticks()
+
+#     if plot_OLS_regression_line == True:
+
+#         model = run_linear_regression(
+#             df=df,
+#             x_plot_column=x_plot_column,
+#             y_plot_column=y_plot_column,
+#             regression_model="OLS-sklearn",
+#             regression_constant=regression_constant,
+#         )
+
+#         # Calc X and Y values for regression line
+#         X_vals = np.linspace(df[x_plot_column].min(), df[x_plot_column].max(), 100)
+#         X_vals_2d = X_vals.reshape(-1, 1)  # sklearn needs 2D input
+#         Y_vals = model.predict(X_vals_2d)
+
+#         # Plot regression line
+#         intercept = model.intercept_
+#         slope = model.coef_[0]
+#         plt.plot(X_vals, Y_vals, color="red", linestyle="--", 
+#                  label=f"OLS Fit: y = {intercept:.1f} + {slope:.2f}x")
+
+#     if plot_Ridge_regression_line == True:
+
+#         model = run_linear_regression(
+#             df=df,
+#             x_plot_column=x_plot_column,
+#             y_plot_column=y_plot_column,
+#             regression_model="Ridge",
+#             regression_constant=regression_constant,
+#             ridge_alpha=1.0,
+#         )
+
+#         # Calc X and Y values for regression line
+#         X_vals = np.linspace(df[x_plot_column].min(), df[x_plot_column].max(), 100)
+#         X_vals_2d = X_vals.reshape(-1, 1)  # sklearn needs 2D input
+#         Y_vals = model.predict(X_vals_2d)
+
+#         # Plot regression line
+#         intercept = model.intercept_
+#         slope = model.coef_[0]
+#         alpha_value = model.alpha_ if hasattr(model, 'alpha_') else 1.0 
+#         plt.plot(X_vals, Y_vals, color="blue", linestyle="--", 
+#              label=f"Ridge Fit (α={alpha_value:.2f}): y = {intercept:.1f} + {slope:.2f}x")
+        
+#     if plot_RidgeCV_regression_line == True:
+
+#         model = run_linear_regression(
+#             df=df,
+#             x_plot_column=x_plot_column,
+#             y_plot_column=y_plot_column,
+#             regression_model="RidgeCV",
+#             regression_constant=regression_constant,
+#         )
+
+#         # Calc X and Y values for regression line
+#         X_vals = np.linspace(df[x_plot_column].min(), df[x_plot_column].max(), 100)
+#         X_vals_2d = X_vals.reshape(-1, 1)  # sklearn needs 2D input
+#         Y_vals = model.predict(X_vals_2d)
+
+#         # Plot regression line
+#         intercept = model.intercept_
+#         slope = model.coef_[0]
+#         alpha_value = model.alpha_ if hasattr(model, 'alpha_') else 1.0
+#         plt.plot(X_vals, Y_vals, color="green", linestyle="--", 
+#              label=f"RidgeCV Fit (α={alpha_value:.2f}): y = {intercept:.1f} + {slope:.2f}x")
+  
+#     # Format title, layout, grid, and legend
+#     # plt.title(title, fontsize=16)
+#     plt.title(title)
+#     plt.tight_layout()
+
+#     if grid == True:
+#         plt.grid(True, linestyle='--', alpha=0.7)
+    
+#     if legend == True:
+#         # plt.legend(fontsize=9)
+#         plt.legend()
+
+#     # Save figure and display plot
+#     if export_plot == True:
+#         plt.savefig(f"{plot_file_name}.png", dpi=300, bbox_inches="tight")
+
+#     # Display the plot
+#     plt.show()
+
+#     return None
+
 import math
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 
-from matplotlib.ticker import MultipleLocator, PercentFormatter
+from matplotlib.ticker import MultipleLocator, PercentFormatter, FormatStrFormatter
 
+from run_linear_regression import run_linear_regression
 
 def round_to_nice_value(value):
-    """Round a value to a 'nice' number for tick spacing (1, 2, 5 × 10^n)."""
+    """Round a value to a 'nice' number for tick spacing (1, 2, 5 x 10^n)."""
     if value <= 0:
         return value
 
@@ -1650,7 +1922,9 @@ def round_to_nice_value(value):
     mantissa = value / magnitude
 
     # Round mantissa to 1, 2, or 5
-    if mantissa <= 1.5:
+    if mantissa <= 1:
+        nice_mantissa = 0.1
+    elif mantissa <= 1.5:
         nice_mantissa = 1
     elif mantissa <= 3:
         nice_mantissa = 2
@@ -1664,31 +1938,42 @@ def round_to_nice_value(value):
 
 def plot_scatter(
     df: pd.DataFrame,
-    plot_columns: str | list[str],
+    x_plot_column: str,
+    y_plot_columns: list,
     title: str,
     x_label: str,
     x_format: str,
+    x_format_decimal_places: int,
     x_tick_spacing: int,
     x_tick_rotation: int,
     y_label: str,
     y_format: str,
     y_format_decimal_places: int,
     y_tick_spacing: int,
+    y_tick_rotation: int,
+    plot_OLS_regression_line: bool,
+    OLS_column: str,
+    plot_Ridge_regression_line: bool,
+    Ridge_column: str,
+    plot_RidgeCV_regression_line: bool,
+    RidgeCV_column: str,
+    regression_constant: bool,
     grid: bool,
     legend: bool,
     export_plot: bool,
     plot_file_name: str,
 ) -> None:
-
     """
-    Plot the price data from a DataFrame for a specified date range and columns.
+    Plot the data from a DataFrame for a specified date range and columns.
 
-    Parameters:
-    -----------
+    Parameters
+    ----------
     df : pd.DataFrame
         DataFrame containing the price data to plot.
-    plot_columns : str OR list
-        List of columns to plot from the DataFrame. If none, all columns will be plotted.
+    x_plot_column : str
+        Column to plot on the x-axis from the DataFrame.
+    y_plot_columns : list
+        Columns to plot on the y-axis from the DataFrame.
     title : str
         Title of the plot.
     x_label : str
@@ -1707,6 +1992,22 @@ def plot_scatter(
         Number of decimal places for y-axis labels.
     y_tick_spacing : int
         Spacing for the y-axis ticks.
+    y_tick_rotation : int, optional
+        Rotation angle for the y-axis tick labels (default: 0).
+    plot_OLS_regression_line : bool
+        Whether to plot an OLS regression line on the scatter plot.
+    OLS_column : str
+        Column name for the OLS regression line.
+    plot_Ridge_regression_line : bool
+        Whether to plot a Ridge regression line on the scatter plot.
+    Ridge_column : str
+        Column name for the Ridge regression line.
+    plot_RidgeCV_regression_line : bool
+        Whether to plot a RidgeCV regression line on the scatter plot.
+    RidgeCV_column : str
+        Column name for the RidgeCV regression line.
+    regression_constant : bool
+        Whether to include a constant term in the regression models.
     grid : bool
         Whether to display a grid on the plot.
     legend : bool
@@ -1716,9 +2017,8 @@ def plot_scatter(
     plot_file_name : str
         File name for saving the figure (if save_fig is True).
     
-
-    Returns:
-    --------
+    Returns
+    -------
     None
     """
 
@@ -1726,37 +2026,32 @@ def plot_scatter(
     plt.figure(figsize=(10, 6))
 
     # Plot data
-    if plot_columns == "All":
-        for col in df.columns:
-            plt.scatter(df.index, df[col], label=col, alpha=0.75)
-    else:
-        for col in plot_columns:
-            plt.scatter(df.index, df[col], label=col, alpha=0.75)
+    for col in y_plot_columns:
+        plt.scatter(df[x_plot_column], df[col], label=col, marker='o', alpha=0.7)
 
     # Format X axis
-    if x_format == "Day":
-        plt.gca().xaxis.set_major_locator(mdates.DayLocator())
-        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
-    elif x_format == "Week":
-        plt.gca().xaxis.set_major_locator(mdates.WeekdayLocator())
-        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
-    elif x_format == "Month":
-        plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
-        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
-    elif x_format == "Year":
-        plt.gca().xaxis.set_major_locator(mdates.YearLocator())
-        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+    if x_format == "Decimal":
+        plt.gca().xaxis.set_major_formatter(FormatStrFormatter(f"%.{x_format_decimal_places}f"))
+    elif x_format == "Percentage":
+        plt.gca().xaxis.set_major_formatter(PercentFormatter(xmax=1, decimals=x_format_decimal_places))
+    elif x_format == "Scientific":
+        plt.gca().xaxis.set_major_formatter(FormatStrFormatter(f"%.{x_format_decimal_places}e"))
+    elif x_format == "Log":
+        plt.xscale("log")
+    elif x_format == "String":
+        pass  # No special formatting for string x-axis
     else:
-        raise ValueError(f"Unrecognized x_format: {x_format}. Use 'Day', 'Week', 'Month', or 'Year'.")
-
+        raise ValueError(f"Unrecognized x_format: {x_format}. Use 'Decimal', 'Percentage', or 'Scientific'.")
+    
     if x_tick_spacing == "Auto":
-        raw_x_spacing = (df.index[-1] - df.index[0]).days / 20
+        raw_x_spacing = (df[x_plot_column].max() - df[x_plot_column].min()) / 20
         x_tick_spacing = round_to_nice_value(raw_x_spacing)
     else:
         x_tick_spacing = x_tick_spacing
+
     plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
-    plt.xlabel(x_label, fontsize=14)
-    plt.xticks(rotation=x_tick_rotation, fontsize=12)
+    plt.xlabel(x_label)
+    plt.xticks(rotation=x_tick_rotation)
 
     # Format Y axis
     if y_format == "Decimal":
@@ -1770,25 +2065,102 @@ def plot_scatter(
     else:
         raise ValueError(f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', or 'Scientific'.")
     
-
     if y_tick_spacing == "Auto":
-        raw_y_spacing = (df[plot_columns].max().max() - df[plot_columns].min().min()) / 10
+        max = 0
+        min = 1
+        for col in y_plot_columns:
+            if df[col].max() > max:
+                max = df[col].max()
+
+            if df[col].min() < min:
+                min = df[col].min()
+
+        raw_y_spacing = (max - min) / 10
         y_tick_spacing = round_to_nice_value(raw_y_spacing)
     else:
         y_tick_spacing = y_tick_spacing
-    plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
-    plt.ylabel(y_label, fontsize=14)
-    plt.yticks(fontsize=12)
 
+    plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
+    plt.ylabel(y_label)
+    plt.yticks(rotation=y_tick_rotation)
+
+    if plot_OLS_regression_line == True:
+
+        model = run_linear_regression(
+            df=df,
+            x_plot_column=x_plot_column,
+            y_plot_column=OLS_column,
+            regression_model="OLS-sklearn",
+            regression_constant=regression_constant,
+        )
+
+        # Calc X and Y values for regression line
+        X_vals = np.linspace(df[x_plot_column].min(), df[x_plot_column].max(), 100)
+        X_vals_2d = X_vals.reshape(-1, 1)  # sklearn needs 2D input
+        Y_vals = model.predict(X_vals_2d)
+
+        # Plot regression line
+        intercept = model.intercept_
+        slope = model.coef_[0]
+        plt.plot(X_vals, Y_vals, color="red", linestyle="--", 
+                 label=f"OLS Fit: y = {intercept:.1f} + {slope:.2f}x")
+
+    if plot_Ridge_regression_line == True:
+
+        model = run_linear_regression(
+            df=df,
+            x_plot_column=x_plot_column,
+            y_plot_column=Ridge_column,
+            regression_model="Ridge",
+            regression_constant=regression_constant,
+            ridge_alpha=1.0,
+        )
+
+        # Calc X and Y values for regression line
+        X_vals = np.linspace(df[x_plot_column].min(), df[x_plot_column].max(), 100)
+        X_vals_2d = X_vals.reshape(-1, 1)  # sklearn needs 2D input
+        Y_vals = model.predict(X_vals_2d)
+
+        # Plot regression line
+        intercept = model.intercept_
+        slope = model.coef_[0]
+        alpha_value = model.alpha_ if hasattr(model, 'alpha_') else 1.0 
+        plt.plot(X_vals, Y_vals, color="blue", linestyle="--", 
+             label=f"Ridge Fit (α={alpha_value:.2f}): y = {intercept:.1f} + {slope:.2f}x")
+        
+    if plot_RidgeCV_regression_line == True:
+
+        model = run_linear_regression(
+            df=df,
+            x_plot_column=x_plot_column,
+            y_plot_column=RidgeCV_column,
+            regression_model="RidgeCV",
+            regression_constant=regression_constant,
+        )
+
+        # Calc X and Y values for regression line
+        X_vals = np.linspace(df[x_plot_column].min(), df[x_plot_column].max(), 100)
+        X_vals_2d = X_vals.reshape(-1, 1)  # sklearn needs 2D input
+        Y_vals = model.predict(X_vals_2d)
+
+        # Plot regression line
+        intercept = model.intercept_
+        slope = model.coef_[0]
+        alpha_value = model.alpha_ if hasattr(model, 'alpha_') else 1.0
+        plt.plot(X_vals, Y_vals, color="green", linestyle="--", 
+             label=f"RidgeCV Fit (α={alpha_value:.2f}): y = {intercept:.1f} + {slope:.2f}x")
+  
     # Format title, layout, grid, and legend
-    plt.title(title, fontsize=16)
+    plt.title(title)
     plt.tight_layout()
 
+    # Grid
     if grid == True:
         plt.grid(True, linestyle='--', alpha=0.7)
-
+    
+    # Legend
     if legend == True:
-        plt.legend(fontsize=9)
+        plt.legend()
 
     # Save figure and display plot
     if export_plot == True:
@@ -1813,7 +2185,6 @@ import statsmodels.api as sm
 def plot_scatter_regression_ffr_vs_returns(
     cycle_df: pd.DataFrame,
     asset_label: str,
-    index_num: str,
     x_vals: np.ndarray,
     y_vals: np.ndarray,
     intercept: float,
@@ -1836,22 +2207,26 @@ def plot_scatter_regression_ffr_vs_returns(
             row["FFR_AnnualizedChange_bps"] + 5,  # small x-offset
             row["AnnualizedReturnPct"],
             row["Cycle"],
-            fontsize=10,
-            color="black"
+            # fontsize=10,
+            color="black",
         )
 
     plt.plot(x_vals, y_vals, color="red", linestyle="--", label=f"OLS Fit: y = {intercept:.1f} + {slope:.2f}x")
     plt.axhline(0, color="gray", linestyle="--", linewidth=0.8)
     plt.axvline(0, color="gray", linestyle="--", linewidth=0.8)
-    plt.title(f"{asset_label} Annualized Return vs Annualized Change in Fed Funds Rate by Policy Cycle", fontsize=16)
-    plt.xlabel("Annualized Change In Fed Funds Rate (bps)", fontsize=14)
-    plt.xticks(fontsize=12)
-    plt.ylabel(f"{asset_label} Annualized Return (%)", fontsize=14)
-    plt.yticks(fontsize=12)
+    # plt.title(f"{asset_label} Annualized Return vs Annualized Change in Fed Funds Rate by Policy Cycle", fontsize=16)
+    plt.title(f"{asset_label} Annualized Return vs Annualized Change in Fed Funds Rate by Policy Cycle")
+    # plt.xlabel("Annualized Change In Fed Funds Rate (bps)", fontsize=14)
+    plt.xlabel("Annualized Change In Fed Funds Rate (bps)")
+    # plt.xticks(fontsize=12)
+    plt.xticks()
+    # plt.ylabel(f"{asset_label} Annualized Return (%)", fontsize=14)
+    plt.ylabel(f"{asset_label} Annualized Return (%)")
+    # plt.yticks(fontsize=12)
+    plt.yticks()
     plt.legend()
     plt.grid(True)
     plt.tight_layout()
-    plt.savefig(f"{index_num}_{asset_label}_Regression_FFR_vs_Returns.png", dpi=300, bbox_inches="tight")
     plt.show()
 ```
 
@@ -1962,40 +2337,68 @@ def plot_stats(
 ### plot_timeseries
 
 ```python
+import math
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import matplotlib.ticker as mtick
 import pandas as pd
 
-from matplotlib.ticker import FormatStrFormatter, MultipleLocator, PercentFormatter
+from matplotlib.ticker import FormatStrFormatter, FuncFormatter, MultipleLocator, PercentFormatter
+
+def round_to_nice_value(value):
+    """Round a value to a 'nice' number for tick spacing (1, 2, 5 x 10^n)."""
+    if value <= 0:
+        return value
+
+    # Find order of magnitude
+    exp = math.floor(math.log10(value))
+    magnitude = 10 ** exp
+
+    # Get mantissa (value normalized to [1, 10))
+    mantissa = value / magnitude
+
+    # Round mantissa to 1, 2, or 5
+    if mantissa <= 1:
+        nice_mantissa = 0.1
+    elif mantissa <= 1.5:
+        nice_mantissa = 1
+    elif mantissa <= 3:
+        nice_mantissa = 2
+    elif mantissa <= 7:
+        nice_mantissa = 5
+    else:
+        nice_mantissa = 10
+
+    return nice_mantissa * magnitude
 
 def plot_timeseries(
-    price_df: pd.DataFrame,
+    df: pd.DataFrame,
     plot_start_date: str,
     plot_end_date: str,
     plot_columns: str | list[str],
     title: str,
     x_label: str,
     x_format: str,
+    x_tick_spacing: int,
+    x_tick_rotation: int,
     y_label: str,
     y_format: str,
     y_format_decimal_places: int,
     y_tick_spacing: int,
+    y_tick_rotation: int,
     grid: bool,
     legend: bool,
     export_plot: bool,
     plot_file_name: str,
-    x_tick_rotation: int = 0,
-
 ) -> None:
 
     """
-    Plot the price data from a DataFrame for a specified date range and columns.
+    Plot the time series data from a DataFrame for a specified date range and columns.
 
     Parameters:
     -----------
     df : pd.DataFrame
-        DataFrame containing the price data to plot.
+        DataFrame containing the time series data to plot.
     plot_start_date : str
         Start date for the plot in 'YYYY-MM-DD' format.
     plot_end_date : str
@@ -2008,8 +2411,10 @@ def plot_timeseries(
         Label for the x-axis.
     x_format : str
         Format for the x-axis date labels.
-    x_tick_rotation : int, optional
-        Rotation angle for the x-axis tick labels (default: 0).
+    x_tick_spacing : int
+        Spacing for the x-axis ticks.
+    x_tick_rotation : int
+        Rotation angle for the x-axis tick labels.
     y_label : str
         Label for the y-axis.
     y_format : str
@@ -2018,6 +2423,8 @@ def plot_timeseries(
         Number of decimal places for y-axis labels.
     y_tick_spacing : int
         Spacing for the y-axis ticks.
+    y_tick_rotation : int
+        Rotation angle for the y-axis tick labels.
     grid : bool
         Whether to display a grid on the plot.
     legend : bool
@@ -2035,32 +2442,30 @@ def plot_timeseries(
 
     # If start date and end date are None, use the entire DataFrame
     if plot_start_date is None and plot_end_date is None:
-        df_filtered = price_df
+        df_filtered = df.copy()
 
     # If only end date is specified, filter by end date
     elif plot_start_date is None and plot_end_date is not None:
-        df_filtered = price_df[(price_df.index <= plot_end_date)]
+        df_filtered = df[(df.index <= plot_end_date)].copy()
 
     # If only start date is specified, filter by start date
     elif plot_start_date is not None and plot_end_date is None:
-        df_filtered = price_df[(price_df.index >= plot_start_date)]
+        df_filtered = df[(df.index >= plot_start_date)].copy()
 
     # If both start date and end date are specified, filter by both
     else:
-        df_filtered = price_df[(price_df.index >= plot_start_date) & (price_df.index <= plot_end_date)]
+        df_filtered = df[(df.index >= plot_start_date) & (df.index <= plot_end_date)].copy()
 
     # Set plot figure size and background color
-    # plt.figure(figsize=(10, 6), facecolor="#F5F5F5")
-    # plt.figure(figsize=(10, 6), facecolor=(249/255, 250/255, 251/255))
     plt.figure(figsize=(10, 6))
 
     # Plot data
     if plot_columns =="All":
         for col in df_filtered.columns:
-            plt.plot(df_filtered.index, df_filtered[col], label=col, linestyle='-', linewidth=1.5)
+            plt.plot(df_filtered.index, df_filtered[col], label=col, linestyle='-', linewidth=1.5, alpha=0.7)
     else:
         for col in plot_columns:
-            plt.plot(df_filtered.index, df_filtered[col], label=col, linestyle='-', linewidth=1.5)
+            plt.plot(df_filtered.index, df_filtered[col], label=col, linestyle='-', linewidth=1.5, alpha=0.7)
 
     # Format X axis
     if x_format == "Day":
@@ -2073,39 +2478,56 @@ def plot_timeseries(
         plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
         plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
     elif x_format == "Year":
-        plt.gca().xaxis.set_major_locator(mdates.YearLocator())
+        plt.gca().xaxis.set_major_locator(mdates.YearLocator(base=x_tick_spacing))
         plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
     else:
         raise ValueError(f"Unrecognized x_format: {x_format}. Use 'Day', 'Week', 'Month', or 'Year'.")
 
-    plt.xlabel(x_label, fontsize=14)
-    plt.xticks(rotation=x_tick_rotation, fontsize=12)
+    plt.xlabel(x_label)
+    plt.xticks(rotation=x_tick_rotation)
 
     # Format Y axis
     if y_format == "Decimal":
-        plt.gca().yaxis.set_major_formatter(FormatStrFormatter(f"%.{y_format_decimal_places}f"))
+        plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f"{x:,.{y_format_decimal_places}f}"))
     elif y_format == "Percentage":
         plt.gca().yaxis.set_major_formatter(PercentFormatter(xmax=1, decimals=y_format_decimal_places))
     elif y_format == "Scientific":
-        plt.gca().yaxis.set_major_formatter(FormatStrFormatter(f"%.{y_format_decimal_places}e"))
+        plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f"{x:.{y_format_decimal_places}e}"))
     elif y_format == "Log":
         plt.yscale("log")
     else:
-        raise ValueError(f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', or 'Scientific'.")
+        raise ValueError(f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', 'Scientific', or 'Log'.")
     
+    if y_tick_spacing == "Auto":
+        max = 0
+        min = 1
+        for col in plot_columns:
+            if df[col].max() > max:
+                max = df[col].max()
+
+            if df[col].min() < min:
+                min = df[col].min()
+
+        raw_y_spacing = (max - min) / 10
+        y_tick_spacing = round_to_nice_value(raw_y_spacing)
+    else:
+        y_tick_spacing = y_tick_spacing
+
     plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
-    plt.ylabel(y_label, fontsize=14)
-    plt.yticks(fontsize=12)
+    plt.ylabel(y_label)
+    plt.yticks(rotation=y_tick_rotation)
 
     # Format title, layout, grid, and legend
-    plt.title(title, fontsize=16)
+    plt.title(title)
     plt.tight_layout()
 
+    # Grid
     if grid == True:
         plt.grid(True, linestyle='--', alpha=0.7)
 
+    # Legend
     if legend == True:
-        plt.legend(fontsize=9)
+        plt.legend()
 
     # Save figure and display plot
     if export_plot == True:
@@ -2752,6 +3174,87 @@ if __name__ == "__main__":
         
 ```
 
+### run_linear_regression
+
+```python
+import numpy as np
+import pandas as pd
+import statsmodels.api as sm
+
+from sklearn.linear_model import LinearRegression, Ridge, RidgeCV
+
+def run_linear_regression(
+    df: pd.DataFrame,
+    x_plot_column: str,
+    y_plot_column: str,
+    regression_model: str,
+    regression_constant: bool,
+    ridge_alpha: float = None,
+) -> LinearRegression | Ridge | RidgeCV | sm.regression.linear_model.RegressionResultsWrapper:
+    """
+    Run a linear regression on the specified DataFrame columns, model, and constant.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        DataFrame containing the price data to plot.
+    x_plot_column : str
+        Column to plot on the x-axis from the DataFrame.
+    y_plot_column : str
+        Column to plot on the y-axis from the DataFrame.
+    regression_model : str
+        Type of regression model to use ("OLS-statsmodels", "OLS-sklearn", "Ridge", or "RidgeCV").
+    regression_constant : bool
+        Whether to include a constant term in the regression model.
+    ridge_alpha : float, optional
+        Alpha value for Ridge regression. Required if regression_model is "Ridge".
+    
+    Returns
+    -------
+    model : LinearRegression | Ridge | RidgeCV | RegressionResultsWrapper
+        The fitted regression model.
+    """
+
+    # Align X and y (common to both models)
+    data = df[[x_plot_column, y_plot_column]].dropna()
+    X = data[[x_plot_column]]
+    y = data[y_plot_column]
+
+    if regression_model == "OLS-statsmodels":
+        # Add constant if requested
+        if regression_constant:
+            X_sm = sm.add_constant(X)
+        else:
+            X_sm = X
+        
+        # Fit OLS regression model
+        model = sm.OLS(y, X_sm).fit()
+    
+    elif regression_model == "OLS-sklearn":
+        # Fit OLS regression model
+        model = LinearRegression(fit_intercept=regression_constant)
+        model.fit(X, y)
+
+    elif regression_model == "Ridge":
+        # Fit Ridge regression model with fixed alpha
+        model = Ridge(alpha=ridge_alpha, fit_intercept=regression_constant)
+        model.fit(X, y)
+    
+    elif regression_model == "RidgeCV":
+        # Fit Ridge regression model with automatic alpha selection via CV
+        alphas = np.logspace(-2, 1, 50)  # 50 values, 0.01 to 10
+        model = RidgeCV(alphas=alphas, cv=5, fit_intercept=regression_constant)
+        model.fit(X, y)
+
+    else:
+        raise ValueError(
+            f"Unrecognized regression_model: {regression_model}. "
+            "Currently, only 'OLS-statsmodels', 'OLS-sklearn', 'Ridge', and 'RidgeCV' are supported."
+        )
+
+    return model
+```
+
 ### strategy_harry_brown_perm_port
 
 ```python
@@ -3079,6 +3582,7 @@ from IPython.display import display
 def yf_pull_data(
     base_directory,
     ticker: str,
+    adjusted: bool,
     source: str,
     asset_class: str,
     excel_export: bool,
@@ -3113,7 +3617,7 @@ def yf_pull_data(
     """
     
     # Download data from YF
-    df = yf.download(ticker, start="1900-01-01")
+    df = yf.download(ticker, start="1900-01-01", auto_adjust=adjusted)
 
     # Drop the column level with the ticker symbol
     df.columns = df.columns.droplevel(1)
@@ -3130,7 +3634,7 @@ def yf_pull_data(
     # Set 'Date' column as index
     df = df.set_index('Date', drop=True)
 
-    # Drop data from last day because it's not accrate until end of day
+    # Drop data from last day because it's not accurate until end of day
     df = df.drop(df.index[-1])
     
     # Create directory

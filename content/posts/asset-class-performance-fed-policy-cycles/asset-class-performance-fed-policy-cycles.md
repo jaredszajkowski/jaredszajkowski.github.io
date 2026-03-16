@@ -1,6 +1,6 @@
 ## Introduction
 
-In this post, we will look into the Fed Funds cycles and evaluate asset class performance during tightening and easing of monetary policy.
+In this post, we will look into the Fed Funds cycles and evaluate asset class performance during tightening and easing of monetary policy. We'll pull data for stocks, bonds (IG and HY), and gold, and analyze their returns during different phases of the Fed Funds cycle. We'll also establish a simple strategy and allocate capital to a specific asset based on the current phase of the cycle, and evaluate the performance of this strategy over time.
 
 ## Python Imports
 
@@ -24,10 +24,6 @@ import pandas_datareader.data as web
 
 # Statistical Analysis
 import statsmodels.api as sm
-
-# Machine Learning
-from sklearn.decomposition import PCA
-from sklearn.preprocessing import StandardScaler
 
 # Suppress warnings
 warnings.filterwarnings("ignore")
@@ -66,7 +62,7 @@ DATA_MANUAL_DIR = config("DATA_MANUAL_DIR")
 Here are the functions needed for this project:
 
 * [bb_clean_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#bb_clean_data): Takes an Excel export from Bloomberg, removes the miscellaneous headings/rows, and returns a DataFrame.
-* [calc_fed_cycle_asset_performance](/posts/reusable-extensible-python-functions-financial-data-analysis/#calc_fed_cycle_asset_performance): Calculates metrics for an asset based on a specified Fed tightening/loosening cycle.
+* [calc_fed_cycle_asset_performance](/posts/reusable-extensible-python-functions-financial-data-analysis/#calc_fed_cycle_asset_performance): Calculates metrics for an asset based on a specified Fed tightening/easing cycle.
 * [load_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#load_data): Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.
 * [pandas_set_decimal_places](/posts/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places): Set the number of decimal places displayed for floating-point numbers in pandas.
 * [plot_bar_returns_ffr_change](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_bar_returns_ffr_change): Plot the bar chart of the cumulative or annualized returns for the asset class along with the change in the Fed Funds Rate.
@@ -187,12 +183,6 @@ display(fedfunds_monthly)
       <td>...</td>
     </tr>
     <tr>
-      <th>2025-10-31</th>
-      <td>NaN</td>
-      <td>0.04000</td>
-      <td>0.03750</td>
-    </tr>
-    <tr>
       <th>2025-11-30</th>
       <td>NaN</td>
       <td>0.04000</td>
@@ -216,9 +206,15 @@ display(fedfunds_monthly)
       <td>0.03750</td>
       <td>0.03500</td>
     </tr>
+    <tr>
+      <th>2026-03-31</th>
+      <td>NaN</td>
+      <td>0.03750</td>
+      <td>0.03500</td>
+    </tr>
   </tbody>
 </table>
-<p>522 rows × 3 columns</p>
+<p>523 rows × 3 columns</p>
 </div>
 
 
@@ -227,7 +223,7 @@ We can then generate several useful plots. First, the Fed Funds target rate:
 
 ```python
 plot_timeseries(
-    price_df=fedfunds_monthly,
+    df=fedfunds_monthly,
     plot_start_date=None,
     plot_end_date=None,
     plot_columns=["DFEDTAR", "DFEDTARU", "DFEDTARL"],
@@ -240,6 +236,7 @@ plot_timeseries(
     y_format="Percentage",
     y_format_decimal_places=0,
     y_tick_spacing=0.01,
+    y_tick_rotation=0,
     grid=True,
     legend=True,
     export_plot=False,
@@ -325,11 +322,6 @@ display(fedfunds_monthly)
       <td>...</td>
     </tr>
     <tr>
-      <th>2025-10-31</th>
-      <td>0.04000</td>
-      <td>-0.00250</td>
-    </tr>
-    <tr>
       <th>2025-11-30</th>
       <td>0.04000</td>
       <td>0.00000</td>
@@ -349,9 +341,14 @@ display(fedfunds_monthly)
       <td>0.03750</td>
       <td>0.00000</td>
     </tr>
+    <tr>
+      <th>2026-03-31</th>
+      <td>0.03750</td>
+      <td>0.00000</td>
+    </tr>
   </tbody>
 </table>
-<p>522 rows × 2 columns</p>
+<p>523 rows × 2 columns</p>
 </div>
 
 
@@ -360,7 +357,7 @@ And then the change in FFR from month-to-month:
 
 ```python
 plot_timeseries(
-    price_df=fedfunds_monthly,
+    df=fedfunds_monthly,
     plot_start_date=None,
     plot_end_date=None,
     plot_columns=["fed_funds_change"],
@@ -373,6 +370,7 @@ plot_timeseries(
     y_format="Percentage",
     y_format_decimal_places=2,
     y_tick_spacing=0.0025,
+    y_tick_rotation=0,
     grid=True,
     legend=False,
     export_plot=False,
@@ -1223,7 +1221,7 @@ Next, we can plot the price history before calculating the cycle performance:
 
 ```python
 plot_timeseries(
-    price_df=spxt,
+    df=spxt,
     plot_start_date=None,
     plot_end_date=None,
     plot_columns=["Close"],
@@ -1236,6 +1234,7 @@ plot_timeseries(
     y_format="Decimal",
     y_format_decimal_places=0,
     y_tick_spacing=1000,
+    y_tick_rotation=0,
     grid=True,
     legend=False,
     export_plot=False,
@@ -1951,8 +1950,8 @@ Y_vals = model.params[0] + model.params[1] * X_vals
     Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.017
     Model:                             OLS   Adj. R-squared:                 -0.018
     Method:                  Least Squares   F-statistic:                    0.4786
-    Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.495
-    Time:                         14:11:31   Log-Likelihood:                -132.24
+    Date:                 Mon, 16 Mar 2026   Prob (F-statistic):              0.495
+    Time:                         13:49:42   Log-Likelihood:                -132.24
     No. Observations:                   30   AIC:                             268.5
     Df Residuals:                       28   BIC:                             271.3
     Df Model:                            1                                         
@@ -2132,7 +2131,7 @@ Next, we can plot the price history before calculating the cycle performance:
 
 ```python
 plot_timeseries(
-    price_df=treas_10y,
+    df=treas_10y,
     plot_start_date=None,
     plot_end_date=None,
     plot_columns=["Close"],
@@ -2145,6 +2144,7 @@ plot_timeseries(
     y_format="Decimal",
     y_format_decimal_places=0,
     y_tick_spacing=50,
+    y_tick_rotation=0,
     grid=True,
     legend=False,
     export_plot=False,
@@ -2860,8 +2860,8 @@ Y_vals = model.params[0] + model.params[1] * X_vals
     Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.050
     Model:                             OLS   Adj. R-squared:                  0.016
     Method:                  Least Squares   F-statistic:                     1.462
-    Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.237
-    Time:                         14:11:34   Log-Likelihood:                -103.64
+    Date:                 Mon, 16 Mar 2026   Prob (F-statistic):              0.237
+    Time:                         13:49:43   Log-Likelihood:                -103.64
     No. Observations:                   30   AIC:                             211.3
     Df Residuals:                       28   BIC:                             214.1
     Df Model:                            1                                         
@@ -3041,7 +3041,7 @@ Next, we can plot the price history before calculating the cycle performance:
 
 ```python
 plot_timeseries(
-    price_df=hy_bonds,
+    df=hy_bonds,
     plot_start_date=None,
     plot_end_date=None,
     plot_columns=["Close"],
@@ -3054,6 +3054,7 @@ plot_timeseries(
     y_format="Decimal",
     y_format_decimal_places=0,
     y_tick_spacing=200,
+    y_tick_rotation=0,
     grid=True,
     legend=False,
     export_plot=False,
@@ -3767,8 +3768,8 @@ Y_vals = model.params[0] + model.params[1] * X_vals
     Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.004
     Model:                             OLS   Adj. R-squared:                 -0.031
     Method:                  Least Squares   F-statistic:                    0.1171
-    Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.735
-    Time:                         14:11:36   Log-Likelihood:                -110.57
+    Date:                 Mon, 16 Mar 2026   Prob (F-statistic):              0.735
+    Time:                         13:49:45   Log-Likelihood:                -110.57
     No. Observations:                   30   AIC:                             225.1
     Df Residuals:                       28   BIC:                             227.9
     Df Model:                            1                                         
@@ -3946,7 +3947,7 @@ Next, we can plot the price history before calculating the cycle performance:
 
 ```python
 plot_timeseries(
-    price_df=gold,
+    df=gold,
     plot_start_date=None,
     plot_end_date=None,
     plot_columns=["Close"],
@@ -3959,6 +3960,7 @@ plot_timeseries(
     y_format="Decimal",
     y_format_decimal_places=0,
     y_tick_spacing=400,
+    y_tick_rotation=0,
     grid=True,
     legend=False,
     export_plot=False,
@@ -4674,8 +4676,8 @@ Y_vals = model.params[0] + model.params[1] * X_vals
     Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.064
     Model:                             OLS   Adj. R-squared:                  0.030
     Method:                  Least Squares   F-statistic:                     1.900
-    Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.179
-    Time:                         14:11:39   Log-Likelihood:                -140.03
+    Date:                 Mon, 16 Mar 2026   Prob (F-statistic):              0.179
+    Time:                         13:49:47   Log-Likelihood:                -140.03
     No. Observations:                   30   AIC:                             284.1
     Df Residuals:                       28   BIC:                             286.9
     Df Model:                            1                                         
@@ -4694,7 +4696,7 @@ Y_vals = model.params[0] + model.params[1] * X_vals
     
     Notes:
     [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
-    Intercept: 11.467013480569243, Slope: -0.056974234027166226
+    Intercept: 11.467013480569243, Slope: -0.05697423402716622
 
 
 And then plot the regression line along with the values:
@@ -4723,7 +4725,7 @@ It's difficult to draw any strong conclusions with the above plot. Gold has trad
 
 With the above analysis (somewhat) complete, let's look at the optimal allocation for a portfolio based on the data and the hypythetical historical results.
 
-We have to be careful with our criteria for when to hold stocks, bonds, or gold, as hindsight bias is certainly possible. So, without overanalyzing the results, let's assume that we hold stocks as the default position during tightening cycles, and then hold bonds during easing cycles when the Fed starts cutting rates, and then resume holding stocks when the Fed stops cutting rates. If there is not any change in FFR, then we still hold stocks.
+We have to be careful with our criteria for when to hold stocks, bonds, or gold, as hindsight bias is certainly possible. So, without overanalyzing the results, **let's assume that we hold stocks as the default position during tightening cycles, and then hold bonds during easing cycles when the Fed starts cutting rates, and then resume holding stocks when the Fed stops cutting rates. If there is not any change in FFR, then we still hold stocks.**
 
 We can then combine the return series based on the above with the following:
 
@@ -5748,7 +5750,7 @@ We can then plot the monthly returns:
 
 ```python
 plot_timeseries(
-    price_df=portfolio_monthly,
+    df=portfolio_monthly,
     plot_start_date=start_date,
     plot_end_date=end_date,
     plot_columns=["Portfolio_Monthly_Return", "SPXT_Monthly_Return", "10Y_Monthly_Return"],
@@ -5761,6 +5763,7 @@ plot_timeseries(
     y_format="Decimal",
     y_format_decimal_places=2,
     y_tick_spacing=0.02,
+    y_tick_rotation=0,
     grid=True,
     legend=True,
     export_plot=False,
@@ -5779,7 +5782,7 @@ And cumulative returns:
 
 ```python
 plot_timeseries(
-    price_df=portfolio_monthly,
+    df=portfolio_monthly,
     plot_start_date=start_date,
     plot_end_date=end_date,
     plot_columns=["Portfolio_Cumulative_Return", "SPXT_Cumulative_Return", "10Y_Cumulative_Return"],
@@ -5792,6 +5795,7 @@ plot_timeseries(
     y_format="Decimal",
     y_format_decimal_places=0,
     y_tick_spacing=3,
+    y_tick_rotation=0,
     grid=True,
     legend=True,
     export_plot=False,
@@ -5810,7 +5814,7 @@ And drawdowns:
 
 ```python
 plot_timeseries(
-    price_df=portfolio_monthly,
+    df=portfolio_monthly,
     plot_start_date=start_date,
     plot_end_date=end_date,
     plot_columns=["Portfolio_Drawdown", "SPXT_Drawdown", "10Y_Drawdown"],
@@ -5823,6 +5827,7 @@ plot_timeseries(
     y_format="Decimal",
     y_format_decimal_places=2,
     y_tick_spacing=0.05,
+    y_tick_rotation=0,
     grid=True,
     legend=True,
     export_plot=False,
@@ -5975,13 +5980,17 @@ Based on the above, our strategy portfolio outperforms both stocks and bonds, wi
 
 This was a interesting exercise to evaluate the performance of different asset classes during Fed tightening and easing cycles. The results are not particularly surprising, but it is interesting to see the data and plots to confirm the economic intuition that stocks perform well during tightening cycles (economic strength) and bonds perform well during easing cycles (economic weakness). The results are certainly dependent on the specific time period or regime, and also on the assumption made for how to handle the periods of neutral policy (i.e. no change in FFR).
 
+On paper, the backtest looks like it would have been a successful strategy, but there are certainly some caveats to consider. First, the strategy is based on the assumption that we can accurately identify the Fed tightening and easing cycles in real-time, which may not be the case. Second, the strategy does not account for transaction costs or taxes, which could significantly impact the returns. Finally, the strategy is based on historical data, and there is no guarantee that the same patterns will hold in the future.
+
+The strategy has done well post-GFC, but the period from 2008 - present has been marked by historically low interest rates and a strong bull market in stocks, which may not be representative of future market conditions based on current valuations (present time February 2026). Additionally, the current rate cutting cycle (cycles 28/29/30) is still ongoing, and it remains to be seen how the strategy will perform during this cycle and in the subsequent cycles.
+
 ## Future Investigation
 
 A couple of ideas sound intriguing for future investigation:
 
 * Does a commodity index (such as GSCI) exhibit differing behavior than gold?
 * How does leverage affect the returns that are observed for the strategy portfolio, stocks, and bonds?
-* Do other Fed tightening/loosening cycles exhibit the same behavior for returns?
+* Do other Fed tightening/easing cycles exhibit the same behavior for returns?
 
 ## References
 

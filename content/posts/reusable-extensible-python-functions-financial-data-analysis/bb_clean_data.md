@@ -22,7 +22,7 @@ def bb_clean_data(
     ----------
     base_directory : str
         Root path to store downloaded data.
-    fund : str
+    fund_ticker_name : str
         The fund to clean the data from.
     source : str
         Name of the data source (e.g., 'Bloomberg').
@@ -69,7 +69,13 @@ def bb_clean_data(
         pass
 
     # Rename column
-    df.rename(columns={"PX_LAST": "Close"}, inplace=True)
+    try:
+        df.rename(columns={"PX_LAST": "Close"}, inplace=True)
+        df.rename(columns={"PX_OPEN": "Open"}, inplace=True)
+        df.rename(columns={"PX_HIGH": "High"}, inplace=True)
+        df.rename(columns={"PX_LOW": "Low"}, inplace=True)
+    except KeyError:
+        pass
 
     # Sort by date
     df.sort_values(by=["Date"], inplace=True)

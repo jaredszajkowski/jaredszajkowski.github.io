@@ -6,8 +6,36 @@
     <description>Recent content in Topics on Jared Szajkowski</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 23 Feb 2026 00:00:01 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Mar 2026 00:00:01 +0000</lastBuildDate>
     <atom:link href="https://www.jaredszajkowski.com/topics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Exchange Traded Funds</title>
+      <link>https://www.jaredszajkowski.com/topics/exchange-traded-funds/</link>
+      <pubDate>Mon, 16 Mar 2026 00:00:01 +0000</pubDate>
+      <guid>https://www.jaredszajkowski.com/topics/exchange-traded-funds/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Pandas</title>
+      <link>https://www.jaredszajkowski.com/topics/pandas/</link>
+      <pubDate>Mon, 16 Mar 2026 00:00:01 +0000</pubDate>
+      <guid>https://www.jaredszajkowski.com/topics/pandas/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Python</title>
+      <link>https://www.jaredszajkowski.com/topics/python/</link>
+      <pubDate>Mon, 16 Mar 2026 00:00:01 +0000</pubDate>
+      <guid>https://www.jaredszajkowski.com/topics/python/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Yahoo Finance</title>
+      <link>https://www.jaredszajkowski.com/topics/yahoo-finance/</link>
+      <pubDate>Mon, 16 Mar 2026 00:00:01 +0000</pubDate>
+      <guid>https://www.jaredszajkowski.com/topics/yahoo-finance/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Arch Linux</title>
       <link>https://www.jaredszajkowski.com/topics/arch-linux/</link>
@@ -41,27 +69,6 @@
       <link>https://www.jaredszajkowski.com/topics/federal-reserve-data/</link>
       <pubDate>Sat, 29 Nov 2025 00:00:01 +0000</pubDate>
       <guid>https://www.jaredszajkowski.com/topics/federal-reserve-data/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Pandas</title>
-      <link>https://www.jaredszajkowski.com/topics/pandas/</link>
-      <pubDate>Sat, 29 Nov 2025 00:00:01 +0000</pubDate>
-      <guid>https://www.jaredszajkowski.com/topics/pandas/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Python</title>
-      <link>https://www.jaredszajkowski.com/topics/python/</link>
-      <pubDate>Sat, 29 Nov 2025 00:00:01 +0000</pubDate>
-      <guid>https://www.jaredszajkowski.com/topics/python/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Yahoo Finance</title>
-      <link>https://www.jaredszajkowski.com/topics/yahoo-finance/</link>
-      <pubDate>Sat, 29 Nov 2025 00:00:01 +0000</pubDate>
-      <guid>https://www.jaredszajkowski.com/topics/yahoo-finance/</guid>
       <description></description>
     </item>
     <item>

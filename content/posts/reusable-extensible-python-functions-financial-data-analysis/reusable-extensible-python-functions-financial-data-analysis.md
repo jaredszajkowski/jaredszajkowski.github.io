@@ -358,6 +358,17 @@ export_track_md_deps(dep_file=dep_file, md_filename="polygon_pull_data.md", cont
 
 
 ```python
+from run_linear_regression import run_linear_regression
+code = Path(SOURCE_DIR / "run_linear_regression.py").read_text()
+# Copy this <!-- INSERT_run_linear_regression_HERE --> to index_temp.md
+export_track_md_deps(dep_file=dep_file, md_filename="run_linear_regression.md", content=code, output_type="python")
+```
+
+    ✅ Exported and tracked: run_linear_regression.md
+
+
+
+```python
 from strategy_harry_brown_perm_port import strategy_harry_brown_perm_port
 code = Path(SOURCE_DIR / "strategy_harry_brown_perm_port.py").read_text()
 # Copy this <!-- INSERT_strategy_harry_brown_perm_port_HERE --> to index_temp.md

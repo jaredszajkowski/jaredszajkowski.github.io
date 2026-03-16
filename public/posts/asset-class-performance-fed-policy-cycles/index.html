@@ -41,8 +41,8 @@
   <link
     type="text/css"
     rel="stylesheet"
-    href="https://www.jaredszajkowski.com/css/main.bundle.min.4cd97d4ccee14be91e750a023a978f50bdeae14e826e7f27011fc8fffac23db6.css"
-    integrity="sha256-TNl9TM7hS&#43;kedQoCOpePUL3q4U6Cbn8nAR/I//rCPbY="
+    href="https://www.jaredszajkowski.com/css/main.bundle.min.2f9ad68cf4fbf0c55a7287ce079d8845ea55ec9112cdecd2ffca98862f074e6d.css"
+    integrity="sha256-L5rWjPT78MVacofOB52IRepV7JESzezS/8qYhi8HTm0="
   />
   
     
@@ -142,7 +142,7 @@
     
     
     "mainEntityOfPage": "true",
-    "wordCount": "8539"
+    "wordCount": "8752"
   }
   </script>
     
@@ -634,7 +634,7 @@
   <div class="flex flex-row flex-wrap items-center">
     
     
-      <time datetime="2025-11-29 00:00:01 &#43;0000 &#43;0000">November 29, 2025</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2026-02-23 00:00:01 &#43;0000 &#43;0000">Updated: February 23, 2026</time><span class="px-2 text-primary-500">&middot;</span><span>8539 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">41 mins</span>
+      <time datetime="2025-11-29 00:00:01 &#43;0000 &#43;0000">November 29, 2025</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2026-02-23 00:00:01 &#43;0000 &#43;0000">Updated: February 23, 2026</time><span class="px-2 text-primary-500">&middot;</span><span>8752 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">42 mins</span>
     
 
     
@@ -781,7 +781,7 @@
         </div>
       
       <div class="min-h-0 min-w-0 max-w-prose grow">
-        <h2 id="introduction" class="relative group">Introduction <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#introduction" aria-label="Anchor">#</a></span></h2><p>In this post, we will look into the Fed Funds cycles and evaluate asset class performance during tightening and easing of monetary policy.</p>
+        <h2 id="introduction" class="relative group">Introduction <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#introduction" aria-label="Anchor">#</a></span></h2><p>In this post, we will look into the Fed Funds cycles and evaluate asset class performance during tightening and easing of monetary policy. We&rsquo;ll pull data for stocks, bonds (IG and HY), and gold, and analyze their returns during different phases of the Fed Funds cycle. We&rsquo;ll also establish a simple strategy and allocate capital to a specific asset based on the current phase of the cycle, and evaluate the performance of this strategy over time.</p>
 <h2 id="python-imports" class="relative group">Python Imports <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#python-imports" aria-label="Anchor">#</a></span></h2><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Standard Library</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">datetime</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
@@ -800,10 +800,6 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Statistical Analysis</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Machine Learning</span>
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Suppress warnings</span>
 </span></span><span class="line"><span class="cl"><span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&#34;ignore&#34;</span><span class="p">)</span>
@@ -836,7 +832,7 @@
     <a href="https://www.jaredszajkowski.com/posts/reusable-extensible-python-functions-financial-data-analysis/#bb_clean_data">bb_clean_data</a>: Takes an Excel export from Bloomberg, removes the miscellaneous headings/rows, and returns a DataFrame.</li>
 <li>
       
-    <a href="https://www.jaredszajkowski.com/posts/reusable-extensible-python-functions-financial-data-analysis/#calc_fed_cycle_asset_performance">calc_fed_cycle_asset_performance</a>: Calculates metrics for an asset based on a specified Fed tightening/loosening cycle.</li>
+    <a href="https://www.jaredszajkowski.com/posts/reusable-extensible-python-functions-financial-data-analysis/#calc_fed_cycle_asset_performance">calc_fed_cycle_asset_performance</a>: Calculates metrics for an asset based on a specified Fed tightening/easing cycle.</li>
 <li>
       
     <a href="https://www.jaredszajkowski.com/posts/reusable-extensible-python-functions-financial-data-analysis/#load_data">load_data</a>: Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.</li>
@@ -955,12 +951,6 @@
       <td>...</td>
     </tr>
     <tr>
-      <th>2025-10-31</th>
-      <td>NaN</td>
-      <td>0.04000</td>
-      <td>0.03750</td>
-    </tr>
-    <tr>
       <th>2025-11-30</th>
       <td>NaN</td>
       <td>0.04000</td>
@@ -984,13 +974,19 @@
       <td>0.03750</td>
       <td>0.03500</td>
     </tr>
+    <tr>
+      <th>2026-03-31</th>
+      <td>NaN</td>
+      <td>0.03750</td>
+      <td>0.03500</td>
+    </tr>
   </tbody>
 </table>
-<p>522 rows × 3 columns</p>
+<p>523 rows × 3 columns</p>
 </div>
 <p>We can then generate several useful plots. First, the Fed Funds target rate:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">plot_timeseries</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">    <span class="n">price_df</span><span class="o">=</span><span class="n">fedfunds_monthly</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="o">=</span><span class="n">fedfunds_monthly</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_start_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_end_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;DFEDTAR&#34;</span><span class="p">,</span> <span class="s2">&#34;DFEDTARU&#34;</span><span class="p">,</span> <span class="s2">&#34;DFEDTARL&#34;</span><span class="p">],</span>
@@ -1003,6 +999,7 @@
 </span></span><span class="line"><span class="cl">    <span class="n">y_format</span><span class="o">=</span><span class="s2">&#34;Percentage&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">y_format_decimal_places</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">y_tick_spacing</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">y_tick_rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">export_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -1078,11 +1075,6 @@
       <td>...</td>
     </tr>
     <tr>
-      <th>2025-10-31</th>
-      <td>0.04000</td>
-      <td>-0.00250</td>
-    </tr>
-    <tr>
       <th>2025-11-30</th>
       <td>0.04000</td>
       <td>0.00000</td>
@@ -1102,13 +1094,18 @@
       <td>0.03750</td>
       <td>0.00000</td>
     </tr>
+    <tr>
+      <th>2026-03-31</th>
+      <td>0.03750</td>
+      <td>0.00000</td>
+    </tr>
   </tbody>
 </table>
-<p>522 rows × 2 columns</p>
+<p>523 rows × 2 columns</p>
 </div>
 <p>And then the change in FFR from month-to-month:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">plot_timeseries</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">    <span class="n">price_df</span><span class="o">=</span><span class="n">fedfunds_monthly</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="o">=</span><span class="n">fedfunds_monthly</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_start_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_end_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;fed_funds_change&#34;</span><span class="p">],</span>
@@ -1121,6 +1118,7 @@
 </span></span><span class="line"><span class="cl">    <span class="n">y_format</span><span class="o">=</span><span class="s2">&#34;Percentage&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">y_format_decimal_places</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">y_tick_spacing</span><span class="o">=</span><span class="mf">0.0025</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">y_tick_rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">export_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -1924,7 +1922,7 @@
 </div>
 <p>Next, we can plot the price history before calculating the cycle performance:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">plot_timeseries</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">    <span class="n">price_df</span><span class="o">=</span><span class="n">spxt</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="o">=</span><span class="n">spxt</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_start_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_end_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;Close&#34;</span><span class="p">],</span>
@@ -1937,6 +1935,7 @@
 </span></span><span class="line"><span class="cl">    <span class="n">y_format</span><span class="o">=</span><span class="s2">&#34;Decimal&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">y_format_decimal_places</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">y_tick_spacing</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">y_tick_rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">export_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -2617,8 +2616,8 @@
 Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.017
 Model:                             OLS   Adj. R-squared:                 -0.018
 Method:                  Least Squares   F-statistic:                    0.4786
-Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.495
-Time:                         14:11:31   Log-Likelihood:                -132.24
+Date:                 Mon, 16 Mar 2026   Prob (F-statistic):              0.495
+Time:                         13:49:42   Log-Likelihood:                -132.24
 No. Observations:                   30   AIC:                             268.5
 Df Residuals:                       28   BIC:                             271.3
 Df Model:                            1                                         
@@ -2774,7 +2773,7 @@ Intercept: 13.076015539043272, Slope: 0.022056651501767076
 </div>
 <p>Next, we can plot the price history before calculating the cycle performance:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">plot_timeseries</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">    <span class="n">price_df</span><span class="o">=</span><span class="n">treas_10y</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="o">=</span><span class="n">treas_10y</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_start_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_end_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;Close&#34;</span><span class="p">],</span>
@@ -2787,6 +2786,7 @@ Intercept: 13.076015539043272, Slope: 0.022056651501767076
 </span></span><span class="line"><span class="cl">    <span class="n">y_format</span><span class="o">=</span><span class="s2">&#34;Decimal&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">y_format_decimal_places</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">y_tick_spacing</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">y_tick_rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">export_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -3467,8 +3467,8 @@ Intercept: 13.076015539043272, Slope: 0.022056651501767076
 Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.050
 Model:                             OLS   Adj. R-squared:                  0.016
 Method:                  Least Squares   F-statistic:                     1.462
-Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.237
-Time:                         14:11:34   Log-Likelihood:                -103.64
+Date:                 Mon, 16 Mar 2026   Prob (F-statistic):              0.237
+Time:                         13:49:43   Log-Likelihood:                -103.64
 No. Observations:                   30   AIC:                             211.3
 Df Residuals:                       28   BIC:                             214.1
 Df Model:                            1                                         
@@ -3624,7 +3624,7 @@ Intercept: 6.745718627069434, Slope: -0.01486255000436152
 </div>
 <p>Next, we can plot the price history before calculating the cycle performance:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">plot_timeseries</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">    <span class="n">price_df</span><span class="o">=</span><span class="n">hy_bonds</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="o">=</span><span class="n">hy_bonds</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_start_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_end_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;Close&#34;</span><span class="p">],</span>
@@ -3637,6 +3637,7 @@ Intercept: 6.745718627069434, Slope: -0.01486255000436152
 </span></span><span class="line"><span class="cl">    <span class="n">y_format</span><span class="o">=</span><span class="s2">&#34;Decimal&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">y_format_decimal_places</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">y_tick_spacing</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">y_tick_rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">export_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -4316,8 +4317,8 @@ Intercept: 6.745718627069434, Slope: -0.01486255000436152
 Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.004
 Model:                             OLS   Adj. R-squared:                 -0.031
 Method:                  Least Squares   F-statistic:                    0.1171
-Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.735
-Time:                         14:11:36   Log-Likelihood:                -110.57
+Date:                 Mon, 16 Mar 2026   Prob (F-statistic):              0.735
+Time:                         13:49:45   Log-Likelihood:                -110.57
 No. Observations:                   30   AIC:                             225.1
 Df Residuals:                       28   BIC:                             227.9
 Df Model:                            1                                         
@@ -4472,7 +4473,7 @@ Intercept: 6.611340605920211, Slope: -0.005299161729553994
 </div>
 <p>Next, we can plot the price history before calculating the cycle performance:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">plot_timeseries</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">    <span class="n">price_df</span><span class="o">=</span><span class="n">gold</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="o">=</span><span class="n">gold</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_start_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_end_date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;Close&#34;</span><span class="p">],</span>
@@ -4485,6 +4486,7 @@ Intercept: 6.611340605920211, Slope: -0.005299161729553994
 </span></span><span class="line"><span class="cl">    <span class="n">y_format</span><span class="o">=</span><span class="s2">&#34;Decimal&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">y_format_decimal_places</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">y_tick_spacing</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">y_tick_rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">export_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -5165,8 +5167,8 @@ Intercept: 6.611340605920211, Slope: -0.005299161729553994
 Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.064
 Model:                             OLS   Adj. R-squared:                  0.030
 Method:                  Least Squares   F-statistic:                     1.900
-Date:                 Tue, 24 Feb 2026   Prob (F-statistic):              0.179
-Time:                         14:11:39   Log-Likelihood:                -140.03
+Date:                 Mon, 16 Mar 2026   Prob (F-statistic):              0.179
+Time:                         13:49:47   Log-Likelihood:                -140.03
 No. Observations:                   30   AIC:                             284.1
 Df Residuals:                       28   BIC:                             286.9
 Df Model:                            1                                         
@@ -5185,7 +5187,7 @@ Kurtosis:                       8.727   Cond. No.                         120.
 
 Notes:
 [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
-Intercept: 11.467013480569243, Slope: -0.056974234027166226
+Intercept: 11.467013480569243, Slope: -0.05697423402716622
 </code></pre>
 <p>And then plot the regression line along with the values:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">plot_scatter_regression_ffr_vs_returns</span><span class="p">(</span>
@@ -5201,7 +5203,7 @@ Intercept: 11.467013480569243, Slope: -0.056974234027166226
 </p>
 <p>It&rsquo;s difficult to draw any strong conclusions with the above plot. Gold has traditionally been considered a hedge for inflation, and while one of the Fed&rsquo;s mandates is to manage inflation, there may not be a conclusion to draw in relationship to the historical returns that gold has exhibited.</p>
 <h2 id="asset-allocation" class="relative group">Asset Allocation <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#asset-allocation" aria-label="Anchor">#</a></span></h2><p>With the above analysis (somewhat) complete, let&rsquo;s look at the optimal allocation for a portfolio based on the data and the hypythetical historical results.</p>
-<p>We have to be careful with our criteria for when to hold stocks, bonds, or gold, as hindsight bias is certainly possible. So, without overanalyzing the results, let&rsquo;s assume that we hold stocks as the default position during tightening cycles, and then hold bonds during easing cycles when the Fed starts cutting rates, and then resume holding stocks when the Fed stops cutting rates. If there is not any change in FFR, then we still hold stocks.</p>
+<p>We have to be careful with our criteria for when to hold stocks, bonds, or gold, as hindsight bias is certainly possible. So, without overanalyzing the results, <strong>let&rsquo;s assume that we hold stocks as the default position during tightening cycles, and then hold bonds during easing cycles when the Fed starts cutting rates, and then resume holding stocks when the Fed stops cutting rates. If there is not any change in FFR, then we still hold stocks.</strong></p>
 <p>We can then combine the return series based on the above with the following:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># Shift the &#34;cycle_filled&#34; column down by one row to create a new column called &#34;cycle_invested&#34; that represents the cycle label that an investor would be invested in for each month (i.e. the cycle label from the previous month)</span>
 </span></span><span class="line"><span class="cl">
@@ -6179,7 +6181,7 @@ Intercept: 11.467013480569243, Slope: -0.056974234027166226
 <p>Next, we&rsquo;ll look at performance for the assets and portfolio.</p>
 <h2 id="performance-statistics" class="relative group">Performance Statistics <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#performance-statistics" aria-label="Anchor">#</a></span></h2><p>We can then plot the monthly returns:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">plot_timeseries</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">    <span class="n">price_df</span><span class="o">=</span><span class="n">portfolio_monthly</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="o">=</span><span class="n">portfolio_monthly</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_start_date</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_end_date</span><span class="o">=</span><span class="n">end_date</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;Portfolio_Monthly_Return&#34;</span><span class="p">,</span> <span class="s2">&#34;SPXT_Monthly_Return&#34;</span><span class="p">,</span> <span class="s2">&#34;10Y_Monthly_Return&#34;</span><span class="p">],</span>
@@ -6192,6 +6194,7 @@ Intercept: 11.467013480569243, Slope: -0.056974234027166226
 </span></span><span class="line"><span class="cl">    <span class="n">y_format</span><span class="o">=</span><span class="s2">&#34;Decimal&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">y_format_decimal_places</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">y_tick_spacing</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">y_tick_rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">export_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -6202,7 +6205,7 @@ Intercept: 11.467013480569243, Slope: -0.056974234027166226
 </p>
 <p>And cumulative returns:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">plot_timeseries</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">    <span class="n">price_df</span><span class="o">=</span><span class="n">portfolio_monthly</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="o">=</span><span class="n">portfolio_monthly</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_start_date</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_end_date</span><span class="o">=</span><span class="n">end_date</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;Portfolio_Cumulative_Return&#34;</span><span class="p">,</span> <span class="s2">&#34;SPXT_Cumulative_Return&#34;</span><span class="p">,</span> <span class="s2">&#34;10Y_Cumulative_Return&#34;</span><span class="p">],</span>
@@ -6215,6 +6218,7 @@ Intercept: 11.467013480569243, Slope: -0.056974234027166226
 </span></span><span class="line"><span class="cl">    <span class="n">y_format</span><span class="o">=</span><span class="s2">&#34;Decimal&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">y_format_decimal_places</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">y_tick_spacing</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">y_tick_rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">export_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -6225,7 +6229,7 @@ Intercept: 11.467013480569243, Slope: -0.056974234027166226
 </p>
 <p>And drawdowns:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">plot_timeseries</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">    <span class="n">price_df</span><span class="o">=</span><span class="n">portfolio_monthly</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="o">=</span><span class="n">portfolio_monthly</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_start_date</span><span class="o">=</span><span class="n">start_date</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_end_date</span><span class="o">=</span><span class="n">end_date</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">plot_columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;Portfolio_Drawdown&#34;</span><span class="p">,</span> <span class="s2">&#34;SPXT_Drawdown&#34;</span><span class="p">,</span> <span class="s2">&#34;10Y_Drawdown&#34;</span><span class="p">],</span>
@@ -6238,6 +6242,7 @@ Intercept: 11.467013480569243, Slope: -0.056974234027166226
 </span></span><span class="line"><span class="cl">    <span class="n">y_format</span><span class="o">=</span><span class="s2">&#34;Decimal&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">y_format_decimal_places</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">y_tick_spacing</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">y_tick_rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">export_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -6370,11 +6375,13 @@ Intercept: 11.467013480569243, Slope: -0.056974234027166226
 </div>
 <p>Based on the above, our strategy portfolio outperforms both stocks and bonds, with lower drawdowns.</p>
 <h2 id="conclusions" class="relative group">Conclusions <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#conclusions" aria-label="Anchor">#</a></span></h2><p>This was a interesting exercise to evaluate the performance of different asset classes during Fed tightening and easing cycles. The results are not particularly surprising, but it is interesting to see the data and plots to confirm the economic intuition that stocks perform well during tightening cycles (economic strength) and bonds perform well during easing cycles (economic weakness). The results are certainly dependent on the specific time period or regime, and also on the assumption made for how to handle the periods of neutral policy (i.e. no change in FFR).</p>
+<p>On paper, the backtest looks like it would have been a successful strategy, but there are certainly some caveats to consider. First, the strategy is based on the assumption that we can accurately identify the Fed tightening and easing cycles in real-time, which may not be the case. Second, the strategy does not account for transaction costs or taxes, which could significantly impact the returns. Finally, the strategy is based on historical data, and there is no guarantee that the same patterns will hold in the future.</p>
+<p>The strategy has done well post-GFC, but the period from 2008 - present has been marked by historically low interest rates and a strong bull market in stocks, which may not be representative of future market conditions based on current valuations (present time February 2026). Additionally, the current rate cutting cycle (cycles 28/29/30) is still ongoing, and it remains to be seen how the strategy will perform during this cycle and in the subsequent cycles.</p>
 <h2 id="future-investigation" class="relative group">Future Investigation <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#future-investigation" aria-label="Anchor">#</a></span></h2><p>A couple of ideas sound intriguing for future investigation:</p>
 <ul>
 <li>Does a commodity index (such as GSCI) exhibit differing behavior than gold?</li>
 <li>How does leverage affect the returns that are observed for the strategy portfolio, stocks, and bonds?</li>
-<li>Do other Fed tightening/loosening cycles exhibit the same behavior for returns?</li>
+<li>Do other Fed tightening/easing cycles exhibit the same behavior for returns?</li>
 </ul>
 <h2 id="references" class="relative group">References <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#references" aria-label="Anchor">#</a></span></h2><ol>
 <li><a href="https://fred.stlouisfed.org/series/DFEDTARU" target="_blank" rel="noreferrer">https://fred.stlouisfed.org/series/DFEDTARU</a></li>

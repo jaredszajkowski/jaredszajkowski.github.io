@@ -39,6 +39,7 @@ def plot_histogram(
     x_tick_rotation: int,
     y_label: str,
     y_tick_spacing: int,
+    y_tick_rotation: int,
     grid: bool,
     legend: bool,
     export_plot: bool,
@@ -46,12 +47,12 @@ def plot_histogram(
 ) -> None:
 
     """
-    Plot the price data from a DataFrame for a specified date range and columns.
+    Plot the histogram for a dataset from a DataFrame for a specified date range and columns.
 
     Parameters:
     -----------
     df : pd.DataFrame
-        DataFrame containing the price data to plot.
+        DataFrame containing the data to plot.
     plot_columns : str OR list
         List of columns to plot from the DataFrame. If none, all columns will be plotted.
     title : str
@@ -66,6 +67,8 @@ def plot_histogram(
         Label for the y-axis.
     y_tick_spacing : int
         Spacing for the y-axis ticks.
+    y_tick_rotation : int
+        Rotation angle for the y-axis tick labels.
     grid : bool
         Whether to display a grid on the plot.
     legend : bool
@@ -90,7 +93,7 @@ def plot_histogram(
             mean = df[col].mean()
             std = df[col].std()
             # Create histogram first to get its color
-            n, bins, patches = plt.hist(df[col], label=col, bins=200, edgecolor='black', alpha=0.5)
+            n, bins, patches = plt.hist(df[col], label=col, bins=200, edgecolor='black', alpha=0.7)
             hist_color = patches[0].get_facecolor()
             # Use histogram color for vertical lines
             plt.axvline(mean, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean: {mean:.3f}')
@@ -103,7 +106,7 @@ def plot_histogram(
             mean = df[col].mean()
             std = df[col].std()
             # Create histogram first to get its color
-            n, bins, patches = plt.hist(df[col], label=col, bins=200, edgecolor='black', alpha=0.5)
+            n, bins, patches = plt.hist(df[col], label=col, bins=200, edgecolor='black', alpha=0.7)
             hist_color = patches[0].get_facecolor()
             # Use histogram color for vertical lines
             plt.axvline(mean, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean: {mean:.3f}')
@@ -118,9 +121,10 @@ def plot_histogram(
         x_tick_spacing = round_to_nice_value(raw_x_spacing)
     else:
         x_tick_spacing = x_tick_spacing
+
     plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
-    plt.xlabel(x_label, fontsize=14)
-    plt.xticks(rotation=x_tick_rotation, fontsize=12)
+    plt.xlabel(x_label)
+    plt.xticks(rotation=x_tick_rotation)
 
     # Format Y axis
     if y_tick_spacing == "Auto":
@@ -128,19 +132,22 @@ def plot_histogram(
         y_tick_spacing = round_to_nice_value(raw_y_spacing)
     else:
         y_tick_spacing = y_tick_spacing
+
     plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
-    plt.ylabel(y_label, fontsize=14)
-    plt.yticks(fontsize=12)
+    plt.ylabel(y_label)
+    plt.yticks(rotation=y_tick_rotation)
 
     # Format title, layout, grid, and legend
-    plt.title(title, fontsize=16)
+    plt.title(title)
     plt.tight_layout()
 
+    # Grid
     if grid == True:
         plt.grid(True, linestyle='--', alpha=0.7)
 
+    # Legend
     if legend == True:
-        plt.legend(fontsize=9)
+        plt.legend()
 
     # Save figure and display plot
     if export_plot == True:

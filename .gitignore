@@ -245,11 +245,8 @@ token.json
 .doit.db.db
 .doit-db.sqlite
 
-src/z_scratch_project_template.ipynb
 
 *Thumbs.db
-
-src/z_scratch_pipeline_template.ipynb
 
 # Ignore .insyncdl files used by Insync
 *.insyncdl
