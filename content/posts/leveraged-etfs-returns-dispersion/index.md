@@ -18,7 +18,7 @@ topics: [
 
 ## Introduction
 
-Over the past 15 years (or so), leveraged ETFs have become a frequently used vehicle for trading equity indices, sectors, and other asset classes for the investor that is seeking to use leverage to amply their returns. The question remains, however, what happens to the returns of leveraged ETFs over extended time horizon? And is there an optimal leverage ratio for the long term buy-and-hold investor that allows them to take advantage of leverage to amply the upside, while avoiding catastrophic losses on the down side? In this investigation, we will delve into these ideas and see what the data shows.
+Over the past 15 years (or so), leveraged ETFs have become frequently used for trading equity indices, sectors, and other asset classes by the investor that is seeking to use leverage for excess exposure to those asset classes. The question remains, however, what happens to the returns of leveraged ETFs over an extended time horizon and is there an optimal leverage ratio for the long-term buy-and-hold investor that allows them to take advantage of leverage to increase the up-side returns, while avoiding catastrophic losses on the down-side? In this investigation, we will delve into these ideas and see what the data shows.
 
  ## Python Imports
 
@@ -37,8 +37,6 @@ import pandas as pd
 # Suppress warnings
 warnings.filterwarnings("ignore")
 ```
-
- ## Add Directories To Path
 
 
 ```python
@@ -104,7 +102,7 @@ Just to clarify, any time we are referring to "close prices" in this analysis, w
 
 ### Acquire & Plot Data (QQQ)
 
-First, let's get the data for QQQ. If we already have the desired data, we can load it from a local file. Otherwise, we can download it from Yahoo Finance using the `yf_pull_data` function.
+First, let's get the data for QQQ. If we already have the desired data, we can load it from a local pickle file. Otherwise, we can download it from Yahoo Finance using the `yf_pull_data` function.
 
 
 ```python
@@ -137,18 +135,7 @@ qqq = qqq.rename(columns={
     "Open": "QQQ_Open",
     "Volume": "QQQ_Volume"
 })
-```
 
-    
-[*********************100%***********************]  1 of 1 completed
-
-    
-
-
-This gives us:
-
-
-```python
 display(qqq)
 ```
 
@@ -191,7 +178,7 @@ display(qqq)
   <tbody>
     <tr>
       <th>1999-03-10</th>
-      <td>43.128670</td>
+      <td>43.128662</td>
       <td>51.062500</td>
       <td>51.156250</td>
       <td>50.281250</td>
@@ -200,7 +187,7 @@ display(qqq)
     </tr>
     <tr>
       <th>1999-03-11</th>
-      <td>43.339809</td>
+      <td>43.339806</td>
       <td>51.312500</td>
       <td>51.734375</td>
       <td>50.312500</td>
@@ -209,7 +196,7 @@ display(qqq)
     </tr>
     <tr>
       <th>1999-03-12</th>
-      <td>42.284039</td>
+      <td>42.284008</td>
       <td>50.062500</td>
       <td>51.156250</td>
       <td>49.656250</td>
@@ -218,7 +205,7 @@ display(qqq)
     </tr>
     <tr>
       <th>1999-03-15</th>
-      <td>43.498177</td>
+      <td>43.498173</td>
       <td>51.500000</td>
       <td>51.562500</td>
       <td>49.906250</td>
@@ -244,57 +231,57 @@ display(qqq)
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-03-09</th>
-      <td>607.760010</td>
-      <td>607.760010</td>
-      <td>609.270020</td>
-      <td>591.330017</td>
-      <td>594.229980</td>
-      <td>93068200</td>
-    </tr>
-    <tr>
-      <th>2026-03-10</th>
-      <td>607.770020</td>
-      <td>607.770020</td>
-      <td>613.289978</td>
-      <td>605.419983</td>
-      <td>607.780029</td>
-      <td>64078900</td>
-    </tr>
-    <tr>
-      <th>2026-03-11</th>
-      <td>607.690002</td>
-      <td>607.690002</td>
-      <td>612.429993</td>
-      <td>605.030029</td>
-      <td>608.950012</td>
-      <td>60114800</td>
-    </tr>
-    <tr>
-      <th>2026-03-12</th>
-      <td>597.260010</td>
-      <td>597.260010</td>
-      <td>604.140015</td>
-      <td>597.049988</td>
-      <td>602.760010</td>
-      <td>71836600</td>
-    </tr>
-    <tr>
       <th>2026-03-13</th>
       <td>593.719971</td>
       <td>593.719971</td>
       <td>603.599976</td>
       <td>592.570007</td>
       <td>599.729980</td>
-      <td>62986500</td>
+      <td>63145500</td>
+    </tr>
+    <tr>
+      <th>2026-03-16</th>
+      <td>600.380005</td>
+      <td>600.380005</td>
+      <td>603.859985</td>
+      <td>599.109985</td>
+      <td>600.039978</td>
+      <td>49077200</td>
+    </tr>
+    <tr>
+      <th>2026-03-17</th>
+      <td>603.309998</td>
+      <td>603.309998</td>
+      <td>605.900024</td>
+      <td>601.869995</td>
+      <td>603.140015</td>
+      <td>47106600</td>
+    </tr>
+    <tr>
+      <th>2026-03-18</th>
+      <td>594.900024</td>
+      <td>594.900024</td>
+      <td>603.159973</td>
+      <td>594.559998</td>
+      <td>601.489990</td>
+      <td>56128000</td>
+    </tr>
+    <tr>
+      <th>2026-03-19</th>
+      <td>593.020020</td>
+      <td>593.020020</td>
+      <td>595.799988</td>
+      <td>587.080017</td>
+      <td>589.510010</td>
+      <td>75415300</td>
     </tr>
   </tbody>
 </table>
-<p>6795 rows × 6 columns</p>
+<p>6799 rows × 6 columns</p>
 </div>
 
 
-And the plot of the timseries of ajdusted close prices:
+And the plot of the time series of partially adjusted close prices:
 
 
 ```python
@@ -322,7 +309,7 @@ plot_timeseries(
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_12_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_9_0.png)
     
 
 
@@ -361,18 +348,7 @@ tqqq = tqqq.rename(columns={
     "Open": "TQQQ_Open", 
     "Volume": "TQQQ_Volume"
 })
-```
 
-    
-[*********************100%***********************]  1 of 1 completed
-
-    
-
-
-This gives us:
-
-
-```python
 display(tqqq)
 ```
 
@@ -468,57 +444,57 @@ display(tqqq)
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-03-09</th>
-      <td>49.389999</td>
-      <td>49.389999</td>
-      <td>49.770000</td>
-      <td>45.500000</td>
-      <td>46.189999</td>
-      <td>159005500</td>
-    </tr>
-    <tr>
-      <th>2026-03-10</th>
-      <td>49.400002</td>
-      <td>49.400002</td>
-      <td>50.740002</td>
-      <td>48.830002</td>
-      <td>49.410000</td>
-      <td>115057200</td>
-    </tr>
-    <tr>
-      <th>2026-03-11</th>
-      <td>49.349998</td>
-      <td>49.349998</td>
-      <td>50.520000</td>
-      <td>48.730000</td>
-      <td>49.680000</td>
-      <td>91104300</td>
-    </tr>
-    <tr>
-      <th>2026-03-12</th>
-      <td>46.830002</td>
-      <td>46.830002</td>
-      <td>48.490002</td>
-      <td>46.750000</td>
-      <td>48.150002</td>
-      <td>130823900</td>
-    </tr>
-    <tr>
       <th>2026-03-13</th>
       <td>45.930000</td>
       <td>45.930000</td>
       <td>48.250000</td>
       <td>45.669998</td>
       <td>47.349998</td>
-      <td>141444100</td>
+      <td>141952500</td>
+    </tr>
+    <tr>
+      <th>2026-03-16</th>
+      <td>47.459999</td>
+      <td>47.459999</td>
+      <td>48.270000</td>
+      <td>47.180000</td>
+      <td>47.369999</td>
+      <td>81421500</td>
+    </tr>
+    <tr>
+      <th>2026-03-17</th>
+      <td>48.160000</td>
+      <td>48.160000</td>
+      <td>48.759998</td>
+      <td>47.810001</td>
+      <td>48.119999</td>
+      <td>74570100</td>
+    </tr>
+    <tr>
+      <th>2026-03-18</th>
+      <td>46.099998</td>
+      <td>46.099998</td>
+      <td>48.110001</td>
+      <td>46.049999</td>
+      <td>47.720001</td>
+      <td>105059300</td>
+    </tr>
+    <tr>
+      <th>2026-03-19</th>
+      <td>45.689999</td>
+      <td>45.689999</td>
+      <td>46.320000</td>
+      <td>44.299999</td>
+      <td>44.869999</td>
+      <td>137588200</td>
     </tr>
   </tbody>
 </table>
-<p>4046 rows × 6 columns</p>
+<p>4050 rows × 6 columns</p>
 </div>
 
 
-And the plot of the timseries of ajdusted close prices:
+And the plot of the time series of partially adjusted close prices:
 
 
 ```python
@@ -546,7 +522,7 @@ plot_timeseries(
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_18_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_13_0.png)
     
 
 
@@ -593,10 +569,7 @@ for etf in etfs:
         qqq_tqqq_aligned[f"{etf}_Rolling_Return_{period_name}"] = (
             qqq_tqqq_aligned[f"{etf}_Close"].pct_change(periods=window)
         )
-```
-
-
-```python
+        
 display(qqq_tqqq_aligned)
 ```
 
@@ -675,7 +648,7 @@ display(qqq_tqqq_aligned)
       <td>0.202786</td>
       <td>0.203438</td>
       <td>6912000</td>
-      <td>37.951683</td>
+      <td>37.951691</td>
       <td>43.669998</td>
       <td>43.790001</td>
       <td>42.759998</td>
@@ -699,7 +672,7 @@ display(qqq_tqqq_aligned)
       <td>0.209167</td>
       <td>0.210391</td>
       <td>17203200</td>
-      <td>38.029903</td>
+      <td>38.029896</td>
       <td>43.759998</td>
       <td>43.880001</td>
       <td>43.160000</td>
@@ -723,7 +696,7 @@ display(qqq_tqqq_aligned)
       <td>0.218776</td>
       <td>0.222266</td>
       <td>19238400</td>
-      <td>38.516556</td>
+      <td>38.516575</td>
       <td>44.320000</td>
       <td>44.349998</td>
       <td>43.849998</td>
@@ -747,7 +720,7 @@ display(qqq_tqqq_aligned)
       <td>0.225156</td>
       <td>0.228594</td>
       <td>38361600</td>
-      <td>38.733829</td>
+      <td>38.733841</td>
       <td>44.570000</td>
       <td>44.570000</td>
       <td>44.259998</td>
@@ -771,7 +744,7 @@ display(qqq_tqqq_aligned)
       <td>0.227786</td>
       <td>0.229167</td>
       <td>77721600</td>
-      <td>38.977173</td>
+      <td>38.977180</td>
       <td>44.849998</td>
       <td>44.930000</td>
       <td>44.450001</td>
@@ -812,109 +785,13 @@ display(qqq_tqqq_aligned)
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-03-09</th>
-      <td>49.389999</td>
-      <td>49.389999</td>
-      <td>49.770000</td>
-      <td>45.500000</td>
-      <td>46.189999</td>
-      <td>159005500</td>
-      <td>607.760010</td>
-      <td>607.760010</td>
-      <td>609.270020</td>
-      <td>591.330017</td>
-      <td>...</td>
-      <td>0.038915</td>
-      <td>-0.006237</td>
-      <td>0.036734</td>
-      <td>-0.110250</td>
-      <td>0.075800</td>
-      <td>0.495760</td>
-      <td>0.583520</td>
-      <td>3.467662</td>
-      <td>0.974021</td>
-      <td>1.139253</td>
-    </tr>
-    <tr>
-      <th>2026-03-10</th>
-      <td>49.400002</td>
-      <td>49.400002</td>
-      <td>50.740002</td>
-      <td>48.830002</td>
-      <td>49.410000</td>
-      <td>115057200</td>
-      <td>607.770020</td>
-      <td>607.770020</td>
-      <td>613.289978</td>
-      <td>605.419983</td>
-      <td>...</td>
-      <td>0.000203</td>
-      <td>0.027027</td>
-      <td>-0.023522</td>
-      <td>-0.120214</td>
-      <td>0.060883</td>
-      <td>0.465658</td>
-      <td>0.673442</td>
-      <td>3.211424</td>
-      <td>0.884417</td>
-      <td>1.342898</td>
-    </tr>
-    <tr>
-      <th>2026-03-11</th>
-      <td>49.349998</td>
-      <td>49.349998</td>
-      <td>50.520000</td>
-      <td>48.730000</td>
-      <td>49.680000</td>
-      <td>91104300</td>
-      <td>607.690002</td>
-      <td>607.690002</td>
-      <td>612.429993</td>
-      <td>605.030029</td>
-      <td>...</td>
-      <td>-0.001012</td>
-      <td>-0.018106</td>
-      <td>-0.046193</td>
-      <td>-0.115591</td>
-      <td>0.051230</td>
-      <td>0.650226</td>
-      <td>0.641443</td>
-      <td>3.189304</td>
-      <td>0.964570</td>
-      <td>1.462268</td>
-    </tr>
-    <tr>
-      <th>2026-03-12</th>
-      <td>46.830002</td>
-      <td>46.830002</td>
-      <td>48.490002</td>
-      <td>46.750000</td>
-      <td>48.150002</td>
-      <td>130823900</td>
-      <td>597.260010</td>
-      <td>597.260010</td>
-      <td>604.140015</td>
-      <td>597.049988</td>
-      <td>...</td>
-      <td>-0.051064</td>
-      <td>-0.059639</td>
-      <td>-0.082125</td>
-      <td>-0.163899</td>
-      <td>-0.003511</td>
-      <td>0.584504</td>
-      <td>0.491164</td>
-      <td>3.129630</td>
-      <td>0.947598</td>
-      <td>1.236390</td>
-    </tr>
-    <tr>
       <th>2026-03-13</th>
       <td>45.930000</td>
       <td>45.930000</td>
       <td>48.250000</td>
       <td>45.669998</td>
       <td>47.349998</td>
-      <td>141444100</td>
+      <td>141952500</td>
       <td>593.719971</td>
       <td>593.719971</td>
       <td>603.599976</td>
@@ -931,9 +808,105 @@ display(qqq_tqqq_aligned)
       <td>1.150281</td>
       <td>1.398433</td>
     </tr>
+    <tr>
+      <th>2026-03-16</th>
+      <td>47.459999</td>
+      <td>47.459999</td>
+      <td>48.270000</td>
+      <td>47.180000</td>
+      <td>47.369999</td>
+      <td>81421500</td>
+      <td>600.380005</td>
+      <td>600.380005</td>
+      <td>603.859985</td>
+      <td>599.109985</td>
+      <td>...</td>
+      <td>0.033312</td>
+      <td>-0.039077</td>
+      <td>-0.016577</td>
+      <td>-0.154161</td>
+      <td>-0.019016</td>
+      <td>0.642499</td>
+      <td>0.599057</td>
+      <td>3.358127</td>
+      <td>1.253026</td>
+      <td>1.217239</td>
+    </tr>
+    <tr>
+      <th>2026-03-17</th>
+      <td>48.160000</td>
+      <td>48.160000</td>
+      <td>48.759998</td>
+      <td>47.810001</td>
+      <td>48.119999</td>
+      <td>74570100</td>
+      <td>603.309998</td>
+      <td>603.309998</td>
+      <td>605.900024</td>
+      <td>601.869995</td>
+      <td>...</td>
+      <td>0.014749</td>
+      <td>-0.025101</td>
+      <td>-0.006396</td>
+      <td>-0.088224</td>
+      <td>-0.029326</td>
+      <td>0.556310</td>
+      <td>0.556561</td>
+      <td>3.613027</td>
+      <td>1.065180</td>
+      <td>1.269290</td>
+    </tr>
+    <tr>
+      <th>2026-03-18</th>
+      <td>46.099998</td>
+      <td>46.099998</td>
+      <td>48.110001</td>
+      <td>46.049999</td>
+      <td>47.720001</td>
+      <td>105059300</td>
+      <td>594.900024</td>
+      <td>594.900024</td>
+      <td>603.159973</td>
+      <td>594.559998</td>
+      <td>...</td>
+      <td>-0.042774</td>
+      <td>-0.065856</td>
+      <td>-0.046536</td>
+      <td>-0.113802</td>
+      <td>-0.068310</td>
+      <td>0.461404</td>
+      <td>0.525480</td>
+      <td>3.322550</td>
+      <td>1.042534</td>
+      <td>1.031284</td>
+    </tr>
+    <tr>
+      <th>2026-03-19</th>
+      <td>45.689999</td>
+      <td>45.689999</td>
+      <td>46.320000</td>
+      <td>44.299999</td>
+      <td>44.869999</td>
+      <td>137588200</td>
+      <td>593.020020</td>
+      <td>593.020020</td>
+      <td>595.799988</td>
+      <td>587.080017</td>
+      <td>...</td>
+      <td>-0.008894</td>
+      <td>-0.024343</td>
+      <td>-0.074914</td>
+      <td>-0.126887</td>
+      <td>-0.070680</td>
+      <td>0.525288</td>
+      <td>0.524270</td>
+      <td>3.011413</td>
+      <td>1.158243</td>
+      <td>1.064618</td>
+    </tr>
   </tbody>
 </table>
-<p>4046 rows × 38 columns</p>
+<p>4050 rows × 38 columns</p>
 </div>
 
 
@@ -965,7 +938,7 @@ plot_timeseries(
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_23_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_17_0.png)
     
 
 
@@ -997,11 +970,11 @@ plot_timeseries(
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_25_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_19_0.png)
     
 
 
-Here is where we truly see the volatility of TQQQ relative to QQQ. In the past 5 years, TQQQ has had drawdowns of 50%, 60%, 70%, and 80%. While it has recovered to make new highs (with the exception of the current ~10% drawdown), very few investors can endure those drawdowns and continue to hold their position. At the same time, we can see from the plot that a ~35% drawdown in QQQ equated to a ~80% drawdown in TQQQ, which is not in fact, 3x. So this tells us that there is dispersion in the long term returns relative to the short term returns between the non-leveraged QQQ and 3x leveraged TQQQ. This idea is well documented in the financial literature as "volatility decay" or "volatility drag". But, and this is the question we are trying to answer, how significant is this effect over various time horizons?
+Here is where we truly see the volatility of TQQQ relative to QQQ. In the past 5 years, TQQQ has had drawdowns of 50%, 60%, 70%, and 80%. While it has recovered to make new highs (with the exception of the current ~25% drawdown as of mid-March 2026), very few investors can endure those drawdowns and continue to hold their position. At the same time, we can see from the plot that a ~35% drawdown in QQQ equated to a ~80% drawdown in TQQQ, which is not in fact, 3x. So this tells us (which we already knew) that there is dispersion in the long-term returns relative to the short-term returns between the non-leveraged QQQ and 3x leveraged TQQQ. This idea is well documented in the financial literature as "volatility decay" or "volatility drag". But, and this is the question we are trying to answer, how significant is this effect over various time horizons?
 
 ### Summary Statistics (QQQ & TQQQ)
 
@@ -1072,10 +1045,10 @@ display(sum_stats)
   <tbody>
     <tr>
       <th>QQQ_Return</th>
-      <td>0.183897</td>
-      <td>0.206040</td>
-      <td>0.892532</td>
-      <td>0.176501</td>
+      <td>0.183653</td>
+      <td>0.205992</td>
+      <td>0.891554</td>
+      <td>0.176226</td>
       <td>0.120031</td>
       <td>2025-04-09</td>
       <td>-0.119788</td>
@@ -1085,14 +1058,14 @@ display(sum_stats)
       <td>2022-12-28</td>
       <td>2023-12-15</td>
       <td>352</td>
-      <td>0.49555</td>
+      <td>0.494777</td>
     </tr>
     <tr>
       <th>TQQQ_Return</th>
-      <td>0.521888</td>
-      <td>0.609705</td>
-      <td>0.855969</td>
-      <td>0.396175</td>
+      <td>0.521148</td>
+      <td>0.609570</td>
+      <td>0.854944</td>
+      <td>0.395260</td>
       <td>0.352442</td>
       <td>2025-04-09</td>
       <td>-0.344652</td>
@@ -1102,20 +1075,20 @@ display(sum_stats)
       <td>2022-12-28</td>
       <td>2024-12-11</td>
       <td>714</td>
-      <td>0.48459</td>
+      <td>0.483471</td>
     </tr>
   </tbody>
 </table>
 </div>
 
 
-Note that these statistics are being run on the partially-adjusted close prices, which are not the true returns, but they do give us a good picture of the relative volatility and drawdowns of the two ETFs. The mean return for TQQQ is much higher than that of QQQ, but the standard deviation is also much higher, which is consistent with the idea of leverage amplifying both the upside and the downside. The maximum drawdown for TQQQ is also much higher than that of QQQ, which again confirms our observations from the drawdown plot.
+Note that these statistics are being run on the partially-adjusted close prices, which are not the true returns (due to not accounting for dividends), but they do give us a picture of the relative volatility and drawdowns of the two ETFs. The mean return for TQQQ is much higher than that of QQQ, but the volatility is also much higher, which is consistent with the idea of leverage amplifying both the up-side and down-side. The maximum drawdown for TQQQ is also much higher than that of QQQ, which again confirms our observations from the drawdown plot.
 
-Also note that the daily maximum return for both funds occured during "Liberation Day" and the daily minimum return for both funds occured early on during COVID.
+Also note that the daily maximum return for both funds occured during "Liberation Day" and the daily minimum return for both funds occured early on during the COVID-19 pandemic.
 
 ### Plot Returns & Verify Beta (QQQ & TQQQ)
 
-Before we look at the rolling returns, let us first verify that the daily returns for TQQQ are in fact ~3x those of QQQ.
+Before we look at the rolling returns, let us first verify that the daily returns for TQQQ are in fact ~3x those of QQQ. We can do that by plotting the daily returns for both funds against each other and running a linear regression to see if the beta is indeed ~3.
 
 
 ```python
@@ -1150,7 +1123,7 @@ plot_scatter(
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_30_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_24_0.png)
     
 
 
@@ -1171,23 +1144,23 @@ print(model.summary())
     ==============================================================================
     Dep. Variable:            TQQQ_Return   R-squared:                       0.997
     Model:                            OLS   Adj. R-squared:                  0.997
-    Method:                 Least Squares   F-statistic:                 1.492e+06
-    Date:                Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                        14:26:00   Log-Likelihood:                 19405.
-    No. Observations:                4045   AIC:                        -3.881e+04
-    Df Residuals:                    4043   BIC:                        -3.879e+04
+    Method:                 Least Squares   F-statistic:                 1.494e+06
+    Date:                Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                        10:48:10   Log-Likelihood:                 19426.
+    No. Observations:                4049   AIC:                        -3.885e+04
+    Df Residuals:                    4047   BIC:                        -3.884e+04
     Df Model:                           1                                         
     Covariance Type:            nonrobust                                         
     ==============================================================================
                      coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------
-    const      -8.554e-05   3.15e-05     -2.720      0.007      -0.000   -2.39e-05
-    QQQ_Return     2.9552      0.002   1221.329      0.000       2.950       2.960
+    const      -8.564e-05   3.14e-05     -2.726      0.006      -0.000    -2.4e-05
+    QQQ_Return     2.9552      0.002   1222.164      0.000       2.950       2.960
     ==============================================================================
-    Omnibus:                     5272.508   Durbin-Watson:                   2.566
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):          9175082.049
-    Skew:                          -6.344   Prob(JB):                         0.00
-    Kurtosis:                     235.974   Cond. No.                         77.1
+    Omnibus:                     5278.850   Durbin-Watson:                   2.567
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):          9199117.408
+    Skew:                          -6.347   Prob(JB):                         0.00
+    Kurtosis:                     236.164   Cond. No.                         77.1
     ==============================================================================
     
     Notes:
@@ -1196,13 +1169,13 @@ print(model.summary())
 
 Visually, this plot makes sense and we can see that there is a strong clustering of points, but we double check with the regression, regressing the TQQQ daily return (y) on the QQQ daily return (X).
 
-Given the above result, with a coefficient of 2.96 and an R^2 of 0.997, we can say that TQQQ does in fact return ~3x QQQ. We would also intuitively expect the coefficient to be 0, which it is nearly.
+Given the above result, with a coefficient of 2.96 and an R^2 of 0.997 (based on the statsmodels OLS regression), we can say that TQQQ does in fact return ~3x QQQ. We would also intuitively expect the coefficient to be 0, and it is nearly 0.
 
 Interestingly, the coefficient varies between OLS and Ridge cross-validation, and both are less than 3.
 
 ### Extrapolate Data (QQQ & TQQQ)
 
-We will now extrapolate the returns of QQQ to backfill the data from the inception of QQQ in 1999 to the inception of TQQQ in 2010. For this, we'll use the coefficient of 2.96 that we found in the regression results above.
+With the above coefficient, we will now extrapolate the returns of QQQ to backfill the data from the inception of QQQ in 1999 to the inception of TQQQ in 2010 to expand our dataset of returns. For this, we'll use the coefficient of 2.96 that we found in the regression results above.
 
 
 ```python
@@ -1237,16 +1210,80 @@ Before we extrapolate, let's first look at the data we have for QQQ and TQQQ aro
 
 ```python
 # Check values around the first valid index
-print(qqq_tqqq_extrap.loc["2010-02-08":"2010-02-13"])
+display(qqq_tqqq_extrap.loc["2010-02-08":"2010-02-13"])
 ```
 
-                QQQ_Close  TQQQ_Close  QQQ_Return  TQQQ_Return
-    Date                                                      
-    2010-02-08  42.669998         NaN   -0.007213    -0.021315
-    2010-02-09  43.110001         NaN    0.010312     0.030473
-    2010-02-10  43.020000         NaN   -0.002088    -0.006169
-    2010-02-11  43.669998    0.216276    0.015109     0.044650
-    2010-02-12  43.759998    0.217161    0.002061     0.004092
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>QQQ_Close</th>
+      <th>TQQQ_Close</th>
+      <th>QQQ_Return</th>
+      <th>TQQQ_Return</th>
+    </tr>
+    <tr>
+      <th>Date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2010-02-08</th>
+      <td>42.669998</td>
+      <td>NaN</td>
+      <td>-0.007213</td>
+      <td>-0.021315</td>
+    </tr>
+    <tr>
+      <th>2010-02-09</th>
+      <td>43.110001</td>
+      <td>NaN</td>
+      <td>0.010312</td>
+      <td>0.030473</td>
+    </tr>
+    <tr>
+      <th>2010-02-10</th>
+      <td>43.020000</td>
+      <td>NaN</td>
+      <td>-0.002088</td>
+      <td>-0.006170</td>
+    </tr>
+    <tr>
+      <th>2010-02-11</th>
+      <td>43.669998</td>
+      <td>0.216276</td>
+      <td>0.015109</td>
+      <td>0.044651</td>
+    </tr>
+    <tr>
+      <th>2010-02-12</th>
+      <td>43.759998</td>
+      <td>0.217161</td>
+      <td>0.002061</td>
+      <td>0.004092</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 
 Now, backfill the data for the TQQQ close price:
@@ -1271,16 +1308,80 @@ Finally, confirm the values are correct:
 
 ```python
 # Confirm values around the first valid index after extrapolation
-print(qqq_tqqq_extrap.loc["2010-02-08":"2010-02-13"])
+display(qqq_tqqq_extrap.loc["2010-02-08":"2010-02-13"])
 ```
 
-                QQQ_Close  TQQQ_Close  QQQ_Return  TQQQ_Return
-    Date                                                      
-    2010-02-08  42.669998    0.202157   -0.007213    -0.021315
-    2010-02-09  43.110001    0.208317    0.010312     0.030473
-    2010-02-10  43.020000    0.207032   -0.002088    -0.006169
-    2010-02-11  43.669998    0.216276    0.015109     0.044650
-    2010-02-12  43.759998    0.217161    0.002061     0.004092
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>QQQ_Close</th>
+      <th>TQQQ_Close</th>
+      <th>QQQ_Return</th>
+      <th>TQQQ_Return</th>
+    </tr>
+    <tr>
+      <th>Date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2010-02-08</th>
+      <td>42.669998</td>
+      <td>0.202157</td>
+      <td>-0.007213</td>
+      <td>-0.021315</td>
+    </tr>
+    <tr>
+      <th>2010-02-09</th>
+      <td>43.110001</td>
+      <td>0.208317</td>
+      <td>0.010312</td>
+      <td>0.030473</td>
+    </tr>
+    <tr>
+      <th>2010-02-10</th>
+      <td>43.020000</td>
+      <td>0.207032</td>
+      <td>-0.002088</td>
+      <td>-0.006170</td>
+    </tr>
+    <tr>
+      <th>2010-02-11</th>
+      <td>43.669998</td>
+      <td>0.216276</td>
+      <td>0.015109</td>
+      <td>0.044651</td>
+    </tr>
+    <tr>
+      <th>2010-02-12</th>
+      <td>43.759998</td>
+      <td>0.217161</td>
+      <td>0.002061</td>
+      <td>0.004092</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 
 And the complete DataFrame with the extrapolated values:
@@ -1326,37 +1427,37 @@ display(qqq_tqqq_extrap)
     <tr>
       <th>1999-03-10</th>
       <td>51.062500</td>
-      <td>13.813139</td>
+      <td>13.814763</td>
       <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>1999-03-11</th>
       <td>51.312500</td>
-      <td>14.012991</td>
+      <td>14.014642</td>
       <td>0.004896</td>
       <td>0.014468</td>
     </tr>
     <tr>
       <th>1999-03-12</th>
       <td>50.062500</td>
-      <td>13.004208</td>
+      <td>13.005728</td>
       <td>-0.024361</td>
-      <td>-0.071989</td>
+      <td>-0.071990</td>
     </tr>
     <tr>
       <th>1999-03-15</th>
       <td>51.500000</td>
-      <td>14.107675</td>
+      <td>14.109337</td>
       <td>0.028714</td>
-      <td>0.084855</td>
+      <td>0.084856</td>
     </tr>
     <tr>
       <th>1999-03-16</th>
       <td>51.937500</td>
-      <td>14.461841</td>
+      <td>14.463549</td>
       <td>0.008495</td>
-      <td>0.025104</td>
+      <td>0.025105</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1366,43 +1467,43 @@ display(qqq_tqqq_extrap)
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-03-09</th>
-      <td>607.760010</td>
-      <td>49.389999</td>
-      <td>0.013356</td>
-      <td>0.038915</td>
-    </tr>
-    <tr>
-      <th>2026-03-10</th>
-      <td>607.770020</td>
-      <td>49.400002</td>
-      <td>0.000016</td>
-      <td>0.000203</td>
-    </tr>
-    <tr>
-      <th>2026-03-11</th>
-      <td>607.690002</td>
-      <td>49.349998</td>
-      <td>-0.000132</td>
-      <td>-0.001012</td>
-    </tr>
-    <tr>
-      <th>2026-03-12</th>
-      <td>597.260010</td>
-      <td>46.830002</td>
-      <td>-0.017163</td>
-      <td>-0.051064</td>
-    </tr>
-    <tr>
       <th>2026-03-13</th>
       <td>593.719971</td>
       <td>45.930000</td>
       <td>-0.005927</td>
       <td>-0.019218</td>
     </tr>
+    <tr>
+      <th>2026-03-16</th>
+      <td>600.380005</td>
+      <td>47.459999</td>
+      <td>0.011217</td>
+      <td>0.033312</td>
+    </tr>
+    <tr>
+      <th>2026-03-17</th>
+      <td>603.309998</td>
+      <td>48.160000</td>
+      <td>0.004880</td>
+      <td>0.014749</td>
+    </tr>
+    <tr>
+      <th>2026-03-18</th>
+      <td>594.900024</td>
+      <td>46.099998</td>
+      <td>-0.013940</td>
+      <td>-0.042774</td>
+    </tr>
+    <tr>
+      <th>2026-03-19</th>
+      <td>593.020020</td>
+      <td>45.689999</td>
+      <td>-0.003160</td>
+      <td>-0.008894</td>
+    </tr>
   </tbody>
 </table>
-<p>6795 rows × 4 columns</p>
+<p>6799 rows × 4 columns</p>
 </div>
 
 
@@ -1448,7 +1549,7 @@ plot_timeseries(
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_44_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_38_0.png)
     
 
 
@@ -1462,7 +1563,7 @@ plot_timeseries(
     title="TQQQ Close Price",
     x_label="Date",
     x_format="Year",
-    x_tick_spacing=1,
+    x_tick_spacing=2,
     x_tick_rotation=30,
     y_label="Price ($)",
     y_format="Decimal",
@@ -1478,7 +1579,7 @@ plot_timeseries(
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_45_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_39_0.png)
     
 
 
@@ -1492,7 +1593,7 @@ plot_timeseries(
     title="Cumulative Returns",
     x_label="Date",
     x_format="Year",
-    x_tick_spacing=1,
+    x_tick_spacing=2,
     x_tick_rotation=30,
     y_label="Cumulative Return",
     y_format="Decimal",
@@ -1508,7 +1609,7 @@ plot_timeseries(
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_46_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_40_0.png)
     
 
 
@@ -1522,7 +1623,7 @@ plot_timeseries(
     title="Drawdowns",
     x_label="Date",
     x_format="Year",
-    x_tick_spacing=1,
+    x_tick_spacing=2,
     x_tick_rotation=30,
     y_label="Drawdown",
     y_format="Percentage",
@@ -1538,11 +1639,151 @@ plot_timeseries(
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_47_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_41_0.png)
     
 
 
-Some quick comments before we look at rolling returns. The drawdown is nearly 100%... which represents nearly a total loss of capital for any allocation to the extrap-TQQQ. Furthermore, as we walk forward through time (2002, 2003, ... etc.), there is really no reason to believe that the returns would ever recover (even partially). So, while we can look at the rolling returns and see how they compare to the 3x return of QQQ, we should keep in mind that the drawdown is so severe that it would be very difficult for any investor to hold through it.
+
+```python
+qqq_extrap_sum_stats = summary_stats(
+    fund_list=["QQQ"],
+    df=qqq_tqqq_extrap[["QQQ_Return"]],
+    period="Daily",
+    use_calendar_days=False,
+    excel_export=False,
+    pickle_export=False,
+    output_confirmation=False,
+)
+
+tqqq_extrap_sum_stats = summary_stats(
+    fund_list=["TQQQ"],
+    df=qqq_tqqq_extrap[["TQQQ_Return"]],
+    period="Daily",
+    use_calendar_days=False,
+    excel_export=False,
+    pickle_export=False,
+    output_confirmation=False,
+)
+
+sum_stats = pd.concat([qqq_sum_stats, tqqq_sum_stats, qqq_extrap_sum_stats, tqqq_extrap_sum_stats])
+sum_stats.index = ["QQQ (2010 - Present)", "TQQQ (2010 - Present)", "QQQ (1999 - Present)", "TQQQ Extrapolated (1999 - Present)"]
+
+display(sum_stats)
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Annual Mean Return (Arithmetic)</th>
+      <th>Annualized Volatility</th>
+      <th>Annualized Sharpe Ratio</th>
+      <th>CAGR (Geometric)</th>
+      <th>Daily Max Return</th>
+      <th>Daily Max Return (Date)</th>
+      <th>Daily Min Return</th>
+      <th>Daily Min Return (Date)</th>
+      <th>Max Drawdown</th>
+      <th>Peak</th>
+      <th>Trough</th>
+      <th>Recovery Date</th>
+      <th>Days to Recovery</th>
+      <th>MAR Ratio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>QQQ (2010 - Present)</th>
+      <td>0.183653</td>
+      <td>0.205992</td>
+      <td>0.891554</td>
+      <td>0.176226</td>
+      <td>0.120031</td>
+      <td>2025-04-09</td>
+      <td>-0.119788</td>
+      <td>2020-03-16</td>
+      <td>-0.356172</td>
+      <td>2021-11-19</td>
+      <td>2022-12-28</td>
+      <td>2023-12-15</td>
+      <td>352.0</td>
+      <td>0.494777</td>
+    </tr>
+    <tr>
+      <th>TQQQ (2010 - Present)</th>
+      <td>0.521148</td>
+      <td>0.609570</td>
+      <td>0.854944</td>
+      <td>0.395260</td>
+      <td>0.352442</td>
+      <td>2025-04-09</td>
+      <td>-0.344652</td>
+      <td>2020-03-16</td>
+      <td>-0.817545</td>
+      <td>2021-11-19</td>
+      <td>2022-12-28</td>
+      <td>2024-12-11</td>
+      <td>714.0</td>
+      <td>0.483471</td>
+    </tr>
+    <tr>
+      <th>QQQ (1999 - Present)</th>
+      <td>0.127243</td>
+      <td>0.269798</td>
+      <td>0.471621</td>
+      <td>0.095147</td>
+      <td>0.168421</td>
+      <td>2001-01-03</td>
+      <td>-0.119788</td>
+      <td>2020-03-16</td>
+      <td>-0.829639</td>
+      <td>2000-03-27</td>
+      <td>2002-10-09</td>
+      <td>2016-09-06</td>
+      <td>5081.0</td>
+      <td>0.114684</td>
+    </tr>
+    <tr>
+      <th>TQQQ Extrapolated (1999 - Present)</th>
+      <td>0.363172</td>
+      <td>0.797669</td>
+      <td>0.455291</td>
+      <td>0.045332</td>
+      <td>0.497716</td>
+      <td>2001-01-03</td>
+      <td>-0.344652</td>
+      <td>2020-03-16</td>
+      <td>-0.999508</td>
+      <td>2000-03-27</td>
+      <td>2009-03-09</td>
+      <td>NaT</td>
+      <td>NaN</td>
+      <td>0.045354</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+Some quick comments before we look at rolling returns.
+
+* The cumulative return for TQQQ is *less* than that of QQQ - which is starkly different from the plot beginning in 2010 at the inception of TQQQ. So the return path really matters here.
+* The drawdown is nearly 100%... which also represents nearly a total loss of capital for any allocation to the extrap-TQQQ. Furthermore, as we walk forward through time (2002, 2003, ... etc.), there is really no reason to believe that the returns would ever recover (even partially). So while we can look at the rolling returns and see how they compare to the 3x return of QQQ, we should keep in mind that the drawdown post-1999 is so severe that it would be very difficult for any investor to hold through it.
 
 ### Plot Rolling Returns (QQQ & TQQQ)
 
@@ -1679,13 +1920,13 @@ for period_name, window in rolling_windows.items():
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_52_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_46_0.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_52_1.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_46_1.png)
     
 
 
@@ -1693,23 +1934,23 @@ for period_name, window in rolling_windows.items():
     ==================================================================================
     Dep. Variable:     TQQQ_Rolling_Return_1d   R-squared:                       0.999
     Model:                                OLS   Adj. R-squared:                  0.999
-    Method:                     Least Squares   F-statistic:                 7.215e+06
-    Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            14:26:03   Log-Likelihood:                 34352.
-    No. Observations:                    6794   AIC:                        -6.870e+04
-    Df Residuals:                        6792   BIC:                        -6.869e+04
+    Method:                     Least Squares   F-statistic:                 7.219e+06
+    Date:                    Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                            10:48:13   Log-Likelihood:                 34374.
+    No. Observations:                    6798   AIC:                        -6.874e+04
+    Df Residuals:                        6796   BIC:                        -6.873e+04
     Df Model:                               1                                         
     Covariance Type:                nonrobust                                         
     =========================================================================================
                                 coef    std err          t      P>|t|      [0.025      0.975]
     -----------------------------------------------------------------------------------------
-    const                 -5.091e-05   1.87e-05     -2.721      0.007   -8.76e-05   -1.42e-05
-    QQQ_Rolling_Return_1d     2.9551      0.001   2686.049      0.000       2.953       2.957
+    const                 -5.099e-05   1.87e-05     -2.727      0.006   -8.76e-05   -1.43e-05
+    QQQ_Rolling_Return_1d     2.9551      0.001   2686.884      0.000       2.953       2.957
     ==============================================================================
-    Omnibus:                    10188.882   Durbin-Watson:                   2.565
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):         43894224.936
-    Skew:                          -8.279   Prob(JB):                         0.00
-    Kurtosis:                     396.425   Cond. No.                         58.8
+    Omnibus:                    10195.883   Durbin-Watson:                   2.565
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):         43955658.407
+    Skew:                          -8.281   Prob(JB):                         0.00
+    Kurtosis:                     396.585   Cond. No.                         58.8
     ==============================================================================
     
     Notes:
@@ -1718,13 +1959,13 @@ for period_name, window in rolling_windows.items():
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_52_3.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_46_3.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_52_4.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_46_4.png)
     
 
 
@@ -1732,23 +1973,23 @@ for period_name, window in rolling_windows.items():
     ==================================================================================
     Dep. Variable:     TQQQ_Rolling_Return_1w   R-squared:                       0.994
     Model:                                OLS   Adj. R-squared:                  0.994
-    Method:                     Least Squares   F-statistic:                 1.116e+06
-    Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            14:26:04   Log-Likelihood:                 23152.
-    No. Observations:                    6790   AIC:                        -4.630e+04
-    Df Residuals:                        6788   BIC:                        -4.629e+04
+    Method:                     Least Squares   F-statistic:                 1.117e+06
+    Date:                    Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                            10:48:14   Log-Likelihood:                 23168.
+    No. Observations:                    6794   AIC:                        -4.633e+04
+    Df Residuals:                        6792   BIC:                        -4.632e+04
     Df Model:                               1                                         
     Covariance Type:                nonrobust                                         
     =========================================================================================
                                 coef    std err          t      P>|t|      [0.025      0.975]
     -----------------------------------------------------------------------------------------
-    const                    -0.0008   9.73e-05     -8.330      0.000      -0.001      -0.001
-    QQQ_Rolling_Return_1w     2.9524      0.003   1056.353      0.000       2.947       2.958
+    const                    -0.0008   9.72e-05     -8.352      0.000      -0.001      -0.001
+    QQQ_Rolling_Return_1w     2.9524      0.003   1056.694      0.000       2.947       2.958
     ==============================================================================
-    Omnibus:                     2839.003   Durbin-Watson:                   0.932
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           563907.961
+    Omnibus:                     2840.367   Durbin-Watson:                   0.932
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           564836.499
     Skew:                          -0.863   Prob(JB):                         0.00
-    Kurtosis:                      47.612   Cond. No.                         28.8
+    Kurtosis:                      47.635   Cond. No.                         28.8
     ==============================================================================
     
     Notes:
@@ -1757,13 +1998,13 @@ for period_name, window in rolling_windows.items():
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_52_6.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_46_6.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_52_7.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_46_7.png)
     
 
 
@@ -1771,23 +2012,23 @@ for period_name, window in rolling_windows.items():
     ==================================================================================
     Dep. Variable:     TQQQ_Rolling_Return_1m   R-squared:                       0.982
     Model:                                OLS   Adj. R-squared:                  0.982
-    Method:                     Least Squares   F-statistic:                 3.695e+05
-    Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            14:26:05   Log-Likelihood:                 14852.
-    No. Observations:                    6774   AIC:                        -2.970e+04
-    Df Residuals:                        6772   BIC:                        -2.969e+04
+    Method:                     Least Squares   F-statistic:                 3.697e+05
+    Date:                    Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                            10:48:15   Log-Likelihood:                 14862.
+    No. Observations:                    6778   AIC:                        -2.972e+04
+    Df Residuals:                        6776   BIC:                        -2.971e+04
     Df Model:                               1                                         
     Covariance Type:                nonrobust                                         
     =========================================================================================
                                 coef    std err          t      P>|t|      [0.025      0.975]
     -----------------------------------------------------------------------------------------
-    const                    -0.0037      0.000    -11.064      0.000      -0.004      -0.003
-    QQQ_Rolling_Return_1m     2.9305      0.005    607.853      0.000       2.921       2.940
+    const                    -0.0037      0.000    -11.090      0.000      -0.004      -0.003
+    QQQ_Rolling_Return_1m     2.9306      0.005    608.020      0.000       2.921       2.940
     ==============================================================================
-    Omnibus:                     1627.646   Durbin-Watson:                   0.296
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            69016.055
-    Skew:                           0.357   Prob(JB):                         0.00
-    Kurtosis:                      18.621   Cond. No.                         14.7
+    Omnibus:                     1629.563   Durbin-Watson:                   0.296
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            69136.389
+    Skew:                           0.358   Prob(JB):                         0.00
+    Kurtosis:                      18.630   Cond. No.                         14.7
     ==============================================================================
     
     Notes:
@@ -1796,13 +2037,13 @@ for period_name, window in rolling_windows.items():
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_52_9.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_46_9.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_52_10.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_46_10.png)
     
 
 
@@ -1810,23 +2051,23 @@ for period_name, window in rolling_windows.items():
     ==================================================================================
     Dep. Variable:     TQQQ_Rolling_Return_3m   R-squared:                       0.958
     Model:                                OLS   Adj. R-squared:                  0.958
-    Method:                     Least Squares   F-statistic:                 1.549e+05
-    Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            14:26:06   Log-Likelihood:                 7946.0
-    No. Observations:                    6732   AIC:                        -1.589e+04
-    Df Residuals:                        6730   BIC:                        -1.587e+04
+    Method:                     Least Squares   F-statistic:                 1.550e+05
+    Date:                    Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                            10:48:16   Log-Likelihood:                 7952.3
+    No. Observations:                    6736   AIC:                        -1.590e+04
+    Df Residuals:                        6734   BIC:                        -1.589e+04
     Df Model:                               1                                         
     Covariance Type:                nonrobust                                         
     =========================================================================================
                                 coef    std err          t      P>|t|      [0.025      0.975]
     -----------------------------------------------------------------------------------------
-    const                    -0.0083      0.001     -8.841      0.000      -0.010      -0.006
-    QQQ_Rolling_Return_3m     2.9848      0.008    393.626      0.000       2.970       3.000
+    const                    -0.0083      0.001     -8.866      0.000      -0.010      -0.006
+    QQQ_Rolling_Return_3m     2.9849      0.008    393.761      0.000       2.970       3.000
     ==============================================================================
-    Omnibus:                     3461.856   Durbin-Watson:                   0.105
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            79524.170
-    Skew:                           1.962   Prob(JB):                         0.00
-    Kurtosis:                      19.374   Cond. No.                         8.38
+    Omnibus:                     3465.471   Durbin-Watson:                   0.105
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            79666.067
+    Skew:                           1.963   Prob(JB):                         0.00
+    Kurtosis:                      19.384   Cond. No.                         8.38
     ==============================================================================
     
     Notes:
@@ -1835,13 +2076,13 @@ for period_name, window in rolling_windows.items():
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_52_12.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_46_12.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_52_13.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_46_13.png)
     
 
 
@@ -1849,23 +2090,23 @@ for period_name, window in rolling_windows.items():
     ==================================================================================
     Dep. Variable:     TQQQ_Rolling_Return_6m   R-squared:                       0.916
     Model:                                OLS   Adj. R-squared:                  0.916
-    Method:                     Least Squares   F-statistic:                 7.247e+04
-    Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            14:26:08   Log-Likelihood:                 2610.3
-    No. Observations:                    6669   AIC:                            -5217.
-    Df Residuals:                        6667   BIC:                            -5203.
+    Method:                     Least Squares   F-statistic:                 7.251e+04
+    Date:                    Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                            10:48:17   Log-Likelihood:                 2613.2
+    No. Observations:                    6673   AIC:                            -5222.
+    Df Residuals:                        6671   BIC:                            -5209.
     Df Model:                               1                                         
     Covariance Type:                nonrobust                                         
     =========================================================================================
                                 coef    std err          t      P>|t|      [0.025      0.975]
     -----------------------------------------------------------------------------------------
-    const                    -0.0096      0.002     -4.515      0.000      -0.014      -0.005
-    QQQ_Rolling_Return_6m     3.0396      0.011    269.206      0.000       3.017       3.062
+    const                    -0.0097      0.002     -4.542      0.000      -0.014      -0.005
+    QQQ_Rolling_Return_6m     3.0397      0.011    269.277      0.000       3.018       3.062
     ==============================================================================
-    Omnibus:                     3654.453   Durbin-Watson:                   0.056
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            60093.604
-    Skew:                           2.262   Prob(JB):                         0.00
-    Kurtosis:                      16.993   Cond. No.                         5.66
+    Omnibus:                     3657.998   Durbin-Watson:                   0.056
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            60190.456
+    Skew:                           2.263   Prob(JB):                         0.00
+    Kurtosis:                      17.000   Cond. No.                         5.66
     ==============================================================================
     
     Notes:
@@ -1874,13 +2115,13 @@ for period_name, window in rolling_windows.items():
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_52_15.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_46_15.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_52_16.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_46_16.png)
     
 
 
@@ -1888,23 +2129,23 @@ for period_name, window in rolling_windows.items():
     ==================================================================================
     Dep. Variable:     TQQQ_Rolling_Return_1y   R-squared:                       0.880
     Model:                                OLS   Adj. R-squared:                  0.880
-    Method:                     Least Squares   F-statistic:                 4.785e+04
-    Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            14:26:09   Log-Likelihood:                -892.54
-    No. Observations:                    6543   AIC:                             1789.
-    Df Residuals:                        6541   BIC:                             1803.
+    Method:                     Least Squares   F-statistic:                 4.786e+04
+    Date:                    Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                            10:48:18   Log-Likelihood:                -892.22
+    No. Observations:                    6547   AIC:                             1788.
+    Df Residuals:                        6545   BIC:                             1802.
     Df Model:                               1                                         
     Covariance Type:                nonrobust                                         
     =========================================================================================
                                 coef    std err          t      P>|t|      [0.025      0.975]
     -----------------------------------------------------------------------------------------
-    const                     0.0191      0.004      5.035      0.000       0.012       0.026
-    QQQ_Rolling_Return_1y     2.8375      0.013    218.746      0.000       2.812       2.863
+    const                     0.0190      0.004      5.011      0.000       0.012       0.026
+    QQQ_Rolling_Return_1y     2.8373      0.013    218.776      0.000       2.812       2.863
     ==============================================================================
-    Omnibus:                     3492.635   Durbin-Watson:                   0.037
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            68111.624
-    Skew:                           2.122   Prob(JB):                         0.00
-    Kurtosis:                      18.226   Cond. No.                         3.84
+    Omnibus:                     3496.697   Durbin-Watson:                   0.037
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            68242.975
+    Skew:                           2.124   Prob(JB):                         0.00
+    Kurtosis:                      18.236   Cond. No.                         3.85
     ==============================================================================
     
     Notes:
@@ -1913,37 +2154,37 @@ for period_name, window in rolling_windows.items():
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_52_18.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_46_18.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_52_19.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_46_19.png)
     
 
 
                                   OLS Regression Results                              
     ==================================================================================
-    Dep. Variable:     TQQQ_Rolling_Return_2y   R-squared:                       0.849
+    Dep. Variable:     TQQQ_Rolling_Return_2y   R-squared:                       0.848
     Model:                                OLS   Adj. R-squared:                  0.848
-    Method:                     Least Squares   F-statistic:                 3.522e+04
-    Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            14:26:10   Log-Likelihood:                -4421.2
-    No. Observations:                    6291   AIC:                             8846.
-    Df Residuals:                        6289   BIC:                             8860.
+    Method:                     Least Squares   F-statistic:                 3.521e+04
+    Date:                    Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                            10:48:20   Log-Likelihood:                -4424.9
+    No. Observations:                    6295   AIC:                             8854.
+    Df Residuals:                        6293   BIC:                             8867.
     Df Model:                               1                                         
     Covariance Type:                nonrobust                                         
     =========================================================================================
                                 coef    std err          t      P>|t|      [0.025      0.975]
     -----------------------------------------------------------------------------------------
-    const                     0.0096      0.007      1.294      0.196      -0.005       0.024
-    QQQ_Rolling_Return_2y     3.1314      0.017    187.680      0.000       3.099       3.164
+    const                     0.0093      0.007      1.254      0.210      -0.005       0.024
+    QQQ_Rolling_Return_2y     3.1311      0.017    187.642      0.000       3.098       3.164
     ==============================================================================
-    Omnibus:                     1595.143   Durbin-Watson:                   0.019
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             4144.668
+    Omnibus:                     1595.851   Durbin-Watson:                   0.019
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             4145.777
     Skew:                           1.367   Prob(JB):                         0.00
-    Kurtosis:                       5.887   Cond. No.                         2.89
+    Kurtosis:                       5.886   Cond. No.                         2.89
     ==============================================================================
     
     Notes:
@@ -1952,37 +2193,37 @@ for period_name, window in rolling_windows.items():
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_52_21.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_46_21.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_52_22.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_46_22.png)
     
 
 
                                   OLS Regression Results                              
     ==================================================================================
-    Dep. Variable:     TQQQ_Rolling_Return_3y   R-squared:                       0.804
+    Dep. Variable:     TQQQ_Rolling_Return_3y   R-squared:                       0.805
     Model:                                OLS   Adj. R-squared:                  0.804
-    Method:                     Least Squares   F-statistic:                 2.481e+04
-    Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            14:26:11   Log-Likelihood:                -6691.5
-    No. Observations:                    6039   AIC:                         1.339e+04
-    Df Residuals:                        6037   BIC:                         1.340e+04
+    Method:                     Least Squares   F-statistic:                 2.486e+04
+    Date:                    Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                            10:48:21   Log-Likelihood:                -6694.0
+    No. Observations:                    6043   AIC:                         1.339e+04
+    Df Residuals:                        6041   BIC:                         1.341e+04
     Df Model:                               1                                         
     Covariance Type:                nonrobust                                         
     =========================================================================================
                                 coef    std err          t      P>|t|      [0.025      0.975]
     -----------------------------------------------------------------------------------------
     const                    -0.0599      0.013     -4.763      0.000      -0.085      -0.035
-    QQQ_Rolling_Return_3y     3.3321      0.021    157.522      0.000       3.291       3.374
+    QQQ_Rolling_Return_3y     3.3319      0.021    157.674      0.000       3.291       3.373
     ==============================================================================
-    Omnibus:                      855.515   Durbin-Watson:                   0.015
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1466.078
-    Skew:                           0.939   Prob(JB):                         0.00
-    Kurtosis:                       4.516   Cond. No.                         2.66
+    Omnibus:                      857.332   Durbin-Watson:                   0.015
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1471.003
+    Skew:                           0.940   Prob(JB):                         0.00
+    Kurtosis:                       4.520   Cond. No.                         2.66
     ==============================================================================
     
     Notes:
@@ -1991,13 +2232,13 @@ for period_name, window in rolling_windows.items():
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_52_24.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_46_24.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_52_25.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_46_25.png)
     
 
 
@@ -2005,23 +2246,23 @@ for period_name, window in rolling_windows.items():
     ==================================================================================
     Dep. Variable:     TQQQ_Rolling_Return_4y   R-squared:                       0.781
     Model:                                OLS   Adj. R-squared:                  0.781
-    Method:                     Least Squares   F-statistic:                 2.068e+04
-    Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            14:26:12   Log-Likelihood:                -8782.4
-    No. Observations:                    5787   AIC:                         1.757e+04
-    Df Residuals:                        5785   BIC:                         1.758e+04
+    Method:                     Least Squares   F-statistic:                 2.065e+04
+    Date:                    Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                            10:48:22   Log-Likelihood:                -8791.8
+    No. Observations:                    5791   AIC:                         1.759e+04
+    Df Residuals:                        5789   BIC:                         1.760e+04
     Df Model:                               1                                         
     Covariance Type:                nonrobust                                         
     =========================================================================================
                                 coef    std err          t      P>|t|      [0.025      0.975]
     -----------------------------------------------------------------------------------------
-    const                    -0.2922      0.021    -13.668      0.000      -0.334      -0.250
-    QQQ_Rolling_Return_4y     3.9343      0.027    143.797      0.000       3.881       3.988
+    const                    -0.2928      0.021    -13.690      0.000      -0.335      -0.251
+    QQQ_Rolling_Return_4y     3.9332      0.027    143.685      0.000       3.880       3.987
     ==============================================================================
-    Omnibus:                      198.061   Durbin-Watson:                   0.010
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              103.519
-    Skew:                           0.140   Prob(JB):                     3.32e-23
-    Kurtosis:                       2.407   Cond. No.                         2.66
+    Omnibus:                      199.708   Durbin-Watson:                   0.010
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              104.116
+    Skew:                           0.140   Prob(JB):                     2.46e-23
+    Kurtosis:                       2.406   Cond. No.                         2.66
     ==============================================================================
     
     Notes:
@@ -2030,13 +2271,13 @@ for period_name, window in rolling_windows.items():
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_52_27.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_46_27.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_52_28.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_46_28.png)
     
 
 
@@ -2044,23 +2285,23 @@ for period_name, window in rolling_windows.items():
     ==================================================================================
     Dep. Variable:     TQQQ_Rolling_Return_5y   R-squared:                       0.743
     Model:                                OLS   Adj. R-squared:                  0.743
-    Method:                     Least Squares   F-statistic:                 1.599e+04
-    Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            14:26:13   Log-Likelihood:                -12071.
-    No. Observations:                    5535   AIC:                         2.415e+04
-    Df Residuals:                        5533   BIC:                         2.416e+04
+    Method:                     Least Squares   F-statistic:                 1.598e+04
+    Date:                    Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                            10:48:23   Log-Likelihood:                -12081.
+    No. Observations:                    5539   AIC:                         2.417e+04
+    Df Residuals:                        5537   BIC:                         2.418e+04
     Df Model:                               1                                         
     Covariance Type:                nonrobust                                         
     =========================================================================================
                                 coef    std err          t      P>|t|      [0.025      0.975]
     -----------------------------------------------------------------------------------------
-    const                    -0.8853      0.044    -19.926      0.000      -0.972      -0.798
-    QQQ_Rolling_Return_5y     5.2054      0.041    126.462      0.000       5.125       5.286
+    const                    -0.8870      0.044    -19.962      0.000      -0.974      -0.800
+    QQQ_Rolling_Return_5y     5.2051      0.041    126.429      0.000       5.124       5.286
     ==============================================================================
-    Omnibus:                      314.365   Durbin-Watson:                   0.009
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              460.149
-    Skew:                           0.498   Prob(JB):                    1.20e-100
-    Kurtosis:                       4.002   Cond. No.                         2.73
+    Omnibus:                      314.921   Durbin-Watson:                   0.009
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              460.335
+    Skew:                           0.499   Prob(JB):                    1.10e-100
+    Kurtosis:                       4.000   Cond. No.                         2.73
     ==============================================================================
     
     Notes:
@@ -2075,7 +2316,9 @@ You're welcome to digest each plot, but here's my observations on the above resu
 * 3m: The skew toward the positive is even more pronounced, and we see even more outliers. The regression coefficient has *increased*, to 2.98 and the R^2 has dropped to 0.96.
 * 6m: The skew toward the positive is very pronounced, and we see a significant number of outliers with pronounced curvanture in the plot. The regression coefficient has increased again, to 3.4 and the R^2 has dropped to 0.92.
 * 1y: At this point, based on the plot and the regression results, we can start to see that the returns of TQQQ are no longer tracking 3x the returns of QQQ as closely as they did in the shorter time periods. The regression coefficient has is now 2.84 and the R^2 has dropped to 0.88.
-* 4y and 5y: We can see that there are periods where the rolling returns of TQQQ are significantly higher *and* lower than 3x the returns of QQQ, which is consistent with the idea of volatility decay. For 4y, based on the regression results, we see that if the rolling return of QQQ was 0, then we would expect a return of -0.30x for TQQQ.
+* 4y and 5y: We can see that there are periods where the rolling returns of TQQQ are significantly higher *and* lower than 3x the returns of QQQ, which is consistent with the idea of volatility decay.
+
+For 4y, based on the regression results, we see that if the rolling return of QQQ was 0, then we would expect a return of -0.30 for TQQQ.
 
 $$
 r_{TQQQ} = -0.30 + 3.93 \times r_{QQQ} = -0.30 + 3.93 \times 0 = -0.30
@@ -2096,10 +2339,6 @@ Next, we will the rolling returns deviation from the expected 3x return for each
 
 ```python
 rolling_returns_stats["Return_Deviation_From_3x"] = rolling_returns_stats["Slope"] - 3.0
-```
-
-
-```python
 display(rolling_returns_stats)
 ```
 
@@ -2138,121 +2377,121 @@ display(rolling_returns_stats)
       <th>0</th>
       <td>1d</td>
       <td>-0.000051</td>
-      <td>2.955114</td>
-      <td>0.999059</td>
+      <td>2.955150</td>
+      <td>0.999060</td>
       <td>NaN</td>
-      <td>2.956838</td>
+      <td>2.956873</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>-0.044886</td>
+      <td>-0.044850</td>
     </tr>
     <tr>
       <th>0</th>
       <td>1w</td>
-      <td>-0.000811</td>
-      <td>2.952376</td>
+      <td>-0.000812</td>
+      <td>2.952417</td>
       <td>0.993954</td>
       <td>NaN</td>
-      <td>2.552537</td>
+      <td>2.552546</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>-0.047624</td>
+      <td>-0.047583</td>
     </tr>
     <tr>
       <th>0</th>
       <td>1m</td>
-      <td>-0.003671</td>
-      <td>2.930530</td>
-      <td>0.982002</td>
+      <td>-0.003678</td>
+      <td>2.930575</td>
+      <td>0.982001</td>
       <td>NaN</td>
-      <td>2.208871</td>
+      <td>2.207696</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>-0.069470</td>
+      <td>-0.069425</td>
     </tr>
     <tr>
       <th>0</th>
       <td>3m</td>
-      <td>-0.008268</td>
-      <td>2.984796</td>
-      <td>0.958372</td>
+      <td>-0.008287</td>
+      <td>2.984886</td>
+      <td>0.958376</td>
       <td>NaN</td>
       <td>1.994392</td>
       <td>-inf</td>
       <td>inf</td>
-      <td>-0.015204</td>
+      <td>-0.015114</td>
     </tr>
     <tr>
       <th>0</th>
       <td>6m</td>
-      <td>-0.009598</td>
-      <td>3.039561</td>
-      <td>0.915755</td>
-      <td>-8.732599</td>
-      <td>1.485007</td>
-      <td>5.416075</td>
-      <td>-3.931068</td>
-      <td>0.039561</td>
+      <td>-0.009650</td>
+      <td>3.039660</td>
+      <td>0.915750</td>
+      <td>-8.727980</td>
+      <td>1.478202</td>
+      <td>5.416124</td>
+      <td>-3.937921</td>
+      <td>0.039660</td>
     </tr>
     <tr>
       <th>0</th>
       <td>1y</td>
-      <td>0.019061</td>
-      <td>2.837467</td>
-      <td>0.879741</td>
+      <td>0.018967</td>
+      <td>2.837257</td>
+      <td>0.879705</td>
       <td>NaN</td>
-      <td>1.222436</td>
+      <td>1.223136</td>
       <td>-inf</td>
       <td>inf</td>
-      <td>-0.162533</td>
+      <td>-0.162743</td>
     </tr>
     <tr>
       <th>0</th>
       <td>2y</td>
-      <td>0.009554</td>
-      <td>3.131370</td>
-      <td>0.848505</td>
-      <td>36.154365</td>
-      <td>1.393182</td>
-      <td>12.341258</td>
-      <td>-10.948076</td>
-      <td>0.131370</td>
+      <td>0.009259</td>
+      <td>3.131069</td>
+      <td>0.848371</td>
+      <td>36.166164</td>
+      <td>1.393286</td>
+      <td>12.341359</td>
+      <td>-10.948073</td>
+      <td>0.131069</td>
     </tr>
     <tr>
       <th>0</th>
       <td>3y</td>
-      <td>-0.059935</td>
-      <td>3.332134</td>
-      <td>0.804313</td>
+      <td>-0.059924</td>
+      <td>3.331942</td>
+      <td>0.804512</td>
       <td>NaN</td>
-      <td>-0.091088</td>
+      <td>-0.088531</td>
       <td>-inf</td>
       <td>inf</td>
-      <td>0.332134</td>
+      <td>0.331942</td>
     </tr>
     <tr>
       <th>0</th>
       <td>4y</td>
-      <td>-0.292179</td>
-      <td>3.934252</td>
-      <td>0.781391</td>
-      <td>19.553878</td>
-      <td>1.759839</td>
-      <td>7.211475</td>
-      <td>-5.451636</td>
-      <td>0.934252</td>
+      <td>-0.292805</td>
+      <td>3.933168</td>
+      <td>0.781005</td>
+      <td>19.560660</td>
+      <td>1.759504</td>
+      <td>7.211577</td>
+      <td>-5.452074</td>
+      <td>0.933168</td>
     </tr>
     <tr>
       <th>0</th>
       <td>5y</td>
-      <td>-0.885319</td>
-      <td>5.205432</td>
-      <td>0.742959</td>
-      <td>43.020977</td>
-      <td>2.433454</td>
-      <td>11.479352</td>
-      <td>-9.045897</td>
-      <td>2.205432</td>
+      <td>-0.886994</td>
+      <td>5.205120</td>
+      <td>0.742721</td>
+      <td>43.036477</td>
+      <td>2.432449</td>
+      <td>11.479526</td>
+      <td>-9.047077</td>
+      <td>2.205120</td>
     </tr>
   </tbody>
 </table>
@@ -2292,7 +2531,7 @@ plot_scatter(
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_49_0.png)
     
 
 
@@ -2329,7 +2568,7 @@ plot_scatter(
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_57_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_50_0.png)
     
 
 
@@ -2366,7 +2605,7 @@ plot_scatter(
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_58_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_51_0.png)
     
 
 
@@ -2445,7 +2684,7 @@ display(rolling_returns_stats.set_index("Period"))
       <td>2.931</td>
       <td>0.982</td>
       <td>NaN</td>
-      <td>2.209</td>
+      <td>2.208</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>-0.069</td>
@@ -2466,10 +2705,10 @@ display(rolling_returns_stats.set_index("Period"))
       <td>-0.010</td>
       <td>3.040</td>
       <td>0.916</td>
-      <td>-8.733</td>
-      <td>1.485</td>
+      <td>-8.728</td>
+      <td>1.478</td>
       <td>5.416</td>
-      <td>-3.931</td>
+      <td>-3.938</td>
       <td>0.040</td>
     </tr>
     <tr>
@@ -2478,17 +2717,17 @@ display(rolling_returns_stats.set_index("Period"))
       <td>2.837</td>
       <td>0.880</td>
       <td>NaN</td>
-      <td>1.222</td>
+      <td>1.223</td>
       <td>-inf</td>
       <td>inf</td>
       <td>-0.163</td>
     </tr>
     <tr>
       <th>2y</th>
-      <td>0.010</td>
+      <td>0.009</td>
       <td>3.131</td>
-      <td>0.849</td>
-      <td>36.154</td>
+      <td>0.848</td>
+      <td>36.166</td>
       <td>1.393</td>
       <td>12.341</td>
       <td>-10.948</td>
@@ -2498,33 +2737,33 @@ display(rolling_returns_stats.set_index("Period"))
       <th>3y</th>
       <td>-0.060</td>
       <td>3.332</td>
-      <td>0.804</td>
+      <td>0.805</td>
       <td>NaN</td>
-      <td>-0.091</td>
+      <td>-0.089</td>
       <td>-inf</td>
       <td>inf</td>
       <td>0.332</td>
     </tr>
     <tr>
       <th>4y</th>
-      <td>-0.292</td>
-      <td>3.934</td>
+      <td>-0.293</td>
+      <td>3.933</td>
       <td>0.781</td>
-      <td>19.554</td>
+      <td>19.561</td>
       <td>1.760</td>
-      <td>7.211</td>
+      <td>7.212</td>
       <td>-5.452</td>
-      <td>0.934</td>
+      <td>0.933</td>
     </tr>
     <tr>
       <th>5y</th>
-      <td>-0.885</td>
+      <td>-0.887</td>
       <td>5.205</td>
       <td>0.743</td>
-      <td>43.021</td>
-      <td>2.433</td>
-      <td>11.479</td>
-      <td>-9.046</td>
+      <td>43.036</td>
+      <td>2.432</td>
+      <td>11.480</td>
+      <td>-9.047</td>
       <td>2.205</td>
     </tr>
   </tbody>
@@ -2539,7 +2778,7 @@ However, as we extend the time period, we see that
 * The "leverage factor" increases significantly, resulting in a deviation from the perfect 3x leverage.
 * The intercept also begins to deviate significantly from 0.
 
-The above highlight the impact of volatility magnification over longer time horizons. This phenomenon is happening likely due to the positive returns that QQQ has achieved over the past 15 years - resulting in TQQQ compounding at a much higher rate than 3x - but it may and likely is not exhibited by other 3x leveraged ETFs that have not had the same positive return profile as QQQ.
+The above highlight the impact of volatility magnification over longer time horizons. This phenomenon is happening likely due to the positive returns that QQQ has achieved since 2010 - resulting in TQQQ compounding at a much higher rate than 3x - but it may and likely is not exhibited by other 3x leveraged ETFs that have not had the same positive return profile as QQQ.
 
 With the above results, the next logical question is, when is the opportune time to buy a 3x leveraged ETF like TQQQ? To answer this, we will look a the drawdown levels of TQQQ and the subsequent returns over various time horizons.
 
@@ -2668,13 +2907,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_0.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_1.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_1.png)
     
 
 
@@ -2682,23 +2921,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_1d   R-squared:                       0.999
     Model:                                       OLS   Adj. R-squared:                  0.999
-    Method:                            Least Squares   F-statistic:                 6.825e+06
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:15   Log-Likelihood:                 33542.
-    No. Observations:                           6648   AIC:                        -6.708e+04
-    Df Residuals:                               6646   BIC:                        -6.707e+04
+    Method:                            Least Squares   F-statistic:                 6.829e+06
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:25   Log-Likelihood:                 33564.
+    No. Observations:                           6652   AIC:                        -6.712e+04
+    Df Residuals:                               6650   BIC:                        -6.711e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                        -5.203e-05   1.91e-05     -2.721      0.007   -8.95e-05   -1.45e-05
-    QQQ_Rolling_Future_Return_1d     2.9551      0.001   2612.377      0.000       2.953       2.957
+    const                        -5.211e-05   1.91e-05     -2.727      0.006   -8.96e-05   -1.46e-05
+    QQQ_Rolling_Future_Return_1d     2.9551      0.001   2613.214      0.000       2.953       2.957
     ==============================================================================
-    Omnibus:                     9913.687   Durbin-Watson:                   2.565
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):         41109927.245
-    Skew:                          -8.187   Prob(JB):                         0.00
-    Kurtosis:                     387.894   Cond. No.                         59.2
+    Omnibus:                     9920.661   Durbin-Watson:                   2.565
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):         41169076.972
+    Skew:                          -8.189   Prob(JB):                         0.00
+    Kurtosis:                     388.055   Cond. No.                         59.2
     ==============================================================================
     
     Notes:
@@ -2707,13 +2946,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_3.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_3.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_4.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_4.png)
     
 
 
@@ -2721,23 +2960,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_1w   R-squared:                       0.994
     Model:                                       OLS   Adj. R-squared:                  0.994
-    Method:                            Least Squares   F-statistic:                 1.088e+06
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:16   Log-Likelihood:                 22709.
-    No. Observations:                           6644   AIC:                        -4.541e+04
-    Df Residuals:                               6642   BIC:                        -4.540e+04
+    Method:                            Least Squares   F-statistic:                 1.089e+06
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:26   Log-Likelihood:                 22724.
+    No. Observations:                           6648   AIC:                        -4.544e+04
+    Df Residuals:                               6646   BIC:                        -4.543e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0008   9.76e-05     -8.221      0.000      -0.001      -0.001
-    QQQ_Rolling_Future_Return_1w     2.9526      0.003   1043.242      0.000       2.947       2.958
+    const                           -0.0008   9.75e-05     -8.243      0.000      -0.001      -0.001
+    QQQ_Rolling_Future_Return_1w     2.9526      0.003   1043.587      0.000       2.947       2.958
     ==============================================================================
-    Omnibus:                     2701.400   Durbin-Watson:                   0.939
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           586368.143
-    Skew:                          -0.779   Prob(JB):                         0.00
-    Kurtosis:                      48.997   Cond. No.                         29.1
+    Omnibus:                     2702.698   Durbin-Watson:                   0.939
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           587354.982
+    Skew:                          -0.778   Prob(JB):                         0.00
+    Kurtosis:                      49.022   Cond. No.                         29.1
     ==============================================================================
     
     Notes:
@@ -2746,13 +2985,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_6.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_6.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_7.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_7.png)
     
 
 
@@ -2760,23 +2999,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_1m   R-squared:                       0.982
     Model:                                       OLS   Adj. R-squared:                  0.982
-    Method:                            Least Squares   F-statistic:                 3.703e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:17   Log-Likelihood:                 14696.
-    No. Observations:                           6628   AIC:                        -2.939e+04
-    Df Residuals:                               6626   BIC:                        -2.937e+04
+    Method:                            Least Squares   F-statistic:                 3.705e+05
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:27   Log-Likelihood:                 14707.
+    No. Observations:                           6632   AIC:                        -2.941e+04
+    Df Residuals:                               6630   BIC:                        -2.940e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0034      0.000    -10.530      0.000      -0.004      -0.003
-    QQQ_Rolling_Future_Return_1m     2.9304      0.005    608.513      0.000       2.921       2.940
+    const                           -0.0034      0.000    -10.557      0.000      -0.004      -0.003
+    QQQ_Rolling_Future_Return_1m     2.9305      0.005    608.682      0.000       2.921       2.940
     ==============================================================================
-    Omnibus:                     1679.490   Durbin-Watson:                   0.312
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            80862.122
-    Skew:                           0.393   Prob(JB):                         0.00
-    Kurtosis:                      20.093   Cond. No.                         14.9
+    Omnibus:                     1681.515   Durbin-Watson:                   0.312
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            81002.207
+    Skew:                           0.394   Prob(JB):                         0.00
+    Kurtosis:                      20.103   Cond. No.                         14.9
     ==============================================================================
     
     Notes:
@@ -2785,13 +3024,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_9.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_9.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_10.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_10.png)
     
 
 
@@ -2799,23 +3038,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_3m   R-squared:                       0.957
     Model:                                       OLS   Adj. R-squared:                  0.957
-    Method:                            Least Squares   F-statistic:                 1.458e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:18   Log-Likelihood:                 7947.5
-    No. Observations:                           6586   AIC:                        -1.589e+04
-    Df Residuals:                               6584   BIC:                        -1.588e+04
+    Method:                            Least Squares   F-statistic:                 1.459e+05
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:28   Log-Likelihood:                 7953.9
+    No. Observations:                           6590   AIC:                        -1.590e+04
+    Df Residuals:                               6588   BIC:                        -1.589e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0076      0.001     -8.260      0.000      -0.009      -0.006
-    QQQ_Rolling_Future_Return_3m     2.9582      0.008    381.884      0.000       2.943       2.973
+    const                           -0.0076      0.001     -8.287      0.000      -0.009      -0.006
+    QQQ_Rolling_Future_Return_3m     2.9583      0.008    382.016      0.000       2.943       2.974
     ==============================================================================
-    Omnibus:                     3401.457   Durbin-Watson:                   0.113
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            86281.946
-    Skew:                           1.942   Prob(JB):                         0.00
-    Kurtosis:                      20.301   Cond. No.                         8.69
+    Omnibus:                     3405.064   Durbin-Watson:                   0.113
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            86432.676
+    Skew:                           1.943   Prob(JB):                         0.00
+    Kurtosis:                      20.311   Cond. No.                         8.69
     ==============================================================================
     
     Notes:
@@ -2824,13 +3063,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_12.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_12.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_13.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_13.png)
     
 
 
@@ -2838,23 +3077,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_6m   R-squared:                       0.921
     Model:                                       OLS   Adj. R-squared:                  0.921
-    Method:                            Least Squares   F-statistic:                 7.566e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:20   Log-Likelihood:                 3154.5
-    No. Observations:                           6523   AIC:                            -6305.
-    Df Residuals:                               6521   BIC:                            -6291.
+    Method:                            Least Squares   F-statistic:                 7.570e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:29   Log-Likelihood:                 3157.7
+    No. Observations:                           6527   AIC:                            -6311.
+    Df Residuals:                               6525   BIC:                            -6298.
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0042      0.002     -2.132      0.033      -0.008      -0.000
-    QQQ_Rolling_Future_Return_6m     2.9626      0.011    275.060      0.000       2.941       2.984
+    const                           -0.0042      0.002     -2.162      0.031      -0.008      -0.000
+    QQQ_Rolling_Future_Return_6m     2.9627      0.011    275.128      0.000       2.942       2.984
     ==============================================================================
-    Omnibus:                     4154.198   Durbin-Watson:                   0.065
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           100612.082
-    Skew:                           2.647   Prob(JB):                         0.00
-    Kurtosis:                      21.498   Cond. No.                         5.85
+    Omnibus:                     4157.931   Durbin-Watson:                   0.065
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           100755.352
+    Skew:                           2.648   Prob(JB):                         0.00
+    Kurtosis:                      21.505   Cond. No.                         5.85
     ==============================================================================
     
     Notes:
@@ -2863,13 +3102,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_15.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_15.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_16.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_16.png)
     
 
 
@@ -2877,23 +3116,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_1y   R-squared:                       0.893
     Model:                                       OLS   Adj. R-squared:                  0.893
-    Method:                            Least Squares   F-statistic:                 5.326e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:21   Log-Likelihood:                -135.51
-    No. Observations:                           6397   AIC:                             275.0
-    Df Residuals:                               6395   BIC:                             288.6
+    Method:                            Least Squares   F-statistic:                 5.327e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:30   Log-Likelihood:                -134.91
+    No. Observations:                           6401   AIC:                             273.8
+    Df Residuals:                               6399   BIC:                             287.4
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                            0.0228      0.003      6.654      0.000       0.016       0.030
-    QQQ_Rolling_Future_Return_1y     2.8089      0.012    230.784      0.000       2.785       2.833
+    const                            0.0227      0.003      6.629      0.000       0.016       0.029
+    QQQ_Rolling_Future_Return_1y     2.8087      0.012    230.809      0.000       2.785       2.833
     ==============================================================================
-    Omnibus:                     2631.338   Durbin-Watson:                   0.052
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            29220.801
-    Skew:                           1.657   Prob(JB):                         0.00
-    Kurtosis:                      12.932   Cond. No.                         4.00
+    Omnibus:                     2634.605   Durbin-Watson:                   0.052
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            29271.842
+    Skew:                           1.658   Prob(JB):                         0.00
+    Kurtosis:                      12.938   Cond. No.                         4.00
     ==============================================================================
     
     Notes:
@@ -2902,13 +3141,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_18.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_18.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_19.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_19.png)
     
 
 
@@ -2916,23 +3155,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_2y   R-squared:                       0.848
     Model:                                       OLS   Adj. R-squared:                  0.848
-    Method:                            Least Squares   F-statistic:                 3.426e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:22   Log-Likelihood:                -4260.2
-    No. Observations:                           6145   AIC:                             8524.
-    Df Residuals:                               6143   BIC:                             8538.
+    Method:                            Least Squares   F-statistic:                 3.424e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:31   Log-Likelihood:                -4263.9
+    No. Observations:                           6149   AIC:                             8532.
+    Df Residuals:                               6147   BIC:                             8545.
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0188      0.008     -2.463      0.014      -0.034      -0.004
-    QQQ_Rolling_Future_Return_2y     3.2014      0.017    185.083      0.000       3.167       3.235
+    const                           -0.0191      0.008     -2.502      0.012      -0.034      -0.004
+    QQQ_Rolling_Future_Return_2y     3.2011      0.017    185.045      0.000       3.167       3.235
     ==============================================================================
-    Omnibus:                     1670.286   Durbin-Watson:                   0.019
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             4641.855
+    Omnibus:                     1670.863   Durbin-Watson:                   0.019
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             4642.106
     Skew:                           1.436   Prob(JB):                         0.00
-    Kurtosis:                       6.143   Cond. No.                         3.02
+    Kurtosis:                       6.142   Cond. No.                         3.02
     ==============================================================================
     
     Notes:
@@ -2941,13 +3180,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_21.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_21.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_22.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_22.png)
     
 
 
@@ -2955,23 +3194,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_3y   R-squared:                       0.811
     Model:                                       OLS   Adj. R-squared:                  0.811
-    Method:                            Least Squares   F-statistic:                 2.522e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:23   Log-Likelihood:                -6367.9
-    No. Observations:                           5893   AIC:                         1.274e+04
-    Df Residuals:                               5891   BIC:                         1.275e+04
+    Method:                            Least Squares   F-statistic:                 2.527e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:33   Log-Likelihood:                -6370.5
+    No. Observations:                           5897   AIC:                         1.274e+04
+    Df Residuals:                               5895   BIC:                         1.276e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.1590      0.013    -12.136      0.000      -0.185      -0.133
-    QQQ_Rolling_Future_Return_3y     3.5025      0.022    158.807      0.000       3.459       3.546
+    const                           -0.1589      0.013    -12.137      0.000      -0.185      -0.133
+    QQQ_Rolling_Future_Return_3y     3.5021      0.022    158.957      0.000       3.459       3.545
     ==============================================================================
-    Omnibus:                      868.866   Durbin-Watson:                   0.015
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1529.067
-    Skew:                           0.959   Prob(JB):                         0.00
-    Kurtosis:                       4.595   Cond. No.                         2.86
+    Omnibus:                      871.005   Durbin-Watson:                   0.015
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1534.952
+    Skew:                           0.960   Prob(JB):                         0.00
+    Kurtosis:                       4.600   Cond. No.                         2.86
     ==============================================================================
     
     Notes:
@@ -2980,13 +3219,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_24.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_24.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_25.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_25.png)
     
 
 
@@ -2994,23 +3233,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_4y   R-squared:                       0.783
     Model:                                       OLS   Adj. R-squared:                  0.783
-    Method:                            Least Squares   F-statistic:                 2.039e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:24   Log-Likelihood:                -8491.0
-    No. Observations:                           5641   AIC:                         1.699e+04
-    Df Residuals:                               5639   BIC:                         1.700e+04
+    Method:                            Least Squares   F-statistic:                 2.035e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:34   Log-Likelihood:                -8500.6
+    No. Observations:                           5645   AIC:                         1.701e+04
+    Df Residuals:                               5643   BIC:                         1.702e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.4268      0.023    -18.906      0.000      -0.471      -0.383
-    QQQ_Rolling_Future_Return_4y     4.0976      0.029    142.777      0.000       4.041       4.154
+    const                           -0.4274      0.023    -18.923      0.000      -0.472      -0.383
+    QQQ_Rolling_Future_Return_4y     4.0965      0.029    142.660      0.000       4.040       4.153
     ==============================================================================
-    Omnibus:                      125.491   Durbin-Watson:                   0.010
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):               78.475
-    Skew:                           0.148   Prob(JB):                     9.11e-18
-    Kurtosis:                       2.504   Cond. No.                         2.85
+    Omnibus:                      126.839   Durbin-Watson:                   0.010
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):               79.052
+    Skew:                           0.148   Prob(JB):                     6.82e-18
+    Kurtosis:                       2.501   Cond. No.                         2.85
     ==============================================================================
     
     Notes:
@@ -3019,13 +3258,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_27.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_27.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_28.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_28.png)
     
 
 
@@ -3033,23 +3272,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_5y   R-squared:                       0.745
     Model:                                       OLS   Adj. R-squared:                  0.745
-    Method:                            Least Squares   F-statistic:                 1.578e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:25   Log-Likelihood:                -11719.
-    No. Observations:                           5389   AIC:                         2.344e+04
-    Df Residuals:                               5387   BIC:                         2.345e+04
+    Method:                            Least Squares   F-statistic:                 1.577e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:35   Log-Likelihood:                -11728.
+    No. Observations:                           5393   AIC:                         2.346e+04
+    Df Residuals:                               5391   BIC:                         2.347e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -1.1137      0.047    -23.759      0.000      -1.206      -1.022
-    QQQ_Rolling_Future_Return_5y     5.3970      0.043    125.610      0.000       5.313       5.481
+    const                           -1.1155      0.047    -23.795      0.000      -1.207      -1.024
+    QQQ_Rolling_Future_Return_5y     5.3968      0.043    125.581      0.000       5.313       5.481
     ==============================================================================
-    Omnibus:                      275.950   Durbin-Watson:                   0.009
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              406.209
-    Skew:                           0.459   Prob(JB):                     6.21e-89
-    Kurtosis:                       3.983   Cond. No.                         2.90
+    Omnibus:                      276.437   Durbin-Watson:                   0.009
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              406.256
+    Skew:                           0.460   Prob(JB):                     6.06e-89
+    Kurtosis:                       3.981   Cond. No.                         2.90
     ==============================================================================
     
     Notes:
@@ -3058,13 +3297,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_30.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_30.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_31.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_31.png)
     
 
 
@@ -3072,23 +3311,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_1d   R-squared:                       0.999
     Model:                                       OLS   Adj. R-squared:                  0.999
-    Method:                            Least Squares   F-statistic:                 6.602e+06
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:27   Log-Likelihood:                 33115.
-    No. Observations:                           6571   AIC:                        -6.623e+04
-    Df Residuals:                               6569   BIC:                        -6.621e+04
+    Method:                            Least Squares   F-statistic:                 6.607e+06
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:36   Log-Likelihood:                 33137.
+    No. Observations:                           6575   AIC:                        -6.627e+04
+    Df Residuals:                               6573   BIC:                        -6.626e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                        -5.264e-05   1.93e-05     -2.721      0.007   -9.06e-05   -1.47e-05
-    QQQ_Rolling_Future_Return_1d     2.9551      0.001   2569.475      0.000       2.953       2.957
+    const                        -5.272e-05   1.93e-05     -2.727      0.006   -9.06e-05   -1.48e-05
+    QQQ_Rolling_Future_Return_1d     2.9551      0.001   2570.313      0.000       2.953       2.957
     ==============================================================================
-    Omnibus:                     9769.052   Durbin-Watson:                   2.565
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):         39689255.457
-    Skew:                          -8.139   Prob(JB):                         0.00
-    Kurtosis:                     383.390   Cond. No.                         59.5
+    Omnibus:                     9776.012   Durbin-Watson:                   2.565
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):         39747209.384
+    Skew:                          -8.140   Prob(JB):                         0.00
+    Kurtosis:                     383.552   Cond. No.                         59.5
     ==============================================================================
     
     Notes:
@@ -3097,13 +3336,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_33.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_33.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_34.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_34.png)
     
 
 
@@ -3111,23 +3350,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_1w   R-squared:                       0.994
     Model:                                       OLS   Adj. R-squared:                  0.994
-    Method:                            Least Squares   F-statistic:                 1.069e+06
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:28   Log-Likelihood:                 22453.
-    No. Observations:                           6567   AIC:                        -4.490e+04
-    Df Residuals:                               6565   BIC:                        -4.489e+04
+    Method:                            Least Squares   F-statistic:                 1.070e+06
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:37   Log-Likelihood:                 22468.
+    No. Observations:                           6571   AIC:                        -4.493e+04
+    Df Residuals:                               6569   BIC:                        -4.492e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0008    9.8e-05     -8.016      0.000      -0.001      -0.001
-    QQQ_Rolling_Future_Return_1w     2.9517      0.003   1033.957      0.000       2.946       2.957
+    const                           -0.0008   9.79e-05     -8.038      0.000      -0.001      -0.001
+    QQQ_Rolling_Future_Return_1w     2.9517      0.003   1034.302      0.000       2.946       2.957
     ==============================================================================
-    Omnibus:                     2705.152   Durbin-Watson:                   0.933
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           594917.588
-    Skew:                          -0.803   Prob(JB):                         0.00
-    Kurtosis:                      49.601   Cond. No.                         29.2
+    Omnibus:                     2706.460   Durbin-Watson:                   0.933
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           595926.912
+    Skew:                          -0.802   Prob(JB):                         0.00
+    Kurtosis:                      49.626   Cond. No.                         29.2
     ==============================================================================
     
     Notes:
@@ -3136,13 +3375,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_36.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_36.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_37.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_37.png)
     
 
 
@@ -3150,23 +3389,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_1m   R-squared:                       0.983
     Model:                                       OLS   Adj. R-squared:                  0.983
-    Method:                            Least Squares   F-statistic:                 3.703e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:29   Log-Likelihood:                 14653.
-    No. Observations:                           6551   AIC:                        -2.930e+04
-    Df Residuals:                               6549   BIC:                        -2.929e+04
+    Method:                            Least Squares   F-statistic:                 3.705e+05
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:38   Log-Likelihood:                 14663.
+    No. Observations:                           6555   AIC:                        -2.932e+04
+    Df Residuals:                               6553   BIC:                        -2.931e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0035      0.000    -10.801      0.000      -0.004      -0.003
-    QQQ_Rolling_Future_Return_1m     2.9224      0.005    608.511      0.000       2.913       2.932
+    const                           -0.0035      0.000    -10.829      0.000      -0.004      -0.003
+    QQQ_Rolling_Future_Return_1m     2.9225      0.005    608.681      0.000       2.913       2.932
     ==============================================================================
-    Omnibus:                     1535.850   Durbin-Watson:                   0.317
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            81019.960
-    Skew:                           0.160   Prob(JB):                         0.00
-    Kurtosis:                      20.226   Cond. No.                         15.0
+    Omnibus:                     1537.427   Durbin-Watson:                   0.317
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            81158.645
+    Skew:                           0.161   Prob(JB):                         0.00
+    Kurtosis:                      20.235   Cond. No.                         15.0
     ==============================================================================
     
     Notes:
@@ -3175,13 +3414,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_39.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_39.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_40.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_40.png)
     
 
 
@@ -3189,23 +3428,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_3m   R-squared:                       0.960
     Model:                                       OLS   Adj. R-squared:                  0.960
-    Method:                            Least Squares   F-statistic:                 1.544e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:30   Log-Likelihood:                 8321.1
-    No. Observations:                           6509   AIC:                        -1.664e+04
-    Df Residuals:                               6507   BIC:                        -1.662e+04
+    Method:                            Least Squares   F-statistic:                 1.545e+05
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:40   Log-Likelihood:                 8327.7
+    No. Observations:                           6513   AIC:                        -1.665e+04
+    Df Residuals:                               6511   BIC:                        -1.664e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0070      0.001     -8.175      0.000      -0.009      -0.005
-    QQQ_Rolling_Future_Return_3m     2.9103      0.007    392.952      0.000       2.896       2.925
+    const                           -0.0070      0.001     -8.206      0.000      -0.009      -0.005
+    QQQ_Rolling_Future_Return_3m     2.9104      0.007    393.086      0.000       2.896       2.925
     ==============================================================================
-    Omnibus:                     2145.969   Durbin-Watson:                   0.136
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            38765.286
-    Skew:                           1.109   Prob(JB):                         0.00
-    Kurtosis:                      14.748   Cond. No.                         8.87
+    Omnibus:                     2148.872   Durbin-Watson:                   0.136
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            38835.698
+    Skew:                           1.110   Prob(JB):                         0.00
+    Kurtosis:                      14.755   Cond. No.                         8.87
     ==============================================================================
     
     Notes:
@@ -3214,13 +3453,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_42.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_42.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_43.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_43.png)
     
 
 
@@ -3228,23 +3467,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_6m   R-squared:                       0.926
     Model:                                       OLS   Adj. R-squared:                  0.926
-    Method:                            Least Squares   F-statistic:                 8.102e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:32   Log-Likelihood:                 3779.1
-    No. Observations:                           6446   AIC:                            -7554.
-    Df Residuals:                               6444   BIC:                            -7541.
+    Method:                            Least Squares   F-statistic:                 8.106e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:41   Log-Likelihood:                 3782.6
+    No. Observations:                           6450   AIC:                            -7561.
+    Df Residuals:                               6448   BIC:                            -7548.
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0015      0.002     -0.860      0.390      -0.005       0.002
-    QQQ_Rolling_Future_Return_6m     2.8743      0.010    284.646      0.000       2.855       2.894
+    const                           -0.0016      0.002     -0.893      0.372      -0.005       0.002
+    QQQ_Rolling_Future_Return_6m     2.8744      0.010    284.711      0.000       2.855       2.894
     ==============================================================================
-    Omnibus:                     3183.205   Durbin-Watson:                   0.077
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            49759.451
-    Skew:                           1.977   Prob(JB):                         0.00
-    Kurtosis:                      16.024   Cond. No.                         6.04
+    Omnibus:                     3186.447   Durbin-Watson:                   0.077
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            49829.858
+    Skew:                           1.978   Prob(JB):                         0.00
+    Kurtosis:                      16.029   Cond. No.                         6.04
     ==============================================================================
     
     Notes:
@@ -3253,13 +3492,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_45.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_45.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_46.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_46.png)
     
 
 
@@ -3267,23 +3506,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_1y   R-squared:                       0.898
     Model:                                       OLS   Adj. R-squared:                  0.898
-    Method:                            Least Squares   F-statistic:                 5.551e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:33   Log-Likelihood:                 115.86
-    No. Observations:                           6320   AIC:                            -227.7
-    Df Residuals:                               6318   BIC:                            -214.2
+    Method:                            Least Squares   F-statistic:                 5.552e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:42   Log-Likelihood:                 116.44
+    No. Observations:                           6324   AIC:                            -228.9
+    Df Residuals:                               6322   BIC:                            -215.4
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                            0.0227      0.003      6.836      0.000       0.016       0.029
-    QQQ_Rolling_Future_Return_1y     2.8344      0.012    235.614      0.000       2.811       2.858
+    const                            0.0226      0.003      6.809      0.000       0.016       0.029
+    QQQ_Rolling_Future_Return_1y     2.8341      0.012    235.634      0.000       2.811       2.858
     ==============================================================================
-    Omnibus:                     2422.820   Durbin-Watson:                   0.068
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            19442.842
-    Skew:                           1.621   Prob(JB):                         0.00
-    Kurtosis:                      10.958   Cond. No.                         4.09
+    Omnibus:                     2425.690   Durbin-Watson:                   0.068
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            19474.427
+    Skew:                           1.622   Prob(JB):                         0.00
+    Kurtosis:                      10.962   Cond. No.                         4.09
     ==============================================================================
     
     Notes:
@@ -3292,13 +3531,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_48.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_48.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_49.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_49.png)
     
 
 
@@ -3306,23 +3545,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_2y   R-squared:                       0.847
     Model:                                       OLS   Adj. R-squared:                  0.847
-    Method:                            Least Squares   F-statistic:                 3.365e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:34   Log-Likelihood:                -4181.2
-    No. Observations:                           6068   AIC:                             8366.
-    Df Residuals:                               6066   BIC:                             8380.
+    Method:                            Least Squares   F-statistic:                 3.363e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:43   Log-Likelihood:                -4184.9
+    No. Observations:                           6072   AIC:                             8374.
+    Df Residuals:                               6070   BIC:                             8387.
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0288      0.008     -3.698      0.000      -0.044      -0.014
-    QQQ_Rolling_Future_Return_2y     3.2276      0.018    183.436      0.000       3.193       3.262
+    const                           -0.0291      0.008     -3.737      0.000      -0.044      -0.014
+    QQQ_Rolling_Future_Return_2y     3.2273      0.018    183.397      0.000       3.193       3.262
     ==============================================================================
-    Omnibus:                     1695.729   Durbin-Watson:                   0.019
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             4868.218
+    Omnibus:                     1696.251   Durbin-Watson:                   0.019
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             4868.031
     Skew:                           1.463   Prob(JB):                         0.00
-    Kurtosis:                       6.270   Cond. No.                         3.07
+    Kurtosis:                       6.269   Cond. No.                         3.08
     ==============================================================================
     
     Notes:
@@ -3331,13 +3570,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_51.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_51.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_52.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_52.png)
     
 
 
@@ -3345,23 +3584,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_3y   R-squared:                       0.814
     Model:                                       OLS   Adj. R-squared:                  0.814
-    Method:                            Least Squares   F-statistic:                 2.547e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:35   Log-Likelihood:                -6191.6
-    No. Observations:                           5816   AIC:                         1.239e+04
-    Df Residuals:                               5814   BIC:                         1.240e+04
+    Method:                            Least Squares   F-statistic:                 2.552e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:44   Log-Likelihood:                -6194.1
+    No. Observations:                           5820   AIC:                         1.239e+04
+    Df Residuals:                               5818   BIC:                         1.241e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.2170      0.013    -16.189      0.000      -0.243      -0.191
-    QQQ_Rolling_Future_Return_3y     3.6008      0.023    159.606      0.000       3.557       3.645
+    const                           -0.2169      0.013    -16.189      0.000      -0.243      -0.191
+    QQQ_Rolling_Future_Return_3y     3.6003      0.023    159.754      0.000       3.556       3.644
     ==============================================================================
-    Omnibus:                      874.268   Durbin-Watson:                   0.015
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1570.330
-    Skew:                           0.966   Prob(JB):                         0.00
-    Kurtosis:                       4.657   Cond. No.                         2.98
+    Omnibus:                      876.552   Durbin-Watson:                   0.015
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1576.675
+    Skew:                           0.967   Prob(JB):                         0.00
+    Kurtosis:                       4.661   Cond. No.                         2.98
     ==============================================================================
     
     Notes:
@@ -3370,13 +3609,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_54.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_54.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_55.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_55.png)
     
 
 
@@ -3384,23 +3623,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_4y   R-squared:                       0.784
     Model:                                       OLS   Adj. R-squared:                  0.784
-    Method:                            Least Squares   F-statistic:                 2.024e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:36   Log-Likelihood:                -8333.7
-    No. Observations:                           5564   AIC:                         1.667e+04
-    Df Residuals:                               5562   BIC:                         1.668e+04
+    Method:                            Least Squares   F-statistic:                 2.021e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:45   Log-Likelihood:                -8343.3
+    No. Observations:                           5568   AIC:                         1.669e+04
+    Df Residuals:                               5566   BIC:                         1.670e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.5059      0.023    -21.736      0.000      -0.552      -0.460
-    QQQ_Rolling_Future_Return_4y     4.1927      0.029    142.267      0.000       4.135       4.250
+    const                           -0.5066      0.023    -21.750      0.000      -0.552      -0.461
+    QQQ_Rolling_Future_Return_4y     4.1916      0.029    142.148      0.000       4.134       4.249
     ==============================================================================
-    Omnibus:                       89.406   Durbin-Watson:                   0.010
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):               63.314
-    Skew:                           0.153   Prob(JB):                     1.78e-14
-    Kurtosis:                       2.576   Cond. No.                         2.96
+    Omnibus:                       90.510   Durbin-Watson:                   0.010
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):               63.852
+    Skew:                           0.153   Prob(JB):                     1.36e-14
+    Kurtosis:                       2.573   Cond. No.                         2.96
     ==============================================================================
     
     Notes:
@@ -3409,37 +3648,37 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_57.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_57.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_58.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_58.png)
     
 
 
                                       OLS Regression Results                                 
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_5y   R-squared:                       0.747
-    Model:                                       OLS   Adj. R-squared:                  0.747
-    Method:                            Least Squares   F-statistic:                 1.566e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:37   Log-Likelihood:                -11532.
-    No. Observations:                           5312   AIC:                         2.307e+04
-    Df Residuals:                               5310   BIC:                         2.308e+04
+    Model:                                       OLS   Adj. R-squared:                  0.746
+    Method:                            Least Squares   F-statistic:                 1.565e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:47   Log-Likelihood:                -11542.
+    No. Observations:                           5316   AIC:                         2.309e+04
+    Df Residuals:                               5314   BIC:                         2.310e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -1.2438      0.048    -25.759      0.000      -1.338      -1.149
-    QQQ_Rolling_Future_Return_5y     5.5050      0.044    125.134      0.000       5.419       5.591
+    const                           -1.2456      0.048    -25.796      0.000      -1.340      -1.151
+    QQQ_Rolling_Future_Return_5y     5.5049      0.044    125.108      0.000       5.419       5.591
     ==============================================================================
-    Omnibus:                      256.613   Durbin-Watson:                   0.009
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              381.078
-    Skew:                           0.437   Prob(JB):                     1.78e-83
-    Kurtosis:                       3.979   Cond. No.                         3.00
+    Omnibus:                      257.063   Durbin-Watson:                   0.009
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              381.050
+    Skew:                           0.438   Prob(JB):                     1.80e-83
+    Kurtosis:                       3.977   Cond. No.                         3.00
     ==============================================================================
     
     Notes:
@@ -3448,13 +3687,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_60.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_60.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_61.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_61.png)
     
 
 
@@ -3462,23 +3701,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_1d   R-squared:                       0.999
     Model:                                       OLS   Adj. R-squared:                  0.999
-    Method:                            Least Squares   F-statistic:                 6.433e+06
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:39   Log-Likelihood:                 32894.
-    No. Observations:                           6531   AIC:                        -6.578e+04
-    Df Residuals:                               6529   BIC:                        -6.577e+04
+    Method:                            Least Squares   F-statistic:                 6.438e+06
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:48   Log-Likelihood:                 32915.
+    No. Observations:                           6535   AIC:                        -6.583e+04
+    Df Residuals:                               6533   BIC:                        -6.581e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                        -5.296e-05   1.95e-05     -2.721      0.007   -9.11e-05   -1.48e-05
-    QQQ_Rolling_Future_Return_1d     2.9551      0.001   2536.404      0.000       2.953       2.957
+    const                        -5.304e-05   1.95e-05     -2.727      0.006   -9.12e-05   -1.49e-05
+    QQQ_Rolling_Future_Return_1d     2.9551      0.001   2537.240      0.000       2.953       2.957
     ==============================================================================
-    Omnibus:                     9694.083   Durbin-Watson:                   2.565
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):         38964571.195
-    Skew:                          -8.113   Prob(JB):                         0.00
-    Kurtosis:                     381.052   Cond. No.                         59.9
+    Omnibus:                     9701.036   Durbin-Watson:                   2.565
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):         39021907.934
+    Skew:                          -8.115   Prob(JB):                         0.00
+    Kurtosis:                     381.214   Cond. No.                         59.9
     ==============================================================================
     
     Notes:
@@ -3487,13 +3726,403 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_63.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_63.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_64.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_64.png)
+    
+
+
+                                      OLS Regression Results                                 
+    =========================================================================================
+    Dep. Variable:     TQQQ_Rolling_Future_Return_1w   R-squared:                       0.994
+    Model:                                       OLS   Adj. R-squared:                  0.994
+    Method:                            Least Squares   F-statistic:                 1.120e+06
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:49   Log-Likelihood:                 22535.
+    No. Observations:                           6531   AIC:                        -4.507e+04
+    Df Residuals:                               6529   BIC:                        -4.505e+04
+    Df Model:                                      1                                         
+    Covariance Type:                       nonrobust                                         
+    ================================================================================================
+                                       coef    std err          t      P>|t|      [0.025      0.975]
+    ------------------------------------------------------------------------------------------------
+    const                           -0.0008   9.52e-05     -8.355      0.000      -0.001      -0.001
+    QQQ_Rolling_Future_Return_1w     2.9553      0.003   1058.146      0.000       2.950       2.961
+    ==============================================================================
+    Omnibus:                     3465.529   Durbin-Watson:                   0.902
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           389032.407
+    Skew:                          -1.579   Prob(JB):                         0.00
+    Kurtosis:                      40.678   Cond. No.                         29.4
+    ==============================================================================
+    
+    Notes:
+    [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+
+
+    
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_66.png)
+    
+
+
+
+    
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_67.png)
+    
+
+
+                                      OLS Regression Results                                 
+    =========================================================================================
+    Dep. Variable:     TQQQ_Rolling_Future_Return_1m   R-squared:                       0.983
+    Model:                                       OLS   Adj. R-squared:                  0.983
+    Method:                            Least Squares   F-statistic:                 3.677e+05
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:50   Log-Likelihood:                 14634.
+    No. Observations:                           6515   AIC:                        -2.926e+04
+    Df Residuals:                               6513   BIC:                        -2.925e+04
+    Df Model:                                      1                                         
+    Covariance Type:                       nonrobust                                         
+    ================================================================================================
+                                       coef    std err          t      P>|t|      [0.025      0.975]
+    ------------------------------------------------------------------------------------------------
+    const                           -0.0035      0.000    -11.062      0.000      -0.004      -0.003
+    QQQ_Rolling_Future_Return_1m     2.9177      0.005    606.361      0.000       2.908       2.927
+    ==============================================================================
+    Omnibus:                     1513.351   Durbin-Watson:                   0.308
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            81994.892
+    Skew:                           0.084   Prob(JB):                         0.00
+    Kurtosis:                      20.379   Cond. No.                         15.2
+    ==============================================================================
+    
+    Notes:
+    [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+
+
+    
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_69.png)
+    
+
+
+
+    
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_70.png)
+    
+
+
+                                      OLS Regression Results                                 
+    =========================================================================================
+    Dep. Variable:     TQQQ_Rolling_Future_Return_3m   R-squared:                       0.961
+    Model:                                       OLS   Adj. R-squared:                  0.961
+    Method:                            Least Squares   F-statistic:                 1.586e+05
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:51   Log-Likelihood:                 8464.2
+    No. Observations:                           6473   AIC:                        -1.692e+04
+    Df Residuals:                               6471   BIC:                        -1.691e+04
+    Df Model:                                      1                                         
+    Covariance Type:                       nonrobust                                         
+    ================================================================================================
+                                       coef    std err          t      P>|t|      [0.025      0.975]
+    ------------------------------------------------------------------------------------------------
+    const                           -0.0067      0.001     -8.072      0.000      -0.008      -0.005
+    QQQ_Rolling_Future_Return_3m     2.8944      0.007    398.200      0.000       2.880       2.909
+    ==============================================================================
+    Omnibus:                     1348.462   Durbin-Watson:                   0.103
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            15299.278
+    Skew:                           0.667   Prob(JB):                         0.00
+    Kurtosis:                      10.412   Cond. No.                         8.94
+    ==============================================================================
+    
+    Notes:
+    [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+
+
+    
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_72.png)
+    
+
+
+
+    
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_73.png)
+    
+
+
+                                      OLS Regression Results                                 
+    =========================================================================================
+    Dep. Variable:     TQQQ_Rolling_Future_Return_6m   R-squared:                       0.929
+    Model:                                       OLS   Adj. R-squared:                  0.929
+    Method:                            Least Squares   F-statistic:                 8.382e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:52   Log-Likelihood:                 4132.0
+    No. Observations:                           6410   AIC:                            -8260.
+    Df Residuals:                               6408   BIC:                            -8246.
+    Df Model:                                      1                                         
+    Covariance Type:                       nonrobust                                         
+    ================================================================================================
+                                       coef    std err          t      P>|t|      [0.025      0.975]
+    ------------------------------------------------------------------------------------------------
+    const                           -0.0006      0.002     -0.371      0.710      -0.004       0.003
+    QQQ_Rolling_Future_Return_6m     2.8223      0.010    289.509      0.000       2.803       2.841
+    ==============================================================================
+    Omnibus:                     2685.458   Durbin-Watson:                   0.109
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            36536.272
+    Skew:                           1.630   Prob(JB):                         0.00
+    Kurtosis:                      14.232   Cond. No.                         6.16
+    ==============================================================================
+    
+    Notes:
+    [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+
+
+    
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_75.png)
+    
+
+
+
+    
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_76.png)
+    
+
+
+                                      OLS Regression Results                                 
+    =========================================================================================
+    Dep. Variable:     TQQQ_Rolling_Future_Return_1y   R-squared:                       0.902
+    Model:                                       OLS   Adj. R-squared:                  0.902
+    Method:                            Least Squares   F-statistic:                 5.755e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:53   Log-Likelihood:                 292.39
+    No. Observations:                           6284   AIC:                            -580.8
+    Df Residuals:                               6282   BIC:                            -567.3
+    Df Model:                                      1                                         
+    Covariance Type:                       nonrobust                                         
+    ================================================================================================
+                                       coef    std err          t      P>|t|      [0.025      0.975]
+    ------------------------------------------------------------------------------------------------
+    const                            0.0223      0.003      6.890      0.000       0.016       0.029
+    QQQ_Rolling_Future_Return_1y     2.8513      0.012    239.894      0.000       2.828       2.875
+    ==============================================================================
+    Omnibus:                     1989.027   Durbin-Watson:                   0.043
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             8597.274
+    Skew:                           1.494   Prob(JB):                         0.00
+    Kurtosis:                       7.889   Cond. No.                         4.14
+    ==============================================================================
+    
+    Notes:
+    [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+
+
+    
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_78.png)
+    
+
+
+
+    
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_79.png)
+    
+
+
+                                      OLS Regression Results                                 
+    =========================================================================================
+    Dep. Variable:     TQQQ_Rolling_Future_Return_2y   R-squared:                       0.847
+    Model:                                       OLS   Adj. R-squared:                  0.847
+    Method:                            Least Squares   F-statistic:                 3.330e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:55   Log-Likelihood:                -4145.1
+    No. Observations:                           6032   AIC:                             8294.
+    Df Residuals:                               6030   BIC:                             8308.
+    Df Model:                                      1                                         
+    Covariance Type:                       nonrobust                                         
+    ================================================================================================
+                                       coef    std err          t      P>|t|      [0.025      0.975]
+    ------------------------------------------------------------------------------------------------
+    const                           -0.0320      0.008     -4.079      0.000      -0.047      -0.017
+    QQQ_Rolling_Future_Return_2y     3.2363      0.018    182.485      0.000       3.202       3.271
+    ==============================================================================
+    Omnibus:                     1703.757   Durbin-Watson:                   0.019
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             4959.168
+    Skew:                           1.473   Prob(JB):                         0.00
+    Kurtosis:                       6.324   Cond. No.                         3.10
+    ==============================================================================
+    
+    Notes:
+    [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+
+
+    
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_81.png)
+    
+
+
+
+    
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_82.png)
+    
+
+
+                                      OLS Regression Results                                 
+    =========================================================================================
+    Dep. Variable:     TQQQ_Rolling_Future_Return_3y   R-squared:                       0.816
+    Model:                                       OLS   Adj. R-squared:                  0.816
+    Method:                            Least Squares   F-statistic:                 2.571e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:56   Log-Likelihood:                -6096.8
+    No. Observations:                           5780   AIC:                         1.220e+04
+    Df Residuals:                               5778   BIC:                         1.221e+04
+    Df Model:                                      1                                         
+    Covariance Type:                       nonrobust                                         
+    ================================================================================================
+                                       coef    std err          t      P>|t|      [0.025      0.975]
+    ------------------------------------------------------------------------------------------------
+    const                           -0.2501      0.014    -18.445      0.000      -0.277      -0.224
+    QQQ_Rolling_Future_Return_3y     3.6562      0.023    160.340      0.000       3.612       3.701
+    ==============================================================================
+    Omnibus:                      878.571   Durbin-Watson:                   0.015
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1603.088
+    Skew:                           0.968   Prob(JB):                         0.00
+    Kurtosis:                       4.705   Cond. No.                         3.05
+    ==============================================================================
+    
+    Notes:
+    [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+
+
+    
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_84.png)
+    
+
+
+
+    
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_85.png)
+    
+
+
+                                      OLS Regression Results                                 
+    =========================================================================================
+    Dep. Variable:     TQQQ_Rolling_Future_Return_4y   R-squared:                       0.785
+    Model:                                       OLS   Adj. R-squared:                  0.785
+    Method:                            Least Squares   F-statistic:                 2.014e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:57   Log-Likelihood:                -8260.2
+    No. Observations:                           5528   AIC:                         1.652e+04
+    Df Residuals:                               5526   BIC:                         1.654e+04
+    Df Model:                                      1                                         
+    Covariance Type:                       nonrobust                                         
+    ================================================================================================
+                                       coef    std err          t      P>|t|      [0.025      0.975]
+    ------------------------------------------------------------------------------------------------
+    const                           -0.5503      0.024    -23.243      0.000      -0.597      -0.504
+    QQQ_Rolling_Future_Return_4y     4.2439      0.030    141.902      0.000       4.185       4.303
+    ==============================================================================
+    Omnibus:                       73.582   Durbin-Watson:                   0.010
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):               55.722
+    Skew:                           0.155   Prob(JB):                     7.95e-13
+    Kurtosis:                       2.618   Cond. No.                         3.02
+    ==============================================================================
+    
+    Notes:
+    [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+
+
+    
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_87.png)
+    
+
+
+
+    
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_88.png)
+    
+
+
+                                      OLS Regression Results                                 
+    =========================================================================================
+    Dep. Variable:     TQQQ_Rolling_Future_Return_5y   R-squared:                       0.747
+    Model:                                       OLS   Adj. R-squared:                  0.747
+    Method:                            Least Squares   F-statistic:                 1.560e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:58   Log-Likelihood:                -11443.
+    No. Observations:                           5276   AIC:                         2.289e+04
+    Df Residuals:                               5274   BIC:                         2.290e+04
+    Df Model:                                      1                                         
+    Covariance Type:                       nonrobust                                         
+    ================================================================================================
+                                       coef    std err          t      P>|t|      [0.025      0.975]
+    ------------------------------------------------------------------------------------------------
+    const                           -1.3175      0.049    -26.859      0.000      -1.414      -1.221
+    QQQ_Rolling_Future_Return_5y     5.5644      0.045    124.889      0.000       5.477       5.652
+    ==============================================================================
+    Omnibus:                      246.746   Durbin-Watson:                   0.009
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              368.441
+    Skew:                           0.425   Prob(JB):                     9.87e-81
+    Kurtosis:                       3.977   Cond. No.                         3.05
+    ==============================================================================
+    
+    Notes:
+    [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+
+
+    
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_90.png)
+    
+
+
+
+    
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_91.png)
+    
+
+
+                                      OLS Regression Results                                 
+    =========================================================================================
+    Dep. Variable:     TQQQ_Rolling_Future_Return_1d   R-squared:                       0.999
+    Model:                                       OLS   Adj. R-squared:                  0.999
+    Method:                            Least Squares   F-statistic:                 6.390e+06
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:48:59   Log-Likelihood:                 32854.
+    No. Observations:                           6524   AIC:                        -6.570e+04
+    Df Residuals:                               6522   BIC:                        -6.569e+04
+    Df Model:                                      1                                         
+    Covariance Type:                       nonrobust                                         
+    ================================================================================================
+                                       coef    std err          t      P>|t|      [0.025      0.975]
+    ------------------------------------------------------------------------------------------------
+    const                        -5.313e-05   1.95e-05     -2.727      0.006   -9.13e-05   -1.49e-05
+    QQQ_Rolling_Future_Return_1d     2.9551      0.001   2527.751      0.000       2.953       2.957
+    ==============================================================================
+    Omnibus:                     9680.302   Durbin-Watson:                   2.565
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):         38821752.772
+    Skew:                          -8.108   Prob(JB):                         0.00
+    Kurtosis:                     380.560   Cond. No.                         60.0
+    ==============================================================================
+    
+    Notes:
+    [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+
+
+    
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_93.png)
+    
+
+
+
+    
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_94.png)
     
 
 
@@ -3502,412 +4131,22 @@ for drawdown in drawdown_levels:
     Dep. Variable:     TQQQ_Rolling_Future_Return_1w   R-squared:                       0.994
     Model:                                       OLS   Adj. R-squared:                  0.994
     Method:                            Least Squares   F-statistic:                 1.119e+06
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:40   Log-Likelihood:                 22520.
-    No. Observations:                           6527   AIC:                        -4.504e+04
-    Df Residuals:                               6525   BIC:                        -4.502e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:00   Log-Likelihood:                 22543.
+    No. Observations:                           6520   AIC:                        -4.508e+04
+    Df Residuals:                               6518   BIC:                        -4.507e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0008   9.53e-05     -8.333      0.000      -0.001      -0.001
-    QQQ_Rolling_Future_Return_1w     2.9552      0.003   1057.792      0.000       2.950       2.961
+    const                           -0.0008   9.46e-05     -8.589      0.000      -0.001      -0.001
+    QQQ_Rolling_Future_Return_1w     2.9535      0.003   1057.775      0.000       2.948       2.959
     ==============================================================================
-    Omnibus:                     3463.566   Durbin-Watson:                   0.902
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           388402.497
-    Skew:                          -1.580   Prob(JB):                         0.00
-    Kurtosis:                      40.659   Cond. No.                         29.4
-    ==============================================================================
-    
-    Notes:
-    [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
-
-
-
-    
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_66.png)
-    
-
-
-
-    
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_67.png)
-    
-
-
-                                      OLS Regression Results                                 
-    =========================================================================================
-    Dep. Variable:     TQQQ_Rolling_Future_Return_1m   R-squared:                       0.983
-    Model:                                       OLS   Adj. R-squared:                  0.983
-    Method:                            Least Squares   F-statistic:                 3.675e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:41   Log-Likelihood:                 14623.
-    No. Observations:                           6511   AIC:                        -2.924e+04
-    Df Residuals:                               6509   BIC:                        -2.923e+04
-    Df Model:                                      1                                         
-    Covariance Type:                       nonrobust                                         
-    ================================================================================================
-                                       coef    std err          t      P>|t|      [0.025      0.975]
-    ------------------------------------------------------------------------------------------------
-    const                           -0.0035      0.000    -11.033      0.000      -0.004      -0.003
-    QQQ_Rolling_Future_Return_1m     2.9176      0.005    606.191      0.000       2.908       2.927
-    ==============================================================================
-    Omnibus:                     1511.925   Durbin-Watson:                   0.308
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            81855.191
-    Skew:                           0.083   Prob(JB):                         0.00
-    Kurtosis:                      20.369   Cond. No.                         15.2
-    ==============================================================================
-    
-    Notes:
-    [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
-
-
-
-    
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_69.png)
-    
-
-
-
-    
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_70.png)
-    
-
-
-                                      OLS Regression Results                                 
-    =========================================================================================
-    Dep. Variable:     TQQQ_Rolling_Future_Return_3m   R-squared:                       0.961
-    Model:                                       OLS   Adj. R-squared:                  0.961
-    Method:                            Least Squares   F-statistic:                 1.585e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:42   Log-Likelihood:                 8457.5
-    No. Observations:                           6469   AIC:                        -1.691e+04
-    Df Residuals:                               6467   BIC:                        -1.690e+04
-    Df Model:                                      1                                         
-    Covariance Type:                       nonrobust                                         
-    ================================================================================================
-                                       coef    std err          t      P>|t|      [0.025      0.975]
-    ------------------------------------------------------------------------------------------------
-    const                           -0.0067      0.001     -8.040      0.000      -0.008      -0.005
-    QQQ_Rolling_Future_Return_3m     2.8943      0.007    398.066      0.000       2.880       2.909
-    ==============================================================================
-    Omnibus:                     1346.125   Durbin-Watson:                   0.103
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            15267.066
-    Skew:                           0.666   Prob(JB):                         0.00
-    Kurtosis:                      10.407   Cond. No.                         8.94
-    ==============================================================================
-    
-    Notes:
-    [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
-
-
-
-    
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_72.png)
-    
-
-
-
-    
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_73.png)
-    
-
-
-                                      OLS Regression Results                                 
-    =========================================================================================
-    Dep. Variable:     TQQQ_Rolling_Future_Return_6m   R-squared:                       0.929
-    Model:                                       OLS   Adj. R-squared:                  0.929
-    Method:                            Least Squares   F-statistic:                 8.378e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:43   Log-Likelihood:                 4128.3
-    No. Observations:                           6406   AIC:                            -8253.
-    Df Residuals:                               6404   BIC:                            -8239.
-    Df Model:                                      1                                         
-    Covariance Type:                       nonrobust                                         
-    ================================================================================================
-                                       coef    std err          t      P>|t|      [0.025      0.975]
-    ------------------------------------------------------------------------------------------------
-    const                           -0.0006      0.002     -0.337      0.736      -0.004       0.003
-    QQQ_Rolling_Future_Return_6m     2.8222      0.010    289.447      0.000       2.803       2.841
-    ==============================================================================
-    Omnibus:                     2682.468   Durbin-Watson:                   0.109
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            36485.982
-    Skew:                           1.629   Prob(JB):                         0.00
-    Kurtosis:                      14.228   Cond. No.                         6.16
-    ==============================================================================
-    
-    Notes:
-    [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
-
-
-
-    
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_75.png)
-    
-
-
-
-    
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_76.png)
-    
-
-
-                                      OLS Regression Results                                 
-    =========================================================================================
-    Dep. Variable:     TQQQ_Rolling_Future_Return_1y   R-squared:                       0.902
-    Model:                                       OLS   Adj. R-squared:                  0.902
-    Method:                            Least Squares   F-statistic:                 5.754e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:45   Log-Likelihood:                 291.84
-    No. Observations:                           6280   AIC:                            -579.7
-    Df Residuals:                               6278   BIC:                            -566.2
-    Df Model:                                      1                                         
-    Covariance Type:                       nonrobust                                         
-    ================================================================================================
-                                       coef    std err          t      P>|t|      [0.025      0.975]
-    ------------------------------------------------------------------------------------------------
-    const                            0.0224      0.003      6.919      0.000       0.016       0.029
-    QQQ_Rolling_Future_Return_1y     2.8516      0.012    239.879      0.000       2.828       2.875
-    ==============================================================================
-    Omnibus:                     1986.661   Durbin-Watson:                   0.043
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             8583.652
-    Skew:                           1.493   Prob(JB):                         0.00
-    Kurtosis:                       7.887   Cond. No.                         4.14
-    ==============================================================================
-    
-    Notes:
-    [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
-
-
-
-    
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_78.png)
-    
-
-
-
-    
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_79.png)
-    
-
-
-                                      OLS Regression Results                                 
-    =========================================================================================
-    Dep. Variable:     TQQQ_Rolling_Future_Return_2y   R-squared:                       0.847
-    Model:                                       OLS   Adj. R-squared:                  0.847
-    Method:                            Least Squares   F-statistic:                 3.331e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:46   Log-Likelihood:                -4141.4
-    No. Observations:                           6028   AIC:                             8287.
-    Df Residuals:                               6026   BIC:                             8300.
-    Df Model:                                      1                                         
-    Covariance Type:                       nonrobust                                         
-    ================================================================================================
-                                       coef    std err          t      P>|t|      [0.025      0.975]
-    ------------------------------------------------------------------------------------------------
-    const                           -0.0317      0.008     -4.039      0.000      -0.047      -0.016
-    QQQ_Rolling_Future_Return_2y     3.2366      0.018    182.524      0.000       3.202       3.271
-    ==============================================================================
-    Omnibus:                     1703.262   Durbin-Watson:                   0.019
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             4959.569
-    Skew:                           1.473   Prob(JB):                         0.00
-    Kurtosis:                       6.326   Cond. No.                         3.10
-    ==============================================================================
-    
-    Notes:
-    [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
-
-
-
-    
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_81.png)
-    
-
-
-
-    
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_82.png)
-    
-
-
-                                      OLS Regression Results                                 
-    =========================================================================================
-    Dep. Variable:     TQQQ_Rolling_Future_Return_3y   R-squared:                       0.816
-    Model:                                       OLS   Adj. R-squared:                  0.816
-    Method:                            Least Squares   F-statistic:                 2.566e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:47   Log-Likelihood:                -6094.3
-    No. Observations:                           5776   AIC:                         1.219e+04
-    Df Residuals:                               5774   BIC:                         1.221e+04
-    Df Model:                                      1                                         
-    Covariance Type:                       nonrobust                                         
-    ================================================================================================
-                                       coef    std err          t      P>|t|      [0.025      0.975]
-    ------------------------------------------------------------------------------------------------
-    const                           -0.2502      0.014    -18.446      0.000      -0.277      -0.224
-    QQQ_Rolling_Future_Return_3y     3.6568      0.023    160.193      0.000       3.612       3.702
-    ==============================================================================
-    Omnibus:                      876.215   Durbin-Watson:                   0.015
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1596.509
-    Skew:                           0.967   Prob(JB):                         0.00
-    Kurtosis:                       4.700   Cond. No.                         3.05
-    ==============================================================================
-    
-    Notes:
-    [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
-
-
-
-    
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_84.png)
-    
-
-
-
-    
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_85.png)
-    
-
-
-                                      OLS Regression Results                                 
-    =========================================================================================
-    Dep. Variable:     TQQQ_Rolling_Future_Return_4y   R-squared:                       0.785
-    Model:                                       OLS   Adj. R-squared:                  0.785
-    Method:                            Least Squares   F-statistic:                 2.017e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:48   Log-Likelihood:                -8250.6
-    No. Observations:                           5524   AIC:                         1.651e+04
-    Df Residuals:                               5522   BIC:                         1.652e+04
-    Df Model:                                      1                                         
-    Covariance Type:                       nonrobust                                         
-    ================================================================================================
-                                       coef    std err          t      P>|t|      [0.025      0.975]
-    ------------------------------------------------------------------------------------------------
-    const                           -0.5497      0.024    -23.230      0.000      -0.596      -0.503
-    QQQ_Rolling_Future_Return_4y     4.2450      0.030    142.023      0.000       4.186       4.304
-    ==============================================================================
-    Omnibus:                       72.624   Durbin-Watson:                   0.010
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):               55.217
-    Skew:                           0.155   Prob(JB):                     1.02e-12
-    Kurtosis:                       2.620   Cond. No.                         3.02
-    ==============================================================================
-    
-    Notes:
-    [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
-
-
-
-    
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_87.png)
-    
-
-
-
-    
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_88.png)
-    
-
-
-                                      OLS Regression Results                                 
-    =========================================================================================
-    Dep. Variable:     TQQQ_Rolling_Future_Return_5y   R-squared:                       0.748
-    Model:                                       OLS   Adj. R-squared:                  0.747
-    Method:                            Least Squares   F-statistic:                 1.560e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:49   Log-Likelihood:                -11434.
-    No. Observations:                           5272   AIC:                         2.287e+04
-    Df Residuals:                               5270   BIC:                         2.288e+04
-    Df Model:                                      1                                         
-    Covariance Type:                       nonrobust                                         
-    ================================================================================================
-                                       coef    std err          t      P>|t|      [0.025      0.975]
-    ------------------------------------------------------------------------------------------------
-    const                           -1.3156      0.049    -26.822      0.000      -1.412      -1.219
-    QQQ_Rolling_Future_Return_5y     5.5645      0.045    124.913      0.000       5.477       5.652
-    ==============================================================================
-    Omnibus:                      246.317   Durbin-Watson:                   0.009
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              368.513
-    Skew:                           0.424   Prob(JB):                     9.51e-81
-    Kurtosis:                       3.980   Cond. No.                         3.05
-    ==============================================================================
-    
-    Notes:
-    [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
-
-
-
-    
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_90.png)
-    
-
-
-
-    
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_91.png)
-    
-
-
-                                      OLS Regression Results                                 
-    =========================================================================================
-    Dep. Variable:     TQQQ_Rolling_Future_Return_1d   R-squared:                       0.999
-    Model:                                       OLS   Adj. R-squared:                  0.999
-    Method:                            Least Squares   F-statistic:                 6.385e+06
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:50   Log-Likelihood:                 32833.
-    No. Observations:                           6520   AIC:                        -6.566e+04
-    Df Residuals:                               6518   BIC:                        -6.565e+04
-    Df Model:                                      1                                         
-    Covariance Type:                       nonrobust                                         
-    ================================================================================================
-                                       coef    std err          t      P>|t|      [0.025      0.975]
-    ------------------------------------------------------------------------------------------------
-    const                        -5.305e-05   1.95e-05     -2.721      0.007   -9.13e-05   -1.48e-05
-    QQQ_Rolling_Future_Return_1d     2.9551      0.001   2526.915      0.000       2.953       2.957
-    ==============================================================================
-    Omnibus:                     9673.351   Durbin-Watson:                   2.565
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):         38764591.768
-    Skew:                          -8.106   Prob(JB):                         0.00
-    Kurtosis:                     380.398   Cond. No.                         60.0
-    ==============================================================================
-    
-    Notes:
-    [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
-
-
-
-    
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_93.png)
-    
-
-
-
-    
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_94.png)
-    
-
-
-                                      OLS Regression Results                                 
-    =========================================================================================
-    Dep. Variable:     TQQQ_Rolling_Future_Return_1w   R-squared:                       0.994
-    Model:                                       OLS   Adj. R-squared:                  0.994
-    Method:                            Least Squares   F-statistic:                 1.118e+06
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:52   Log-Likelihood:                 22527.
-    No. Observations:                           6516   AIC:                        -4.505e+04
-    Df Residuals:                               6514   BIC:                        -4.504e+04
-    Df Model:                                      1                                         
-    Covariance Type:                       nonrobust                                         
-    ================================================================================================
-                                       coef    std err          t      P>|t|      [0.025      0.975]
-    ------------------------------------------------------------------------------------------------
-    const                           -0.0008   9.47e-05     -8.566      0.000      -0.001      -0.001
-    QQQ_Rolling_Future_Return_1w     2.9535      0.003   1057.421      0.000       2.948       2.959
-    ==============================================================================
-    Omnibus:                     3593.998   Durbin-Watson:                   0.881
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           403875.873
+    Omnibus:                     3596.070   Durbin-Watson:                   0.881
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           404529.514
     Skew:                          -1.687   Prob(JB):                         0.00
-    Kurtosis:                      41.421   Cond. No.                         29.6
+    Kurtosis:                      41.441   Cond. No.                         29.6
     ==============================================================================
     
     Notes:
@@ -3916,13 +4155,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_96.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_96.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_97.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_97.png)
     
 
 
@@ -3930,23 +4169,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_1m   R-squared:                       0.983
     Model:                                       OLS   Adj. R-squared:                  0.983
-    Method:                            Least Squares   F-statistic:                 3.661e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:53   Log-Likelihood:                 14619.
-    No. Observations:                           6500   AIC:                        -2.923e+04
-    Df Residuals:                               6498   BIC:                        -2.922e+04
+    Method:                            Least Squares   F-statistic:                 3.663e+05
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:02   Log-Likelihood:                 14629.
+    No. Observations:                           6504   AIC:                        -2.925e+04
+    Df Residuals:                               6502   BIC:                        -2.924e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0035      0.000    -11.021      0.000      -0.004      -0.003
-    QQQ_Rolling_Future_Return_1m     2.9150      0.005    605.092      0.000       2.906       2.924
+    const                           -0.0035      0.000    -11.049      0.000      -0.004      -0.003
+    QQQ_Rolling_Future_Return_1m     2.9150      0.005    605.262      0.000       2.906       2.924
     ==============================================================================
-    Omnibus:                     1510.573   Durbin-Watson:                   0.297
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            82826.988
-    Skew:                           0.062   Prob(JB):                         0.00
-    Kurtosis:                      20.487   Cond. No.                         15.2
+    Omnibus:                     1511.960   Durbin-Watson:                   0.297
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            82967.919
+    Skew:                           0.063   Prob(JB):                         0.00
+    Kurtosis:                      20.497   Cond. No.                         15.2
     ==============================================================================
     
     Notes:
@@ -3955,13 +4194,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_99.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_99.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_100.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_100.png)
     
 
 
@@ -3969,23 +4208,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_3m   R-squared:                       0.961
     Model:                                       OLS   Adj. R-squared:                  0.961
-    Method:                            Least Squares   F-statistic:                 1.591e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:54   Log-Likelihood:                 8471.5
-    No. Observations:                           6458   AIC:                        -1.694e+04
-    Df Residuals:                               6456   BIC:                        -1.693e+04
+    Method:                            Least Squares   F-statistic:                 1.592e+05
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:03   Log-Likelihood:                 8478.2
+    No. Observations:                           6462   AIC:                        -1.695e+04
+    Df Residuals:                               6460   BIC:                        -1.694e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0065      0.001     -7.870      0.000      -0.008      -0.005
-    QQQ_Rolling_Future_Return_3m     2.8924      0.007    398.870      0.000       2.878       2.907
+    const                           -0.0066      0.001     -7.902      0.000      -0.008      -0.005
+    QQQ_Rolling_Future_Return_3m     2.8925      0.007    399.004      0.000       2.878       2.907
     ==============================================================================
-    Omnibus:                     1376.418   Durbin-Watson:                   0.101
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            15591.855
-    Skew:                           0.692   Prob(JB):                         0.00
-    Kurtosis:                      10.485   Cond. No.                         8.95
+    Omnibus:                     1378.797   Durbin-Watson:                   0.101
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            15624.610
+    Skew:                           0.693   Prob(JB):                         0.00
+    Kurtosis:                      10.491   Cond. No.                         8.95
     ==============================================================================
     
     Notes:
@@ -3994,13 +4233,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_102.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_102.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_103.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_103.png)
     
 
 
@@ -4008,23 +4247,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_6m   R-squared:                       0.931
     Model:                                       OLS   Adj. R-squared:                  0.931
-    Method:                            Least Squares   F-statistic:                 8.656e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:55   Log-Likelihood:                 4305.0
-    No. Observations:                           6395   AIC:                            -8606.
-    Df Residuals:                               6393   BIC:                            -8593.
+    Method:                            Least Squares   F-statistic:                 8.659e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:04   Log-Likelihood:                 4308.7
+    No. Observations:                           6399   AIC:                            -8613.
+    Df Residuals:                               6397   BIC:                            -8600.
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                        -4.855e-06      0.002     -0.003      0.998      -0.003       0.003
-    QQQ_Rolling_Future_Return_6m     2.8036      0.010    294.207      0.000       2.785       2.822
+    const                        -6.286e-05      0.002     -0.039      0.969      -0.003       0.003
+    QQQ_Rolling_Future_Return_6m     2.8037      0.010    294.268      0.000       2.785       2.822
     ==============================================================================
-    Omnibus:                     1637.994   Durbin-Watson:                   0.057
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             8138.991
-    Skew:                           1.146   Prob(JB):                         0.00
-    Kurtosis:                       8.029   Cond. No.                         6.19
+    Omnibus:                     1640.518   Durbin-Watson:                   0.057
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             8154.359
+    Skew:                           1.147   Prob(JB):                         0.00
+    Kurtosis:                       8.032   Cond. No.                         6.19
     ==============================================================================
     
     Notes:
@@ -4033,13 +4272,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_105.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_105.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_106.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_106.png)
     
 
 
@@ -4047,23 +4286,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_1y   R-squared:                       0.902
     Model:                                       OLS   Adj. R-squared:                  0.902
-    Method:                            Least Squares   F-statistic:                 5.795e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:57   Log-Likelihood:                 326.09
-    No. Observations:                           6269   AIC:                            -648.2
-    Df Residuals:                               6267   BIC:                            -634.7
+    Method:                            Least Squares   F-statistic:                 5.796e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:05   Log-Likelihood:                 326.63
+    No. Observations:                           6273   AIC:                            -649.3
+    Df Residuals:                               6271   BIC:                            -635.8
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                            0.0211      0.003      6.535      0.000       0.015       0.027
-    QQQ_Rolling_Future_Return_1y     2.8618      0.012    240.727      0.000       2.838       2.885
+    const                            0.0210      0.003      6.506      0.000       0.015       0.027
+    QQQ_Rolling_Future_Return_1y     2.8615      0.012    240.740      0.000       2.838       2.885
     ==============================================================================
-    Omnibus:                     1984.175   Durbin-Watson:                   0.039
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             8573.296
-    Skew:                           1.494   Prob(JB):                         0.00
-    Kurtosis:                       7.888   Cond. No.                         4.16
+    Omnibus:                     1986.510   Durbin-Watson:                   0.039
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             8586.686
+    Skew:                           1.495   Prob(JB):                         0.00
+    Kurtosis:                       7.890   Cond. No.                         4.16
     ==============================================================================
     
     Notes:
@@ -4072,13 +4311,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_108.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_108.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_109.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_109.png)
     
 
 
@@ -4086,23 +4325,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_2y   R-squared:                       0.847
     Model:                                       OLS   Adj. R-squared:                  0.847
-    Method:                            Least Squares   F-statistic:                 3.333e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:58   Log-Likelihood:                -4121.6
-    No. Observations:                           6017   AIC:                             8247.
-    Df Residuals:                               6015   BIC:                             8261.
+    Method:                            Least Squares   F-statistic:                 3.332e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:06   Log-Likelihood:                -4125.3
+    No. Observations:                           6021   AIC:                             8255.
+    Df Residuals:                               6019   BIC:                             8268.
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0345      0.008     -4.386      0.000      -0.050      -0.019
-    QQQ_Rolling_Future_Return_2y     3.2439      0.018    182.575      0.000       3.209       3.279
+    const                           -0.0348      0.008     -4.426      0.000      -0.050      -0.019
+    QQQ_Rolling_Future_Return_2y     3.2436      0.018    182.536      0.000       3.209       3.278
     ==============================================================================
-    Omnibus:                     1712.301   Durbin-Watson:                   0.019
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             5037.509
-    Skew:                           1.480   Prob(JB):                         0.00
-    Kurtosis:                       6.367   Cond. No.                         3.11
+    Omnibus:                     1712.778   Durbin-Watson:                   0.018
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             5036.957
+    Skew:                           1.479   Prob(JB):                         0.00
+    Kurtosis:                       6.365   Cond. No.                         3.11
     ==============================================================================
     
     Notes:
@@ -4111,37 +4350,37 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_111.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_111.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_112.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_112.png)
     
 
 
                                       OLS Regression Results                                 
     =========================================================================================
-    Dep. Variable:     TQQQ_Rolling_Future_Return_3y   R-squared:                       0.817
-    Model:                                       OLS   Adj. R-squared:                  0.817
-    Method:                            Least Squares   F-statistic:                 2.581e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:26:59   Log-Likelihood:                -6058.9
-    No. Observations:                           5765   AIC:                         1.212e+04
-    Df Residuals:                               5763   BIC:                         1.214e+04
+    Dep. Variable:     TQQQ_Rolling_Future_Return_3y   R-squared:                       0.818
+    Model:                                       OLS   Adj. R-squared:                  0.818
+    Method:                            Least Squares   F-statistic:                 2.585e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:07   Log-Likelihood:                -6061.4
+    No. Observations:                           5769   AIC:                         1.213e+04
+    Df Residuals:                               5767   BIC:                         1.214e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.2618      0.014    -19.253      0.000      -0.288      -0.235
-    QQQ_Rolling_Future_Return_3y     3.6767      0.023    160.644      0.000       3.632       3.722
+    const                           -0.2617      0.014    -19.251      0.000      -0.288      -0.235
+    QQQ_Rolling_Future_Return_3y     3.6760      0.023    160.791      0.000       3.631       3.721
     ==============================================================================
-    Omnibus:                      869.452   Durbin-Watson:                   0.015
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1585.916
-    Skew:                           0.962   Prob(JB):                         0.00
-    Kurtosis:                       4.703   Cond. No.                         3.07
+    Omnibus:                      871.835   Durbin-Watson:                   0.015
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1592.549
+    Skew:                           0.963   Prob(JB):                         0.00
+    Kurtosis:                       4.708   Cond. No.                         3.07
     ==============================================================================
     
     Notes:
@@ -4150,37 +4389,37 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_114.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_114.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_115.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_115.png)
     
 
 
                                       OLS Regression Results                                 
     =========================================================================================
-    Dep. Variable:     TQQQ_Rolling_Future_Return_4y   R-squared:                       0.786
-    Model:                                       OLS   Adj. R-squared:                  0.786
-    Method:                            Least Squares   F-statistic:                 2.019e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:00   Log-Likelihood:                -8223.4
-    No. Observations:                           5513   AIC:                         1.645e+04
-    Df Residuals:                               5511   BIC:                         1.646e+04
+    Dep. Variable:     TQQQ_Rolling_Future_Return_4y   R-squared:                       0.785
+    Model:                                       OLS   Adj. R-squared:                  0.785
+    Method:                            Least Squares   F-statistic:                 2.016e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:09   Log-Likelihood:                -8233.0
+    No. Observations:                           5517   AIC:                         1.647e+04
+    Df Residuals:                               5515   BIC:                         1.648e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.5646      0.024    -23.758      0.000      -0.611      -0.518
-    QQQ_Rolling_Future_Return_4y     4.2630      0.030    142.094      0.000       4.204       4.322
+    const                           -0.5652      0.024    -23.770      0.000      -0.612      -0.519
+    QQQ_Rolling_Future_Return_4y     4.2620      0.030    141.973      0.000       4.203       4.321
     ==============================================================================
-    Omnibus:                       67.431   Durbin-Watson:                   0.010
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):               52.172
-    Skew:                           0.153   Prob(JB):                     4.69e-12
-    Kurtosis:                       2.634   Cond. No.                         3.04
+    Omnibus:                       68.346   Durbin-Watson:                   0.010
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):               52.666
+    Skew:                           0.153   Prob(JB):                     3.66e-12
+    Kurtosis:                       2.631   Cond. No.                         3.04
     ==============================================================================
     
     Notes:
@@ -4189,13 +4428,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_117.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_117.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_118.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_118.png)
     
 
 
@@ -4203,23 +4442,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_5y   R-squared:                       0.748
     Model:                                       OLS   Adj. R-squared:                  0.748
-    Method:                            Least Squares   F-statistic:                 1.562e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:01   Log-Likelihood:                -11403.
-    No. Observations:                           5261   AIC:                         2.281e+04
-    Df Residuals:                               5259   BIC:                         2.282e+04
+    Method:                            Least Squares   F-statistic:                 1.561e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:10   Log-Likelihood:                -11413.
+    No. Observations:                           5265   AIC:                         2.283e+04
+    Df Residuals:                               5263   BIC:                         2.284e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -1.3405      0.049    -27.216      0.000      -1.437      -1.244
-    QQQ_Rolling_Future_Return_5y     5.5855      0.045    124.962      0.000       5.498       5.673
+    const                           -1.3424      0.049    -27.253      0.000      -1.439      -1.246
+    QQQ_Rolling_Future_Return_5y     5.5854      0.045    124.937      0.000       5.498       5.673
     ==============================================================================
-    Omnibus:                      241.818   Durbin-Watson:                   0.009
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              363.534
-    Skew:                           0.417   Prob(JB):                     1.15e-79
-    Kurtosis:                       3.981   Cond. No.                         3.07
+    Omnibus:                      242.236   Durbin-Watson:                   0.009
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              363.436
+    Skew:                           0.418   Prob(JB):                     1.20e-79
+    Kurtosis:                       3.979   Cond. No.                         3.07
     ==============================================================================
     
     Notes:
@@ -4228,13 +4467,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_120.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_120.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_121.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_121.png)
     
 
 
@@ -4242,23 +4481,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_1d   R-squared:                       0.999
     Model:                                       OLS   Adj. R-squared:                  0.999
-    Method:                            Least Squares   F-statistic:                 6.255e+06
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:03   Log-Likelihood:                 32495.
-    No. Observations:                           6457   AIC:                        -6.499e+04
-    Df Residuals:                               6455   BIC:                        -6.497e+04
+    Method:                            Least Squares   F-statistic:                 6.259e+06
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:11   Log-Likelihood:                 32517.
+    No. Observations:                           6461   AIC:                        -6.503e+04
+    Df Residuals:                               6459   BIC:                        -6.502e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                        -4.913e-05   1.97e-05     -2.500      0.012   -8.77e-05   -1.06e-05
-    QQQ_Rolling_Future_Return_1d     2.9549      0.001   2501.003      0.000       2.953       2.957
+    const                        -4.922e-05   1.96e-05     -2.506      0.012   -8.77e-05   -1.07e-05
+    QQQ_Rolling_Future_Return_1d     2.9550      0.001   2501.839      0.000       2.953       2.957
     ==============================================================================
-    Omnibus:                     9580.111   Durbin-Watson:                   2.567
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):         38114515.631
-    Skew:                          -8.108   Prob(JB):                         0.00
-    Kurtosis:                     379.038   Cond. No.                         60.1
+    Omnibus:                     9587.052   Durbin-Watson:                   2.567
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):         38171135.662
+    Skew:                          -8.110   Prob(JB):                         0.00
+    Kurtosis:                     379.201   Cond. No.                         60.2
     ==============================================================================
     
     Notes:
@@ -4267,13 +4506,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_123.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_123.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_124.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_124.png)
     
 
 
@@ -4281,23 +4520,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_1w   R-squared:                       0.994
     Model:                                       OLS   Adj. R-squared:                  0.994
-    Method:                            Least Squares   F-statistic:                 1.109e+06
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:04   Log-Likelihood:                 22311.
-    No. Observations:                           6453   AIC:                        -4.462e+04
-    Df Residuals:                               6451   BIC:                        -4.461e+04
+    Method:                            Least Squares   F-statistic:                 1.110e+06
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:12   Log-Likelihood:                 22327.
+    No. Observations:                           6457   AIC:                        -4.465e+04
+    Df Residuals:                               6455   BIC:                        -4.464e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0008   9.51e-05     -8.169      0.000      -0.001      -0.001
-    QQQ_Rolling_Future_Return_1w     2.9529      0.003   1053.321      0.000       2.947       2.958
+    const                           -0.0008   9.51e-05     -8.192      0.000      -0.001      -0.001
+    QQQ_Rolling_Future_Return_1w     2.9529      0.003   1053.678      0.000       2.947       2.958
     ==============================================================================
-    Omnibus:                     3540.518   Durbin-Watson:                   0.887
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           402393.065
-    Skew:                          -1.669   Prob(JB):                         0.00
-    Kurtosis:                      41.541   Cond. No.                         29.5
+    Omnibus:                     3542.548   Durbin-Watson:                   0.887
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           403047.013
+    Skew:                          -1.668   Prob(JB):                         0.00
+    Kurtosis:                      41.561   Cond. No.                         29.5
     ==============================================================================
     
     Notes:
@@ -4306,13 +4545,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_126.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_126.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_127.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_127.png)
     
 
 
@@ -4320,23 +4559,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_1m   R-squared:                       0.983
     Model:                                       OLS   Adj. R-squared:                  0.983
-    Method:                            Least Squares   F-statistic:                 3.615e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:05   Log-Likelihood:                 14455.
-    No. Observations:                           6437   AIC:                        -2.891e+04
-    Df Residuals:                               6435   BIC:                        -2.889e+04
+    Method:                            Least Squares   F-statistic:                 3.617e+05
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:13   Log-Likelihood:                 14465.
+    No. Observations:                           6441   AIC:                        -2.893e+04
+    Df Residuals:                               6439   BIC:                        -2.891e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0034      0.000    -10.594      0.000      -0.004      -0.003
-    QQQ_Rolling_Future_Return_1m     2.9144      0.005    601.219      0.000       2.905       2.924
+    const                           -0.0034      0.000    -10.622      0.000      -0.004      -0.003
+    QQQ_Rolling_Future_Return_1m     2.9145      0.005    601.389      0.000       2.905       2.924
     ==============================================================================
-    Omnibus:                     1490.690   Durbin-Watson:                   0.295
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            81043.655
-    Skew:                           0.049   Prob(JB):                         0.00
-    Kurtosis:                      20.383   Cond. No.                         15.2
+    Omnibus:                     1492.050   Durbin-Watson:                   0.295
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            81182.235
+    Skew:                           0.050   Prob(JB):                         0.00
+    Kurtosis:                      20.392   Cond. No.                         15.2
     ==============================================================================
     
     Notes:
@@ -4345,13 +4584,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_129.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_129.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_130.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_130.png)
     
 
 
@@ -4360,22 +4599,22 @@ for drawdown in drawdown_levels:
     Dep. Variable:     TQQQ_Rolling_Future_Return_3m   R-squared:                       0.961
     Model:                                       OLS   Adj. R-squared:                  0.961
     Method:                            Least Squares   F-statistic:                 1.589e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:06   Log-Likelihood:                 8428.1
-    No. Observations:                           6424   AIC:                        -1.685e+04
-    Df Residuals:                               6422   BIC:                        -1.684e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:14   Log-Likelihood:                 8431.4
+    No. Observations:                           6426   AIC:                        -1.686e+04
+    Df Residuals:                               6424   BIC:                        -1.685e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0063      0.001     -7.529      0.000      -0.008      -0.005
-    QQQ_Rolling_Future_Return_3m     2.8919      0.007    398.560      0.000       2.878       2.906
+    const                           -0.0063      0.001     -7.545      0.000      -0.008      -0.005
+    QQQ_Rolling_Future_Return_3m     2.8920      0.007    398.627      0.000       2.878       2.906
     ==============================================================================
-    Omnibus:                     1375.718   Durbin-Watson:                   0.101
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            15496.490
-    Skew:                           0.698   Prob(JB):                         0.00
-    Kurtosis:                      10.480   Cond. No.                         8.93
+    Omnibus:                     1376.905   Durbin-Watson:                   0.101
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            15512.908
+    Skew:                           0.699   Prob(JB):                         0.00
+    Kurtosis:                      10.482   Cond. No.                         8.93
     ==============================================================================
     
     Notes:
@@ -4384,13 +4623,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_132.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_132.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_133.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_133.png)
     
 
 
@@ -4398,23 +4637,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_6m   R-squared:                       0.931
     Model:                                       OLS   Adj. R-squared:                  0.931
-    Method:                            Least Squares   F-statistic:                 8.673e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:07   Log-Likelihood:                 4311.8
-    No. Observations:                           6392   AIC:                            -8620.
-    Df Residuals:                               6390   BIC:                            -8606.
+    Method:                            Least Squares   F-statistic:                 8.677e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:16   Log-Likelihood:                 4315.5
+    No. Observations:                           6396   AIC:                            -8627.
+    Df Residuals:                               6394   BIC:                            -8613.
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                            0.0001      0.002      0.068      0.946      -0.003       0.003
-    QQQ_Rolling_Future_Return_6m     2.8037      0.010    294.503      0.000       2.785       2.822
+    const                         5.147e-05      0.002      0.032      0.975      -0.003       0.003
+    QQQ_Rolling_Future_Return_6m     2.8038      0.010    294.564      0.000       2.785       2.822
     ==============================================================================
-    Omnibus:                     1653.772   Durbin-Watson:                   0.055
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             8144.760
-    Skew:                           1.162   Prob(JB):                         0.00
-    Kurtosis:                       8.018   Cond. No.                         6.19
+    Omnibus:                     1656.307   Durbin-Watson:                   0.055
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             8160.166
+    Skew:                           1.163   Prob(JB):                         0.00
+    Kurtosis:                       8.021   Cond. No.                         6.19
     ==============================================================================
     
     Notes:
@@ -4423,37 +4662,37 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_135.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_135.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_136.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_136.png)
     
 
 
                                       OLS Regression Results                                 
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_1y   R-squared:                       0.903
-    Model:                                       OLS   Adj. R-squared:                  0.903
-    Method:                            Least Squares   F-statistic:                 5.801e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:09   Log-Likelihood:                 333.68
-    No. Observations:                           6266   AIC:                            -663.4
-    Df Residuals:                               6264   BIC:                            -649.9
+    Model:                                       OLS   Adj. R-squared:                  0.902
+    Method:                            Least Squares   F-statistic:                 5.802e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:17   Log-Likelihood:                 334.22
+    No. Observations:                           6270   AIC:                            -664.4
+    Df Residuals:                               6268   BIC:                            -650.9
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                            0.0205      0.003      6.376      0.000       0.014       0.027
-    QQQ_Rolling_Future_Return_1y     2.8644      0.012    240.863      0.000       2.841       2.888
+    const                            0.0204      0.003      6.347      0.000       0.014       0.027
+    QQQ_Rolling_Future_Return_1y     2.8641      0.012    240.876      0.000       2.841       2.887
     ==============================================================================
-    Omnibus:                     1982.919   Durbin-Watson:                   0.038
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             8590.359
-    Skew:                           1.493   Prob(JB):                         0.00
-    Kurtosis:                       7.898   Cond. No.                         4.16
+    Omnibus:                     1985.249   Durbin-Watson:                   0.038
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             8603.706
+    Skew:                           1.494   Prob(JB):                         0.00
+    Kurtosis:                       7.900   Cond. No.                         4.16
     ==============================================================================
     
     Notes:
@@ -4462,13 +4701,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_138.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_138.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_139.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_139.png)
     
 
 
@@ -4476,23 +4715,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_2y   R-squared:                       0.847
     Model:                                       OLS   Adj. R-squared:                  0.847
-    Method:                            Least Squares   F-statistic:                 3.336e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:10   Log-Likelihood:                -4114.4
-    No. Observations:                           6014   AIC:                             8233.
-    Df Residuals:                               6012   BIC:                             8246.
+    Method:                            Least Squares   F-statistic:                 3.335e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:18   Log-Likelihood:                -4118.1
+    No. Observations:                           6018   AIC:                             8240.
+    Df Residuals:                               6016   BIC:                             8254.
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0360      0.008     -4.571      0.000      -0.051      -0.021
-    QQQ_Rolling_Future_Return_2y     3.2475      0.018    182.648      0.000       3.213       3.282
+    const                           -0.0363      0.008     -4.611      0.000      -0.052      -0.021
+    QQQ_Rolling_Future_Return_2y     3.2472      0.018    182.609      0.000       3.212       3.282
     ==============================================================================
-    Omnibus:                     1717.522   Durbin-Watson:                   0.018
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             5077.382
+    Omnibus:                     1717.992   Durbin-Watson:                   0.018
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             5076.764
     Skew:                           1.483   Prob(JB):                         0.00
-    Kurtosis:                       6.386   Cond. No.                         3.12
+    Kurtosis:                       6.384   Cond. No.                         3.12
     ==============================================================================
     
     Notes:
@@ -4501,13 +4740,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_141.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_141.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_142.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_142.png)
     
 
 
@@ -4515,23 +4754,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_3y   R-squared:                       0.818
     Model:                                       OLS   Adj. R-squared:                  0.818
-    Method:                            Least Squares   F-statistic:                 2.588e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:11   Log-Likelihood:                -6046.1
-    No. Observations:                           5762   AIC:                         1.210e+04
-    Df Residuals:                               5760   BIC:                         1.211e+04
+    Method:                            Least Squares   F-statistic:                 2.593e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:19   Log-Likelihood:                -6048.7
+    No. Observations:                           5766   AIC:                         1.210e+04
+    Df Residuals:                               5764   BIC:                         1.211e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.2659      0.014    -19.547      0.000      -0.293      -0.239
-    QQQ_Rolling_Future_Return_3y     3.6838      0.023    160.873      0.000       3.639       3.729
+    const                           -0.2658      0.014    -19.546      0.000      -0.292      -0.239
+    QQQ_Rolling_Future_Return_3y     3.6831      0.023    161.019      0.000       3.638       3.728
     ==============================================================================
-    Omnibus:                      866.163   Durbin-Watson:                   0.015
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1580.248
-    Skew:                           0.959   Prob(JB):                         0.00
-    Kurtosis:                       4.704   Cond. No.                         3.08
+    Omnibus:                      868.557   Durbin-Watson:                   0.015
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1586.900
+    Skew:                           0.960   Prob(JB):                         0.00
+    Kurtosis:                       4.708   Cond. No.                         3.08
     ==============================================================================
     
     Notes:
@@ -4540,37 +4779,37 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_144.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_144.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_145.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_145.png)
     
 
 
                                       OLS Regression Results                                 
     =========================================================================================
-    Dep. Variable:     TQQQ_Rolling_Future_Return_4y   R-squared:                       0.786
-    Model:                                       OLS   Adj. R-squared:                  0.786
-    Method:                            Least Squares   F-statistic:                 2.021e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:12   Log-Likelihood:                -8214.5
-    No. Observations:                           5510   AIC:                         1.643e+04
-    Df Residuals:                               5508   BIC:                         1.645e+04
+    Dep. Variable:     TQQQ_Rolling_Future_Return_4y   R-squared:                       0.785
+    Model:                                       OLS   Adj. R-squared:                  0.785
+    Method:                            Least Squares   F-statistic:                 2.018e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:20   Log-Likelihood:                -8224.2
+    No. Observations:                           5514   AIC:                         1.645e+04
+    Df Residuals:                               5512   BIC:                         1.647e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.5696      0.024    -23.943      0.000      -0.616      -0.523
-    QQQ_Rolling_Future_Return_4y     4.2692      0.030    142.161      0.000       4.210       4.328
+    const                           -0.5702      0.024    -23.954      0.000      -0.617      -0.524
+    QQQ_Rolling_Future_Return_4y     4.2681      0.030    142.040      0.000       4.209       4.327
     ==============================================================================
-    Omnibus:                       65.711   Durbin-Watson:                   0.010
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):               51.050
-    Skew:                           0.151   Prob(JB):                     8.22e-12
-    Kurtosis:                       2.638   Cond. No.                         3.05
+    Omnibus:                       66.615   Durbin-Watson:                   0.010
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):               51.542
+    Skew:                           0.151   Prob(JB):                     6.42e-12
+    Kurtosis:                       2.636   Cond. No.                         3.05
     ==============================================================================
     
     Notes:
@@ -4579,13 +4818,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_147.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_147.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_148.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_148.png)
     
 
 
@@ -4593,23 +4832,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_5y   R-squared:                       0.748
     Model:                                       OLS   Adj. R-squared:                  0.748
-    Method:                            Least Squares   F-statistic:                 1.563e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:13   Log-Likelihood:                -11393.
-    No. Observations:                           5258   AIC:                         2.279e+04
-    Df Residuals:                               5256   BIC:                         2.280e+04
+    Method:                            Least Squares   F-statistic:                 1.562e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:21   Log-Likelihood:                -11403.
+    No. Observations:                           5262   AIC:                         2.281e+04
+    Df Residuals:                               5260   BIC:                         2.282e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -1.3493      0.049    -27.365      0.000      -1.446      -1.253
-    QQQ_Rolling_Future_Return_5y     5.5930      0.045    125.018      0.000       5.505       5.681
+    const                           -1.3512      0.049    -27.402      0.000      -1.448      -1.255
+    QQQ_Rolling_Future_Return_5y     5.5929      0.045    124.994      0.000       5.505       5.681
     ==============================================================================
-    Omnibus:                      239.977   Durbin-Watson:                   0.009
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              361.637
-    Skew:                           0.414   Prob(JB):                     2.96e-79
-    Kurtosis:                       3.982   Cond. No.                         3.08
+    Omnibus:                      240.390   Durbin-Watson:                   0.009
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              361.528
+    Skew:                           0.415   Prob(JB):                     3.13e-79
+    Kurtosis:                       3.980   Cond. No.                         3.08
     ==============================================================================
     
     Notes:
@@ -4618,13 +4857,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_150.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_150.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_151.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_151.png)
     
 
 
@@ -4633,8 +4872,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     TQQQ_Rolling_Future_Return_1d   R-squared:                       0.999
     Model:                                       OLS   Adj. R-squared:                  0.999
     Method:                            Least Squares   F-statistic:                 5.999e+06
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:15   Log-Likelihood:                 31532.
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:23   Log-Likelihood:                 31532.
     No. Observations:                           6280   AIC:                        -6.306e+04
     Df Residuals:                               6278   BIC:                        -6.305e+04
     Df Model:                                      1                                         
@@ -4642,13 +4881,13 @@ for drawdown in drawdown_levels:
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                        -4.232e-05   2.02e-05     -2.100      0.036   -8.18e-05   -2.81e-06
-    QQQ_Rolling_Future_Return_1d     2.9547      0.001   2449.263      0.000       2.952       2.957
+    const                        -4.233e-05   2.02e-05     -2.100      0.036   -8.18e-05   -2.82e-06
+    QQQ_Rolling_Future_Return_1d     2.9547      0.001   2449.278      0.000       2.952       2.957
     ==============================================================================
-    Omnibus:                     9286.532   Durbin-Watson:                   2.569
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):         35696636.910
+    Omnibus:                     9286.961   Durbin-Watson:                   2.569
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):         35703537.495
     Skew:                          -8.058   Prob(JB):                         0.00
-    Kurtosis:                     371.999   Cond. No.                         59.9
+    Kurtosis:                     372.035   Cond. No.                         59.9
     ==============================================================================
     
     Notes:
@@ -4657,13 +4896,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_153.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_153.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_154.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_154.png)
     
 
 
@@ -4672,8 +4911,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     TQQQ_Rolling_Future_Return_1w   R-squared:                       0.994
     Model:                                       OLS   Adj. R-squared:                  0.994
     Method:                            Least Squares   F-statistic:                 1.076e+06
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:16   Log-Likelihood:                 21675.
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:24   Log-Likelihood:                 21675.
     No. Observations:                           6280   AIC:                        -4.335e+04
     Df Residuals:                               6278   BIC:                        -4.333e+04
     Df Model:                                      1                                         
@@ -4681,12 +4920,12 @@ for drawdown in drawdown_levels:
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0007    9.7e-05     -7.551      0.000      -0.001      -0.001
-    QQQ_Rolling_Future_Return_1w     2.9525      0.003   1037.392      0.000       2.947       2.958
+    const                           -0.0007    9.7e-05     -7.552      0.000      -0.001      -0.001
+    QQQ_Rolling_Future_Return_1w     2.9525      0.003   1037.390      0.000       2.947       2.958
     ==============================================================================
-    Omnibus:                     3408.626   Durbin-Watson:                   0.895
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           384667.664
-    Skew:                          -1.639   Prob(JB):                         0.00
+    Omnibus:                     3408.663   Durbin-Watson:                   0.895
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           384677.004
+    Skew:                          -1.640   Prob(JB):                         0.00
     Kurtosis:                      41.201   Cond. No.                         29.4
     ==============================================================================
     
@@ -4696,13 +4935,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_156.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_156.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_157.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_157.png)
     
 
 
@@ -4711,8 +4950,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     TQQQ_Rolling_Future_Return_1m   R-squared:                       0.982
     Model:                                       OLS   Adj. R-squared:                  0.982
     Method:                            Least Squares   F-statistic:                 3.507e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:17   Log-Likelihood:                 14068.
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:25   Log-Likelihood:                 14068.
     No. Observations:                           6280   AIC:                        -2.813e+04
     Df Residuals:                               6278   BIC:                        -2.812e+04
     Df Model:                                      1                                         
@@ -4721,10 +4960,10 @@ for drawdown in drawdown_levels:
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
     const                           -0.0032      0.000     -9.790      0.000      -0.004      -0.003
-    QQQ_Rolling_Future_Return_1m     2.9140      0.005    592.182      0.000       2.904       2.924
+    QQQ_Rolling_Future_Return_1m     2.9141      0.005    592.180      0.000       2.904       2.924
     ==============================================================================
-    Omnibus:                     1452.365   Durbin-Watson:                   0.296
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            78369.604
+    Omnibus:                     1452.390   Durbin-Watson:                   0.296
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            78375.812
     Skew:                           0.053   Prob(JB):                         0.00
     Kurtosis:                      20.306   Cond. No.                         15.1
     ==============================================================================
@@ -4735,13 +4974,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_159.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_159.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_160.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_160.png)
     
 
 
@@ -4750,8 +4989,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     TQQQ_Rolling_Future_Return_3m   R-squared:                       0.961
     Model:                                       OLS   Adj. R-squared:                  0.961
     Method:                            Least Squares   F-statistic:                 1.566e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:18   Log-Likelihood:                 8264.2
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:26   Log-Likelihood:                 8264.1
     No. Observations:                           6280   AIC:                        -1.652e+04
     Df Residuals:                               6278   BIC:                        -1.651e+04
     Df Model:                                      1                                         
@@ -4759,13 +4998,13 @@ for drawdown in drawdown_levels:
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0059      0.001     -7.038      0.000      -0.008      -0.004
-    QQQ_Rolling_Future_Return_3m     2.8977      0.007    395.692      0.000       2.883       2.912
+    const                           -0.0059      0.001     -7.039      0.000      -0.008      -0.004
+    QQQ_Rolling_Future_Return_3m     2.8978      0.007    395.691      0.000       2.883       2.912
     ==============================================================================
-    Omnibus:                     1352.162   Durbin-Watson:                   0.102
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            15599.280
+    Omnibus:                     1352.145   Durbin-Watson:                   0.102
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            15599.625
     Skew:                           0.696   Prob(JB):                         0.00
-    Kurtosis:                      10.594   Cond. No.                         8.95
+    Kurtosis:                      10.595   Cond. No.                         8.95
     ==============================================================================
     
     Notes:
@@ -4774,13 +5013,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_162.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_162.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_163.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_163.png)
     
 
 
@@ -4789,8 +5028,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     TQQQ_Rolling_Future_Return_6m   R-squared:                       0.932
     Model:                                       OLS   Adj. R-squared:                  0.932
     Method:                            Least Squares   F-statistic:                 8.613e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:19   Log-Likelihood:                 4282.1
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:27   Log-Likelihood:                 4282.0
     No. Observations:                           6280   AIC:                            -8560.
     Df Residuals:                               6278   BIC:                            -8547.
     Df Model:                                      1                                         
@@ -4798,11 +5037,11 @@ for drawdown in drawdown_levels:
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0002      0.002     -0.127      0.899      -0.003       0.003
-    QQQ_Rolling_Future_Return_6m     2.8191      0.010    293.486      0.000       2.800       2.838
+    const                           -0.0002      0.002     -0.128      0.898      -0.003       0.003
+    QQQ_Rolling_Future_Return_6m     2.8191      0.010    293.485      0.000       2.800       2.838
     ==============================================================================
-    Omnibus:                     1637.681   Durbin-Watson:                   0.057
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             8395.060
+    Omnibus:                     1637.708   Durbin-Watson:                   0.057
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             8395.371
     Skew:                           1.159   Prob(JB):                         0.00
     Kurtosis:                       8.168   Cond. No.                         6.24
     ==============================================================================
@@ -4813,13 +5052,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_165.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_165.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_166.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_166.png)
     
 
 
@@ -4828,61 +5067,22 @@ for drawdown in drawdown_levels:
     Dep. Variable:     TQQQ_Rolling_Future_Return_1y   R-squared:                       0.904
     Model:                                       OLS   Adj. R-squared:                  0.904
     Method:                            Least Squares   F-statistic:                 5.852e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:20   Log-Likelihood:                 404.91
-    No. Observations:                           6199   AIC:                            -805.8
-    Df Residuals:                               6197   BIC:                            -792.3
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:28   Log-Likelihood:                 405.40
+    No. Observations:                           6203   AIC:                            -806.8
+    Df Residuals:                               6201   BIC:                            -793.3
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                            0.0162      0.003      5.033      0.000       0.010       0.023
-    QQQ_Rolling_Future_Return_1y     2.8920      0.012    241.905      0.000       2.869       2.915
+    const                            0.0161      0.003      5.004      0.000       0.010       0.022
+    QQQ_Rolling_Future_Return_1y     2.8917      0.012    241.915      0.000       2.868       2.915
     ==============================================================================
-    Omnibus:                     1966.648   Durbin-Watson:                   0.038
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             8739.805
-    Skew:                           1.487   Prob(JB):                         0.00
-    Kurtosis:                       7.999   Cond. No.                         4.22
-    ==============================================================================
-    
-    Notes:
-    [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
-
-
-
-    
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_168.png)
-    
-
-
-
-    
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_169.png)
-    
-
-
-                                      OLS Regression Results                                 
-    =========================================================================================
-    Dep. Variable:     TQQQ_Rolling_Future_Return_2y   R-squared:                       0.851
-    Model:                                       OLS   Adj. R-squared:                  0.851
-    Method:                            Least Squares   F-statistic:                 3.401e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:22   Log-Likelihood:                -4010.4
-    No. Observations:                           5977   AIC:                             8025.
-    Df Residuals:                               5975   BIC:                             8038.
-    Df Model:                                      1                                         
-    Covariance Type:                       nonrobust                                         
-    ================================================================================================
-                                       coef    std err          t      P>|t|      [0.025      0.975]
-    ------------------------------------------------------------------------------------------------
-    const                           -0.0503      0.008     -6.388      0.000      -0.066      -0.035
-    QQQ_Rolling_Future_Return_2y     3.2857      0.018    184.405      0.000       3.251       3.321
-    ==============================================================================
-    Omnibus:                     1728.061   Durbin-Watson:                   0.019
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             5277.259
+    Omnibus:                     1968.898   Durbin-Watson:                   0.038
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             8752.375
     Skew:                           1.488   Prob(JB):                         0.00
-    Kurtosis:                       6.512   Cond. No.                         3.16
+    Kurtosis:                       8.001   Cond. No.                         4.22
     ==============================================================================
     
     Notes:
@@ -4891,37 +5091,37 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_171.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_168.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_172.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_169.png)
     
 
 
                                       OLS Regression Results                                 
     =========================================================================================
-    Dep. Variable:     TQQQ_Rolling_Future_Return_3y   R-squared:                       0.821
-    Model:                                       OLS   Adj. R-squared:                  0.821
-    Method:                            Least Squares   F-statistic:                 2.631e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:23   Log-Likelihood:                -5943.8
-    No. Observations:                           5725   AIC:                         1.189e+04
-    Df Residuals:                               5723   BIC:                         1.190e+04
+    Dep. Variable:     TQQQ_Rolling_Future_Return_2y   R-squared:                       0.850
+    Model:                                       OLS   Adj. R-squared:                  0.850
+    Method:                            Least Squares   F-statistic:                 3.399e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:30   Log-Likelihood:                -4014.1
+    No. Observations:                           5981   AIC:                             8032.
+    Df Residuals:                               5979   BIC:                             8046.
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.2891      0.014    -21.164      0.000      -0.316      -0.262
-    QQQ_Rolling_Future_Return_3y     3.7271      0.023    162.217      0.000       3.682       3.772
+    const                           -0.0506      0.008     -6.427      0.000      -0.066      -0.035
+    QQQ_Rolling_Future_Return_2y     3.2855      0.018    184.363      0.000       3.251       3.320
     ==============================================================================
-    Omnibus:                      846.190   Durbin-Watson:                   0.015
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1556.288
-    Skew:                           0.941   Prob(JB):                         0.00
-    Kurtosis:                       4.726   Cond. No.                         3.12
+    Omnibus:                     1728.443   Durbin-Watson:                   0.019
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             5275.936
+    Skew:                           1.487   Prob(JB):                         0.00
+    Kurtosis:                       6.511   Cond. No.                         3.16
     ==============================================================================
     
     Notes:
@@ -4930,37 +5130,76 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_174.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_171.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_175.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_172.png)
+    
+
+
+                                      OLS Regression Results                                 
+    =========================================================================================
+    Dep. Variable:     TQQQ_Rolling_Future_Return_3y   R-squared:                       0.822
+    Model:                                       OLS   Adj. R-squared:                  0.821
+    Method:                            Least Squares   F-statistic:                 2.636e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:31   Log-Likelihood:                -5946.3
+    No. Observations:                           5729   AIC:                         1.190e+04
+    Df Residuals:                               5727   BIC:                         1.191e+04
+    Df Model:                                      1                                         
+    Covariance Type:                       nonrobust                                         
+    ================================================================================================
+                                       coef    std err          t      P>|t|      [0.025      0.975]
+    ------------------------------------------------------------------------------------------------
+    const                           -0.2889      0.014    -21.162      0.000      -0.316      -0.262
+    QQQ_Rolling_Future_Return_3y     3.7263      0.023    162.363      0.000       3.681       3.771
+    ==============================================================================
+    Omnibus:                      848.663   Durbin-Watson:                   0.015
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1563.131
+    Skew:                           0.942   Prob(JB):                         0.00
+    Kurtosis:                       4.731   Cond. No.                         3.12
+    ==============================================================================
+    
+    Notes:
+    [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+
+
+
+    
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_174.png)
+    
+
+
+
+    
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_175.png)
     
 
 
                                       OLS Regression Results                                 
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_4y   R-squared:                       0.789
-    Model:                                       OLS   Adj. R-squared:                  0.789
-    Method:                            Least Squares   F-statistic:                 2.045e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:24   Log-Likelihood:                -8114.6
-    No. Observations:                           5473   AIC:                         1.623e+04
-    Df Residuals:                               5471   BIC:                         1.625e+04
+    Model:                                       OLS   Adj. R-squared:                  0.788
+    Method:                            Least Squares   F-statistic:                 2.041e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:32   Log-Likelihood:                -8124.3
+    No. Observations:                           5477   AIC:                         1.625e+04
+    Df Residuals:                               5475   BIC:                         1.627e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.6018      0.024    -25.144      0.000      -0.649      -0.555
-    QQQ_Rolling_Future_Return_4y     4.3140      0.030    142.997      0.000       4.255       4.373
+    const                           -0.6024      0.024    -25.154      0.000      -0.649      -0.555
+    QQQ_Rolling_Future_Return_4y     4.3129      0.030    142.871      0.000       4.254       4.372
     ==============================================================================
-    Omnibus:                       51.316   Durbin-Watson:                   0.010
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):               40.579
-    Skew:                           0.131   Prob(JB):                     1.54e-09
-    Kurtosis:                       2.669   Cond. No.                         3.09
+    Omnibus:                       52.134   Durbin-Watson:                   0.010
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):               41.049
+    Skew:                           0.131   Prob(JB):                     1.22e-09
+    Kurtosis:                       2.666   Cond. No.                         3.09
     ==============================================================================
     
     Notes:
@@ -4969,13 +5208,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_177.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_177.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_178.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_178.png)
     
 
 
@@ -4983,23 +5222,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_5y   R-squared:                       0.750
     Model:                                       OLS   Adj. R-squared:                  0.750
-    Method:                            Least Squares   F-statistic:                 1.574e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:25   Log-Likelihood:                -11327.
-    No. Observations:                           5238   AIC:                         2.266e+04
-    Df Residuals:                               5236   BIC:                         2.267e+04
+    Method:                            Least Squares   F-statistic:                 1.573e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:33   Log-Likelihood:                -11337.
+    No. Observations:                           5242   AIC:                         2.268e+04
+    Df Residuals:                               5240   BIC:                         2.269e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -1.4104      0.050    -28.398      0.000      -1.508      -1.313
-    QQQ_Rolling_Future_Return_5y     5.6451      0.045    125.443      0.000       5.557       5.733
+    const                           -1.4123      0.050    -28.435      0.000      -1.510      -1.315
+    QQQ_Rolling_Future_Return_5y     5.6450      0.045    125.420      0.000       5.557       5.733
     ==============================================================================
-    Omnibus:                      226.987   Durbin-Watson:                   0.009
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              348.438
-    Skew:                           0.392   Prob(JB):                     2.18e-76
-    Kurtosis:                       3.990   Cond. No.                         3.11
+    Omnibus:                      227.364   Durbin-Watson:                   0.009
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              348.243
+    Skew:                           0.393   Prob(JB):                     2.40e-76
+    Kurtosis:                       3.988   Cond. No.                         3.11
     ==============================================================================
     
     Notes:
@@ -5008,13 +5247,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_180.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_180.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_181.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_181.png)
     
 
 
@@ -5023,8 +5262,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     TQQQ_Rolling_Future_Return_1d   R-squared:                       0.999
     Model:                                       OLS   Adj. R-squared:                  0.999
     Method:                            Least Squares   F-statistic:                 5.379e+06
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:26   Log-Likelihood:                 29443.
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:34   Log-Likelihood:                 29443.
     No. Observations:                           5890   AIC:                        -5.888e+04
     Df Residuals:                               5888   BIC:                        -5.887e+04
     Df Model:                                      1                                         
@@ -5032,13 +5271,13 @@ for drawdown in drawdown_levels:
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                        -3.034e-05   2.13e-05     -1.426      0.154   -7.21e-05    1.14e-05
-    QQQ_Rolling_Future_Return_1d     2.9544      0.001   2319.352      0.000       2.952       2.957
+    const                        -3.035e-05   2.13e-05     -1.426      0.154   -7.21e-05    1.14e-05
+    QQQ_Rolling_Future_Return_1d     2.9544      0.001   2319.365      0.000       2.952       2.957
     ==============================================================================
-    Omnibus:                     8697.849   Durbin-Watson:                   2.575
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):         31773160.847
-    Skew:                          -8.043   Prob(JB):                         0.00
-    Kurtosis:                     362.454   Cond. No.                         59.9
+    Omnibus:                     8698.243   Durbin-Watson:                   2.576
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):         31779112.797
+    Skew:                          -8.044   Prob(JB):                         0.00
+    Kurtosis:                     362.488   Cond. No.                         59.9
     ==============================================================================
     
     Notes:
@@ -5047,13 +5286,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_183.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_183.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_184.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_184.png)
     
 
 
@@ -5062,8 +5301,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     TQQQ_Rolling_Future_Return_1w   R-squared:                       0.994
     Model:                                       OLS   Adj. R-squared:                  0.994
     Method:                            Least Squares   F-statistic:                 1.008e+06
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:27   Log-Likelihood:                 20303.
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:35   Log-Likelihood:                 20303.
     No. Observations:                           5890   AIC:                        -4.060e+04
     Df Residuals:                               5888   BIC:                        -4.059e+04
     Df Model:                                      1                                         
@@ -5071,13 +5310,13 @@ for drawdown in drawdown_levels:
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0006      0.000     -6.361      0.000      -0.001      -0.000
-    QQQ_Rolling_Future_Return_1w     2.9525      0.003   1003.867      0.000       2.947       2.958
+    const                           -0.0006      0.000     -6.362      0.000      -0.001      -0.000
+    QQQ_Rolling_Future_Return_1w     2.9525      0.003   1003.864      0.000       2.947       2.958
     ==============================================================================
-    Omnibus:                     3288.157   Durbin-Watson:                   0.897
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           369121.603
+    Omnibus:                     3288.178   Durbin-Watson:                   0.897
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           369130.882
     Skew:                          -1.720   Prob(JB):                         0.00
-    Kurtosis:                      41.629   Cond. No.                         29.3
+    Kurtosis:                      41.630   Cond. No.                         29.3
     ==============================================================================
     
     Notes:
@@ -5086,13 +5325,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_186.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_186.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_187.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_187.png)
     
 
 
@@ -5101,8 +5340,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     TQQQ_Rolling_Future_Return_1m   R-squared:                       0.983
     Model:                                       OLS   Adj. R-squared:                  0.983
     Method:                            Least Squares   F-statistic:                 3.372e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:29   Log-Likelihood:                 13210.
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:36   Log-Likelihood:                 13210.
     No. Observations:                           5890   AIC:                        -2.642e+04
     Df Residuals:                               5888   BIC:                        -2.640e+04
     Df Model:                                      1                                         
@@ -5110,13 +5349,13 @@ for drawdown in drawdown_levels:
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0025      0.000     -7.377      0.000      -0.003      -0.002
-    QQQ_Rolling_Future_Return_1m     2.9139      0.005    580.681      0.000       2.904       2.924
+    const                           -0.0025      0.000     -7.378      0.000      -0.003      -0.002
+    QQQ_Rolling_Future_Return_1m     2.9139      0.005    580.680      0.000       2.904       2.924
     ==============================================================================
-    Omnibus:                     1415.259   Durbin-Watson:                   0.310
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            78284.153
+    Omnibus:                     1415.287   Durbin-Watson:                   0.310
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            78290.616
     Skew:                           0.193   Prob(JB):                         0.00
-    Kurtosis:                      20.856   Cond. No.                         15.0
+    Kurtosis:                      20.857   Cond. No.                         15.0
     ==============================================================================
     
     Notes:
@@ -5125,13 +5364,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_189.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_189.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_190.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_190.png)
     
 
 
@@ -5140,8 +5379,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     TQQQ_Rolling_Future_Return_3m   R-squared:                       0.962
     Model:                                       OLS   Adj. R-squared:                  0.962
     Method:                            Least Squares   F-statistic:                 1.509e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:30   Log-Likelihood:                 7799.9
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:38   Log-Likelihood:                 7799.8
     No. Observations:                           5890   AIC:                        -1.560e+04
     Df Residuals:                               5888   BIC:                        -1.558e+04
     Df Model:                                      1                                         
@@ -5149,11 +5388,11 @@ for drawdown in drawdown_levels:
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0040      0.001     -4.617      0.000      -0.006      -0.002
+    const                           -0.0040      0.001     -4.618      0.000      -0.006      -0.002
     QQQ_Rolling_Future_Return_3m     2.9067      0.007    388.462      0.000       2.892       2.921
     ==============================================================================
-    Omnibus:                     1368.515   Durbin-Watson:                   0.107
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            16450.659
+    Omnibus:                     1368.503   Durbin-Watson:                   0.107
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            16451.047
     Skew:                           0.766   Prob(JB):                         0.00
     Kurtosis:                      11.043   Cond. No.                         8.93
     ==============================================================================
@@ -5164,13 +5403,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_192.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_192.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_193.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_193.png)
     
 
 
@@ -5179,8 +5418,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     TQQQ_Rolling_Future_Return_6m   R-squared:                       0.934
     Model:                                       OLS   Adj. R-squared:                  0.934
     Method:                            Least Squares   F-statistic:                 8.379e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:31   Log-Likelihood:                 4198.9
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:39   Log-Likelihood:                 4198.9
     No. Observations:                           5890   AIC:                            -8394.
     Df Residuals:                               5888   BIC:                            -8380.
     Df Model:                                      1                                         
@@ -5188,11 +5427,11 @@ for drawdown in drawdown_levels:
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0017      0.002     -1.050      0.294      -0.005       0.002
-    QQQ_Rolling_Future_Return_6m     2.8731      0.010    289.464      0.000       2.854       2.893
+    const                           -0.0017      0.002     -1.051      0.293      -0.005       0.002
+    QQQ_Rolling_Future_Return_6m     2.8731      0.010    289.463      0.000       2.854       2.893
     ==============================================================================
-    Omnibus:                     1462.300   Durbin-Watson:                   0.063
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             8111.743
+    Omnibus:                     1462.326   Durbin-Watson:                   0.063
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             8112.048
     Skew:                           1.074   Prob(JB):                         0.00
     Kurtosis:                       8.333   Cond. No.                         6.45
     ==============================================================================
@@ -5203,13 +5442,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_195.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_195.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_196.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_196.png)
     
 
 
@@ -5217,21 +5456,21 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_1y   R-squared:                       0.912
     Model:                                       OLS   Adj. R-squared:                  0.912
-    Method:                            Least Squares   F-statistic:                 6.073e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:32   Log-Likelihood:                 715.33
-    No. Observations:                           5852   AIC:                            -1427.
-    Df Residuals:                               5850   BIC:                            -1413.
+    Method:                            Least Squares   F-statistic:                 6.072e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:40   Log-Likelihood:                 715.59
+    No. Observations:                           5856   AIC:                            -1427.
+    Df Residuals:                               5854   BIC:                            -1414.
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0009      0.003     -0.283      0.777      -0.007       0.005
-    QQQ_Rolling_Future_Return_1y     3.0133      0.012    246.430      0.000       2.989       3.037
+    const                           -0.0010      0.003     -0.316      0.752      -0.007       0.005
+    QQQ_Rolling_Future_Return_1y     3.0129      0.012    246.417      0.000       2.989       3.037
     ==============================================================================
-    Omnibus:                     1763.446   Durbin-Watson:                   0.043
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             8317.030
+    Omnibus:                     1765.294   Durbin-Watson:                   0.043
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             8324.815
     Skew:                           1.385   Prob(JB):                         0.00
     Kurtosis:                       8.142   Cond. No.                         4.45
     ==============================================================================
@@ -5242,13 +5481,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_198.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_198.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_199.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_199.png)
     
 
 
@@ -5256,23 +5495,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_2y   R-squared:                       0.865
     Model:                                       OLS   Adj. R-squared:                  0.865
-    Method:                            Least Squares   F-statistic:                 3.714e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:33   Log-Likelihood:                -3517.9
-    No. Observations:                           5784   AIC:                             7040.
-    Df Residuals:                               5782   BIC:                             7053.
+    Method:                            Least Squares   F-statistic:                 3.712e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:41   Log-Likelihood:                -3521.7
+    No. Observations:                           5788   AIC:                             7047.
+    Df Residuals:                               5786   BIC:                             7061.
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.1117      0.008    -14.133      0.000      -0.127      -0.096
-    QQQ_Rolling_Future_Return_2y     3.4522      0.018    192.714      0.000       3.417       3.487
+    const                           -0.1120      0.008    -14.174      0.000      -0.128      -0.097
+    QQQ_Rolling_Future_Return_2y     3.4520      0.018    192.658      0.000       3.417       3.487
     ==============================================================================
-    Omnibus:                     1654.899   Durbin-Watson:                   0.020
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             5619.104
-    Skew:                           1.427   Prob(JB):                         0.00
-    Kurtosis:                       6.895   Cond. No.                         3.36
+    Omnibus:                     1654.872   Durbin-Watson:                   0.020
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             5614.207
+    Skew:                           1.426   Prob(JB):                         0.00
+    Kurtosis:                       6.891   Cond. No.                         3.36
     ==============================================================================
     
     Notes:
@@ -5281,13 +5520,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_201.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_201.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_202.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_202.png)
     
 
 
@@ -5295,23 +5534,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_3y   R-squared:                       0.838
     Model:                                       OLS   Adj. R-squared:                  0.838
-    Method:                            Least Squares   F-statistic:                 2.855e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:34   Log-Likelihood:                -5444.7
-    No. Observations:                           5532   AIC:                         1.089e+04
-    Df Residuals:                               5530   BIC:                         1.091e+04
+    Method:                            Least Squares   F-statistic:                 2.860e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:42   Log-Likelihood:                -5447.4
+    No. Observations:                           5536   AIC:                         1.090e+04
+    Df Residuals:                               5534   BIC:                         1.091e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.3845      0.014    -27.769      0.000      -0.412      -0.357
-    QQQ_Rolling_Future_Return_3y     3.9132      0.023    168.966      0.000       3.868       3.959
+    const                           -0.3842      0.014    -27.762      0.000      -0.411      -0.357
+    QQQ_Rolling_Future_Return_3y     3.9121      0.023    169.102      0.000       3.867       3.957
     ==============================================================================
-    Omnibus:                      670.448   Durbin-Watson:                   0.016
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1243.454
-    Skew:                           0.791   Prob(JB):                    9.71e-271
-    Kurtosis:                       4.700   Cond. No.                         3.31
+    Omnibus:                      673.372   Durbin-Watson:                   0.016
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1250.889
+    Skew:                           0.793   Prob(JB):                    2.36e-272
+    Kurtosis:                       4.705   Cond. No.                         3.31
     ==============================================================================
     
     Notes:
@@ -5320,37 +5559,37 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_204.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_204.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_205.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_205.png)
     
 
 
                                       OLS Regression Results                                 
     =========================================================================================
-    Dep. Variable:     TQQQ_Rolling_Future_Return_4y   R-squared:                       0.806
-    Model:                                       OLS   Adj. R-squared:                  0.806
-    Method:                            Least Squares   F-statistic:                 2.190e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:36   Log-Likelihood:                -7596.8
-    No. Observations:                           5280   AIC:                         1.520e+04
-    Df Residuals:                               5278   BIC:                         1.521e+04
+    Dep. Variable:     TQQQ_Rolling_Future_Return_4y   R-squared:                       0.805
+    Model:                                       OLS   Adj. R-squared:                  0.805
+    Method:                            Least Squares   F-statistic:                 2.186e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:43   Log-Likelihood:                -7607.1
+    No. Observations:                           5284   AIC:                         1.522e+04
+    Df Residuals:                               5282   BIC:                         1.523e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.7323      0.024    -30.052      0.000      -0.780      -0.685
-    QQQ_Rolling_Future_Return_4y     4.5109      0.030    147.996      0.000       4.451       4.571
+    const                           -0.7330      0.024    -30.056      0.000      -0.781      -0.685
+    QQQ_Rolling_Future_Return_4y     4.5098      0.031    147.842      0.000       4.450       4.570
     ==============================================================================
-    Omnibus:                       12.319   Durbin-Watson:                   0.011
-    Prob(Omnibus):                  0.002   Jarque-Bera (JB):               10.050
-    Skew:                          -0.007   Prob(JB):                      0.00657
-    Kurtosis:                       2.787   Cond. No.                         3.25
+    Omnibus:                       12.832   Durbin-Watson:                   0.011
+    Prob(Omnibus):                  0.002   Jarque-Bera (JB):               10.417
+    Skew:                          -0.007   Prob(JB):                      0.00547
+    Kurtosis:                       2.783   Cond. No.                         3.25
     ==============================================================================
     
     Notes:
@@ -5359,13 +5598,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_207.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_207.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_208.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_208.png)
     
 
 
@@ -5374,22 +5613,22 @@ for drawdown in drawdown_levels:
     Dep. Variable:     TQQQ_Rolling_Future_Return_5y   R-squared:                       0.759
     Model:                                       OLS   Adj. R-squared:                  0.759
     Method:                            Least Squares   F-statistic:                 1.625e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:37   Log-Likelihood:                -11052.
-    No. Observations:                           5158   AIC:                         2.211e+04
-    Df Residuals:                               5156   BIC:                         2.212e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:44   Log-Likelihood:                -11062.
+    No. Observations:                           5162   AIC:                         2.213e+04
+    Df Residuals:                               5160   BIC:                         2.214e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -1.6745      0.051    -32.771      0.000      -1.775      -1.574
-    QQQ_Rolling_Future_Return_5y     5.8696      0.046    127.481      0.000       5.779       5.960
+    const                           -1.6765      0.051    -32.809      0.000      -1.777      -1.576
+    QQQ_Rolling_Future_Return_5y     5.8697      0.046    127.460      0.000       5.779       5.960
     ==============================================================================
-    Omnibus:                      168.503   Durbin-Watson:                   0.010
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              287.431
-    Skew:                           0.281   Prob(JB):                     3.85e-63
-    Kurtosis:                       4.010   Cond. No.                         3.27
+    Omnibus:                      168.674   Durbin-Watson:                   0.010
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              286.815
+    Skew:                           0.283   Prob(JB):                     5.24e-63
+    Kurtosis:                       4.007   Cond. No.                         3.27
     ==============================================================================
     
     Notes:
@@ -5398,13 +5637,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_210.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_210.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_211.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_211.png)
     
 
 
@@ -5412,23 +5651,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_1d   R-squared:                       0.999
     Model:                                       OLS   Adj. R-squared:                  0.999
-    Method:                            Least Squares   F-statistic:                 4.764e+06
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:38   Log-Likelihood:                 27156.
-    No. Observations:                           5448   AIC:                        -5.431e+04
-    Df Residuals:                               5446   BIC:                        -5.429e+04
+    Method:                            Least Squares   F-statistic:                 4.765e+06
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:45   Log-Likelihood:                 27161.
+    No. Observations:                           5449   AIC:                        -5.432e+04
+    Df Residuals:                               5447   BIC:                        -5.431e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                        -1.568e-05   2.24e-05     -0.699      0.485   -5.97e-05    2.83e-05
-    QQQ_Rolling_Future_Return_1d     2.9531      0.001   2182.718      0.000       2.950       2.956
+    const                        -1.579e-05   2.24e-05     -0.703      0.482   -5.98e-05    2.82e-05
+    QQQ_Rolling_Future_Return_1d     2.9531      0.001   2182.969      0.000       2.950       2.956
     ==============================================================================
-    Omnibus:                     8179.872   Durbin-Watson:                   2.578
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):         30309716.309
-    Skew:                          -8.324   Prob(JB):                         0.00
-    Kurtosis:                     368.029   Cond. No.                         60.3
+    Omnibus:                     8181.984   Durbin-Watson:                   2.578
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):         30330198.571
+    Skew:                          -8.325   Prob(JB):                         0.00
+    Kurtosis:                     368.118   Cond. No.                         60.3
     ==============================================================================
     
     Notes:
@@ -5437,13 +5676,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_213.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_213.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_214.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_214.png)
     
 
 
@@ -5451,23 +5690,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_1w   R-squared:                       0.994
     Model:                                       OLS   Adj. R-squared:                  0.994
-    Method:                            Least Squares   F-statistic:                 9.352e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:39   Log-Likelihood:                 18848.
-    No. Observations:                           5448   AIC:                        -3.769e+04
-    Df Residuals:                               5446   BIC:                        -3.768e+04
+    Method:                            Least Squares   F-statistic:                 9.353e+05
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:47   Log-Likelihood:                 18852.
+    No. Observations:                           5449   AIC:                        -3.770e+04
+    Df Residuals:                               5447   BIC:                        -3.769e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0006      0.000     -5.487      0.000      -0.001      -0.000
-    QQQ_Rolling_Future_Return_1w     2.9495      0.003    967.032      0.000       2.943       2.955
+    const                           -0.0006      0.000     -5.494      0.000      -0.001      -0.000
+    QQQ_Rolling_Future_Return_1w     2.9495      0.003    967.121      0.000       2.944       2.955
     ==============================================================================
-    Omnibus:                     3225.193   Durbin-Watson:                   0.872
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           383535.806
+    Omnibus:                     3225.668   Durbin-Watson:                   0.872
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           383700.484
     Skew:                          -1.881   Prob(JB):                         0.00
-    Kurtosis:                      43.932   Cond. No.                         29.6
+    Kurtosis:                      43.937   Cond. No.                         29.6
     ==============================================================================
     
     Notes:
@@ -5476,13 +5715,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_216.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_216.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_217.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_217.png)
     
 
 
@@ -5490,23 +5729,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_1m   R-squared:                       0.982
     Model:                                       OLS   Adj. R-squared:                  0.982
-    Method:                            Least Squares   F-statistic:                 3.034e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:40   Log-Likelihood:                 12185.
-    No. Observations:                           5448   AIC:                        -2.437e+04
-    Df Residuals:                               5446   BIC:                        -2.435e+04
+    Method:                            Least Squares   F-statistic:                 3.035e+05
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:48   Log-Likelihood:                 12187.
+    No. Observations:                           5449   AIC:                        -2.437e+04
+    Df Residuals:                               5447   BIC:                        -2.436e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0021      0.000     -5.896      0.000      -0.003      -0.001
-    QQQ_Rolling_Future_Return_1m     2.9063      0.005    550.837      0.000       2.896       2.917
+    const                           -0.0021      0.000     -5.906      0.000      -0.003      -0.001
+    QQQ_Rolling_Future_Return_1m     2.9063      0.005    550.870      0.000       2.896       2.917
     ==============================================================================
-    Omnibus:                     1330.394   Durbin-Watson:                   0.299
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            76723.084
+    Omnibus:                     1330.819   Durbin-Watson:                   0.299
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            76755.730
     Skew:                           0.205   Prob(JB):                         0.00
-    Kurtosis:                      21.380   Cond. No.                         15.1
+    Kurtosis:                      21.382   Cond. No.                         15.1
     ==============================================================================
     
     Notes:
@@ -5515,13 +5754,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_219.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_219.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_220.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_220.png)
     
 
 
@@ -5529,23 +5768,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_3m   R-squared:                       0.961
     Model:                                       OLS   Adj. R-squared:                  0.961
-    Method:                            Least Squares   F-statistic:                 1.351e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:41   Log-Likelihood:                 7156.4
-    No. Observations:                           5448   AIC:                        -1.431e+04
-    Df Residuals:                               5446   BIC:                        -1.430e+04
+    Method:                            Least Squares   F-statistic:                 1.352e+05
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:49   Log-Likelihood:                 7157.9
+    No. Observations:                           5449   AIC:                        -1.431e+04
+    Df Residuals:                               5447   BIC:                        -1.430e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0035      0.001     -3.894      0.000      -0.005      -0.002
-    QQQ_Rolling_Future_Return_3m     2.9141      0.008    367.616      0.000       2.899       2.930
+    const                           -0.0036      0.001     -3.906      0.000      -0.005      -0.002
+    QQQ_Rolling_Future_Return_3m     2.9142      0.008    367.643      0.000       2.899       2.930
     ==============================================================================
-    Omnibus:                     1264.052   Durbin-Watson:                   0.097
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            15799.603
-    Skew:                           0.751   Prob(JB):                         0.00
-    Kurtosis:                      11.206   Cond. No.                         9.00
+    Omnibus:                     1264.663   Durbin-Watson:                   0.097
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            15806.472
+    Skew:                           0.752   Prob(JB):                         0.00
+    Kurtosis:                      11.207   Cond. No.                         9.00
     ==============================================================================
     
     Notes:
@@ -5554,13 +5793,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_222.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_222.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_223.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_223.png)
     
 
 
@@ -5568,23 +5807,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_6m   R-squared:                       0.937
     Model:                                       OLS   Adj. R-squared:                  0.937
-    Method:                            Least Squares   F-statistic:                 8.113e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:43   Log-Likelihood:                 4025.3
-    No. Observations:                           5448   AIC:                            -8047.
-    Df Residuals:                               5446   BIC:                            -8033.
+    Method:                            Least Squares   F-statistic:                 8.114e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:50   Log-Likelihood:                 4026.4
+    No. Observations:                           5449   AIC:                            -8049.
+    Df Residuals:                               5447   BIC:                            -8036.
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0043      0.002     -2.530      0.011      -0.008      -0.001
-    QQQ_Rolling_Future_Return_6m     2.9102      0.010    284.832      0.000       2.890       2.930
+    const                           -0.0043      0.002     -2.536      0.011      -0.008      -0.001
+    QQQ_Rolling_Future_Return_6m     2.9102      0.010    284.854      0.000       2.890       2.930
     ==============================================================================
-    Omnibus:                      970.459   Durbin-Watson:                   0.062
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             4545.928
+    Omnibus:                      970.997   Durbin-Watson:                   0.062
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             4549.111
     Skew:                           0.789   Prob(JB):                         0.00
-    Kurtosis:                       7.188   Cond. No.                         6.55
+    Kurtosis:                       7.189   Cond. No.                         6.55
     ==============================================================================
     
     Notes:
@@ -5593,13 +5832,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_225.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_225.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_226.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_226.png)
     
 
 
@@ -5608,22 +5847,22 @@ for drawdown in drawdown_levels:
     Dep. Variable:     TQQQ_Rolling_Future_Return_1y   R-squared:                       0.917
     Model:                                       OLS   Adj. R-squared:                  0.917
     Method:                            Least Squares   F-statistic:                 5.978e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:44   Log-Likelihood:                 790.32
-    No. Observations:                           5444   AIC:                            -1577.
-    Df Residuals:                               5442   BIC:                            -1563.
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:51   Log-Likelihood:                 790.34
+    No. Observations:                           5445   AIC:                            -1577.
+    Df Residuals:                               5443   BIC:                            -1563.
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0018      0.003     -0.540      0.589      -0.008       0.005
-    QQQ_Rolling_Future_Return_1y     3.0627      0.013    244.506      0.000       3.038       3.087
+    const                           -0.0019      0.003     -0.552      0.581      -0.008       0.005
+    QQQ_Rolling_Future_Return_1y     3.0627      0.013    244.501      0.000       3.038       3.087
     ==============================================================================
-    Omnibus:                     1400.332   Durbin-Watson:                   0.045
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             6204.356
+    Omnibus:                     1400.683   Durbin-Watson:                   0.045
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             6204.933
     Skew:                           1.186   Prob(JB):                         0.00
-    Kurtosis:                       7.661   Cond. No.                         4.51
+    Kurtosis:                       7.660   Cond. No.                         4.51
     ==============================================================================
     
     Notes:
@@ -5632,13 +5871,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_228.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_228.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_229.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_229.png)
     
 
 
@@ -5646,23 +5885,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_2y   R-squared:                       0.876
     Model:                                       OLS   Adj. R-squared:                  0.876
-    Method:                            Least Squares   F-statistic:                 3.833e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:45   Log-Likelihood:                -3103.9
-    No. Observations:                           5444   AIC:                             6212.
-    Df Residuals:                               5442   BIC:                             6225.
+    Method:                            Least Squares   F-statistic:                 3.832e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:52   Log-Likelihood:                -3104.9
+    No. Observations:                           5445   AIC:                             6214.
+    Df Residuals:                               5443   BIC:                             6227.
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.1256      0.008    -15.596      0.000      -0.141      -0.110
-    QQQ_Rolling_Future_Return_2y     3.5395      0.018    195.774      0.000       3.504       3.575
+    const                           -0.1257      0.008    -15.600      0.000      -0.141      -0.110
+    QQQ_Rolling_Future_Return_2y     3.5393      0.018    195.755      0.000       3.504       3.575
     ==============================================================================
-    Omnibus:                     1478.767   Durbin-Watson:                   0.022
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             5089.206
+    Omnibus:                     1478.861   Durbin-Watson:                   0.022
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             5088.828
     Skew:                           1.346   Prob(JB):                         0.00
-    Kurtosis:                       6.898   Cond. No.                         3.45
+    Kurtosis:                       6.897   Cond. No.                         3.45
     ==============================================================================
     
     Notes:
@@ -5671,13 +5910,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_231.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_231.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_232.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_232.png)
     
 
 
@@ -5685,23 +5924,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_3y   R-squared:                       0.850
     Model:                                       OLS   Adj. R-squared:                  0.850
-    Method:                            Least Squares   F-statistic:                 2.988e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:46   Log-Likelihood:                -5021.0
-    No. Observations:                           5289   AIC:                         1.005e+04
-    Df Residuals:                               5287   BIC:                         1.006e+04
+    Method:                            Least Squares   F-statistic:                 2.993e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:53   Log-Likelihood:                -5023.8
+    No. Observations:                           5293   AIC:                         1.005e+04
+    Df Residuals:                               5291   BIC:                         1.006e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.3933      0.014    -28.260      0.000      -0.421      -0.366
-    QQQ_Rolling_Future_Return_3y     3.9757      0.023    172.869      0.000       3.931       4.021
+    const                           -0.3930      0.014    -28.248      0.000      -0.420      -0.366
+    QQQ_Rolling_Future_Return_3y     3.9743      0.023    172.995      0.000       3.929       4.019
     ==============================================================================
-    Omnibus:                      578.227   Durbin-Watson:                   0.018
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1146.794
-    Skew:                           0.704   Prob(JB):                    9.48e-250
-    Kurtosis:                       4.795   Cond. No.                         3.36
+    Omnibus:                      581.517   Durbin-Watson:                   0.018
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1155.092
+    Skew:                           0.706   Prob(JB):                    1.50e-251
+    Kurtosis:                       4.801   Cond. No.                         3.36
     ==============================================================================
     
     Notes:
@@ -5710,13 +5949,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_234.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_234.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_235.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_235.png)
     
 
 
@@ -5724,23 +5963,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     TQQQ_Rolling_Future_Return_4y   R-squared:                       0.820
     Model:                                       OLS   Adj. R-squared:                  0.820
-    Method:                            Least Squares   F-statistic:                 2.303e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:47   Log-Likelihood:                -7126.5
-    No. Observations:                           5068   AIC:                         1.426e+04
-    Df Residuals:                               5066   BIC:                         1.427e+04
+    Method:                            Least Squares   F-statistic:                 2.301e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:54   Log-Likelihood:                -7129.3
+    No. Observations:                           5069   AIC:                         1.426e+04
+    Df Residuals:                               5067   BIC:                         1.428e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.7486      0.024    -30.693      0.000      -0.796      -0.701
-    QQQ_Rolling_Future_Return_4y     4.5873      0.030    151.752      0.000       4.528       4.647
+    const                           -0.7487      0.024    -30.691      0.000      -0.797      -0.701
+    QQQ_Rolling_Future_Return_4y     4.5870      0.030    151.701      0.000       4.528       4.646
     ==============================================================================
-    Omnibus:                       13.154   Durbin-Watson:                   0.011
-    Prob(Omnibus):                  0.001   Jarque-Bera (JB):               13.239
-    Skew:                          -0.121   Prob(JB):                      0.00133
-    Kurtosis:                       2.934   Cond. No.                         3.29
+    Omnibus:                       13.198   Durbin-Watson:                   0.011
+    Prob(Omnibus):                  0.001   Jarque-Bera (JB):               13.281
+    Skew:                          -0.121   Prob(JB):                      0.00131
+    Kurtosis:                       2.933   Cond. No.                         3.29
     ==============================================================================
     
     Notes:
@@ -5749,13 +5988,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_237.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_237.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_238.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_56_238.png)
     
 
 
@@ -5764,8 +6003,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     TQQQ_Rolling_Future_Return_5y   R-squared:                       0.766
     Model:                                       OLS   Adj. R-squared:                  0.766
     Method:                            Least Squares   F-statistic:                 1.659e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:27:48   Log-Likelihood:                -10800.
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:49:56   Log-Likelihood:                -10800.
     No. Observations:                           5068   AIC:                         2.160e+04
     Df Residuals:                               5066   BIC:                         2.162e+04
     Df Model:                                      1                                         
@@ -5773,12 +6012,12 @@ for drawdown in drawdown_levels:
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -1.7612      0.052    -34.112      0.000      -1.862      -1.660
-    QQQ_Rolling_Future_Return_5y     5.9669      0.046    128.790      0.000       5.876       6.058
+    const                           -1.7612      0.052    -34.113      0.000      -1.862      -1.660
+    QQQ_Rolling_Future_Return_5y     5.9669      0.046    128.789      0.000       5.876       6.058
     ==============================================================================
-    Omnibus:                      145.200   Durbin-Watson:                   0.010
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              276.778
-    Skew:                           0.210   Prob(JB):                     7.91e-61
+    Omnibus:                      145.234   Durbin-Watson:                   0.010
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              276.862
+    Skew:                           0.210   Prob(JB):                     7.59e-61
     Kurtosis:                       4.065   Cond. No.                         3.33
     ==============================================================================
     
@@ -5847,19 +6086,19 @@ display(rolling_returns_positive_future_returns)
       <td>0.544</td>
       <td>0.545</td>
       <td>0.543</td>
-      <td>0.544</td>
+      <td>0.543</td>
     </tr>
     <tr>
       <th>1</th>
       <td>1w</td>
       <td>0.563</td>
       <td>0.562</td>
+      <td>0.561</td>
+      <td>0.561</td>
       <td>0.562</td>
-      <td>0.562</td>
+      <td>0.565</td>
+      <td>0.565</td>
       <td>0.563</td>
-      <td>0.565</td>
-      <td>0.565</td>
-      <td>0.564</td>
     </tr>
     <tr>
       <th>2</th>
@@ -5876,10 +6115,10 @@ display(rolling_returns_positive_future_returns)
     <tr>
       <th>3</th>
       <td>3m</td>
-      <td>0.639</td>
       <td>0.638</td>
       <td>0.637</td>
-      <td>0.637</td>
+      <td>0.636</td>
+      <td>0.636</td>
       <td>0.639</td>
       <td>0.643</td>
       <td>0.651</td>
@@ -5889,10 +6128,10 @@ display(rolling_returns_positive_future_returns)
       <th>4</th>
       <td>6m</td>
       <td>0.665</td>
-      <td>0.665</td>
       <td>0.664</td>
       <td>0.664</td>
-      <td>0.665</td>
+      <td>0.664</td>
+      <td>0.664</td>
       <td>0.668</td>
       <td>0.689</td>
       <td>0.684</td>
@@ -5903,7 +6142,7 @@ display(rolling_returns_positive_future_returns)
       <td>0.708</td>
       <td>0.708</td>
       <td>0.708</td>
-      <td>0.708</td>
+      <td>0.709</td>
       <td>0.709</td>
       <td>0.712</td>
       <td>0.728</td>
@@ -5915,9 +6154,9 @@ display(rolling_returns_positive_future_returns)
       <td>0.734</td>
       <td>0.743</td>
       <td>0.748</td>
-      <td>0.749</td>
       <td>0.750</td>
-      <td>0.754</td>
+      <td>0.750</td>
+      <td>0.755</td>
       <td>0.780</td>
       <td>0.802</td>
     </tr>
@@ -5929,7 +6168,7 @@ display(rolling_returns_positive_future_returns)
       <td>0.760</td>
       <td>0.761</td>
       <td>0.762</td>
-      <td>0.766</td>
+      <td>0.767</td>
       <td>0.781</td>
       <td>0.782</td>
     </tr>
@@ -5948,12 +6187,12 @@ display(rolling_returns_positive_future_returns)
     <tr>
       <th>9</th>
       <td>5y</td>
-      <td>0.729</td>
+      <td>0.730</td>
       <td>0.740</td>
       <td>0.746</td>
       <td>0.747</td>
       <td>0.748</td>
-      <td>0.750</td>
+      <td>0.751</td>
       <td>0.762</td>
       <td>0.764</td>
     </tr>
@@ -5995,7 +6234,7 @@ plot_scatter(
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_66_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_59_0.png)
     
 
 
@@ -6013,7 +6252,7 @@ Next, we will repeat the same analysis for SPY and UPRO, and see how the results
 
 ### Acquire & Plot Data (SPY)
 
-First, let's get the data for SPY. If we already have the desired data, we can load it from a local file. Otherwise, we can download it from Yahoo Finance using the `yf_pull_data` function.
+First, let's get the data for SPY. If we already have the desired data, we can load it from a local pickle file. Otherwise, we can download it from Yahoo Finance using the `yf_pull_data` function.
 
 
 ```python
@@ -6046,18 +6285,7 @@ spy = spy.rename(columns={
     "Open": "SPY_Open",
     "Volume": "SPY_Volume"
 })
-```
 
-    
-[*********************100%***********************]  1 of 1 completed
-
-    
-
-
-This gives us:
-
-
-```python
 display(spy)
 ```
 
@@ -6153,57 +6381,57 @@ display(spy)
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-03-09</th>
-      <td>678.270</td>
-      <td>678.270</td>
-      <td>679.920</td>
-      <td>662.390</td>
-      <td>666.390</td>
-      <td>102667700</td>
-    </tr>
-    <tr>
-      <th>2026-03-10</th>
-      <td>677.180</td>
-      <td>677.180</td>
-      <td>683.360</td>
-      <td>674.760</td>
-      <td>677.720</td>
-      <td>81505300</td>
-    </tr>
-    <tr>
-      <th>2026-03-11</th>
-      <td>676.330</td>
-      <td>676.330</td>
-      <td>680.080</td>
-      <td>673.340</td>
-      <td>677.580</td>
-      <td>68441700</td>
-    </tr>
-    <tr>
-      <th>2026-03-12</th>
-      <td>666.060</td>
-      <td>666.060</td>
-      <td>671.650</td>
-      <td>665.870</td>
-      <td>671.160</td>
-      <td>108882200</td>
-    </tr>
-    <tr>
       <th>2026-03-13</th>
       <td>662.290</td>
       <td>662.290</td>
       <td>672.340</td>
       <td>661.360</td>
       <td>669.270</td>
-      <td>96905100</td>
+      <td>97200200</td>
+    </tr>
+    <tr>
+      <th>2026-03-16</th>
+      <td>669.030</td>
+      <td>669.030</td>
+      <td>672.070</td>
+      <td>667.120</td>
+      <td>668.380</td>
+      <td>82023100</td>
+    </tr>
+    <tr>
+      <th>2026-03-17</th>
+      <td>670.790</td>
+      <td>670.790</td>
+      <td>674.440</td>
+      <td>669.700</td>
+      <td>672.390</td>
+      <td>87128000</td>
+    </tr>
+    <tr>
+      <th>2026-03-18</th>
+      <td>661.430</td>
+      <td>661.430</td>
+      <td>669.720</td>
+      <td>661.190</td>
+      <td>668.360</td>
+      <td>82062600</td>
+    </tr>
+    <tr>
+      <th>2026-03-19</th>
+      <td>659.800</td>
+      <td>659.800</td>
+      <td>662.980</td>
+      <td>655.170</td>
+      <td>656.970</td>
+      <td>111120500</td>
     </tr>
   </tbody>
 </table>
-<p>8337 rows × 6 columns</p>
+<p>8341 rows × 6 columns</p>
 </div>
 
 
-And the plot of the timseries of ajdusted close prices:
+And the plot of the time series of partially adjusted close prices:
 
 
 ```python
@@ -6231,7 +6459,7 @@ plot_timeseries(
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_72_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_63_0.png)
     
 
 
@@ -6270,18 +6498,7 @@ upro = upro.rename(columns={
     "Open": "UPRO_Open", 
     "Volume": "UPRO_Volume"
 })
-```
 
-    
-[*********************100%***********************]  1 of 1 completed
-
-    
-
-
-This gives us:
-
-
-```python
 display(upro)
 ```
 
@@ -6377,57 +6594,57 @@ display(upro)
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-03-09</th>
-      <td>110.970</td>
-      <td>110.970</td>
-      <td>111.740</td>
-      <td>103.270</td>
-      <td>105.200</td>
-      <td>9101400</td>
-    </tr>
-    <tr>
-      <th>2026-03-10</th>
-      <td>110.310</td>
-      <td>110.310</td>
-      <td>113.410</td>
-      <td>109.210</td>
-      <td>110.650</td>
-      <td>6155700</td>
-    </tr>
-    <tr>
-      <th>2026-03-11</th>
-      <td>109.940</td>
-      <td>109.940</td>
-      <td>111.760</td>
-      <td>108.490</td>
-      <td>110.540</td>
-      <td>4181000</td>
-    </tr>
-    <tr>
-      <th>2026-03-12</th>
-      <td>104.890</td>
-      <td>104.890</td>
-      <td>107.620</td>
-      <td>104.800</td>
-      <td>107.350</td>
-      <td>6085600</td>
-    </tr>
-    <tr>
       <th>2026-03-13</th>
       <td>103.010</td>
       <td>103.010</td>
       <td>107.760</td>
       <td>102.600</td>
       <td>106.300</td>
-      <td>6577000</td>
+      <td>6599000</td>
+    </tr>
+    <tr>
+      <th>2026-03-16</th>
+      <td>106.100</td>
+      <td>106.100</td>
+      <td>107.540</td>
+      <td>105.240</td>
+      <td>105.830</td>
+      <td>4607100</td>
+    </tr>
+    <tr>
+      <th>2026-03-17</th>
+      <td>106.920</td>
+      <td>106.920</td>
+      <td>108.670</td>
+      <td>106.600</td>
+      <td>107.700</td>
+      <td>2942600</td>
+    </tr>
+    <tr>
+      <th>2026-03-18</th>
+      <td>102.470</td>
+      <td>102.470</td>
+      <td>106.370</td>
+      <td>102.350</td>
+      <td>105.740</td>
+      <td>5114100</td>
+    </tr>
+    <tr>
+      <th>2026-03-19</th>
+      <td>101.630</td>
+      <td>101.630</td>
+      <td>103.110</td>
+      <td>99.480</td>
+      <td>100.270</td>
+      <td>5510300</td>
     </tr>
   </tbody>
 </table>
-<p>4205 rows × 6 columns</p>
+<p>4209 rows × 6 columns</p>
 </div>
 
 
-And the plot of the timseries of ajdusted close prices:
+And the plot of the time series of partially adjusted close prices:
 
 
 ```python
@@ -6455,7 +6672,7 @@ plot_timeseries(
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_78_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_67_0.png)
     
 
 
@@ -6502,10 +6719,7 @@ for etf in etfs:
         spy_upro_aligned[f"{etf}_Rolling_Return_{period_name}"] = (
             spy_upro_aligned[f"{etf}_Close"].pct_change(periods=window)
         )
-```
-
-
-```python
+        
 display(spy_upro_aligned)
 ```
 
@@ -6721,109 +6935,13 @@ display(spy_upro_aligned)
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-03-09</th>
-      <td>110.970</td>
-      <td>110.970</td>
-      <td>111.740</td>
-      <td>103.270</td>
-      <td>105.200</td>
-      <td>9101400</td>
-      <td>678.270</td>
-      <td>678.270</td>
-      <td>679.920</td>
-      <td>662.390</td>
-      <td>...</td>
-      <td>0.026</td>
-      <td>-0.038</td>
-      <td>-0.009</td>
-      <td>-0.056</td>
-      <td>0.084</td>
-      <td>0.383</td>
-      <td>0.668</td>
-      <td>2.110</td>
-      <td>1.007</td>
-      <td>1.656</td>
-    </tr>
-    <tr>
-      <th>2026-03-10</th>
-      <td>110.310</td>
-      <td>110.310</td>
-      <td>113.410</td>
-      <td>109.210</td>
-      <td>110.650</td>
-      <td>6155700</td>
-      <td>677.180</td>
-      <td>677.180</td>
-      <td>683.360</td>
-      <td>674.760</td>
-      <td>...</td>
-      <td>-0.006</td>
-      <td>-0.017</td>
-      <td>-0.069</td>
-      <td>-0.065</td>
-      <td>0.069</td>
-      <td>0.355</td>
-      <td>0.710</td>
-      <td>1.952</td>
-      <td>0.893</td>
-      <td>1.748</td>
-    </tr>
-    <tr>
-      <th>2026-03-11</th>
-      <td>109.940</td>
-      <td>109.940</td>
-      <td>111.760</td>
-      <td>108.490</td>
-      <td>110.540</td>
-      <td>4181000</td>
-      <td>676.330</td>
-      <td>676.330</td>
-      <td>680.080</td>
-      <td>673.340</td>
-      <td>...</td>
-      <td>-0.003</td>
-      <td>-0.041</td>
-      <td>-0.085</td>
-      <td>-0.060</td>
-      <td>0.059</td>
-      <td>0.467</td>
-      <td>0.679</td>
-      <td>1.933</td>
-      <td>0.914</td>
-      <td>1.847</td>
-    </tr>
-    <tr>
-      <th>2026-03-12</th>
-      <td>104.890</td>
-      <td>104.890</td>
-      <td>107.620</td>
-      <td>104.800</td>
-      <td>107.350</td>
-      <td>6085600</td>
-      <td>666.060</td>
-      <td>666.060</td>
-      <td>671.650</td>
-      <td>665.870</td>
-      <td>...</td>
-      <td>-0.046</td>
-      <td>-0.069</td>
-      <td>-0.120</td>
-      <td>-0.101</td>
-      <td>0.001</td>
-      <td>0.435</td>
-      <td>0.556</td>
-      <td>1.934</td>
-      <td>0.872</td>
-      <td>1.573</td>
-    </tr>
-    <tr>
       <th>2026-03-13</th>
       <td>103.010</td>
       <td>103.010</td>
       <td>107.760</td>
       <td>102.600</td>
       <td>106.300</td>
-      <td>6577000</td>
+      <td>6599000</td>
       <td>662.290</td>
       <td>662.290</td>
       <td>672.340</td>
@@ -6840,9 +6958,105 @@ display(spy_upro_aligned)
       <td>1.017</td>
       <td>1.565</td>
     </tr>
+    <tr>
+      <th>2026-03-16</th>
+      <td>106.100</td>
+      <td>106.100</td>
+      <td>107.540</td>
+      <td>105.240</td>
+      <td>105.830</td>
+      <td>4607100</td>
+      <td>669.030</td>
+      <td>669.030</td>
+      <td>672.070</td>
+      <td>667.120</td>
+      <td>...</td>
+      <td>0.030</td>
+      <td>-0.044</td>
+      <td>-0.065</td>
+      <td>-0.113</td>
+      <td>-0.009</td>
+      <td>0.490</td>
+      <td>0.610</td>
+      <td>2.131</td>
+      <td>1.128</td>
+      <td>1.535</td>
+    </tr>
+    <tr>
+      <th>2026-03-17</th>
+      <td>106.920</td>
+      <td>106.920</td>
+      <td>108.670</td>
+      <td>106.600</td>
+      <td>107.700</td>
+      <td>2942600</td>
+      <td>670.790</td>
+      <td>670.790</td>
+      <td>674.440</td>
+      <td>669.700</td>
+      <td>...</td>
+      <td>0.008</td>
+      <td>-0.031</td>
+      <td>-0.058</td>
+      <td>-0.076</td>
+      <td>-0.017</td>
+      <td>0.417</td>
+      <td>0.572</td>
+      <td>2.298</td>
+      <td>0.984</td>
+      <td>1.508</td>
+    </tr>
+    <tr>
+      <th>2026-03-18</th>
+      <td>102.470</td>
+      <td>102.470</td>
+      <td>106.370</td>
+      <td>102.350</td>
+      <td>105.740</td>
+      <td>5114100</td>
+      <td>661.430</td>
+      <td>661.430</td>
+      <td>669.720</td>
+      <td>661.190</td>
+      <td>...</td>
+      <td>-0.042</td>
+      <td>-0.068</td>
+      <td>-0.102</td>
+      <td>-0.110</td>
+      <td>-0.053</td>
+      <td>0.328</td>
+      <td>0.514</td>
+      <td>2.182</td>
+      <td>0.929</td>
+      <td>1.332</td>
+    </tr>
+    <tr>
+      <th>2026-03-19</th>
+      <td>101.630</td>
+      <td>101.630</td>
+      <td>103.110</td>
+      <td>99.480</td>
+      <td>100.270</td>
+      <td>5510300</td>
+      <td>659.800</td>
+      <td>659.800</td>
+      <td>662.980</td>
+      <td>655.170</td>
+      <td>...</td>
+      <td>-0.008</td>
+      <td>-0.031</td>
+      <td>-0.122</td>
+      <td>-0.110</td>
+      <td>-0.058</td>
+      <td>0.360</td>
+      <td>0.512</td>
+      <td>2.003</td>
+      <td>0.987</td>
+      <td>1.303</td>
+    </tr>
   </tbody>
 </table>
-<p>4205 rows × 38 columns</p>
+<p>4209 rows × 38 columns</p>
 </div>
 
 
@@ -6874,7 +7088,7 @@ plot_timeseries(
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_83_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_71_0.png)
     
 
 
@@ -6906,7 +7120,7 @@ plot_timeseries(
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_85_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_73_0.png)
     
 
 
@@ -6981,8 +7195,8 @@ display(sum_stats)
       <th>SPY_Return</th>
       <td>0.133</td>
       <td>0.172</td>
-      <td>0.774</td>
-      <td>0.126</td>
+      <td>0.772</td>
+      <td>0.125</td>
       <td>0.105</td>
       <td>2025-04-09</td>
       <td>-0.109</td>
@@ -6992,14 +7206,14 @@ display(sum_stats)
       <td>2020-03-23</td>
       <td>2020-08-18</td>
       <td>148</td>
-      <td>0.368</td>
+      <td>0.367</td>
     </tr>
     <tr>
       <th>UPRO_Return</th>
-      <td>0.400</td>
+      <td>0.399</td>
       <td>0.513</td>
-      <td>0.780</td>
-      <td>0.305</td>
+      <td>0.778</td>
+      <td>0.304</td>
       <td>0.280</td>
       <td>2020-03-24</td>
       <td>-0.349</td>
@@ -7009,7 +7223,7 @@ display(sum_stats)
       <td>2020-03-23</td>
       <td>2021-01-08</td>
       <td>291</td>
-      <td>0.398</td>
+      <td>0.396</td>
     </tr>
   </tbody>
 </table>
@@ -7053,7 +7267,7 @@ plot_scatter(
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_89_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_77_0.png)
     
 
 
@@ -7074,30 +7288,30 @@ print(model.summary())
     ==============================================================================
     Dep. Variable:            UPRO_Return   R-squared:                       0.994
     Model:                            OLS   Adj. R-squared:                  0.994
-    Method:                 Least Squares   F-statistic:                 6.745e+05
-    Date:                Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                        14:27:52   Log-Likelihood:                 19150.
-    No. Observations:                4204   AIC:                        -3.830e+04
-    Df Residuals:                    4202   BIC:                        -3.828e+04
+    Method:                 Least Squares   F-statistic:                 6.755e+05
+    Date:                Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                        10:50:00   Log-Likelihood:                 19170.
+    No. Observations:                4208   AIC:                        -3.834e+04
+    Df Residuals:                    4206   BIC:                        -3.832e+04
     Df Model:                           1                                         
     Covariance Type:            nonrobust                                         
     ==============================================================================
                      coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------
-    const       1.711e-05   3.93e-05      0.436      0.663   -5.99e-05    9.41e-05
-    SPY_Return     2.9760      0.004    821.252      0.000       2.969       2.983
+    const       1.678e-05   3.93e-05      0.427      0.669   -6.02e-05    9.37e-05
+    SPY_Return     2.9760      0.004    821.893      0.000       2.969       2.983
     ==============================================================================
-    Omnibus:                     2680.692   Durbin-Watson:                   2.590
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           517107.129
-    Skew:                           1.986   Prob(JB):                         0.00
-    Kurtosis:                      57.188   Cond. No.                         92.3
+    Omnibus:                     2684.452   Durbin-Watson:                   2.590
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           518588.291
+    Skew:                           1.987   Prob(JB):                         0.00
+    Kurtosis:                      57.240   Cond. No.                         92.3
     ==============================================================================
     
     Notes:
     [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
 
 
-Visually, this plot makes sense and we can see that there is a strong clustering of points, but we double check with the regression, regressing the UPRO daily return (y) on the SPY daily return (X).
+Similar to QQQ/TQQQ, this plot makes sense and we can see that there is a strong clustering of points, but we double check with the regression, regressing the UPRO daily return (y) on the SPY daily return (X).
 
 ### Extrapolate Data (SPY & UPRO)
 
@@ -7136,18 +7350,94 @@ Before we extrapolate, let's first look at the data we have for SPY and UPRO aro
 
 ```python
 # Check values around the first valid index
-print(spy_upro_extrap.loc["2009-06-20":"2009-06-30"])
+display(spy_upro_extrap.loc["2009-06-20":"2009-06-30"])
 ```
 
-                SPY_Close  UPRO_Close  SPY_Return  UPRO_Return
-    Date                                                      
-    2009-06-22     89.280         NaN      -0.030       -0.089
-    2009-06-23     89.350         NaN       0.001        0.002
-    2009-06-24     90.120         NaN       0.009        0.026
-    2009-06-25     92.080       1.206       0.022        0.065
-    2009-06-26     91.840       1.199      -0.003       -0.005
-    2009-06-29     92.700       1.233       0.009        0.028
-    2009-06-30     91.950       1.204      -0.008       -0.024
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>SPY_Close</th>
+      <th>UPRO_Close</th>
+      <th>SPY_Return</th>
+      <th>UPRO_Return</th>
+    </tr>
+    <tr>
+      <th>Date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2009-06-22</th>
+      <td>89.280</td>
+      <td>NaN</td>
+      <td>-0.030</td>
+      <td>-0.089</td>
+    </tr>
+    <tr>
+      <th>2009-06-23</th>
+      <td>89.350</td>
+      <td>NaN</td>
+      <td>0.001</td>
+      <td>0.002</td>
+    </tr>
+    <tr>
+      <th>2009-06-24</th>
+      <td>90.120</td>
+      <td>NaN</td>
+      <td>0.009</td>
+      <td>0.026</td>
+    </tr>
+    <tr>
+      <th>2009-06-25</th>
+      <td>92.080</td>
+      <td>1.206</td>
+      <td>0.022</td>
+      <td>0.065</td>
+    </tr>
+    <tr>
+      <th>2009-06-26</th>
+      <td>91.840</td>
+      <td>1.199</td>
+      <td>-0.003</td>
+      <td>-0.005</td>
+    </tr>
+    <tr>
+      <th>2009-06-29</th>
+      <td>92.700</td>
+      <td>1.233</td>
+      <td>0.009</td>
+      <td>0.028</td>
+    </tr>
+    <tr>
+      <th>2009-06-30</th>
+      <td>91.950</td>
+      <td>1.204</td>
+      <td>-0.008</td>
+      <td>-0.024</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 
 Now, backfill the data for the UPRO close price:
@@ -7172,18 +7462,94 @@ Finally, confirm the values are correct:
 
 ```python
 # Confirm values around the first valid index after extrapolation
-print(spy_upro_extrap.loc["2009-06-20":"2009-06-30"])
+display(spy_upro_extrap.loc["2009-06-20":"2009-06-30"])
 ```
 
-                SPY_Close  UPRO_Close  SPY_Return  UPRO_Return
-    Date                                                      
-    2009-06-22     89.280       1.101      -0.030       -0.089
-    2009-06-23     89.350       1.104       0.001        0.002
-    2009-06-24     90.120       1.132       0.009        0.026
-    2009-06-25     92.080       1.206       0.022        0.065
-    2009-06-26     91.840       1.199      -0.003       -0.005
-    2009-06-29     92.700       1.233       0.009        0.028
-    2009-06-30     91.950       1.204      -0.008       -0.024
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>SPY_Close</th>
+      <th>UPRO_Close</th>
+      <th>SPY_Return</th>
+      <th>UPRO_Return</th>
+    </tr>
+    <tr>
+      <th>Date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2009-06-22</th>
+      <td>89.280</td>
+      <td>1.101</td>
+      <td>-0.030</td>
+      <td>-0.089</td>
+    </tr>
+    <tr>
+      <th>2009-06-23</th>
+      <td>89.350</td>
+      <td>1.104</td>
+      <td>0.001</td>
+      <td>0.002</td>
+    </tr>
+    <tr>
+      <th>2009-06-24</th>
+      <td>90.120</td>
+      <td>1.132</td>
+      <td>0.009</td>
+      <td>0.026</td>
+    </tr>
+    <tr>
+      <th>2009-06-25</th>
+      <td>92.080</td>
+      <td>1.206</td>
+      <td>0.022</td>
+      <td>0.065</td>
+    </tr>
+    <tr>
+      <th>2009-06-26</th>
+      <td>91.840</td>
+      <td>1.199</td>
+      <td>-0.003</td>
+      <td>-0.005</td>
+    </tr>
+    <tr>
+      <th>2009-06-29</th>
+      <td>92.700</td>
+      <td>1.233</td>
+      <td>0.009</td>
+      <td>0.028</td>
+    </tr>
+    <tr>
+      <th>2009-06-30</th>
+      <td>91.950</td>
+      <td>1.204</td>
+      <td>-0.008</td>
+      <td>-0.024</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 
 And the complete DataFrame with the extrapolated values:
@@ -7269,43 +7635,43 @@ display(spy_upro_extrap)
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-03-09</th>
-      <td>678.270</td>
-      <td>110.970</td>
-      <td>0.009</td>
-      <td>0.026</td>
-    </tr>
-    <tr>
-      <th>2026-03-10</th>
-      <td>677.180</td>
-      <td>110.310</td>
-      <td>-0.002</td>
-      <td>-0.006</td>
-    </tr>
-    <tr>
-      <th>2026-03-11</th>
-      <td>676.330</td>
-      <td>109.940</td>
-      <td>-0.001</td>
-      <td>-0.003</td>
-    </tr>
-    <tr>
-      <th>2026-03-12</th>
-      <td>666.060</td>
-      <td>104.890</td>
-      <td>-0.015</td>
-      <td>-0.046</td>
-    </tr>
-    <tr>
       <th>2026-03-13</th>
       <td>662.290</td>
       <td>103.010</td>
       <td>-0.006</td>
       <td>-0.018</td>
     </tr>
+    <tr>
+      <th>2026-03-16</th>
+      <td>669.030</td>
+      <td>106.100</td>
+      <td>0.010</td>
+      <td>0.030</td>
+    </tr>
+    <tr>
+      <th>2026-03-17</th>
+      <td>670.790</td>
+      <td>106.920</td>
+      <td>0.003</td>
+      <td>0.008</td>
+    </tr>
+    <tr>
+      <th>2026-03-18</th>
+      <td>661.430</td>
+      <td>102.470</td>
+      <td>-0.014</td>
+      <td>-0.042</td>
+    </tr>
+    <tr>
+      <th>2026-03-19</th>
+      <td>659.800</td>
+      <td>101.630</td>
+      <td>-0.002</td>
+      <td>-0.008</td>
+    </tr>
   </tbody>
 </table>
-<p>8337 rows × 4 columns</p>
+<p>8341 rows × 4 columns</p>
 </div>
 
 
@@ -7351,7 +7717,7 @@ plot_timeseries(
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_103_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_91_0.png)
     
 
 
@@ -7381,7 +7747,7 @@ plot_timeseries(
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_104_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_92_0.png)
     
 
 
@@ -7411,7 +7777,7 @@ plot_timeseries(
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_105_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_93_0.png)
     
 
 
@@ -7441,11 +7807,148 @@ plot_timeseries(
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_106_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_94_0.png)
     
 
 
-Interestingly, the drawdown for UPRO is not nearly as severe as that of TQQQ, which may be due to the fact that SPY has not had the same extreme return profile as QQQ over the past 15 years. This highlights the importance of the underlying asset's return profile on the performance of leveraged ETFs.
+
+```python
+spy_extrap_sum_stats = summary_stats(
+    fund_list=["SPY"],
+    df=spy_upro_extrap[["SPY_Return"]],
+    period="Daily",
+    use_calendar_days=False,
+    excel_export=False,
+    pickle_export=False,
+    output_confirmation=False,
+)
+
+upro_extrap_sum_stats = summary_stats(
+    fund_list=["UPRO"],
+    df=spy_upro_extrap[["UPRO_Return"]],
+    period="Daily",
+    use_calendar_days=False,
+    excel_export=False,
+    pickle_export=False,
+    output_confirmation=False,
+)
+
+sum_stats = pd.concat([spy_sum_stats, upro_sum_stats, spy_extrap_sum_stats, upro_extrap_sum_stats])
+sum_stats.index = ["SPY (2009 - Present)", "UPRO (2009 - Present)", "SPY (1993 - Present)", "UPRO Extrapolated (1993 - Present)"]
+
+display(sum_stats)
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Annual Mean Return (Arithmetic)</th>
+      <th>Annualized Volatility</th>
+      <th>Annualized Sharpe Ratio</th>
+      <th>CAGR (Geometric)</th>
+      <th>Daily Max Return</th>
+      <th>Daily Max Return (Date)</th>
+      <th>Daily Min Return</th>
+      <th>Daily Min Return (Date)</th>
+      <th>Max Drawdown</th>
+      <th>Peak</th>
+      <th>Trough</th>
+      <th>Recovery Date</th>
+      <th>Days to Recovery</th>
+      <th>MAR Ratio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>SPY (2009 - Present)</th>
+      <td>0.133</td>
+      <td>0.172</td>
+      <td>0.772</td>
+      <td>0.125</td>
+      <td>0.105</td>
+      <td>2025-04-09</td>
+      <td>-0.109</td>
+      <td>2020-03-16</td>
+      <td>-0.341</td>
+      <td>2020-02-19</td>
+      <td>2020-03-23</td>
+      <td>2020-08-18</td>
+      <td>148</td>
+      <td>0.367</td>
+    </tr>
+    <tr>
+      <th>UPRO (2009 - Present)</th>
+      <td>0.399</td>
+      <td>0.513</td>
+      <td>0.778</td>
+      <td>0.304</td>
+      <td>0.280</td>
+      <td>2020-03-24</td>
+      <td>-0.349</td>
+      <td>2020-03-16</td>
+      <td>-0.768</td>
+      <td>2020-02-19</td>
+      <td>2020-03-23</td>
+      <td>2021-01-08</td>
+      <td>291</td>
+      <td>0.396</td>
+    </tr>
+    <tr>
+      <th>SPY (1993 - Present)</th>
+      <td>0.099</td>
+      <td>0.186</td>
+      <td>0.533</td>
+      <td>0.085</td>
+      <td>0.145</td>
+      <td>2008-10-13</td>
+      <td>-0.109</td>
+      <td>2020-03-16</td>
+      <td>-0.565</td>
+      <td>2007-10-09</td>
+      <td>2009-03-09</td>
+      <td>2013-03-14</td>
+      <td>1466</td>
+      <td>0.151</td>
+    </tr>
+    <tr>
+      <th>UPRO Extrapolated (1993 - Present)</th>
+      <td>0.297</td>
+      <td>0.555</td>
+      <td>0.536</td>
+      <td>0.153</td>
+      <td>0.432</td>
+      <td>2008-10-13</td>
+      <td>-0.349</td>
+      <td>2020-03-16</td>
+      <td>-0.976</td>
+      <td>2000-03-24</td>
+      <td>2009-03-09</td>
+      <td>2017-11-30</td>
+      <td>3188</td>
+      <td>0.156</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+Interestingly, the maximum drawdown for UPRO is not as severe as that of TQQQ, which may be due to that SPY has not had the same extreme return profile as QQQ. This highlights the importance of the underlying asset's return profile on the performance of leveraged ETFs.
 
 ### Plot Rolling Returns (SPY & UPRO)
 
@@ -7582,13 +8085,13 @@ for period_name, window in rolling_windows.items():
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_110_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_99_0.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_110_1.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_99_1.png)
     
 
 
@@ -7596,23 +8099,23 @@ for period_name, window in rolling_windows.items():
     ==================================================================================
     Dep. Variable:     UPRO_Rolling_Return_1d   R-squared:                       0.997
     Model:                                OLS   Adj. R-squared:                  0.997
-    Method:                     Least Squares   F-statistic:                 3.117e+06
-    Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            14:27:55   Log-Likelihood:                 40824.
-    No. Observations:                    8336   AIC:                        -8.164e+04
-    Df Residuals:                        8334   BIC:                        -8.163e+04
+    Method:                     Least Squares   F-statistic:                 3.119e+06
+    Date:                    Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                            10:50:03   Log-Likelihood:                 40846.
+    No. Observations:                    8340   AIC:                        -8.169e+04
+    Df Residuals:                        8338   BIC:                        -8.167e+04
     Df Model:                               1                                         
     Covariance Type:                nonrobust                                         
     =========================================================================================
                                 coef    std err          t      P>|t|      [0.025      0.975]
     -----------------------------------------------------------------------------------------
-    const                  8.628e-06   1.98e-05      0.436      0.663   -3.02e-05    4.74e-05
-    SPY_Rolling_Return_1d     2.9760      0.002   1765.423      0.000       2.973       2.979
+    const                  8.462e-06   1.98e-05      0.428      0.669   -3.03e-05    4.73e-05
+    SPY_Rolling_Return_1d     2.9760      0.002   1766.061      0.000       2.973       2.979
     ==============================================================================
-    Omnibus:                     6871.164   Durbin-Watson:                   2.591
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):          4247760.442
-    Skew:                           2.811   Prob(JB):                         0.00
-    Kurtosis:                     113.445   Cond. No.                         85.2
+    Omnibus:                     6875.715   Durbin-Watson:                   2.590
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):          4253525.948
+    Skew:                           2.812   Prob(JB):                         0.00
+    Kurtosis:                     113.493   Cond. No.                         85.2
     ==============================================================================
     
     Notes:
@@ -7621,13 +8124,13 @@ for period_name, window in rolling_windows.items():
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_110_3.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_99_3.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_110_4.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_99_4.png)
     
 
 
@@ -7635,23 +8138,23 @@ for period_name, window in rolling_windows.items():
     ==================================================================================
     Dep. Variable:     UPRO_Rolling_Return_1w   R-squared:                       0.994
     Model:                                OLS   Adj. R-squared:                  0.994
-    Method:                     Least Squares   F-statistic:                 1.404e+06
-    Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            14:27:56   Log-Likelihood:                 31594.
-    No. Observations:                    8332   AIC:                        -6.318e+04
-    Df Residuals:                        8330   BIC:                        -6.317e+04
+    Method:                     Least Squares   F-statistic:                 1.405e+06
+    Date:                    Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                            10:50:04   Log-Likelihood:                 31611.
+    No. Observations:                    8336   AIC:                        -6.322e+04
+    Df Residuals:                        8334   BIC:                        -6.320e+04
     Df Model:                               1                                         
     Covariance Type:                nonrobust                                         
     =========================================================================================
                                 coef    std err          t      P>|t|      [0.025      0.975]
     -----------------------------------------------------------------------------------------
-    const                    -0.0003      6e-05     -4.277      0.000      -0.000      -0.000
-    SPY_Rolling_Return_1w     2.9725      0.003   1184.942      0.000       2.968       2.977
+    const                    -0.0003      6e-05     -4.302      0.000      -0.000      -0.000
+    SPY_Rolling_Return_1w     2.9725      0.003   1185.305      0.000       2.968       2.977
     ==============================================================================
-    Omnibus:                     3741.895   Durbin-Watson:                   0.955
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):          1489497.909
-    Skew:                          -0.847   Prob(JB):                         0.00
-    Kurtosis:                      68.480   Cond. No.                         42.0
+    Omnibus:                     3742.566   Durbin-Watson:                   0.955
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):          1491140.193
+    Skew:                          -0.846   Prob(JB):                         0.00
+    Kurtosis:                      68.500   Cond. No.                         42.0
     ==============================================================================
     
     Notes:
@@ -7660,13 +8163,13 @@ for period_name, window in rolling_windows.items():
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_110_6.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_99_6.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_110_7.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_99_7.png)
     
 
 
@@ -7674,23 +8177,23 @@ for period_name, window in rolling_windows.items():
     ==================================================================================
     Dep. Variable:     UPRO_Rolling_Return_1m   R-squared:                       0.988
     Model:                                OLS   Adj. R-squared:                  0.988
-    Method:                     Least Squares   F-statistic:                 6.653e+05
-    Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            14:27:58   Log-Likelihood:                 23130.
-    No. Observations:                    8316   AIC:                        -4.626e+04
-    Df Residuals:                        8314   BIC:                        -4.624e+04
+    Method:                     Least Squares   F-statistic:                 6.658e+05
+    Date:                    Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                            10:50:05   Log-Likelihood:                 23143.
+    No. Observations:                    8320   AIC:                        -4.628e+04
+    Df Residuals:                        8318   BIC:                        -4.627e+04
     Df Model:                               1                                         
     Covariance Type:                nonrobust                                         
     =========================================================================================
                                 coef    std err          t      P>|t|      [0.025      0.975]
     -----------------------------------------------------------------------------------------
-    const                    -0.0015      0.000     -9.029      0.000      -0.002      -0.001
-    SPY_Rolling_Return_1m     2.9603      0.004    815.680      0.000       2.953       2.967
+    const                    -0.0015      0.000     -9.060      0.000      -0.002      -0.001
+    SPY_Rolling_Return_1m     2.9604      0.004    815.950      0.000       2.953       2.967
     ==============================================================================
-    Omnibus:                     2879.641   Durbin-Watson:                   0.314
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           855364.296
-    Skew:                          -0.291   Prob(JB):                         0.00
-    Kurtosis:                      52.681   Cond. No.                         22.1
+    Omnibus:                     2880.229   Durbin-Watson:                   0.314
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           856447.781
+    Skew:                          -0.289   Prob(JB):                         0.00
+    Kurtosis:                      52.701   Cond. No.                         22.1
     ==============================================================================
     
     Notes:
@@ -7699,13 +8202,13 @@ for period_name, window in rolling_windows.items():
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_110_9.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_99_9.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_110_10.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_99_10.png)
     
 
 
@@ -7713,23 +8216,23 @@ for period_name, window in rolling_windows.items():
     ==================================================================================
     Dep. Variable:     UPRO_Rolling_Return_3m   R-squared:                       0.979
     Model:                                OLS   Adj. R-squared:                  0.979
-    Method:                     Least Squares   F-statistic:                 3.832e+05
-    Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            14:27:59   Log-Likelihood:                 16419.
-    No. Observations:                    8274   AIC:                        -3.283e+04
-    Df Residuals:                        8272   BIC:                        -3.282e+04
+    Method:                     Least Squares   F-statistic:                 3.834e+05
+    Date:                    Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                            10:50:06   Log-Likelihood:                 16428.
+    No. Observations:                    8278   AIC:                        -3.285e+04
+    Df Residuals:                        8276   BIC:                        -3.284e+04
     Df Model:                               1                                         
     Covariance Type:                nonrobust                                         
     =========================================================================================
                                 coef    std err          t      P>|t|      [0.025      0.975]
     -----------------------------------------------------------------------------------------
-    const                    -0.0068      0.000    -17.721      0.000      -0.008      -0.006
-    SPY_Rolling_Return_3m     3.0481      0.005    619.009      0.000       3.038       3.058
+    const                    -0.0068      0.000    -17.757      0.000      -0.008      -0.006
+    SPY_Rolling_Return_3m     3.0482      0.005    619.198      0.000       3.039       3.058
     ==============================================================================
-    Omnibus:                     2412.574   Durbin-Watson:                   0.136
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           132831.172
-    Skew:                           0.582   Prob(JB):                         0.00
-    Kurtosis:                      22.594   Cond. No.                         13.5
+    Omnibus:                     2415.384   Durbin-Watson:                   0.136
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           133009.869
+    Skew:                           0.583   Prob(JB):                         0.00
+    Kurtosis:                      22.603   Cond. No.                         13.5
     ==============================================================================
     
     Notes:
@@ -7738,13 +8241,13 @@ for period_name, window in rolling_windows.items():
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_110_12.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_99_12.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_110_13.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_99_13.png)
     
 
 
@@ -7752,23 +8255,23 @@ for period_name, window in rolling_windows.items():
     ==================================================================================
     Dep. Variable:     UPRO_Rolling_Return_6m   R-squared:                       0.957
     Model:                                OLS   Adj. R-squared:                  0.957
-    Method:                     Least Squares   F-statistic:                 1.830e+05
-    Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            14:28:00   Log-Likelihood:                 10161.
-    No. Observations:                    8211   AIC:                        -2.032e+04
-    Df Residuals:                        8209   BIC:                        -2.030e+04
+    Method:                     Least Squares   F-statistic:                 1.831e+05
+    Date:                    Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                            10:50:07   Log-Likelihood:                 10167.
+    No. Observations:                    8215   AIC:                        -2.033e+04
+    Df Residuals:                        8213   BIC:                        -2.032e+04
     Df Model:                               1                                         
     Covariance Type:                nonrobust                                         
     =========================================================================================
                                 coef    std err          t      P>|t|      [0.025      0.975]
     -----------------------------------------------------------------------------------------
-    const                    -0.0109      0.001    -12.883      0.000      -0.013      -0.009
-    SPY_Rolling_Return_6m     3.0707      0.007    427.780      0.000       3.057       3.085
+    const                    -0.0110      0.001    -12.922      0.000      -0.013      -0.009
+    SPY_Rolling_Return_6m     3.0708      0.007    427.856      0.000       3.057       3.085
     ==============================================================================
-    Omnibus:                     2066.367   Durbin-Watson:                   0.055
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            26461.991
-    Skew:                           0.843   Prob(JB):                         0.00
-    Kurtosis:                      11.631   Cond. No.                         9.29
+    Omnibus:                     2069.108   Durbin-Watson:                   0.055
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            26494.998
+    Skew:                           0.844   Prob(JB):                         0.00
+    Kurtosis:                      11.634   Cond. No.                         9.29
     ==============================================================================
     
     Notes:
@@ -7777,13 +8280,13 @@ for period_name, window in rolling_windows.items():
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_110_15.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_99_15.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_110_16.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_99_16.png)
     
 
 
@@ -7791,23 +8294,23 @@ for period_name, window in rolling_windows.items():
     ==================================================================================
     Dep. Variable:     UPRO_Rolling_Return_1y   R-squared:                       0.927
     Model:                                OLS   Adj. R-squared:                  0.927
-    Method:                     Least Squares   F-statistic:                 1.024e+05
-    Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            14:28:01   Log-Likelihood:                 3932.3
-    No. Observations:                    8085   AIC:                            -7861.
-    Df Residuals:                        8083   BIC:                            -7847.
+    Method:                     Least Squares   F-statistic:                 1.023e+05
+    Date:                    Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                            10:50:08   Log-Likelihood:                 3933.3
+    No. Observations:                    8089   AIC:                            -7863.
+    Df Residuals:                        8087   BIC:                            -7849.
     Df Model:                               1                                         
     Covariance Type:                nonrobust                                         
     =========================================================================================
                                 coef    std err          t      P>|t|      [0.025      0.975]
     -----------------------------------------------------------------------------------------
-    const                    -0.0196      0.002    -10.120      0.000      -0.023      -0.016
-    SPY_Rolling_Return_1y     3.2120      0.010    319.930      0.000       3.192       3.232
+    const                    -0.0196      0.002    -10.152      0.000      -0.023      -0.016
+    SPY_Rolling_Return_1y     3.2117      0.010    319.885      0.000       3.192       3.231
     ==============================================================================
-    Omnibus:                     1394.260   Durbin-Watson:                   0.031
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             6548.397
+    Omnibus:                     1394.974   Durbin-Watson:                   0.031
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             6543.160
     Skew:                           0.764   Prob(JB):                         0.00
-    Kurtosis:                       7.136   Cond. No.                         6.13
+    Kurtosis:                       7.132   Cond. No.                         6.13
     ==============================================================================
     
     Notes:
@@ -7816,13 +8319,13 @@ for period_name, window in rolling_windows.items():
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_110_18.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_99_18.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_110_19.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_99_19.png)
     
 
 
@@ -7830,23 +8333,23 @@ for period_name, window in rolling_windows.items():
     ==================================================================================
     Dep. Variable:     UPRO_Rolling_Return_2y   R-squared:                       0.897
     Model:                                OLS   Adj. R-squared:                  0.897
-    Method:                     Least Squares   F-statistic:                 6.796e+04
-    Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            14:28:02   Log-Likelihood:                -2121.4
-    No. Observations:                    7833   AIC:                             4247.
-    Df Residuals:                        7831   BIC:                             4261.
+    Method:                     Least Squares   F-statistic:                 6.792e+04
+    Date:                    Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                            10:50:10   Log-Likelihood:                -2124.3
+    No. Observations:                    7837   AIC:                             4253.
+    Df Residuals:                        7835   BIC:                             4267.
     Df Model:                               1                                         
     Covariance Type:                nonrobust                                         
     =========================================================================================
                                 coef    std err          t      P>|t|      [0.025      0.975]
     -----------------------------------------------------------------------------------------
-    const                    -0.0512      0.005    -11.120      0.000      -0.060      -0.042
-    SPY_Rolling_Return_2y     3.5614      0.014    260.683      0.000       3.535       3.588
+    const                    -0.0514      0.005    -11.155      0.000      -0.060      -0.042
+    SPY_Rolling_Return_2y     3.5611      0.014    260.609      0.000       3.534       3.588
     ==============================================================================
-    Omnibus:                      950.225   Durbin-Watson:                   0.018
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1486.222
+    Omnibus:                      950.451   Durbin-Watson:                   0.018
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1486.082
     Skew:                           0.866   Prob(JB):                         0.00
-    Kurtosis:                       4.246   Cond. No.                         3.99
+    Kurtosis:                       4.245   Cond. No.                         3.99
     ==============================================================================
     
     Notes:
@@ -7855,37 +8358,37 @@ for period_name, window in rolling_windows.items():
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_110_21.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_99_21.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_110_22.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_99_22.png)
     
 
 
                                   OLS Regression Results                              
     ==================================================================================
-    Dep. Variable:     UPRO_Rolling_Return_3y   R-squared:                       0.867
-    Model:                                OLS   Adj. R-squared:                  0.867
-    Method:                     Least Squares   F-statistic:                 4.922e+04
-    Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            14:28:04   Log-Likelihood:                -7016.3
-    No. Observations:                    7581   AIC:                         1.404e+04
-    Df Residuals:                        7579   BIC:                         1.405e+04
+    Dep. Variable:     UPRO_Rolling_Return_3y   R-squared:                       0.866
+    Model:                                OLS   Adj. R-squared:                  0.866
+    Method:                     Least Squares   F-statistic:                 4.921e+04
+    Date:                    Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                            10:50:11   Log-Likelihood:                -7020.9
+    No. Observations:                    7585   AIC:                         1.405e+04
+    Df Residuals:                        7583   BIC:                         1.406e+04
     Df Model:                               1                                         
     Covariance Type:                nonrobust                                         
     =========================================================================================
                                 coef    std err          t      P>|t|      [0.025      0.975]
     -----------------------------------------------------------------------------------------
-    const                    -0.2356      0.009    -24.832      0.000      -0.254      -0.217
-    SPY_Rolling_Return_3y     4.3927      0.020    221.847      0.000       4.354       4.432
+    const                    -0.2356      0.009    -24.829      0.000      -0.254      -0.217
+    SPY_Rolling_Return_3y     4.3915      0.020    221.830      0.000       4.353       4.430
     ==============================================================================
-    Omnibus:                     1286.625   Durbin-Watson:                   0.008
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             2437.416
-    Skew:                           1.053   Prob(JB):                         0.00
-    Kurtosis:                       4.812   Cond. No.                         3.15
+    Omnibus:                     1290.151   Durbin-Watson:                   0.008
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             2447.661
+    Skew:                           1.054   Prob(JB):                         0.00
+    Kurtosis:                       4.816   Cond. No.                         3.15
     ==============================================================================
     
     Notes:
@@ -7894,13 +8397,13 @@ for period_name, window in rolling_windows.items():
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_110_24.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_99_24.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_110_25.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_99_25.png)
     
 
 
@@ -7908,23 +8411,23 @@ for period_name, window in rolling_windows.items():
     ==================================================================================
     Dep. Variable:     UPRO_Rolling_Return_4y   R-squared:                       0.863
     Model:                                OLS   Adj. R-squared:                  0.863
-    Method:                     Least Squares   F-statistic:                 4.605e+04
-    Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            14:28:05   Log-Likelihood:                -10251.
-    No. Observations:                    7329   AIC:                         2.051e+04
-    Df Residuals:                        7327   BIC:                         2.052e+04
+    Method:                     Least Squares   F-statistic:                 4.601e+04
+    Date:                    Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                            10:50:12   Log-Likelihood:                -10260.
+    No. Observations:                    7333   AIC:                         2.052e+04
+    Df Residuals:                        7331   BIC:                         2.054e+04
     Df Model:                               1                                         
     Covariance Type:                nonrobust                                         
     =========================================================================================
                                 coef    std err          t      P>|t|      [0.025      0.975]
     -----------------------------------------------------------------------------------------
-    const                    -0.5499      0.016    -34.731      0.000      -0.581      -0.519
-    SPY_Rolling_Return_4y     5.3711      0.025    214.593      0.000       5.322       5.420
+    const                    -0.5505      0.016    -34.758      0.000      -0.582      -0.519
+    SPY_Rolling_Return_4y     5.3705      0.025    214.491      0.000       5.321       5.420
     ==============================================================================
-    Omnibus:                     1107.340   Durbin-Watson:                   0.008
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             2298.081
-    Skew:                           0.913   Prob(JB):                         0.00
-    Kurtosis:                       5.048   Cond. No.                         2.69
+    Omnibus:                     1107.003   Durbin-Watson:                   0.008
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             2296.125
+    Skew:                           0.912   Prob(JB):                         0.00
+    Kurtosis:                       5.046   Cond. No.                         2.69
     ==============================================================================
     
     Notes:
@@ -7933,13 +8436,13 @@ for period_name, window in rolling_windows.items():
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_110_27.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_99_27.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_110_28.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_99_28.png)
     
 
 
@@ -7947,23 +8450,23 @@ for period_name, window in rolling_windows.items():
     ==================================================================================
     Dep. Variable:     UPRO_Rolling_Return_5y   R-squared:                       0.850
     Model:                                OLS   Adj. R-squared:                  0.850
-    Method:                     Least Squares   F-statistic:                 4.018e+04
-    Date:                    Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                            14:28:06   Log-Likelihood:                -12776.
-    No. Observations:                    7077   AIC:                         2.556e+04
-    Df Residuals:                        7075   BIC:                         2.557e+04
+    Method:                     Least Squares   F-statistic:                 4.016e+04
+    Date:                    Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                            10:50:13   Log-Likelihood:                -12784.
+    No. Observations:                    7081   AIC:                         2.557e+04
+    Df Residuals:                        7079   BIC:                         2.559e+04
     Df Model:                               1                                         
     Covariance Type:                nonrobust                                         
     =========================================================================================
                                 coef    std err          t      P>|t|      [0.025      0.975]
     -----------------------------------------------------------------------------------------
-    const                    -1.0034      0.025    -40.626      0.000      -1.052      -0.955
-    SPY_Rolling_Return_5y     6.2796      0.031    200.453      0.000       6.218       6.341
+    const                    -1.0043      0.025    -40.653      0.000      -1.053      -0.956
+    SPY_Rolling_Return_5y     6.2791      0.031    200.394      0.000       6.218       6.341
     ==============================================================================
-    Omnibus:                      685.964   Durbin-Watson:                   0.007
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1311.055
-    Skew:                           0.650   Prob(JB):                    2.03e-285
-    Kurtosis:                       4.660   Cond. No.                         2.50
+    Omnibus:                      686.865   Durbin-Watson:                   0.007
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1311.688
+    Skew:                           0.651   Prob(JB):                    1.48e-285
+    Kurtosis:                       4.659   Cond. No.                         2.51
     ==============================================================================
     
     Notes:
@@ -7977,10 +8480,6 @@ Next, we will the rolling returns deviation from the expected 3x return for each
 
 ```python
 rolling_returns_stats["Return_Deviation_From_3x"] = rolling_returns_stats["Slope"] - 3.0
-```
-
-
-```python
 display(rolling_returns_stats)
 ```
 
@@ -8031,13 +8530,13 @@ display(rolling_returns_stats)
       <th>0</th>
       <td>1w</td>
       <td>-0.000</td>
-      <td>2.972</td>
+      <td>2.973</td>
       <td>0.994</td>
       <td>NaN</td>
       <td>2.757</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>-0.028</td>
+      <td>-0.027</td>
     </tr>
     <tr>
       <th>0</th>
@@ -8070,7 +8569,7 @@ display(rolling_returns_stats)
       <td>3.071</td>
       <td>0.957</td>
       <td>NaN</td>
-      <td>1.038</td>
+      <td>1.023</td>
       <td>-inf</td>
       <td>inf</td>
       <td>0.071</td>
@@ -8103,37 +8602,37 @@ display(rolling_returns_stats)
       <th>0</th>
       <td>3y</td>
       <td>-0.236</td>
-      <td>4.393</td>
-      <td>0.867</td>
-      <td>-6.067</td>
-      <td>1.578</td>
+      <td>4.391</td>
+      <td>0.866</td>
+      <td>-6.069</td>
+      <td>1.579</td>
       <td>8.621</td>
-      <td>-7.042</td>
-      <td>1.393</td>
+      <td>-7.041</td>
+      <td>1.391</td>
     </tr>
     <tr>
       <th>0</th>
       <td>4y</td>
-      <td>-0.550</td>
+      <td>-0.551</td>
       <td>5.371</td>
       <td>0.863</td>
-      <td>-65.924</td>
-      <td>0.021</td>
+      <td>-65.942</td>
+      <td>0.022</td>
       <td>7.235</td>
-      <td>-7.214</td>
+      <td>-7.212</td>
       <td>2.371</td>
     </tr>
     <tr>
       <th>0</th>
       <td>5y</td>
-      <td>-1.003</td>
-      <td>6.280</td>
+      <td>-1.004</td>
+      <td>6.279</td>
       <td>0.850</td>
-      <td>-35.218</td>
-      <td>-2.261</td>
+      <td>-35.228</td>
+      <td>-2.258</td>
       <td>21.003</td>
-      <td>-23.265</td>
-      <td>3.280</td>
+      <td>-23.262</td>
+      <td>3.279</td>
     </tr>
   </tbody>
 </table>
@@ -8173,7 +8672,7 @@ plot_scatter(
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_114_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_102_0.png)
     
 
 
@@ -8210,7 +8709,7 @@ plot_scatter(
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_115_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_103_0.png)
     
 
 
@@ -8247,7 +8746,7 @@ plot_scatter(
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_116_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_104_0.png)
     
 
 
@@ -8312,13 +8811,13 @@ display(rolling_returns_stats.set_index("Period"))
     <tr>
       <th>1w</th>
       <td>-0.000</td>
-      <td>2.972</td>
+      <td>2.973</td>
       <td>0.994</td>
       <td>NaN</td>
       <td>2.757</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>-0.028</td>
+      <td>-0.027</td>
     </tr>
     <tr>
       <th>1m</th>
@@ -8348,7 +8847,7 @@ display(rolling_returns_stats.set_index("Period"))
       <td>3.071</td>
       <td>0.957</td>
       <td>NaN</td>
-      <td>1.038</td>
+      <td>1.023</td>
       <td>-inf</td>
       <td>inf</td>
       <td>0.071</td>
@@ -8378,35 +8877,35 @@ display(rolling_returns_stats.set_index("Period"))
     <tr>
       <th>3y</th>
       <td>-0.236</td>
-      <td>4.393</td>
-      <td>0.867</td>
-      <td>-6.067</td>
-      <td>1.578</td>
+      <td>4.391</td>
+      <td>0.866</td>
+      <td>-6.069</td>
+      <td>1.579</td>
       <td>8.621</td>
-      <td>-7.042</td>
-      <td>1.393</td>
+      <td>-7.041</td>
+      <td>1.391</td>
     </tr>
     <tr>
       <th>4y</th>
-      <td>-0.550</td>
+      <td>-0.551</td>
       <td>5.371</td>
       <td>0.863</td>
-      <td>-65.924</td>
-      <td>0.021</td>
+      <td>-65.942</td>
+      <td>0.022</td>
       <td>7.235</td>
-      <td>-7.214</td>
+      <td>-7.212</td>
       <td>2.371</td>
     </tr>
     <tr>
       <th>5y</th>
-      <td>-1.003</td>
-      <td>6.280</td>
+      <td>-1.004</td>
+      <td>6.279</td>
       <td>0.850</td>
-      <td>-35.218</td>
-      <td>-2.261</td>
+      <td>-35.228</td>
+      <td>-2.258</td>
       <td>21.003</td>
-      <td>-23.265</td>
-      <td>3.280</td>
+      <td>-23.262</td>
+      <td>3.279</td>
     </tr>
   </tbody>
 </table>
@@ -8545,13 +9044,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_0.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_1.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_1.png)
     
 
 
@@ -8559,23 +9058,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     UPRO_Rolling_Future_Return_1d   R-squared:                       0.997
     Model:                                       OLS   Adj. R-squared:                  0.997
-    Method:                            Least Squares   F-statistic:                 2.285e+06
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:07   Log-Likelihood:                 29859.
-    No. Observations:                           6221   AIC:                        -5.971e+04
-    Df Residuals:                               6219   BIC:                        -5.970e+04
+    Method:                            Least Squares   F-statistic:                 2.287e+06
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:14   Log-Likelihood:                 29880.
+    No. Observations:                           6225   AIC:                        -5.976e+04
+    Df Residuals:                               6223   BIC:                        -5.974e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                         2.196e-05   2.53e-05      0.869      0.385   -2.76e-05    7.15e-05
-    SPY_Rolling_Future_Return_1d     2.9765      0.002   1511.654      0.000       2.973       2.980
+    const                         2.173e-05   2.53e-05      0.860      0.390   -2.78e-05    7.12e-05
+    SPY_Rolling_Future_Return_1d     2.9765      0.002   1512.346      0.000       2.973       2.980
     ==============================================================================
-    Omnibus:                     4600.809   Durbin-Watson:                   2.630
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):          2414888.124
-    Skew:                           2.321   Prob(JB):                         0.00
-    Kurtosis:                      99.410   Cond. No.                         78.0
+    Omnibus:                     4604.989   Durbin-Watson:                   2.630
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):          2419343.312
+    Skew:                           2.322   Prob(JB):                         0.00
+    Kurtosis:                      99.468   Cond. No.                         78.0
     ==============================================================================
     
     Notes:
@@ -8584,13 +9083,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_3.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_3.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_4.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_4.png)
     
 
 
@@ -8598,23 +9097,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     UPRO_Rolling_Future_Return_1w   R-squared:                       0.994
     Model:                                       OLS   Adj. R-squared:                  0.994
-    Method:                            Least Squares   F-statistic:                 9.665e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:09   Log-Likelihood:                 22872.
-    No. Observations:                           6219   AIC:                        -4.574e+04
-    Df Residuals:                               6217   BIC:                        -4.573e+04
+    Method:                            Least Squares   F-statistic:                 9.670e+05
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:16   Log-Likelihood:                 22880.
+    No. Observations:                           6221   AIC:                        -4.576e+04
+    Df Residuals:                               6219   BIC:                        -4.574e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0002   7.79e-05     -3.047      0.002      -0.000   -8.46e-05
-    SPY_Rolling_Future_Return_1w     2.9732      0.003    983.115      0.000       2.967       2.979
+    const                           -0.0002   7.78e-05     -3.059      0.002      -0.000   -8.55e-05
+    SPY_Rolling_Future_Return_1w     2.9733      0.003    983.339      0.000       2.967       2.979
     ==============================================================================
-    Omnibus:                     2734.500   Durbin-Watson:                   0.978
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           782234.894
+    Omnibus:                     2734.967   Durbin-Watson:                   0.978
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           782879.243
     Skew:                          -0.876   Prob(JB):                         0.00
-    Kurtosis:                      57.915   Cond. No.                         39.0
+    Kurtosis:                      57.929   Cond. No.                         39.0
     ==============================================================================
     
     Notes:
@@ -8623,13 +9122,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_6.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_6.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_7.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_7.png)
     
 
 
@@ -8638,8 +9137,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1m   R-squared:                       0.988
     Model:                                       OLS   Adj. R-squared:                  0.988
     Method:                            Least Squares   F-statistic:                 4.994e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:10   Log-Likelihood:                 16962.
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:17   Log-Likelihood:                 16962.
     No. Observations:                           6218   AIC:                        -3.392e+04
     Df Residuals:                               6216   BIC:                        -3.391e+04
     Df Model:                                      1                                         
@@ -8650,8 +9149,8 @@ for drawdown in drawdown_levels:
     const                           -0.0015      0.000     -7.184      0.000      -0.002      -0.001
     SPY_Rolling_Future_Return_1m     2.9746      0.004    706.661      0.000       2.966       2.983
     ==============================================================================
-    Omnibus:                     3371.444   Durbin-Watson:                   0.336
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           387348.606
+    Omnibus:                     3371.450   Durbin-Watson:                   0.336
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           387349.033
     Skew:                          -1.631   Prob(JB):                         0.00
     Kurtosis:                      41.528   Cond. No.                         21.0
     ==============================================================================
@@ -8662,13 +9161,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_9.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_9.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_10.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_10.png)
     
 
 
@@ -8677,8 +9176,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_3m   R-squared:                       0.978
     Model:                                       OLS   Adj. R-squared:                  0.978
     Method:                            Least Squares   F-statistic:                 2.716e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:11   Log-Likelihood:                 11917.
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:18   Log-Likelihood:                 11917.
     No. Observations:                           6218   AIC:                        -2.383e+04
     Df Residuals:                               6216   BIC:                        -2.382e+04
     Df Model:                                      1                                         
@@ -8689,8 +9188,8 @@ for drawdown in drawdown_levels:
     const                           -0.0048      0.000    -10.061      0.000      -0.006      -0.004
     SPY_Rolling_Future_Return_3m     3.0334      0.006    521.161      0.000       3.022       3.045
     ==============================================================================
-    Omnibus:                     1724.576   Durbin-Watson:                   0.148
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            87846.616
+    Omnibus:                     1724.578   Durbin-Watson:                   0.148
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            87846.797
     Skew:                           0.522   Prob(JB):                         0.00
     Kurtosis:                      21.384   Cond. No.                         12.9
     ==============================================================================
@@ -8701,13 +9200,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_12.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_12.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_13.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_13.png)
     
 
 
@@ -8716,8 +9215,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_6m   R-squared:                       0.961
     Model:                                       OLS   Adj. R-squared:                  0.961
     Method:                            Least Squares   F-statistic:                 1.537e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:12   Log-Likelihood:                 7698.5
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:19   Log-Likelihood:                 7698.5
     No. Observations:                           6214   AIC:                        -1.539e+04
     Df Residuals:                               6212   BIC:                        -1.538e+04
     Df Model:                                      1                                         
@@ -8726,10 +9225,10 @@ for drawdown in drawdown_levels:
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
     const                           -0.0015      0.001     -1.526      0.127      -0.003       0.000
-    SPY_Rolling_Future_Return_6m     3.0330      0.008    391.990      0.000       3.018       3.048
+    SPY_Rolling_Future_Return_6m     3.0330      0.008    391.989      0.000       3.018       3.048
     ==============================================================================
-    Omnibus:                     2086.730   Durbin-Watson:                   0.070
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            20739.746
+    Omnibus:                     2086.731   Durbin-Watson:                   0.070
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            20739.792
     Skew:                           1.316   Prob(JB):                         0.00
     Kurtosis:                      11.554   Cond. No.                         8.72
     ==============================================================================
@@ -8740,37 +9239,37 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_15.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_15.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_16.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_16.png)
     
 
 
                                       OLS Regression Results                                 
     =========================================================================================
-    Dep. Variable:     UPRO_Rolling_Future_Return_1y   R-squared:                       0.934
-    Model:                                       OLS   Adj. R-squared:                  0.934
-    Method:                            Least Squares   F-statistic:                 8.620e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:13   Log-Likelihood:                 3064.8
-    No. Observations:                           6141   AIC:                            -6126.
-    Df Residuals:                               6139   BIC:                            -6112.
+    Dep. Variable:     UPRO_Rolling_Future_Return_1y   R-squared:                       0.933
+    Model:                                       OLS   Adj. R-squared:                  0.933
+    Method:                            Least Squares   F-statistic:                 8.615e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:20   Log-Likelihood:                 3065.1
+    No. Observations:                           6145   AIC:                            -6126.
+    Df Residuals:                               6143   BIC:                            -6113.
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0007      0.002     -0.314      0.754      -0.005       0.004
-    SPY_Rolling_Future_Return_1y     3.1993      0.011    293.600      0.000       3.178       3.221
+    const                           -0.0008      0.002     -0.356      0.722      -0.005       0.003
+    SPY_Rolling_Future_Return_1y     3.1989      0.011    293.513      0.000       3.178       3.220
     ==============================================================================
-    Omnibus:                     1575.656   Durbin-Watson:                   0.041
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             7484.757
+    Omnibus:                     1575.624   Durbin-Watson:                   0.041
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             7474.760
     Skew:                           1.162   Prob(JB):                         0.00
-    Kurtosis:                       7.883   Cond. No.                         5.86
+    Kurtosis:                       7.878   Cond. No.                         5.87
     ==============================================================================
     
     Notes:
@@ -8779,37 +9278,37 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_18.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_18.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_19.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_19.png)
     
 
 
                                       OLS Regression Results                                 
     =========================================================================================
-    Dep. Variable:     UPRO_Rolling_Future_Return_2y   R-squared:                       0.892
-    Model:                                       OLS   Adj. R-squared:                  0.892
-    Method:                            Least Squares   F-statistic:                 4.980e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:14   Log-Likelihood:                -1446.2
-    No. Observations:                           6061   AIC:                             2896.
-    Df Residuals:                               6059   BIC:                             2910.
+    Dep. Variable:     UPRO_Rolling_Future_Return_2y   R-squared:                       0.891
+    Model:                                       OLS   Adj. R-squared:                  0.891
+    Method:                            Least Squares   F-statistic:                 4.976e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:21   Log-Likelihood:                -1449.1
+    No. Observations:                           6065   AIC:                             2902.
+    Df Residuals:                               6063   BIC:                             2916.
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0175      0.005     -3.607      0.000      -0.027      -0.008
-    SPY_Rolling_Future_Return_2y     3.4272      0.015    223.154      0.000       3.397       3.457
+    const                           -0.0177      0.005     -3.647      0.000      -0.027      -0.008
+    SPY_Rolling_Future_Return_2y     3.4267      0.015    223.064      0.000       3.397       3.457
     ==============================================================================
-    Omnibus:                     1154.327   Durbin-Watson:                   0.024
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             2673.564
+    Omnibus:                     1154.647   Durbin-Watson:                   0.024
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             2673.170
     Skew:                           1.077   Prob(JB):                         0.00
-    Kurtosis:                       5.438   Cond. No.                         4.03
+    Kurtosis:                       5.437   Cond. No.                         4.03
     ==============================================================================
     
     Notes:
@@ -8818,13 +9317,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_21.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_21.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_22.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_22.png)
     
 
 
@@ -8832,23 +9331,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     UPRO_Rolling_Future_Return_3y   R-squared:                       0.861
     Model:                                       OLS   Adj. R-squared:                  0.861
-    Method:                            Least Squares   F-statistic:                 3.592e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:16   Log-Likelihood:                -4707.3
-    No. Observations:                           5809   AIC:                             9419.
-    Df Residuals:                               5807   BIC:                             9432.
+    Method:                            Least Squares   F-statistic:                 3.593e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:22   Log-Likelihood:                -4711.2
+    No. Observations:                           5813   AIC:                             9426.
+    Df Residuals:                               5811   BIC:                             9440.
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.1527      0.009    -16.369      0.000      -0.171      -0.134
-    SPY_Rolling_Future_Return_3y     4.1206      0.022    189.528      0.000       4.078       4.163
+    const                           -0.1527      0.009    -16.362      0.000      -0.171      -0.134
+    SPY_Rolling_Future_Return_3y     4.1189      0.022    189.542      0.000       4.076       4.161
     ==============================================================================
-    Omnibus:                     1530.432   Durbin-Watson:                   0.011
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             4862.520
-    Skew:                           1.335   Prob(JB):                         0.00
-    Kurtosis:                       6.601   Cond. No.                         3.30
+    Omnibus:                     1535.888   Durbin-Watson:                   0.011
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             4892.352
+    Skew:                           1.338   Prob(JB):                         0.00
+    Kurtosis:                       6.611   Cond. No.                         3.30
     ==============================================================================
     
     Notes:
@@ -8857,37 +9356,37 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_24.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_24.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_25.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_25.png)
     
 
 
                                       OLS Regression Results                                 
     =========================================================================================
-    Dep. Variable:     UPRO_Rolling_Future_Return_4y   R-squared:                       0.849
-    Model:                                       OLS   Adj. R-squared:                  0.849
-    Method:                            Least Squares   F-statistic:                 3.112e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:17   Log-Likelihood:                -7257.5
-    No. Observations:                           5557   AIC:                         1.452e+04
-    Df Residuals:                               5555   BIC:                         1.453e+04
+    Dep. Variable:     UPRO_Rolling_Future_Return_4y   R-squared:                       0.848
+    Model:                                       OLS   Adj. R-squared:                  0.848
+    Method:                            Least Squares   F-statistic:                 3.107e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:24   Log-Likelihood:                -7266.5
+    No. Observations:                           5561   AIC:                         1.454e+04
+    Df Residuals:                               5559   BIC:                         1.455e+04
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.4417      0.016    -27.325      0.000      -0.473      -0.410
-    SPY_Rolling_Future_Return_4y     5.1530      0.029    176.414      0.000       5.096       5.210
+    const                           -0.4423      0.016    -27.345      0.000      -0.474      -0.411
+    SPY_Rolling_Future_Return_4y     5.1517      0.029    176.265      0.000       5.094       5.209
     ==============================================================================
-    Omnibus:                     1907.776   Durbin-Watson:                   0.013
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            10169.158
-    Skew:                           1.554   Prob(JB):                         0.00
-    Kurtosis:                       8.853   Cond. No.                         2.83
+    Omnibus:                     1907.051   Durbin-Watson:                   0.013
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            10159.047
+    Skew:                           1.553   Prob(JB):                         0.00
+    Kurtosis:                       8.848   Cond. No.                         2.83
     ==============================================================================
     
     Notes:
@@ -8896,13 +9395,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_27.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_27.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_28.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_28.png)
     
 
 
@@ -8911,8 +9410,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_5y   R-squared:                       0.838
     Model:                                       OLS   Adj. R-squared:                  0.838
     Method:                            Least Squares   F-statistic:                 2.842e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:18   Log-Likelihood:                -9617.9
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:25   Log-Likelihood:                -9617.9
     No. Observations:                           5508   AIC:                         1.924e+04
     Df Residuals:                               5506   BIC:                         1.925e+04
     Df Model:                                      1                                         
@@ -8923,8 +9422,8 @@ for drawdown in drawdown_levels:
     const                           -0.9357      0.026    -35.724      0.000      -0.987      -0.884
     SPY_Rolling_Future_Return_5y     6.1980      0.037    168.589      0.000       6.126       6.270
     ==============================================================================
-    Omnibus:                     1244.876   Durbin-Watson:                   0.010
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             4373.621
+    Omnibus:                     1244.885   Durbin-Watson:                   0.010
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             4373.673
     Skew:                           1.109   Prob(JB):                         0.00
     Kurtosis:                       6.760   Cond. No.                         2.58
     ==============================================================================
@@ -8935,13 +9434,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_30.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_30.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_31.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_31.png)
     
 
 
@@ -8950,8 +9449,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1d   R-squared:                       0.997
     Model:                                       OLS   Adj. R-squared:                  0.997
     Method:                            Least Squares   F-statistic:                 1.837e+06
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:19   Log-Likelihood:                 25121.
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:26   Log-Likelihood:                 25121.
     No. Observations:                           5293   AIC:                        -5.024e+04
     Df Residuals:                               5291   BIC:                        -5.023e+04
     Df Model:                                      1                                         
@@ -8960,10 +9459,10 @@ for drawdown in drawdown_levels:
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
     const                         3.561e-05   2.89e-05      1.232      0.218   -2.11e-05    9.23e-05
-    SPY_Rolling_Future_Return_1d     2.9772      0.002   1355.226      0.000       2.973       2.981
+    SPY_Rolling_Future_Return_1d     2.9772      0.002   1355.227      0.000       2.973       2.981
     ==============================================================================
-    Omnibus:                     3682.706   Durbin-Watson:                   2.648
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):          1787435.938
+    Omnibus:                     3682.704   Durbin-Watson:                   2.648
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):          1787442.183
     Skew:                           2.082   Prob(JB):                         0.00
     Kurtosis:                      92.930   Cond. No.                         76.0
     ==============================================================================
@@ -8974,13 +9473,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_33.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_33.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_34.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_34.png)
     
 
 
@@ -8989,8 +9488,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1w   R-squared:                       0.993
     Model:                                       OLS   Adj. R-squared:                  0.993
     Method:                            Least Squares   F-statistic:                 7.714e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:20   Log-Likelihood:                 19160.
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:27   Log-Likelihood:                 19160.
     No. Observations:                           5293   AIC:                        -3.832e+04
     Df Residuals:                               5291   BIC:                        -3.830e+04
     Df Model:                                      1                                         
@@ -8999,10 +9498,10 @@ for drawdown in drawdown_levels:
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
     const                           -0.0002   8.94e-05     -2.240      0.025      -0.000    -2.5e-05
-    SPY_Rolling_Future_Return_1w     2.9708      0.003    878.276      0.000       2.964       2.977
+    SPY_Rolling_Future_Return_1w     2.9708      0.003    878.275      0.000       2.964       2.977
     ==============================================================================
-    Omnibus:                     2333.089   Durbin-Watson:                   0.986
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           564965.860
+    Omnibus:                     2333.094   Durbin-Watson:                   0.986
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           564966.997
     Skew:                          -0.921   Prob(JB):                         0.00
     Kurtosis:                      53.580   Cond. No.                         38.0
     ==============================================================================
@@ -9013,13 +9512,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_36.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_36.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_37.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_37.png)
     
 
 
@@ -9028,8 +9527,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1m   R-squared:                       0.987
     Model:                                       OLS   Adj. R-squared:                  0.987
     Method:                            Least Squares   F-statistic:                 4.024e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:21   Log-Likelihood:                 14137.
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:28   Log-Likelihood:                 14137.
     No. Observations:                           5293   AIC:                        -2.827e+04
     Df Residuals:                               5291   BIC:                        -2.826e+04
     Df Model:                                      1                                         
@@ -9040,8 +9539,8 @@ for drawdown in drawdown_levels:
     const                           -0.0014      0.000     -6.033      0.000      -0.002      -0.001
     SPY_Rolling_Future_Return_1m     2.9716      0.005    634.375      0.000       2.962       2.981
     ==============================================================================
-    Omnibus:                     2857.215   Durbin-Watson:                   0.332
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           280080.687
+    Omnibus:                     2857.220   Durbin-Watson:                   0.332
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           280081.058
     Skew:                          -1.658   Prob(JB):                         0.00
     Kurtosis:                      38.482   Cond. No.                         20.4
     ==============================================================================
@@ -9052,13 +9551,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_39.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_39.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_40.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_40.png)
     
 
 
@@ -9067,8 +9566,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_3m   R-squared:                       0.977
     Model:                                       OLS   Adj. R-squared:                  0.977
     Method:                            Least Squares   F-statistic:                 2.274e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:23   Log-Likelihood:                 9942.2
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:29   Log-Likelihood:                 9942.2
     No. Observations:                           5293   AIC:                        -1.988e+04
     Df Residuals:                               5291   BIC:                        -1.987e+04
     Df Model:                                      1                                         
@@ -9079,8 +9578,8 @@ for drawdown in drawdown_levels:
     const                           -0.0036      0.001     -6.764      0.000      -0.005      -0.003
     SPY_Rolling_Future_Return_3m     3.0230      0.006    476.832      0.000       3.011       3.035
     ==============================================================================
-    Omnibus:                     1416.233   Durbin-Watson:                   0.159
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            70537.930
+    Omnibus:                     1416.235   Durbin-Watson:                   0.159
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            70538.125
     Skew:                           0.467   Prob(JB):                         0.00
     Kurtosis:                      20.860   Cond. No.                         12.5
     ==============================================================================
@@ -9091,13 +9590,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_42.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_42.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_43.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_43.png)
     
 
 
@@ -9106,8 +9605,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_6m   R-squared:                       0.960
     Model:                                       OLS   Adj. R-squared:                  0.960
     Method:                            Least Squares   F-statistic:                 1.281e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:24   Log-Likelihood:                 6392.3
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:30   Log-Likelihood:                 6392.3
     No. Observations:                           5293   AIC:                        -1.278e+04
     Df Residuals:                               5291   BIC:                        -1.277e+04
     Df Model:                                      1                                         
@@ -9118,8 +9617,8 @@ for drawdown in drawdown_levels:
     const                            0.0016      0.001      1.525      0.127      -0.000       0.004
     SPY_Rolling_Future_Return_6m     3.0177      0.008    357.941      0.000       3.001       3.034
     ==============================================================================
-    Omnibus:                     1752.103   Durbin-Watson:                   0.078
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            16365.764
+    Omnibus:                     1752.104   Durbin-Watson:                   0.078
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            16365.813
     Skew:                           1.309   Prob(JB):                         0.00
     Kurtosis:                      11.207   Cond. No.                         8.50
     ==============================================================================
@@ -9130,13 +9629,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_45.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_45.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_46.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_46.png)
     
 
 
@@ -9144,23 +9643,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     UPRO_Rolling_Future_Return_1y   R-squared:                       0.937
     Model:                                       OLS   Adj. R-squared:                  0.937
-    Method:                            Least Squares   F-statistic:                 7.757e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:25   Log-Likelihood:                 2737.3
-    No. Observations:                           5248   AIC:                            -5471.
-    Df Residuals:                               5246   BIC:                            -5457.
+    Method:                            Least Squares   F-statistic:                 7.751e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:31   Log-Likelihood:                 2737.4
+    No. Observations:                           5252   AIC:                            -5471.
+    Df Residuals:                               5250   BIC:                            -5458.
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                            0.0101      0.002      4.550      0.000       0.006       0.015
-    SPY_Rolling_Future_Return_1y     3.1690      0.011    278.518      0.000       3.147       3.191
+    const                            0.0100      0.002      4.499      0.000       0.006       0.014
+    SPY_Rolling_Future_Return_1y     3.1685      0.011    278.402      0.000       3.146       3.191
     ==============================================================================
-    Omnibus:                     1724.713   Durbin-Watson:                   0.051
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             9895.182
-    Skew:                           1.453   Prob(JB):                         0.00
-    Kurtosis:                       9.066   Cond. No.                         5.79
+    Omnibus:                     1724.172   Durbin-Watson:                   0.051
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             9878.617
+    Skew:                           1.452   Prob(JB):                         0.00
+    Kurtosis:                       9.059   Cond. No.                         5.79
     ==============================================================================
     
     Notes:
@@ -9169,13 +9668,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_48.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_48.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_49.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_49.png)
     
 
 
@@ -9184,8 +9683,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_2y   R-squared:                       0.895
     Model:                                       OLS   Adj. R-squared:                  0.895
     Method:                            Least Squares   F-statistic:                 4.481e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:26   Log-Likelihood:                -840.74
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:32   Log-Likelihood:                -840.74
     No. Observations:                           5235   AIC:                             1685.
     Df Residuals:                               5233   BIC:                             1699.
     Df Model:                                      1                                         
@@ -9197,7 +9696,7 @@ for drawdown in drawdown_levels:
     SPY_Rolling_Future_Return_2y     3.3654      0.016    211.679      0.000       3.334       3.397
     ==============================================================================
     Omnibus:                     1350.050   Durbin-Watson:                   0.031
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             4692.366
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             4692.374
     Skew:                           1.271   Prob(JB):                         0.00
     Kurtosis:                       6.879   Cond. No.                         4.18
     ==============================================================================
@@ -9208,13 +9707,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_51.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_51.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_52.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_52.png)
     
 
 
@@ -9222,23 +9721,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     UPRO_Rolling_Future_Return_3y   R-squared:                       0.885
     Model:                                       OLS   Adj. R-squared:                  0.885
-    Method:                            Least Squares   F-statistic:                 3.849e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:27   Log-Likelihood:                -2524.0
-    No. Observations:                           4998   AIC:                             5052.
-    Df Residuals:                               4996   BIC:                             5065.
+    Method:                            Least Squares   F-statistic:                 3.852e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:34   Log-Likelihood:                -2526.5
+    No. Observations:                           5002   AIC:                             5057.
+    Df Residuals:                               5000   BIC:                             5070.
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.1052      0.008    -13.955      0.000      -0.120      -0.090
-    SPY_Rolling_Future_Return_3y     3.8081      0.019    196.192      0.000       3.770       3.846
+    const                           -0.1050      0.008    -13.937      0.000      -0.120      -0.090
+    SPY_Rolling_Future_Return_3y     3.8062      0.019    196.263      0.000       3.768       3.844
     ==============================================================================
-    Omnibus:                     1497.695   Durbin-Watson:                   0.020
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             8214.199
-    Skew:                           1.324   Prob(JB):                         0.00
-    Kurtosis:                       8.695   Cond. No.                         3.66
+    Omnibus:                     1503.052   Durbin-Watson:                   0.020
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             8258.957
+    Skew:                           1.327   Prob(JB):                         0.00
+    Kurtosis:                       8.708   Cond. No.                         3.66
     ==============================================================================
     
     Notes:
@@ -9247,37 +9746,37 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_54.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_54.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_55.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_55.png)
     
 
 
                                       OLS Regression Results                                 
     =========================================================================================
-    Dep. Variable:     UPRO_Rolling_Future_Return_4y   R-squared:                       0.862
-    Model:                                       OLS   Adj. R-squared:                  0.862
-    Method:                            Least Squares   F-statistic:                 2.963e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:28   Log-Likelihood:                -4784.4
-    No. Observations:                           4757   AIC:                             9573.
-    Df Residuals:                               4755   BIC:                             9586.
+    Dep. Variable:     UPRO_Rolling_Future_Return_4y   R-squared:                       0.861
+    Model:                                       OLS   Adj. R-squared:                  0.861
+    Method:                            Least Squares   F-statistic:                 2.954e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:35   Log-Likelihood:                -4794.7
+    No. Observations:                           4761   AIC:                             9593.
+    Df Residuals:                               4759   BIC:                             9606.
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.3002      0.013    -22.587      0.000      -0.326      -0.274
-    SPY_Rolling_Future_Return_4y     4.6068      0.027    172.137      0.000       4.554       4.659
+    const                           -0.3006      0.013    -22.590      0.000      -0.327      -0.275
+    SPY_Rolling_Future_Return_4y     4.6048      0.027    171.866      0.000       4.552       4.657
     ==============================================================================
-    Omnibus:                     2932.099   Durbin-Watson:                   0.020
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            69932.785
-    Skew:                           2.518   Prob(JB):                         0.00
-    Kurtosis:                      21.096   Cond. No.                         3.16
+    Omnibus:                     2926.577   Durbin-Watson:                   0.020
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            69551.746
+    Skew:                           2.509   Prob(JB):                         0.00
+    Kurtosis:                      21.039   Cond. No.                         3.16
     ==============================================================================
     
     Notes:
@@ -9286,13 +9785,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_57.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_57.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_58.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_58.png)
     
 
 
@@ -9301,8 +9800,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_5y   R-squared:                       0.842
     Model:                                       OLS   Adj. R-squared:                  0.842
     Method:                            Least Squares   F-statistic:                 2.529e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:30   Log-Likelihood:                -6916.8
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:36   Log-Likelihood:                -6916.8
     No. Observations:                           4736   AIC:                         1.384e+04
     Df Residuals:                               4734   BIC:                         1.385e+04
     Df Model:                                      1                                         
@@ -9311,10 +9810,10 @@ for drawdown in drawdown_levels:
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
     const                           -0.6492      0.022    -29.490      0.000      -0.692      -0.606
-    SPY_Rolling_Future_Return_5y     5.4202      0.034    159.020      0.000       5.353       5.487
+    SPY_Rolling_Future_Return_5y     5.4202      0.034    159.019      0.000       5.353       5.487
     ==============================================================================
-    Omnibus:                     2512.987   Durbin-Watson:                   0.026
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            40989.263
+    Omnibus:                     2513.002   Durbin-Watson:                   0.026
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            40989.951
     Skew:                           2.157   Prob(JB):                         0.00
     Kurtosis:                      16.751   Cond. No.                         2.84
     ==============================================================================
@@ -9325,13 +9824,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_60.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_60.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_61.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_61.png)
     
 
 
@@ -9340,8 +9839,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1d   R-squared:                       0.997
     Model:                                       OLS   Adj. R-squared:                  0.997
     Method:                            Least Squares   F-statistic:                 1.595e+06
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:31   Log-Likelihood:                 22509.
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:37   Log-Likelihood:                 22509.
     No. Observations:                           4774   AIC:                        -4.501e+04
     Df Residuals:                               4772   BIC:                        -4.500e+04
     Df Model:                                      1                                         
@@ -9352,8 +9851,8 @@ for drawdown in drawdown_levels:
     const                           4.7e-05   3.14e-05      1.497      0.135   -1.46e-05       0.000
     SPY_Rolling_Future_Return_1d     2.9768      0.002   1263.103      0.000       2.972       2.981
     ==============================================================================
-    Omnibus:                     3250.843   Durbin-Watson:                   2.668
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):          1511414.470
+    Omnibus:                     3250.841   Durbin-Watson:                   2.668
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):          1511419.631
     Skew:                           2.004   Prob(JB):                         0.00
     Kurtosis:                      90.076   Cond. No.                         75.1
     ==============================================================================
@@ -9364,13 +9863,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_63.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_63.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_64.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_64.png)
     
 
 
@@ -9379,8 +9878,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1w   R-squared:                       0.993
     Model:                                       OLS   Adj. R-squared:                  0.993
     Method:                            Least Squares   F-statistic:                 6.655e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:32   Log-Likelihood:                 17170.
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:38   Log-Likelihood:                 17170.
     No. Observations:                           4774   AIC:                        -3.434e+04
     Df Residuals:                               4772   BIC:                        -3.432e+04
     Df Model:                                      1                                         
@@ -9391,8 +9890,8 @@ for drawdown in drawdown_levels:
     const                           -0.0002   9.63e-05     -1.929      0.054      -0.000    2.99e-06
     SPY_Rolling_Future_Return_1w     2.9716      0.004    815.801      0.000       2.964       2.979
     ==============================================================================
-    Omnibus:                     1997.752   Durbin-Watson:                   0.986
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           483400.223
+    Omnibus:                     1997.757   Durbin-Watson:                   0.986
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           483401.433
     Skew:                          -0.802   Prob(JB):                         0.00
     Kurtosis:                      52.271   Cond. No.                         37.9
     ==============================================================================
@@ -9403,13 +9902,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_66.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_66.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_67.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_67.png)
     
 
 
@@ -9418,8 +9917,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1m   R-squared:                       0.987
     Model:                                       OLS   Adj. R-squared:                  0.987
     Method:                            Least Squares   F-statistic:                 3.515e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:33   Log-Likelihood:                 12680.
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:39   Log-Likelihood:                 12680.
     No. Observations:                           4774   AIC:                        -2.536e+04
     Df Residuals:                               4772   BIC:                        -2.534e+04
     Df Model:                                      1                                         
@@ -9430,8 +9929,8 @@ for drawdown in drawdown_levels:
     const                           -0.0011      0.000     -4.428      0.000      -0.002      -0.001
     SPY_Rolling_Future_Return_1m     2.9621      0.005    592.897      0.000       2.952       2.972
     ==============================================================================
-    Omnibus:                     2677.436   Durbin-Watson:                   0.336
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           262814.760
+    Omnibus:                     2677.442   Durbin-Watson:                   0.336
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           262815.265
     Skew:                          -1.764   Prob(JB):                         0.00
     Kurtosis:                      39.177   Cond. No.                         20.3
     ==============================================================================
@@ -9442,13 +9941,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_69.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_69.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_70.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_70.png)
     
 
 
@@ -9457,8 +9956,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_3m   R-squared:                       0.978
     Model:                                       OLS   Adj. R-squared:                  0.978
     Method:                            Least Squares   F-statistic:                 2.123e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:34   Log-Likelihood:                 8982.1
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:40   Log-Likelihood:                 8982.1
     No. Observations:                           4774   AIC:                        -1.796e+04
     Df Residuals:                               4772   BIC:                        -1.795e+04
     Df Model:                                      1                                         
@@ -9469,10 +9968,10 @@ for drawdown in drawdown_levels:
     const                           -0.0024      0.001     -4.439      0.000      -0.004      -0.001
     SPY_Rolling_Future_Return_3m     3.0171      0.007    460.794      0.000       3.004       3.030
     ==============================================================================
-    Omnibus:                     1429.012   Durbin-Watson:                   0.169
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            68304.492
+    Omnibus:                     1429.013   Durbin-Watson:                   0.169
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            68304.746
     Skew:                           0.660   Prob(JB):                         0.00
-    Kurtosis:                      21.483   Cond. No.                         12.3
+    Kurtosis:                      21.484   Cond. No.                         12.3
     ==============================================================================
     
     Notes:
@@ -9481,13 +9980,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_72.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_72.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_73.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_73.png)
     
 
 
@@ -9496,8 +9995,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_6m   R-squared:                       0.960
     Model:                                       OLS   Adj. R-squared:                  0.960
     Method:                            Least Squares   F-statistic:                 1.138e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:36   Log-Likelihood:                 5697.0
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:41   Log-Likelihood:                 5697.0
     No. Observations:                           4774   AIC:                        -1.139e+04
     Df Residuals:                               4772   BIC:                        -1.138e+04
     Df Model:                                      1                                         
@@ -9509,7 +10008,7 @@ for drawdown in drawdown_levels:
     SPY_Rolling_Future_Return_6m     3.0135      0.009    337.350      0.000       2.996       3.031
     ==============================================================================
     Omnibus:                     1652.367   Durbin-Watson:                   0.081
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            14599.547
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            14599.595
     Skew:                           1.398   Prob(JB):                         0.00
     Kurtosis:                      11.098   Cond. No.                         8.43
     ==============================================================================
@@ -9520,13 +10019,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_75.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_75.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_76.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_76.png)
     
 
 
@@ -9535,8 +10034,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1y   R-squared:                       0.937
     Model:                                       OLS   Adj. R-squared:                  0.937
     Method:                            Least Squares   F-statistic:                 7.059e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:37   Log-Likelihood:                 2483.5
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:43   Log-Likelihood:                 2483.5
     No. Observations:                           4753   AIC:                            -4963.
     Df Residuals:                               4751   BIC:                            -4950.
     Df Model:                                      1                                         
@@ -9547,8 +10046,8 @@ for drawdown in drawdown_levels:
     const                            0.0150      0.002      6.476      0.000       0.010       0.020
     SPY_Rolling_Future_Return_1y     3.1488      0.012    265.683      0.000       3.126       3.172
     ==============================================================================
-    Omnibus:                     1666.063   Durbin-Watson:                   0.054
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            10578.908
+    Omnibus:                     1666.061   Durbin-Watson:                   0.054
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            10578.904
     Skew:                           1.528   Prob(JB):                         0.00
     Kurtosis:                       9.639   Cond. No.                         5.74
     ==============================================================================
@@ -9559,13 +10058,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_78.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_78.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_79.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_79.png)
     
 
 
@@ -9574,8 +10073,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_2y   R-squared:                       0.901
     Model:                                       OLS   Adj. R-squared:                  0.901
     Method:                            Least Squares   F-statistic:                 4.347e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:38   Log-Likelihood:                -568.49
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:44   Log-Likelihood:                -568.49
     No. Observations:                           4753   AIC:                             1141.
     Df Residuals:                               4751   BIC:                             1154.
     Df Model:                                      1                                         
@@ -9587,7 +10086,7 @@ for drawdown in drawdown_levels:
     SPY_Rolling_Future_Return_2y     3.3736      0.016    208.486      0.000       3.342       3.405
     ==============================================================================
     Omnibus:                     1332.905   Durbin-Watson:                   0.031
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             5113.742
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             5113.745
     Skew:                           1.349   Prob(JB):                         0.00
     Kurtosis:                       7.306   Cond. No.                         4.22
     ==============================================================================
@@ -9598,13 +10097,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_81.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_81.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_82.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_82.png)
     
 
 
@@ -9612,23 +10111,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     UPRO_Rolling_Future_Return_3y   R-squared:                       0.904
     Model:                                       OLS   Adj. R-squared:                  0.904
-    Method:                            Least Squares   F-statistic:                 4.265e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:39   Log-Likelihood:                -1581.0
-    No. Observations:                           4545   AIC:                             3166.
-    Df Residuals:                               4543   BIC:                             3179.
+    Method:                            Least Squares   F-statistic:                 4.268e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:45   Log-Likelihood:                -1583.7
+    No. Observations:                           4549   AIC:                             3171.
+    Df Residuals:                               4547   BIC:                             3184.
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0865      0.007    -12.630      0.000      -0.100      -0.073
-    SPY_Rolling_Future_Return_3y     3.7644      0.018    206.520      0.000       3.729       3.800
+    const                           -0.0863      0.007    -12.600      0.000      -0.100      -0.073
+    SPY_Rolling_Future_Return_3y     3.7621      0.018    206.583      0.000       3.726       3.798
     ==============================================================================
-    Omnibus:                      685.599   Durbin-Watson:                   0.019
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1776.838
-    Skew:                           0.833   Prob(JB):                         0.00
-    Kurtosis:                       5.571   Cond. No.                         3.83
+    Omnibus:                      689.204   Durbin-Watson:                   0.019
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1786.337
+    Skew:                           0.836   Prob(JB):                         0.00
+    Kurtosis:                       5.575   Cond. No.                         3.83
     ==============================================================================
     
     Notes:
@@ -9637,13 +10136,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_84.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_84.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_85.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_85.png)
     
 
 
@@ -9651,23 +10150,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     UPRO_Rolling_Future_Return_4y   R-squared:                       0.916
     Model:                                       OLS   Adj. R-squared:                  0.916
-    Method:                            Least Squares   F-statistic:                 4.728e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:40   Log-Likelihood:                -2622.0
-    No. Observations:                           4319   AIC:                             5248.
-    Df Residuals:                               4317   BIC:                             5261.
+    Method:                            Least Squares   F-statistic:                 4.692e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:46   Log-Likelihood:                -2639.4
+    No. Observations:                           4323   AIC:                             5283.
+    Df Residuals:                               4321   BIC:                             5296.
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.2143      0.009    -22.712      0.000      -0.233      -0.196
-    SPY_Rolling_Future_Return_4y     4.3762      0.020    217.433      0.000       4.337       4.416
+    const                           -0.2147      0.009    -22.670      0.000      -0.233      -0.196
+    SPY_Rolling_Future_Return_4y     4.3735      0.020    216.604      0.000       4.334       4.413
     ==============================================================================
-    Omnibus:                      112.708   Durbin-Watson:                   0.023
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              238.544
-    Skew:                          -0.138   Prob(JB):                     1.59e-52
-    Kurtosis:                       4.118   Cond. No.                         3.33
+    Omnibus:                      115.551   Durbin-Watson:                   0.023
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              243.237
+    Skew:                          -0.148   Prob(JB):                     1.52e-53
+    Kurtosis:                       4.124   Cond. No.                         3.33
     ==============================================================================
     
     Notes:
@@ -9676,13 +10175,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_87.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_87.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_88.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_88.png)
     
 
 
@@ -9691,8 +10190,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_5y   R-squared:                       0.887
     Model:                                       OLS   Adj. R-squared:                  0.887
     Method:                            Least Squares   F-statistic:                 3.391e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:42   Log-Likelihood:                -4969.9
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:47   Log-Likelihood:                -4969.9
     No. Observations:                           4317   AIC:                             9944.
     Df Residuals:                               4315   BIC:                             9957.
     Df Model:                                      1                                         
@@ -9703,8 +10202,8 @@ for drawdown in drawdown_levels:
     const                           -0.4824      0.017    -28.176      0.000      -0.516      -0.449
     SPY_Rolling_Future_Return_5y     5.0841      0.028    184.147      0.000       5.030       5.138
     ==============================================================================
-    Omnibus:                      712.799   Durbin-Watson:                   0.017
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             3463.389
+    Omnibus:                      712.801   Durbin-Watson:                   0.017
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             3463.411
     Skew:                           0.712   Prob(JB):                         0.00
     Kurtosis:                       7.150   Cond. No.                         2.94
     ==============================================================================
@@ -9715,13 +10214,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_90.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_90.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_91.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_91.png)
     
 
 
@@ -9730,8 +10229,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1d   R-squared:                       0.997
     Model:                                       OLS   Adj. R-squared:                  0.997
     Method:                            Least Squares   F-statistic:                 1.488e+06
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:43   Log-Likelihood:                 21081.
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:48   Log-Likelihood:                 21081.
     No. Observations:                           4464   AIC:                        -4.216e+04
     Df Residuals:                               4462   BIC:                        -4.214e+04
     Df Model:                                      1                                         
@@ -9740,10 +10239,10 @@ for drawdown in drawdown_levels:
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
     const                         4.396e-05   3.22e-05      1.364      0.173   -1.92e-05       0.000
-    SPY_Rolling_Future_Return_1d     2.9793      0.002   1219.664      0.000       2.974       2.984
+    SPY_Rolling_Future_Return_1d     2.9793      0.002   1219.665      0.000       2.974       2.984
     ==============================================================================
-    Omnibus:                     2686.077   Durbin-Watson:                   2.618
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):          1503196.947
+    Omnibus:                     2686.074   Durbin-Watson:                   2.618
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):          1503202.742
     Skew:                           1.531   Prob(JB):                         0.00
     Kurtosis:                      92.846   Cond. No.                         75.8
     ==============================================================================
@@ -9754,13 +10253,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_93.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_93.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_94.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_94.png)
     
 
 
@@ -9769,8 +10268,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1w   R-squared:                       0.993
     Model:                                       OLS   Adj. R-squared:                  0.993
     Method:                            Least Squares   F-statistic:                 6.179e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:44   Log-Likelihood:                 16080.
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:49   Log-Likelihood:                 16080.
     No. Observations:                           4464   AIC:                        -3.216e+04
     Df Residuals:                               4462   BIC:                        -3.214e+04
     Df Model:                                      1                                         
@@ -9781,8 +10280,8 @@ for drawdown in drawdown_levels:
     const                           -0.0002    9.9e-05     -1.778      0.075      -0.000     1.8e-05
     SPY_Rolling_Future_Return_1w     2.9718      0.004    786.075      0.000       2.964       2.979
     ==============================================================================
-    Omnibus:                     1978.267   Durbin-Watson:                   0.971
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           519572.475
+    Omnibus:                     1978.273   Durbin-Watson:                   0.971
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           519573.742
     Skew:                          -0.906   Prob(JB):                         0.00
     Kurtosis:                      55.822   Cond. No.                         38.3
     ==============================================================================
@@ -9793,13 +10292,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_96.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_96.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_97.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_97.png)
     
 
 
@@ -9808,8 +10307,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1m   R-squared:                       0.986
     Model:                                       OLS   Adj. R-squared:                  0.986
     Method:                            Least Squares   F-statistic:                 3.225e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:45   Log-Likelihood:                 11851.
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:50   Log-Likelihood:                 11851.
     No. Observations:                           4464   AIC:                        -2.370e+04
     Df Residuals:                               4462   BIC:                        -2.368e+04
     Df Model:                                      1                                         
@@ -9820,8 +10319,8 @@ for drawdown in drawdown_levels:
     const                           -0.0009      0.000     -3.423      0.001      -0.001      -0.000
     SPY_Rolling_Future_Return_1m     2.9521      0.005    567.899      0.000       2.942       2.962
     ==============================================================================
-    Omnibus:                     2550.504   Durbin-Watson:                   0.358
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           256191.593
+    Omnibus:                     2550.510   Durbin-Watson:                   0.358
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           256192.123
     Skew:                          -1.811   Prob(JB):                         0.00
     Kurtosis:                      39.936   Cond. No.                         20.4
     ==============================================================================
@@ -9832,13 +10331,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_99.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_99.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_100.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_100.png)
     
 
 
@@ -9847,8 +10346,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_3m   R-squared:                       0.978
     Model:                                       OLS   Adj. R-squared:                  0.978
     Method:                            Least Squares   F-statistic:                 2.007e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:46   Log-Likelihood:                 8451.5
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:52   Log-Likelihood:                 8451.5
     No. Observations:                           4464   AIC:                        -1.690e+04
     Df Residuals:                               4462   BIC:                        -1.689e+04
     Df Model:                                      1                                         
@@ -9859,8 +10358,8 @@ for drawdown in drawdown_levels:
     const                           -0.0018      0.001     -3.149      0.002      -0.003      -0.001
     SPY_Rolling_Future_Return_3m     3.0075      0.007    448.019      0.000       2.994       3.021
     ==============================================================================
-    Omnibus:                     1648.790   Durbin-Watson:                   0.182
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            57107.468
+    Omnibus:                     1648.791   Durbin-Watson:                   0.182
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            57107.738
     Skew:                           1.101   Prob(JB):                         0.00
     Kurtosis:                      20.383   Cond. No.                         12.3
     ==============================================================================
@@ -9871,13 +10370,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_102.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_102.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_103.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_103.png)
     
 
 
@@ -9886,8 +10385,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_6m   R-squared:                       0.959
     Model:                                       OLS   Adj. R-squared:                  0.959
     Method:                            Least Squares   F-statistic:                 1.039e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:48   Log-Likelihood:                 5314.4
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:53   Log-Likelihood:                 5314.4
     No. Observations:                           4464   AIC:                        -1.062e+04
     Df Residuals:                               4462   BIC:                        -1.061e+04
     Df Model:                                      1                                         
@@ -9898,8 +10397,8 @@ for drawdown in drawdown_levels:
     const                            0.0040      0.001      3.492      0.000       0.002       0.006
     SPY_Rolling_Future_Return_6m     2.9974      0.009    322.290      0.000       2.979       3.016
     ==============================================================================
-    Omnibus:                     1611.795   Durbin-Watson:                   0.081
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            13016.420
+    Omnibus:                     1611.796   Durbin-Watson:                   0.081
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            13016.465
     Skew:                           1.500   Prob(JB):                         0.00
     Kurtosis:                      10.809   Cond. No.                         8.46
     ==============================================================================
@@ -9910,13 +10409,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_105.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_105.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_106.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_106.png)
     
 
 
@@ -9925,8 +10424,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1y   R-squared:                       0.936
     Model:                                       OLS   Adj. R-squared:                  0.936
     Method:                            Least Squares   F-statistic:                 6.492e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:49   Log-Likelihood:                 2334.7
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:54   Log-Likelihood:                 2334.7
     No. Observations:                           4456   AIC:                            -4665.
     Df Residuals:                               4454   BIC:                            -4653.
     Df Model:                                      1                                         
@@ -9937,8 +10436,8 @@ for drawdown in drawdown_levels:
     const                            0.0162      0.002      6.861      0.000       0.012       0.021
     SPY_Rolling_Future_Return_1y     3.1341      0.012    254.788      0.000       3.110       3.158
     ==============================================================================
-    Omnibus:                     1684.542   Durbin-Watson:                   0.054
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            11773.004
+    Omnibus:                     1684.541   Durbin-Watson:                   0.054
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            11772.994
     Skew:                           1.634   Prob(JB):                         0.00
     Kurtosis:                      10.262   Cond. No.                         5.77
     ==============================================================================
@@ -9949,13 +10448,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_108.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_108.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_109.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_109.png)
     
 
 
@@ -9964,8 +10463,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_2y   R-squared:                       0.907
     Model:                                       OLS   Adj. R-squared:                  0.907
     Method:                            Least Squares   F-statistic:                 4.354e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:50   Log-Likelihood:                -457.07
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:55   Log-Likelihood:                -457.07
     No. Observations:                           4456   AIC:                             918.1
     Df Residuals:                               4454   BIC:                             930.9
     Df Model:                                      1                                         
@@ -9976,8 +10475,8 @@ for drawdown in drawdown_levels:
     const                            0.0011      0.005      0.221      0.825      -0.009       0.011
     SPY_Rolling_Future_Return_2y     3.4517      0.017    208.652      0.000       3.419       3.484
     ==============================================================================
-    Omnibus:                     1243.361   Durbin-Watson:                   0.033
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             4602.615
+    Omnibus:                     1243.360   Durbin-Watson:                   0.033
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             4602.619
     Skew:                           1.354   Prob(JB):                         0.00
     Kurtosis:                       7.179   Cond. No.                         4.25
     ==============================================================================
@@ -9988,13 +10487,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_111.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_111.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_112.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_112.png)
     
 
 
@@ -10002,23 +10501,23 @@ for drawdown in drawdown_levels:
     =========================================================================================
     Dep. Variable:     UPRO_Rolling_Future_Return_3y   R-squared:                       0.907
     Model:                                       OLS   Adj. R-squared:                  0.907
-    Method:                            Least Squares   F-statistic:                 4.210e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:51   Log-Likelihood:                -1442.5
-    No. Observations:                           4323   AIC:                             2889.
-    Df Residuals:                               4321   BIC:                             2902.
+    Method:                            Least Squares   F-statistic:                 4.212e+04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:56   Log-Likelihood:                -1445.7
+    No. Observations:                           4327   AIC:                             2895.
+    Df Residuals:                               4325   BIC:                             2908.
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0838      0.007    -12.068      0.000      -0.097      -0.070
-    SPY_Rolling_Future_Return_3y     3.8006      0.019    205.187      0.000       3.764       3.837
+    const                           -0.0836      0.007    -12.033      0.000      -0.097      -0.070
+    SPY_Rolling_Future_Return_3y     3.7980      0.019    205.221      0.000       3.762       3.834
     ==============================================================================
-    Omnibus:                      700.473   Durbin-Watson:                   0.022
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1800.061
-    Skew:                           0.891   Prob(JB):                         0.00
-    Kurtosis:                       5.611   Cond. No.                         3.85
+    Omnibus:                      703.791   Durbin-Watson:                   0.022
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1808.699
+    Skew:                           0.894   Prob(JB):                         0.00
+    Kurtosis:                       5.614   Cond. No.                         3.85
     ==============================================================================
     
     Notes:
@@ -10027,13 +10526,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_114.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_114.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_115.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_115.png)
     
 
 
@@ -10042,8 +10541,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_4y   R-squared:                       0.926
     Model:                                       OLS   Adj. R-squared:                  0.926
     Method:                            Least Squares   F-statistic:                 5.187e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:52   Log-Likelihood:                -2273.5
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:58   Log-Likelihood:                -2273.5
     No. Observations:                           4126   AIC:                             4551.
     Df Residuals:                               4124   BIC:                             4564.
     Df Model:                                      1                                         
@@ -10051,12 +10550,12 @@ for drawdown in drawdown_levels:
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.2233      0.009    -24.385      0.000      -0.241      -0.205
+    const                           -0.2233      0.009    -24.386      0.000      -0.241      -0.205
     SPY_Rolling_Future_Return_4y     4.4751      0.020    227.751      0.000       4.437       4.514
     ==============================================================================
-    Omnibus:                      119.525   Durbin-Watson:                   0.024
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              294.806
-    Skew:                          -0.074   Prob(JB):                     9.63e-65
+    Omnibus:                      119.526   Durbin-Watson:                   0.024
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              294.809
+    Skew:                          -0.074   Prob(JB):                     9.62e-65
     Kurtosis:                       4.301   Cond. No.                         3.36
     ==============================================================================
     
@@ -10066,13 +10565,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_117.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_117.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_118.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_118.png)
     
 
 
@@ -10081,8 +10580,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_5y   R-squared:                       0.896
     Model:                                       OLS   Adj. R-squared:                  0.896
     Method:                            Least Squares   F-statistic:                 3.555e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:54   Log-Likelihood:                -4610.6
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:50:59   Log-Likelihood:                -4610.6
     No. Observations:                           4126   AIC:                             9225.
     Df Residuals:                               4124   BIC:                             9238.
     Df Model:                                      1                                         
@@ -10093,8 +10592,8 @@ for drawdown in drawdown_levels:
     const                           -0.5058      0.017    -29.867      0.000      -0.539      -0.473
     SPY_Rolling_Future_Return_5y     5.2122      0.028    188.534      0.000       5.158       5.266
     ==============================================================================
-    Omnibus:                      688.588   Durbin-Watson:                   0.019
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             3306.754
+    Omnibus:                      688.590   Durbin-Watson:                   0.019
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             3306.777
     Skew:                           0.724   Prob(JB):                         0.00
     Kurtosis:                       7.140   Cond. No.                         2.96
     ==============================================================================
@@ -10105,13 +10604,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_120.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_120.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_121.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_121.png)
     
 
 
@@ -10120,8 +10619,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1d   R-squared:                       0.997
     Model:                                       OLS   Adj. R-squared:                  0.997
     Method:                            Least Squares   F-statistic:                 1.317e+06
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:55   Log-Likelihood:                 18256.
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:00   Log-Likelihood:                 18256.
     No. Observations:                           3871   AIC:                        -3.651e+04
     Df Residuals:                               3869   BIC:                        -3.650e+04
     Df Model:                                      1                                         
@@ -10130,10 +10629,10 @@ for drawdown in drawdown_levels:
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
     const                         6.221e-05   3.48e-05      1.786      0.074   -6.08e-06       0.000
-    SPY_Rolling_Future_Return_1d     2.9842      0.003   1147.793      0.000       2.979       2.989
+    SPY_Rolling_Future_Return_1d     2.9842      0.003   1147.794      0.000       2.979       2.989
     ==============================================================================
-    Omnibus:                     2862.865   Durbin-Watson:                   2.686
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):          1149210.351
+    Omnibus:                     2862.869   Durbin-Watson:                   2.686
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):          1149211.801
     Skew:                           2.367   Prob(JB):                         0.00
     Kurtosis:                      87.277   Cond. No.                         74.7
     ==============================================================================
@@ -10144,13 +10643,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_123.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_123.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_124.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_124.png)
     
 
 
@@ -10159,8 +10658,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1w   R-squared:                       0.992
     Model:                                       OLS   Adj. R-squared:                  0.992
     Method:                            Least Squares   F-statistic:                 5.116e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:56   Log-Likelihood:                 13825.
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:01   Log-Likelihood:                 13825.
     No. Observations:                           3871   AIC:                        -2.765e+04
     Df Residuals:                               3869   BIC:                        -2.763e+04
     Df Model:                                      1                                         
@@ -10171,8 +10670,8 @@ for drawdown in drawdown_levels:
     const                           -0.0001      0.000     -0.958      0.338      -0.000       0.000
     SPY_Rolling_Future_Return_1w     2.9704      0.004    715.239      0.000       2.962       2.979
     ==============================================================================
-    Omnibus:                     1716.538   Durbin-Watson:                   1.002
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           449887.905
+    Omnibus:                     1716.544   Durbin-Watson:                   1.002
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           449889.145
     Skew:                          -0.903   Prob(JB):                         0.00
     Kurtosis:                      55.783   Cond. No.                         38.0
     ==============================================================================
@@ -10183,13 +10682,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_126.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_126.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_127.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_127.png)
     
 
 
@@ -10198,8 +10697,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1m   R-squared:                       0.986
     Model:                                       OLS   Adj. R-squared:                  0.986
     Method:                            Least Squares   F-statistic:                 2.738e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:57   Log-Likelihood:                 10219.
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:02   Log-Likelihood:                 10219.
     No. Observations:                           3871   AIC:                        -2.043e+04
     Df Residuals:                               3869   BIC:                        -2.042e+04
     Df Model:                                      1                                         
@@ -10210,8 +10709,8 @@ for drawdown in drawdown_levels:
     const                           -0.0008      0.000     -2.717      0.007      -0.001      -0.000
     SPY_Rolling_Future_Return_1m     2.9439      0.006    523.305      0.000       2.933       2.955
     ==============================================================================
-    Omnibus:                     2107.631   Durbin-Watson:                   0.385
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           199364.230
+    Omnibus:                     2107.638   Durbin-Watson:                   0.385
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           199364.854
     Skew:                          -1.681   Prob(JB):                         0.00
     Kurtosis:                      37.996   Cond. No.                         20.3
     ==============================================================================
@@ -10222,13 +10721,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_129.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_129.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_130.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_130.png)
     
 
 
@@ -10237,8 +10736,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_3m   R-squared:                       0.978
     Model:                                       OLS   Adj. R-squared:                  0.978
     Method:                            Least Squares   F-statistic:                 1.701e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:28:58   Log-Likelihood:                 7306.6
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:03   Log-Likelihood:                 7306.6
     No. Observations:                           3871   AIC:                        -1.461e+04
     Df Residuals:                               3869   BIC:                        -1.460e+04
     Df Model:                                      1                                         
@@ -10250,7 +10749,7 @@ for drawdown in drawdown_levels:
     SPY_Rolling_Future_Return_3m     2.9840      0.007    412.439      0.000       2.970       2.998
     ==============================================================================
     Omnibus:                     1375.125   Durbin-Watson:                   0.193
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            43082.229
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            43082.434
     Skew:                           1.059   Prob(JB):                         0.00
     Kurtosis:                      19.206   Cond. No.                         12.3
     ==============================================================================
@@ -10261,13 +10760,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_132.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_132.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_133.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_133.png)
     
 
 
@@ -10276,8 +10775,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_6m   R-squared:                       0.957
     Model:                                       OLS   Adj. R-squared:                  0.957
     Method:                            Least Squares   F-statistic:                 8.590e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:00   Log-Likelihood:                 4532.3
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:04   Log-Likelihood:                 4532.3
     No. Observations:                           3871   AIC:                            -9061.
     Df Residuals:                               3869   BIC:                            -9048.
     Df Model:                                      1                                         
@@ -10289,7 +10788,7 @@ for drawdown in drawdown_levels:
     SPY_Rolling_Future_Return_6m     2.9569      0.010    293.089      0.000       2.937       2.977
     ==============================================================================
     Omnibus:                     1292.768   Durbin-Watson:                   0.081
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             9397.773
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             9397.804
     Skew:                           1.396   Prob(JB):                         0.00
     Kurtosis:                      10.104   Cond. No.                         8.37
     ==============================================================================
@@ -10300,13 +10799,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_135.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_135.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_136.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_136.png)
     
 
 
@@ -10315,8 +10814,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1y   R-squared:                       0.933
     Model:                                       OLS   Adj. R-squared:                  0.933
     Method:                            Least Squares   F-statistic:                 5.409e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:01   Log-Likelihood:                 1958.2
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:06   Log-Likelihood:                 1958.2
     No. Observations:                           3871   AIC:                            -3912.
     Df Residuals:                               3869   BIC:                            -3900.
     Df Model:                                      1                                         
@@ -10327,8 +10826,8 @@ for drawdown in drawdown_levels:
     const                            0.0174      0.003      6.787      0.000       0.012       0.022
     SPY_Rolling_Future_Return_1y     3.1291      0.013    232.562      0.000       3.103       3.155
     ==============================================================================
-    Omnibus:                     1514.882   Durbin-Watson:                   0.057
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            11136.976
+    Omnibus:                     1514.881   Durbin-Watson:                   0.057
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            11136.961
     Skew:                           1.682   Prob(JB):                         0.00
     Kurtosis:                      10.598   Cond. No.                         5.77
     ==============================================================================
@@ -10339,13 +10838,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_138.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_138.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_139.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_139.png)
     
 
 
@@ -10354,8 +10853,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_2y   R-squared:                       0.912
     Model:                                       OLS   Adj. R-squared:                  0.912
     Method:                            Least Squares   F-statistic:                 4.022e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:02   Log-Likelihood:                -377.53
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:07   Log-Likelihood:                -377.53
     No. Observations:                           3871   AIC:                             759.1
     Df Residuals:                               3869   BIC:                             771.6
     Df Model:                                      1                                         
@@ -10367,7 +10866,7 @@ for drawdown in drawdown_levels:
     SPY_Rolling_Future_Return_2y     3.5921      0.018    200.550      0.000       3.557       3.627
     ==============================================================================
     Omnibus:                     1084.267   Durbin-Watson:                   0.036
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             3631.483
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             3631.488
     Skew:                           1.395   Prob(JB):                         0.00
     Kurtosis:                       6.839   Cond. No.                         4.30
     ==============================================================================
@@ -10378,13 +10877,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_141.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_141.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_142.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_142.png)
     
 
 
@@ -10393,22 +10892,22 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_3y   R-squared:                       0.911
     Model:                                       OLS   Adj. R-squared:                  0.911
     Method:                            Least Squares   F-statistic:                 3.909e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:03   Log-Likelihood:                -1292.1
-    No. Observations:                           3832   AIC:                             2588.
-    Df Residuals:                               3830   BIC:                             2601.
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:08   Log-Likelihood:                -1296.2
+    No. Observations:                           3836   AIC:                             2596.
+    Df Residuals:                               3834   BIC:                             2609.
     Df Model:                                      1                                         
     Covariance Type:                       nonrobust                                         
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.0884      0.007    -12.033      0.000      -0.103      -0.074
-    SPY_Rolling_Future_Return_3y     3.8786      0.020    197.723      0.000       3.840       3.917
+    const                           -0.0882      0.007    -11.990      0.000      -0.103      -0.074
+    SPY_Rolling_Future_Return_3y     3.8754      0.020    197.704      0.000       3.837       3.914
     ==============================================================================
-    Omnibus:                      631.089   Durbin-Watson:                   0.022
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1399.356
-    Skew:                           0.954   Prob(JB):                    1.36e-304
-    Kurtosis:                       5.263   Cond. No.                         3.82
+    Omnibus:                      633.463   Durbin-Watson:                   0.022
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1405.435
+    Skew:                           0.956   Prob(JB):                    6.51e-306
+    Kurtosis:                       5.266   Cond. No.                         3.82
     ==============================================================================
     
     Notes:
@@ -10417,13 +10916,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_144.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_144.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_145.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_145.png)
     
 
 
@@ -10432,8 +10931,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_4y   R-squared:                       0.940
     Model:                                       OLS   Adj. R-squared:                  0.940
     Method:                            Least Squares   F-statistic:                 5.811e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:04   Log-Likelihood:                -1764.0
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:09   Log-Likelihood:                -1764.0
     No. Observations:                           3696   AIC:                             3532.
     Df Residuals:                               3694   BIC:                             3544.
     Df Model:                                      1                                         
@@ -10444,9 +10943,9 @@ for drawdown in drawdown_levels:
     const                           -0.2199      0.009    -24.595      0.000      -0.237      -0.202
     SPY_Rolling_Future_Return_4y     4.5978      0.019    241.056      0.000       4.560       4.635
     ==============================================================================
-    Omnibus:                      141.094   Durbin-Watson:                   0.030
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              415.728
-    Skew:                           0.068   Prob(JB):                     5.32e-91
+    Omnibus:                      141.095   Durbin-Watson:                   0.030
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              415.732
+    Skew:                           0.068   Prob(JB):                     5.31e-91
     Kurtosis:                       4.637   Cond. No.                         3.32
     ==============================================================================
     
@@ -10456,13 +10955,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_147.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_147.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_148.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_148.png)
     
 
 
@@ -10471,8 +10970,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_5y   R-squared:                       0.907
     Model:                                       OLS   Adj. R-squared:                  0.907
     Method:                            Least Squares   F-statistic:                 3.594e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:05   Log-Likelihood:                -3996.6
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:10   Log-Likelihood:                -3996.6
     No. Observations:                           3696   AIC:                             7997.
     Df Residuals:                               3694   BIC:                             8010.
     Df Model:                                      1                                         
@@ -10483,8 +10982,8 @@ for drawdown in drawdown_levels:
     const                           -0.5139      0.017    -30.042      0.000      -0.547      -0.480
     SPY_Rolling_Future_Return_5y     5.3991      0.028    189.589      0.000       5.343       5.455
     ==============================================================================
-    Omnibus:                      551.159   Durbin-Watson:                   0.022
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             2881.358
+    Omnibus:                      551.161   Durbin-Watson:                   0.022
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             2881.381
     Skew:                           0.609   Prob(JB):                         0.00
     Kurtosis:                       7.151   Cond. No.                         2.96
     ==============================================================================
@@ -10495,13 +10994,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_150.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_150.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_151.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_151.png)
     
 
 
@@ -10510,8 +11009,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1d   R-squared:                       0.997
     Model:                                       OLS   Adj. R-squared:                  0.997
     Method:                            Least Squares   F-statistic:                 1.059e+06
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:07   Log-Likelihood:                 14432.
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:11   Log-Likelihood:                 14432.
     No. Observations:                           3070   AIC:                        -2.886e+04
     Df Residuals:                               3068   BIC:                        -2.885e+04
     Df Model:                                      1                                         
@@ -10520,10 +11019,10 @@ for drawdown in drawdown_levels:
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
     const                          7.42e-05   3.97e-05      1.868      0.062   -3.69e-06       0.000
-    SPY_Rolling_Future_Return_1d     2.9825      0.003   1028.945      0.000       2.977       2.988
+    SPY_Rolling_Future_Return_1d     2.9825      0.003   1028.946      0.000       2.977       2.988
     ==============================================================================
-    Omnibus:                     2273.218   Durbin-Watson:                   2.537
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):          1053036.968
+    Omnibus:                     2273.216   Durbin-Watson:                   2.537
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):          1053039.180
     Skew:                           2.319   Prob(JB):                         0.00
     Kurtosis:                      93.613   Cond. No.                         73.0
     ==============================================================================
@@ -10534,13 +11033,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_153.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_153.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_154.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_154.png)
     
 
 
@@ -10549,8 +11048,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1w   R-squared:                       0.992
     Model:                                       OLS   Adj. R-squared:                  0.992
     Method:                            Least Squares   F-statistic:                 3.762e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:08   Log-Likelihood:                 10750.
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:13   Log-Likelihood:                 10750.
     No. Observations:                           3070   AIC:                        -2.150e+04
     Df Residuals:                               3068   BIC:                        -2.148e+04
     Df Model:                                      1                                         
@@ -10561,10 +11060,10 @@ for drawdown in drawdown_levels:
     const                           -0.0001      0.000     -1.043      0.297      -0.000       0.000
     SPY_Rolling_Future_Return_1w     2.9678      0.005    613.318      0.000       2.958       2.977
     ==============================================================================
-    Omnibus:                     1399.948   Durbin-Watson:                   1.060
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           313435.830
+    Omnibus:                     1399.953   Durbin-Watson:                   1.060
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           313436.633
     Skew:                          -0.997   Prob(JB):                         0.00
-    Kurtosis:                      52.460   Cond. No.                         36.7
+    Kurtosis:                      52.461   Cond. No.                         36.7
     ==============================================================================
     
     Notes:
@@ -10573,13 +11072,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_156.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_156.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_157.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_157.png)
     
 
 
@@ -10588,8 +11087,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1m   R-squared:                       0.986
     Model:                                       OLS   Adj. R-squared:                  0.986
     Method:                            Least Squares   F-statistic:                 2.086e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:09   Log-Likelihood:                 7938.3
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:14   Log-Likelihood:                 7938.3
     No. Observations:                           3070   AIC:                        -1.587e+04
     Df Residuals:                               3068   BIC:                        -1.586e+04
     Df Model:                                      1                                         
@@ -10600,8 +11099,8 @@ for drawdown in drawdown_levels:
     const                           -0.0006      0.000     -1.711      0.087      -0.001     8.3e-05
     SPY_Rolling_Future_Return_1m     2.9397      0.006    456.774      0.000       2.927       2.952
     ==============================================================================
-    Omnibus:                     1387.733   Durbin-Watson:                   0.407
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           109426.463
+    Omnibus:                     1387.739   Durbin-Watson:                   0.407
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           109426.916
     Skew:                          -1.256   Prob(JB):                         0.00
     Kurtosis:                      32.140   Cond. No.                         19.6
     ==============================================================================
@@ -10612,13 +11111,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_159.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_159.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_160.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_160.png)
     
 
 
@@ -10627,8 +11126,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_3m   R-squared:                       0.977
     Model:                                       OLS   Adj. R-squared:                  0.977
     Method:                            Least Squares   F-statistic:                 1.313e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:10   Log-Likelihood:                 5610.5
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:15   Log-Likelihood:                 5610.5
     No. Observations:                           3070   AIC:                        -1.122e+04
     Df Residuals:                               3068   BIC:                        -1.121e+04
     Df Model:                                      1                                         
@@ -10640,7 +11139,7 @@ for drawdown in drawdown_levels:
     SPY_Rolling_Future_Return_3m     2.9878      0.008    362.348      0.000       2.972       3.004
     ==============================================================================
     Omnibus:                     1129.279   Durbin-Watson:                   0.193
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            29419.559
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            29419.689
     Skew:                           1.166   Prob(JB):                         0.00
     Kurtosis:                      17.985   Cond. No.                         11.7
     ==============================================================================
@@ -10651,13 +11150,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_162.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_162.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_163.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_163.png)
     
 
 
@@ -10666,8 +11165,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_6m   R-squared:                       0.956
     Model:                                       OLS   Adj. R-squared:                  0.956
     Method:                            Least Squares   F-statistic:                 6.658e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:11   Log-Likelihood:                 3373.6
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:16   Log-Likelihood:                 3373.6
     No. Observations:                           3070   AIC:                            -6743.
     Df Residuals:                               3068   BIC:                            -6731.
     Df Model:                                      1                                         
@@ -10679,7 +11178,7 @@ for drawdown in drawdown_levels:
     SPY_Rolling_Future_Return_6m     2.9412      0.011    258.024      0.000       2.919       2.964
     ==============================================================================
     Omnibus:                      862.196   Durbin-Watson:                   0.075
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             5064.599
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             5064.617
     Skew:                           1.201   Prob(JB):                         0.00
     Kurtosis:                       8.816   Cond. No.                         7.84
     ==============================================================================
@@ -10690,13 +11189,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_165.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_165.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_166.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_166.png)
     
 
 
@@ -10705,8 +11204,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1y   R-squared:                       0.932
     Model:                                       OLS   Adj. R-squared:                  0.932
     Method:                            Least Squares   F-statistic:                 4.197e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:12   Log-Likelihood:                 1581.2
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:17   Log-Likelihood:                 1581.2
     No. Observations:                           3070   AIC:                            -3158.
     Df Residuals:                               3068   BIC:                            -3146.
     Df Model:                                      1                                         
@@ -10717,8 +11216,8 @@ for drawdown in drawdown_levels:
     const                            0.0132      0.003      4.453      0.000       0.007       0.019
     SPY_Rolling_Future_Return_1y     3.1762      0.016    204.862      0.000       3.146       3.207
     ==============================================================================
-    Omnibus:                     1210.909   Durbin-Watson:                   0.065
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            10511.033
+    Omnibus:                     1210.907   Durbin-Watson:                   0.065
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            10511.015
     Skew:                           1.634   Prob(JB):                         0.00
     Kurtosis:                      11.455   Cond. No.                         5.99
     ==============================================================================
@@ -10729,13 +11228,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_168.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_168.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_169.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_169.png)
     
 
 
@@ -10744,8 +11243,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_2y   R-squared:                       0.932
     Model:                                       OLS   Adj. R-squared:                  0.932
     Method:                            Least Squares   F-statistic:                 4.210e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:14   Log-Likelihood:                 230.85
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:18   Log-Likelihood:                 230.85
     No. Observations:                           3070   AIC:                            -457.7
     Df Residuals:                               3068   BIC:                            -445.6
     Df Model:                                      1                                         
@@ -10757,7 +11256,7 @@ for drawdown in drawdown_levels:
     SPY_Rolling_Future_Return_2y     4.1802      0.020    205.190      0.000       4.140       4.220
     ==============================================================================
     Omnibus:                      971.652   Durbin-Watson:                   0.048
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             5574.704
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             5574.723
     Skew:                           1.382   Prob(JB):                         0.00
     Kurtosis:                       8.995   Cond. No.                         5.23
     ==============================================================================
@@ -10768,13 +11267,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_171.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_171.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_172.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_172.png)
     
 
 
@@ -10783,8 +11282,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_3y   R-squared:                       0.906
     Model:                                       OLS   Adj. R-squared:                  0.906
     Method:                            Least Squares   F-statistic:                 2.942e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:15   Log-Likelihood:                -1092.7
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:20   Log-Likelihood:                -1092.7
     No. Observations:                           3070   AIC:                             2189.
     Df Residuals:                               3068   BIC:                             2201.
     Df Model:                                      1                                         
@@ -10795,9 +11294,9 @@ for drawdown in drawdown_levels:
     const                           -0.1351      0.009    -15.223      0.000      -0.153      -0.118
     SPY_Rolling_Future_Return_3y     4.1099      0.024    171.519      0.000       4.063       4.157
     ==============================================================================
-    Omnibus:                      523.372   Durbin-Watson:                   0.022
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              948.088
-    Skew:                           1.070   Prob(JB):                    1.33e-206
+    Omnibus:                      523.371   Durbin-Watson:                   0.022
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              948.085
+    Skew:                           1.070   Prob(JB):                    1.34e-206
     Kurtosis:                       4.682   Cond. No.                         4.13
     ==============================================================================
     
@@ -10807,13 +11306,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_174.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_174.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_175.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_175.png)
     
 
 
@@ -10822,8 +11321,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_4y   R-squared:                       0.942
     Model:                                       OLS   Adj. R-squared:                  0.942
     Method:                            Least Squares   F-statistic:                 4.920e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:16   Log-Likelihood:                -1478.5
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:21   Log-Likelihood:                -1478.5
     No. Observations:                           3055   AIC:                             2961.
     Df Residuals:                               3053   BIC:                             2973.
     Df Model:                                      1                                         
@@ -10834,9 +11333,9 @@ for drawdown in drawdown_levels:
     const                           -0.2228      0.010    -21.595      0.000      -0.243      -0.203
     SPY_Rolling_Future_Return_4y     4.6897      0.021    221.807      0.000       4.648       4.731
     ==============================================================================
-    Omnibus:                      120.436   Durbin-Watson:                   0.033
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              311.979
-    Skew:                           0.172   Prob(JB):                     1.80e-68
+    Omnibus:                      120.437   Durbin-Watson:                   0.033
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              311.983
+    Skew:                           0.172   Prob(JB):                     1.79e-68
     Kurtosis:                       4.527   Cond. No.                         3.39
     ==============================================================================
     
@@ -10846,13 +11345,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_177.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_177.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_178.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_178.png)
     
 
 
@@ -10861,8 +11360,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_5y   R-squared:                       0.919
     Model:                                       OLS   Adj. R-squared:                  0.919
     Method:                            Least Squares   F-statistic:                 3.475e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:17   Log-Likelihood:                -3195.7
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:22   Log-Likelihood:                -3195.7
     No. Observations:                           3055   AIC:                             6395.
     Df Residuals:                               3053   BIC:                             6407.
     Df Model:                                      1                                         
@@ -10873,8 +11372,8 @@ for drawdown in drawdown_levels:
     const                           -0.5517      0.019    -29.728      0.000      -0.588      -0.515
     SPY_Rolling_Future_Return_5y     5.6649      0.030    186.400      0.000       5.605       5.724
     ==============================================================================
-    Omnibus:                      454.992   Durbin-Watson:                   0.025
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             2120.542
+    Omnibus:                      454.994   Durbin-Watson:                   0.025
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             2120.561
     Skew:                           0.640   Prob(JB):                         0.00
     Kurtosis:                       6.876   Cond. No.                         3.02
     ==============================================================================
@@ -10885,13 +11384,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_180.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_180.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_181.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_181.png)
     
 
 
@@ -10900,8 +11399,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1d   R-squared:                       0.997
     Model:                                       OLS   Adj. R-squared:                  0.997
     Method:                            Least Squares   F-statistic:                 7.538e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:18   Log-Likelihood:                 10930.
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:23   Log-Likelihood:                 10930.
     No. Observations:                           2365   AIC:                        -2.186e+04
     Df Residuals:                               2363   BIC:                        -2.184e+04
     Df Model:                                      1                                         
@@ -10909,11 +11408,11 @@ for drawdown in drawdown_levels:
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                         8.908e-05    4.9e-05      1.818      0.069      -7e-06       0.000
-    SPY_Rolling_Future_Return_1d     2.9779      0.003    868.238      0.000       2.971       2.985
+    const                         8.908e-05    4.9e-05      1.818      0.069   -7.01e-06       0.000
+    SPY_Rolling_Future_Return_1d     2.9779      0.003    868.239      0.000       2.971       2.985
     ==============================================================================
-    Omnibus:                     1557.902   Durbin-Watson:                   2.718
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           638251.842
+    Omnibus:                     1557.901   Durbin-Watson:                   2.718
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           638252.914
     Skew:                           1.869   Prob(JB):                         0.00
     Kurtosis:                      83.393   Cond. No.                         70.0
     ==============================================================================
@@ -10924,13 +11423,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_183.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_183.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_184.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_184.png)
     
 
 
@@ -10939,8 +11438,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1w   R-squared:                       0.991
     Model:                                       OLS   Adj. R-squared:                  0.991
     Method:                            Least Squares   F-statistic:                 2.714e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:19   Log-Likelihood:                 8089.2
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:24   Log-Likelihood:                 8089.2
     No. Observations:                           2365   AIC:                        -1.617e+04
     Df Residuals:                               2363   BIC:                        -1.616e+04
     Df Model:                                      1                                         
@@ -10949,10 +11448,10 @@ for drawdown in drawdown_levels:
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
     const                        -7.288e-05      0.000     -0.447      0.655      -0.000       0.000
-    SPY_Rolling_Future_Return_1w     2.9631      0.006    520.935      0.000       2.952       2.974
+    SPY_Rolling_Future_Return_1w     2.9632      0.006    520.934      0.000       2.952       2.974
     ==============================================================================
-    Omnibus:                      893.424   Durbin-Watson:                   1.046
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           167543.096
+    Omnibus:                      893.428   Durbin-Watson:                   1.046
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           167543.560
     Skew:                          -0.621   Prob(JB):                         0.00
     Kurtosis:                      44.215   Cond. No.                         34.9
     ==============================================================================
@@ -10963,13 +11462,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_186.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_186.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_187.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_187.png)
     
 
 
@@ -10978,8 +11477,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1m   R-squared:                       0.984
     Model:                                       OLS   Adj. R-squared:                  0.984
     Method:                            Least Squares   F-statistic:                 1.475e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:20   Log-Likelihood:                 5932.1
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:25   Log-Likelihood:                 5932.1
     No. Observations:                           2365   AIC:                        -1.186e+04
     Df Residuals:                               2363   BIC:                        -1.185e+04
     Df Model:                                      1                                         
@@ -10990,8 +11489,8 @@ for drawdown in drawdown_levels:
     const                           -0.0007      0.000     -1.733      0.083      -0.002    9.34e-05
     SPY_Rolling_Future_Return_1m     2.9414      0.008    384.053      0.000       2.926       2.956
     ==============================================================================
-    Omnibus:                      955.111   Durbin-Watson:                   0.364
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            63631.709
+    Omnibus:                      955.115   Durbin-Watson:                   0.364
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            63631.957
     Skew:                          -1.056   Prob(JB):                         0.00
     Kurtosis:                      28.323   Cond. No.                         18.9
     ==============================================================================
@@ -11002,13 +11501,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_189.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_189.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_190.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_190.png)
     
 
 
@@ -11017,8 +11516,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_3m   R-squared:                       0.976
     Model:                                       OLS   Adj. R-squared:                  0.976
     Method:                            Least Squares   F-statistic:                 9.454e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:21   Log-Likelihood:                 4110.7
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:27   Log-Likelihood:                 4110.7
     No. Observations:                           2365   AIC:                            -8217.
     Df Residuals:                               2363   BIC:                            -8206.
     Df Model:                                      1                                         
@@ -11030,7 +11529,7 @@ for drawdown in drawdown_levels:
     SPY_Rolling_Future_Return_3m     2.9866      0.010    307.473      0.000       2.968       3.006
     ==============================================================================
     Omnibus:                      813.503   Durbin-Watson:                   0.169
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            16781.750
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            16781.822
     Skew:                           1.111   Prob(JB):                         0.00
     Kurtosis:                      15.859   Cond. No.                         11.1
     ==============================================================================
@@ -11041,13 +11540,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_192.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_192.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_193.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_193.png)
     
 
 
@@ -11056,8 +11555,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_6m   R-squared:                       0.954
     Model:                                       OLS   Adj. R-squared:                  0.954
     Method:                            Least Squares   F-statistic:                 4.945e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:23   Log-Likelihood:                 2608.8
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:28   Log-Likelihood:                 2608.8
     No. Observations:                           2365   AIC:                            -5214.
     Df Residuals:                               2363   BIC:                            -5202.
     Df Model:                                      1                                         
@@ -11068,8 +11567,8 @@ for drawdown in drawdown_levels:
     const                            0.0035      0.002      1.917      0.055   -7.96e-05       0.007
     SPY_Rolling_Future_Return_6m     3.0747      0.014    222.381      0.000       3.048       3.102
     ==============================================================================
-    Omnibus:                      829.879   Durbin-Watson:                   0.069
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             7404.057
+    Omnibus:                      829.878   Durbin-Watson:                   0.069
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             7404.075
     Skew:                           1.399   Prob(JB):                         0.00
     Kurtosis:                      11.204   Cond. No.                         8.39
     ==============================================================================
@@ -11080,13 +11579,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_195.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_195.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_196.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_196.png)
     
 
 
@@ -11095,8 +11594,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1y   R-squared:                       0.941
     Model:                                       OLS   Adj. R-squared:                  0.941
     Method:                            Least Squares   F-statistic:                 3.754e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:24   Log-Likelihood:                 1607.4
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:29   Log-Likelihood:                 1607.4
     No. Observations:                           2365   AIC:                            -3211.
     Df Residuals:                               2363   BIC:                            -3199.
     Df Model:                                      1                                         
@@ -11107,8 +11606,8 @@ for drawdown in drawdown_levels:
     const                           -0.0550      0.003    -16.382      0.000      -0.062      -0.048
     SPY_Rolling_Future_Return_1y     3.5929      0.019    193.749      0.000       3.556       3.629
     ==============================================================================
-    Omnibus:                      724.737   Durbin-Watson:                   0.076
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            11317.549
+    Omnibus:                      724.734   Durbin-Watson:                   0.076
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            11317.547
     Skew:                           1.017   Prob(JB):                         0.00
     Kurtosis:                      13.522   Cond. No.                         7.46
     ==============================================================================
@@ -11119,13 +11618,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_198.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_198.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_199.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_199.png)
     
 
 
@@ -11134,8 +11633,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_2y   R-squared:                       0.947
     Model:                                       OLS   Adj. R-squared:                  0.947
     Method:                            Least Squares   F-statistic:                 4.184e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:25   Log-Likelihood:                 728.41
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:30   Log-Likelihood:                 728.41
     No. Observations:                           2365   AIC:                            -1453.
     Df Residuals:                               2363   BIC:                            -1441.
     Df Model:                                      1                                         
@@ -11146,8 +11645,8 @@ for drawdown in drawdown_levels:
     const                           -0.3422      0.007    -49.482      0.000      -0.356      -0.329
     SPY_Rolling_Future_Return_2y     4.7992      0.023    204.538      0.000       4.753       4.845
     ==============================================================================
-    Omnibus:                      261.292   Durbin-Watson:                   0.050
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1788.713
+    Omnibus:                      261.294   Durbin-Watson:                   0.050
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1788.732
     Skew:                          -0.271   Prob(JB):                         0.00
     Kurtosis:                       7.226   Cond. No.                         6.82
     ==============================================================================
@@ -11158,13 +11657,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_201.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_201.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_202.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_202.png)
     
 
 
@@ -11173,8 +11672,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_3y   R-squared:                       0.901
     Model:                                       OLS   Adj. R-squared:                  0.901
     Method:                            Least Squares   F-statistic:                 2.158e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:26   Log-Likelihood:                -648.58
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:31   Log-Likelihood:                -648.58
     No. Observations:                           2365   AIC:                             1301.
     Df Residuals:                               2363   BIC:                             1313.
     Df Model:                                      1                                         
@@ -11185,8 +11684,8 @@ for drawdown in drawdown_levels:
     const                           -0.3554      0.013    -28.107      0.000      -0.380      -0.331
     SPY_Rolling_Future_Return_3y     4.7081      0.032    146.886      0.000       4.645       4.771
     ==============================================================================
-    Omnibus:                      350.033   Durbin-Watson:                   0.028
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              725.274
+    Omnibus:                      350.032   Durbin-Watson:                   0.028
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              725.273
     Skew:                           0.885   Prob(JB):                    3.23e-158
     Kurtosis:                       5.057   Cond. No.                         5.47
     ==============================================================================
@@ -11197,13 +11696,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_204.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_204.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_205.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_205.png)
     
 
 
@@ -11212,8 +11711,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_4y   R-squared:                       0.925
     Model:                                       OLS   Adj. R-squared:                  0.925
     Method:                            Least Squares   F-statistic:                 2.909e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:27   Log-Likelihood:                -1339.2
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:32   Log-Likelihood:                -1339.2
     No. Observations:                           2365   AIC:                             2682.
     Df Residuals:                               2363   BIC:                             2694.
     Df Model:                                      1                                         
@@ -11221,11 +11720,11 @@ for drawdown in drawdown_levels:
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                           -0.1851      0.014    -12.912      0.000      -0.213      -0.157
+    const                           -0.1851      0.014    -12.913      0.000      -0.213      -0.157
     SPY_Rolling_Future_Return_4y     4.6425      0.027    170.565      0.000       4.589       4.696
     ==============================================================================
     Omnibus:                       55.496   Durbin-Watson:                   0.030
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              118.356
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              118.358
     Skew:                           0.081   Prob(JB):                     1.99e-26
     Kurtosis:                       4.084   Cond. No.                         3.69
     ==============================================================================
@@ -11236,13 +11735,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_207.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_207.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_208.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_208.png)
     
 
 
@@ -11251,8 +11750,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_5y   R-squared:                       0.917
     Model:                                       OLS   Adj. R-squared:                  0.917
     Method:                            Least Squares   F-statistic:                 2.615e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:28   Log-Likelihood:                -2565.1
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:33   Log-Likelihood:                -2565.1
     No. Observations:                           2365   AIC:                             5134.
     Df Residuals:                               2363   BIC:                             5146.
     Df Model:                                      1                                         
@@ -11263,9 +11762,9 @@ for drawdown in drawdown_levels:
     const                           -0.4704      0.023    -20.191      0.000      -0.516      -0.425
     SPY_Rolling_Future_Return_5y     5.6929      0.035    161.723      0.000       5.624       5.762
     ==============================================================================
-    Omnibus:                      311.086   Durbin-Watson:                   0.028
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1363.041
-    Skew:                           0.566   Prob(JB):                    1.05e-296
+    Omnibus:                      311.087   Durbin-Watson:                   0.028
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1363.056
+    Skew:                           0.566   Prob(JB):                    1.04e-296
     Kurtosis:                       6.543   Cond. No.                         3.12
     ==============================================================================
     
@@ -11275,13 +11774,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_210.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_210.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_211.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_211.png)
     
 
 
@@ -11290,8 +11789,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1d   R-squared:                       0.997
     Model:                                       OLS   Adj. R-squared:                  0.997
     Method:                            Least Squares   F-statistic:                 4.362e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:29   Log-Likelihood:                 6607.2
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:34   Log-Likelihood:                 6607.2
     No. Observations:                           1479   AIC:                        -1.321e+04
     Df Residuals:                               1477   BIC:                        -1.320e+04
     Df Model:                                      1                                         
@@ -11300,10 +11799,10 @@ for drawdown in drawdown_levels:
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
     const                            0.0001   7.23e-05      1.550      0.121   -2.98e-05       0.000
-    SPY_Rolling_Future_Return_1d     2.9736      0.005    660.468      0.000       2.965       2.982
+    SPY_Rolling_Future_Return_1d     2.9736      0.005    660.469      0.000       2.965       2.982
     ==============================================================================
-    Omnibus:                      759.528   Durbin-Watson:                   2.689
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           237908.791
+    Omnibus:                      759.529   Durbin-Watson:                   2.689
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):           237909.235
     Skew:                           1.142   Prob(JB):                         0.00
     Kurtosis:                      65.092   Cond. No.                         62.3
     ==============================================================================
@@ -11314,13 +11813,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_213.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_213.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_214.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_214.png)
     
 
 
@@ -11329,8 +11828,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1w   R-squared:                       0.990
     Model:                                       OLS   Adj. R-squared:                  0.990
     Method:                            Least Squares   F-statistic:                 1.475e+05
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:31   Log-Likelihood:                 4779.3
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:35   Log-Likelihood:                 4779.3
     No. Observations:                           1479   AIC:                            -9555.
     Df Residuals:                               1477   BIC:                            -9544.
     Df Model:                                      1                                         
@@ -11338,11 +11837,11 @@ for drawdown in drawdown_levels:
     ================================================================================================
                                        coef    std err          t      P>|t|      [0.025      0.975]
     ------------------------------------------------------------------------------------------------
-    const                         3.196e-06      0.000      0.013      0.990      -0.000       0.000
+    const                         3.192e-06      0.000      0.013      0.990      -0.000       0.000
     SPY_Rolling_Future_Return_1w     2.9572      0.008    384.014      0.000       2.942       2.972
     ==============================================================================
-    Omnibus:                      517.977   Durbin-Watson:                   1.023
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            52657.085
+    Omnibus:                      517.978   Durbin-Watson:                   1.023
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            52657.254
     Skew:                          -0.625   Prob(JB):                         0.00
     Kurtosis:                      32.205   Cond. No.                         31.0
     ==============================================================================
@@ -11353,13 +11852,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_216.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_216.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_217.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_217.png)
     
 
 
@@ -11368,8 +11867,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1m   R-squared:                       0.983
     Model:                                       OLS   Adj. R-squared:                  0.983
     Method:                            Least Squares   F-statistic:                 8.452e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:32   Log-Likelihood:                 3588.8
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:37   Log-Likelihood:                 3588.8
     No. Observations:                           1479   AIC:                            -7174.
     Df Residuals:                               1477   BIC:                            -7163.
     Df Model:                                      1                                         
@@ -11380,8 +11879,8 @@ for drawdown in drawdown_levels:
     const                           -0.0029      0.001     -5.075      0.000      -0.004      -0.002
     SPY_Rolling_Future_Return_1m     3.0167      0.010    290.718      0.000       2.996       3.037
     ==============================================================================
-    Omnibus:                      951.943   Durbin-Watson:                   0.291
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            19753.591
+    Omnibus:                      951.945   Durbin-Watson:                   0.291
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):            19753.701
     Skew:                          -2.649   Prob(JB):                         0.00
     Kurtosis:                      20.102   Cond. No.                         18.7
     ==============================================================================
@@ -11392,13 +11891,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_219.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_219.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_220.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_220.png)
     
 
 
@@ -11407,8 +11906,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_3m   R-squared:                       0.980
     Model:                                       OLS   Adj. R-squared:                  0.980
     Method:                            Least Squares   F-statistic:                 7.182e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:33   Log-Likelihood:                 2749.5
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:38   Log-Likelihood:                 2749.5
     No. Observations:                           1479   AIC:                            -5495.
     Df Residuals:                               1477   BIC:                            -5484.
     Df Model:                                      1                                         
@@ -11420,7 +11919,7 @@ for drawdown in drawdown_levels:
     SPY_Rolling_Future_Return_3m     3.2239      0.012    267.983      0.000       3.200       3.248
     ==============================================================================
     Omnibus:                      396.774   Durbin-Watson:                   0.203
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             3170.391
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             3170.413
     Skew:                          -1.021   Prob(JB):                         0.00
     Kurtosis:                       9.876   Cond. No.                         12.3
     ==============================================================================
@@ -11431,13 +11930,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_222.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_222.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_223.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_223.png)
     
 
 
@@ -11446,8 +11945,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_6m   R-squared:                       0.971
     Model:                                       OLS   Adj. R-squared:                  0.971
     Method:                            Least Squares   F-statistic:                 4.873e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:34   Log-Likelihood:                 1996.2
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:39   Log-Likelihood:                 1996.2
     No. Observations:                           1479   AIC:                            -3988.
     Df Residuals:                               1477   BIC:                            -3978.
     Df Model:                                      1                                         
@@ -11458,8 +11957,8 @@ for drawdown in drawdown_levels:
     const                           -0.0410      0.002    -19.752      0.000      -0.045      -0.037
     SPY_Rolling_Future_Return_6m     3.5211      0.016    220.756      0.000       3.490       3.552
     ==============================================================================
-    Omnibus:                      303.529   Durbin-Watson:                   0.139
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1799.504
+    Omnibus:                      303.530   Durbin-Watson:                   0.139
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1799.512
     Skew:                          -0.818   Prob(JB):                         0.00
     Kurtosis:                       8.150   Cond. No.                         9.83
     ==============================================================================
@@ -11470,13 +11969,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_225.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_225.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_226.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_226.png)
     
 
 
@@ -11485,8 +11984,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_1y   R-squared:                       0.945
     Model:                                       OLS   Adj. R-squared:                  0.945
     Method:                            Least Squares   F-statistic:                 2.531e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:35   Log-Likelihood:                 1208.7
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:40   Log-Likelihood:                 1208.7
     No. Observations:                           1479   AIC:                            -2413.
     Df Residuals:                               1477   BIC:                            -2403.
     Df Model:                                      1                                         
@@ -11497,8 +11996,8 @@ for drawdown in drawdown_levels:
     const                           -0.1638      0.005    -32.562      0.000      -0.174      -0.154
     SPY_Rolling_Future_Return_1y     4.1149      0.026    159.078      0.000       4.064       4.166
     ==============================================================================
-    Omnibus:                      636.693   Durbin-Watson:                   0.055
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             4021.716
+    Omnibus:                      636.695   Durbin-Watson:                   0.055
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):             4021.742
     Skew:                          -1.901   Prob(JB):                         0.00
     Kurtosis:                      10.128   Cond. No.                         9.55
     ==============================================================================
@@ -11509,13 +12008,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_228.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_228.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_229.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_229.png)
     
 
 
@@ -11524,8 +12023,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_2y   R-squared:                       0.940
     Model:                                       OLS   Adj. R-squared:                  0.940
     Method:                            Least Squares   F-statistic:                 2.322e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:36   Log-Likelihood:                 417.22
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:41   Log-Likelihood:                 417.21
     No. Observations:                           1479   AIC:                            -830.4
     Df Residuals:                               1477   BIC:                            -819.8
     Df Model:                                      1                                         
@@ -11536,9 +12035,9 @@ for drawdown in drawdown_levels:
     const                           -0.5307      0.012    -45.553      0.000      -0.554      -0.508
     SPY_Rolling_Future_Return_2y     5.2906      0.035    152.380      0.000       5.222       5.359
     ==============================================================================
-    Omnibus:                      350.739   Durbin-Watson:                   0.045
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              917.233
-    Skew:                          -1.244   Prob(JB):                    6.69e-200
+    Omnibus:                      350.741   Durbin-Watson:                   0.045
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              917.243
+    Skew:                          -1.244   Prob(JB):                    6.66e-200
     Kurtosis:                       5.949   Cond. No.                         8.01
     ==============================================================================
     
@@ -11548,13 +12047,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_231.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_231.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_232.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_232.png)
     
 
 
@@ -11563,8 +12062,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_3y   R-squared:                       0.884
     Model:                                       OLS   Adj. R-squared:                  0.884
     Method:                            Least Squares   F-statistic:                 1.128e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:37   Log-Likelihood:                -268.54
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:42   Log-Likelihood:                -268.54
     No. Observations:                           1479   AIC:                             541.1
     Df Residuals:                               1477   BIC:                             551.7
     Df Model:                                      1                                         
@@ -11575,8 +12074,8 @@ for drawdown in drawdown_levels:
     const                           -1.0243      0.027    -38.038      0.000      -1.077      -0.972
     SPY_Rolling_Future_Return_3y     6.1791      0.058    106.196      0.000       6.065       6.293
     ==============================================================================
-    Omnibus:                       74.636   Durbin-Watson:                   0.032
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):               91.011
+    Omnibus:                       74.637   Durbin-Watson:                   0.032
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):               91.013
     Skew:                          -0.512   Prob(JB):                     1.73e-20
     Kurtosis:                       3.655   Cond. No.                         9.25
     ==============================================================================
@@ -11587,13 +12086,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_234.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_234.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_235.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_235.png)
     
 
 
@@ -11602,8 +12101,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_4y   R-squared:                       0.877
     Model:                                       OLS   Adj. R-squared:                  0.876
     Method:                            Least Squares   F-statistic:                 1.049e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:38   Log-Likelihood:                -460.04
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:43   Log-Likelihood:                -460.04
     No. Observations:                           1479   AIC:                             924.1
     Df Residuals:                               1477   BIC:                             934.7
     Df Model:                                      1                                         
@@ -11614,9 +12113,9 @@ for drawdown in drawdown_levels:
     const                           -1.3231      0.040    -33.268      0.000      -1.401      -1.245
     SPY_Rolling_Future_Return_4y     6.5218      0.064    102.414      0.000       6.397       6.647
     ==============================================================================
-    Omnibus:                      317.126   Durbin-Watson:                   0.032
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              747.178
-    Skew:                          -1.169   Prob(JB):                    5.65e-163
+    Omnibus:                      317.129   Durbin-Watson:                   0.032
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              747.191
+    Skew:                          -1.169   Prob(JB):                    5.62e-163
     Kurtosis:                       5.580   Cond. No.                         10.2
     ==============================================================================
     
@@ -11626,13 +12125,13 @@ for drawdown in drawdown_levels:
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_237.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_237.png)
     
 
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_121_238.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_109_238.png)
     
 
 
@@ -11641,8 +12140,8 @@ for drawdown in drawdown_levels:
     Dep. Variable:     UPRO_Rolling_Future_Return_5y   R-squared:                       0.895
     Model:                                       OLS   Adj. R-squared:                  0.895
     Method:                            Least Squares   F-statistic:                 1.258e+04
-    Date:                           Mon, 16 Mar 2026   Prob (F-statistic):               0.00
-    Time:                                   14:29:39   Log-Likelihood:                -1478.3
+    Date:                           Fri, 20 Mar 2026   Prob (F-statistic):               0.00
+    Time:                                   10:51:44   Log-Likelihood:                -1478.3
     No. Observations:                           1479   AIC:                             2961.
     Df Residuals:                               1477   BIC:                             2971.
     Df Model:                                      1                                         
@@ -11653,9 +12152,9 @@ for drawdown in drawdown_levels:
     const                           -1.3147      0.048    -27.526      0.000      -1.408      -1.221
     SPY_Rolling_Future_Return_5y     6.8270      0.061    112.164      0.000       6.708       6.946
     ==============================================================================
-    Omnibus:                      180.962   Durbin-Watson:                   0.042
-    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              814.106
-    Skew:                           0.496   Prob(JB):                    1.66e-177
+    Omnibus:                      180.963   Durbin-Watson:                   0.042
+    Prob(Omnibus):                  0.000   Jarque-Bera (JB):              814.116
+    Skew:                           0.496   Prob(JB):                    1.65e-177
     Kurtosis:                       6.497   Cond. No.                         5.57
     ==============================================================================
     
@@ -11804,7 +12303,7 @@ display(rolling_returns_positive_future_returns)
       <td>0.721</td>
       <td>0.720</td>
       <td>0.722</td>
-      <td>0.724</td>
+      <td>0.725</td>
       <td>0.717</td>
       <td>0.744</td>
       <td>0.870</td>
@@ -11872,7 +12371,7 @@ plot_scatter(
 
 
     
-![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_124_0.png)
+![png](leveraged-etfs-returns-dispersion_files/leveraged-etfs-returns-dispersion_112_0.png)
     
 
 
@@ -11881,6 +12380,13 @@ This plot summarizes the future rolling returns well. Similar as to QQQ/TQQQ, fo
 As we extend the time horizon, out to the 2y, 3y, 4y, and 5y mark, the percentage of positive rolling returns following an 80% drawdown increases significantly, and is greater than *95%*. This suggests that while the volatility decay effect is present for UPRO, it may not be as severe as that of TQQQ, which could be due to the less extreme return profile of SPY compared to QQQ.
 
 As an investor, this suggests that the optimal time to buy UPRO would be following a drawdown of 50% or more, and holding for at least 2 years. One could dollar cost average into UPRO following a drawdown of 50% or more, and continue to add to the position with a consistent contribution schedule until all capital has been allocated.
+
+## Future Investigation
+
+There are a couple of ideas for future investigation that would be interesting to explore:
+
+* Expand the analysis of SPY/UPRO to SPX/UPRO (using Bloomberg data for SPX), and extrapolate UPRO return data back to January of 1975.
+* Implement and backtest a strategy that DCA's into UPRO on a consistent schdule (monthly, quarterly, etc.)
 
 ## Code
 

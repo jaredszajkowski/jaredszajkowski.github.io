@@ -5,7 +5,7 @@ import yfinance as yf
 from IPython.display import display
 
 def yf_pull_data(
-    base_directory,
+    base_directory: str,
     ticker: str,
     adjusted: bool,
     source: str,
@@ -20,10 +20,12 @@ def yf_pull_data(
 
     Parameters:
     -----------
-    base_directory
+    base_directory : str
         Root path to store downloaded data.
     ticker : str
         Ticker symbol to download.
+    adjusted : bool
+        If True, download adjusted price data.
     source : str
         Name of the data source (e.g., 'Yahoo').
     asset_class : str
@@ -42,7 +44,7 @@ def yf_pull_data(
     """
     
     # Download data from YF
-    df = yf.download(ticker, start="1900-01-01", auto_adjust=adjusted)
+    df = yf.download(ticker, start="1900-01-01", auto_adjust=adjusted, progress=False)
 
     # Drop the column level with the ticker symbol
     df.columns = df.columns.droplevel(1)
