@@ -8,18 +8,13 @@
     pswpModule: () => import('https://cdn.jsdelivr.net/npm/photoswipe@5/dist/photoswipe.esm.js'),
   });
 
-  // Ensure we get the full resolution dimensions
+  // Add size parsing for images
   lightbox.addFilter('itemData', (itemData, index) => {
     const img = itemData.element;
-    
-    // Create a new image to get true dimensions
-    const fullImg = new Image();
-    fullImg.src = img.src;
-    
     return {
       src: img.src,
-      width: fullImg.naturalWidth || img.naturalWidth || 1920,
-      height: fullImg.naturalHeight || img.naturalHeight || 1080,
+      width: img.naturalWidth || 1920,
+      height: img.naturalHeight || 1080,
       alt: img.alt
     };
   });
