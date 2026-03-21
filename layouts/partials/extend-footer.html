@@ -1,44 +1,23 @@
 <!-- PhotoSwipe JS -->
 <script type="module">
   import PhotoSwipeLightbox from 'https://cdn.jsdelivr.net/npm/photoswipe@5/dist/photoswipe-lightbox.esm.js';
-  import PhotoSwipe from 'https://cdn.jsdelivr.net/npm/photoswipe@5/dist/photoswipe.esm.js';
 
-  // Wrap all prose images in links with dimensions
-  document.addEventListener('DOMContentLoaded', () => {
-    const images = document.querySelectorAll('.prose img');
-    images.forEach(img => {
-      // Wait for image to load to get natural dimensions
-      if (img.complete) {
-        wrapImage(img);
-      } else {
-        img.addEventListener('load', () => wrapImage(img));
-      }
-    });
-
-    function wrapImage(img) {
-      if (img.parentElement.tagName === 'A') return; // Already wrapped
-      
-      const link = document.createElement('a');
-      link.href = img.src;
-      link.setAttribute('data-pswp-width', img.naturalWidth);
-      link.setAttribute('data-pswp-height', img.naturalHeight);
-      
-      if (img.alt) {
-        link.setAttribute('data-pswp-caption', img.alt);
-      }
-      
-      img.parentNode.insertBefore(link, img);
-      link.appendChild(img);
-    }
-
-    // Initialize PhotoSwipe after wrapping
-    setTimeout(() => {
-      const lightbox = new PhotoSwipeLightbox({
-        gallery: '.prose',
-        children: 'a',
-        pswpModule: PhotoSwipe
-      });
-      lightbox.init();
-    }, 100);
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: '.prose',
+    children: 'img',
+    pswpModule: () => import('https://cdn.jsdelivr.net/npm/photoswipe@5/dist/photoswipe.esm.js'),
   });
+
+  // Add size parsing for images
+  lightbox.addFilter('itemData', (itemData, index) => {
+    const img = itemData.element;
+    return {
+      src: img.src,
+      width: img.naturalWidth || 1920,
+      height: img.naturalHeight || 1080,
+      alt: img.alt
+    };
+  });
+
+  lightbox.init();
 </script>
