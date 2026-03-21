@@ -1,13 +1,38 @@
-<!-- GLightbox JS -->
-<script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Initialize GLightbox for all content images
-    const lightbox = GLightbox({
-      selector: '.prose img',
-      touchNavigation: true,
-      loop: true,
-      autoplayVideos: true
+<!-- PhotoSwipe JS -->
+<script type="module">
+  import PhotoSwipeLightbox from 'https://cdn.jsdelivr.net/npm/photoswipe@5/dist/photoswipe-lightbox.esm.js';
+  import PhotoSwipe from 'https://cdn.jsdelivr.net/npm/photoswipe@5/dist/photoswipe.esm.js';
+
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: '.prose',
+    children: 'img',
+    pswpModule: PhotoSwipe,
+    // Counter is shown by default in PhotoSwipe 5
+  });
+  
+  // Get image dimensions for proper display
+  lightbox.on('uiRegister', function() {
+    lightbox.pswp.ui.registerElement({
+      name: 'custom-caption',
+      order: 9,
+      isButton: false,
+      appendTo: 'root',
+      html: '',
+      onInit: (el, pswp) => {
+        lightbox.pswp.on('change', () => {
+          const currSlideElement = lightbox.pswp.currSlide.data.element;
+          let captionHTML = '';
+          if (currSlideElement) {
+            const altText = currSlideElement.getAttribute('alt');
+            if (altText) {
+              captionHTML = altText;
+            }
+          }
+          el.innerHTML = captionHTML || '';
+        });
+      }
     });
   });
+
+  lightbox.init();
 </script>
