@@ -1,0 +1,13 @@
+<!-- GLightbox JS -->
+<script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Initialize GLightbox for all content images
+    const lightbox = GLightbox({
+      selector: '.prose img',
+      touchNavigation: true,
+      loop: true,
+      autoplayVideos: true
+    });
+  });
+</script>
