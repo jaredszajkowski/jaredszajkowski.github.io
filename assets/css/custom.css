@@ -54,3 +54,13 @@
 .dark .prose table {
   border: 1px solid rgba(var(--color-neutral-500), 1);
 }
+
+/* Change cursor to pointer when hovering over images 
+.prose img {
+  cursor: pointer;
+} */
+
+/* Optional: zoom cursor for even clearer indication */
+.prose img {
+  cursor: zoom-in;
+}
