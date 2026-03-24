@@ -91,18 +91,6 @@ htmlcov/
 nosetests.xml
 coverage.xml
 
-# Translations
-*.mo
-*.pot
-
-# Django stuff:
-*.log
-
-# Sphinx documentation
-docs/
-/docs_src/apidocs
-
-
 # PyBuilder
 target/
 
@@ -250,3 +238,8 @@ token.json
 
 # Ignore .insyncdl files used by Insync
 *.insyncdl
+
+public/
+.hugo_build.lock
+resources/_gen/
+content/posts/ETF_Trend_Following/
