@@ -119,7 +119,10 @@ def config(*args, **kwargs):
     else:
         # If the variable is not defined in the settings.py file,
         # then fall back to using decouple normally.
-        var = _config(*args, **kwargs)
+        # var = _config(*args, **kwargs)
+        raise Exception(
+            f"{key} is not defined in settings.py. Please add it to the settings.py file."
+        )
     return var
 
 
