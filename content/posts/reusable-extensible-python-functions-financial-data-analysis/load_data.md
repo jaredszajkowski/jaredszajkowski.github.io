@@ -2,6 +2,7 @@
 import pandas as pd
 from pathlib import Path
 
+
 def load_data(
     base_directory,
     ticker: str,
@@ -10,11 +11,10 @@ def load_data(
     timeframe: str,
     file_format: str,
 ) -> pd.DataFrame:
-    
     """
     Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.
 
-    This function attempts to read a file first as a CSV, then as an Excel file 
+    This function attempts to read a file first as a CSV, then as an Excel file
     (specifically looking for a sheet named 'data' and using the 'calamine' engine).
     If both attempts fail, a ValueError is raised.
 
@@ -49,20 +49,29 @@ def load_data(
     """
 
     if file_format == "csv":
-        csv_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.csv"
+        csv_path = (
+            Path(base_directory) / source / asset_class / timeframe / f"{ticker}.csv"
+        )
         df = pd.read_csv(csv_path)
         return df
-    
+
     elif file_format == "excel":
-        xlsx_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.xlsx"
+        xlsx_path = (
+            Path(base_directory) / source / asset_class / timeframe / f"{ticker}.xlsx"
+        )
         df = pd.read_excel(xlsx_path, sheet_name="data", engine="calamine")
         return df
 
     elif file_format == "pickle":
-        pickle_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.pkl"
+        pickle_path = (
+            Path(base_directory) / source / asset_class / timeframe / f"{ticker}.pkl"
+        )
         df = pd.read_pickle(pickle_path)
         return df
-    
+
     else:
-        raise ValueError(f"❌ Unsupported file format: {file_format}. Please use 'csv', 'excel', or 'pickle'.")
+        raise ValueError(
+            f"❌ Unsupported file format: {file_format}. Please use 'csv', 'excel', or 'pickle'."
+        )
+
 ```

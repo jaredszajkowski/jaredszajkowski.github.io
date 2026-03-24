@@ -5,42 +5,15 @@
 
 ```python
 # Standard Library
-import datetime
-import io
 import os
-import random
 import sys
 import warnings
 
-from datetime import datetime, timedelta
 from pathlib import Path
-
-# Data Handling
-import numpy as np
-import pandas as pd
-
-# Data Visualization
-import matplotlib.dates as mdates
-import matplotlib.pyplot as plt
-import matplotlib.ticker as mtick
-import seaborn as sns
-from matplotlib.ticker import FormatStrFormatter, FuncFormatter, MultipleLocator
-
-# Data Sources
-import yfinance as yf
-
-# Statistical Analysis
-import statsmodels.api as sm
-
-# Machine Learning
-from sklearn.decomposition import PCA
-from sklearn.preprocessing import StandardScaler
 
 # Suppress warnings
 warnings.filterwarnings("ignore")
 ```
-
-## Add Directories To Path
 
 
 ```python
@@ -77,7 +50,7 @@ for i, path in enumerate(sys.path):
     2: /usr/lib/python3.13/lib-dynload
     3: 
     4: /home/jared/python-virtual-envs/general-venv-p313/lib/python3.13/site-packages
-    5: /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io_congo/src
+    5: /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/src
 
 
 ## Track Index Dependencies
@@ -314,13 +287,13 @@ export_track_md_deps(dep_file=dep_file, md_filename="plot_stats.md", content=cod
 
 
 ```python
-from plot_timeseries import plot_timeseries
-code = Path(SOURCE_DIR / "plot_timeseries.py").read_text()
-# Copy this <!-- INSERT_plot_timeseries_HERE --> to index_temp.md
-export_track_md_deps(dep_file=dep_file, md_filename="plot_timeseries.md", content=code, output_type="python")
+from plot_time_series import plot_time_series
+code = Path(SOURCE_DIR / "plot_time_series.py").read_text()
+# Copy this <!-- INSERT_plot_time_series_HERE --> to index_temp.md
+export_track_md_deps(dep_file=dep_file, md_filename="plot_time_series.md", content=code, output_type="python")
 ```
 
-    ✅ Exported and tracked: plot_timeseries.md
+    ✅ Exported and tracked: plot_time_series.md
 
 
 

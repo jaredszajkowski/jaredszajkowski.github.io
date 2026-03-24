@@ -2,6 +2,7 @@
 import pandas as pd
 import numpy as np
 
+
 def summary_stats(
     fund_list: list[str],
     df: pd.DataFrame,
@@ -11,7 +12,6 @@ def summary_stats(
     pickle_export: bool,
     output_confirmation: bool,
 ) -> pd.DataFrame:
-    
     """
     Calculate summary statistics for the given fund list and return data.
 
@@ -51,40 +51,51 @@ def summary_stats(
     try:
         timeframe = period_to_timeframe[period]
     except KeyError:
-        raise ValueError(f"Invalid period: {period}. Must be one of {list(period_to_timeframe.keys())}")
+        raise ValueError(
+            f"Invalid period: {period}. Must be one of {list(period_to_timeframe.keys())}"
+        )
 
-    df_stats = pd.DataFrame(df.mean(axis=0) * timeframe) # annualized
-    df_stats.columns = ['Annual Mean Return (Arithmetic)']
-    df_stats['Annualized Volatility'] = df.std() * np.sqrt(timeframe) # annualized
-    df_stats['Annualized Sharpe Ratio'] = df_stats['Annual Mean Return (Arithmetic)'] / df_stats['Annualized Volatility']
+    df_stats = pd.DataFrame(df.mean(axis=0) * timeframe)  # annualized
+    df_stats.columns = ["Annual Mean Return (Arithmetic)"]
+    df_stats["Annualized Volatility"] = df.std() * np.sqrt(timeframe)  # annualized
+    df_stats["Annualized Sharpe Ratio"] = (
+        df_stats["Annual Mean Return (Arithmetic)"] / df_stats["Annualized Volatility"]
+    )
 
     df_cagr = (1 + df[df.columns[0]]).cumprod()
-    cagr = (df_cagr.iloc[-1] / 1) ** ( 1 / (len(df_cagr) / timeframe)) - 1
-    df_stats['CAGR (Geometric)'] = cagr
+    cagr = (df_cagr.iloc[-1] / 1) ** (1 / (len(df_cagr) / timeframe)) - 1
+    df_stats["CAGR (Geometric)"] = cagr
 
-    df_stats[f'{period} Max Return'] = df.max()
-    df_stats[f'{period} Max Return (Date)'] = df.idxmax().values[0]
-    df_stats[f'{period} Min Return'] = df.min()
-    df_stats[f'{period} Min Return (Date)'] = df.idxmin().values[0]
-    
+    df_stats[f"{period} Max Return"] = df.max()
+    df_stats[f"{period} Max Return (Date)"] = df.idxmax().values[0]
+    df_stats[f"{period} Min Return"] = df.min()
+    df_stats[f"{period} Min Return (Date)"] = df.idxmin().values[0]
+
     wealth_index = 1000 * (1 + df).cumprod()
     previous_peaks = wealth_index.cummax()
     drawdowns = (wealth_index - previous_peaks) / previous_peaks
 
-    df_stats['Max Drawdown'] = drawdowns.min()
-    df_stats['Peak'] = [previous_peaks[col][:drawdowns[col].idxmin()].idxmax() for col in previous_peaks.columns]
-    df_stats['Trough'] = drawdowns.idxmin()
+    df_stats["Max Drawdown"] = drawdowns.min()
+    df_stats["Peak"] = [
+        previous_peaks[col][: drawdowns[col].idxmin()].idxmax()
+        for col in previous_peaks.columns
+    ]
+    df_stats["Trough"] = drawdowns.idxmin()
 
     recovery_date = []
     for col in wealth_index.columns:
-        prev_max = previous_peaks[col][:drawdowns[col].idxmin()].max()
-        recovery_wealth = pd.DataFrame([wealth_index[col][drawdowns[col].idxmin():]]).T
-        recovery_date.append(recovery_wealth[recovery_wealth[col] >= prev_max].index.min())
-    df_stats['Recovery Date'] = recovery_date
-    df_stats['Days to Recovery'] = (df_stats['Recovery Date'] - df_stats['Trough']).dt.days
-    df_stats['MAR Ratio'] = df_stats['CAGR (Geometric)'] / -df_stats['Max Drawdown']
+        prev_max = previous_peaks[col][: drawdowns[col].idxmin()].max()
+        recovery_wealth = pd.DataFrame([wealth_index[col][drawdowns[col].idxmin() :]]).T
+        recovery_date.append(
+            recovery_wealth[recovery_wealth[col] >= prev_max].index.min()
+        )
+    df_stats["Recovery Date"] = recovery_date
+    df_stats["Calendar Days to Recovery"] = (
+        df_stats["Recovery Date"] - df_stats["Trough"]
+    ).dt.days
+    df_stats["MAR Ratio"] = df_stats["CAGR (Geometric)"] / -df_stats["Max Drawdown"]
 
-    plan_name = '_'.join(fund_list)
+    plan_name = "_".join(fund_list)
 
     # Export to excel
     if excel_export == True:
@@ -103,6 +114,7 @@ def summary_stats(
         print(f"Summary stats complete for {plan_name}")
     else:
         pass
-    
+
     return df_stats
+
 ```

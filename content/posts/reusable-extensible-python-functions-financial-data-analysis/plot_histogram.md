@@ -13,7 +13,7 @@ def round_to_nice_value(value):
 
     # Find order of magnitude
     exp = math.floor(math.log10(value))
-    magnitude = 10 ** exp
+    magnitude = 10**exp
 
     # Get mantissa (value normalized to [1, 10))
     mantissa = value / magnitude
@@ -46,7 +46,6 @@ def plot_histogram(
     export_plot: bool,
     plot_file_name: str,
 ) -> None:
-
     """
     Plot the histogram for a dataset from a DataFrame for a specified date range and columns.
 
@@ -78,7 +77,7 @@ def plot_histogram(
         Whether to save the figure as a PNG file.
     plot_file_name : str
         File name for saving the figure (if save_fig is True).
-    
+
 
     Returns:
     --------
@@ -94,27 +93,91 @@ def plot_histogram(
             mean = df[col].mean()
             std = df[col].std()
             # Create histogram first to get its color
-            n, bins, patches = plt.hist(df[col], label=col, bins=200, edgecolor='black', alpha=0.7)
+            n, bins, patches = plt.hist(
+                df[col], label=col, bins=200, edgecolor="black", alpha=0.7
+            )
             hist_color = patches[0].get_facecolor()
             # Use histogram color for vertical lines
-            plt.axvline(mean, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean: {mean:.3f}')
-            plt.axvline(mean + std, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean + 1 std: {mean + std:.3f}')
-            plt.axvline(mean - std, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean - 1 std: {mean - std:.3f}')
-            plt.axvline(mean + 2 * std, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean + 2 std: {mean + 2 * std:.3f}')
-            plt.axvline(mean - 2 * std, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean - 2 std: {mean - 2 * std:.3f}')
+            plt.axvline(
+                mean,
+                color=hist_color,
+                linestyle="dashed",
+                linewidth=1,
+                label=f"Mean: {mean:.3f}",
+            )
+            plt.axvline(
+                mean + std,
+                color=hist_color,
+                linestyle="dashed",
+                linewidth=1,
+                label=f"Mean + 1 std: {mean + std:.3f}",
+            )
+            plt.axvline(
+                mean - std,
+                color=hist_color,
+                linestyle="dashed",
+                linewidth=1,
+                label=f"Mean - 1 std: {mean - std:.3f}",
+            )
+            plt.axvline(
+                mean + 2 * std,
+                color=hist_color,
+                linestyle="dashed",
+                linewidth=1,
+                label=f"Mean + 2 std: {mean + 2 * std:.3f}",
+            )
+            plt.axvline(
+                mean - 2 * std,
+                color=hist_color,
+                linestyle="dashed",
+                linewidth=1,
+                label=f"Mean - 2 std: {mean - 2 * std:.3f}",
+            )
     else:
         for col in plot_columns:
             mean = df[col].mean()
             std = df[col].std()
             # Create histogram first to get its color
-            n, bins, patches = plt.hist(df[col], label=col, bins=200, edgecolor='black', alpha=0.7)
+            n, bins, patches = plt.hist(
+                df[col], label=col, bins=200, edgecolor="black", alpha=0.7
+            )
             hist_color = patches[0].get_facecolor()
             # Use histogram color for vertical lines
-            plt.axvline(mean, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean: {mean:.3f}')
-            plt.axvline(mean + std, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean + 1 std: {mean + std:.3f}')
-            plt.axvline(mean - std, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean - 1 std: {mean - std:.3f}')
-            plt.axvline(mean + 2 * std, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean + 2 std: {mean + 2 * std:.3f}')
-            plt.axvline(mean - 2 * std, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean - 2 std: {mean - 2 * std:.3f}')
+            plt.axvline(
+                mean,
+                color=hist_color,
+                linestyle="dashed",
+                linewidth=1,
+                label=f"Mean: {mean:.3f}",
+            )
+            plt.axvline(
+                mean + std,
+                color=hist_color,
+                linestyle="dashed",
+                linewidth=1,
+                label=f"Mean + 1 std: {mean + std:.3f}",
+            )
+            plt.axvline(
+                mean - std,
+                color=hist_color,
+                linestyle="dashed",
+                linewidth=1,
+                label=f"Mean - 1 std: {mean - std:.3f}",
+            )
+            plt.axvline(
+                mean + 2 * std,
+                color=hist_color,
+                linestyle="dashed",
+                linewidth=1,
+                label=f"Mean + 2 std: {mean + 2 * std:.3f}",
+            )
+            plt.axvline(
+                mean - 2 * std,
+                color=hist_color,
+                linestyle="dashed",
+                linewidth=1,
+                label=f"Mean - 2 std: {mean - 2 * std:.3f}",
+            )
 
     # Format X axis
     if x_tick_spacing == "Auto":
@@ -144,7 +207,7 @@ def plot_histogram(
 
     # Grid
     if grid == True:
-        plt.grid(True, linestyle='--', alpha=0.7)
+        plt.grid(True, linestyle="--", alpha=0.7)
 
     # Legend
     if legend == True:
@@ -158,4 +221,5 @@ def plot_histogram(
     plt.show()
 
     return None
+
 ```

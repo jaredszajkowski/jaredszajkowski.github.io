@@ -55,39 +55,39 @@ def plot_stats(
     """
 
     # Set plot figure size and background color
-    plt.figure(figsize=(12, 6), facecolor="#F5F5F5")
+    plt.figure(figsize=(10, 6))
 
     # Plot data
     if plot_columns == "All":
         for col in stats_df.columns:
             plt.scatter(
-                stats_df.index, stats_df[col], label=col, linestyle="-", linewidth=1.5
+                stats_df.index, stats_df[col], label=col, marker="o", alpha=0.7
             )
     else:
         for col in plot_columns:
             plt.scatter(
-                stats_df.index, stats_df[col], label=col, linestyle="-", linewidth=1.5
+                stats_df.index, stats_df[col], label=col, marker="o", alpha=0.7
             )
 
     # Format X axis
     plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
-    plt.xlabel(x_label, fontsize=10)
-    plt.xticks(rotation=x_rotation, fontsize=8)
+    plt.xlabel(x_label)
+    plt.xticks(rotation=x_rotation)
 
     # Format Y axis
     plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
-    plt.ylabel(y_label, fontsize=10)
-    plt.yticks(fontsize=8)
+    plt.ylabel(y_label)
+    plt.yticks()
 
     # Format title, layout, grid, and legend
-    plt.title(title, fontsize=12)
+    plt.title(title)
     plt.tight_layout()
 
     if grid == True:
         plt.grid(True, linestyle="--", alpha=0.7)
 
     if legend == True:
-        plt.legend(fontsize=9)
+        plt.legend()
 
     # Save figure and display plot
     if export_plot == True:

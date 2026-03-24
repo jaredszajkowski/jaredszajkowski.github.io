@@ -321,14 +321,14 @@ def calc_fed_cycle_asset_performance(
 ```python
 import pandas as pd
 
+
 def calc_vix_trade_pnl(
     transaction_df: pd.DataFrame,
-    exp_start_date: str,
-    exp_end_date: str,
-    trade_start_date: str,
-    trade_end_date: str,
+    exp_start_date: str | None,
+    exp_end_date: str | None,
+    trade_start_date: str | None,
+    trade_end_date: str | None,
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, str, str, str, str]:
-    
     """
     Calculate the profit and loss (PnL) of trades based on transaction data.
 
@@ -336,13 +336,13 @@ def calc_vix_trade_pnl(
     ----------
     transaction_df : pd.DataFrame
         DataFrame containing transaction data.
-    exp_start_date : str
+    exp_start_date : str | None
         Start date for filtering transactions in 'YYYY-MM-DD' format. This is the start of the range for the option expiration date.
-    exp_end_date : str
+    exp_end_date : str | None
         End date for filtering transactions in 'YYYY-MM-DD' format. This is the end of the range for the option expiration date.
-    trade_start_date : str
+    trade_start_date : str | None
         Start date for filtering transactions in 'YYYY-MM-DD' format. This is the start of the range for the trade date.
-    trade_end_date : str
+    trade_end_date : str | None
         End date for filtering transactions in 'YYYY-MM-DD' format. This is the end of the range for the trade date.
 
     Returns
@@ -360,76 +360,125 @@ def calc_vix_trade_pnl(
     """
 
     # If start and end dates for trades and expirations are None, use the entire DataFrame
-    if exp_start_date is None and exp_end_date is None and trade_start_date is None and trade_end_date is None:
+    if (
+        exp_start_date is None
+        and exp_end_date is None
+        and trade_start_date is None
+        and trade_end_date is None
+    ):
         transactions_data = transaction_df
-    
+
     # If both start and end dates for trades and expirations are provided then filter by both
     else:
         transactions_data = transaction_df[
-            (transaction_df['Exp_Date'] >= exp_start_date) & (transaction_df['Exp_Date'] <= exp_end_date) &
-            (transaction_df['Trade_Date'] >= trade_start_date) & (transaction_df['Trade_Date'] <= trade_end_date)
+            (transaction_df["Exp_Date"] >= exp_start_date)
+            & (transaction_df["Exp_Date"] <= exp_end_date)
+            & (transaction_df["Trade_Date"] >= trade_start_date)
+            & (transaction_df["Trade_Date"] <= trade_end_date)
         ]
 
     # Combine the 'Action' and 'Symbol' columns to create a unique identifier for each transaction
-    transactions_data['TradeDate_Action_Symbol_VIX'] = (
-        transactions_data['Trade_Date'].astype(str) + 
-        ", " + 
-        transactions_data['Action'] + 
-        ", " + 
-        transactions_data['Symbol'] + 
-        ", VIX = " + 
-        transactions_data['Approx_VIX_Level'].astype(str)
+    transactions_data["TradeDate_Action_Symbol_VIX"] = (
+        transactions_data["Trade_Date"].astype(str)
+        + ", "
+        + transactions_data["Action"]
+        + ", "
+        + transactions_data["Symbol"]
+        + ", VIX = "
+        + transactions_data["Approx_VIX_Level"].astype(str)
     )
 
     # Split buys and sells and sum the notional amounts
-    transactions_sells = transactions_data[transactions_data['Action'] == 'Sell to Close']
-    transactions_sells = transactions_sells.groupby(['Symbol', 'Exp_Date'], as_index=False)[['Amount', 'Quantity']].sum()
+    transactions_sells = transactions_data[
+        transactions_data["Action"] == "Sell to Close"
+    ]
+    transactions_sells = transactions_sells.groupby(
+        ["Symbol", "Exp_Date"], as_index=False
+    )[["Amount", "Quantity"]].sum()
 
-    transactions_buys = transactions_data[transactions_data['Action'] == 'Buy to Open']
-    transactions_buys = transactions_buys.groupby(['Symbol', 'Exp_Date'], as_index=False)[['Amount', 'Quantity']].sum()
+    transactions_buys = transactions_data[transactions_data["Action"] == "Buy to Open"]
+    transactions_buys = transactions_buys.groupby(
+        ["Symbol", "Exp_Date"], as_index=False
+    )[["Amount", "Quantity"]].sum()
 
     # Merge buys and sells dataframes back together
-    merged_transactions = pd.merge(transactions_buys, transactions_sells, on=['Symbol', 'Exp_Date'], how='outer', suffixes=('_Buy', '_Sell'))
-    merged_transactions = merged_transactions.sort_values(by=['Exp_Date'], ascending=[True])
+    merged_transactions = pd.merge(
+        transactions_buys,
+        transactions_sells,
+        on=["Symbol", "Exp_Date"],
+        how="outer",
+        suffixes=("_Buy", "_Sell"),
+    )
+    merged_transactions = merged_transactions.sort_values(
+        by=["Exp_Date"], ascending=[True]
+    )
     merged_transactions = merged_transactions.reset_index(drop=True)
 
     # Identify the closed positions
-    merged_transactions['Closed'] = (~merged_transactions['Amount_Sell'].isna()) & (~merged_transactions['Amount_Buy'].isna()) & (merged_transactions['Quantity_Buy'] == merged_transactions['Quantity_Sell'])
+    merged_transactions["Closed"] = (
+        (~merged_transactions["Amount_Sell"].isna())
+        & (~merged_transactions["Amount_Buy"].isna())
+        & (merged_transactions["Quantity_Buy"] == merged_transactions["Quantity_Sell"])
+    )
 
     # Create a new dataframe for closed positions
-    closed_trades = merged_transactions[merged_transactions['Closed']]
+    closed_trades = merged_transactions[merged_transactions["Closed"]]
     closed_trades = closed_trades.reset_index(drop=True)
-    closed_trades['Realized_PnL'] = closed_trades['Amount_Sell'] - closed_trades['Amount_Buy']
-    closed_trades['Percent_PnL'] = closed_trades['Realized_PnL'] / closed_trades['Amount_Buy']
-    closed_trades.drop(columns={'Closed', 'Exp_Date'}, inplace=True)
-    closed_trades['Quantity_Sell'] = closed_trades['Quantity_Sell'].astype(int)
+    closed_trades["Realized_PnL"] = (
+        closed_trades["Amount_Sell"] - closed_trades["Amount_Buy"]
+    )
+    closed_trades["Percent_PnL"] = (
+        closed_trades["Realized_PnL"] / closed_trades["Amount_Buy"]
+    )
+    closed_trades.drop(columns={"Closed", "Exp_Date"}, inplace=True)
+    closed_trades["Quantity_Sell"] = closed_trades["Quantity_Sell"].astype(int)
 
     # Calculate the net % PnL
-    net_PnL_percent = closed_trades['Realized_PnL'].sum() / closed_trades['Amount_Buy'].sum()
+    net_PnL_percent = (
+        closed_trades["Realized_PnL"].sum() / closed_trades["Amount_Buy"].sum()
+    )
     net_PnL_percent_str = f"{round(net_PnL_percent * 100, 2)}%"
 
     # Calculate the net $ PnL
-    net_PnL = closed_trades['Realized_PnL'].sum()
+    net_PnL = closed_trades["Realized_PnL"].sum()
     net_PnL_str = f"${net_PnL:,.2f}"
 
     # Create a new dataframe for open positions
-    open_trades = merged_transactions[~merged_transactions['Closed']]
+    open_trades = merged_transactions[~merged_transactions["Closed"]]
     open_trades = open_trades.reset_index(drop=True)
-    open_trades.drop(columns={'Closed', 'Amount_Sell', 'Quantity_Sell', 'Exp_Date'}, inplace=True)
+    open_trades.drop(
+        columns={"Closed", "Amount_Sell", "Quantity_Sell", "Exp_Date"}, inplace=True
+    )
 
     # Calculate the total market value of opened positions
     # If start and end dates for trades and expirations are None, use only the closed positions
-    if exp_start_date is None and exp_end_date is None and trade_start_date is None and trade_end_date is None:
-        total_opened_pos_mkt_val = closed_trades['Amount_Buy'].sum()
+    if (
+        exp_start_date is None
+        and exp_end_date is None
+        and trade_start_date is None
+        and trade_end_date is None
+    ):
+        total_opened_pos_mkt_val = closed_trades["Amount_Buy"].sum()
     else:
-        total_opened_pos_mkt_val = closed_trades['Amount_Buy'].sum() + open_trades['Amount_Buy'].sum()
+        total_opened_pos_mkt_val = (
+            closed_trades["Amount_Buy"].sum() + open_trades["Amount_Buy"].sum()
+        )
     total_opened_pos_mkt_val_str = f"${total_opened_pos_mkt_val:,.2f}"
 
     # Calculate the total market value of closed positions
-    total_closed_pos_mkt_val = closed_trades['Amount_Sell'].sum()
+    total_closed_pos_mkt_val = closed_trades["Amount_Sell"].sum()
     total_closed_pos_mkt_val_str = f"${total_closed_pos_mkt_val:,.2f}"
 
-    return transactions_data, closed_trades, open_trades, net_PnL_percent_str, net_PnL_str, total_opened_pos_mkt_val_str, total_closed_pos_mkt_val_str
+    return (
+        transactions_data,
+        closed_trades,
+        open_trades,
+        net_PnL_percent_str,
+        net_PnL_str,
+        total_opened_pos_mkt_val_str,
+        total_closed_pos_mkt_val_str,
+    )
+
 ```
 
 ### coinbase_fetch_available_products
@@ -1312,6 +1361,7 @@ if __name__ == "__main__":
 import pandas as pd
 from pathlib import Path
 
+
 def load_data(
     base_directory,
     ticker: str,
@@ -1320,11 +1370,10 @@ def load_data(
     timeframe: str,
     file_format: str,
 ) -> pd.DataFrame:
-    
     """
     Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.
 
-    This function attempts to read a file first as a CSV, then as an Excel file 
+    This function attempts to read a file first as a CSV, then as an Excel file
     (specifically looking for a sheet named 'data' and using the 'calamine' engine).
     If both attempts fail, a ValueError is raised.
 
@@ -1359,22 +1408,31 @@ def load_data(
     """
 
     if file_format == "csv":
-        csv_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.csv"
+        csv_path = (
+            Path(base_directory) / source / asset_class / timeframe / f"{ticker}.csv"
+        )
         df = pd.read_csv(csv_path)
         return df
-    
+
     elif file_format == "excel":
-        xlsx_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.xlsx"
+        xlsx_path = (
+            Path(base_directory) / source / asset_class / timeframe / f"{ticker}.xlsx"
+        )
         df = pd.read_excel(xlsx_path, sheet_name="data", engine="calamine")
         return df
 
     elif file_format == "pickle":
-        pickle_path = Path(base_directory) / source / asset_class / timeframe / f"{ticker}.pkl"
+        pickle_path = (
+            Path(base_directory) / source / asset_class / timeframe / f"{ticker}.pkl"
+        )
         df = pd.read_pickle(pickle_path)
         return df
-    
+
     else:
-        raise ValueError(f"❌ Unsupported file format: {file_format}. Please use 'csv', 'excel', or 'pickle'.")
+        raise ValueError(
+            f"❌ Unsupported file format: {file_format}. Please use 'csv', 'excel', or 'pickle'."
+        )
+
 ```
 
 ### pandas_set_decimal_places
@@ -1382,10 +1440,10 @@ def load_data(
 ```python
 import pandas as pd
 
+
 def pandas_set_decimal_places(
     decimal_places: int,
 ) -> None:
-    
     """
     Set the number of decimal places displayed for floating-point numbers in pandas.
 
@@ -1405,8 +1463,9 @@ def pandas_set_decimal_places(
            0
     0   1.235
     """
-    
-    pd.set_option('display.float_format', lambda x: f'%.{decimal_places}f' % x)
+
+    pd.set_option("display.float_format", lambda x: f"%.{decimal_places}f" % x)
+
 ```
 
 ### plot_bar_returns_ffr_change
@@ -1498,7 +1557,7 @@ def round_to_nice_value(value):
 
     # Find order of magnitude
     exp = math.floor(math.log10(value))
-    magnitude = 10 ** exp
+    magnitude = 10**exp
 
     # Get mantissa (value normalized to [1, 10))
     mantissa = value / magnitude
@@ -1531,7 +1590,6 @@ def plot_histogram(
     export_plot: bool,
     plot_file_name: str,
 ) -> None:
-
     """
     Plot the histogram for a dataset from a DataFrame for a specified date range and columns.
 
@@ -1563,7 +1621,7 @@ def plot_histogram(
         Whether to save the figure as a PNG file.
     plot_file_name : str
         File name for saving the figure (if save_fig is True).
-    
+
 
     Returns:
     --------
@@ -1579,27 +1637,91 @@ def plot_histogram(
             mean = df[col].mean()
             std = df[col].std()
             # Create histogram first to get its color
-            n, bins, patches = plt.hist(df[col], label=col, bins=200, edgecolor='black', alpha=0.7)
+            n, bins, patches = plt.hist(
+                df[col], label=col, bins=200, edgecolor="black", alpha=0.7
+            )
             hist_color = patches[0].get_facecolor()
             # Use histogram color for vertical lines
-            plt.axvline(mean, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean: {mean:.3f}')
-            plt.axvline(mean + std, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean + 1 std: {mean + std:.3f}')
-            plt.axvline(mean - std, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean - 1 std: {mean - std:.3f}')
-            plt.axvline(mean + 2 * std, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean + 2 std: {mean + 2 * std:.3f}')
-            plt.axvline(mean - 2 * std, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean - 2 std: {mean - 2 * std:.3f}')
+            plt.axvline(
+                mean,
+                color=hist_color,
+                linestyle="dashed",
+                linewidth=1,
+                label=f"Mean: {mean:.3f}",
+            )
+            plt.axvline(
+                mean + std,
+                color=hist_color,
+                linestyle="dashed",
+                linewidth=1,
+                label=f"Mean + 1 std: {mean + std:.3f}",
+            )
+            plt.axvline(
+                mean - std,
+                color=hist_color,
+                linestyle="dashed",
+                linewidth=1,
+                label=f"Mean - 1 std: {mean - std:.3f}",
+            )
+            plt.axvline(
+                mean + 2 * std,
+                color=hist_color,
+                linestyle="dashed",
+                linewidth=1,
+                label=f"Mean + 2 std: {mean + 2 * std:.3f}",
+            )
+            plt.axvline(
+                mean - 2 * std,
+                color=hist_color,
+                linestyle="dashed",
+                linewidth=1,
+                label=f"Mean - 2 std: {mean - 2 * std:.3f}",
+            )
     else:
         for col in plot_columns:
             mean = df[col].mean()
             std = df[col].std()
             # Create histogram first to get its color
-            n, bins, patches = plt.hist(df[col], label=col, bins=200, edgecolor='black', alpha=0.7)
+            n, bins, patches = plt.hist(
+                df[col], label=col, bins=200, edgecolor="black", alpha=0.7
+            )
             hist_color = patches[0].get_facecolor()
             # Use histogram color for vertical lines
-            plt.axvline(mean, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean: {mean:.3f}')
-            plt.axvline(mean + std, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean + 1 std: {mean + std:.3f}')
-            plt.axvline(mean - std, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean - 1 std: {mean - std:.3f}')
-            plt.axvline(mean + 2 * std, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean + 2 std: {mean + 2 * std:.3f}')
-            plt.axvline(mean - 2 * std, color=hist_color, linestyle='dashed', linewidth=1, label=f'Mean - 2 std: {mean - 2 * std:.3f}')
+            plt.axvline(
+                mean,
+                color=hist_color,
+                linestyle="dashed",
+                linewidth=1,
+                label=f"Mean: {mean:.3f}",
+            )
+            plt.axvline(
+                mean + std,
+                color=hist_color,
+                linestyle="dashed",
+                linewidth=1,
+                label=f"Mean + 1 std: {mean + std:.3f}",
+            )
+            plt.axvline(
+                mean - std,
+                color=hist_color,
+                linestyle="dashed",
+                linewidth=1,
+                label=f"Mean - 1 std: {mean - std:.3f}",
+            )
+            plt.axvline(
+                mean + 2 * std,
+                color=hist_color,
+                linestyle="dashed",
+                linewidth=1,
+                label=f"Mean + 2 std: {mean + 2 * std:.3f}",
+            )
+            plt.axvline(
+                mean - 2 * std,
+                color=hist_color,
+                linestyle="dashed",
+                linewidth=1,
+                label=f"Mean - 2 std: {mean - 2 * std:.3f}",
+            )
 
     # Format X axis
     if x_tick_spacing == "Auto":
@@ -1629,7 +1751,7 @@ def plot_histogram(
 
     # Grid
     if grid == True:
-        plt.grid(True, linestyle='--', alpha=0.7)
+        plt.grid(True, linestyle="--", alpha=0.7)
 
     # Legend
     if legend == True:
@@ -1643,271 +1765,20 @@ def plot_histogram(
     plt.show()
 
     return None
+
 ```
 
 ### plot_scatter
 
 ```python
-# import math
-# import matplotlib.pyplot as plt
-# import numpy as np
-# import pandas as pd
-
-# from matplotlib.ticker import MultipleLocator, PercentFormatter, FormatStrFormatter
-
-# from run_linear_regression import run_linear_regression
-
-# def round_to_nice_value(value):
-#     """Round a value to a 'nice' number for tick spacing (1, 2, 5 × 10^n)."""
-#     if value <= 0:
-#         return value
-
-#     # Find order of magnitude
-#     exp = math.floor(math.log10(value))
-#     magnitude = 10 ** exp
-
-#     # Get mantissa (value normalized to [1, 10))
-#     mantissa = value / magnitude
-
-#     # Round mantissa to 1, 2, or 5
-#     if mantissa <= 1.5:
-#         nice_mantissa = 1
-#     elif mantissa <= 3:
-#         nice_mantissa = 2
-#     elif mantissa <= 7:
-#         nice_mantissa = 5
-#     else:
-#         nice_mantissa = 10
-
-#     return nice_mantissa * magnitude
-
-
-# def plot_scatter(
-#     df: pd.DataFrame,
-#     x_plot_column: str,
-#     y_plot_columns: list,
-#     title: str,
-#     x_label: str,
-#     x_format: str,
-#     x_format_decimal_places: int,
-#     x_tick_spacing: int,
-#     x_tick_rotation: int,
-#     y_label: str,
-#     y_format: str,
-#     y_format_decimal_places: int,
-#     y_tick_spacing: int,
-#     plot_OLS_regression_line: bool,
-#     plot_Ridge_regression_line: bool,
-#     plot_RidgeCV_regression_line: bool,
-#     regression_constant: bool,
-#     grid: bool,
-#     legend: bool,
-#     export_plot: bool,
-#     plot_file_name: str,
-# ) -> None:
-#     """
-#     Plot the price data from a DataFrame for a specified date range and columns.
-
-#     Parameters
-#     ----------
-#     df : pd.DataFrame
-#         DataFrame containing the price data to plot.
-#     x_plot_column : str
-#         Column to plot on the x-axis from the DataFrame.
-#     y_plot_columns : list
-#         Columns to plot on the y-axis from the DataFrame.
-#     title : str
-#         Title of the plot.
-#     x_label : str
-#         Label for the x-axis.
-#     x_format : str
-#         Format for the x-axis date labels.
-#     x_tick_spacing : int
-#         Spacing for the x-axis ticks.
-#     x_tick_rotation : int, optional
-#         Rotation angle for the x-axis tick labels (default: 0).
-#     y_label : str
-#         Label for the y-axis.
-#     y_format : str
-#         Format for the y-axis labels.
-#     y_format_decimal_places : int
-#         Number of decimal places for y-axis labels.
-#     y_tick_spacing : int
-#         Spacing for the y-axis ticks.
-#     plot_OLS_regression_line : bool
-#         Whether to plot an OLS regression line on the scatter plot.
-#     plot_Ridge_regression_line : bool
-#         Whether to plot a Ridge regression line on the scatter plot.
-#     plot_RidgeCV_regression_line : bool
-#         Whether to plot a RidgeCV regression line on the scatter plot.
-#     regression_constant : bool
-#         Whether to include a constant term in the regression models.
-#     grid : bool
-#         Whether to display a grid on the plot.
-#     legend : bool
-#         Whether to display a legend on the plot.
-#     export_plot : bool
-#         Whether to save the figure as a PNG file.
-#     plot_file_name : str
-#         File name for saving the figure (if save_fig is True).
-    
-#     Returns
-#     -------
-#     None
-#     """
-
-#     # Set plot figure size and background color
-#     plt.figure(figsize=(10, 6))
-
-#     # Plot data
-#     for col in y_plot_columns:
-#         plt.scatter(df[x_plot_column], df[col])
-
-#     # Format X axis
-#     if x_format == "Decimal":
-#         plt.gca().xaxis.set_major_formatter(FormatStrFormatter(f"%.{x_format_decimal_places}f"))
-#     elif x_format == "Percentage":
-#         plt.gca().xaxis.set_major_formatter(PercentFormatter(xmax=1, decimals=x_format_decimal_places))
-#     elif x_format == "Scientific":
-#         plt.gca().xaxis.set_major_formatter(FormatStrFormatter(f"%.{x_format_decimal_places}e"))
-#     elif x_format == "Log":
-#         plt.xscale("log")
-#     elif x_format == "String":
-#         pass  # No special formatting for string x-axis
-#     else:
-#         raise ValueError(f"Unrecognized x_format: {x_format}. Use 'Decimal', 'Percentage', or 'Scientific'.")
-    
-#     if x_tick_spacing == "Auto":
-#         raw_x_spacing = (df[x_plot_column].max() - df[x_plot_column].min()) / 20
-#         x_tick_spacing = round_to_nice_value(raw_x_spacing)
-#     else:
-#         x_tick_spacing = x_tick_spacing
-
-#     plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
-#     # plt.xlabel(x_label, fontsize=14)
-#     plt.xlabel(x_label)
-#     # plt.xticks(rotation=x_tick_rotation, fontsize=12)
-#     plt.xticks(rotation=x_tick_rotation)
-
-#     # Format Y axis
-#     if y_format == "Decimal":
-#         plt.gca().yaxis.set_major_formatter(FormatStrFormatter(f"%.{y_format_decimal_places}f"))
-#     elif y_format == "Percentage":
-#         plt.gca().yaxis.set_major_formatter(PercentFormatter(xmax=1, decimals=y_format_decimal_places))
-#     elif y_format == "Scientific":
-#         plt.gca().yaxis.set_major_formatter(FormatStrFormatter(f"%.{y_format_decimal_places}e"))
-#     elif y_format == "Log":
-#         plt.yscale("log")
-#     else:
-#         raise ValueError(f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', or 'Scientific'.")
-    
-#     if y_tick_spacing == "Auto":
-#         raw_y_spacing = (df[y_plot_column].max() - df[y_plot_column].min()) / 10
-#         y_tick_spacing = round_to_nice_value(raw_y_spacing)
-#     else:
-#         y_tick_spacing = y_tick_spacing
-
-#     plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
-#     # plt.ylabel(y_label, fontsize=14)
-#     plt.ylabel(y_label)
-#     # plt.yticks(fontsize=12)
-#     plt.yticks()
-
-#     if plot_OLS_regression_line == True:
-
-#         model = run_linear_regression(
-#             df=df,
-#             x_plot_column=x_plot_column,
-#             y_plot_column=y_plot_column,
-#             regression_model="OLS-sklearn",
-#             regression_constant=regression_constant,
-#         )
-
-#         # Calc X and Y values for regression line
-#         X_vals = np.linspace(df[x_plot_column].min(), df[x_plot_column].max(), 100)
-#         X_vals_2d = X_vals.reshape(-1, 1)  # sklearn needs 2D input
-#         Y_vals = model.predict(X_vals_2d)
-
-#         # Plot regression line
-#         intercept = model.intercept_
-#         slope = model.coef_[0]
-#         plt.plot(X_vals, Y_vals, color="red", linestyle="--", 
-#                  label=f"OLS Fit: y = {intercept:.1f} + {slope:.2f}x")
-
-#     if plot_Ridge_regression_line == True:
-
-#         model = run_linear_regression(
-#             df=df,
-#             x_plot_column=x_plot_column,
-#             y_plot_column=y_plot_column,
-#             regression_model="Ridge",
-#             regression_constant=regression_constant,
-#             ridge_alpha=1.0,
-#         )
-
-#         # Calc X and Y values for regression line
-#         X_vals = np.linspace(df[x_plot_column].min(), df[x_plot_column].max(), 100)
-#         X_vals_2d = X_vals.reshape(-1, 1)  # sklearn needs 2D input
-#         Y_vals = model.predict(X_vals_2d)
-
-#         # Plot regression line
-#         intercept = model.intercept_
-#         slope = model.coef_[0]
-#         alpha_value = model.alpha_ if hasattr(model, 'alpha_') else 1.0 
-#         plt.plot(X_vals, Y_vals, color="blue", linestyle="--", 
-#              label=f"Ridge Fit (α={alpha_value:.2f}): y = {intercept:.1f} + {slope:.2f}x")
-        
-#     if plot_RidgeCV_regression_line == True:
-
-#         model = run_linear_regression(
-#             df=df,
-#             x_plot_column=x_plot_column,
-#             y_plot_column=y_plot_column,
-#             regression_model="RidgeCV",
-#             regression_constant=regression_constant,
-#         )
-
-#         # Calc X and Y values for regression line
-#         X_vals = np.linspace(df[x_plot_column].min(), df[x_plot_column].max(), 100)
-#         X_vals_2d = X_vals.reshape(-1, 1)  # sklearn needs 2D input
-#         Y_vals = model.predict(X_vals_2d)
-
-#         # Plot regression line
-#         intercept = model.intercept_
-#         slope = model.coef_[0]
-#         alpha_value = model.alpha_ if hasattr(model, 'alpha_') else 1.0
-#         plt.plot(X_vals, Y_vals, color="green", linestyle="--", 
-#              label=f"RidgeCV Fit (α={alpha_value:.2f}): y = {intercept:.1f} + {slope:.2f}x")
-  
-#     # Format title, layout, grid, and legend
-#     # plt.title(title, fontsize=16)
-#     plt.title(title)
-#     plt.tight_layout()
-
-#     if grid == True:
-#         plt.grid(True, linestyle='--', alpha=0.7)
-    
-#     if legend == True:
-#         # plt.legend(fontsize=9)
-#         plt.legend()
-
-#     # Save figure and display plot
-#     if export_plot == True:
-#         plt.savefig(f"{plot_file_name}.png", dpi=300, bbox_inches="tight")
-
-#     # Display the plot
-#     plt.show()
-
-#     return None
-
 import math
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
 from matplotlib.ticker import MultipleLocator, PercentFormatter, FormatStrFormatter
-
 from run_linear_regression import run_linear_regression
+
 
 def round_to_nice_value(value):
     """Round a value to a 'nice' number for tick spacing (1, 2, 5 x 10^n)."""
@@ -1916,7 +1787,7 @@ def round_to_nice_value(value):
 
     # Find order of magnitude
     exp = math.floor(math.log10(value))
-    magnitude = 10 ** exp
+    magnitude = 10**exp
 
     # Get mantissa (value normalized to [1, 10))
     mantissa = value / magnitude
@@ -2016,7 +1887,7 @@ def plot_scatter(
         Whether to save the figure as a PNG file.
     plot_file_name : str
         File name for saving the figure (if save_fig is True).
-    
+
     Returns
     -------
     None
@@ -2027,22 +1898,30 @@ def plot_scatter(
 
     # Plot data
     for col in y_plot_columns:
-        plt.scatter(df[x_plot_column], df[col], label=col, marker='o', alpha=0.7)
+        plt.scatter(df[x_plot_column], df[col], label=col, marker="o", alpha=0.7)
 
     # Format X axis
     if x_format == "Decimal":
-        plt.gca().xaxis.set_major_formatter(FormatStrFormatter(f"%.{x_format_decimal_places}f"))
+        plt.gca().xaxis.set_major_formatter(
+            FormatStrFormatter(f"%.{x_format_decimal_places}f")
+        )
     elif x_format == "Percentage":
-        plt.gca().xaxis.set_major_formatter(PercentFormatter(xmax=1, decimals=x_format_decimal_places))
+        plt.gca().xaxis.set_major_formatter(
+            PercentFormatter(xmax=1, decimals=x_format_decimal_places)
+        )
     elif x_format == "Scientific":
-        plt.gca().xaxis.set_major_formatter(FormatStrFormatter(f"%.{x_format_decimal_places}e"))
+        plt.gca().xaxis.set_major_formatter(
+            FormatStrFormatter(f"%.{x_format_decimal_places}e")
+        )
     elif x_format == "Log":
         plt.xscale("log")
     elif x_format == "String":
         pass  # No special formatting for string x-axis
     else:
-        raise ValueError(f"Unrecognized x_format: {x_format}. Use 'Decimal', 'Percentage', or 'Scientific'.")
-    
+        raise ValueError(
+            f"Unrecognized x_format: {x_format}. Use 'Decimal', 'Percentage', or 'Scientific'."
+        )
+
     if x_tick_spacing == "Auto":
         raw_x_spacing = (df[x_plot_column].max() - df[x_plot_column].min()) / 20
         x_tick_spacing = round_to_nice_value(raw_x_spacing)
@@ -2055,16 +1934,24 @@ def plot_scatter(
 
     # Format Y axis
     if y_format == "Decimal":
-        plt.gca().yaxis.set_major_formatter(FormatStrFormatter(f"%.{y_format_decimal_places}f"))
+        plt.gca().yaxis.set_major_formatter(
+            FormatStrFormatter(f"%.{y_format_decimal_places}f")
+        )
     elif y_format == "Percentage":
-        plt.gca().yaxis.set_major_formatter(PercentFormatter(xmax=1, decimals=y_format_decimal_places))
+        plt.gca().yaxis.set_major_formatter(
+            PercentFormatter(xmax=1, decimals=y_format_decimal_places)
+        )
     elif y_format == "Scientific":
-        plt.gca().yaxis.set_major_formatter(FormatStrFormatter(f"%.{y_format_decimal_places}e"))
+        plt.gca().yaxis.set_major_formatter(
+            FormatStrFormatter(f"%.{y_format_decimal_places}e")
+        )
     elif y_format == "Log":
         plt.yscale("log")
     else:
-        raise ValueError(f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', or 'Scientific'.")
-    
+        raise ValueError(
+            f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', or 'Scientific'."
+        )
+
     if y_tick_spacing == "Auto":
         max = 0
         min = 1
@@ -2102,8 +1989,13 @@ def plot_scatter(
         # Plot regression line
         intercept = model.intercept_
         slope = model.coef_[0]
-        plt.plot(X_vals, Y_vals, color="red", linestyle="--", 
-                 label=f"OLS Fit: y = {intercept:.1f} + {slope:.2f}x")
+        plt.plot(
+            X_vals,
+            Y_vals,
+            color="red",
+            linestyle="--",
+            label=f"OLS Fit: y = {intercept:.1f} + {slope:.2f}x",
+        )
 
     if plot_Ridge_regression_line == True:
 
@@ -2124,10 +2016,15 @@ def plot_scatter(
         # Plot regression line
         intercept = model.intercept_
         slope = model.coef_[0]
-        alpha_value = model.alpha_ if hasattr(model, 'alpha_') else 1.0 
-        plt.plot(X_vals, Y_vals, color="blue", linestyle="--", 
-             label=f"Ridge Fit (α={alpha_value:.2f}): y = {intercept:.1f} + {slope:.2f}x")
-        
+        alpha_value = model.alpha_ if hasattr(model, "alpha_") else 1.0
+        plt.plot(
+            X_vals,
+            Y_vals,
+            color="blue",
+            linestyle="--",
+            label=f"Ridge Fit (α={alpha_value:.2f}): y = {intercept:.1f} + {slope:.2f}x",
+        )
+
     if plot_RidgeCV_regression_line == True:
 
         model = run_linear_regression(
@@ -2146,18 +2043,23 @@ def plot_scatter(
         # Plot regression line
         intercept = model.intercept_
         slope = model.coef_[0]
-        alpha_value = model.alpha_ if hasattr(model, 'alpha_') else 1.0
-        plt.plot(X_vals, Y_vals, color="green", linestyle="--", 
-             label=f"RidgeCV Fit (α={alpha_value:.2f}): y = {intercept:.1f} + {slope:.2f}x")
-  
+        alpha_value = model.alpha_ if hasattr(model, "alpha_") else 1.0
+        plt.plot(
+            X_vals,
+            Y_vals,
+            color="green",
+            linestyle="--",
+            label=f"RidgeCV Fit (α={alpha_value:.2f}): y = {intercept:.1f} + {slope:.2f}x",
+        )
+
     # Format title, layout, grid, and legend
     plt.title(title)
     plt.tight_layout()
 
     # Grid
     if grid == True:
-        plt.grid(True, linestyle='--', alpha=0.7)
-    
+        plt.grid(True, linestyle="--", alpha=0.7)
+
     # Legend
     if legend == True:
         plt.legend()
@@ -2170,6 +2072,7 @@ def plot_scatter(
     plt.show()
 
     return None
+
 ```
 
 ### plot_scatter_regression_ffr_vs_returns
@@ -2190,9 +2093,34 @@ def plot_scatter_regression_ffr_vs_returns(
     intercept: float,
     slope: float,
 ) -> None:
+    """
+    Plot a scatter plot of annualized returns vs annualized change in Fed Funds 
+    Rate, with a regression line and annotations for each policy cycle.
 
+    Parameters
+    ----------
+    cycle_df : pd.DataFrame
+        DataFrame containing the policy cycle data with columns 'FFR_AnnualizedChange_bps', 'AnnualizedReturnPct', and 'Cycle'.
+    asset_label : str
+        Label for the asset being plotted (e.g., "S&P 500").
+    x_vals : np.ndarray
+        Array of x values for the regression line.
+    y_vals : np.ndarray
+        Array of y values for the regression line.
+    intercept : float
+        Intercept of the OLS regression line.
+    slope : float
+        Slope of the OLS regression line.
+
+    Returns
+    -------
+    None
+    """
+
+    # Set plot figure size and background color
     plt.figure(figsize=(10, 6))
 
+    # Plot data
     sns.scatterplot(
         data=cycle_df,
         x="FFR_AnnualizedChange_bps",
@@ -2214,20 +2142,25 @@ def plot_scatter_regression_ffr_vs_returns(
     plt.plot(x_vals, y_vals, color="red", linestyle="--", label=f"OLS Fit: y = {intercept:.1f} + {slope:.2f}x")
     plt.axhline(0, color="gray", linestyle="--", linewidth=0.8)
     plt.axvline(0, color="gray", linestyle="--", linewidth=0.8)
-    # plt.title(f"{asset_label} Annualized Return vs Annualized Change in Fed Funds Rate by Policy Cycle", fontsize=16)
-    plt.title(f"{asset_label} Annualized Return vs Annualized Change in Fed Funds Rate by Policy Cycle")
-    # plt.xlabel("Annualized Change In Fed Funds Rate (bps)", fontsize=14)
+    
+    # Format X axis
     plt.xlabel("Annualized Change In Fed Funds Rate (bps)")
-    # plt.xticks(fontsize=12)
     plt.xticks()
-    # plt.ylabel(f"{asset_label} Annualized Return (%)", fontsize=14)
+
+    # Format Y axis
     plt.ylabel(f"{asset_label} Annualized Return (%)")
-    # plt.yticks(fontsize=12)
     plt.yticks()
-    plt.legend()
-    plt.grid(True)
+
+    # Format title, layout, grid, and legend
+    plt.title(f"{asset_label} Annualized Return vs Annualized Change in Fed Funds Rate by Policy Cycle")
     plt.tight_layout()
+    plt.grid(True)
+    plt.legend()
+
+    # Display the plot
     plt.show()
+
+    return None
 ```
 
 ### plot_stats
@@ -2289,39 +2222,39 @@ def plot_stats(
     """
 
     # Set plot figure size and background color
-    plt.figure(figsize=(12, 6), facecolor="#F5F5F5")
+    plt.figure(figsize=(10, 6))
 
     # Plot data
     if plot_columns == "All":
         for col in stats_df.columns:
             plt.scatter(
-                stats_df.index, stats_df[col], label=col, linestyle="-", linewidth=1.5
+                stats_df.index, stats_df[col], label=col, marker="o", alpha=0.7
             )
     else:
         for col in plot_columns:
             plt.scatter(
-                stats_df.index, stats_df[col], label=col, linestyle="-", linewidth=1.5
+                stats_df.index, stats_df[col], label=col, marker="o", alpha=0.7
             )
 
     # Format X axis
     plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
-    plt.xlabel(x_label, fontsize=10)
-    plt.xticks(rotation=x_rotation, fontsize=8)
+    plt.xlabel(x_label)
+    plt.xticks(rotation=x_rotation)
 
     # Format Y axis
     plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
-    plt.ylabel(y_label, fontsize=10)
-    plt.yticks(fontsize=8)
+    plt.ylabel(y_label)
+    plt.yticks()
 
     # Format title, layout, grid, and legend
-    plt.title(title, fontsize=12)
+    plt.title(title)
     plt.tight_layout()
 
     if grid == True:
         plt.grid(True, linestyle="--", alpha=0.7)
 
     if legend == True:
-        plt.legend(fontsize=9)
+        plt.legend()
 
     # Save figure and display plot
     if export_plot == True:
@@ -2336,208 +2269,7 @@ def plot_stats(
 
 ### plot_timeseries
 
-```python
-import math
-import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
-import matplotlib.ticker as mtick
-import pandas as pd
-
-from matplotlib.ticker import FormatStrFormatter, FuncFormatter, MultipleLocator, PercentFormatter
-
-def round_to_nice_value(value):
-    """Round a value to a 'nice' number for tick spacing (1, 2, 5 x 10^n)."""
-    if value <= 0:
-        return value
-
-    # Find order of magnitude
-    exp = math.floor(math.log10(value))
-    magnitude = 10 ** exp
-
-    # Get mantissa (value normalized to [1, 10))
-    mantissa = value / magnitude
-
-    # Round mantissa to 1, 2, or 5
-    if mantissa <= 1:
-        nice_mantissa = 0.1
-    elif mantissa <= 1.5:
-        nice_mantissa = 1
-    elif mantissa <= 3:
-        nice_mantissa = 2
-    elif mantissa <= 7:
-        nice_mantissa = 5
-    else:
-        nice_mantissa = 10
-
-    return nice_mantissa * magnitude
-
-def plot_timeseries(
-    df: pd.DataFrame,
-    plot_start_date: str,
-    plot_end_date: str,
-    plot_columns: str | list[str],
-    title: str,
-    x_label: str,
-    x_format: str,
-    x_tick_spacing: int,
-    x_tick_rotation: int,
-    y_label: str,
-    y_format: str,
-    y_format_decimal_places: int,
-    y_tick_spacing: int,
-    y_tick_rotation: int,
-    grid: bool,
-    legend: bool,
-    export_plot: bool,
-    plot_file_name: str,
-) -> None:
-
-    """
-    Plot the time series data from a DataFrame for a specified date range and columns.
-
-    Parameters:
-    -----------
-    df : pd.DataFrame
-        DataFrame containing the time series data to plot.
-    plot_start_date : str
-        Start date for the plot in 'YYYY-MM-DD' format.
-    plot_end_date : str
-        End date for the plot in 'YYYY-MM-DD' format.
-    plot_columns : str OR list
-        List of columns to plot from the DataFrame. If none, all columns will be plotted.
-    title : str
-        Title of the plot.
-    x_label : str
-        Label for the x-axis.
-    x_format : str
-        Format for the x-axis date labels.
-    x_tick_spacing : int
-        Spacing for the x-axis ticks.
-    x_tick_rotation : int
-        Rotation angle for the x-axis tick labels.
-    y_label : str
-        Label for the y-axis.
-    y_format : str
-        Format for the y-axis labels.
-    y_format_decimal_places : int
-        Number of decimal places for y-axis labels.
-    y_tick_spacing : int
-        Spacing for the y-axis ticks.
-    y_tick_rotation : int
-        Rotation angle for the y-axis tick labels.
-    grid : bool
-        Whether to display a grid on the plot.
-    legend : bool
-        Whether to display a legend on the plot.
-    export_plot : bool
-        Whether to save the figure as a PNG file.
-    plot_file_name : str
-        File name for saving the figure (if save_fig is True).
-    
-
-    Returns:
-    --------
-    None
-    """
-
-    # If start date and end date are None, use the entire DataFrame
-    if plot_start_date is None and plot_end_date is None:
-        df_filtered = df.copy()
-
-    # If only end date is specified, filter by end date
-    elif plot_start_date is None and plot_end_date is not None:
-        df_filtered = df[(df.index <= plot_end_date)].copy()
-
-    # If only start date is specified, filter by start date
-    elif plot_start_date is not None and plot_end_date is None:
-        df_filtered = df[(df.index >= plot_start_date)].copy()
-
-    # If both start date and end date are specified, filter by both
-    else:
-        df_filtered = df[(df.index >= plot_start_date) & (df.index <= plot_end_date)].copy()
-
-    # Set plot figure size and background color
-    plt.figure(figsize=(10, 6))
-
-    # Plot data
-    if plot_columns =="All":
-        for col in df_filtered.columns:
-            plt.plot(df_filtered.index, df_filtered[col], label=col, linestyle='-', linewidth=1.5, alpha=0.7)
-    else:
-        for col in plot_columns:
-            plt.plot(df_filtered.index, df_filtered[col], label=col, linestyle='-', linewidth=1.5, alpha=0.7)
-
-    # Format X axis
-    if x_format == "Day":
-        plt.gca().xaxis.set_major_locator(mdates.DayLocator())
-        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
-    elif x_format == "Week":
-        plt.gca().xaxis.set_major_locator(mdates.WeekdayLocator())
-        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
-    elif x_format == "Month":
-        plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
-        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
-    elif x_format == "Year":
-        plt.gca().xaxis.set_major_locator(mdates.YearLocator(base=x_tick_spacing))
-        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
-    else:
-        raise ValueError(f"Unrecognized x_format: {x_format}. Use 'Day', 'Week', 'Month', or 'Year'.")
-
-    plt.xlabel(x_label)
-    plt.xticks(rotation=x_tick_rotation)
-
-    # Format Y axis
-    if y_format == "Decimal":
-        plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f"{x:,.{y_format_decimal_places}f}"))
-    elif y_format == "Percentage":
-        plt.gca().yaxis.set_major_formatter(PercentFormatter(xmax=1, decimals=y_format_decimal_places))
-    elif y_format == "Scientific":
-        plt.gca().yaxis.set_major_formatter(FuncFormatter(lambda x, _: f"{x:.{y_format_decimal_places}e}"))
-    elif y_format == "Log":
-        plt.yscale("log")
-    else:
-        raise ValueError(f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', 'Scientific', or 'Log'.")
-    
-    if y_tick_spacing == "Auto":
-        max = 0
-        min = 1
-        for col in plot_columns:
-            if df[col].max() > max:
-                max = df[col].max()
-
-            if df[col].min() < min:
-                min = df[col].min()
-
-        raw_y_spacing = (max - min) / 10
-        y_tick_spacing = round_to_nice_value(raw_y_spacing)
-    else:
-        y_tick_spacing = y_tick_spacing
-
-    plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
-    plt.ylabel(y_label)
-    plt.yticks(rotation=y_tick_rotation)
-
-    # Format title, layout, grid, and legend
-    plt.title(title)
-    plt.tight_layout()
-
-    # Grid
-    if grid == True:
-        plt.grid(True, linestyle='--', alpha=0.7)
-
-    # Legend
-    if legend == True:
-        plt.legend()
-
-    # Save figure and display plot
-    if export_plot == True:
-        plt.savefig(f"{plot_file_name}.png", dpi=300, bbox_inches="tight")
-
-    # Display the plot
-    plt.show()
-
-    return None
-```
+<!-- INSERT_plot_timeseries_HERE -->
 
 ### plot_vix_with_trades
 
@@ -3183,6 +2915,7 @@ import statsmodels.api as sm
 
 from sklearn.linear_model import LinearRegression, Ridge, RidgeCV
 
+
 def run_linear_regression(
     df: pd.DataFrame,
     x_plot_column: str,
@@ -3190,7 +2923,12 @@ def run_linear_regression(
     regression_model: str,
     regression_constant: bool,
     ridge_alpha: float = None,
-) -> LinearRegression | Ridge | RidgeCV | sm.regression.linear_model.RegressionResultsWrapper:
+) -> (
+    LinearRegression
+    | Ridge
+    | RidgeCV
+    | sm.regression.linear_model.RegressionResultsWrapper
+):
     """
     Run a linear regression on the specified DataFrame columns, model, and constant.
 
@@ -3208,7 +2946,7 @@ def run_linear_regression(
         Whether to include a constant term in the regression model.
     ridge_alpha : float, optional
         Alpha value for Ridge regression. Required if regression_model is "Ridge".
-    
+
     Returns
     -------
     model : LinearRegression | Ridge | RidgeCV | RegressionResultsWrapper
@@ -3226,10 +2964,10 @@ def run_linear_regression(
             X_sm = sm.add_constant(X)
         else:
             X_sm = X
-        
+
         # Fit OLS regression model
         model = sm.OLS(y, X_sm).fit()
-    
+
     elif regression_model == "OLS-sklearn":
         # Fit OLS regression model
         model = LinearRegression(fit_intercept=regression_constant)
@@ -3239,7 +2977,7 @@ def run_linear_regression(
         # Fit Ridge regression model with fixed alpha
         model = Ridge(alpha=ridge_alpha, fit_intercept=regression_constant)
         model.fit(X, y)
-    
+
     elif regression_model == "RidgeCV":
         # Fit Ridge regression model with automatic alpha selection via CV
         alphas = np.logspace(-2, 1, 50)  # 50 values, 0.01 to 10
@@ -3253,6 +2991,7 @@ def run_linear_regression(
         )
 
     return model
+
 ```
 
 ### strategy_harry_brown_perm_port
@@ -3465,6 +3204,7 @@ def strategy_harry_brown_perm_port(
 import pandas as pd
 import numpy as np
 
+
 def summary_stats(
     fund_list: list[str],
     df: pd.DataFrame,
@@ -3474,7 +3214,6 @@ def summary_stats(
     pickle_export: bool,
     output_confirmation: bool,
 ) -> pd.DataFrame:
-    
     """
     Calculate summary statistics for the given fund list and return data.
 
@@ -3514,40 +3253,51 @@ def summary_stats(
     try:
         timeframe = period_to_timeframe[period]
     except KeyError:
-        raise ValueError(f"Invalid period: {period}. Must be one of {list(period_to_timeframe.keys())}")
+        raise ValueError(
+            f"Invalid period: {period}. Must be one of {list(period_to_timeframe.keys())}"
+        )
 
-    df_stats = pd.DataFrame(df.mean(axis=0) * timeframe) # annualized
-    df_stats.columns = ['Annual Mean Return (Arithmetic)']
-    df_stats['Annualized Volatility'] = df.std() * np.sqrt(timeframe) # annualized
-    df_stats['Annualized Sharpe Ratio'] = df_stats['Annual Mean Return (Arithmetic)'] / df_stats['Annualized Volatility']
+    df_stats = pd.DataFrame(df.mean(axis=0) * timeframe)  # annualized
+    df_stats.columns = ["Annual Mean Return (Arithmetic)"]
+    df_stats["Annualized Volatility"] = df.std() * np.sqrt(timeframe)  # annualized
+    df_stats["Annualized Sharpe Ratio"] = (
+        df_stats["Annual Mean Return (Arithmetic)"] / df_stats["Annualized Volatility"]
+    )
 
     df_cagr = (1 + df[df.columns[0]]).cumprod()
-    cagr = (df_cagr.iloc[-1] / 1) ** ( 1 / (len(df_cagr) / timeframe)) - 1
-    df_stats['CAGR (Geometric)'] = cagr
+    cagr = (df_cagr.iloc[-1] / 1) ** (1 / (len(df_cagr) / timeframe)) - 1
+    df_stats["CAGR (Geometric)"] = cagr
 
-    df_stats[f'{period} Max Return'] = df.max()
-    df_stats[f'{period} Max Return (Date)'] = df.idxmax().values[0]
-    df_stats[f'{period} Min Return'] = df.min()
-    df_stats[f'{period} Min Return (Date)'] = df.idxmin().values[0]
-    
+    df_stats[f"{period} Max Return"] = df.max()
+    df_stats[f"{period} Max Return (Date)"] = df.idxmax().values[0]
+    df_stats[f"{period} Min Return"] = df.min()
+    df_stats[f"{period} Min Return (Date)"] = df.idxmin().values[0]
+
     wealth_index = 1000 * (1 + df).cumprod()
     previous_peaks = wealth_index.cummax()
     drawdowns = (wealth_index - previous_peaks) / previous_peaks
 
-    df_stats['Max Drawdown'] = drawdowns.min()
-    df_stats['Peak'] = [previous_peaks[col][:drawdowns[col].idxmin()].idxmax() for col in previous_peaks.columns]
-    df_stats['Trough'] = drawdowns.idxmin()
+    df_stats["Max Drawdown"] = drawdowns.min()
+    df_stats["Peak"] = [
+        previous_peaks[col][: drawdowns[col].idxmin()].idxmax()
+        for col in previous_peaks.columns
+    ]
+    df_stats["Trough"] = drawdowns.idxmin()
 
     recovery_date = []
     for col in wealth_index.columns:
-        prev_max = previous_peaks[col][:drawdowns[col].idxmin()].max()
-        recovery_wealth = pd.DataFrame([wealth_index[col][drawdowns[col].idxmin():]]).T
-        recovery_date.append(recovery_wealth[recovery_wealth[col] >= prev_max].index.min())
-    df_stats['Recovery Date'] = recovery_date
-    df_stats['Days to Recovery'] = (df_stats['Recovery Date'] - df_stats['Trough']).dt.days
-    df_stats['MAR Ratio'] = df_stats['CAGR (Geometric)'] / -df_stats['Max Drawdown']
+        prev_max = previous_peaks[col][: drawdowns[col].idxmin()].max()
+        recovery_wealth = pd.DataFrame([wealth_index[col][drawdowns[col].idxmin() :]]).T
+        recovery_date.append(
+            recovery_wealth[recovery_wealth[col] >= prev_max].index.min()
+        )
+    df_stats["Recovery Date"] = recovery_date
+    df_stats["Calendar Days to Recovery"] = (
+        df_stats["Recovery Date"] - df_stats["Trough"]
+    ).dt.days
+    df_stats["MAR Ratio"] = df_stats["CAGR (Geometric)"] / -df_stats["Max Drawdown"]
 
-    plan_name = '_'.join(fund_list)
+    plan_name = "_".join(fund_list)
 
     # Export to excel
     if excel_export == True:
@@ -3566,8 +3316,9 @@ def summary_stats(
         print(f"Summary stats complete for {plan_name}")
     else:
         pass
-    
+
     return df_stats
+
 ```
 
 ### yf_pull_data
@@ -3579,8 +3330,9 @@ import yfinance as yf
 
 from IPython.display import display
 
+
 def yf_pull_data(
-    base_directory,
+    base_directory: str,
     ticker: str,
     adjusted: bool,
     source: str,
@@ -3589,16 +3341,17 @@ def yf_pull_data(
     pickle_export: bool,
     output_confirmation: bool,
 ) -> pd.DataFrame:
-    
     """
     Download daily price data from Yahoo Finance and export it.
 
     Parameters:
     -----------
-    base_directory
+    base_directory : str
         Root path to store downloaded data.
     ticker : str
         Ticker symbol to download.
+    adjusted : bool
+        If True, download adjusted price data.
     source : str
         Name of the data source (e.g., 'Yahoo').
     asset_class : str
@@ -3615,9 +3368,9 @@ def yf_pull_data(
     df : pd.DataFrame
         DataFrame containing the downloaded data.
     """
-    
+
     # Download data from YF
-    df = yf.download(ticker, start="1900-01-01", auto_adjust=adjusted)
+    df = yf.download(ticker, start="1900-01-01", auto_adjust=adjusted, progress=False)
 
     # Drop the column level with the ticker symbol
     df.columns = df.columns.droplevel(1)
@@ -3629,14 +3382,14 @@ def yf_pull_data(
     df.columns.name = None
 
     # Reset date column
-    df['Date'] = df['Date'].dt.tz_localize(None)
+    df["Date"] = df["Date"].dt.tz_localize(None)
 
     # Set 'Date' column as index
-    df = df.set_index('Date', drop=True)
+    df = df.set_index("Date", drop=True)
 
     # Drop data from last day because it's not accurate until end of day
     df = df.drop(df.index[-1])
-    
+
     # Create directory
     directory = f"{base_directory}/{source}/{asset_class}/Daily"
     os.makedirs(directory, exist_ok=True)
@@ -3664,6 +3417,7 @@ def yf_pull_data(
         pass
 
     return df
+
 ```
 
 ## References
