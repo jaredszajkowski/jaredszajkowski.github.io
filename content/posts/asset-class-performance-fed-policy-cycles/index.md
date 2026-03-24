@@ -48,8 +48,6 @@ import statsmodels.api as sm
 warnings.filterwarnings("ignore")
 ```
 
-## Add Directories To Path
-
 
 ```python
 # Add the source subdirectory to the system path to allow import config from settings.py
@@ -86,7 +84,7 @@ Here are the functions needed for this project:
 * [pandas_set_decimal_places](/posts/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places): Set the number of decimal places displayed for floating-point numbers in pandas.
 * [plot_bar_returns_ffr_change](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_bar_returns_ffr_change): Plot the bar chart of the cumulative or annualized returns for the asset class along with the change in the Fed Funds Rate.
 * [plot_scatter_regression_ffr_vs_returns](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_scatter_regression_ffr_vs_returns): Plot the scatter plot and regression of the annualized return for the asset class along with the annualized change in the Fed Funds Rate.
-* [plot_timeseries](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_timeseries): Plot the timeseries data from a DataFrame for a specified date range and columns.
+* [plot_time_series](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_time_series): Plot the time series data from a DataFrame for a specified date range and columns.
 * [summary_stats](/posts/reusable-extensible-python-functions-financial-data-analysis/#summary_stats): Generate summary statistics for a series of returns.
 
 
@@ -97,7 +95,7 @@ from load_data import load_data
 from pandas_set_decimal_places import pandas_set_decimal_places
 from plot_bar_returns_ffr_change import plot_bar_returns_ffr_change
 from plot_scatter_regression_ffr_vs_returns import plot_scatter_regression_ffr_vs_returns
-from plot_timeseries import plot_timeseries
+from plot_time_series import plot_time_series
 from summary_stats import summary_stats
 ```
 
@@ -110,7 +108,7 @@ First, let's get the data for the Fed Funds target rate (FFR). This data is foun
 
 ```python
 # Set decimal places
-pandas_set_decimal_places(5)
+pandas_set_decimal_places(4)
 
 # Pull Federal Funds Target Rate (DISCONTINUED) (DFEDTAR)
 fedfunds_target_old = web.DataReader("DFEDTAR", "fred", start="1900-01-01", end=datetime.today())
@@ -167,31 +165,31 @@ display(fedfunds_monthly)
   <tbody>
     <tr>
       <th>1982-09-30</th>
-      <td>0.10250</td>
+      <td>0.1025</td>
       <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>1982-10-31</th>
-      <td>0.09500</td>
+      <td>0.0950</td>
       <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>1982-11-30</th>
-      <td>0.09000</td>
+      <td>0.0900</td>
       <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>1982-12-31</th>
-      <td>0.08500</td>
+      <td>0.0850</td>
       <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>1983-01-31</th>
-      <td>0.08500</td>
+      <td>0.0850</td>
       <td>NaN</td>
       <td>NaN</td>
     </tr>
@@ -204,32 +202,32 @@ display(fedfunds_monthly)
     <tr>
       <th>2025-11-30</th>
       <td>NaN</td>
-      <td>0.04000</td>
-      <td>0.03750</td>
+      <td>0.0400</td>
+      <td>0.0375</td>
     </tr>
     <tr>
       <th>2025-12-31</th>
       <td>NaN</td>
-      <td>0.03750</td>
-      <td>0.03500</td>
+      <td>0.0375</td>
+      <td>0.0350</td>
     </tr>
     <tr>
       <th>2026-01-31</th>
       <td>NaN</td>
-      <td>0.03750</td>
-      <td>0.03500</td>
+      <td>0.0375</td>
+      <td>0.0350</td>
     </tr>
     <tr>
       <th>2026-02-28</th>
       <td>NaN</td>
-      <td>0.03750</td>
-      <td>0.03500</td>
+      <td>0.0375</td>
+      <td>0.0350</td>
     </tr>
     <tr>
       <th>2026-03-31</th>
       <td>NaN</td>
-      <td>0.03750</td>
-      <td>0.03500</td>
+      <td>0.0375</td>
+      <td>0.0350</td>
     </tr>
   </tbody>
 </table>
@@ -241,7 +239,7 @@ We can then generate several useful plots. First, the Fed Funds target rate:
 
 
 ```python
-plot_timeseries(
+plot_time_series(
     df=fedfunds_monthly,
     plot_start_date=None,
     plot_end_date=None,
@@ -250,7 +248,7 @@ plot_timeseries(
     x_label="Date",
     x_format="Year",
     x_tick_spacing=2,
-    x_tick_rotation=45,
+    x_tick_rotation=30,
     y_label="Rate (%)",
     y_format="Percentage",
     y_format_decimal_places=0,
@@ -265,7 +263,7 @@ plot_timeseries(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_10_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_8_0.png)
     
 
 
@@ -312,28 +310,28 @@ display(fedfunds_monthly)
   <tbody>
     <tr>
       <th>1982-09-30</th>
-      <td>0.10250</td>
+      <td>0.1025</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>1982-10-31</th>
-      <td>0.09500</td>
-      <td>-0.00750</td>
+      <td>0.0950</td>
+      <td>-0.0075</td>
     </tr>
     <tr>
       <th>1982-11-30</th>
-      <td>0.09000</td>
-      <td>-0.00500</td>
+      <td>0.0900</td>
+      <td>-0.0050</td>
     </tr>
     <tr>
       <th>1982-12-31</th>
-      <td>0.08500</td>
-      <td>-0.00500</td>
+      <td>0.0850</td>
+      <td>-0.0050</td>
     </tr>
     <tr>
       <th>1983-01-31</th>
-      <td>0.08500</td>
-      <td>0.00000</td>
+      <td>0.0850</td>
+      <td>0.0000</td>
     </tr>
     <tr>
       <th>...</th>
@@ -342,28 +340,28 @@ display(fedfunds_monthly)
     </tr>
     <tr>
       <th>2025-11-30</th>
-      <td>0.04000</td>
-      <td>0.00000</td>
+      <td>0.0400</td>
+      <td>0.0000</td>
     </tr>
     <tr>
       <th>2025-12-31</th>
-      <td>0.03750</td>
-      <td>-0.00250</td>
+      <td>0.0375</td>
+      <td>-0.0025</td>
     </tr>
     <tr>
       <th>2026-01-31</th>
-      <td>0.03750</td>
-      <td>0.00000</td>
+      <td>0.0375</td>
+      <td>0.0000</td>
     </tr>
     <tr>
       <th>2026-02-28</th>
-      <td>0.03750</td>
-      <td>0.00000</td>
+      <td>0.0375</td>
+      <td>0.0000</td>
     </tr>
     <tr>
       <th>2026-03-31</th>
-      <td>0.03750</td>
-      <td>0.00000</td>
+      <td>0.0375</td>
+      <td>0.0000</td>
     </tr>
   </tbody>
 </table>
@@ -375,7 +373,7 @@ And then the change in FFR from month-to-month:
 
 
 ```python
-plot_timeseries(
+plot_time_series(
     df=fedfunds_monthly,
     plot_start_date=None,
     plot_end_date=None,
@@ -384,7 +382,7 @@ plot_timeseries(
     x_label="Date",
     x_format="Year",
     x_tick_spacing=2,
-    x_tick_rotation=45,
+    x_tick_rotation=30,
     y_label="Rate Change (%)",
     y_format="Percentage",
     y_format_decimal_places=2,
@@ -399,7 +397,7 @@ plot_timeseries(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_13_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_11_0.png)
     
 
 
@@ -475,46 +473,46 @@ display(fedfunds_cycles)
     <tr>
       <th>0</th>
       <td>1989-12-31</td>
-      <td>0.08250</td>
+      <td>0.0825</td>
       <td>1990-01-31</td>
-      <td>0.08250</td>
-      <td>0.00000</td>
+      <td>0.0825</td>
+      <td>0.0000</td>
       <td>Neutral</td>
     </tr>
     <tr>
       <th>1</th>
       <td>1990-01-31</td>
-      <td>0.08250</td>
+      <td>0.0825</td>
       <td>1990-02-28</td>
-      <td>0.08250</td>
-      <td>0.00000</td>
+      <td>0.0825</td>
+      <td>0.0000</td>
       <td>Neutral</td>
     </tr>
     <tr>
       <th>2</th>
       <td>1990-02-28</td>
-      <td>0.08250</td>
+      <td>0.0825</td>
       <td>1990-03-31</td>
-      <td>0.08250</td>
-      <td>0.00000</td>
+      <td>0.0825</td>
+      <td>0.0000</td>
       <td>Neutral</td>
     </tr>
     <tr>
       <th>3</th>
       <td>1990-03-31</td>
-      <td>0.08250</td>
+      <td>0.0825</td>
       <td>1990-04-30</td>
-      <td>0.08250</td>
-      <td>0.00000</td>
+      <td>0.0825</td>
+      <td>0.0000</td>
       <td>Neutral</td>
     </tr>
     <tr>
       <th>4</th>
       <td>1990-04-30</td>
-      <td>0.08250</td>
+      <td>0.0825</td>
       <td>1990-05-31</td>
-      <td>0.08250</td>
-      <td>0.00000</td>
+      <td>0.0825</td>
+      <td>0.0000</td>
       <td>Neutral</td>
     </tr>
     <tr>
@@ -529,43 +527,43 @@ display(fedfunds_cycles)
     <tr>
       <th>429</th>
       <td>2025-09-30</td>
-      <td>0.04250</td>
+      <td>0.0425</td>
       <td>2025-10-31</td>
-      <td>0.04000</td>
-      <td>-0.00250</td>
+      <td>0.0400</td>
+      <td>-0.0025</td>
       <td>Easing</td>
     </tr>
     <tr>
       <th>430</th>
       <td>2025-10-31</td>
-      <td>0.04000</td>
+      <td>0.0400</td>
       <td>2025-11-30</td>
-      <td>0.04000</td>
-      <td>0.00000</td>
+      <td>0.0400</td>
+      <td>0.0000</td>
       <td>Neutral</td>
     </tr>
     <tr>
       <th>431</th>
       <td>2025-11-30</td>
-      <td>0.04000</td>
+      <td>0.0400</td>
       <td>2025-12-31</td>
-      <td>0.03750</td>
-      <td>-0.00250</td>
+      <td>0.0375</td>
+      <td>-0.0025</td>
       <td>Easing</td>
     </tr>
     <tr>
       <th>432</th>
       <td>2025-12-31</td>
-      <td>0.03750</td>
+      <td>0.0375</td>
       <td>2026-01-31</td>
-      <td>0.03750</td>
-      <td>0.00000</td>
+      <td>0.0375</td>
+      <td>0.0000</td>
       <td>Neutral</td>
     </tr>
     <tr>
       <th>433</th>
       <td>2026-01-31</td>
-      <td>0.03750</td>
+      <td>0.0375</td>
       <td>NaT</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -634,40 +632,40 @@ display(cycle_ranges)
       <td>Neutral</td>
       <td>1989-12-31</td>
       <td>1990-06-30</td>
-      <td>0.08250</td>
-      <td>0.08250</td>
+      <td>0.0825</td>
+      <td>0.0825</td>
     </tr>
     <tr>
       <th>1</th>
       <td>Easing</td>
       <td>1990-06-30</td>
       <td>1990-07-31</td>
-      <td>0.08250</td>
-      <td>0.08000</td>
+      <td>0.0825</td>
+      <td>0.0800</td>
     </tr>
     <tr>
       <th>2</th>
       <td>Neutral</td>
       <td>1990-07-31</td>
       <td>1990-09-30</td>
-      <td>0.08000</td>
-      <td>0.08000</td>
+      <td>0.0800</td>
+      <td>0.0800</td>
     </tr>
     <tr>
       <th>3</th>
       <td>Easing</td>
       <td>1990-09-30</td>
       <td>1991-04-30</td>
-      <td>0.08000</td>
-      <td>0.05750</td>
+      <td>0.0800</td>
+      <td>0.0575</td>
     </tr>
     <tr>
       <th>4</th>
       <td>Neutral</td>
       <td>1991-04-30</td>
       <td>1991-07-31</td>
-      <td>0.05750</td>
-      <td>0.05750</td>
+      <td>0.0575</td>
+      <td>0.0575</td>
     </tr>
     <tr>
       <th>...</th>
@@ -682,40 +680,40 @@ display(cycle_ranges)
       <td>Neutral</td>
       <td>2024-12-31</td>
       <td>2025-08-31</td>
-      <td>0.04500</td>
-      <td>0.04500</td>
+      <td>0.0450</td>
+      <td>0.0450</td>
     </tr>
     <tr>
       <th>117</th>
       <td>Easing</td>
       <td>2025-08-31</td>
       <td>2025-10-31</td>
-      <td>0.04500</td>
-      <td>0.04000</td>
+      <td>0.0450</td>
+      <td>0.0400</td>
     </tr>
     <tr>
       <th>118</th>
       <td>Neutral</td>
       <td>2025-10-31</td>
       <td>2025-11-30</td>
-      <td>0.04000</td>
-      <td>0.04000</td>
+      <td>0.0400</td>
+      <td>0.0400</td>
     </tr>
     <tr>
       <th>119</th>
       <td>Easing</td>
       <td>2025-11-30</td>
       <td>2025-12-31</td>
-      <td>0.04000</td>
-      <td>0.03750</td>
+      <td>0.0400</td>
+      <td>0.0375</td>
     </tr>
     <tr>
       <th>120</th>
       <td>Neutral</td>
       <td>2025-12-31</td>
       <td>2026-01-31</td>
-      <td>0.03750</td>
-      <td>0.03750</td>
+      <td>0.0375</td>
+      <td>0.0375</td>
     </tr>
   </tbody>
 </table>
@@ -797,9 +795,9 @@ display(cycle_ranges)
       <td>Modified Tightening</td>
       <td>1989-12-31</td>
       <td>1990-06-30</td>
-      <td>0.08250</td>
-      <td>0.08250</td>
-      <td>0.00000</td>
+      <td>0.0825</td>
+      <td>0.0825</td>
+      <td>0.0000</td>
       <td>Cycle 1</td>
     </tr>
     <tr>
@@ -807,9 +805,9 @@ display(cycle_ranges)
       <td>Easing</td>
       <td>1990-06-30</td>
       <td>1993-03-31</td>
-      <td>0.08250</td>
-      <td>0.03000</td>
-      <td>-0.05250</td>
+      <td>0.0825</td>
+      <td>0.0300</td>
+      <td>-0.0525</td>
       <td>Cycle 2</td>
     </tr>
     <tr>
@@ -817,9 +815,9 @@ display(cycle_ranges)
       <td>Modified Tightening</td>
       <td>1993-03-31</td>
       <td>1994-01-31</td>
-      <td>0.03000</td>
-      <td>0.03000</td>
-      <td>0.00000</td>
+      <td>0.0300</td>
+      <td>0.0300</td>
+      <td>0.0000</td>
       <td>Cycle 3</td>
     </tr>
     <tr>
@@ -827,9 +825,9 @@ display(cycle_ranges)
       <td>Tightening</td>
       <td>1994-01-31</td>
       <td>1995-06-30</td>
-      <td>0.03000</td>
-      <td>0.06000</td>
-      <td>0.03000</td>
+      <td>0.0300</td>
+      <td>0.0600</td>
+      <td>0.0300</td>
       <td>Cycle 4</td>
     </tr>
     <tr>
@@ -837,9 +835,9 @@ display(cycle_ranges)
       <td>Easing</td>
       <td>1995-06-30</td>
       <td>1996-07-31</td>
-      <td>0.06000</td>
-      <td>0.05250</td>
-      <td>-0.00750</td>
+      <td>0.0600</td>
+      <td>0.0525</td>
+      <td>-0.0075</td>
       <td>Cycle 5</td>
     </tr>
     <tr>
@@ -847,9 +845,9 @@ display(cycle_ranges)
       <td>Modified Tightening</td>
       <td>1996-07-31</td>
       <td>1997-02-28</td>
-      <td>0.05250</td>
-      <td>0.05250</td>
-      <td>0.00000</td>
+      <td>0.0525</td>
+      <td>0.0525</td>
+      <td>0.0000</td>
       <td>Cycle 6</td>
     </tr>
     <tr>
@@ -857,9 +855,9 @@ display(cycle_ranges)
       <td>Tightening</td>
       <td>1997-02-28</td>
       <td>1997-09-30</td>
-      <td>0.05250</td>
-      <td>0.05500</td>
-      <td>0.00250</td>
+      <td>0.0525</td>
+      <td>0.0550</td>
+      <td>0.0025</td>
       <td>Cycle 7</td>
     </tr>
     <tr>
@@ -867,9 +865,9 @@ display(cycle_ranges)
       <td>Modified Tightening</td>
       <td>1997-09-30</td>
       <td>1998-08-31</td>
-      <td>0.05500</td>
-      <td>0.05500</td>
-      <td>0.00000</td>
+      <td>0.0550</td>
+      <td>0.0550</td>
+      <td>0.0000</td>
       <td>Cycle 8</td>
     </tr>
     <tr>
@@ -877,9 +875,9 @@ display(cycle_ranges)
       <td>Easing</td>
       <td>1998-08-31</td>
       <td>1999-05-31</td>
-      <td>0.05500</td>
-      <td>0.04750</td>
-      <td>-0.00750</td>
+      <td>0.0550</td>
+      <td>0.0475</td>
+      <td>-0.0075</td>
       <td>Cycle 9</td>
     </tr>
     <tr>
@@ -887,9 +885,9 @@ display(cycle_ranges)
       <td>Tightening</td>
       <td>1999-05-31</td>
       <td>2000-11-30</td>
-      <td>0.04750</td>
-      <td>0.06500</td>
-      <td>0.01750</td>
+      <td>0.0475</td>
+      <td>0.0650</td>
+      <td>0.0175</td>
       <td>Cycle 10</td>
     </tr>
     <tr>
@@ -897,9 +895,9 @@ display(cycle_ranges)
       <td>Modified Tightening</td>
       <td>2000-11-30</td>
       <td>2000-12-31</td>
-      <td>0.06500</td>
-      <td>0.06500</td>
-      <td>0.00000</td>
+      <td>0.0650</td>
+      <td>0.0650</td>
+      <td>0.0000</td>
       <td>Cycle 11</td>
     </tr>
     <tr>
@@ -907,9 +905,9 @@ display(cycle_ranges)
       <td>Easing</td>
       <td>2000-12-31</td>
       <td>2002-06-30</td>
-      <td>0.06500</td>
-      <td>0.01750</td>
-      <td>-0.04750</td>
+      <td>0.0650</td>
+      <td>0.0175</td>
+      <td>-0.0475</td>
       <td>Cycle 12</td>
     </tr>
     <tr>
@@ -917,9 +915,9 @@ display(cycle_ranges)
       <td>Modified Tightening</td>
       <td>2002-06-30</td>
       <td>2002-10-31</td>
-      <td>0.01750</td>
-      <td>0.01750</td>
-      <td>0.00000</td>
+      <td>0.0175</td>
+      <td>0.0175</td>
+      <td>0.0000</td>
       <td>Cycle 13</td>
     </tr>
     <tr>
@@ -927,9 +925,9 @@ display(cycle_ranges)
       <td>Easing</td>
       <td>2002-10-31</td>
       <td>2003-12-31</td>
-      <td>0.01750</td>
-      <td>0.01000</td>
-      <td>-0.00750</td>
+      <td>0.0175</td>
+      <td>0.0100</td>
+      <td>-0.0075</td>
       <td>Cycle 14</td>
     </tr>
     <tr>
@@ -937,9 +935,9 @@ display(cycle_ranges)
       <td>Modified Tightening</td>
       <td>2003-12-31</td>
       <td>2004-05-31</td>
-      <td>0.01000</td>
-      <td>0.01000</td>
-      <td>0.00000</td>
+      <td>0.0100</td>
+      <td>0.0100</td>
+      <td>0.0000</td>
       <td>Cycle 15</td>
     </tr>
     <tr>
@@ -947,9 +945,9 @@ display(cycle_ranges)
       <td>Tightening</td>
       <td>2004-05-31</td>
       <td>2006-12-31</td>
-      <td>0.01000</td>
-      <td>0.05250</td>
-      <td>0.04250</td>
+      <td>0.0100</td>
+      <td>0.0525</td>
+      <td>0.0425</td>
       <td>Cycle 16</td>
     </tr>
     <tr>
@@ -957,9 +955,9 @@ display(cycle_ranges)
       <td>Modified Tightening</td>
       <td>2006-12-31</td>
       <td>2007-08-31</td>
-      <td>0.05250</td>
-      <td>0.05250</td>
-      <td>0.00000</td>
+      <td>0.0525</td>
+      <td>0.0525</td>
+      <td>0.0000</td>
       <td>Cycle 17</td>
     </tr>
     <tr>
@@ -967,9 +965,9 @@ display(cycle_ranges)
       <td>Easing</td>
       <td>2007-08-31</td>
       <td>2009-07-31</td>
-      <td>0.05250</td>
-      <td>0.00250</td>
-      <td>-0.05000</td>
+      <td>0.0525</td>
+      <td>0.0025</td>
+      <td>-0.0500</td>
       <td>Cycle 18</td>
     </tr>
     <tr>
@@ -977,9 +975,9 @@ display(cycle_ranges)
       <td>Modified Tightening</td>
       <td>2009-07-31</td>
       <td>2015-11-30</td>
-      <td>0.00250</td>
-      <td>0.00250</td>
-      <td>0.00000</td>
+      <td>0.0025</td>
+      <td>0.0025</td>
+      <td>0.0000</td>
       <td>Cycle 19</td>
     </tr>
     <tr>
@@ -987,9 +985,9 @@ display(cycle_ranges)
       <td>Tightening</td>
       <td>2015-11-30</td>
       <td>2016-06-30</td>
-      <td>0.00250</td>
-      <td>0.00500</td>
-      <td>0.00250</td>
+      <td>0.0025</td>
+      <td>0.0050</td>
+      <td>0.0025</td>
       <td>Cycle 20</td>
     </tr>
     <tr>
@@ -997,9 +995,9 @@ display(cycle_ranges)
       <td>Modified Tightening</td>
       <td>2016-06-30</td>
       <td>2016-11-30</td>
-      <td>0.00500</td>
-      <td>0.00500</td>
-      <td>0.00000</td>
+      <td>0.0050</td>
+      <td>0.0050</td>
+      <td>0.0000</td>
       <td>Cycle 21</td>
     </tr>
     <tr>
@@ -1007,9 +1005,9 @@ display(cycle_ranges)
       <td>Tightening</td>
       <td>2016-11-30</td>
       <td>2019-06-30</td>
-      <td>0.00500</td>
-      <td>0.02500</td>
-      <td>0.02000</td>
+      <td>0.0050</td>
+      <td>0.0250</td>
+      <td>0.0200</td>
       <td>Cycle 22</td>
     </tr>
     <tr>
@@ -1017,9 +1015,9 @@ display(cycle_ranges)
       <td>Modified Tightening</td>
       <td>2019-06-30</td>
       <td>2019-07-31</td>
-      <td>0.02500</td>
-      <td>0.02500</td>
-      <td>0.00000</td>
+      <td>0.0250</td>
+      <td>0.0250</td>
+      <td>0.0000</td>
       <td>Cycle 23</td>
     </tr>
     <tr>
@@ -1027,9 +1025,9 @@ display(cycle_ranges)
       <td>Easing</td>
       <td>2019-07-31</td>
       <td>2020-09-30</td>
-      <td>0.02500</td>
-      <td>0.00250</td>
-      <td>-0.02250</td>
+      <td>0.0250</td>
+      <td>0.0025</td>
+      <td>-0.0225</td>
       <td>Cycle 24</td>
     </tr>
     <tr>
@@ -1037,9 +1035,9 @@ display(cycle_ranges)
       <td>Modified Tightening</td>
       <td>2020-09-30</td>
       <td>2022-02-28</td>
-      <td>0.00250</td>
-      <td>0.00250</td>
-      <td>0.00000</td>
+      <td>0.0025</td>
+      <td>0.0025</td>
+      <td>0.0000</td>
       <td>Cycle 25</td>
     </tr>
     <tr>
@@ -1047,9 +1045,9 @@ display(cycle_ranges)
       <td>Tightening</td>
       <td>2022-02-28</td>
       <td>2024-01-31</td>
-      <td>0.00250</td>
-      <td>0.05500</td>
-      <td>0.05250</td>
+      <td>0.0025</td>
+      <td>0.0550</td>
+      <td>0.0525</td>
       <td>Cycle 26</td>
     </tr>
     <tr>
@@ -1057,9 +1055,9 @@ display(cycle_ranges)
       <td>Modified Tightening</td>
       <td>2024-01-31</td>
       <td>2024-08-31</td>
-      <td>0.05500</td>
-      <td>0.05500</td>
-      <td>0.00000</td>
+      <td>0.0550</td>
+      <td>0.0550</td>
+      <td>0.0000</td>
       <td>Cycle 27</td>
     </tr>
     <tr>
@@ -1067,9 +1065,9 @@ display(cycle_ranges)
       <td>Easing</td>
       <td>2024-08-31</td>
       <td>2025-06-30</td>
-      <td>0.05500</td>
-      <td>0.04500</td>
-      <td>-0.01000</td>
+      <td>0.0550</td>
+      <td>0.0450</td>
+      <td>-0.0100</td>
       <td>Cycle 28</td>
     </tr>
     <tr>
@@ -1077,9 +1075,9 @@ display(cycle_ranges)
       <td>Modified Tightening</td>
       <td>2025-06-30</td>
       <td>2025-08-31</td>
-      <td>0.04500</td>
-      <td>0.04500</td>
-      <td>0.00000</td>
+      <td>0.0450</td>
+      <td>0.0450</td>
+      <td>0.0000</td>
       <td>Cycle 29</td>
     </tr>
     <tr>
@@ -1087,9 +1085,9 @@ display(cycle_ranges)
       <td>Easing</td>
       <td>2025-08-31</td>
       <td>2026-01-31</td>
-      <td>0.04500</td>
-      <td>0.03750</td>
-      <td>-0.00750</td>
+      <td>0.0450</td>
+      <td>0.0375</td>
+      <td>-0.0075</td>
       <td>Cycle 30</td>
     </tr>
   </tbody>
@@ -1112,6 +1110,8 @@ First, we will clean and load the data for the S&P 500 Total Return Index (SPXT)
 
 
 ```python
+pandas_set_decimal_places(2)
+
 bb_clean_data(
     base_directory=DATA_DIR,
     fund_ticker_name="SPXT_S&P 500 Total Return Index",
@@ -1176,28 +1176,28 @@ display(spxt_monthly)
   <tbody>
     <tr>
       <th>1990-01-31</th>
-      <td>353.94000</td>
-      <td>-0.06713</td>
+      <td>353.94</td>
+      <td>-0.07</td>
     </tr>
     <tr>
       <th>1990-02-28</th>
-      <td>358.50000</td>
-      <td>0.01288</td>
+      <td>358.50</td>
+      <td>0.01</td>
     </tr>
     <tr>
       <th>1990-03-31</th>
       <td>368</td>
-      <td>0.02650</td>
+      <td>0.03</td>
     </tr>
     <tr>
       <th>1990-04-30</th>
-      <td>358.81000</td>
-      <td>-0.02497</td>
+      <td>358.81</td>
+      <td>-0.02</td>
     </tr>
     <tr>
       <th>1990-05-31</th>
-      <td>393.80000</td>
-      <td>0.09752</td>
+      <td>393.80</td>
+      <td>0.10</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1206,28 +1206,28 @@ display(spxt_monthly)
     </tr>
     <tr>
       <th>2025-09-30</th>
-      <td>14826.80000</td>
-      <td>0.03650</td>
+      <td>14826.80</td>
+      <td>0.04</td>
     </tr>
     <tr>
       <th>2025-10-31</th>
-      <td>15173.95000</td>
-      <td>0.02341</td>
+      <td>15173.95</td>
+      <td>0.02</td>
     </tr>
     <tr>
       <th>2025-11-30</th>
-      <td>15211.14000</td>
-      <td>0.00245</td>
+      <td>15211.14</td>
+      <td>0.00</td>
     </tr>
     <tr>
       <th>2025-12-31</th>
-      <td>15220.45000</td>
-      <td>0.00061</td>
+      <td>15220.45</td>
+      <td>0.00</td>
     </tr>
     <tr>
       <th>2026-01-31</th>
-      <td>15441.15000</td>
-      <td>0.01450</td>
+      <td>15441.15</td>
+      <td>0.01</td>
     </tr>
   </tbody>
 </table>
@@ -1239,7 +1239,7 @@ Next, we can plot the price history before calculating the cycle performance:
 
 
 ```python
-plot_timeseries(
+plot_time_series(
     df=spxt,
     plot_start_date=None,
     plot_end_date=None,
@@ -1248,7 +1248,7 @@ plot_timeseries(
     x_label="Date",
     x_format="Year",
     x_tick_spacing=2,
-    x_tick_rotation=45,
+    x_tick_rotation=30,
     y_label="Price ($)",
     y_format="Decimal",
     y_format_decimal_places=0,
@@ -1263,7 +1263,7 @@ plot_timeseries(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_24_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_22_0.png)
     
 
 
@@ -1326,17 +1326,17 @@ display(spxt_cycles)
       <td>1989-12-31</td>
       <td>1990-06-30</td>
       <td>6</td>
-      <td>0.03092</td>
-      <td>3.09164</td>
-      <td>0.00634</td>
-      <td>0.63403</td>
-      <td>0.06279</td>
-      <td>6.27887</td>
-      <td>0.19170</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.03</td>
+      <td>3.09</td>
+      <td>0.01</td>
+      <td>0.63</td>
+      <td>0.06</td>
+      <td>6.28</td>
+      <td>0.19</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 1, 1989-12-31 to 1990-06-30</td>
     </tr>
     <tr>
@@ -1345,17 +1345,17 @@ display(spxt_cycles)
       <td>1990-06-30</td>
       <td>1993-03-31</td>
       <td>34</td>
-      <td>0.36800</td>
-      <td>36.80041</td>
-      <td>0.00996</td>
-      <td>0.99573</td>
-      <td>0.11694</td>
-      <td>11.69426</td>
-      <td>0.13198</td>
-      <td>-0.05250</td>
-      <td>-525.00000</td>
-      <td>-0.01853</td>
-      <td>-185.29412</td>
+      <td>0.37</td>
+      <td>36.80</td>
+      <td>0.01</td>
+      <td>1.00</td>
+      <td>0.12</td>
+      <td>11.69</td>
+      <td>0.13</td>
+      <td>-0.05</td>
+      <td>-525.00</td>
+      <td>-0.02</td>
+      <td>-185.29</td>
       <td>Cycle 2, 1990-06-30 to 1993-03-31</td>
     </tr>
     <tr>
@@ -1364,17 +1364,17 @@ display(spxt_cycles)
       <td>1993-03-31</td>
       <td>1994-01-31</td>
       <td>11</td>
-      <td>0.11359</td>
-      <td>11.35920</td>
-      <td>0.01001</td>
-      <td>1.00089</td>
-      <td>0.12454</td>
-      <td>12.45375</td>
-      <td>0.06918</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.11</td>
+      <td>11.36</td>
+      <td>0.01</td>
+      <td>1.00</td>
+      <td>0.12</td>
+      <td>12.45</td>
+      <td>0.07</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 3, 1993-03-31 to 1994-01-31</td>
     </tr>
     <tr>
@@ -1383,17 +1383,17 @@ display(spxt_cycles)
       <td>1994-01-31</td>
       <td>1995-06-30</td>
       <td>18</td>
-      <td>0.21800</td>
-      <td>21.80042</td>
-      <td>0.01141</td>
-      <td>1.14060</td>
-      <td>0.14051</td>
-      <td>14.05103</td>
-      <td>0.09928</td>
-      <td>0.03000</td>
-      <td>300.00000</td>
-      <td>0.02000</td>
-      <td>200.00000</td>
+      <td>0.22</td>
+      <td>21.80</td>
+      <td>0.01</td>
+      <td>1.14</td>
+      <td>0.14</td>
+      <td>14.05</td>
+      <td>0.10</td>
+      <td>0.03</td>
+      <td>300.00</td>
+      <td>0.02</td>
+      <td>200.00</td>
       <td>Cycle 4, 1994-01-31 to 1995-06-30</td>
     </tr>
     <tr>
@@ -1402,17 +1402,17 @@ display(spxt_cycles)
       <td>1995-06-30</td>
       <td>1996-07-31</td>
       <td>14</td>
-      <td>0.23230</td>
-      <td>23.23023</td>
-      <td>0.01527</td>
-      <td>1.52704</td>
-      <td>0.19607</td>
-      <td>19.60729</td>
-      <td>0.07840</td>
-      <td>-0.00750</td>
-      <td>-75.00000</td>
-      <td>-0.00643</td>
-      <td>-64.28571</td>
+      <td>0.23</td>
+      <td>23.23</td>
+      <td>0.02</td>
+      <td>1.53</td>
+      <td>0.20</td>
+      <td>19.61</td>
+      <td>0.08</td>
+      <td>-0.01</td>
+      <td>-75.00</td>
+      <td>-0.01</td>
+      <td>-64.29</td>
       <td>Cycle 5, 1995-06-30 to 1996-07-31</td>
     </tr>
     <tr>
@@ -1421,17 +1421,17 @@ display(spxt_cycles)
       <td>1996-07-31</td>
       <td>1997-02-28</td>
       <td>8</td>
-      <td>0.19592</td>
-      <td>19.59152</td>
-      <td>0.02336</td>
-      <td>2.33576</td>
-      <td>0.30783</td>
-      <td>30.78278</td>
-      <td>0.14361</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.20</td>
+      <td>19.59</td>
+      <td>0.02</td>
+      <td>2.34</td>
+      <td>0.31</td>
+      <td>30.78</td>
+      <td>0.14</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 6, 1996-07-31 to 1997-02-28</td>
     </tr>
     <tr>
@@ -1440,17 +1440,17 @@ display(spxt_cycles)
       <td>1997-02-28</td>
       <td>1997-09-30</td>
       <td>8</td>
-      <td>0.22017</td>
-      <td>22.01713</td>
-      <td>0.02631</td>
-      <td>2.63056</td>
-      <td>0.34782</td>
-      <td>34.78178</td>
-      <td>0.17547</td>
-      <td>0.00250</td>
-      <td>25.00000</td>
-      <td>0.00375</td>
-      <td>37.50000</td>
+      <td>0.22</td>
+      <td>22.02</td>
+      <td>0.03</td>
+      <td>2.63</td>
+      <td>0.35</td>
+      <td>34.78</td>
+      <td>0.18</td>
+      <td>0.00</td>
+      <td>25.00</td>
+      <td>0.00</td>
+      <td>37.50</td>
       <td>Cycle 7, 1997-02-28 to 1997-09-30</td>
     </tr>
     <tr>
@@ -1459,17 +1459,17 @@ display(spxt_cycles)
       <td>1997-09-30</td>
       <td>1998-08-31</td>
       <td>12</td>
-      <td>0.08094</td>
-      <td>8.09434</td>
-      <td>0.00812</td>
-      <td>0.81242</td>
-      <td>0.08094</td>
-      <td>8.09434</td>
-      <td>0.20028</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.08</td>
+      <td>8.09</td>
+      <td>0.01</td>
+      <td>0.81</td>
+      <td>0.08</td>
+      <td>8.09</td>
+      <td>0.20</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 8, 1997-09-30 to 1998-08-31</td>
     </tr>
     <tr>
@@ -1478,17 +1478,17 @@ display(spxt_cycles)
       <td>1998-08-31</td>
       <td>1999-05-31</td>
       <td>10</td>
-      <td>0.17553</td>
-      <td>17.55334</td>
-      <td>0.01849</td>
-      <td>1.84915</td>
-      <td>0.21418</td>
-      <td>21.41769</td>
-      <td>0.23543</td>
-      <td>-0.00750</td>
-      <td>-75.00000</td>
-      <td>-0.00900</td>
-      <td>-90.00000</td>
+      <td>0.18</td>
+      <td>17.55</td>
+      <td>0.02</td>
+      <td>1.85</td>
+      <td>0.21</td>
+      <td>21.42</td>
+      <td>0.24</td>
+      <td>-0.01</td>
+      <td>-75.00</td>
+      <td>-0.01</td>
+      <td>-90.00</td>
       <td>Cycle 9, 1998-08-31 to 1999-05-31</td>
     </tr>
     <tr>
@@ -1497,17 +1497,17 @@ display(spxt_cycles)
       <td>1999-05-31</td>
       <td>2000-11-30</td>
       <td>19</td>
-      <td>0.00401</td>
-      <td>0.40140</td>
-      <td>0.00127</td>
-      <td>0.12700</td>
-      <td>0.00253</td>
-      <td>0.25333</td>
-      <td>0.16483</td>
-      <td>0.01750</td>
-      <td>175.00000</td>
-      <td>0.01105</td>
-      <td>110.52632</td>
+      <td>0.00</td>
+      <td>0.40</td>
+      <td>0.00</td>
+      <td>0.13</td>
+      <td>0.00</td>
+      <td>0.25</td>
+      <td>0.16</td>
+      <td>0.02</td>
+      <td>175.00</td>
+      <td>0.01</td>
+      <td>110.53</td>
       <td>Cycle 10, 1999-05-31 to 2000-11-30</td>
     </tr>
     <tr>
@@ -1516,17 +1516,17 @@ display(spxt_cycles)
       <td>2000-11-30</td>
       <td>2000-12-31</td>
       <td>2</td>
-      <td>-0.07433</td>
-      <td>-7.43308</td>
-      <td>-0.03697</td>
-      <td>-3.69725</td>
-      <td>-0.37088</td>
-      <td>-37.08781</td>
-      <td>0.20511</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>-0.07</td>
+      <td>-7.43</td>
+      <td>-0.04</td>
+      <td>-3.70</td>
+      <td>-0.37</td>
+      <td>-37.09</td>
+      <td>0.21</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 11, 2000-11-30 to 2000-12-31</td>
     </tr>
     <tr>
@@ -1535,17 +1535,17 @@ display(spxt_cycles)
       <td>2000-12-31</td>
       <td>2002-06-30</td>
       <td>19</td>
-      <td>-0.23106</td>
-      <td>-23.10629</td>
-      <td>-0.01254</td>
-      <td>-1.25394</td>
-      <td>-0.15291</td>
-      <td>-15.29071</td>
-      <td>0.17313</td>
-      <td>-0.04750</td>
-      <td>-475.00000</td>
-      <td>-0.03000</td>
-      <td>-300.00000</td>
+      <td>-0.23</td>
+      <td>-23.11</td>
+      <td>-0.01</td>
+      <td>-1.25</td>
+      <td>-0.15</td>
+      <td>-15.29</td>
+      <td>0.17</td>
+      <td>-0.05</td>
+      <td>-475.00</td>
+      <td>-0.03</td>
+      <td>-300.00</td>
       <td>Cycle 12, 2000-12-31 to 2002-06-30</td>
     </tr>
     <tr>
@@ -1554,17 +1554,17 @@ display(spxt_cycles)
       <td>2002-06-30</td>
       <td>2002-10-31</td>
       <td>5</td>
-      <td>-0.16407</td>
-      <td>-16.40672</td>
-      <td>-0.03266</td>
-      <td>-3.26564</td>
-      <td>-0.34955</td>
-      <td>-34.95539</td>
-      <td>0.27616</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>-0.16</td>
+      <td>-16.41</td>
+      <td>-0.03</td>
+      <td>-3.27</td>
+      <td>-0.35</td>
+      <td>-34.96</td>
+      <td>0.28</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 13, 2002-06-30 to 2002-10-31</td>
     </tr>
     <tr>
@@ -1573,17 +1573,17 @@ display(spxt_cycles)
       <td>2002-10-31</td>
       <td>2003-12-31</td>
       <td>15</td>
-      <td>0.39543</td>
-      <td>39.54292</td>
-      <td>0.02325</td>
-      <td>2.32521</td>
-      <td>0.30547</td>
-      <td>30.54681</td>
-      <td>0.14377</td>
-      <td>-0.00750</td>
-      <td>-75.00000</td>
-      <td>-0.00600</td>
-      <td>-60.00000</td>
+      <td>0.40</td>
+      <td>39.54</td>
+      <td>0.02</td>
+      <td>2.33</td>
+      <td>0.31</td>
+      <td>30.55</td>
+      <td>0.14</td>
+      <td>-0.01</td>
+      <td>-75.00</td>
+      <td>-0.01</td>
+      <td>-60.00</td>
       <td>Cycle 14, 2002-10-31 to 2003-12-31</td>
     </tr>
     <tr>
@@ -1592,17 +1592,17 @@ display(spxt_cycles)
       <td>2003-12-31</td>
       <td>2004-05-31</td>
       <td>6</td>
-      <td>0.06792</td>
-      <td>6.79152</td>
-      <td>0.01127</td>
-      <td>1.12720</td>
-      <td>0.14044</td>
-      <td>14.04429</td>
-      <td>0.08737</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.07</td>
+      <td>6.79</td>
+      <td>0.01</td>
+      <td>1.13</td>
+      <td>0.14</td>
+      <td>14.04</td>
+      <td>0.09</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 15, 2003-12-31 to 2004-05-31</td>
     </tr>
     <tr>
@@ -1611,17 +1611,17 @@ display(spxt_cycles)
       <td>2004-05-31</td>
       <td>2006-12-31</td>
       <td>32</td>
-      <td>0.34572</td>
-      <td>34.57166</td>
-      <td>0.00952</td>
-      <td>0.95192</td>
-      <td>0.11778</td>
-      <td>11.77833</td>
-      <td>0.06998</td>
-      <td>0.04250</td>
-      <td>425.00000</td>
-      <td>0.01594</td>
-      <td>159.37500</td>
+      <td>0.35</td>
+      <td>34.57</td>
+      <td>0.01</td>
+      <td>0.95</td>
+      <td>0.12</td>
+      <td>11.78</td>
+      <td>0.07</td>
+      <td>0.04</td>
+      <td>425.00</td>
+      <td>0.02</td>
+      <td>159.38</td>
       <td>Cycle 16, 2004-05-31 to 2006-12-31</td>
     </tr>
     <tr>
@@ -1630,17 +1630,17 @@ display(spxt_cycles)
       <td>2006-12-31</td>
       <td>2007-08-31</td>
       <td>9</td>
-      <td>0.06671</td>
-      <td>6.67103</td>
-      <td>0.00748</td>
-      <td>0.74817</td>
-      <td>0.08992</td>
-      <td>8.99217</td>
-      <td>0.08722</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.07</td>
+      <td>6.67</td>
+      <td>0.01</td>
+      <td>0.75</td>
+      <td>0.09</td>
+      <td>8.99</td>
+      <td>0.09</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 17, 2006-12-31 to 2007-08-31</td>
     </tr>
     <tr>
@@ -1649,17 +1649,17 @@ display(spxt_cycles)
       <td>2007-08-31</td>
       <td>2009-07-31</td>
       <td>24</td>
-      <td>-0.28840</td>
-      <td>-28.83990</td>
-      <td>-0.01191</td>
-      <td>-1.19125</td>
-      <td>-0.15644</td>
-      <td>-15.64355</td>
-      <td>0.22888</td>
-      <td>-0.05000</td>
-      <td>-500.00000</td>
-      <td>-0.02500</td>
-      <td>-250.00000</td>
+      <td>-0.29</td>
+      <td>-28.84</td>
+      <td>-0.01</td>
+      <td>-1.19</td>
+      <td>-0.16</td>
+      <td>-15.64</td>
+      <td>0.23</td>
+      <td>-0.05</td>
+      <td>-500.00</td>
+      <td>-0.03</td>
+      <td>-250.00</td>
       <td>Cycle 18, 2007-08-31 to 2009-07-31</td>
     </tr>
     <tr>
@@ -1668,17 +1668,17 @@ display(spxt_cycles)
       <td>2009-07-31</td>
       <td>2015-11-30</td>
       <td>77</td>
-      <td>1.59039</td>
-      <td>159.03905</td>
-      <td>0.01314</td>
-      <td>1.31414</td>
-      <td>0.15990</td>
-      <td>15.99000</td>
-      <td>0.13125</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>1.59</td>
+      <td>159.04</td>
+      <td>0.01</td>
+      <td>1.31</td>
+      <td>0.16</td>
+      <td>15.99</td>
+      <td>0.13</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 19, 2009-07-31 to 2015-11-30</td>
     </tr>
     <tr>
@@ -1687,17 +1687,17 @@ display(spxt_cycles)
       <td>2015-11-30</td>
       <td>2016-06-30</td>
       <td>8</td>
-      <td>0.02502</td>
-      <td>2.50250</td>
-      <td>0.00356</td>
-      <td>0.35617</td>
-      <td>0.03777</td>
-      <td>3.77714</td>
-      <td>0.11389</td>
-      <td>0.00250</td>
-      <td>25.00000</td>
-      <td>0.00375</td>
-      <td>37.50000</td>
+      <td>0.03</td>
+      <td>2.50</td>
+      <td>0.00</td>
+      <td>0.36</td>
+      <td>0.04</td>
+      <td>3.78</td>
+      <td>0.11</td>
+      <td>0.00</td>
+      <td>25.00</td>
+      <td>0.00</td>
+      <td>37.50</td>
       <td>Cycle 20, 2015-11-30 to 2016-06-30</td>
     </tr>
     <tr>
@@ -1706,17 +1706,17 @@ display(spxt_cycles)
       <td>2016-06-30</td>
       <td>2016-11-30</td>
       <td>6</td>
-      <td>0.06008</td>
-      <td>6.00766</td>
-      <td>0.00997</td>
-      <td>0.99744</td>
-      <td>0.12376</td>
-      <td>12.37623</td>
-      <td>0.07708</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.06</td>
+      <td>6.01</td>
+      <td>0.01</td>
+      <td>1.00</td>
+      <td>0.12</td>
+      <td>12.38</td>
+      <td>0.08</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 21, 2016-06-30 to 2016-11-30</td>
     </tr>
     <tr>
@@ -1725,17 +1725,17 @@ display(spxt_cycles)
       <td>2016-11-30</td>
       <td>2019-06-30</td>
       <td>32</td>
-      <td>0.46031</td>
-      <td>46.03091</td>
-      <td>0.01256</td>
-      <td>1.25618</td>
-      <td>0.15257</td>
-      <td>15.25686</td>
-      <td>0.12685</td>
-      <td>0.02000</td>
-      <td>200.00000</td>
-      <td>0.00750</td>
-      <td>75.00000</td>
+      <td>0.46</td>
+      <td>46.03</td>
+      <td>0.01</td>
+      <td>1.26</td>
+      <td>0.15</td>
+      <td>15.26</td>
+      <td>0.13</td>
+      <td>0.02</td>
+      <td>200.00</td>
+      <td>0.01</td>
+      <td>75.00</td>
       <td>Cycle 22, 2016-11-30 to 2019-06-30</td>
     </tr>
     <tr>
@@ -1744,17 +1744,17 @@ display(spxt_cycles)
       <td>2019-06-30</td>
       <td>2019-07-31</td>
       <td>2</td>
-      <td>0.08586</td>
-      <td>8.58628</td>
-      <td>0.04242</td>
-      <td>4.24249</td>
-      <td>0.63927</td>
-      <td>63.92672</td>
-      <td>0.13743</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.09</td>
+      <td>8.59</td>
+      <td>0.04</td>
+      <td>4.24</td>
+      <td>0.64</td>
+      <td>63.93</td>
+      <td>0.14</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 23, 2019-06-30 to 2019-07-31</td>
     </tr>
     <tr>
@@ -1763,17 +1763,17 @@ display(spxt_cycles)
       <td>2019-07-31</td>
       <td>2020-09-30</td>
       <td>15</td>
-      <td>0.17105</td>
-      <td>17.10456</td>
-      <td>0.01234</td>
-      <td>1.23424</td>
-      <td>0.13464</td>
-      <td>13.46425</td>
-      <td>0.21140</td>
-      <td>-0.02250</td>
-      <td>-225.00000</td>
-      <td>-0.01800</td>
-      <td>-180.00000</td>
+      <td>0.17</td>
+      <td>17.10</td>
+      <td>0.01</td>
+      <td>1.23</td>
+      <td>0.13</td>
+      <td>13.46</td>
+      <td>0.21</td>
+      <td>-0.02</td>
+      <td>-225.00</td>
+      <td>-0.02</td>
+      <td>-180.00</td>
       <td>Cycle 24, 2019-07-31 to 2020-09-30</td>
     </tr>
     <tr>
@@ -1782,17 +1782,17 @@ display(spxt_cycles)
       <td>2020-09-30</td>
       <td>2022-02-28</td>
       <td>18</td>
-      <td>0.27728</td>
-      <td>27.72844</td>
-      <td>0.01457</td>
-      <td>1.45670</td>
-      <td>0.17722</td>
-      <td>17.72221</td>
-      <td>0.15078</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.28</td>
+      <td>27.73</td>
+      <td>0.01</td>
+      <td>1.46</td>
+      <td>0.18</td>
+      <td>17.72</td>
+      <td>0.15</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 25, 2020-09-30 to 2022-02-28</td>
     </tr>
     <tr>
@@ -1801,17 +1801,17 @@ display(spxt_cycles)
       <td>2022-02-28</td>
       <td>2024-01-31</td>
       <td>24</td>
-      <td>0.10892</td>
-      <td>10.89196</td>
-      <td>0.00584</td>
-      <td>0.58363</td>
-      <td>0.05305</td>
-      <td>5.30525</td>
-      <td>0.19480</td>
-      <td>0.05250</td>
-      <td>525.00000</td>
-      <td>0.02625</td>
-      <td>262.50000</td>
+      <td>0.11</td>
+      <td>10.89</td>
+      <td>0.01</td>
+      <td>0.58</td>
+      <td>0.05</td>
+      <td>5.31</td>
+      <td>0.19</td>
+      <td>0.05</td>
+      <td>525.00</td>
+      <td>0.03</td>
+      <td>262.50</td>
       <td>Cycle 26, 2022-02-28 to 2024-01-31</td>
     </tr>
     <tr>
@@ -1820,17 +1820,17 @@ display(spxt_cycles)
       <td>2024-01-31</td>
       <td>2024-08-31</td>
       <td>8</td>
-      <td>0.19526</td>
-      <td>19.52588</td>
-      <td>0.02293</td>
-      <td>2.29282</td>
-      <td>0.30675</td>
-      <td>30.67513</td>
-      <td>0.10238</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.20</td>
+      <td>19.53</td>
+      <td>0.02</td>
+      <td>2.29</td>
+      <td>0.31</td>
+      <td>30.68</td>
+      <td>0.10</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 27, 2024-01-31 to 2024-08-31</td>
     </tr>
     <tr>
@@ -1839,17 +1839,17 @@ display(spxt_cycles)
       <td>2024-08-31</td>
       <td>2025-06-30</td>
       <td>11</td>
-      <td>0.13779</td>
-      <td>13.77869</td>
-      <td>0.01244</td>
-      <td>1.24436</td>
-      <td>0.15122</td>
-      <td>15.12175</td>
-      <td>0.13032</td>
-      <td>-0.01000</td>
-      <td>-100.00000</td>
-      <td>-0.01091</td>
-      <td>-109.09091</td>
+      <td>0.14</td>
+      <td>13.78</td>
+      <td>0.01</td>
+      <td>1.24</td>
+      <td>0.15</td>
+      <td>15.12</td>
+      <td>0.13</td>
+      <td>-0.01</td>
+      <td>-100.00</td>
+      <td>-0.01</td>
+      <td>-109.09</td>
       <td>Cycle 28, 2024-08-31 to 2025-06-30</td>
     </tr>
     <tr>
@@ -1858,17 +1858,17 @@ display(spxt_cycles)
       <td>2025-06-30</td>
       <td>2025-08-31</td>
       <td>3</td>
-      <td>0.09622</td>
-      <td>9.62171</td>
-      <td>0.03119</td>
-      <td>3.11890</td>
-      <td>0.44406</td>
-      <td>44.40637</td>
-      <td>0.05911</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.10</td>
+      <td>9.62</td>
+      <td>0.03</td>
+      <td>3.12</td>
+      <td>0.44</td>
+      <td>44.41</td>
+      <td>0.06</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 29, 2025-06-30 to 2025-08-31</td>
     </tr>
     <tr>
@@ -1877,17 +1877,17 @@ display(spxt_cycles)
       <td>2025-08-31</td>
       <td>2026-01-31</td>
       <td>6</td>
-      <td>0.10133</td>
-      <td>10.13298</td>
-      <td>0.01629</td>
-      <td>1.62914</td>
-      <td>0.21293</td>
-      <td>21.29273</td>
-      <td>0.04688</td>
-      <td>-0.00750</td>
-      <td>-75.00000</td>
-      <td>-0.01500</td>
-      <td>-150.00000</td>
+      <td>0.10</td>
+      <td>10.13</td>
+      <td>0.02</td>
+      <td>1.63</td>
+      <td>0.21</td>
+      <td>21.29</td>
+      <td>0.05</td>
+      <td>-0.01</td>
+      <td>-75.00</td>
+      <td>-0.01</td>
+      <td>-150.00</td>
       <td>Cycle 30, 2025-08-31 to 2026-01-31</td>
     </tr>
   </tbody>
@@ -1920,7 +1920,7 @@ plot_bar_returns_ffr_change(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_28_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_26_0.png)
     
 
 
@@ -1937,7 +1937,7 @@ plot_bar_returns_ffr_change(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_30_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_28_0.png)
     
 
 
@@ -1969,8 +1969,8 @@ Y_vals = model.params[0] + model.params[1] * X_vals
     Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.017
     Model:                             OLS   Adj. R-squared:                 -0.018
     Method:                  Least Squares   F-statistic:                    0.4786
-    Date:                 Mon, 16 Mar 2026   Prob (F-statistic):              0.495
-    Time:                         13:49:42   Log-Likelihood:                -132.24
+    Date:                 Mon, 23 Mar 2026   Prob (F-statistic):              0.495
+    Time:                         22:08:21   Log-Likelihood:                -132.24
     No. Observations:                   30   AIC:                             268.5
     Df Residuals:                       28   BIC:                             271.3
     Df Model:                            1                                         
@@ -2008,7 +2008,7 @@ plot_scatter_regression_ffr_vs_returns(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_34_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_32_0.png)
     
 
 
@@ -2086,28 +2086,28 @@ display(treas_10y_monthly)
   <tbody>
     <tr>
       <th>1990-01-31</th>
-      <td>98.01300</td>
-      <td>-0.01987</td>
+      <td>98.01</td>
+      <td>-0.02</td>
     </tr>
     <tr>
       <th>1990-02-28</th>
-      <td>97.99000</td>
-      <td>-0.00023</td>
+      <td>97.99</td>
+      <td>-0.00</td>
     </tr>
     <tr>
       <th>1990-03-31</th>
-      <td>97.98900</td>
-      <td>-0.00001</td>
+      <td>97.99</td>
+      <td>-0.00</td>
     </tr>
     <tr>
       <th>1990-04-30</th>
-      <td>96.60600</td>
-      <td>-0.01411</td>
+      <td>96.61</td>
+      <td>-0.01</td>
     </tr>
     <tr>
       <th>1990-05-31</th>
-      <td>99.64700</td>
-      <td>0.03148</td>
+      <td>99.65</td>
+      <td>0.03</td>
     </tr>
     <tr>
       <th>...</th>
@@ -2116,28 +2116,28 @@ display(treas_10y_monthly)
     </tr>
     <tr>
       <th>2025-09-30</th>
-      <td>645.58400</td>
-      <td>0.00675</td>
+      <td>645.58</td>
+      <td>0.01</td>
     </tr>
     <tr>
       <th>2025-10-31</th>
-      <td>650.00500</td>
-      <td>0.00685</td>
+      <td>650.00</td>
+      <td>0.01</td>
     </tr>
     <tr>
       <th>2025-11-30</th>
-      <td>656.63600</td>
-      <td>0.01020</td>
+      <td>656.64</td>
+      <td>0.01</td>
     </tr>
     <tr>
       <th>2025-12-31</th>
-      <td>652.28800</td>
-      <td>-0.00662</td>
+      <td>652.29</td>
+      <td>-0.01</td>
     </tr>
     <tr>
       <th>2026-01-31</th>
-      <td>650.16900</td>
-      <td>-0.00325</td>
+      <td>650.17</td>
+      <td>-0.00</td>
     </tr>
   </tbody>
 </table>
@@ -2149,7 +2149,7 @@ Next, we can plot the price history before calculating the cycle performance:
 
 
 ```python
-plot_timeseries(
+plot_time_series(
     df=treas_10y,
     plot_start_date=None,
     plot_end_date=None,
@@ -2158,7 +2158,7 @@ plot_timeseries(
     x_label="Date",
     x_format="Year",
     x_tick_spacing=2,
-    x_tick_rotation=45,
+    x_tick_rotation=30,
     y_label="Price ($)",
     y_format="Decimal",
     y_format_decimal_places=0,
@@ -2173,7 +2173,7 @@ plot_timeseries(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_39_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_37_0.png)
     
 
 
@@ -2236,17 +2236,17 @@ display(treas_10y_cycles)
       <td>1989-12-31</td>
       <td>1990-06-30</td>
       <td>6</td>
-      <td>0.01362</td>
-      <td>1.36200</td>
-      <td>0.00241</td>
-      <td>0.24101</td>
-      <td>0.02743</td>
-      <td>2.74255</td>
-      <td>0.06657</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.01</td>
+      <td>1.36</td>
+      <td>0.00</td>
+      <td>0.24</td>
+      <td>0.03</td>
+      <td>2.74</td>
+      <td>0.07</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 1, 1989-12-31 to 1990-06-30</td>
     </tr>
     <tr>
@@ -2255,17 +2255,17 @@ display(treas_10y_cycles)
       <td>1990-06-30</td>
       <td>1993-03-31</td>
       <td>34</td>
-      <td>0.45682</td>
-      <td>45.68226</td>
-      <td>0.01124</td>
-      <td>1.12428</td>
-      <td>0.14202</td>
-      <td>14.20180</td>
-      <td>0.05346</td>
-      <td>-0.05250</td>
-      <td>-525.00000</td>
-      <td>-0.01853</td>
-      <td>-185.29412</td>
+      <td>0.46</td>
+      <td>45.68</td>
+      <td>0.01</td>
+      <td>1.12</td>
+      <td>0.14</td>
+      <td>14.20</td>
+      <td>0.05</td>
+      <td>-0.05</td>
+      <td>-525.00</td>
+      <td>-0.02</td>
+      <td>-185.29</td>
       <td>Cycle 2, 1990-06-30 to 1993-03-31</td>
     </tr>
     <tr>
@@ -2274,17 +2274,17 @@ display(treas_10y_cycles)
       <td>1993-03-31</td>
       <td>1994-01-31</td>
       <td>11</td>
-      <td>0.08876</td>
-      <td>8.87610</td>
-      <td>0.00784</td>
-      <td>0.78356</td>
-      <td>0.09721</td>
-      <td>9.72108</td>
-      <td>0.04458</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.09</td>
+      <td>8.88</td>
+      <td>0.01</td>
+      <td>0.78</td>
+      <td>0.10</td>
+      <td>9.72</td>
+      <td>0.04</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 3, 1993-03-31 to 1994-01-31</td>
     </tr>
     <tr>
@@ -2293,17 +2293,17 @@ display(treas_10y_cycles)
       <td>1994-01-31</td>
       <td>1995-06-30</td>
       <td>18</td>
-      <td>0.07796</td>
-      <td>7.79638</td>
-      <td>0.00439</td>
-      <td>0.43870</td>
-      <td>0.05132</td>
-      <td>5.13229</td>
-      <td>0.07287</td>
-      <td>0.03000</td>
-      <td>300.00000</td>
-      <td>0.02000</td>
-      <td>200.00000</td>
+      <td>0.08</td>
+      <td>7.80</td>
+      <td>0.00</td>
+      <td>0.44</td>
+      <td>0.05</td>
+      <td>5.13</td>
+      <td>0.07</td>
+      <td>0.03</td>
+      <td>300.00</td>
+      <td>0.02</td>
+      <td>200.00</td>
       <td>Cycle 4, 1994-01-31 to 1995-06-30</td>
     </tr>
     <tr>
@@ -2312,17 +2312,17 @@ display(treas_10y_cycles)
       <td>1995-06-30</td>
       <td>1996-07-31</td>
       <td>14</td>
-      <td>0.04785</td>
-      <td>4.78467</td>
-      <td>0.00344</td>
-      <td>0.34387</td>
-      <td>0.04087</td>
-      <td>4.08738</td>
-      <td>0.04940</td>
-      <td>-0.00750</td>
-      <td>-75.00000</td>
-      <td>-0.00643</td>
-      <td>-64.28571</td>
+      <td>0.05</td>
+      <td>4.78</td>
+      <td>0.00</td>
+      <td>0.34</td>
+      <td>0.04</td>
+      <td>4.09</td>
+      <td>0.05</td>
+      <td>-0.01</td>
+      <td>-75.00</td>
+      <td>-0.01</td>
+      <td>-64.29</td>
       <td>Cycle 5, 1995-06-30 to 1996-07-31</td>
     </tr>
     <tr>
@@ -2331,17 +2331,17 @@ display(treas_10y_cycles)
       <td>1996-07-31</td>
       <td>1997-02-28</td>
       <td>8</td>
-      <td>0.05301</td>
-      <td>5.30118</td>
-      <td>0.00658</td>
-      <td>0.65819</td>
-      <td>0.08056</td>
-      <td>8.05623</td>
-      <td>0.05365</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.05</td>
+      <td>5.30</td>
+      <td>0.01</td>
+      <td>0.66</td>
+      <td>0.08</td>
+      <td>8.06</td>
+      <td>0.05</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 6, 1996-07-31 to 1997-02-28</td>
     </tr>
     <tr>
@@ -2350,17 +2350,17 @@ display(treas_10y_cycles)
       <td>1997-02-28</td>
       <td>1997-09-30</td>
       <td>8</td>
-      <td>0.06453</td>
-      <td>6.45298</td>
-      <td>0.00799</td>
-      <td>0.79904</td>
-      <td>0.09834</td>
-      <td>9.83398</td>
-      <td>0.06285</td>
-      <td>0.00250</td>
-      <td>25.00000</td>
-      <td>0.00375</td>
-      <td>37.50000</td>
+      <td>0.06</td>
+      <td>6.45</td>
+      <td>0.01</td>
+      <td>0.80</td>
+      <td>0.10</td>
+      <td>9.83</td>
+      <td>0.06</td>
+      <td>0.00</td>
+      <td>25.00</td>
+      <td>0.00</td>
+      <td>37.50</td>
       <td>Cycle 7, 1997-02-28 to 1997-09-30</td>
     </tr>
     <tr>
@@ -2369,17 +2369,17 @@ display(treas_10y_cycles)
       <td>1997-09-30</td>
       <td>1998-08-31</td>
       <td>12</td>
-      <td>0.14428</td>
-      <td>14.42797</td>
-      <td>0.01135</td>
-      <td>1.13516</td>
-      <td>0.14428</td>
-      <td>14.42797</td>
-      <td>0.03891</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.14</td>
+      <td>14.43</td>
+      <td>0.01</td>
+      <td>1.14</td>
+      <td>0.14</td>
+      <td>14.43</td>
+      <td>0.04</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 8, 1997-09-30 to 1998-08-31</td>
     </tr>
     <tr>
@@ -2388,17 +2388,17 @@ display(treas_10y_cycles)
       <td>1998-08-31</td>
       <td>1999-05-31</td>
       <td>10</td>
-      <td>0.03052</td>
-      <td>3.05162</td>
-      <td>0.00326</td>
-      <td>0.32630</td>
-      <td>0.03673</td>
-      <td>3.67303</td>
-      <td>0.08244</td>
-      <td>-0.00750</td>
-      <td>-75.00000</td>
-      <td>-0.00900</td>
-      <td>-90.00000</td>
+      <td>0.03</td>
+      <td>3.05</td>
+      <td>0.00</td>
+      <td>0.33</td>
+      <td>0.04</td>
+      <td>3.67</td>
+      <td>0.08</td>
+      <td>-0.01</td>
+      <td>-75.00</td>
+      <td>-0.01</td>
+      <td>-90.00</td>
       <td>Cycle 9, 1998-08-31 to 1999-05-31</td>
     </tr>
     <tr>
@@ -2407,17 +2407,17 @@ display(treas_10y_cycles)
       <td>1999-05-31</td>
       <td>2000-11-30</td>
       <td>19</td>
-      <td>0.08744</td>
-      <td>8.74418</td>
-      <td>0.00449</td>
-      <td>0.44926</td>
-      <td>0.05437</td>
-      <td>5.43706</td>
-      <td>0.04250</td>
-      <td>0.01750</td>
-      <td>175.00000</td>
-      <td>0.01105</td>
-      <td>110.52632</td>
+      <td>0.09</td>
+      <td>8.74</td>
+      <td>0.00</td>
+      <td>0.45</td>
+      <td>0.05</td>
+      <td>5.44</td>
+      <td>0.04</td>
+      <td>0.02</td>
+      <td>175.00</td>
+      <td>0.01</td>
+      <td>110.53</td>
       <td>Cycle 10, 1999-05-31 to 2000-11-30</td>
     </tr>
     <tr>
@@ -2426,17 +2426,17 @@ display(treas_10y_cycles)
       <td>2000-11-30</td>
       <td>2000-12-31</td>
       <td>2</td>
-      <td>0.04918</td>
-      <td>4.91839</td>
-      <td>0.02430</td>
-      <td>2.42972</td>
-      <td>0.33386</td>
-      <td>33.38584</td>
-      <td>0.00458</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.05</td>
+      <td>4.92</td>
+      <td>0.02</td>
+      <td>2.43</td>
+      <td>0.33</td>
+      <td>33.39</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 11, 2000-11-30 to 2000-12-31</td>
     </tr>
     <tr>
@@ -2445,17 +2445,17 @@ display(treas_10y_cycles)
       <td>2000-12-31</td>
       <td>2002-06-30</td>
       <td>19</td>
-      <td>0.14331</td>
-      <td>14.33071</td>
-      <td>0.00721</td>
-      <td>0.72113</td>
-      <td>0.08826</td>
-      <td>8.82645</td>
-      <td>0.05901</td>
-      <td>-0.04750</td>
-      <td>-475.00000</td>
-      <td>-0.03000</td>
-      <td>-300.00000</td>
+      <td>0.14</td>
+      <td>14.33</td>
+      <td>0.01</td>
+      <td>0.72</td>
+      <td>0.09</td>
+      <td>8.83</td>
+      <td>0.06</td>
+      <td>-0.05</td>
+      <td>-475.00</td>
+      <td>-0.03</td>
+      <td>-300.00</td>
       <td>Cycle 12, 2000-12-31 to 2002-06-30</td>
     </tr>
     <tr>
@@ -2464,17 +2464,17 @@ display(treas_10y_cycles)
       <td>2002-06-30</td>
       <td>2002-10-31</td>
       <td>5</td>
-      <td>0.09945</td>
-      <td>9.94496</td>
-      <td>0.01929</td>
-      <td>1.92905</td>
-      <td>0.25551</td>
-      <td>25.55118</td>
-      <td>0.06682</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.10</td>
+      <td>9.94</td>
+      <td>0.02</td>
+      <td>1.93</td>
+      <td>0.26</td>
+      <td>25.55</td>
+      <td>0.07</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 13, 2002-06-30 to 2002-10-31</td>
     </tr>
     <tr>
@@ -2483,17 +2483,17 @@ display(treas_10y_cycles)
       <td>2002-10-31</td>
       <td>2003-12-31</td>
       <td>15</td>
-      <td>0.02161</td>
-      <td>2.16130</td>
-      <td>0.00172</td>
-      <td>0.17218</td>
-      <td>0.01725</td>
-      <td>1.72534</td>
-      <td>0.08696</td>
-      <td>-0.00750</td>
-      <td>-75.00000</td>
-      <td>-0.00600</td>
-      <td>-60.00000</td>
+      <td>0.02</td>
+      <td>2.16</td>
+      <td>0.00</td>
+      <td>0.17</td>
+      <td>0.02</td>
+      <td>1.73</td>
+      <td>0.09</td>
+      <td>-0.01</td>
+      <td>-75.00</td>
+      <td>-0.01</td>
+      <td>-60.00</td>
       <td>Cycle 14, 2002-10-31 to 2003-12-31</td>
     </tr>
     <tr>
@@ -2502,17 +2502,17 @@ display(treas_10y_cycles)
       <td>2003-12-31</td>
       <td>2004-05-31</td>
       <td>6</td>
-      <td>-0.00088</td>
-      <td>-0.08831</td>
-      <td>0.00006</td>
-      <td>0.00600</td>
-      <td>-0.00177</td>
-      <td>-0.17654</td>
-      <td>0.07653</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>-0.00</td>
+      <td>-0.09</td>
+      <td>0.00</td>
+      <td>0.01</td>
+      <td>-0.00</td>
+      <td>-0.18</td>
+      <td>0.08</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 15, 2003-12-31 to 2004-05-31</td>
     </tr>
     <tr>
@@ -2521,17 +2521,17 @@ display(treas_10y_cycles)
       <td>2004-05-31</td>
       <td>2006-12-31</td>
       <td>32</td>
-      <td>0.10267</td>
-      <td>10.26670</td>
-      <td>0.00314</td>
-      <td>0.31382</td>
-      <td>0.03733</td>
-      <td>3.73293</td>
-      <td>0.04440</td>
-      <td>0.04250</td>
-      <td>425.00000</td>
-      <td>0.01594</td>
-      <td>159.37500</td>
+      <td>0.10</td>
+      <td>10.27</td>
+      <td>0.00</td>
+      <td>0.31</td>
+      <td>0.04</td>
+      <td>3.73</td>
+      <td>0.04</td>
+      <td>0.04</td>
+      <td>425.00</td>
+      <td>0.02</td>
+      <td>159.38</td>
       <td>Cycle 16, 2004-05-31 to 2006-12-31</td>
     </tr>
     <tr>
@@ -2540,17 +2540,17 @@ display(treas_10y_cycles)
       <td>2006-12-31</td>
       <td>2007-08-31</td>
       <td>9</td>
-      <td>0.03300</td>
-      <td>3.30047</td>
-      <td>0.00371</td>
-      <td>0.37102</td>
-      <td>0.04425</td>
-      <td>4.42466</td>
-      <td>0.05098</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.03</td>
+      <td>3.30</td>
+      <td>0.00</td>
+      <td>0.37</td>
+      <td>0.04</td>
+      <td>4.42</td>
+      <td>0.05</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 17, 2006-12-31 to 2007-08-31</td>
     </tr>
     <tr>
@@ -2559,17 +2559,17 @@ display(treas_10y_cycles)
       <td>2007-08-31</td>
       <td>2009-07-31</td>
       <td>24</td>
-      <td>0.19843</td>
-      <td>19.84327</td>
-      <td>0.00792</td>
-      <td>0.79193</td>
-      <td>0.09473</td>
-      <td>9.47295</td>
-      <td>0.09432</td>
-      <td>-0.05000</td>
-      <td>-500.00000</td>
-      <td>-0.02500</td>
-      <td>-250.00000</td>
+      <td>0.20</td>
+      <td>19.84</td>
+      <td>0.01</td>
+      <td>0.79</td>
+      <td>0.09</td>
+      <td>9.47</td>
+      <td>0.09</td>
+      <td>-0.05</td>
+      <td>-500.00</td>
+      <td>-0.03</td>
+      <td>-250.00</td>
       <td>Cycle 18, 2007-08-31 to 2009-07-31</td>
     </tr>
     <tr>
@@ -2578,17 +2578,17 @@ display(treas_10y_cycles)
       <td>2009-07-31</td>
       <td>2015-11-30</td>
       <td>77</td>
-      <td>0.38995</td>
-      <td>38.99485</td>
-      <td>0.00443</td>
-      <td>0.44302</td>
-      <td>0.05265</td>
-      <td>5.26537</td>
-      <td>0.05945</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.39</td>
+      <td>38.99</td>
+      <td>0.00</td>
+      <td>0.44</td>
+      <td>0.05</td>
+      <td>5.27</td>
+      <td>0.06</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 19, 2009-07-31 to 2015-11-30</td>
     </tr>
     <tr>
@@ -2597,17 +2597,17 @@ display(treas_10y_cycles)
       <td>2015-11-30</td>
       <td>2016-06-30</td>
       <td>8</td>
-      <td>0.06790</td>
-      <td>6.78998</td>
-      <td>0.00835</td>
-      <td>0.83470</td>
-      <td>0.10356</td>
-      <td>10.35595</td>
-      <td>0.05317</td>
-      <td>0.00250</td>
-      <td>25.00000</td>
-      <td>0.00375</td>
-      <td>37.50000</td>
+      <td>0.07</td>
+      <td>6.79</td>
+      <td>0.01</td>
+      <td>0.83</td>
+      <td>0.10</td>
+      <td>10.36</td>
+      <td>0.05</td>
+      <td>0.00</td>
+      <td>25.00</td>
+      <td>0.00</td>
+      <td>37.50</td>
       <td>Cycle 20, 2015-11-30 to 2016-06-30</td>
     </tr>
     <tr>
@@ -2616,17 +2616,17 @@ display(treas_10y_cycles)
       <td>2016-06-30</td>
       <td>2016-11-30</td>
       <td>6</td>
-      <td>-0.03175</td>
-      <td>-3.17490</td>
-      <td>-0.00513</td>
-      <td>-0.51254</td>
-      <td>-0.06249</td>
-      <td>-6.24899</td>
-      <td>0.08242</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>-0.03</td>
+      <td>-3.17</td>
+      <td>-0.01</td>
+      <td>-0.51</td>
+      <td>-0.06</td>
+      <td>-6.25</td>
+      <td>0.08</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 21, 2016-06-30 to 2016-11-30</td>
     </tr>
     <tr>
@@ -2635,17 +2635,17 @@ display(treas_10y_cycles)
       <td>2016-11-30</td>
       <td>2019-06-30</td>
       <td>32</td>
-      <td>0.05923</td>
-      <td>5.92338</td>
-      <td>0.00190</td>
-      <td>0.19002</td>
-      <td>0.02181</td>
-      <td>2.18142</td>
-      <td>0.04975</td>
-      <td>0.02000</td>
-      <td>200.00000</td>
-      <td>0.00750</td>
-      <td>75.00000</td>
+      <td>0.06</td>
+      <td>5.92</td>
+      <td>0.00</td>
+      <td>0.19</td>
+      <td>0.02</td>
+      <td>2.18</td>
+      <td>0.05</td>
+      <td>0.02</td>
+      <td>200.00</td>
+      <td>0.01</td>
+      <td>75.00</td>
       <td>Cycle 22, 2016-11-30 to 2019-06-30</td>
     </tr>
     <tr>
@@ -2654,17 +2654,17 @@ display(treas_10y_cycles)
       <td>2019-06-30</td>
       <td>2019-07-31</td>
       <td>2</td>
-      <td>0.01306</td>
-      <td>1.30568</td>
-      <td>0.00653</td>
-      <td>0.65261</td>
-      <td>0.08094</td>
-      <td>8.09429</td>
-      <td>0.03024</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.01</td>
+      <td>1.31</td>
+      <td>0.01</td>
+      <td>0.65</td>
+      <td>0.08</td>
+      <td>8.09</td>
+      <td>0.03</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 23, 2019-06-30 to 2019-07-31</td>
     </tr>
     <tr>
@@ -2673,17 +2673,17 @@ display(treas_10y_cycles)
       <td>2019-07-31</td>
       <td>2020-09-30</td>
       <td>15</td>
-      <td>0.13083</td>
-      <td>13.08268</td>
-      <td>0.00837</td>
-      <td>0.83706</td>
-      <td>0.10336</td>
-      <td>10.33591</td>
-      <td>0.06056</td>
-      <td>-0.02250</td>
-      <td>-225.00000</td>
-      <td>-0.01800</td>
-      <td>-180.00000</td>
+      <td>0.13</td>
+      <td>13.08</td>
+      <td>0.01</td>
+      <td>0.84</td>
+      <td>0.10</td>
+      <td>10.34</td>
+      <td>0.06</td>
+      <td>-0.02</td>
+      <td>-225.00</td>
+      <td>-0.02</td>
+      <td>-180.00</td>
       <td>Cycle 24, 2019-07-31 to 2020-09-30</td>
     </tr>
     <tr>
@@ -2692,17 +2692,17 @@ display(treas_10y_cycles)
       <td>2020-09-30</td>
       <td>2022-02-28</td>
       <td>18</td>
-      <td>-0.06522</td>
-      <td>-6.52177</td>
-      <td>-0.00366</td>
-      <td>-0.36622</td>
-      <td>-0.04397</td>
-      <td>-4.39653</td>
-      <td>0.04430</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>-0.07</td>
+      <td>-6.52</td>
+      <td>-0.00</td>
+      <td>-0.37</td>
+      <td>-0.04</td>
+      <td>-4.40</td>
+      <td>0.04</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 25, 2020-09-30 to 2022-02-28</td>
     </tr>
     <tr>
@@ -2711,17 +2711,17 @@ display(treas_10y_cycles)
       <td>2022-02-28</td>
       <td>2024-01-31</td>
       <td>24</td>
-      <td>-0.09878</td>
-      <td>-9.87840</td>
-      <td>-0.00394</td>
-      <td>-0.39369</td>
-      <td>-0.05068</td>
-      <td>-5.06760</td>
-      <td>0.09858</td>
-      <td>0.05250</td>
-      <td>525.00000</td>
-      <td>0.02625</td>
-      <td>262.50000</td>
+      <td>-0.10</td>
+      <td>-9.88</td>
+      <td>-0.00</td>
+      <td>-0.39</td>
+      <td>-0.05</td>
+      <td>-5.07</td>
+      <td>0.10</td>
+      <td>0.05</td>
+      <td>525.00</td>
+      <td>0.03</td>
+      <td>262.50</td>
       <td>Cycle 26, 2022-02-28 to 2024-01-31</td>
     </tr>
     <tr>
@@ -2730,17 +2730,17 @@ display(treas_10y_cycles)
       <td>2024-01-31</td>
       <td>2024-08-31</td>
       <td>8</td>
-      <td>0.02748</td>
-      <td>2.74817</td>
-      <td>0.00357</td>
-      <td>0.35718</td>
-      <td>0.04150</td>
-      <td>4.15045</td>
-      <td>0.06957</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.03</td>
+      <td>2.75</td>
+      <td>0.00</td>
+      <td>0.36</td>
+      <td>0.04</td>
+      <td>4.15</td>
+      <td>0.07</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 27, 2024-01-31 to 2024-08-31</td>
     </tr>
     <tr>
@@ -2749,17 +2749,17 @@ display(treas_10y_cycles)
       <td>2024-08-31</td>
       <td>2025-06-30</td>
       <td>11</td>
-      <td>0.03294</td>
-      <td>3.29408</td>
-      <td>0.00310</td>
-      <td>0.31010</td>
-      <td>0.03599</td>
-      <td>3.59887</td>
-      <td>0.06280</td>
-      <td>-0.01000</td>
-      <td>-100.00000</td>
-      <td>-0.01091</td>
-      <td>-109.09091</td>
+      <td>0.03</td>
+      <td>3.29</td>
+      <td>0.00</td>
+      <td>0.31</td>
+      <td>0.04</td>
+      <td>3.60</td>
+      <td>0.06</td>
+      <td>-0.01</td>
+      <td>-100.00</td>
+      <td>-0.01</td>
+      <td>-109.09</td>
       <td>Cycle 28, 2024-08-31 to 2025-06-30</td>
     </tr>
     <tr>
@@ -2768,17 +2768,17 @@ display(treas_10y_cycles)
       <td>2025-06-30</td>
       <td>2025-08-31</td>
       <td>3</td>
-      <td>0.02670</td>
-      <td>2.66978</td>
-      <td>0.00888</td>
-      <td>0.88750</td>
-      <td>0.11114</td>
-      <td>11.11445</td>
-      <td>0.04409</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.03</td>
+      <td>2.67</td>
+      <td>0.01</td>
+      <td>0.89</td>
+      <td>0.11</td>
+      <td>11.11</td>
+      <td>0.04</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 29, 2025-06-30 to 2025-08-31</td>
     </tr>
     <tr>
@@ -2787,17 +2787,17 @@ display(treas_10y_cycles)
       <td>2025-08-31</td>
       <td>2026-01-31</td>
       <td>6</td>
-      <td>0.03081</td>
-      <td>3.08068</td>
-      <td>0.00510</td>
-      <td>0.51007</td>
-      <td>0.06256</td>
-      <td>6.25626</td>
-      <td>0.02992</td>
-      <td>-0.00750</td>
-      <td>-75.00000</td>
-      <td>-0.01500</td>
-      <td>-150.00000</td>
+      <td>0.03</td>
+      <td>3.08</td>
+      <td>0.01</td>
+      <td>0.51</td>
+      <td>0.06</td>
+      <td>6.26</td>
+      <td>0.03</td>
+      <td>-0.01</td>
+      <td>-75.00</td>
+      <td>-0.01</td>
+      <td>-150.00</td>
       <td>Cycle 30, 2025-08-31 to 2026-01-31</td>
     </tr>
   </tbody>
@@ -2830,7 +2830,7 @@ plot_bar_returns_ffr_change(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_43_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_41_0.png)
     
 
 
@@ -2847,7 +2847,7 @@ plot_bar_returns_ffr_change(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_45_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_43_0.png)
     
 
 
@@ -2879,8 +2879,8 @@ Y_vals = model.params[0] + model.params[1] * X_vals
     Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.050
     Model:                             OLS   Adj. R-squared:                  0.016
     Method:                  Least Squares   F-statistic:                     1.462
-    Date:                 Mon, 16 Mar 2026   Prob (F-statistic):              0.237
-    Time:                         13:49:43   Log-Likelihood:                -103.64
+    Date:                 Mon, 23 Mar 2026   Prob (F-statistic):              0.237
+    Time:                         22:08:23   Log-Likelihood:                -103.64
     No. Observations:                   30   AIC:                             211.3
     Df Residuals:                       28   BIC:                             214.1
     Df Model:                            1                                         
@@ -2918,7 +2918,7 @@ plot_scatter_regression_ffr_vs_returns(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_49_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_47_0.png)
     
 
 
@@ -2996,28 +2996,28 @@ display(hy_bonds_monthly)
   <tbody>
     <tr>
       <th>1990-01-31</th>
-      <td>194.21000</td>
-      <td>-0.02146</td>
+      <td>194.21</td>
+      <td>-0.02</td>
     </tr>
     <tr>
       <th>1990-02-28</th>
-      <td>190.20000</td>
-      <td>-0.02065</td>
+      <td>190.20</td>
+      <td>-0.02</td>
     </tr>
     <tr>
       <th>1990-03-31</th>
-      <td>195.19000</td>
-      <td>0.02624</td>
+      <td>195.19</td>
+      <td>0.03</td>
     </tr>
     <tr>
       <th>1990-04-30</th>
-      <td>194.86000</td>
-      <td>-0.00169</td>
+      <td>194.86</td>
+      <td>-0.00</td>
     </tr>
     <tr>
       <th>1990-05-31</th>
-      <td>198.62000</td>
-      <td>0.01930</td>
+      <td>198.62</td>
+      <td>0.02</td>
     </tr>
     <tr>
       <th>...</th>
@@ -3026,28 +3026,28 @@ display(hy_bonds_monthly)
     </tr>
     <tr>
       <th>2025-09-30</th>
-      <td>2876.85000</td>
-      <td>0.00816</td>
+      <td>2876.85</td>
+      <td>0.01</td>
     </tr>
     <tr>
       <th>2025-10-31</th>
-      <td>2881.38000</td>
-      <td>0.00157</td>
+      <td>2881.38</td>
+      <td>0.00</td>
     </tr>
     <tr>
       <th>2025-11-30</th>
-      <td>2898.07000</td>
-      <td>0.00579</td>
+      <td>2898.07</td>
+      <td>0.01</td>
     </tr>
     <tr>
       <th>2025-12-31</th>
-      <td>2914.49000</td>
-      <td>0.00567</td>
+      <td>2914.49</td>
+      <td>0.01</td>
     </tr>
     <tr>
       <th>2026-01-31</th>
-      <td>2929.32000</td>
-      <td>0.00509</td>
+      <td>2929.32</td>
+      <td>0.01</td>
     </tr>
   </tbody>
 </table>
@@ -3059,7 +3059,7 @@ Next, we can plot the price history before calculating the cycle performance:
 
 
 ```python
-plot_timeseries(
+plot_time_series(
     df=hy_bonds,
     plot_start_date=None,
     plot_end_date=None,
@@ -3068,7 +3068,7 @@ plot_timeseries(
     x_label="Date",
     x_format="Year",
     x_tick_spacing=2,
-    x_tick_rotation=45,
+    x_tick_rotation=30,
     y_label="Price ($)",
     y_format="Decimal",
     y_format_decimal_places=0,
@@ -3083,7 +3083,7 @@ plot_timeseries(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_53_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_51_0.png)
     
 
 
@@ -3146,17 +3146,17 @@ display(hy_bonds_cycles)
       <td>1989-12-31</td>
       <td>1990-06-30</td>
       <td>6</td>
-      <td>0.02494</td>
-      <td>2.49408</td>
-      <td>0.00432</td>
-      <td>0.43159</td>
-      <td>0.05050</td>
-      <td>5.05036</td>
-      <td>0.07625</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.02</td>
+      <td>2.49</td>
+      <td>0.00</td>
+      <td>0.43</td>
+      <td>0.05</td>
+      <td>5.05</td>
+      <td>0.08</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 1, 1989-12-31 to 1990-06-30</td>
     </tr>
     <tr>
@@ -3165,17 +3165,17 @@ display(hy_bonds_cycles)
       <td>1990-06-30</td>
       <td>1993-03-31</td>
       <td>34</td>
-      <td>0.62149</td>
-      <td>62.14883</td>
-      <td>0.01480</td>
-      <td>1.47959</td>
-      <td>0.18601</td>
-      <td>18.60069</td>
-      <td>0.10898</td>
-      <td>-0.05250</td>
-      <td>-525.00000</td>
-      <td>-0.01853</td>
-      <td>-185.29412</td>
+      <td>0.62</td>
+      <td>62.15</td>
+      <td>0.01</td>
+      <td>1.48</td>
+      <td>0.19</td>
+      <td>18.60</td>
+      <td>0.11</td>
+      <td>-0.05</td>
+      <td>-525.00</td>
+      <td>-0.02</td>
+      <td>-185.29</td>
       <td>Cycle 2, 1990-06-30 to 1993-03-31</td>
     </tr>
     <tr>
@@ -3184,17 +3184,17 @@ display(hy_bonds_cycles)
       <td>1993-03-31</td>
       <td>1994-01-31</td>
       <td>11</td>
-      <td>0.14262</td>
-      <td>14.26235</td>
-      <td>0.01221</td>
-      <td>1.22129</td>
-      <td>0.15656</td>
-      <td>15.65571</td>
-      <td>0.02227</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.14</td>
+      <td>14.26</td>
+      <td>0.01</td>
+      <td>1.22</td>
+      <td>0.16</td>
+      <td>15.66</td>
+      <td>0.02</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 3, 1993-03-31 to 1994-01-31</td>
     </tr>
     <tr>
@@ -3203,17 +3203,17 @@ display(hy_bonds_cycles)
       <td>1994-01-31</td>
       <td>1995-06-30</td>
       <td>18</td>
-      <td>0.11254</td>
-      <td>11.25422</td>
-      <td>0.00607</td>
-      <td>0.60701</td>
-      <td>0.07369</td>
-      <td>7.36869</td>
-      <td>0.05691</td>
-      <td>0.03000</td>
-      <td>300.00000</td>
-      <td>0.02000</td>
-      <td>200.00000</td>
+      <td>0.11</td>
+      <td>11.25</td>
+      <td>0.01</td>
+      <td>0.61</td>
+      <td>0.07</td>
+      <td>7.37</td>
+      <td>0.06</td>
+      <td>0.03</td>
+      <td>300.00</td>
+      <td>0.02</td>
+      <td>200.00</td>
       <td>Cycle 4, 1994-01-31 to 1995-06-30</td>
     </tr>
     <tr>
@@ -3222,17 +3222,17 @@ display(hy_bonds_cycles)
       <td>1995-06-30</td>
       <td>1996-07-31</td>
       <td>14</td>
-      <td>0.10892</td>
-      <td>10.89235</td>
-      <td>0.00743</td>
-      <td>0.74262</td>
-      <td>0.09267</td>
-      <td>9.26651</td>
-      <td>0.01906</td>
-      <td>-0.00750</td>
-      <td>-75.00000</td>
-      <td>-0.00643</td>
-      <td>-64.28571</td>
+      <td>0.11</td>
+      <td>10.89</td>
+      <td>0.01</td>
+      <td>0.74</td>
+      <td>0.09</td>
+      <td>9.27</td>
+      <td>0.02</td>
+      <td>-0.01</td>
+      <td>-75.00</td>
+      <td>-0.01</td>
+      <td>-64.29</td>
       <td>Cycle 5, 1995-06-30 to 1996-07-31</td>
     </tr>
     <tr>
@@ -3241,17 +3241,17 @@ display(hy_bonds_cycles)
       <td>1996-07-31</td>
       <td>1997-02-28</td>
       <td>8</td>
-      <td>0.10479</td>
-      <td>10.47889</td>
-      <td>0.01255</td>
-      <td>1.25548</td>
-      <td>0.16123</td>
-      <td>16.12319</td>
-      <td>0.02366</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.10</td>
+      <td>10.48</td>
+      <td>0.01</td>
+      <td>1.26</td>
+      <td>0.16</td>
+      <td>16.12</td>
+      <td>0.02</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 6, 1996-07-31 to 1997-02-28</td>
     </tr>
     <tr>
@@ -3260,17 +3260,17 @@ display(hy_bonds_cycles)
       <td>1997-02-28</td>
       <td>1997-09-30</td>
       <td>8</td>
-      <td>0.09557</td>
-      <td>9.55703</td>
-      <td>0.01156</td>
-      <td>1.15581</td>
-      <td>0.14673</td>
-      <td>14.67279</td>
-      <td>0.04792</td>
-      <td>0.00250</td>
-      <td>25.00000</td>
-      <td>0.00375</td>
-      <td>37.50000</td>
+      <td>0.10</td>
+      <td>9.56</td>
+      <td>0.01</td>
+      <td>1.16</td>
+      <td>0.15</td>
+      <td>14.67</td>
+      <td>0.05</td>
+      <td>0.00</td>
+      <td>25.00</td>
+      <td>0.00</td>
+      <td>37.50</td>
       <td>Cycle 7, 1997-02-28 to 1997-09-30</td>
     </tr>
     <tr>
@@ -3279,17 +3279,17 @@ display(hy_bonds_cycles)
       <td>1997-09-30</td>
       <td>1998-08-31</td>
       <td>12</td>
-      <td>0.03219</td>
-      <td>3.21938</td>
-      <td>0.00282</td>
-      <td>0.28169</td>
-      <td>0.03219</td>
-      <td>3.21938</td>
-      <td>0.06631</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.03</td>
+      <td>3.22</td>
+      <td>0.00</td>
+      <td>0.28</td>
+      <td>0.03</td>
+      <td>3.22</td>
+      <td>0.07</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 8, 1997-09-30 to 1998-08-31</td>
     </tr>
     <tr>
@@ -3298,17 +3298,17 @@ display(hy_bonds_cycles)
       <td>1998-08-31</td>
       <td>1999-05-31</td>
       <td>10</td>
-      <td>-0.00728</td>
-      <td>-0.72813</td>
-      <td>-0.00042</td>
-      <td>-0.04217</td>
-      <td>-0.00873</td>
-      <td>-0.87312</td>
-      <td>0.09026</td>
-      <td>-0.00750</td>
-      <td>-75.00000</td>
-      <td>-0.00900</td>
-      <td>-90.00000</td>
+      <td>-0.01</td>
+      <td>-0.73</td>
+      <td>-0.00</td>
+      <td>-0.04</td>
+      <td>-0.01</td>
+      <td>-0.87</td>
+      <td>0.09</td>
+      <td>-0.01</td>
+      <td>-75.00</td>
+      <td>-0.01</td>
+      <td>-90.00</td>
       <td>Cycle 9, 1998-08-31 to 1999-05-31</td>
     </tr>
     <tr>
@@ -3317,17 +3317,17 @@ display(hy_bonds_cycles)
       <td>1999-05-31</td>
       <td>2000-11-30</td>
       <td>19</td>
-      <td>-0.08916</td>
-      <td>-8.91594</td>
-      <td>-0.00480</td>
-      <td>-0.47963</td>
-      <td>-0.05728</td>
-      <td>-5.72758</td>
-      <td>0.05172</td>
-      <td>0.01750</td>
-      <td>175.00000</td>
-      <td>0.01105</td>
-      <td>110.52632</td>
+      <td>-0.09</td>
+      <td>-8.92</td>
+      <td>-0.00</td>
+      <td>-0.48</td>
+      <td>-0.06</td>
+      <td>-5.73</td>
+      <td>0.05</td>
+      <td>0.02</td>
+      <td>175.00</td>
+      <td>0.01</td>
+      <td>110.53</td>
       <td>Cycle 10, 1999-05-31 to 2000-11-30</td>
     </tr>
     <tr>
@@ -3336,17 +3336,17 @@ display(hy_bonds_cycles)
       <td>2000-11-30</td>
       <td>2000-12-31</td>
       <td>2</td>
-      <td>-0.02105</td>
-      <td>-2.10510</td>
-      <td>-0.01014</td>
-      <td>-1.01430</td>
-      <td>-0.11984</td>
-      <td>-11.98427</td>
-      <td>0.14432</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>-0.02</td>
+      <td>-2.11</td>
+      <td>-0.01</td>
+      <td>-1.01</td>
+      <td>-0.12</td>
+      <td>-11.98</td>
+      <td>0.14</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 11, 2000-11-30 to 2000-12-31</td>
     </tr>
     <tr>
@@ -3355,17 +3355,17 @@ display(hy_bonds_cycles)
       <td>2000-12-31</td>
       <td>2002-06-30</td>
       <td>19</td>
-      <td>0.02117</td>
-      <td>2.11701</td>
-      <td>0.00167</td>
-      <td>0.16693</td>
-      <td>0.01332</td>
-      <td>1.33189</td>
-      <td>0.11914</td>
-      <td>-0.04750</td>
-      <td>-475.00000</td>
-      <td>-0.03000</td>
-      <td>-300.00000</td>
+      <td>0.02</td>
+      <td>2.12</td>
+      <td>0.00</td>
+      <td>0.17</td>
+      <td>0.01</td>
+      <td>1.33</td>
+      <td>0.12</td>
+      <td>-0.05</td>
+      <td>-475.00</td>
+      <td>-0.03</td>
+      <td>-300.00</td>
       <td>Cycle 12, 2000-12-31 to 2002-06-30</td>
     </tr>
     <tr>
@@ -3374,17 +3374,17 @@ display(hy_bonds_cycles)
       <td>2002-06-30</td>
       <td>2002-10-31</td>
       <td>5</td>
-      <td>-0.10874</td>
-      <td>-10.87431</td>
-      <td>-0.02215</td>
-      <td>-2.21511</td>
-      <td>-0.24141</td>
-      <td>-24.14102</td>
-      <td>0.13364</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>-0.11</td>
+      <td>-10.87</td>
+      <td>-0.02</td>
+      <td>-2.22</td>
+      <td>-0.24</td>
+      <td>-24.14</td>
+      <td>0.13</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 13, 2002-06-30 to 2002-10-31</td>
     </tr>
     <tr>
@@ -3393,17 +3393,17 @@ display(hy_bonds_cycles)
       <td>2002-10-31</td>
       <td>2003-12-31</td>
       <td>15</td>
-      <td>0.37662</td>
-      <td>37.66182</td>
-      <td>0.02172</td>
-      <td>2.17230</td>
-      <td>0.29137</td>
-      <td>29.13703</td>
-      <td>0.07004</td>
-      <td>-0.00750</td>
-      <td>-75.00000</td>
-      <td>-0.00600</td>
-      <td>-60.00000</td>
+      <td>0.38</td>
+      <td>37.66</td>
+      <td>0.02</td>
+      <td>2.17</td>
+      <td>0.29</td>
+      <td>29.14</td>
+      <td>0.07</td>
+      <td>-0.01</td>
+      <td>-75.00</td>
+      <td>-0.01</td>
+      <td>-60.00</td>
       <td>Cycle 14, 2002-10-31 to 2003-12-31</td>
     </tr>
     <tr>
@@ -3412,17 +3412,17 @@ display(hy_bonds_cycles)
       <td>2003-12-31</td>
       <td>2004-05-31</td>
       <td>6</td>
-      <td>0.02188</td>
-      <td>2.18782</td>
-      <td>0.00371</td>
-      <td>0.37115</td>
-      <td>0.04424</td>
-      <td>4.42350</td>
-      <td>0.05322</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.02</td>
+      <td>2.19</td>
+      <td>0.00</td>
+      <td>0.37</td>
+      <td>0.04</td>
+      <td>4.42</td>
+      <td>0.05</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 15, 2003-12-31 to 2004-05-31</td>
     </tr>
     <tr>
@@ -3431,17 +3431,17 @@ display(hy_bonds_cycles)
       <td>2004-05-31</td>
       <td>2006-12-31</td>
       <td>32</td>
-      <td>0.25625</td>
-      <td>25.62459</td>
-      <td>0.00722</td>
-      <td>0.72211</td>
-      <td>0.08931</td>
-      <td>8.93138</td>
-      <td>0.04056</td>
-      <td>0.04250</td>
-      <td>425.00000</td>
-      <td>0.01594</td>
-      <td>159.37500</td>
+      <td>0.26</td>
+      <td>25.62</td>
+      <td>0.01</td>
+      <td>0.72</td>
+      <td>0.09</td>
+      <td>8.93</td>
+      <td>0.04</td>
+      <td>0.04</td>
+      <td>425.00</td>
+      <td>0.02</td>
+      <td>159.38</td>
       <td>Cycle 16, 2004-05-31 to 2006-12-31</td>
     </tr>
     <tr>
@@ -3450,17 +3450,17 @@ display(hy_bonds_cycles)
       <td>2006-12-31</td>
       <td>2007-08-31</td>
       <td>9</td>
-      <td>0.01683</td>
-      <td>1.68350</td>
-      <td>0.00199</td>
-      <td>0.19914</td>
-      <td>0.02251</td>
-      <td>2.25094</td>
-      <td>0.05992</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.02</td>
+      <td>1.68</td>
+      <td>0.00</td>
+      <td>0.20</td>
+      <td>0.02</td>
+      <td>2.25</td>
+      <td>0.06</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 17, 2006-12-31 to 2007-08-31</td>
     </tr>
     <tr>
@@ -3469,17 +3469,17 @@ display(hy_bonds_cycles)
       <td>2007-08-31</td>
       <td>2009-07-31</td>
       <td>24</td>
-      <td>0.04908</td>
-      <td>4.90805</td>
-      <td>0.00371</td>
-      <td>0.37092</td>
-      <td>0.02425</td>
-      <td>2.42463</td>
-      <td>0.20404</td>
-      <td>-0.05000</td>
-      <td>-500.00000</td>
-      <td>-0.02500</td>
-      <td>-250.00000</td>
+      <td>0.05</td>
+      <td>4.91</td>
+      <td>0.00</td>
+      <td>0.37</td>
+      <td>0.02</td>
+      <td>2.42</td>
+      <td>0.20</td>
+      <td>-0.05</td>
+      <td>-500.00</td>
+      <td>-0.03</td>
+      <td>-250.00</td>
       <td>Cycle 18, 2007-08-31 to 2009-07-31</td>
     </tr>
     <tr>
@@ -3488,17 +3488,17 @@ display(hy_bonds_cycles)
       <td>2009-07-31</td>
       <td>2015-11-30</td>
       <td>77</td>
-      <td>0.83146</td>
-      <td>83.14599</td>
-      <td>0.00808</td>
-      <td>0.80820</td>
-      <td>0.09889</td>
-      <td>9.88931</td>
-      <td>0.06867</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.83</td>
+      <td>83.15</td>
+      <td>0.01</td>
+      <td>0.81</td>
+      <td>0.10</td>
+      <td>9.89</td>
+      <td>0.07</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 19, 2009-07-31 to 2015-11-30</td>
     </tr>
     <tr>
@@ -3507,17 +3507,17 @@ display(hy_bonds_cycles)
       <td>2015-11-30</td>
       <td>2016-06-30</td>
       <td>8</td>
-      <td>0.03948</td>
-      <td>3.94781</td>
-      <td>0.00515</td>
-      <td>0.51508</td>
-      <td>0.05980</td>
-      <td>5.97977</td>
-      <td>0.09107</td>
-      <td>0.00250</td>
-      <td>25.00000</td>
-      <td>0.00375</td>
-      <td>37.50000</td>
+      <td>0.04</td>
+      <td>3.95</td>
+      <td>0.01</td>
+      <td>0.52</td>
+      <td>0.06</td>
+      <td>5.98</td>
+      <td>0.09</td>
+      <td>0.00</td>
+      <td>25.00</td>
+      <td>0.00</td>
+      <td>37.50</td>
       <td>Cycle 20, 2015-11-30 to 2016-06-30</td>
     </tr>
     <tr>
@@ -3526,17 +3526,17 @@ display(hy_bonds_cycles)
       <td>2016-06-30</td>
       <td>2016-11-30</td>
       <td>6</td>
-      <td>0.06426</td>
-      <td>6.42628</td>
-      <td>0.01049</td>
-      <td>1.04900</td>
-      <td>0.13266</td>
-      <td>13.26554</td>
-      <td>0.04025</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.06</td>
+      <td>6.43</td>
+      <td>0.01</td>
+      <td>1.05</td>
+      <td>0.13</td>
+      <td>13.27</td>
+      <td>0.04</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 21, 2016-06-30 to 2016-11-30</td>
     </tr>
     <tr>
@@ -3545,17 +3545,17 @@ display(hy_bonds_cycles)
       <td>2016-11-30</td>
       <td>2019-06-30</td>
       <td>32</td>
-      <td>0.17306</td>
-      <td>17.30568</td>
-      <td>0.00508</td>
-      <td>0.50759</td>
-      <td>0.06168</td>
-      <td>6.16825</td>
-      <td>0.04347</td>
-      <td>0.02000</td>
-      <td>200.00000</td>
-      <td>0.00750</td>
-      <td>75.00000</td>
+      <td>0.17</td>
+      <td>17.31</td>
+      <td>0.01</td>
+      <td>0.51</td>
+      <td>0.06</td>
+      <td>6.17</td>
+      <td>0.04</td>
+      <td>0.02</td>
+      <td>200.00</td>
+      <td>0.01</td>
+      <td>75.00</td>
       <td>Cycle 22, 2016-11-30 to 2019-06-30</td>
     </tr>
     <tr>
@@ -3564,17 +3564,17 @@ display(hy_bonds_cycles)
       <td>2019-06-30</td>
       <td>2019-07-31</td>
       <td>2</td>
-      <td>0.02856</td>
-      <td>2.85572</td>
-      <td>0.01421</td>
-      <td>1.42144</td>
-      <td>0.18405</td>
-      <td>18.40520</td>
-      <td>0.04203</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.03</td>
+      <td>2.86</td>
+      <td>0.01</td>
+      <td>1.42</td>
+      <td>0.18</td>
+      <td>18.41</td>
+      <td>0.04</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 23, 2019-06-30 to 2019-07-31</td>
     </tr>
     <tr>
@@ -3583,17 +3583,17 @@ display(hy_bonds_cycles)
       <td>2019-07-31</td>
       <td>2020-09-30</td>
       <td>15</td>
-      <td>0.04631</td>
-      <td>4.63140</td>
-      <td>0.00372</td>
-      <td>0.37244</td>
-      <td>0.03688</td>
-      <td>3.68827</td>
-      <td>0.13113</td>
-      <td>-0.02250</td>
-      <td>-225.00000</td>
-      <td>-0.01800</td>
-      <td>-180.00000</td>
+      <td>0.05</td>
+      <td>4.63</td>
+      <td>0.00</td>
+      <td>0.37</td>
+      <td>0.04</td>
+      <td>3.69</td>
+      <td>0.13</td>
+      <td>-0.02</td>
+      <td>-225.00</td>
+      <td>-0.02</td>
+      <td>-180.00</td>
       <td>Cycle 24, 2019-07-31 to 2020-09-30</td>
     </tr>
     <tr>
@@ -3602,17 +3602,17 @@ display(hy_bonds_cycles)
       <td>2020-09-30</td>
       <td>2022-02-28</td>
       <td>18</td>
-      <td>0.06775</td>
-      <td>6.77496</td>
-      <td>0.00374</td>
-      <td>0.37444</td>
-      <td>0.04467</td>
-      <td>4.46712</td>
-      <td>0.04952</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.07</td>
+      <td>6.77</td>
+      <td>0.00</td>
+      <td>0.37</td>
+      <td>0.04</td>
+      <td>4.47</td>
+      <td>0.05</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 25, 2020-09-30 to 2022-02-28</td>
     </tr>
     <tr>
@@ -3621,17 +3621,17 @@ display(hy_bonds_cycles)
       <td>2022-02-28</td>
       <td>2024-01-31</td>
       <td>24</td>
-      <td>0.03580</td>
-      <td>3.58042</td>
-      <td>0.00186</td>
-      <td>0.18605</td>
-      <td>0.01774</td>
-      <td>1.77447</td>
-      <td>0.09916</td>
-      <td>0.05250</td>
-      <td>525.00000</td>
-      <td>0.02625</td>
-      <td>262.50000</td>
+      <td>0.04</td>
+      <td>3.58</td>
+      <td>0.00</td>
+      <td>0.19</td>
+      <td>0.02</td>
+      <td>1.77</td>
+      <td>0.10</td>
+      <td>0.05</td>
+      <td>525.00</td>
+      <td>0.03</td>
+      <td>262.50</td>
       <td>Cycle 26, 2022-02-28 to 2024-01-31</td>
     </tr>
     <tr>
@@ -3640,17 +3640,17 @@ display(hy_bonds_cycles)
       <td>2024-01-31</td>
       <td>2024-08-31</td>
       <td>8</td>
-      <td>0.06285</td>
-      <td>6.28480</td>
-      <td>0.00769</td>
-      <td>0.76866</td>
-      <td>0.09574</td>
-      <td>9.57381</td>
-      <td>0.03255</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.06</td>
+      <td>6.28</td>
+      <td>0.01</td>
+      <td>0.77</td>
+      <td>0.10</td>
+      <td>9.57</td>
+      <td>0.03</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 27, 2024-01-31 to 2024-08-31</td>
     </tr>
     <tr>
@@ -3659,17 +3659,17 @@ display(hy_bonds_cycles)
       <td>2024-08-31</td>
       <td>2025-06-30</td>
       <td>11</td>
-      <td>0.08182</td>
-      <td>8.18158</td>
-      <td>0.00722</td>
-      <td>0.72241</td>
-      <td>0.08958</td>
-      <td>8.95776</td>
-      <td>0.03617</td>
-      <td>-0.01000</td>
-      <td>-100.00000</td>
-      <td>-0.01091</td>
-      <td>-109.09091</td>
+      <td>0.08</td>
+      <td>8.18</td>
+      <td>0.01</td>
+      <td>0.72</td>
+      <td>0.09</td>
+      <td>8.96</td>
+      <td>0.04</td>
+      <td>-0.01</td>
+      <td>-100.00</td>
+      <td>-0.01</td>
+      <td>-109.09</td>
       <td>Cycle 28, 2024-08-31 to 2025-06-30</td>
     </tr>
     <tr>
@@ -3678,17 +3678,17 @@ display(hy_bonds_cycles)
       <td>2025-06-30</td>
       <td>2025-08-31</td>
       <td>3</td>
-      <td>0.03577</td>
-      <td>3.57673</td>
-      <td>0.01180</td>
-      <td>1.17991</td>
-      <td>0.15093</td>
-      <td>15.09297</td>
-      <td>0.02414</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.04</td>
+      <td>3.58</td>
+      <td>0.01</td>
+      <td>1.18</td>
+      <td>0.15</td>
+      <td>15.09</td>
+      <td>0.02</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 29, 2025-06-30 to 2025-08-31</td>
     </tr>
     <tr>
@@ -3697,17 +3697,17 @@ display(hy_bonds_cycles)
       <td>2025-08-31</td>
       <td>2026-01-31</td>
       <td>6</td>
-      <td>0.03937</td>
-      <td>3.93741</td>
-      <td>0.00646</td>
-      <td>0.64627</td>
-      <td>0.08030</td>
-      <td>8.02985</td>
-      <td>0.01260</td>
-      <td>-0.00750</td>
-      <td>-75.00000</td>
-      <td>-0.01500</td>
-      <td>-150.00000</td>
+      <td>0.04</td>
+      <td>3.94</td>
+      <td>0.01</td>
+      <td>0.65</td>
+      <td>0.08</td>
+      <td>8.03</td>
+      <td>0.01</td>
+      <td>-0.01</td>
+      <td>-75.00</td>
+      <td>-0.01</td>
+      <td>-150.00</td>
       <td>Cycle 30, 2025-08-31 to 2026-01-31</td>
     </tr>
   </tbody>
@@ -3740,7 +3740,7 @@ plot_bar_returns_ffr_change(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_57_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_55_0.png)
     
 
 
@@ -3757,7 +3757,7 @@ plot_bar_returns_ffr_change(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_59_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_57_0.png)
     
 
 
@@ -3787,8 +3787,8 @@ Y_vals = model.params[0] + model.params[1] * X_vals
     Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.004
     Model:                             OLS   Adj. R-squared:                 -0.031
     Method:                  Least Squares   F-statistic:                    0.1171
-    Date:                 Mon, 16 Mar 2026   Prob (F-statistic):              0.735
-    Time:                         13:49:45   Log-Likelihood:                -110.57
+    Date:                 Mon, 23 Mar 2026   Prob (F-statistic):              0.735
+    Time:                         22:08:25   Log-Likelihood:                -110.57
     No. Observations:                   30   AIC:                             225.1
     Df Residuals:                       28   BIC:                             227.9
     Df Model:                            1                                         
@@ -3826,7 +3826,7 @@ plot_scatter_regression_ffr_vs_returns(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_63_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_61_0.png)
     
 
 
@@ -3902,28 +3902,28 @@ display(gold_monthly)
   <tbody>
     <tr>
       <th>1990-01-31</th>
-      <td>415.05000</td>
-      <td>0.03439</td>
+      <td>415.05</td>
+      <td>0.03</td>
     </tr>
     <tr>
       <th>1990-02-28</th>
-      <td>407.70000</td>
-      <td>-0.01771</td>
+      <td>407.70</td>
+      <td>-0.02</td>
     </tr>
     <tr>
       <th>1990-03-31</th>
-      <td>368.50000</td>
-      <td>-0.09615</td>
+      <td>368.50</td>
+      <td>-0.10</td>
     </tr>
     <tr>
       <th>1990-04-30</th>
-      <td>367.75000</td>
-      <td>-0.00204</td>
+      <td>367.75</td>
+      <td>-0.00</td>
     </tr>
     <tr>
       <th>1990-05-31</th>
-      <td>363.05000</td>
-      <td>-0.01278</td>
+      <td>363.05</td>
+      <td>-0.01</td>
     </tr>
     <tr>
       <th>...</th>
@@ -3932,28 +3932,28 @@ display(gold_monthly)
     </tr>
     <tr>
       <th>2025-09-30</th>
-      <td>3858.96000</td>
-      <td>0.11920</td>
+      <td>3858.96</td>
+      <td>0.12</td>
     </tr>
     <tr>
       <th>2025-10-31</th>
-      <td>4002.92000</td>
-      <td>0.03731</td>
+      <td>4002.92</td>
+      <td>0.04</td>
     </tr>
     <tr>
       <th>2025-11-30</th>
-      <td>4239.43000</td>
-      <td>0.05908</td>
+      <td>4239.43</td>
+      <td>0.06</td>
     </tr>
     <tr>
       <th>2025-12-31</th>
-      <td>4319.37000</td>
-      <td>0.01886</td>
+      <td>4319.37</td>
+      <td>0.02</td>
     </tr>
     <tr>
       <th>2026-01-31</th>
-      <td>4894.23000</td>
-      <td>0.13309</td>
+      <td>4894.23</td>
+      <td>0.13</td>
     </tr>
   </tbody>
 </table>
@@ -3965,7 +3965,7 @@ Next, we can plot the price history before calculating the cycle performance:
 
 
 ```python
-plot_timeseries(
+plot_time_series(
     df=gold,
     plot_start_date=None,
     plot_end_date=None,
@@ -3974,7 +3974,7 @@ plot_timeseries(
     x_label="Date",
     x_format="Year",
     x_tick_spacing=2,
-    x_tick_rotation=45,
+    x_tick_rotation=30,
     y_label="Price ($)",
     y_format="Decimal",
     y_format_decimal_places=0,
@@ -3989,7 +3989,7 @@ plot_timeseries(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_67_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_65_0.png)
     
 
 
@@ -4052,17 +4052,17 @@ display(gold_cycles)
       <td>1989-12-31</td>
       <td>1990-06-30</td>
       <td>6</td>
-      <td>-0.12224</td>
-      <td>-12.22430</td>
-      <td>-0.02069</td>
-      <td>-2.06945</td>
-      <td>-0.22954</td>
-      <td>-22.95426</td>
-      <td>0.14885</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>-0.12</td>
+      <td>-12.22</td>
+      <td>-0.02</td>
+      <td>-2.07</td>
+      <td>-0.23</td>
+      <td>-22.95</td>
+      <td>0.15</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 1, 1989-12-31 to 1990-06-30</td>
     </tr>
     <tr>
@@ -4071,17 +4071,17 @@ display(gold_cycles)
       <td>1990-06-30</td>
       <td>1993-03-31</td>
       <td>34</td>
-      <td>-0.06624</td>
-      <td>-6.62443</td>
-      <td>-0.00158</td>
-      <td>-0.15839</td>
-      <td>-0.02390</td>
-      <td>-2.39005</td>
-      <td>0.10292</td>
-      <td>-0.05250</td>
-      <td>-525.00000</td>
-      <td>-0.01853</td>
-      <td>-185.29412</td>
+      <td>-0.07</td>
+      <td>-6.62</td>
+      <td>-0.00</td>
+      <td>-0.16</td>
+      <td>-0.02</td>
+      <td>-2.39</td>
+      <td>0.10</td>
+      <td>-0.05</td>
+      <td>-525.00</td>
+      <td>-0.02</td>
+      <td>-185.29</td>
       <td>Cycle 2, 1990-06-30 to 1993-03-31</td>
     </tr>
     <tr>
@@ -4090,17 +4090,17 @@ display(gold_cycles)
       <td>1993-03-31</td>
       <td>1994-01-31</td>
       <td>11</td>
-      <td>0.15903</td>
-      <td>15.90288</td>
-      <td>0.01462</td>
-      <td>1.46238</td>
-      <td>0.17468</td>
-      <td>17.46838</td>
-      <td>0.17075</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.16</td>
+      <td>15.90</td>
+      <td>0.01</td>
+      <td>1.46</td>
+      <td>0.17</td>
+      <td>17.47</td>
+      <td>0.17</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 3, 1993-03-31 to 1994-01-31</td>
     </tr>
     <tr>
@@ -4109,17 +4109,17 @@ display(gold_cycles)
       <td>1994-01-31</td>
       <td>1995-06-30</td>
       <td>18</td>
-      <td>-0.01561</td>
-      <td>-1.56130</td>
-      <td>-0.00070</td>
-      <td>-0.06966</td>
-      <td>-0.01044</td>
-      <td>-1.04359</td>
-      <td>0.06717</td>
-      <td>0.03000</td>
-      <td>300.00000</td>
-      <td>0.02000</td>
-      <td>200.00000</td>
+      <td>-0.02</td>
+      <td>-1.56</td>
+      <td>-0.00</td>
+      <td>-0.07</td>
+      <td>-0.01</td>
+      <td>-1.04</td>
+      <td>0.07</td>
+      <td>0.03</td>
+      <td>300.00</td>
+      <td>0.02</td>
+      <td>200.00</td>
       <td>Cycle 4, 1994-01-31 to 1995-06-30</td>
     </tr>
     <tr>
@@ -4128,17 +4128,17 @@ display(gold_cycles)
       <td>1995-06-30</td>
       <td>1996-07-31</td>
       <td>14</td>
-      <td>0.00716</td>
-      <td>0.71559</td>
-      <td>0.00066</td>
-      <td>0.06552</td>
-      <td>0.00613</td>
-      <td>0.61305</td>
-      <td>0.06186</td>
-      <td>-0.00750</td>
-      <td>-75.00000</td>
-      <td>-0.00643</td>
-      <td>-64.28571</td>
+      <td>0.01</td>
+      <td>0.72</td>
+      <td>0.00</td>
+      <td>0.07</td>
+      <td>0.01</td>
+      <td>0.61</td>
+      <td>0.06</td>
+      <td>-0.01</td>
+      <td>-75.00</td>
+      <td>-0.01</td>
+      <td>-64.29</td>
       <td>Cycle 5, 1995-06-30 to 1996-07-31</td>
     </tr>
     <tr>
@@ -4147,17 +4147,17 @@ display(gold_cycles)
       <td>1996-07-31</td>
       <td>1997-02-28</td>
       <td>8</td>
-      <td>-0.04468</td>
-      <td>-4.46839</td>
-      <td>-0.00519</td>
-      <td>-0.51936</td>
-      <td>-0.06627</td>
-      <td>-6.62715</td>
-      <td>0.11737</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>-0.04</td>
+      <td>-4.47</td>
+      <td>-0.01</td>
+      <td>-0.52</td>
+      <td>-0.07</td>
+      <td>-6.63</td>
+      <td>0.12</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 6, 1996-07-31 to 1997-02-28</td>
     </tr>
     <tr>
@@ -4166,17 +4166,17 @@ display(gold_cycles)
       <td>1997-02-28</td>
       <td>1997-09-30</td>
       <td>8</td>
-      <td>-0.02875</td>
-      <td>-2.87498</td>
-      <td>-0.00313</td>
-      <td>-0.31292</td>
-      <td>-0.04281</td>
-      <td>-4.28133</td>
-      <td>0.11886</td>
-      <td>0.00250</td>
-      <td>25.00000</td>
-      <td>0.00375</td>
-      <td>37.50000</td>
+      <td>-0.03</td>
+      <td>-2.87</td>
+      <td>-0.00</td>
+      <td>-0.31</td>
+      <td>-0.04</td>
+      <td>-4.28</td>
+      <td>0.12</td>
+      <td>0.00</td>
+      <td>25.00</td>
+      <td>0.00</td>
+      <td>37.50</td>
       <td>Cycle 7, 1997-02-28 to 1997-09-30</td>
     </tr>
     <tr>
@@ -4185,17 +4185,17 @@ display(gold_cycles)
       <td>1997-09-30</td>
       <td>1998-08-31</td>
       <td>12</td>
-      <td>-0.14993</td>
-      <td>-14.99306</td>
-      <td>-0.01285</td>
-      <td>-1.28489</td>
-      <td>-0.14993</td>
-      <td>-14.99306</td>
-      <td>0.12433</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>-0.15</td>
+      <td>-14.99</td>
+      <td>-0.01</td>
+      <td>-1.28</td>
+      <td>-0.15</td>
+      <td>-14.99</td>
+      <td>0.12</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 8, 1997-09-30 to 1998-08-31</td>
     </tr>
     <tr>
@@ -4204,17 +4204,17 @@ display(gold_cycles)
       <td>1998-08-31</td>
       <td>1999-05-31</td>
       <td>10</td>
-      <td>-0.05621</td>
-      <td>-5.62053</td>
-      <td>-0.00517</td>
-      <td>-0.51718</td>
-      <td>-0.06706</td>
-      <td>-6.70614</td>
-      <td>0.12709</td>
-      <td>-0.00750</td>
-      <td>-75.00000</td>
-      <td>-0.00900</td>
-      <td>-90.00000</td>
+      <td>-0.06</td>
+      <td>-5.62</td>
+      <td>-0.01</td>
+      <td>-0.52</td>
+      <td>-0.07</td>
+      <td>-6.71</td>
+      <td>0.13</td>
+      <td>-0.01</td>
+      <td>-75.00</td>
+      <td>-0.01</td>
+      <td>-90.00</td>
       <td>Cycle 9, 1998-08-31 to 1999-05-31</td>
     </tr>
     <tr>
@@ -4223,17 +4223,17 @@ display(gold_cycles)
       <td>1999-05-31</td>
       <td>2000-11-30</td>
       <td>19</td>
-      <td>-0.05619</td>
-      <td>-5.61857</td>
-      <td>-0.00193</td>
-      <td>-0.19269</td>
-      <td>-0.03586</td>
-      <td>-3.58627</td>
-      <td>0.17333</td>
-      <td>0.01750</td>
-      <td>175.00000</td>
-      <td>0.01105</td>
-      <td>110.52632</td>
+      <td>-0.06</td>
+      <td>-5.62</td>
+      <td>-0.00</td>
+      <td>-0.19</td>
+      <td>-0.04</td>
+      <td>-3.59</td>
+      <td>0.17</td>
+      <td>0.02</td>
+      <td>175.00</td>
+      <td>0.01</td>
+      <td>110.53</td>
       <td>Cycle 10, 1999-05-31 to 2000-11-30</td>
     </tr>
     <tr>
@@ -4242,17 +4242,17 @@ display(gold_cycles)
       <td>2000-11-30</td>
       <td>2000-12-31</td>
       <td>2</td>
-      <td>0.02678</td>
-      <td>2.67773</td>
-      <td>0.01332</td>
-      <td>1.33221</td>
-      <td>0.17181</td>
-      <td>17.18109</td>
-      <td>0.03266</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.03</td>
+      <td>2.68</td>
+      <td>0.01</td>
+      <td>1.33</td>
+      <td>0.17</td>
+      <td>17.18</td>
+      <td>0.03</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 11, 2000-11-30 to 2000-12-31</td>
     </tr>
     <tr>
@@ -4261,17 +4261,17 @@ display(gold_cycles)
       <td>2000-12-31</td>
       <td>2002-06-30</td>
       <td>19</td>
-      <td>0.16269</td>
-      <td>16.26918</td>
-      <td>0.00844</td>
-      <td>0.84406</td>
-      <td>0.09988</td>
-      <td>9.98819</td>
-      <td>0.11022</td>
-      <td>-0.04750</td>
-      <td>-475.00000</td>
-      <td>-0.03000</td>
-      <td>-300.00000</td>
+      <td>0.16</td>
+      <td>16.27</td>
+      <td>0.01</td>
+      <td>0.84</td>
+      <td>0.10</td>
+      <td>9.99</td>
+      <td>0.11</td>
+      <td>-0.05</td>
+      <td>-475.00</td>
+      <td>-0.03</td>
+      <td>-300.00</td>
       <td>Cycle 12, 2000-12-31 to 2002-06-30</td>
     </tr>
     <tr>
@@ -4280,17 +4280,17 @@ display(gold_cycles)
       <td>2002-06-30</td>
       <td>2002-10-31</td>
       <td>5</td>
-      <td>-0.02695</td>
-      <td>-2.69484</td>
-      <td>-0.00496</td>
-      <td>-0.49607</td>
-      <td>-0.06346</td>
-      <td>-6.34605</td>
-      <td>0.12104</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>-0.03</td>
+      <td>-2.69</td>
+      <td>-0.00</td>
+      <td>-0.50</td>
+      <td>-0.06</td>
+      <td>-6.35</td>
+      <td>0.12</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 13, 2002-06-30 to 2002-10-31</td>
     </tr>
     <tr>
@@ -4299,17 +4299,17 @@ display(gold_cycles)
       <td>2002-10-31</td>
       <td>2003-12-31</td>
       <td>15</td>
-      <td>0.28404</td>
-      <td>28.40365</td>
-      <td>0.01772</td>
-      <td>1.77192</td>
-      <td>0.22141</td>
-      <td>22.14112</td>
-      <td>0.15439</td>
-      <td>-0.00750</td>
-      <td>-75.00000</td>
-      <td>-0.00600</td>
-      <td>-60.00000</td>
+      <td>0.28</td>
+      <td>28.40</td>
+      <td>0.02</td>
+      <td>1.77</td>
+      <td>0.22</td>
+      <td>22.14</td>
+      <td>0.15</td>
+      <td>-0.01</td>
+      <td>-75.00</td>
+      <td>-0.01</td>
+      <td>-60.00</td>
       <td>Cycle 14, 2002-10-31 to 2003-12-31</td>
     </tr>
     <tr>
@@ -4318,17 +4318,17 @@ display(gold_cycles)
       <td>2003-12-31</td>
       <td>2004-05-31</td>
       <td>6</td>
-      <td>-0.00653</td>
-      <td>-0.65302</td>
-      <td>0.00044</td>
-      <td>0.04419</td>
-      <td>-0.01302</td>
-      <td>-1.30178</td>
-      <td>0.20868</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>-0.01</td>
+      <td>-0.65</td>
+      <td>0.00</td>
+      <td>0.04</td>
+      <td>-0.01</td>
+      <td>-1.30</td>
+      <td>0.21</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 15, 2003-12-31 to 2004-05-31</td>
     </tr>
     <tr>
@@ -4337,17 +4337,17 @@ display(gold_cycles)
       <td>2004-05-31</td>
       <td>2006-12-31</td>
       <td>32</td>
-      <td>0.64628</td>
-      <td>64.62831</td>
-      <td>0.01653</td>
-      <td>1.65326</td>
-      <td>0.20556</td>
-      <td>20.55610</td>
-      <td>0.14568</td>
-      <td>0.04250</td>
-      <td>425.00000</td>
-      <td>0.01594</td>
-      <td>159.37500</td>
+      <td>0.65</td>
+      <td>64.63</td>
+      <td>0.02</td>
+      <td>1.65</td>
+      <td>0.21</td>
+      <td>20.56</td>
+      <td>0.15</td>
+      <td>0.04</td>
+      <td>425.00</td>
+      <td>0.02</td>
+      <td>159.38</td>
       <td>Cycle 16, 2004-05-31 to 2006-12-31</td>
     </tr>
     <tr>
@@ -4356,17 +4356,17 @@ display(gold_cycles)
       <td>2006-12-31</td>
       <td>2007-08-31</td>
       <td>9</td>
-      <td>0.03904</td>
-      <td>3.90432</td>
-      <td>0.00447</td>
-      <td>0.44660</td>
-      <td>0.05239</td>
-      <td>5.23935</td>
-      <td>0.07374</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.04</td>
+      <td>3.90</td>
+      <td>0.00</td>
+      <td>0.45</td>
+      <td>0.05</td>
+      <td>5.24</td>
+      <td>0.07</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 17, 2006-12-31 to 2007-08-31</td>
     </tr>
     <tr>
@@ -4375,17 +4375,17 @@ display(gold_cycles)
       <td>2007-08-31</td>
       <td>2009-07-31</td>
       <td>24</td>
-      <td>0.43610</td>
-      <td>43.60981</td>
-      <td>0.01766</td>
-      <td>1.76641</td>
-      <td>0.19837</td>
-      <td>19.83731</td>
-      <td>0.24658</td>
-      <td>-0.05000</td>
-      <td>-500.00000</td>
-      <td>-0.02500</td>
-      <td>-250.00000</td>
+      <td>0.44</td>
+      <td>43.61</td>
+      <td>0.02</td>
+      <td>1.77</td>
+      <td>0.20</td>
+      <td>19.84</td>
+      <td>0.25</td>
+      <td>-0.05</td>
+      <td>-500.00</td>
+      <td>-0.03</td>
+      <td>-250.00</td>
       <td>Cycle 18, 2007-08-31 to 2009-07-31</td>
     </tr>
     <tr>
@@ -4394,17 +4394,17 @@ display(gold_cycles)
       <td>2009-07-31</td>
       <td>2015-11-30</td>
       <td>77</td>
-      <td>0.14924</td>
-      <td>14.92391</td>
-      <td>0.00317</td>
-      <td>0.31742</td>
-      <td>0.02191</td>
-      <td>2.19146</td>
-      <td>0.18253</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.15</td>
+      <td>14.92</td>
+      <td>0.00</td>
+      <td>0.32</td>
+      <td>0.02</td>
+      <td>2.19</td>
+      <td>0.18</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 19, 2009-07-31 to 2015-11-30</td>
     </tr>
     <tr>
@@ -4413,17 +4413,17 @@ display(gold_cycles)
       <td>2015-11-30</td>
       <td>2016-06-30</td>
       <td>8</td>
-      <td>0.15742</td>
-      <td>15.74192</td>
-      <td>0.02027</td>
-      <td>2.02679</td>
-      <td>0.24519</td>
-      <td>24.51911</td>
-      <td>0.22531</td>
-      <td>0.00250</td>
-      <td>25.00000</td>
-      <td>0.00375</td>
-      <td>37.50000</td>
+      <td>0.16</td>
+      <td>15.74</td>
+      <td>0.02</td>
+      <td>2.03</td>
+      <td>0.25</td>
+      <td>24.52</td>
+      <td>0.23</td>
+      <td>0.00</td>
+      <td>25.00</td>
+      <td>0.00</td>
+      <td>37.50</td>
       <td>Cycle 20, 2015-11-30 to 2016-06-30</td>
     </tr>
     <tr>
@@ -4432,17 +4432,17 @@ display(gold_cycles)
       <td>2016-06-30</td>
       <td>2016-11-30</td>
       <td>6</td>
-      <td>-0.03466</td>
-      <td>-3.46575</td>
-      <td>-0.00449</td>
-      <td>-0.44887</td>
-      <td>-0.06811</td>
-      <td>-6.81139</td>
-      <td>0.19940</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>-0.03</td>
+      <td>-3.47</td>
+      <td>-0.00</td>
+      <td>-0.45</td>
+      <td>-0.07</td>
+      <td>-6.81</td>
+      <td>0.20</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 21, 2016-06-30 to 2016-11-30</td>
     </tr>
     <tr>
@@ -4451,17 +4451,17 @@ display(gold_cycles)
       <td>2016-11-30</td>
       <td>2019-06-30</td>
       <td>32</td>
-      <td>0.10362</td>
-      <td>10.36165</td>
-      <td>0.00355</td>
-      <td>0.35519</td>
-      <td>0.03766</td>
-      <td>3.76642</td>
-      <td>0.10758</td>
-      <td>0.02000</td>
-      <td>200.00000</td>
-      <td>0.00750</td>
-      <td>75.00000</td>
+      <td>0.10</td>
+      <td>10.36</td>
+      <td>0.00</td>
+      <td>0.36</td>
+      <td>0.04</td>
+      <td>3.77</td>
+      <td>0.11</td>
+      <td>0.02</td>
+      <td>200.00</td>
+      <td>0.01</td>
+      <td>75.00</td>
       <td>Cycle 22, 2016-11-30 to 2019-06-30</td>
     </tr>
     <tr>
@@ -4470,17 +4470,17 @@ display(gold_cycles)
       <td>2019-06-30</td>
       <td>2019-07-31</td>
       <td>2</td>
-      <td>0.08288</td>
-      <td>8.28750</td>
-      <td>0.04132</td>
-      <td>4.13180</td>
-      <td>0.61239</td>
-      <td>61.23899</td>
-      <td>0.18771</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.08</td>
+      <td>8.29</td>
+      <td>0.04</td>
+      <td>4.13</td>
+      <td>0.61</td>
+      <td>61.24</td>
+      <td>0.19</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 23, 2019-06-30 to 2019-07-31</td>
     </tr>
     <tr>
@@ -4489,17 +4489,17 @@ display(gold_cycles)
       <td>2019-07-31</td>
       <td>2020-09-30</td>
       <td>15</td>
-      <td>0.33789</td>
-      <td>33.78880</td>
-      <td>0.02043</td>
-      <td>2.04336</td>
-      <td>0.26222</td>
-      <td>26.22222</td>
-      <td>0.14899</td>
-      <td>-0.02250</td>
-      <td>-225.00000</td>
-      <td>-0.01800</td>
-      <td>-180.00000</td>
+      <td>0.34</td>
+      <td>33.79</td>
+      <td>0.02</td>
+      <td>2.04</td>
+      <td>0.26</td>
+      <td>26.22</td>
+      <td>0.15</td>
+      <td>-0.02</td>
+      <td>-225.00</td>
+      <td>-0.02</td>
+      <td>-180.00</td>
       <td>Cycle 24, 2019-07-31 to 2020-09-30</td>
     </tr>
     <tr>
@@ -4508,17 +4508,17 @@ display(gold_cycles)
       <td>2020-09-30</td>
       <td>2022-02-28</td>
       <td>18</td>
-      <td>-0.02989</td>
-      <td>-2.98862</td>
-      <td>-0.00076</td>
-      <td>-0.07561</td>
-      <td>-0.02002</td>
-      <td>-2.00247</td>
-      <td>0.15388</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>-0.03</td>
+      <td>-2.99</td>
+      <td>-0.00</td>
+      <td>-0.08</td>
+      <td>-0.02</td>
+      <td>-2.00</td>
+      <td>0.15</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 25, 2020-09-30 to 2022-02-28</td>
     </tr>
     <tr>
@@ -4527,17 +4527,17 @@ display(gold_cycles)
       <td>2022-02-28</td>
       <td>2024-01-31</td>
       <td>24</td>
-      <td>0.13485</td>
-      <td>13.48509</td>
-      <td>0.00605</td>
-      <td>0.60516</td>
-      <td>0.06529</td>
-      <td>6.52938</td>
-      <td>0.13996</td>
-      <td>0.05250</td>
-      <td>525.00000</td>
-      <td>0.02625</td>
-      <td>262.50000</td>
+      <td>0.13</td>
+      <td>13.49</td>
+      <td>0.01</td>
+      <td>0.61</td>
+      <td>0.07</td>
+      <td>6.53</td>
+      <td>0.14</td>
+      <td>0.05</td>
+      <td>525.00</td>
+      <td>0.03</td>
+      <td>262.50</td>
       <td>Cycle 26, 2022-02-28 to 2024-01-31</td>
     </tr>
     <tr>
@@ -4546,17 +4546,17 @@ display(gold_cycles)
       <td>2024-01-31</td>
       <td>2024-08-31</td>
       <td>8</td>
-      <td>0.21348</td>
-      <td>21.34824</td>
-      <td>0.02494</td>
-      <td>2.49353</td>
-      <td>0.33675</td>
-      <td>33.67502</td>
-      <td>0.11399</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.21</td>
+      <td>21.35</td>
+      <td>0.02</td>
+      <td>2.49</td>
+      <td>0.34</td>
+      <td>33.68</td>
+      <td>0.11</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 27, 2024-01-31 to 2024-08-31</td>
     </tr>
     <tr>
@@ -4565,17 +4565,17 @@ display(gold_cycles)
       <td>2024-08-31</td>
       <td>2025-06-30</td>
       <td>11</td>
-      <td>0.34954</td>
-      <td>34.95424</td>
-      <td>0.02824</td>
-      <td>2.82419</td>
-      <td>0.38683</td>
-      <td>38.68250</td>
-      <td>0.12923</td>
-      <td>-0.01000</td>
-      <td>-100.00000</td>
-      <td>-0.01091</td>
-      <td>-109.09091</td>
+      <td>0.35</td>
+      <td>34.95</td>
+      <td>0.03</td>
+      <td>2.82</td>
+      <td>0.39</td>
+      <td>38.68</td>
+      <td>0.13</td>
+      <td>-0.01</td>
+      <td>-100.00</td>
+      <td>-0.01</td>
+      <td>-109.09</td>
       <td>Cycle 28, 2024-08-31 to 2025-06-30</td>
     </tr>
     <tr>
@@ -4584,17 +4584,17 @@ display(gold_cycles)
       <td>2025-06-30</td>
       <td>2025-08-31</td>
       <td>3</td>
-      <td>0.04825</td>
-      <td>4.82481</td>
-      <td>0.01609</td>
-      <td>1.60850</td>
-      <td>0.20741</td>
-      <td>20.74143</td>
-      <td>0.09689</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
-      <td>0.00000</td>
+      <td>0.05</td>
+      <td>4.82</td>
+      <td>0.02</td>
+      <td>1.61</td>
+      <td>0.21</td>
+      <td>20.74</td>
+      <td>0.10</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>Cycle 29, 2025-06-30 to 2025-08-31</td>
     </tr>
     <tr>
@@ -4603,17 +4603,17 @@ display(gold_cycles)
       <td>2025-08-31</td>
       <td>2026-01-31</td>
       <td>6</td>
-      <td>0.48764</td>
-      <td>48.76396</td>
-      <td>0.06926</td>
-      <td>6.92618</td>
-      <td>1.21307</td>
-      <td>121.30714</td>
-      <td>0.16013</td>
-      <td>-0.00750</td>
-      <td>-75.00000</td>
-      <td>-0.01500</td>
-      <td>-150.00000</td>
+      <td>0.49</td>
+      <td>48.76</td>
+      <td>0.07</td>
+      <td>6.93</td>
+      <td>1.21</td>
+      <td>121.31</td>
+      <td>0.16</td>
+      <td>-0.01</td>
+      <td>-75.00</td>
+      <td>-0.01</td>
+      <td>-150.00</td>
       <td>Cycle 30, 2025-08-31 to 2026-01-31</td>
     </tr>
   </tbody>
@@ -4646,7 +4646,7 @@ plot_bar_returns_ffr_change(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_71_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_69_0.png)
     
 
 
@@ -4663,7 +4663,7 @@ plot_bar_returns_ffr_change(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_73_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_71_0.png)
     
 
 
@@ -4695,8 +4695,8 @@ Y_vals = model.params[0] + model.params[1] * X_vals
     Dep. Variable:     AnnualizedReturnPct   R-squared:                       0.064
     Model:                             OLS   Adj. R-squared:                  0.030
     Method:                  Least Squares   F-statistic:                     1.900
-    Date:                 Mon, 16 Mar 2026   Prob (F-statistic):              0.179
-    Time:                         13:49:47   Log-Likelihood:                -140.03
+    Date:                 Mon, 23 Mar 2026   Prob (F-statistic):              0.179
+    Time:                         22:08:28   Log-Likelihood:                -140.03
     No. Observations:                   30   AIC:                             284.1
     Df Residuals:                       28   BIC:                             286.9
     Df Model:                            1                                         
@@ -4715,7 +4715,7 @@ Y_vals = model.params[0] + model.params[1] * X_vals
     
     Notes:
     [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
-    Intercept: 11.467013480569243, Slope: -0.05697423402716622
+    Intercept: 11.467013480569243, Slope: -0.056974234027166226
 
 
 And then plot the regression line along with the values:
@@ -4734,7 +4734,7 @@ plot_scatter_regression_ffr_vs_returns(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_77_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_75_0.png)
     
 
 
@@ -4791,10 +4791,10 @@ display(fedfunds_grouped_cycles)
     <tr>
       <th>0</th>
       <td>1989-12-31</td>
-      <td>0.08250</td>
+      <td>0.08</td>
       <td>1990-01-31</td>
-      <td>0.08250</td>
-      <td>0.00000</td>
+      <td>0.08</td>
+      <td>0.00</td>
       <td>Neutral</td>
       <td>Modified Tightening</td>
       <td>1</td>
@@ -4803,10 +4803,10 @@ display(fedfunds_grouped_cycles)
     <tr>
       <th>1</th>
       <td>1990-01-31</td>
-      <td>0.08250</td>
+      <td>0.08</td>
       <td>1990-02-28</td>
-      <td>0.08250</td>
-      <td>0.00000</td>
+      <td>0.08</td>
+      <td>0.00</td>
       <td>Neutral</td>
       <td>Modified Tightening</td>
       <td>1</td>
@@ -4815,10 +4815,10 @@ display(fedfunds_grouped_cycles)
     <tr>
       <th>2</th>
       <td>1990-02-28</td>
-      <td>0.08250</td>
+      <td>0.08</td>
       <td>1990-03-31</td>
-      <td>0.08250</td>
-      <td>0.00000</td>
+      <td>0.08</td>
+      <td>0.00</td>
       <td>Neutral</td>
       <td>Modified Tightening</td>
       <td>1</td>
@@ -4827,10 +4827,10 @@ display(fedfunds_grouped_cycles)
     <tr>
       <th>3</th>
       <td>1990-03-31</td>
-      <td>0.08250</td>
+      <td>0.08</td>
       <td>1990-04-30</td>
-      <td>0.08250</td>
-      <td>0.00000</td>
+      <td>0.08</td>
+      <td>0.00</td>
       <td>Neutral</td>
       <td>Modified Tightening</td>
       <td>1</td>
@@ -4839,10 +4839,10 @@ display(fedfunds_grouped_cycles)
     <tr>
       <th>4</th>
       <td>1990-04-30</td>
-      <td>0.08250</td>
+      <td>0.08</td>
       <td>1990-05-31</td>
-      <td>0.08250</td>
-      <td>0.00000</td>
+      <td>0.08</td>
+      <td>0.00</td>
       <td>Neutral</td>
       <td>Modified Tightening</td>
       <td>1</td>
@@ -4863,10 +4863,10 @@ display(fedfunds_grouped_cycles)
     <tr>
       <th>429</th>
       <td>2025-09-30</td>
-      <td>0.04250</td>
+      <td>0.04</td>
       <td>2025-10-31</td>
-      <td>0.04000</td>
-      <td>-0.00250</td>
+      <td>0.04</td>
+      <td>-0.00</td>
       <td>Easing</td>
       <td>Easing</td>
       <td>30</td>
@@ -4875,10 +4875,10 @@ display(fedfunds_grouped_cycles)
     <tr>
       <th>430</th>
       <td>2025-10-31</td>
-      <td>0.04000</td>
+      <td>0.04</td>
       <td>2025-11-30</td>
-      <td>0.04000</td>
-      <td>0.00000</td>
+      <td>0.04</td>
+      <td>0.00</td>
       <td>Neutral</td>
       <td>Easing</td>
       <td>30</td>
@@ -4887,10 +4887,10 @@ display(fedfunds_grouped_cycles)
     <tr>
       <th>431</th>
       <td>2025-11-30</td>
-      <td>0.04000</td>
+      <td>0.04</td>
       <td>2025-12-31</td>
-      <td>0.03750</td>
-      <td>-0.00250</td>
+      <td>0.04</td>
+      <td>-0.00</td>
       <td>Easing</td>
       <td>Easing</td>
       <td>30</td>
@@ -4899,10 +4899,10 @@ display(fedfunds_grouped_cycles)
     <tr>
       <th>432</th>
       <td>2025-12-31</td>
-      <td>0.03750</td>
+      <td>0.04</td>
       <td>2026-01-31</td>
-      <td>0.03750</td>
-      <td>0.00000</td>
+      <td>0.04</td>
+      <td>0.00</td>
       <td>Neutral</td>
       <td>Easing</td>
       <td>30</td>
@@ -4911,7 +4911,7 @@ display(fedfunds_grouped_cycles)
     <tr>
       <th>433</th>
       <td>2026-01-31</td>
-      <td>0.03750</td>
+      <td>0.04</td>
       <td>NaT</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -4975,8 +4975,8 @@ display(stocks_merged)
     <tr>
       <th>0</th>
       <td>1990-01-31</td>
-      <td>353.94000</td>
-      <td>-0.06713</td>
+      <td>353.94</td>
+      <td>-0.07</td>
       <td>1990-01-31</td>
       <td>1990-02-28</td>
       <td>Modified Tightening</td>
@@ -4985,8 +4985,8 @@ display(stocks_merged)
     <tr>
       <th>1</th>
       <td>1990-02-28</td>
-      <td>358.50000</td>
-      <td>0.01288</td>
+      <td>358.50</td>
+      <td>0.01</td>
       <td>1990-02-28</td>
       <td>1990-03-31</td>
       <td>Modified Tightening</td>
@@ -4996,7 +4996,7 @@ display(stocks_merged)
       <th>2</th>
       <td>1990-03-31</td>
       <td>368</td>
-      <td>0.02650</td>
+      <td>0.03</td>
       <td>1990-03-31</td>
       <td>1990-04-30</td>
       <td>Modified Tightening</td>
@@ -5005,8 +5005,8 @@ display(stocks_merged)
     <tr>
       <th>3</th>
       <td>1990-04-30</td>
-      <td>358.81000</td>
-      <td>-0.02497</td>
+      <td>358.81</td>
+      <td>-0.02</td>
       <td>1990-04-30</td>
       <td>1990-05-31</td>
       <td>Modified Tightening</td>
@@ -5015,8 +5015,8 @@ display(stocks_merged)
     <tr>
       <th>4</th>
       <td>1990-05-31</td>
-      <td>393.80000</td>
-      <td>0.09752</td>
+      <td>393.80</td>
+      <td>0.10</td>
       <td>1990-05-31</td>
       <td>1990-06-30</td>
       <td>Modified Tightening</td>
@@ -5035,8 +5035,8 @@ display(stocks_merged)
     <tr>
       <th>427</th>
       <td>2025-08-31</td>
-      <td>14304.68000</td>
-      <td>0.02027</td>
+      <td>14304.68</td>
+      <td>0.02</td>
       <td>2025-08-31</td>
       <td>2025-09-30</td>
       <td>Modified Tightening</td>
@@ -5045,8 +5045,8 @@ display(stocks_merged)
     <tr>
       <th>428</th>
       <td>2025-09-30</td>
-      <td>14826.80000</td>
-      <td>0.03650</td>
+      <td>14826.80</td>
+      <td>0.04</td>
       <td>2025-09-30</td>
       <td>2025-10-31</td>
       <td>Easing</td>
@@ -5055,8 +5055,8 @@ display(stocks_merged)
     <tr>
       <th>429</th>
       <td>2025-10-31</td>
-      <td>15173.95000</td>
-      <td>0.02341</td>
+      <td>15173.95</td>
+      <td>0.02</td>
       <td>2025-10-31</td>
       <td>2025-11-30</td>
       <td>Easing</td>
@@ -5065,8 +5065,8 @@ display(stocks_merged)
     <tr>
       <th>430</th>
       <td>2025-11-30</td>
-      <td>15211.14000</td>
-      <td>0.00245</td>
+      <td>15211.14</td>
+      <td>0.00</td>
       <td>2025-11-30</td>
       <td>2025-12-31</td>
       <td>Easing</td>
@@ -5075,8 +5075,8 @@ display(stocks_merged)
     <tr>
       <th>431</th>
       <td>2025-12-31</td>
-      <td>15220.45000</td>
-      <td>0.00061</td>
+      <td>15220.45</td>
+      <td>0.00</td>
       <td>2025-12-31</td>
       <td>2026-01-31</td>
       <td>Easing</td>
@@ -5137,8 +5137,8 @@ display(bonds_merged)
     <tr>
       <th>0</th>
       <td>1990-01-31</td>
-      <td>98.01300</td>
-      <td>-0.01987</td>
+      <td>98.01</td>
+      <td>-0.02</td>
       <td>1990-01-31</td>
       <td>1990-02-28</td>
       <td>Modified Tightening</td>
@@ -5147,8 +5147,8 @@ display(bonds_merged)
     <tr>
       <th>1</th>
       <td>1990-02-28</td>
-      <td>97.99000</td>
-      <td>-0.00023</td>
+      <td>97.99</td>
+      <td>-0.00</td>
       <td>1990-02-28</td>
       <td>1990-03-31</td>
       <td>Modified Tightening</td>
@@ -5157,8 +5157,8 @@ display(bonds_merged)
     <tr>
       <th>2</th>
       <td>1990-03-31</td>
-      <td>97.98900</td>
-      <td>-0.00001</td>
+      <td>97.99</td>
+      <td>-0.00</td>
       <td>1990-03-31</td>
       <td>1990-04-30</td>
       <td>Modified Tightening</td>
@@ -5167,8 +5167,8 @@ display(bonds_merged)
     <tr>
       <th>3</th>
       <td>1990-04-30</td>
-      <td>96.60600</td>
-      <td>-0.01411</td>
+      <td>96.61</td>
+      <td>-0.01</td>
       <td>1990-04-30</td>
       <td>1990-05-31</td>
       <td>Modified Tightening</td>
@@ -5177,8 +5177,8 @@ display(bonds_merged)
     <tr>
       <th>4</th>
       <td>1990-05-31</td>
-      <td>99.64700</td>
-      <td>0.03148</td>
+      <td>99.65</td>
+      <td>0.03</td>
       <td>1990-05-31</td>
       <td>1990-06-30</td>
       <td>Modified Tightening</td>
@@ -5197,8 +5197,8 @@ display(bonds_merged)
     <tr>
       <th>427</th>
       <td>2025-08-31</td>
-      <td>641.25800</td>
-      <td>0.01668</td>
+      <td>641.26</td>
+      <td>0.02</td>
       <td>2025-08-31</td>
       <td>2025-09-30</td>
       <td>Modified Tightening</td>
@@ -5207,8 +5207,8 @@ display(bonds_merged)
     <tr>
       <th>428</th>
       <td>2025-09-30</td>
-      <td>645.58400</td>
-      <td>0.00675</td>
+      <td>645.58</td>
+      <td>0.01</td>
       <td>2025-09-30</td>
       <td>2025-10-31</td>
       <td>Easing</td>
@@ -5217,8 +5217,8 @@ display(bonds_merged)
     <tr>
       <th>429</th>
       <td>2025-10-31</td>
-      <td>650.00500</td>
-      <td>0.00685</td>
+      <td>650.00</td>
+      <td>0.01</td>
       <td>2025-10-31</td>
       <td>2025-11-30</td>
       <td>Easing</td>
@@ -5227,8 +5227,8 @@ display(bonds_merged)
     <tr>
       <th>430</th>
       <td>2025-11-30</td>
-      <td>656.63600</td>
-      <td>0.01020</td>
+      <td>656.64</td>
+      <td>0.01</td>
       <td>2025-11-30</td>
       <td>2025-12-31</td>
       <td>Easing</td>
@@ -5237,8 +5237,8 @@ display(bonds_merged)
     <tr>
       <th>431</th>
       <td>2025-12-31</td>
-      <td>652.28800</td>
-      <td>-0.00662</td>
+      <td>652.29</td>
+      <td>-0.01</td>
       <td>2025-12-31</td>
       <td>2026-01-31</td>
       <td>Easing</td>
@@ -5303,222 +5303,222 @@ display(strategy.head(20))
     <tr>
       <th>0</th>
       <td>1990-01-31</td>
-      <td>353.94000</td>
-      <td>-0.06713</td>
+      <td>353.94</td>
+      <td>-0.07</td>
       <td>1990-01-31</td>
       <td>1990-02-28</td>
       <td>Modified Tightening</td>
       <td>1</td>
-      <td>-0.06713</td>
+      <td>-0.07</td>
     </tr>
     <tr>
       <th>1</th>
       <td>1990-02-28</td>
-      <td>358.50000</td>
-      <td>0.01288</td>
+      <td>358.50</td>
+      <td>0.01</td>
       <td>1990-02-28</td>
       <td>1990-03-31</td>
       <td>Modified Tightening</td>
       <td>1</td>
-      <td>0.01288</td>
+      <td>0.01</td>
     </tr>
     <tr>
       <th>2</th>
       <td>1990-03-31</td>
       <td>368</td>
-      <td>0.02650</td>
+      <td>0.03</td>
       <td>1990-03-31</td>
       <td>1990-04-30</td>
       <td>Modified Tightening</td>
       <td>1</td>
-      <td>0.02650</td>
+      <td>0.03</td>
     </tr>
     <tr>
       <th>3</th>
       <td>1990-04-30</td>
-      <td>358.81000</td>
-      <td>-0.02497</td>
+      <td>358.81</td>
+      <td>-0.02</td>
       <td>1990-04-30</td>
       <td>1990-05-31</td>
       <td>Modified Tightening</td>
       <td>1</td>
-      <td>-0.02497</td>
+      <td>-0.02</td>
     </tr>
     <tr>
       <th>4</th>
       <td>1990-05-31</td>
-      <td>393.80000</td>
-      <td>0.09752</td>
+      <td>393.80</td>
+      <td>0.10</td>
       <td>1990-05-31</td>
       <td>1990-06-30</td>
       <td>Modified Tightening</td>
       <td>1</td>
-      <td>0.09752</td>
+      <td>0.10</td>
     </tr>
     <tr>
       <th>5</th>
       <td>1990-06-30</td>
-      <td>391.14000</td>
-      <td>-0.00675</td>
+      <td>391.14</td>
+      <td>-0.01</td>
       <td>1990-06-30</td>
       <td>1990-07-31</td>
       <td>Modified Tightening</td>
       <td>2</td>
-      <td>-0.00675</td>
+      <td>-0.01</td>
     </tr>
     <tr>
       <th>6</th>
       <td>1990-07-31</td>
-      <td>102.84500</td>
-      <td>0.01463</td>
+      <td>102.84</td>
+      <td>0.01</td>
       <td>1990-07-31</td>
       <td>1990-08-31</td>
       <td>Easing</td>
       <td>2</td>
-      <td>0.01463</td>
+      <td>0.01</td>
     </tr>
     <tr>
       <th>7</th>
       <td>1990-08-31</td>
-      <td>100.78200</td>
-      <td>-0.02006</td>
+      <td>100.78</td>
+      <td>-0.02</td>
       <td>1990-08-31</td>
       <td>1990-09-30</td>
       <td>Easing</td>
       <td>2</td>
-      <td>-0.02006</td>
+      <td>-0.02</td>
     </tr>
     <tr>
       <th>8</th>
       <td>1990-09-30</td>
-      <td>101.74000</td>
-      <td>0.00951</td>
+      <td>101.74</td>
+      <td>0.01</td>
       <td>1990-09-30</td>
       <td>1990-10-31</td>
       <td>Easing</td>
       <td>2</td>
-      <td>0.00951</td>
+      <td>0.01</td>
     </tr>
     <tr>
       <th>9</th>
       <td>1990-10-31</td>
-      <td>103.65200</td>
-      <td>0.01879</td>
+      <td>103.65</td>
+      <td>0.02</td>
       <td>1990-10-31</td>
       <td>1990-11-30</td>
       <td>Easing</td>
       <td>2</td>
-      <td>0.01879</td>
+      <td>0.02</td>
     </tr>
     <tr>
       <th>10</th>
       <td>1990-11-30</td>
-      <td>106.43100</td>
-      <td>0.02681</td>
+      <td>106.43</td>
+      <td>0.03</td>
       <td>1990-11-30</td>
       <td>1990-12-31</td>
       <td>Easing</td>
       <td>2</td>
-      <td>0.02681</td>
+      <td>0.03</td>
     </tr>
     <tr>
       <th>11</th>
       <td>1990-12-31</td>
-      <td>108.24900</td>
-      <td>0.01708</td>
+      <td>108.25</td>
+      <td>0.02</td>
       <td>1990-12-31</td>
       <td>1991-01-31</td>
       <td>Easing</td>
       <td>2</td>
-      <td>0.01708</td>
+      <td>0.02</td>
     </tr>
     <tr>
       <th>12</th>
       <td>1991-01-31</td>
-      <td>109.52500</td>
-      <td>0.01179</td>
+      <td>109.53</td>
+      <td>0.01</td>
       <td>1991-01-31</td>
       <td>1991-02-28</td>
       <td>Easing</td>
       <td>2</td>
-      <td>0.01179</td>
+      <td>0.01</td>
     </tr>
     <tr>
       <th>13</th>
       <td>1991-02-28</td>
-      <td>110.10400</td>
-      <td>0.00529</td>
+      <td>110.10</td>
+      <td>0.01</td>
       <td>1991-02-28</td>
       <td>1991-03-31</td>
       <td>Easing</td>
       <td>2</td>
-      <td>0.00529</td>
+      <td>0.01</td>
     </tr>
     <tr>
       <th>14</th>
       <td>1991-03-31</td>
-      <td>110.43400</td>
-      <td>0.00300</td>
+      <td>110.43</td>
+      <td>0.00</td>
       <td>1991-03-31</td>
       <td>1991-04-30</td>
       <td>Easing</td>
       <td>2</td>
-      <td>0.00300</td>
+      <td>0.00</td>
     </tr>
     <tr>
       <th>15</th>
       <td>1991-04-30</td>
-      <td>111.59800</td>
-      <td>0.01054</td>
+      <td>111.60</td>
+      <td>0.01</td>
       <td>1991-04-30</td>
       <td>1991-05-31</td>
       <td>Easing</td>
       <td>2</td>
-      <td>0.01054</td>
+      <td>0.01</td>
     </tr>
     <tr>
       <th>16</th>
       <td>1991-05-31</td>
-      <td>112.07800</td>
-      <td>0.00430</td>
+      <td>112.08</td>
+      <td>0.00</td>
       <td>1991-05-31</td>
       <td>1991-06-30</td>
       <td>Easing</td>
       <td>2</td>
-      <td>0.00430</td>
+      <td>0.00</td>
     </tr>
     <tr>
       <th>17</th>
       <td>1991-06-30</td>
-      <td>111.50200</td>
-      <td>-0.00514</td>
+      <td>111.50</td>
+      <td>-0.01</td>
       <td>1991-06-30</td>
       <td>1991-07-31</td>
       <td>Easing</td>
       <td>2</td>
-      <td>-0.00514</td>
+      <td>-0.01</td>
     </tr>
     <tr>
       <th>18</th>
       <td>1991-07-31</td>
-      <td>113.05200</td>
-      <td>0.01390</td>
+      <td>113.05</td>
+      <td>0.01</td>
       <td>1991-07-31</td>
       <td>1991-08-31</td>
       <td>Easing</td>
       <td>2</td>
-      <td>0.01390</td>
+      <td>0.01</td>
     </tr>
     <tr>
       <th>19</th>
       <td>1991-08-31</td>
-      <td>116.06500</td>
-      <td>0.02665</td>
+      <td>116.06</td>
+      <td>0.03</td>
       <td>1991-08-31</td>
       <td>1991-09-30</td>
       <td>Easing</td>
       <td>2</td>
-      <td>0.02665</td>
+      <td>0.03</td>
     </tr>
   </tbody>
 </table>
@@ -5624,63 +5624,63 @@ display(portfolio_monthly)
   <tbody>
     <tr>
       <th>1990-01-31</th>
-      <td>-0.06713</td>
-      <td>-0.06713</td>
-      <td>0.00000</td>
-      <td>-0.06713</td>
-      <td>-0.06713</td>
-      <td>0.00000</td>
-      <td>-0.01987</td>
-      <td>-0.01987</td>
-      <td>0.00000</td>
+      <td>-0.07</td>
+      <td>-0.07</td>
+      <td>0.00</td>
+      <td>-0.07</td>
+      <td>-0.07</td>
+      <td>0.00</td>
+      <td>-0.02</td>
+      <td>-0.02</td>
+      <td>0.00</td>
     </tr>
     <tr>
       <th>1990-02-28</th>
-      <td>0.01288</td>
-      <td>-0.05511</td>
-      <td>0.00000</td>
-      <td>0.01288</td>
-      <td>-0.05511</td>
-      <td>0.00000</td>
-      <td>-0.00023</td>
-      <td>-0.02010</td>
-      <td>-0.00023</td>
+      <td>0.01</td>
+      <td>-0.06</td>
+      <td>0.00</td>
+      <td>0.01</td>
+      <td>-0.06</td>
+      <td>0.00</td>
+      <td>-0.00</td>
+      <td>-0.02</td>
+      <td>-0.00</td>
     </tr>
     <tr>
       <th>1990-03-31</th>
-      <td>0.02650</td>
-      <td>-0.03007</td>
-      <td>0.00000</td>
-      <td>0.02650</td>
-      <td>-0.03007</td>
-      <td>0.00000</td>
-      <td>-0.00001</td>
-      <td>-0.02011</td>
-      <td>-0.00024</td>
+      <td>0.03</td>
+      <td>-0.03</td>
+      <td>0.00</td>
+      <td>0.03</td>
+      <td>-0.03</td>
+      <td>0.00</td>
+      <td>-0.00</td>
+      <td>-0.02</td>
+      <td>-0.00</td>
     </tr>
     <tr>
       <th>1990-04-30</th>
-      <td>-0.02497</td>
-      <td>-0.05429</td>
-      <td>-0.02497</td>
-      <td>-0.02497</td>
-      <td>-0.05429</td>
-      <td>-0.02497</td>
-      <td>-0.01411</td>
-      <td>-0.03394</td>
-      <td>-0.01436</td>
+      <td>-0.02</td>
+      <td>-0.05</td>
+      <td>-0.02</td>
+      <td>-0.02</td>
+      <td>-0.05</td>
+      <td>-0.02</td>
+      <td>-0.01</td>
+      <td>-0.03</td>
+      <td>-0.01</td>
     </tr>
     <tr>
       <th>1990-05-31</th>
-      <td>0.09752</td>
-      <td>0.03793</td>
-      <td>0.00000</td>
-      <td>0.09752</td>
-      <td>0.03793</td>
-      <td>0.00000</td>
-      <td>0.03148</td>
-      <td>-0.00353</td>
-      <td>0.00000</td>
+      <td>0.10</td>
+      <td>0.04</td>
+      <td>0.00</td>
+      <td>0.10</td>
+      <td>0.04</td>
+      <td>0.00</td>
+      <td>0.03</td>
+      <td>-0.00</td>
+      <td>0.00</td>
     </tr>
     <tr>
       <th>...</th>
@@ -5696,63 +5696,63 @@ display(portfolio_monthly)
     </tr>
     <tr>
       <th>2025-08-31</th>
-      <td>0.02027</td>
-      <td>42.28506</td>
-      <td>0.00000</td>
-      <td>0.02027</td>
-      <td>36.70243</td>
-      <td>0.00000</td>
-      <td>0.01668</td>
-      <td>5.41258</td>
-      <td>-0.11316</td>
+      <td>0.02</td>
+      <td>42.29</td>
+      <td>0.00</td>
+      <td>0.02</td>
+      <td>36.70</td>
+      <td>0.00</td>
+      <td>0.02</td>
+      <td>5.41</td>
+      <td>-0.11</td>
     </tr>
     <tr>
       <th>2025-09-30</th>
-      <td>0.00675</td>
-      <td>42.57706</td>
-      <td>0.00000</td>
-      <td>0.03650</td>
-      <td>38.07857</td>
-      <td>0.00000</td>
-      <td>0.00675</td>
-      <td>5.45584</td>
-      <td>-0.10717</td>
+      <td>0.01</td>
+      <td>42.58</td>
+      <td>0.00</td>
+      <td>0.04</td>
+      <td>38.08</td>
+      <td>0.00</td>
+      <td>0.01</td>
+      <td>5.46</td>
+      <td>-0.11</td>
     </tr>
     <tr>
       <th>2025-10-31</th>
-      <td>0.00685</td>
-      <td>42.87548</td>
-      <td>0.00000</td>
-      <td>0.02341</td>
-      <td>38.99354</td>
-      <td>0.00000</td>
-      <td>0.00685</td>
-      <td>5.50005</td>
-      <td>-0.10106</td>
+      <td>0.01</td>
+      <td>42.88</td>
+      <td>0.00</td>
+      <td>0.02</td>
+      <td>38.99</td>
+      <td>0.00</td>
+      <td>0.01</td>
+      <td>5.50</td>
+      <td>-0.10</td>
     </tr>
     <tr>
       <th>2025-11-30</th>
-      <td>0.01020</td>
-      <td>43.32308</td>
-      <td>0.00000</td>
-      <td>0.00245</td>
-      <td>39.09156</td>
-      <td>0.00000</td>
-      <td>0.01020</td>
-      <td>5.56636</td>
-      <td>-0.09189</td>
+      <td>0.01</td>
+      <td>43.32</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>39.09</td>
+      <td>0.00</td>
+      <td>0.01</td>
+      <td>5.57</td>
+      <td>-0.09</td>
     </tr>
     <tr>
       <th>2025-12-31</th>
-      <td>-0.00662</td>
-      <td>43.02959</td>
-      <td>-0.00662</td>
-      <td>0.00061</td>
-      <td>39.11610</td>
-      <td>0.00000</td>
-      <td>-0.00662</td>
-      <td>5.52288</td>
-      <td>-0.09790</td>
+      <td>-0.01</td>
+      <td>43.03</td>
+      <td>-0.01</td>
+      <td>0.00</td>
+      <td>39.12</td>
+      <td>0.00</td>
+      <td>-0.01</td>
+      <td>5.52</td>
+      <td>-0.10</td>
     </tr>
   </tbody>
 </table>
@@ -5768,7 +5768,7 @@ We can then plot the monthly returns:
 
 
 ```python
-plot_timeseries(
+plot_time_series(
     df=portfolio_monthly,
     plot_start_date=start_date,
     plot_end_date=end_date,
@@ -5777,7 +5777,7 @@ plot_timeseries(
     x_label="Date",
     x_format="Year",
     x_tick_spacing=2,
-    x_tick_rotation=45,
+    x_tick_rotation=30,
     y_label="Return",
     y_format="Decimal",
     y_format_decimal_places=2,
@@ -5792,7 +5792,7 @@ plot_timeseries(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_87_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_85_0.png)
     
 
 
@@ -5800,7 +5800,7 @@ And cumulative returns:
 
 
 ```python
-plot_timeseries(
+plot_time_series(
     df=portfolio_monthly,
     plot_start_date=start_date,
     plot_end_date=end_date,
@@ -5809,7 +5809,7 @@ plot_timeseries(
     x_label="Date",
     x_format="Year",
     x_tick_spacing=2,
-    x_tick_rotation=45,
+    x_tick_rotation=30,
     y_label="Cumulative Return",
     y_format="Decimal",
     y_format_decimal_places=0,
@@ -5824,7 +5824,7 @@ plot_timeseries(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_89_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_87_0.png)
     
 
 
@@ -5832,7 +5832,7 @@ And drawdowns:
 
 
 ```python
-plot_timeseries(
+plot_time_series(
     df=portfolio_monthly,
     plot_start_date=start_date,
     plot_end_date=end_date,
@@ -5841,8 +5841,8 @@ plot_timeseries(
     x_label="Date",
     x_format="Year",
     x_tick_spacing=2,
-    x_tick_rotation=45,
-    y_label="Drawdown",
+    x_tick_rotation=30,
+    y_label="Drawdown (%)",
     y_format="Decimal",
     y_format_decimal_places=2,
     y_tick_spacing=0.05,
@@ -5856,7 +5856,7 @@ plot_timeseries(
 
 
     
-![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_91_0.png)
+![png](asset-class-performance-fed-policy-cycles_files/asset-class-performance-fed-policy-cycles_89_0.png)
     
 
 
@@ -5931,61 +5931,61 @@ sum_stats
       <th>Peak</th>
       <th>Trough</th>
       <th>Recovery Date</th>
-      <th>Days to Recovery</th>
+      <th>Calendar Days to Recovery</th>
       <th>MAR Ratio</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>Portfolio_Monthly_Return</th>
-      <td>0.11267</td>
-      <td>0.11897</td>
-      <td>0.94701</td>
-      <td>0.11086</td>
-      <td>0.10946</td>
+      <td>0.11</td>
+      <td>0.12</td>
+      <td>0.95</td>
+      <td>0.11</td>
+      <td>0.11</td>
       <td>2020-11-30</td>
-      <td>-0.14458</td>
+      <td>-0.14</td>
       <td>1998-08-31</td>
-      <td>-0.23867</td>
+      <td>-0.24</td>
       <td>2021-12-31</td>
       <td>2022-09-30</td>
       <td>2023-12-31</td>
-      <td>457.00000</td>
-      <td>0.46449</td>
+      <td>457.00</td>
+      <td>0.46</td>
     </tr>
     <tr>
       <th>SPXT_Monthly_Return</th>
-      <td>0.11392</td>
-      <td>0.14735</td>
-      <td>0.77311</td>
-      <td>0.10799</td>
-      <td>0.12819</td>
+      <td>0.11</td>
+      <td>0.15</td>
+      <td>0.77</td>
+      <td>0.11</td>
+      <td>0.13</td>
       <td>2020-04-30</td>
-      <td>-0.16795</td>
+      <td>-0.17</td>
       <td>2008-10-31</td>
-      <td>-0.50949</td>
+      <td>-0.51</td>
       <td>2007-10-31</td>
       <td>2009-02-28</td>
       <td>2012-03-31</td>
-      <td>1127.00000</td>
-      <td>0.21196</td>
+      <td>1127.00</td>
+      <td>0.21</td>
     </tr>
     <tr>
       <th>10Y_Monthly_Return</th>
-      <td>0.05420</td>
-      <td>0.06331</td>
-      <td>0.85606</td>
-      <td>0.05347</td>
-      <td>0.08169</td>
+      <td>0.05</td>
+      <td>0.06</td>
+      <td>0.86</td>
+      <td>0.05</td>
+      <td>0.08</td>
       <td>2008-11-30</td>
-      <td>-0.05558</td>
+      <td>-0.06</td>
       <td>2003-07-31</td>
-      <td>-0.22865</td>
+      <td>-0.23</td>
       <td>2020-07-31</td>
       <td>2023-10-31</td>
       <td>NaT</td>
       <td>NaN</td>
-      <td>0.23386</td>
+      <td>0.23</td>
     </tr>
   </tbody>
 </table>
