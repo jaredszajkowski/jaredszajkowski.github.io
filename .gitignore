@@ -239,7 +239,8 @@ token.json
 # Ignore .insyncdl files used by Insync
 *.insyncdl
 
-public/
+# public/
 .hugo_build.lock
 resources/_gen/
 content/posts/ETF_Trend_Following/
+public/posts/ETF_Trend_Following/
