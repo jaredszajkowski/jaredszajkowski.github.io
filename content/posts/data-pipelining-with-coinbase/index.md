@@ -144,7 +144,7 @@ display(df)
   </thead>
   <tbody>
     <tr>
-      <th>24</th>
+      <th>645</th>
       <td>00-USD</td>
       <td>00</td>
       <td>USD</td>
@@ -165,7 +165,7 @@ display(df)
       <td></td>
     </tr>
     <tr>
-      <th>342</th>
+      <th>292</th>
       <td>1INCH-USD</td>
       <td>1INCH</td>
       <td>USD</td>
@@ -186,7 +186,7 @@ display(df)
       <td></td>
     </tr>
     <tr>
-      <th>534</th>
+      <th>40</th>
       <td>2Z-USD</td>
       <td>2Z</td>
       <td>USD</td>
@@ -207,7 +207,7 @@ display(df)
       <td></td>
     </tr>
     <tr>
-      <th>713</th>
+      <th>308</th>
       <td>A8-USD</td>
       <td>A8</td>
       <td>USD</td>
@@ -228,7 +228,7 @@ display(df)
       <td></td>
     </tr>
     <tr>
-      <th>115</th>
+      <th>695</th>
       <td>AAVE-USD</td>
       <td>AAVE</td>
       <td>USD</td>
@@ -270,7 +270,7 @@ display(df)
       <td>...</td>
     </tr>
     <tr>
-      <th>442</th>
+      <th>15</th>
       <td>ZKC-USD</td>
       <td>ZKC</td>
       <td>USD</td>
@@ -291,7 +291,7 @@ display(df)
       <td></td>
     </tr>
     <tr>
-      <th>352</th>
+      <th>534</th>
       <td>ZKP-USD</td>
       <td>ZKP</td>
       <td>USD</td>
@@ -312,7 +312,7 @@ display(df)
       <td></td>
     </tr>
     <tr>
-      <th>88</th>
+      <th>456</th>
       <td>ZORA-USD</td>
       <td>ZORA</td>
       <td>USD</td>
@@ -333,7 +333,7 @@ display(df)
       <td></td>
     </tr>
     <tr>
-      <th>467</th>
+      <th>322</th>
       <td>ZRO-USD</td>
       <td>ZRO</td>
       <td>USD</td>
@@ -354,7 +354,7 @@ display(df)
       <td></td>
     </tr>
     <tr>
-      <th>610</th>
+      <th>609</th>
       <td>ZRX-USD</td>
       <td>ZRX</td>
       <td>USD</td>
@@ -376,7 +376,7 @@ display(df)
     </tr>
   </tbody>
 </table>
-<p>375 rows × 18 columns</p>
+<p>379 rows × 18 columns</p>
 </div>
 
 

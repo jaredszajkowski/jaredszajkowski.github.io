@@ -79,7 +79,7 @@ for i, path in enumerate(sys.path):
     3: 
     4: /home/jared/python-virtual-envs/general-venv-p313/lib/python3.13/site-packages
     5: /home/jared/python-virtual-envs/general-venv-p313/lib/python3.13/site-packages/setuptools/_vendor
-    6: /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io_congo/src
+    6: /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/src
 
 
 ## Track Index Dependencies
