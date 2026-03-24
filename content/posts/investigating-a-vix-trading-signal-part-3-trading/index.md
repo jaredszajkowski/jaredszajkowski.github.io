@@ -99,6 +99,8 @@ Here are the trades executed to date, with any comments related to execution, ma
 | 2025-10-08 00:00:00 | Sell to Close | VIX 11/19/2025 21.00 C |         10 |    1.83 |          9.31 |  1820.69 |             nan    | nan                                                                                           |
 | 2025-09-11 00:00:00 | Buy to Open   | VIX 12/17/2025 17.00 C |         10 |    3.90 |         10.81 |  3910.81 |             nan    | nan                                                                                           |
 | 2025-10-10 00:00:00 | Sell to Close | VIX 12/17/2025 17.00 C |         10 |    4.60 |         10.81 |  4589.19 |             nan    | nan                                                                                           |
+| 2025-12-19 00:00:00 | Buy to Open   | VIX 02/18/2026 22.00 C |         10 |    1.69 |          9.31 |  1699.31 |             nan    | nan                                                                                           |
+| 2026-01-20 00:00:00 | Sell to Close | VIX 02/18/2026 22.00 C |         10 |    1.74 |          9.31 |  1730.69 |             nan    | nan                                                                                           |
 
 #### Volatility In August 2024
 
@@ -212,10 +214,10 @@ Percent Profit/Loss: -22.69%
 
 #### Complete Trade History (Closed Positions)
 
-Total Opened Position Market Value: $92,748.97</br>
-Total Closed Position Market Value: $92,590.88</br>
-Net Profit/Loss: $-158.09</br>
-Percent Profit/Loss: -0.17%
+Total Opened Position Market Value: $94,448.28</br>
+Total Closed Position Market Value: $94,321.57</br>
+Net Profit/Loss: $-126.71</br>
+Percent Profit/Loss: -0.13%
 
 ## References
 

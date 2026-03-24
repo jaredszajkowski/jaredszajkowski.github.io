@@ -40,8 +40,6 @@ from sklearn.preprocessing import StandardScaler
 warnings.filterwarnings("ignore")
 ```
 
-## Add Directories To Path
-
 
 ```python
 # Add the source subdirectory to the system path to allow import config from settings.py
@@ -77,7 +75,7 @@ for i, path in enumerate(sys.path):
     2: /usr/lib/python3.13/lib-dynload
     3: 
     4: /home/jared/python-virtual-envs/general-venv-p313/lib/python3.13/site-packages
-    5: /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io_congo/src
+    5: /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/src
 
 
 ## Track Index Dependencies
@@ -106,8 +104,8 @@ from df_info_markdown import df_info_markdown
 from export_track_md_deps import export_track_md_deps
 from load_data import load_data
 from pandas_set_decimal_places import pandas_set_decimal_places
-from plot_timeseries import plot_timeseries
 from plot_stats import plot_stats
+from plot_time_series import plot_time_series
 from plot_vix_with_trades import plot_vix_with_trades
 from yf_pull_data import yf_pull_data
 ```
@@ -121,6 +119,7 @@ from yf_pull_data import yf_pull_data
 yf_pull_data(
     base_directory=DATA_DIR,
     ticker="^VIX",
+    adjusted=True,
     source="Yahoo_Finance", 
     asset_class="Indices", 
     excel_export=True,
@@ -128,11 +127,6 @@ yf_pull_data(
     output_confirmation=True,
 )
 ```
-
-    [*********************100%***********************]  1 of 1 completed
-
-    
-
 
     The first and last date of data for ^VIX is: 
 
@@ -221,11 +215,11 @@ yf_pull_data(
   </thead>
   <tbody>
     <tr>
-      <th>2026-02-05</th>
-      <td>21.77</td>
-      <td>23.1</td>
-      <td>19.059999</td>
-      <td>19.24</td>
+      <th>2026-03-20</th>
+      <td>26.780001</td>
+      <td>29.280001</td>
+      <td>23.68</td>
+      <td>24.459999</td>
       <td>0</td>
     </tr>
   </tbody>
@@ -323,48 +317,48 @@ yf_pull_data(
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-01-30</th>
-      <td>17.440001</td>
-      <td>19.270000</td>
-      <td>16.670000</td>
-      <td>18.719999</td>
+      <th>2026-03-16</th>
+      <td>23.510000</td>
+      <td>26.420000</td>
+      <td>23.230000</td>
+      <td>25.879999</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>2026-02-02</th>
-      <td>16.340000</td>
-      <td>19.959999</td>
-      <td>16.080000</td>
-      <td>19.950001</td>
+      <th>2026-03-17</th>
+      <td>22.370001</td>
+      <td>24.580000</td>
+      <td>21.870001</td>
+      <td>24.559999</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>2026-02-03</th>
-      <td>18.000000</td>
-      <td>20.370001</td>
-      <td>16.049999</td>
-      <td>16.160000</td>
+      <th>2026-03-18</th>
+      <td>25.090000</td>
+      <td>25.129999</td>
+      <td>21.469999</td>
+      <td>21.510000</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>2026-02-04</th>
-      <td>18.639999</td>
-      <td>21.240000</td>
-      <td>17.469999</td>
-      <td>17.629999</td>
+      <th>2026-03-19</th>
+      <td>24.059999</td>
+      <td>27.520000</td>
+      <td>23.540001</td>
+      <td>25.600000</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>2026-02-05</th>
-      <td>21.770000</td>
-      <td>23.100000</td>
-      <td>19.059999</td>
-      <td>19.240000</td>
+      <th>2026-03-20</th>
+      <td>26.780001</td>
+      <td>29.280001</td>
+      <td>23.680000</td>
+      <td>24.459999</td>
       <td>0</td>
     </tr>
   </tbody>
 </table>
-<p>9091 rows × 5 columns</p>
+<p>9121 rows × 5 columns</p>
 </div>
 
 
@@ -411,16 +405,16 @@ df_info(vix)
 
     The columns, shape, and data types are:
     <class 'pandas.core.frame.DataFrame'>
-    DatetimeIndex: 9091 entries, 1990-01-02 to 2026-02-05
+    DatetimeIndex: 9121 entries, 1990-01-02 to 2026-03-20
     Data columns (total 4 columns):
      #   Column  Non-Null Count  Dtype  
     ---  ------  --------------  -----  
-     0   Close   9091 non-null   float64
-     1   High    9091 non-null   float64
-     2   Low     9091 non-null   float64
-     3   Open    9091 non-null   float64
+     0   Close   9121 non-null   float64
+     1   High    9121 non-null   float64
+     2   Low     9121 non-null   float64
+     3   Open    9121 non-null   float64
     dtypes: float64(4)
-    memory usage: 355.1 KB
+    memory usage: 356.3 KB
     None
     The first 5 rows are:
 
@@ -535,39 +529,39 @@ df_info(vix)
   </thead>
   <tbody>
     <tr>
-      <th>2026-01-30</th>
-      <td>17.44</td>
-      <td>19.27</td>
-      <td>16.67</td>
-      <td>18.72</td>
+      <th>2026-03-16</th>
+      <td>23.51</td>
+      <td>26.42</td>
+      <td>23.23</td>
+      <td>25.88</td>
     </tr>
     <tr>
-      <th>2026-02-02</th>
-      <td>16.34</td>
-      <td>19.96</td>
-      <td>16.08</td>
-      <td>19.95</td>
+      <th>2026-03-17</th>
+      <td>22.37</td>
+      <td>24.58</td>
+      <td>21.87</td>
+      <td>24.56</td>
     </tr>
     <tr>
-      <th>2026-02-03</th>
-      <td>18.00</td>
-      <td>20.37</td>
-      <td>16.05</td>
-      <td>16.16</td>
+      <th>2026-03-18</th>
+      <td>25.09</td>
+      <td>25.13</td>
+      <td>21.47</td>
+      <td>21.51</td>
     </tr>
     <tr>
-      <th>2026-02-04</th>
-      <td>18.64</td>
-      <td>21.24</td>
-      <td>17.47</td>
-      <td>17.63</td>
+      <th>2026-03-19</th>
+      <td>24.06</td>
+      <td>27.52</td>
+      <td>23.54</td>
+      <td>25.60</td>
     </tr>
     <tr>
-      <th>2026-02-05</th>
-      <td>21.77</td>
-      <td>23.10</td>
-      <td>19.06</td>
-      <td>19.24</td>
+      <th>2026-03-20</th>
+      <td>26.78</td>
+      <td>29.28</td>
+      <td>23.68</td>
+      <td>24.46</td>
     </tr>
   </tbody>
 </table>
@@ -633,24 +627,24 @@ display(vix_stats)
   <tbody>
     <tr>
       <th>count</th>
-      <td>9091.00</td>
-      <td>9091.00</td>
-      <td>9091.00</td>
-      <td>9091.00</td>
+      <td>9121.00</td>
+      <td>9121.00</td>
+      <td>9121.00</td>
+      <td>9121.00</td>
     </tr>
     <tr>
       <th>mean</th>
-      <td>19.45</td>
-      <td>20.36</td>
-      <td>18.77</td>
-      <td>19.54</td>
+      <td>19.46</td>
+      <td>20.37</td>
+      <td>18.78</td>
+      <td>19.55</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>7.78</td>
-      <td>8.33</td>
-      <td>7.33</td>
-      <td>7.85</td>
+      <td>7.77</td>
+      <td>8.32</td>
+      <td>7.32</td>
+      <td>7.84</td>
     </tr>
     <tr>
       <th>min</th>
@@ -661,24 +655,24 @@ display(vix_stats)
     </tr>
     <tr>
       <th>25%</th>
-      <td>13.94</td>
-      <td>14.60</td>
-      <td>13.46</td>
+      <td>13.96</td>
+      <td>14.61</td>
+      <td>13.47</td>
       <td>13.98</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>17.58</td>
-      <td>18.32</td>
-      <td>16.98</td>
-      <td>17.64</td>
+      <td>17.61</td>
+      <td>18.33</td>
+      <td>17.01</td>
+      <td>17.66</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>22.73</td>
-      <td>23.73</td>
-      <td>22.05</td>
-      <td>22.89</td>
+      <td>22.74</td>
+      <td>23.75</td>
+      <td>22.06</td>
+      <td>22.90</td>
     </tr>
     <tr>
       <th>max</th>
@@ -689,52 +683,52 @@ display(vix_stats)
     </tr>
     <tr>
       <th>mean + -1 std</th>
-      <td>11.67</td>
-      <td>12.03</td>
-      <td>11.44</td>
       <td>11.69</td>
+      <td>12.05</td>
+      <td>11.46</td>
+      <td>11.71</td>
     </tr>
     <tr>
       <th>mean + 0 std</th>
-      <td>19.45</td>
-      <td>20.36</td>
-      <td>18.77</td>
-      <td>19.54</td>
+      <td>19.46</td>
+      <td>20.37</td>
+      <td>18.78</td>
+      <td>19.55</td>
     </tr>
     <tr>
       <th>mean + 1 std</th>
       <td>27.22</td>
-      <td>28.69</td>
-      <td>26.11</td>
+      <td>28.70</td>
+      <td>26.10</td>
       <td>27.39</td>
     </tr>
     <tr>
       <th>mean + 2 std</th>
-      <td>35.00</td>
-      <td>37.03</td>
-      <td>33.44</td>
+      <td>34.99</td>
+      <td>37.02</td>
+      <td>33.43</td>
       <td>35.24</td>
     </tr>
     <tr>
       <th>mean + 3 std</th>
-      <td>42.78</td>
-      <td>45.36</td>
-      <td>40.77</td>
-      <td>43.09</td>
+      <td>42.76</td>
+      <td>45.35</td>
+      <td>40.75</td>
+      <td>43.08</td>
     </tr>
     <tr>
       <th>mean + 4 std</th>
-      <td>50.55</td>
-      <td>53.69</td>
-      <td>48.11</td>
-      <td>50.94</td>
+      <td>50.53</td>
+      <td>53.67</td>
+      <td>48.07</td>
+      <td>50.92</td>
     </tr>
     <tr>
       <th>mean + 5 std</th>
-      <td>58.33</td>
-      <td>62.02</td>
-      <td>55.44</td>
-      <td>58.79</td>
+      <td>58.29</td>
+      <td>61.99</td>
+      <td>55.40</td>
+      <td>58.76</td>
     </tr>
   </tbody>
 </table>
@@ -1510,22 +1504,22 @@ display(vix_stats_by_year)
     </tr>
     <tr>
       <th>2026</th>
-      <td>16.64</td>
-      <td>1.61</td>
+      <td>19.83</td>
+      <td>4.15</td>
       <td>14.85</td>
-      <td>19.95</td>
-      <td>17.77</td>
-      <td>2.30</td>
+      <td>35.12</td>
+      <td>21.29</td>
+      <td>4.57</td>
       <td>15.21</td>
-      <td>23.10</td>
-      <td>15.82</td>
-      <td>1.21</td>
+      <td>35.30</td>
+      <td>18.44</td>
+      <td>3.13</td>
       <td>14.43</td>
-      <td>19.06</td>
-      <td>16.49</td>
-      <td>1.73</td>
+      <td>24.76</td>
+      <td>19.57</td>
+      <td>3.85</td>
       <td>14.49</td>
-      <td>21.77</td>
+      <td>29.49</td>
     </tr>
   </tbody>
 </table>
@@ -1637,38 +1631,38 @@ display(vix_stats_by_month)
     <tr>
       <th>2</th>
       <td>19.66</td>
-      <td>7.20</td>
+      <td>7.12</td>
       <td>10.19</td>
       <td>52.50</td>
-      <td>20.51</td>
-      <td>7.63</td>
+      <td>20.52</td>
+      <td>7.55</td>
       <td>10.26</td>
       <td>53.16</td>
-      <td>18.89</td>
-      <td>6.79</td>
+      <td>18.88</td>
+      <td>6.72</td>
       <td>9.70</td>
       <td>48.97</td>
       <td>19.57</td>
-      <td>7.11</td>
+      <td>7.04</td>
       <td>10.02</td>
       <td>52.62</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>20.47</td>
-      <td>9.63</td>
+      <td>20.56</td>
+      <td>9.57</td>
       <td>10.59</td>
       <td>82.69</td>
-      <td>21.39</td>
-      <td>10.49</td>
+      <td>21.50</td>
+      <td>10.43</td>
       <td>11.24</td>
       <td>85.47</td>
-      <td>19.54</td>
-      <td>8.65</td>
+      <td>19.60</td>
+      <td>8.59</td>
       <td>10.53</td>
       <td>70.37</td>
-      <td>20.35</td>
-      <td>9.56</td>
+      <td>20.43</td>
+      <td>9.49</td>
       <td>10.74</td>
       <td>82.69</td>
     </tr>
@@ -1914,57 +1908,57 @@ display(vix_deciles)
       <th>0.20</th>
       <td>13.31</td>
       <td>13.91</td>
-      <td>12.89</td>
+      <td>12.90</td>
       <td>13.35</td>
     </tr>
     <tr>
       <th>0.30</th>
-      <td>14.67</td>
-      <td>15.37</td>
-      <td>14.17</td>
-      <td>14.75</td>
+      <td>14.68</td>
+      <td>15.39</td>
+      <td>14.18</td>
+      <td>14.76</td>
     </tr>
     <tr>
       <th>0.40</th>
-      <td>16.11</td>
-      <td>16.77</td>
-      <td>15.58</td>
-      <td>16.15</td>
+      <td>16.12</td>
+      <td>16.78</td>
+      <td>15.60</td>
+      <td>16.16</td>
     </tr>
     <tr>
       <th>0.50</th>
-      <td>17.58</td>
-      <td>18.32</td>
-      <td>16.98</td>
-      <td>17.64</td>
+      <td>17.61</td>
+      <td>18.33</td>
+      <td>17.01</td>
+      <td>17.66</td>
     </tr>
     <tr>
       <th>0.60</th>
-      <td>19.47</td>
-      <td>20.32</td>
-      <td>18.89</td>
-      <td>19.59</td>
+      <td>19.49</td>
+      <td>20.35</td>
+      <td>18.92</td>
+      <td>19.60</td>
     </tr>
     <tr>
       <th>0.70</th>
-      <td>21.54</td>
-      <td>22.53</td>
-      <td>20.88</td>
-      <td>21.66</td>
+      <td>21.55</td>
+      <td>22.56</td>
+      <td>20.90</td>
+      <td>21.67</td>
     </tr>
     <tr>
       <th>0.80</th>
       <td>24.23</td>
-      <td>25.20</td>
+      <td>25.22</td>
       <td>23.35</td>
-      <td>24.30</td>
+      <td>24.32</td>
     </tr>
     <tr>
       <th>0.90</th>
-      <td>28.61</td>
+      <td>28.60</td>
       <td>29.90</td>
-      <td>27.62</td>
-      <td>28.77</td>
+      <td>27.59</td>
+      <td>28.75</td>
     </tr>
     <tr>
       <th>1.00</th>
@@ -2082,38 +2076,38 @@ display(vix_deciles_by_year)
     <tr>
       <th rowspan="5" valign="top">2026</th>
       <th>0.60</th>
-      <td>16.30</td>
-      <td>17.35</td>
-      <td>15.98</td>
-      <td>16.35</td>
+      <td>19.95</td>
+      <td>21.44</td>
+      <td>18.89</td>
+      <td>20.20</td>
     </tr>
     <tr>
       <th>0.70</th>
-      <td>16.67</td>
-      <td>19.32</td>
-      <td>16.05</td>
-      <td>16.76</td>
+      <td>21.48</td>
+      <td>22.97</td>
+      <td>19.78</td>
+      <td>21.02</td>
     </tr>
     <tr>
       <th>0.80</th>
-      <td>18.07</td>
-      <td>20.12</td>
-      <td>16.40</td>
-      <td>17.12</td>
+      <td>24.39</td>
+      <td>25.48</td>
+      <td>21.63</td>
+      <td>23.53</td>
     </tr>
     <tr>
       <th>0.90</th>
-      <td>19.29</td>
-      <td>20.94</td>
-      <td>17.23</td>
-      <td>18.45</td>
+      <td>24.83</td>
+      <td>27.46</td>
+      <td>23.45</td>
+      <td>25.04</td>
     </tr>
     <tr>
       <th>1.00</th>
-      <td>19.95</td>
-      <td>23.10</td>
-      <td>19.06</td>
-      <td>21.77</td>
+      <td>35.12</td>
+      <td>35.30</td>
+      <td>24.76</td>
+      <td>29.49</td>
     </tr>
   </tbody>
 </table>
@@ -2298,73 +2292,73 @@ display(vix_deciles_current_year)
     </tr>
     <tr>
       <th>0.10</th>
-      <td>15.04</td>
-      <td>15.44</td>
-      <td>14.64</td>
-      <td>14.79</td>
+      <td>15.51</td>
+      <td>15.96</td>
+      <td>14.89</td>
+      <td>15.40</td>
     </tr>
     <tr>
       <th>0.20</th>
-      <td>15.41</td>
-      <td>15.83</td>
-      <td>14.80</td>
-      <td>15.28</td>
+      <td>16.05</td>
+      <td>16.61</td>
+      <td>15.30</td>
+      <td>16.05</td>
     </tr>
     <tr>
       <th>0.30</th>
-      <td>15.68</td>
-      <td>16.28</td>
-      <td>15.14</td>
-      <td>15.62</td>
+      <td>16.64</td>
+      <td>18.09</td>
+      <td>16.05</td>
+      <td>16.71</td>
     </tr>
     <tr>
       <th>0.40</th>
-      <td>16.02</td>
-      <td>16.51</td>
-      <td>15.30</td>
-      <td>15.88</td>
+      <td>17.89</td>
+      <td>19.78</td>
+      <td>16.78</td>
+      <td>17.68</td>
     </tr>
     <tr>
       <th>0.50</th>
-      <td>16.07</td>
-      <td>16.66</td>
-      <td>15.52</td>
-      <td>16.12</td>
+      <td>19.30</td>
+      <td>20.90</td>
+      <td>17.68</td>
+      <td>18.86</td>
     </tr>
     <tr>
       <th>0.60</th>
-      <td>16.30</td>
-      <td>17.35</td>
-      <td>15.98</td>
-      <td>16.35</td>
+      <td>19.95</td>
+      <td>21.44</td>
+      <td>18.89</td>
+      <td>20.20</td>
     </tr>
     <tr>
       <th>0.70</th>
-      <td>16.67</td>
-      <td>19.32</td>
-      <td>16.05</td>
-      <td>16.76</td>
+      <td>21.48</td>
+      <td>22.97</td>
+      <td>19.78</td>
+      <td>21.02</td>
     </tr>
     <tr>
       <th>0.80</th>
-      <td>18.07</td>
-      <td>20.12</td>
-      <td>16.40</td>
-      <td>17.12</td>
+      <td>24.39</td>
+      <td>25.48</td>
+      <td>21.63</td>
+      <td>23.53</td>
     </tr>
     <tr>
       <th>0.90</th>
-      <td>19.29</td>
-      <td>20.94</td>
-      <td>17.23</td>
-      <td>18.45</td>
+      <td>24.83</td>
+      <td>27.46</td>
+      <td>23.45</td>
+      <td>25.04</td>
     </tr>
     <tr>
       <th>1.00</th>
-      <td>19.95</td>
-      <td>23.10</td>
-      <td>19.06</td>
-      <td>21.77</td>
+      <td>35.12</td>
+      <td>35.30</td>
+      <td>24.76</td>
+      <td>29.49</td>
     </tr>
   </tbody>
 </table>
@@ -2654,7 +2648,7 @@ res_lt15_to_gt20
 # Plot histogram for wait times
 import matplotlib.pyplot as plt
 
-plt.figure(figsize=(12, 6))
+plt.figure(figsize=(10, 6))
 plt.hist(res_lt15_to_gt20['wait_trading_days'].dropna(), bins=200, alpha=0.5, label='LT 15 to GT 20')
 plt.xlabel('Days')
 plt.ylabel('Frequency')
@@ -2665,7 +2659,7 @@ plt.show()
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_35_0.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_34_0.png)
     
 
 
@@ -2832,7 +2826,7 @@ cdf_df
 
 ```python
 # Plot CDF
-plt.figure(figsize=(12, 6))
+plt.figure(figsize=(10, 6))
 plt.plot(cdf_df['wait'], cdf_df['cdf'])
 plt.title('CDF of LT 15 to GT 20')
 plt.xlabel('Wait')
@@ -2843,7 +2837,7 @@ plt.show()
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_38_0.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_37_0.png)
     
 
 
@@ -2955,7 +2949,7 @@ display(probs)
   <tbody>
     <tr>
       <th>5</th>
-      <td>0.78</td>
+      <td>0.79</td>
       <td>0.73</td>
       <td>0.66</td>
       <td>0.59</td>
@@ -2967,7 +2961,7 @@ display(probs)
       <td>0.30</td>
       <td>0.26</td>
       <td>0.23</td>
-      <td>0.20</td>
+      <td>0.21</td>
       <td>0.18</td>
       <td>0.16</td>
       <td>0.14</td>
@@ -2981,14 +2975,14 @@ display(probs)
       <td>0.83</td>
       <td>0.78</td>
       <td>0.71</td>
-      <td>0.64</td>
+      <td>0.65</td>
       <td>0.59</td>
       <td>0.54</td>
       <td>0.49</td>
       <td>0.43</td>
       <td>0.40</td>
       <td>0.35</td>
-      <td>0.30</td>
+      <td>0.31</td>
       <td>0.27</td>
       <td>0.25</td>
       <td>0.22</td>
@@ -2996,12 +2990,12 @@ display(probs)
       <td>0.17</td>
       <td>0.15</td>
       <td>0.13</td>
-      <td>0.11</td>
+      <td>0.12</td>
       <td>0.10</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>0.85</td>
+      <td>0.86</td>
       <td>0.81</td>
       <td>0.75</td>
       <td>0.68</td>
@@ -3019,19 +3013,19 @@ display(probs)
       <td>0.20</td>
       <td>0.17</td>
       <td>0.15</td>
-      <td>0.13</td>
+      <td>0.14</td>
       <td>0.12</td>
     </tr>
     <tr>
       <th>20</th>
-      <td>0.87</td>
+      <td>0.88</td>
       <td>0.83</td>
-      <td>0.77</td>
+      <td>0.78</td>
       <td>0.71</td>
       <td>0.65</td>
-      <td>0.60</td>
+      <td>0.61</td>
       <td>0.56</td>
-      <td>0.49</td>
+      <td>0.50</td>
       <td>0.46</td>
       <td>0.41</td>
       <td>0.37</td>
@@ -3041,7 +3035,7 @@ display(probs)
       <td>0.25</td>
       <td>0.22</td>
       <td>0.19</td>
-      <td>0.16</td>
+      <td>0.17</td>
       <td>0.15</td>
       <td>0.14</td>
     </tr>
@@ -3063,16 +3057,16 @@ display(probs)
       <td>0.31</td>
       <td>0.27</td>
       <td>0.24</td>
-      <td>0.21</td>
+      <td>0.22</td>
       <td>0.18</td>
       <td>0.17</td>
-      <td>0.15</td>
+      <td>0.16</td>
     </tr>
     <tr>
       <th>30</th>
       <td>0.91</td>
       <td>0.87</td>
-      <td>0.81</td>
+      <td>0.82</td>
       <td>0.76</td>
       <td>0.70</td>
       <td>0.65</td>
@@ -3081,7 +3075,7 @@ display(probs)
       <td>0.51</td>
       <td>0.45</td>
       <td>0.42</td>
-      <td>0.38</td>
+      <td>0.39</td>
       <td>0.36</td>
       <td>0.33</td>
       <td>0.29</td>
@@ -3099,7 +3093,7 @@ display(probs)
       <td>0.77</td>
       <td>0.72</td>
       <td>0.67</td>
-      <td>0.63</td>
+      <td>0.64</td>
       <td>0.56</td>
       <td>0.53</td>
       <td>0.47</td>
@@ -3122,7 +3116,7 @@ display(probs)
       <td>0.79</td>
       <td>0.74</td>
       <td>0.69</td>
-      <td>0.65</td>
+      <td>0.66</td>
       <td>0.58</td>
       <td>0.55</td>
       <td>0.49</td>
@@ -3141,7 +3135,7 @@ display(probs)
       <th>45</th>
       <td>0.94</td>
       <td>0.91</td>
-      <td>0.85</td>
+      <td>0.86</td>
       <td>0.80</td>
       <td>0.75</td>
       <td>0.71</td>
@@ -3218,7 +3212,7 @@ display(probs)
       <td>0.64</td>
       <td>0.61</td>
       <td>0.54</td>
-      <td>0.51</td>
+      <td>0.52</td>
       <td>0.49</td>
       <td>0.47</td>
       <td>0.43</td>
@@ -3236,7 +3230,7 @@ display(probs)
       <td>0.89</td>
       <td>0.84</td>
       <td>0.81</td>
-      <td>0.76</td>
+      <td>0.77</td>
       <td>0.74</td>
       <td>0.65</td>
       <td>0.62</td>
@@ -3244,7 +3238,7 @@ display(probs)
       <td>0.53</td>
       <td>0.50</td>
       <td>0.48</td>
-      <td>0.44</td>
+      <td>0.45</td>
       <td>0.40</td>
       <td>0.37</td>
       <td>0.34</td>
@@ -3266,7 +3260,7 @@ display(probs)
       <td>0.56</td>
       <td>0.54</td>
       <td>0.51</td>
-      <td>0.49</td>
+      <td>0.50</td>
       <td>0.46</td>
       <td>0.41</td>
       <td>0.38</td>
@@ -3288,7 +3282,7 @@ display(probs)
       <td>0.65</td>
       <td>0.57</td>
       <td>0.55</td>
-      <td>0.52</td>
+      <td>0.53</td>
       <td>0.51</td>
       <td>0.47</td>
       <td>0.42</td>
@@ -3398,16 +3392,16 @@ display(probs)
       <td>0.89</td>
       <td>0.86</td>
       <td>0.83</td>
-      <td>0.81</td>
+      <td>0.82</td>
       <td>0.72</td>
       <td>0.69</td>
       <td>0.62</td>
       <td>0.60</td>
-      <td>0.57</td>
+      <td>0.58</td>
       <td>0.56</td>
       <td>0.52</td>
       <td>0.47</td>
-      <td>0.46</td>
+      <td>0.45</td>
       <td>0.42</td>
       <td>0.38</td>
       <td>0.36</td>
@@ -3511,15 +3505,15 @@ display(cond_probs)
 ```
 
 
-    Close   18.64
-    High    21.24
-    Low     17.47
-    Open    17.63
-    Name: 2026-02-04 00:00:00, dtype: float64
+    Close   24.06
+    High    27.52
+    Low     23.54
+    Open    25.60
+    Name: 2026-03-19 00:00:00, dtype: float64
 
 
 
-    np.float64(21.23999977111816)
+    np.float64(27.52000045776367)
 
 
 
@@ -3565,266 +3559,266 @@ display(cond_probs)
       <td>1.00</td>
       <td>1.00</td>
       <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
       <td>0.99</td>
-      <td>0.96</td>
-      <td>0.91</td>
-      <td>0.78</td>
-      <td>0.51</td>
-      <td>0.32</td>
-      <td>0.21</td>
-      <td>0.14</td>
-      <td>0.09</td>
-      <td>0.06</td>
-      <td>0.04</td>
-      <td>0.03</td>
-      <td>0.02</td>
+      <td>0.98</td>
+      <td>0.94</td>
+      <td>0.84</td>
+      <td>0.75</td>
+      <td>0.60</td>
+      <td>0.46</td>
+      <td>0.41</td>
     </tr>
     <tr>
       <th>10</th>
       <td>1.00</td>
       <td>1.00</td>
       <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
       <td>0.99</td>
-      <td>0.96</td>
-      <td>0.93</td>
-      <td>0.82</td>
-      <td>0.60</td>
-      <td>0.44</td>
-      <td>0.32</td>
-      <td>0.26</td>
-      <td>0.18</td>
-      <td>0.15</td>
-      <td>0.12</td>
-      <td>0.11</td>
-      <td>0.09</td>
+      <td>0.99</td>
+      <td>0.95</td>
+      <td>0.86</td>
+      <td>0.81</td>
+      <td>0.70</td>
+      <td>0.56</td>
+      <td>0.50</td>
     </tr>
     <tr>
       <th>15</th>
       <td>1.00</td>
       <td>1.00</td>
       <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
       <td>0.99</td>
       <td>0.96</td>
-      <td>0.93</td>
-      <td>0.86</td>
-      <td>0.65</td>
-      <td>0.51</td>
-      <td>0.39</td>
-      <td>0.33</td>
-      <td>0.24</td>
-      <td>0.21</td>
-      <td>0.17</td>
-      <td>0.15</td>
-      <td>0.13</td>
+      <td>0.89</td>
+      <td>0.82</td>
+      <td>0.74</td>
+      <td>0.61</td>
+      <td>0.55</td>
     </tr>
     <tr>
       <th>20</th>
       <td>1.00</td>
       <td>1.00</td>
       <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
       <td>0.99</td>
       <td>0.96</td>
-      <td>0.95</td>
-      <td>0.88</td>
-      <td>0.68</td>
+      <td>0.89</td>
+      <td>0.82</td>
+      <td>0.76</td>
+      <td>0.62</td>
       <td>0.56</td>
-      <td>0.44</td>
-      <td>0.38</td>
-      <td>0.29</td>
-      <td>0.25</td>
-      <td>0.22</td>
-      <td>0.19</td>
-      <td>0.16</td>
     </tr>
     <tr>
       <th>25</th>
       <td>1.00</td>
       <td>1.00</td>
       <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
       <td>0.99</td>
-      <td>0.97</td>
-      <td>0.95</td>
-      <td>0.90</td>
-      <td>0.71</td>
-      <td>0.58</td>
-      <td>0.46</td>
-      <td>0.42</td>
-      <td>0.35</td>
-      <td>0.29</td>
-      <td>0.26</td>
-      <td>0.23</td>
-      <td>0.20</td>
+      <td>0.91</td>
+      <td>0.86</td>
+      <td>0.79</td>
+      <td>0.64</td>
+      <td>0.57</td>
     </tr>
     <tr>
       <th>30</th>
       <td>1.00</td>
       <td>1.00</td>
       <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
       <td>0.99</td>
-      <td>0.97</td>
-      <td>0.95</td>
-      <td>0.90</td>
-      <td>0.75</td>
-      <td>0.62</td>
-      <td>0.48</td>
-      <td>0.43</td>
-      <td>0.37</td>
-      <td>0.33</td>
-      <td>0.31</td>
-      <td>0.28</td>
-      <td>0.25</td>
+      <td>0.93</td>
+      <td>0.89</td>
+      <td>0.81</td>
+      <td>0.66</td>
+      <td>0.60</td>
     </tr>
     <tr>
       <th>35</th>
       <td>1.00</td>
       <td>1.00</td>
       <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
       <td>0.99</td>
-      <td>0.97</td>
-      <td>0.95</td>
+      <td>0.94</td>
       <td>0.90</td>
-      <td>0.79</td>
-      <td>0.66</td>
-      <td>0.52</td>
-      <td>0.45</td>
-      <td>0.39</td>
-      <td>0.35</td>
-      <td>0.33</td>
-      <td>0.30</td>
-      <td>0.27</td>
+      <td>0.85</td>
+      <td>0.70</td>
+      <td>0.62</td>
     </tr>
     <tr>
       <th>40</th>
       <td>1.00</td>
       <td>1.00</td>
       <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
       <td>0.99</td>
-      <td>0.97</td>
-      <td>0.95</td>
-      <td>0.91</td>
-      <td>0.81</td>
-      <td>0.68</td>
-      <td>0.54</td>
-      <td>0.46</td>
-      <td>0.40</td>
-      <td>0.36</td>
-      <td>0.34</td>
-      <td>0.30</td>
-      <td>0.28</td>
+      <td>0.94</td>
+      <td>0.90</td>
+      <td>0.86</td>
+      <td>0.76</td>
+      <td>0.65</td>
     </tr>
     <tr>
       <th>45</th>
       <td>1.00</td>
       <td>1.00</td>
       <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
       <td>0.99</td>
-      <td>0.97</td>
-      <td>0.96</td>
-      <td>0.91</td>
-      <td>0.82</td>
-      <td>0.71</td>
-      <td>0.55</td>
-      <td>0.47</td>
-      <td>0.41</td>
-      <td>0.37</td>
-      <td>0.35</td>
-      <td>0.31</td>
-      <td>0.28</td>
+      <td>0.94</td>
+      <td>0.90</td>
+      <td>0.86</td>
+      <td>0.78</td>
+      <td>0.68</td>
     </tr>
     <tr>
       <th>50</th>
       <td>1.00</td>
       <td>1.00</td>
       <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
       <td>0.99</td>
-      <td>0.97</td>
-      <td>0.96</td>
-      <td>0.91</td>
-      <td>0.82</td>
-      <td>0.73</td>
-      <td>0.56</td>
-      <td>0.50</td>
-      <td>0.43</td>
-      <td>0.38</td>
-      <td>0.35</td>
-      <td>0.31</td>
-      <td>0.28</td>
+      <td>0.94</td>
+      <td>0.90</td>
+      <td>0.86</td>
+      <td>0.78</td>
+      <td>0.70</td>
     </tr>
     <tr>
       <th>55</th>
       <td>1.00</td>
       <td>1.00</td>
       <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
       <td>0.99</td>
-      <td>0.97</td>
-      <td>0.96</td>
-      <td>0.92</td>
-      <td>0.82</td>
-      <td>0.74</td>
-      <td>0.57</td>
-      <td>0.53</td>
-      <td>0.48</td>
-      <td>0.44</td>
-      <td>0.39</td>
-      <td>0.34</td>
-      <td>0.31</td>
+      <td>0.94</td>
+      <td>0.91</td>
+      <td>0.88</td>
+      <td>0.78</td>
+      <td>0.70</td>
     </tr>
     <tr>
       <th>60</th>
       <td>1.00</td>
       <td>1.00</td>
       <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
       <td>0.99</td>
-      <td>0.97</td>
-      <td>0.96</td>
-      <td>0.92</td>
-      <td>0.85</td>
-      <td>0.77</td>
-      <td>0.58</td>
-      <td>0.54</td>
-      <td>0.49</td>
-      <td>0.46</td>
-      <td>0.40</td>
-      <td>0.36</td>
-      <td>0.33</td>
+      <td>0.94</td>
+      <td>0.91</td>
+      <td>0.88</td>
+      <td>0.78</td>
+      <td>0.70</td>
     </tr>
     <tr>
       <th>65</th>
       <td>1.00</td>
       <td>1.00</td>
       <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
       <td>0.99</td>
-      <td>0.98</td>
-      <td>0.97</td>
-      <td>0.93</td>
-      <td>0.85</td>
-      <td>0.77</td>
-      <td>0.59</td>
-      <td>0.55</td>
-      <td>0.51</td>
-      <td>0.48</td>
-      <td>0.41</td>
-      <td>0.37</td>
-      <td>0.34</td>
+      <td>0.94</td>
+      <td>0.91</td>
+      <td>0.88</td>
+      <td>0.79</td>
+      <td>0.70</td>
     </tr>
     <tr>
       <th>70</th>
       <td>1.00</td>
       <td>1.00</td>
       <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
       <td>0.99</td>
-      <td>0.98</td>
-      <td>0.97</td>
+      <td>0.94</td>
       <td>0.93</td>
-      <td>0.85</td>
-      <td>0.79</td>
-      <td>0.62</td>
-      <td>0.57</td>
-      <td>0.54</td>
-      <td>0.50</td>
-      <td>0.42</td>
-      <td>0.38</td>
-      <td>0.35</td>
+      <td>0.89</td>
+      <td>0.80</td>
+      <td>0.71</td>
     </tr>
   </tbody>
 </table>
@@ -3838,11 +3832,11 @@ display(cond_probs)
 
 ```python
 # Plotting
-plt.figure(figsize=(12, 6), facecolor="#F5F5F5")
+plt.figure(figsize=(10, 6))
 
 # Histogram
-plt.hist([vix['High']], label=['High'], bins=200, edgecolor='black', color='steelblue', alpha=1)
-plt.hist([vix['Low']], label=['Low'], bins=200, edgecolor='black', color='lightblue', alpha=0.5)
+plt.hist([vix['High']], label=['High'], bins=200, edgecolor='black', color='steelblue', alpha=0.7)
+plt.hist([vix['Low']], label=['Low'], bins=200, edgecolor='black', color='lightblue', alpha=0.7)
 
 # Plot a vertical line at the mean, mean + 1 std, and mean + 2 std
 plt.axvline(vix_stats.loc['mean + -1 std']['High'], color='brown', linestyle='dashed', linewidth=1, label=f'High Mean - 1 std: {vix_stats.loc['mean + -1 std']['High']:.2f}')
@@ -3866,20 +3860,20 @@ plt.axvline(vix_stats.loc['mean + 4 std']['Low'], color='yellow', linestyle='sol
 # Set X axis
 x_tick_spacing = 5  # Specify the interval for y-axis ticks
 plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
-plt.xlabel("VIX", fontsize=10)
-plt.xticks(rotation=0, fontsize=8)
+plt.xlabel("VIX")
+plt.xticks(rotation=30)
 
 # Set Y axis
 y_tick_spacing = 25  # Specify the interval for y-axis ticks
 plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
-plt.ylabel("# Of Datapoints", fontsize=10)
-plt.yticks(fontsize=8)
+plt.ylabel("# Of Datapoints")
+plt.yticks()
 
 # Set title, layout, grid, and legend
 plt.title("CBOE Volatility Index (VIX) Histogram (200 Bins)", fontsize=12)
 plt.tight_layout()
 plt.grid(True, linestyle='--', alpha=0.7)
-plt.legend(fontsize=9)
+plt.legend()
 
 # Save figure and display plot
 plt.savefig("01_Histogram+Mean+SD.png", dpi=300, bbox_inches="tight")
@@ -3888,7 +3882,7 @@ plt.show()
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_45_0.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_44_0.png)
     
 
 
@@ -3896,22 +3890,55 @@ plt.show()
 
 
 ```python
-plot_timeseries(
-    price_df=vix,
+plot_time_series(
+    df=vix,
     plot_start_date=None,
     plot_end_date="2009-12-31",
     plot_columns=["High", "Low"],
     title="CBOE Volatility Index (VIX), 1990 - 2009",
     x_label="Date",
     x_format="Year",
+    x_tick_spacing=1,
+    x_tick_rotation=30,
     y_label="VIX",
     y_format="Decimal",
     y_format_decimal_places=0,
     y_tick_spacing=5,
+    y_tick_rotation=0,
     grid=True,
     legend=True,
     export_plot=True,
     plot_file_name="01_VIX_Plot_1990-2009",
+)
+```
+
+
+    
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_46_0.png)
+    
+
+
+
+```python
+plot_time_series(
+    df=vix,
+    plot_start_date="2010-01-01",
+    plot_end_date=None,
+    plot_columns=["High", "Low"],
+    title="CBOE Volatility Index (VIX), 2010 - Present",
+    x_label="Date",
+    x_format="Year",
+    x_tick_spacing=1,
+    x_tick_rotation=30,
+    y_label="VIX",
+    y_format="Decimal",
+    y_format_decimal_places=0,
+    y_tick_spacing=5,
+    y_tick_rotation=0,
+    grid=True,
+    legend=True,
+    export_plot=True,
+    plot_file_name="01_VIX_Plot_2010-Present",
 )
 ```
 
@@ -3923,22 +3950,25 @@ plot_timeseries(
 
 
 ```python
-plot_timeseries(
-    price_df=vix,
-    plot_start_date="2010-01-01",
+plot_time_series(
+    df=vix,
+    plot_start_date="2024-01-01",
     plot_end_date=None,
     plot_columns=["High", "Low"],
-    title="CBOE Volatility Index (VIX), 2010 - Present",
+    title="CBOE Volatility Index (VIX), 2024 - Present",
     x_label="Date",
     x_format="Year",
+    x_tick_spacing=1,
+    x_tick_rotation=30,
     y_label="VIX",
     y_format="Decimal",
     y_format_decimal_places=0,
     y_tick_spacing=5,
+    y_tick_rotation=0,
     grid=True,
     legend=True,
     export_plot=True,
-    plot_file_name="01_VIX_Plot_2010-Present",
+    plot_file_name="01_VIX_Plot_2024-Present",
 )
 ```
 
@@ -3950,45 +3980,21 @@ plot_timeseries(
 
 
 ```python
-plot_timeseries(
-    price_df=vix,
-    plot_start_date="2024-01-01",
-    plot_end_date=None,
-    plot_columns=["High", "Low"],
-    title="CBOE Volatility Index (VIX), 2024 - Present",
-    x_label="Date",
-    x_format="Year",
-    y_label="VIX",
-    y_format="Decimal",
-    y_format_decimal_places=0,
-    y_tick_spacing=5,
-    grid=True,
-    legend=True,
-    export_plot=True,
-    plot_file_name="01_VIX_Plot_2024-Present",
-)
-```
-
-
-    
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_49_0.png)
-    
-
-
-
-```python
-plot_timeseries(
-    price_df=vix,
+plot_time_series(
+    df=vix,
     plot_start_date="2025-01-01",
     plot_end_date=None,
     plot_columns=["High", "Low"],
     title="CBOE Volatility Index (VIX), 2025 - Present",
     x_label="Date",
     x_format="Year",
+    x_tick_spacing=1,
+    x_tick_rotation=30,
     y_label="VIX",
     y_format="Decimal",
     y_format_decimal_places=0,
     y_tick_spacing=5,
+    y_tick_rotation=0,
     grid=True,
     legend=True,
     export_plot=True,
@@ -3998,7 +4004,7 @@ plot_timeseries(
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_50_0.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_49_0.png)
     
 
 
@@ -4011,10 +4017,10 @@ plot_stats(
     plot_columns=["Open_mean", "High_mean", "Low_mean", "Close_mean"],
     title="VIX Mean OHLC By Year",
     x_label="Year",
-    x_rotation=45,
-    x_tick_spacing=1,
+    x_rotation=30,
+    x_tick_spacing=2,
     y_label="Price",
-    y_tick_spacing=1,
+    y_tick_spacing=2,
     grid=True,
     legend=True,
     export_plot=True,
@@ -4024,7 +4030,7 @@ plot_stats(
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_52_0.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_51_0.png)
     
 
 
@@ -4050,7 +4056,7 @@ plot_stats(
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_54_0.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_53_0.png)
     
 
 
@@ -4063,6 +4069,7 @@ plot_stats(
 yf_pull_data(
     base_directory=DATA_DIR,
     ticker="^VVIX",
+    adjusted=True,
     source="Yahoo_Finance", 
     asset_class="Indices", 
     excel_export=True,
@@ -4070,11 +4077,6 @@ yf_pull_data(
     output_confirmation=True,
 )
 ```
-
-    [*********************100%***********************]  1 of 1 completed
-
-    
-
 
     The first and last date of data for ^VVIX is: 
 
@@ -4163,11 +4165,11 @@ yf_pull_data(
   </thead>
   <tbody>
     <tr>
-      <th>2026-02-05</th>
-      <td>117.07</td>
-      <td>119.60</td>
-      <td>109.02</td>
-      <td>113.97</td>
+      <th>2026-03-20</th>
+      <td>126.28</td>
+      <td>131.93</td>
+      <td>118.88</td>
+      <td>119.02</td>
       <td>0</td>
     </tr>
   </tbody>
@@ -4265,48 +4267,48 @@ yf_pull_data(
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-01-30</th>
-      <td>108.18</td>
-      <td>109.75</td>
-      <td>101.46</td>
-      <td>103.19</td>
+      <th>2026-03-16</th>
+      <td>116.78</td>
+      <td>125.80</td>
+      <td>116.71</td>
+      <td>125.42</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>2026-02-02</th>
-      <td>98.77</td>
-      <td>108.49</td>
-      <td>98.62</td>
-      <td>108.23</td>
+      <th>2026-03-17</th>
+      <td>110.55</td>
+      <td>115.03</td>
+      <td>108.33</td>
+      <td>115.03</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>2026-02-03</th>
-      <td>103.82</td>
-      <td>113.72</td>
-      <td>98.82</td>
-      <td>99.05</td>
+      <th>2026-03-18</th>
+      <td>126.50</td>
+      <td>126.55</td>
+      <td>113.96</td>
+      <td>114.82</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>2026-02-04</th>
-      <td>106.16</td>
-      <td>113.85</td>
-      <td>101.51</td>
-      <td>103.02</td>
+      <th>2026-03-19</th>
+      <td>118.09</td>
+      <td>134.26</td>
+      <td>116.63</td>
+      <td>134.00</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>2026-02-05</th>
-      <td>117.07</td>
-      <td>119.60</td>
-      <td>109.02</td>
-      <td>113.97</td>
+      <th>2026-03-20</th>
+      <td>126.28</td>
+      <td>131.93</td>
+      <td>118.88</td>
+      <td>119.02</td>
       <td>0</td>
     </tr>
   </tbody>
 </table>
-<p>4795 rows × 5 columns</p>
+<p>4825 rows × 5 columns</p>
 </div>
 
 
@@ -4353,16 +4355,16 @@ df_info(vvix)
 
     The columns, shape, and data types are:
     <class 'pandas.core.frame.DataFrame'>
-    DatetimeIndex: 4795 entries, 2007-01-03 to 2026-02-05
+    DatetimeIndex: 4825 entries, 2007-01-03 to 2026-03-20
     Data columns (total 4 columns):
      #   Column  Non-Null Count  Dtype  
     ---  ------  --------------  -----  
-     0   Close   4795 non-null   float64
-     1   High    4795 non-null   float64
-     2   Low     4795 non-null   float64
-     3   Open    4795 non-null   float64
+     0   Close   4825 non-null   float64
+     1   High    4825 non-null   float64
+     2   Low     4825 non-null   float64
+     3   Open    4825 non-null   float64
     dtypes: float64(4)
-    memory usage: 187.3 KB
+    memory usage: 188.5 KB
     None
     The first 5 rows are:
 
@@ -4477,39 +4479,39 @@ df_info(vvix)
   </thead>
   <tbody>
     <tr>
-      <th>2026-01-30</th>
-      <td>108.18</td>
-      <td>109.75</td>
-      <td>101.46</td>
-      <td>103.19</td>
+      <th>2026-03-16</th>
+      <td>116.78</td>
+      <td>125.80</td>
+      <td>116.71</td>
+      <td>125.42</td>
     </tr>
     <tr>
-      <th>2026-02-02</th>
-      <td>98.77</td>
-      <td>108.49</td>
-      <td>98.62</td>
-      <td>108.23</td>
+      <th>2026-03-17</th>
+      <td>110.55</td>
+      <td>115.03</td>
+      <td>108.33</td>
+      <td>115.03</td>
     </tr>
     <tr>
-      <th>2026-02-03</th>
-      <td>103.82</td>
-      <td>113.72</td>
-      <td>98.82</td>
-      <td>99.05</td>
+      <th>2026-03-18</th>
+      <td>126.50</td>
+      <td>126.55</td>
+      <td>113.96</td>
+      <td>114.82</td>
     </tr>
     <tr>
-      <th>2026-02-04</th>
-      <td>106.16</td>
-      <td>113.85</td>
-      <td>101.51</td>
-      <td>103.02</td>
+      <th>2026-03-19</th>
+      <td>118.09</td>
+      <td>134.26</td>
+      <td>116.63</td>
+      <td>134.00</td>
     </tr>
     <tr>
-      <th>2026-02-05</th>
-      <td>117.07</td>
-      <td>119.60</td>
-      <td>109.02</td>
-      <td>113.97</td>
+      <th>2026-03-20</th>
+      <td>126.28</td>
+      <td>131.93</td>
+      <td>118.88</td>
+      <td>119.02</td>
     </tr>
   </tbody>
 </table>
@@ -4574,24 +4576,24 @@ display(vvix_stats)
   <tbody>
     <tr>
       <th>count</th>
-      <td>4795.00</td>
-      <td>4795.00</td>
-      <td>4795.00</td>
-      <td>4795.00</td>
+      <td>4825.00</td>
+      <td>4825.00</td>
+      <td>4825.00</td>
+      <td>4825.00</td>
     </tr>
     <tr>
       <th>mean</th>
-      <td>93.68</td>
-      <td>95.78</td>
-      <td>92.09</td>
-      <td>93.93</td>
+      <td>93.81</td>
+      <td>95.93</td>
+      <td>92.20</td>
+      <td>94.07</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>16.25</td>
-      <td>17.88</td>
-      <td>14.90</td>
       <td>16.31</td>
+      <td>17.95</td>
+      <td>14.94</td>
+      <td>16.36</td>
     </tr>
     <tr>
       <th>min</th>
@@ -4602,24 +4604,24 @@ display(vvix_stats)
     </tr>
     <tr>
       <th>25%</th>
-      <td>82.60</td>
-      <td>83.82</td>
-      <td>81.69</td>
-      <td>82.87</td>
+      <td>82.65</td>
+      <td>83.88</td>
+      <td>81.72</td>
+      <td>82.90</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>90.91</td>
-      <td>92.73</td>
-      <td>89.74</td>
-      <td>91.31</td>
+      <td>91.07</td>
+      <td>92.84</td>
+      <td>89.88</td>
+      <td>91.42</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>102.19</td>
-      <td>105.15</td>
-      <td>99.87</td>
-      <td>102.60</td>
+      <td>102.49</td>
+      <td>105.46</td>
+      <td>100.26</td>
+      <td>102.86</td>
     </tr>
     <tr>
       <th>max</th>
@@ -4630,52 +4632,52 @@ display(vvix_stats)
     </tr>
     <tr>
       <th>mean + -1 std</th>
-      <td>77.42</td>
-      <td>77.90</td>
-      <td>77.18</td>
-      <td>77.62</td>
+      <td>77.50</td>
+      <td>77.99</td>
+      <td>77.26</td>
+      <td>77.70</td>
     </tr>
     <tr>
       <th>mean + 0 std</th>
-      <td>93.68</td>
-      <td>95.78</td>
-      <td>92.09</td>
-      <td>93.93</td>
+      <td>93.81</td>
+      <td>95.93</td>
+      <td>92.20</td>
+      <td>94.07</td>
     </tr>
     <tr>
       <th>mean + 1 std</th>
-      <td>109.93</td>
-      <td>113.67</td>
-      <td>106.99</td>
-      <td>110.24</td>
+      <td>110.11</td>
+      <td>113.88</td>
+      <td>107.14</td>
+      <td>110.43</td>
     </tr>
     <tr>
       <th>mean + 2 std</th>
-      <td>126.19</td>
-      <td>131.55</td>
-      <td>121.90</td>
-      <td>126.54</td>
+      <td>126.42</td>
+      <td>131.83</td>
+      <td>122.08</td>
+      <td>126.79</td>
     </tr>
     <tr>
       <th>mean + 3 std</th>
-      <td>142.44</td>
-      <td>149.44</td>
-      <td>136.80</td>
-      <td>142.85</td>
+      <td>142.72</td>
+      <td>149.77</td>
+      <td>137.01</td>
+      <td>143.16</td>
     </tr>
     <tr>
       <th>mean + 4 std</th>
-      <td>158.70</td>
-      <td>167.32</td>
-      <td>151.71</td>
-      <td>159.16</td>
+      <td>159.03</td>
+      <td>167.72</td>
+      <td>151.95</td>
+      <td>159.52</td>
     </tr>
     <tr>
       <th>mean + 5 std</th>
-      <td>174.95</td>
-      <td>185.20</td>
-      <td>166.61</td>
-      <td>175.46</td>
+      <td>175.33</td>
+      <td>185.66</td>
+      <td>166.89</td>
+      <td>175.89</td>
     </tr>
   </tbody>
 </table>
@@ -5128,22 +5130,22 @@ display(vvix_stats_by_year)
     </tr>
     <tr>
       <th>2026</th>
-      <td>100.27</td>
-      <td>7.83</td>
+      <td>108.88</td>
+      <td>11.83</td>
       <td>89.81</td>
-      <td>118.27</td>
-      <td>103.90</td>
-      <td>9.11</td>
+      <td>137.07</td>
+      <td>112.72</td>
+      <td>12.64</td>
       <td>90.43</td>
-      <td>120.21</td>
-      <td>97.23</td>
-      <td>6.19</td>
+      <td>140.99</td>
+      <td>104.40</td>
+      <td>9.52</td>
       <td>86.70</td>
-      <td>110.28</td>
-      <td>99.85</td>
-      <td>7.88</td>
+      <td>125.01</td>
+      <td>107.94</td>
+      <td>11.70</td>
       <td>88.19</td>
-      <td>117.07</td>
+      <td>140.44</td>
     </tr>
   </tbody>
 </table>
@@ -5254,39 +5256,39 @@ display(vvix_stats_by_month)
     </tr>
     <tr>
       <th>2</th>
-      <td>93.63</td>
-      <td>18.20</td>
+      <td>94.21</td>
+      <td>18.11</td>
       <td>65.47</td>
       <td>176.72</td>
-      <td>95.59</td>
-      <td>20.68</td>
+      <td>96.22</td>
+      <td>20.53</td>
       <td>65.47</td>
       <td>203.73</td>
-      <td>91.51</td>
-      <td>16.38</td>
+      <td>92.02</td>
+      <td>16.28</td>
       <td>65.47</td>
       <td>165.35</td>
-      <td>93.27</td>
-      <td>18.55</td>
+      <td>93.82</td>
+      <td>18.41</td>
       <td>65.47</td>
       <td>180.61</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>95.30</td>
-      <td>21.66</td>
+      <td>96.27</td>
+      <td>21.92</td>
       <td>66.97</td>
       <td>203.03</td>
-      <td>97.38</td>
-      <td>23.56</td>
+      <td>98.45</td>
+      <td>23.86</td>
       <td>66.97</td>
       <td>209.76</td>
-      <td>92.94</td>
-      <td>19.51</td>
+      <td>93.74</td>
+      <td>19.65</td>
       <td>66.97</td>
       <td>187.27</td>
-      <td>94.89</td>
-      <td>21.59</td>
+      <td>95.82</td>
+      <td>21.82</td>
       <td>66.97</td>
       <td>207.59</td>
     </tr>
@@ -5523,66 +5525,66 @@ display(vvix_deciles)
     </tr>
     <tr>
       <th>0.10</th>
-      <td>76.07</td>
-      <td>76.41</td>
-      <td>75.59</td>
-      <td>76.14</td>
+      <td>76.15</td>
+      <td>76.43</td>
+      <td>75.61</td>
+      <td>76.17</td>
     </tr>
     <tr>
       <th>0.20</th>
-      <td>80.83</td>
-      <td>81.68</td>
-      <td>80.05</td>
-      <td>80.99</td>
+      <td>80.88</td>
+      <td>81.72</td>
+      <td>80.10</td>
+      <td>81.04</td>
     </tr>
     <tr>
       <th>0.30</th>
-      <td>84.20</td>
-      <td>85.60</td>
-      <td>83.33</td>
-      <td>84.52</td>
+      <td>84.30</td>
+      <td>85.64</td>
+      <td>83.39</td>
+      <td>84.58</td>
     </tr>
     <tr>
       <th>0.40</th>
-      <td>87.56</td>
-      <td>89.00</td>
-      <td>86.40</td>
-      <td>87.84</td>
+      <td>87.62</td>
+      <td>89.08</td>
+      <td>86.49</td>
+      <td>87.91</td>
     </tr>
     <tr>
       <th>0.50</th>
-      <td>90.91</td>
-      <td>92.73</td>
-      <td>89.74</td>
-      <td>91.31</td>
+      <td>91.07</td>
+      <td>92.84</td>
+      <td>89.88</td>
+      <td>91.42</td>
     </tr>
     <tr>
       <th>0.60</th>
-      <td>94.53</td>
-      <td>96.71</td>
-      <td>93.30</td>
-      <td>94.84</td>
+      <td>94.75</td>
+      <td>97.00</td>
+      <td>93.45</td>
+      <td>94.97</td>
     </tr>
     <tr>
       <th>0.70</th>
-      <td>99.22</td>
-      <td>101.79</td>
-      <td>97.51</td>
-      <td>99.53</td>
+      <td>99.48</td>
+      <td>102.01</td>
+      <td>97.75</td>
+      <td>99.68</td>
     </tr>
     <tr>
       <th>0.80</th>
-      <td>105.85</td>
-      <td>109.40</td>
-      <td>103.63</td>
-      <td>106.43</td>
+      <td>106.12</td>
+      <td>109.73</td>
+      <td>103.96</td>
+      <td>106.58</td>
     </tr>
     <tr>
       <th>0.90</th>
-      <td>115.10</td>
-      <td>118.68</td>
-      <td>112.29</td>
-      <td>115.27</td>
+      <td>115.47</td>
+      <td>118.88</td>
+      <td>112.39</td>
+      <td>115.57</td>
     </tr>
     <tr>
       <th>1.00</th>
@@ -5617,11 +5619,11 @@ export_track_md_deps(
 
 ```python
 # Plotting
-plt.figure(figsize=(12, 6), facecolor="#F5F5F5")
+plt.figure(figsize=(10, 6))
 
 # Histogram
-plt.hist([vvix['High']], label=['High'], bins=200, edgecolor='black', color='steelblue', alpha=1)
-plt.hist([vvix['Low']], label=['Low'], bins=200, edgecolor='black', color='lightblue', alpha=0.5)
+plt.hist([vvix['High']], label=['High'], bins=200, edgecolor='black', color='steelblue', alpha=0.7)
+plt.hist([vvix['Low']], label=['Low'], bins=200, edgecolor='black', color='lightblue', alpha=0.7)
 
 # Plot a vertical line at the mean, mean + 1 std, and mean + 2 std
 plt.axvline(vvix_stats.loc['mean + -1 std']['High'], color='brown', linestyle='dashed', linewidth=1, label=f'High Mean - 1 std: {vvix_stats.loc['mean + -1 std']['High']:.2f}')
@@ -5643,22 +5645,22 @@ plt.axvline(vvix_stats.loc['mean + 4 std']['High'], color='yellow', linestyle='d
 plt.axvline(vvix_stats.loc['mean + 4 std']['Low'], color='yellow', linestyle='solid', linewidth=1, label=f'Low Mean + 4 std: {vvix_stats.loc['mean + 4 std']['Low']:.2f}')
 
 # Set X axis
-x_tick_spacing = 5  # Specify the interval for x-axis ticks
+x_tick_spacing = 10  # Specify the interval for x-axis ticks
 plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
-plt.xlabel("VVIX", fontsize=10)
-plt.xticks(rotation=0, fontsize=8)
+plt.xlabel("VVIX")
+plt.xticks(rotation=30)
 
 # Set Y axis
-y_tick_spacing = 25  # Specify the interval for y-axis ticks
+y_tick_spacing = 15  # Specify the interval for y-axis ticks
 plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
-plt.ylabel("# Of Datapoints", fontsize=10)
-plt.yticks(fontsize=8)
+plt.ylabel("# Of Datapoints")
+plt.yticks()
 
 # Set title, layout, grid, and legend
-plt.title("CBOE VVIX Histogram (200 Bins)", fontsize=12)
+plt.title("CBOE VVIX Histogram (200 Bins)")
 plt.tight_layout()
 plt.grid(True, linestyle='--', alpha=0.7)
-plt.legend(fontsize=9)
+plt.legend()
 
 # Save figure and display plot
 plt.savefig("02_Histogram+Mean+SD.png", dpi=300, bbox_inches="tight")
@@ -5667,7 +5669,7 @@ plt.show()
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_75_0.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_74_0.png)
     
 
 
@@ -5675,22 +5677,55 @@ plt.show()
 
 
 ```python
-plot_timeseries(
-    price_df=vvix,
+plot_time_series(
+    df=vvix,
     plot_start_date=None,
     plot_end_date="2016-12-31",
     plot_columns=["High", "Low"],
     title="CBOE VVIX, 2007 - 2016",
     x_label="Date",
     x_format="Year",
+    x_tick_spacing=1,
+    x_tick_rotation=30,
     y_label="VIX",
     y_format="Decimal",
     y_format_decimal_places=0,
     y_tick_spacing=15,
+    y_tick_rotation=0,
     grid=True,
     legend=True,
     export_plot=True,
     plot_file_name="02_VVIX_Plot_2007-2016",
+)
+```
+
+
+    
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_76_0.png)
+    
+
+
+
+```python
+plot_time_series(
+    df=vvix,
+    plot_start_date="2017-01-01",
+    plot_end_date=None,
+    plot_columns=["High", "Low"],
+    title="CBOE VVIX, 2017 - Present",
+    x_label="Date",
+    x_format="Year",
+    x_tick_spacing=1,
+    x_tick_rotation=30,
+    y_label="VIX",
+    y_format="Decimal",
+    y_format_decimal_places=0,
+    y_tick_spacing=15,
+    y_tick_rotation=0,
+    grid=True,
+    legend=True,
+    export_plot=True,
+    plot_file_name="02_VVIX_Plot_2017-Present",
 )
 ```
 
@@ -5702,22 +5737,25 @@ plot_timeseries(
 
 
 ```python
-plot_timeseries(
-    price_df=vvix,
-    plot_start_date="2017-01-01",
+plot_time_series(
+    df=vvix,
+    plot_start_date="2024-01-01",
     plot_end_date=None,
     plot_columns=["High", "Low"],
-    title="CBOE VVIX, 2017 - Present",
+    title="CBOE VVIX, 2024 - Present",
     x_label="Date",
-    x_format="Year",
+    x_format="Month",
+    x_tick_spacing=1,
+    x_tick_rotation=30,
     y_label="VIX",
     y_format="Decimal",
     y_format_decimal_places=0,
     y_tick_spacing=15,
+    y_tick_rotation=0,
     grid=True,
     legend=True,
     export_plot=True,
-    plot_file_name="02_VVIX_Plot_2017-Present",
+    plot_file_name="02_VVIX_Plot_2024-Present",
 )
 ```
 
@@ -5729,45 +5767,21 @@ plot_timeseries(
 
 
 ```python
-plot_timeseries(
-    price_df=vvix,
-    plot_start_date="2024-01-01",
-    plot_end_date=None,
-    plot_columns=["High", "Low"],
-    title="CBOE VVIX, 2024 - Present",
-    x_label="Date",
-    x_format="Month",
-    y_label="VIX",
-    y_format="Decimal",
-    y_format_decimal_places=0,
-    y_tick_spacing=15,
-    grid=True,
-    legend=True,
-    export_plot=True,
-    plot_file_name="02_VVIX_Plot_2024-Present",
-)
-```
-
-
-    
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_79_0.png)
-    
-
-
-
-```python
-plot_timeseries(
-    price_df=vvix,
+plot_time_series(
+    df=vvix,
     plot_start_date="2025-01-01",
     plot_end_date=None,
     plot_columns=["High", "Low"],
     title="CBOE VVIX, 2025 - Present",
     x_label="Date",
     x_format="Month",
+    x_tick_spacing=1,
+    x_tick_rotation=30,
     y_label="VIX",
     y_format="Decimal",
     y_format_decimal_places=0,
     y_tick_spacing=15,
+    y_tick_rotation=0,
     grid=True,
     legend=True,
     export_plot=True,
@@ -5777,7 +5791,7 @@ plot_timeseries(
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_80_0.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_79_0.png)
     
 
 
@@ -5803,7 +5817,7 @@ plot_stats(
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_82_0.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_81_0.png)
     
 
 
@@ -5829,7 +5843,7 @@ plot_stats(
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_84_0.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_83_0.png)
     
 
 
@@ -5859,16 +5873,16 @@ df_info(vix_over_vvix)
 
     The columns, shape, and data types are:
     <class 'pandas.core.frame.DataFrame'>
-    DatetimeIndex: 4795 entries, 2007-01-03 to 2026-02-05
+    DatetimeIndex: 4825 entries, 2007-01-03 to 2026-03-20
     Data columns (total 4 columns):
      #   Column                   Non-Null Count  Dtype  
     ---  ------                   --------------  -----  
-     0   Close_VIX_to_VVIX_Ratio  4795 non-null   float64
-     1   High_VIX_to_VVIX_Ratio   4795 non-null   float64
-     2   Low_VIX_to_VVIX_Ratio    4795 non-null   float64
-     3   Open_VIX_to_VVIX_Ratio   4795 non-null   float64
+     0   Close_VIX_to_VVIX_Ratio  4825 non-null   float64
+     1   High_VIX_to_VVIX_Ratio   4825 non-null   float64
+     2   Low_VIX_to_VVIX_Ratio    4825 non-null   float64
+     3   Open_VIX_to_VVIX_Ratio   4825 non-null   float64
     dtypes: float64(4)
-    memory usage: 187.3 KB
+    memory usage: 188.5 KB
     None
     The first 5 rows are:
 
@@ -5983,39 +5997,39 @@ df_info(vix_over_vvix)
   </thead>
   <tbody>
     <tr>
-      <th>2026-01-30</th>
-      <td>0.16</td>
-      <td>0.18</td>
-      <td>0.16</td>
-      <td>0.18</td>
+      <th>2026-03-16</th>
+      <td>0.20</td>
+      <td>0.21</td>
+      <td>0.20</td>
+      <td>0.21</td>
     </tr>
     <tr>
-      <th>2026-02-02</th>
-      <td>0.17</td>
-      <td>0.18</td>
-      <td>0.16</td>
-      <td>0.18</td>
+      <th>2026-03-17</th>
+      <td>0.20</td>
+      <td>0.21</td>
+      <td>0.20</td>
+      <td>0.21</td>
     </tr>
     <tr>
-      <th>2026-02-03</th>
-      <td>0.17</td>
-      <td>0.18</td>
-      <td>0.16</td>
-      <td>0.16</td>
-    </tr>
-    <tr>
-      <th>2026-02-04</th>
-      <td>0.18</td>
-      <td>0.19</td>
-      <td>0.17</td>
-      <td>0.17</td>
-    </tr>
-    <tr>
-      <th>2026-02-05</th>
+      <th>2026-03-18</th>
+      <td>0.20</td>
+      <td>0.20</td>
       <td>0.19</td>
       <td>0.19</td>
-      <td>0.17</td>
-      <td>0.17</td>
+    </tr>
+    <tr>
+      <th>2026-03-19</th>
+      <td>0.20</td>
+      <td>0.20</td>
+      <td>0.20</td>
+      <td>0.19</td>
+    </tr>
+    <tr>
+      <th>2026-03-20</th>
+      <td>0.21</td>
+      <td>0.22</td>
+      <td>0.20</td>
+      <td>0.21</td>
     </tr>
   </tbody>
 </table>
@@ -6081,10 +6095,10 @@ display(vix_over_vvix_stats)
   <tbody>
     <tr>
       <th>count</th>
-      <td>4795.00</td>
-      <td>4795.00</td>
-      <td>4795.00</td>
-      <td>4795.00</td>
+      <td>4825.00</td>
+      <td>4825.00</td>
+      <td>4825.00</td>
+      <td>4825.00</td>
     </tr>
     <tr>
       <th>mean</th>
@@ -6168,7 +6182,7 @@ display(vix_over_vvix_stats)
       <td>0.47</td>
       <td>0.49</td>
       <td>0.45</td>
-      <td>0.48</td>
+      <td>0.47</td>
     </tr>
     <tr>
       <th>mean + 4 std</th>
@@ -6181,7 +6195,7 @@ display(vix_over_vvix_stats)
       <th>mean + 5 std</th>
       <td>0.64</td>
       <td>0.68</td>
-      <td>0.62</td>
+      <td>0.61</td>
       <td>0.65</td>
     </tr>
   </tbody>
@@ -6371,11 +6385,11 @@ export_track_md_deps(dep_file=dep_file, md_filename="03_VIX_Over_VVIX_Deciles.md
 
 ```python
 # Plotting
-plt.figure(figsize=(12, 6), facecolor="#F5F5F5")
+plt.figure(figsize=(10, 6))
 
 # Histogram
-plt.hist([vix_over_vvix['High_VIX_to_VVIX_Ratio']], label=['High_VIX_to_VVIX_Ratio'], bins=200, edgecolor='black', color='steelblue', alpha=1)
-plt.hist([vix_over_vvix['Low_VIX_to_VVIX_Ratio']], label=['Low_VIX_to_VVIX_Ratio'], bins=200, edgecolor='black', color='lightblue', alpha=0.5)
+plt.hist([vix_over_vvix['High_VIX_to_VVIX_Ratio']], label=['High_VIX_to_VVIX_Ratio'], bins=200, edgecolor='black', color='steelblue', alpha=0.7)
+plt.hist([vix_over_vvix['Low_VIX_to_VVIX_Ratio']], label=['Low_VIX_to_VVIX_Ratio'], bins=200, edgecolor='black', color='lightblue', alpha=0.7)
 
 # Plot a vertical line at the mean, mean + 1 std, and mean + 2 std
 plt.axvline(vix_over_vvix_stats.loc['mean + -1 std']['High_VIX_to_VVIX_Ratio'], color='brown', linestyle='dashed', linewidth=1, label=f'High Mean - 1 std: {vix_over_vvix_stats.loc['mean + -1 std']['High_VIX_to_VVIX_Ratio']:.2f}')
@@ -6399,20 +6413,20 @@ plt.axvline(vix_over_vvix_stats.loc['mean + 4 std']['Low_VIX_to_VVIX_Ratio'], co
 # Set X axis
 x_tick_spacing = 0.05  # Specify the interval for y-axis ticks
 plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
-plt.xlabel("VIX/VVIX", fontsize=10)
-plt.xticks(rotation=0, fontsize=8)
+plt.xlabel("VIX/VVIX")
+plt.xticks(rotation=0)
 
 # Set Y axis
 y_tick_spacing = 25  # Specify the interval for y-axis ticks
 plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
-plt.ylabel("# Of Datapoints", fontsize=10)
-plt.yticks(fontsize=8)
+plt.ylabel("# Of Datapoints")
+plt.yticks()
 
 # Set title, layout, grid, and legend
-plt.title("CBOE VIX/VVIX Histogram (200 Bins)", fontsize=12)
+plt.title("CBOE VIX/VVIX Histogram (200 Bins)")
 plt.tight_layout()
 plt.grid(True, linestyle='--', alpha=0.7)
-plt.legend(fontsize=9)
+plt.legend()
 
 # Save figure and display plot
 plt.savefig("03_Histogram+Mean+SD.png", dpi=300, bbox_inches="tight")
@@ -6421,7 +6435,7 @@ plt.show()
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_102_0.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_101_0.png)
     
 
 
@@ -6429,22 +6443,55 @@ plt.show()
 
 
 ```python
-plot_timeseries(
-    price_df=vix_over_vvix,
+plot_time_series(
+    df=vix_over_vvix,
     plot_start_date=None,
     plot_end_date="2016-12-31",
     plot_columns=["High_VIX_to_VVIX_Ratio", "Low_VIX_to_VVIX_Ratio"],
     title="CBOE VIX/VVIX, 2007 - 2016",
     x_label="Date",
     x_format="Year",
+    x_tick_spacing=1,
+    x_tick_rotation=30,
     y_label="VIX/VVIX",
     y_format="Decimal",
     y_format_decimal_places=2,
     y_tick_spacing=0.10,
+    y_tick_rotation=0,
     grid=True,
     legend=True,
     export_plot=True,
     plot_file_name="03_VIX_Over_VVIX_Plot_2007-2016",
+)
+```
+
+
+    
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_103_0.png)
+    
+
+
+
+```python
+plot_time_series(
+    df=vix_over_vvix,
+    plot_start_date="2017-01-01",
+    plot_end_date=None,
+    plot_columns=["High_VIX_to_VVIX_Ratio", "Low_VIX_to_VVIX_Ratio"],
+    title="CBOE VIX/VVIX, 2017 - Present",
+    x_label="Date",
+    x_format="Year",
+    x_tick_spacing=1,
+    x_tick_rotation=30,
+    y_label="VIX/VVIX",
+    y_format="Decimal",
+    y_format_decimal_places=2,
+    y_tick_spacing=0.10,
+    y_tick_rotation=0,
+    grid=True,
+    legend=True,
+    export_plot=True,
+    plot_file_name="03_VIX_Over_VVIX_Plot_2017-Present",
 )
 ```
 
@@ -6456,22 +6503,25 @@ plot_timeseries(
 
 
 ```python
-plot_timeseries(
-    price_df=vix_over_vvix,
-    plot_start_date="2017-01-01",
+plot_time_series(
+    df=vix_over_vvix,
+    plot_start_date="2024-01-01",
     plot_end_date=None,
     plot_columns=["High_VIX_to_VVIX_Ratio", "Low_VIX_to_VVIX_Ratio"],
-    title="CBOE VIX/VVIX, 2017 - Present",
+    title="CBOE VIX/VVIX, 2024 - Present",
     x_label="Date",
-    x_format="Year",
+    x_format="Month",
+    x_tick_spacing=1,
+    x_tick_rotation=30,
     y_label="VIX/VVIX",
     y_format="Decimal",
     y_format_decimal_places=2,
-    y_tick_spacing=0.10,
+    y_tick_spacing=0.05,
+    y_tick_rotation=0,
     grid=True,
     legend=True,
     export_plot=True,
-    plot_file_name="03_VIX_Over_VVIX_Plot_2017-Present",
+    plot_file_name="03_VIX_Over_VVIX_Plot_2024-Present",
 )
 ```
 
@@ -6483,45 +6533,21 @@ plot_timeseries(
 
 
 ```python
-plot_timeseries(
-    price_df=vix_over_vvix,
-    plot_start_date="2024-01-01",
-    plot_end_date=None,
-    plot_columns=["High_VIX_to_VVIX_Ratio", "Low_VIX_to_VVIX_Ratio"],
-    title="CBOE VIX/VVIX, 2024 - Present",
-    x_label="Date",
-    x_format="Month",
-    y_label="VIX/VVIX",
-    y_format="Decimal",
-    y_format_decimal_places=2,
-    y_tick_spacing=0.05,
-    grid=True,
-    legend=True,
-    export_plot=True,
-    plot_file_name="03_VIX_Over_VVIX_Plot_2024-Present",
-)
-```
-
-
-    
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_106_0.png)
-    
-
-
-
-```python
-plot_timeseries(
-    price_df=vix_over_vvix,
+plot_time_series(
+    df=vix_over_vvix,
     plot_start_date="2025-01-01",
     plot_end_date=None,
     plot_columns=["High_VIX_to_VVIX_Ratio", "Low_VIX_to_VVIX_Ratio"],
     title="CBOE VIX/VVIX, 2025 - Present",
     x_label="Date",
     x_format="Month",
+    x_tick_spacing=1,
+    x_tick_rotation=30,
     y_label="VIX/VVIX",
     y_format="Decimal",
     y_format_decimal_places=2,
     y_tick_spacing=0.05,
+    y_tick_rotation=0,
     grid=True,
     legend=True,
     export_plot=True,
@@ -6531,7 +6557,7 @@ plot_timeseries(
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_107_0.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_106_0.png)
     
 
 
@@ -6806,103 +6832,103 @@ display(vix)
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-01-30</th>
-      <td>17.44</td>
-      <td>19.27</td>
-      <td>16.67</td>
-      <td>18.72</td>
-      <td>18.09</td>
-      <td>17.82</td>
-      <td>22.27</td>
-      <td>17.09</td>
+      <th>2026-03-16</th>
+      <td>23.51</td>
+      <td>26.42</td>
+      <td>23.23</td>
+      <td>25.88</td>
+      <td>27.85</td>
+      <td>27.74</td>
+      <td>34.67</td>
+      <td>24.77</td>
       <td>False</td>
-      <td>17.88</td>
-      <td>17.95</td>
-      <td>17.65</td>
-      <td>22.06</td>
-      <td>17.47</td>
+      <td>20.86</td>
+      <td>26.91</td>
+      <td>27.02</td>
+      <td>33.78</td>
+      <td>25.29</td>
       <td>False</td>
-      <td>17.60</td>
+      <td>22.33</td>
     </tr>
     <tr>
-      <th>2026-02-02</th>
-      <td>16.34</td>
-      <td>19.96</td>
-      <td>16.08</td>
-      <td>19.95</td>
-      <td>18.46</td>
-      <td>18.09</td>
-      <td>22.62</td>
-      <td>17.32</td>
+      <th>2026-03-17</th>
+      <td>22.37</td>
+      <td>24.58</td>
+      <td>21.87</td>
+      <td>24.56</td>
+      <td>27.50</td>
+      <td>27.85</td>
+      <td>34.82</td>
+      <td>24.85</td>
       <td>False</td>
-      <td>17.76</td>
-      <td>18.31</td>
-      <td>17.95</td>
-      <td>22.43</td>
-      <td>17.71</td>
+      <td>21.05</td>
+      <td>26.49</td>
+      <td>26.91</td>
+      <td>33.64</td>
+      <td>25.22</td>
       <td>False</td>
-      <td>17.69</td>
+      <td>22.42</td>
     </tr>
     <tr>
-      <th>2026-02-03</th>
-      <td>18.00</td>
-      <td>20.37</td>
-      <td>16.05</td>
-      <td>16.16</td>
-      <td>18.40</td>
-      <td>18.46</td>
-      <td>23.07</td>
-      <td>17.57</td>
+      <th>2026-03-18</th>
+      <td>25.09</td>
+      <td>25.13</td>
+      <td>21.47</td>
+      <td>21.51</td>
+      <td>27.52</td>
+      <td>27.50</td>
+      <td>34.37</td>
+      <td>25.09</td>
       <td>False</td>
-      <td>17.67</td>
-      <td>18.69</td>
-      <td>18.31</td>
-      <td>22.89</td>
-      <td>17.96</td>
-      <td>False</td>
-      <td>17.79</td>
-    </tr>
-    <tr>
-      <th>2026-02-04</th>
-      <td>18.64</td>
       <td>21.24</td>
-      <td>17.47</td>
-      <td>17.63</td>
-      <td>18.44</td>
-      <td>18.40</td>
-      <td>23.00</td>
-      <td>17.87</td>
+      <td>26.24</td>
+      <td>26.49</td>
+      <td>33.11</td>
+      <td>25.21</td>
       <td>False</td>
-      <td>17.53</td>
-      <td>19.15</td>
-      <td>18.69</td>
-      <td>23.36</td>
-      <td>18.28</td>
-      <td>False</td>
-      <td>17.93</td>
+      <td>22.53</td>
     </tr>
     <tr>
-      <th>2026-02-05</th>
-      <td>21.77</td>
-      <td>23.10</td>
-      <td>19.06</td>
-      <td>19.24</td>
-      <td>19.08</td>
-      <td>18.44</td>
-      <td>23.05</td>
-      <td>18.25</td>
-      <td>True</td>
-      <td>17.43</td>
-      <td>19.87</td>
-      <td>19.15</td>
-      <td>23.94</td>
-      <td>18.74</td>
+      <th>2026-03-19</th>
+      <td>24.06</td>
+      <td>27.52</td>
+      <td>23.54</td>
+      <td>25.60</td>
+      <td>27.69</td>
+      <td>27.52</td>
+      <td>34.40</td>
+      <td>25.41</td>
       <td>False</td>
-      <td>18.13</td>
+      <td>21.49</td>
+      <td>26.48</td>
+      <td>26.24</td>
+      <td>32.80</td>
+      <td>25.43</td>
+      <td>False</td>
+      <td>22.72</td>
+    </tr>
+    <tr>
+      <th>2026-03-20</th>
+      <td>26.78</td>
+      <td>29.28</td>
+      <td>23.68</td>
+      <td>24.46</td>
+      <td>27.63</td>
+      <td>27.69</td>
+      <td>34.61</td>
+      <td>25.82</td>
+      <td>False</td>
+      <td>21.76</td>
+      <td>26.99</td>
+      <td>26.48</td>
+      <td>33.09</td>
+      <td>25.80</td>
+      <td>False</td>
+      <td>22.98</td>
     </tr>
   </tbody>
 </table>
-<p>9091 rows × 16 columns</p>
+<p>9121 rows × 16 columns</p>
 </div>
 
 
@@ -7413,8 +7439,8 @@ display(spike_count_SMA)
     </tr>
     <tr>
       <th>2026</th>
-      <td>22</td>
-      <td>2</td>
+      <td>49</td>
+      <td>5</td>
     </tr>
   </tbody>
 </table>
@@ -7655,8 +7681,8 @@ display(spike_count_EMA)
     </tr>
     <tr>
       <th>2026</th>
-      <td>23</td>
-      <td>1</td>
+      <td>50</td>
+      <td>4</td>
     </tr>
   </tbody>
 </table>
@@ -7666,7 +7692,7 @@ display(spike_count_EMA)
 
 ```python
 # Plotting
-plt.figure(figsize=(12, 6), facecolor="#F5F5F5")
+plt.figure(figsize=(10, 6))
 
 # Bar positions
 x = np.arange(len(spike_count_SMA[True].index))
@@ -7679,23 +7705,21 @@ plt.bar(x - width / 2, spike_count_SMA[True].values, width, color="steelblue", l
 plt.bar(x + width / 2, spike_count_EMA[True].values, width, color="forestgreen", label="Spike Counts Using EMA")
 
 # Set X axis
-# x_tick_spacing = 5  # Specify the interval for y-axis ticks
-# plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
 plt.xlabel("Year", fontsize=10)
-plt.xticks(x, spike_count_SMA[True].index, rotation=45, fontsize=8)
+plt.xticks(x, spike_count_SMA[True].index, rotation=30)
 plt.xlim(x[0] - 2 * width, x[-1] + 2 * width)
 
-# # Set Y axis
+# Set Y axis
 y_tick_spacing = 2  # Specify the interval for y-axis ticks
 plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
-plt.ylabel("Count", fontsize=10)
-plt.yticks(fontsize=8)
+plt.ylabel("Count")
+plt.yticks()
 
 # Set title, layout, grid, and legend
-plt.title("Yearly Totals Of Spike Counts", fontsize=12)
+plt.title("Yearly Totals Of Spike Counts")
 plt.tight_layout()
 plt.grid(True, linestyle='--', alpha=0.7)
-plt.legend(fontsize=9)
+plt.legend()
 
 # Save figure and display plot
 plt.savefig("08_Spike_Counts.png", dpi=300, bbox_inches="tight")
@@ -7704,7 +7728,7 @@ plt.show()
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_121_0.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_120_0.png)
     
 
 
@@ -7712,7 +7736,7 @@ plt.show()
 
 
 ```python
-def vix_plot(start_year, end_year):
+def vix_plot(start_year, end_year, x_tick_spacing):
     # Start and end dates
     start_date = start_year + '-01-01'
     end_date = end_year + '-12-31'
@@ -7721,7 +7745,7 @@ def vix_plot(start_year, end_year):
     vix_temp = vix[(vix.index >= start_date) & (vix.index <= end_date)]
 
     # Plotting
-    plt.figure(figsize=(12, 6), facecolor="#F5F5F5")
+    plt.figure(figsize=(10, 6))
 
     # Plot data
     plt.plot(vix_temp.index, vix_temp['High'], label='High', linestyle='-', color='steelblue', linewidth=1)
@@ -7732,22 +7756,22 @@ def vix_plot(start_year, end_year):
     plt.scatter(vix_temp[vix_temp['Spike_SMA'] == True].index, vix_temp[vix_temp['Spike_SMA'] == True]['High'], label='Spike (High > 1.25 * 10 Day High SMA)', linestyle='-', color='black', s=20)
 
     # Set X axis
-    plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
+    plt.gca().xaxis.set_major_locator(mdates.MonthLocator(interval=x_tick_spacing))
     plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
-    plt.xlabel("Date", fontsize=10)
-    plt.xticks(rotation=45, fontsize=8)
+    plt.xlabel("Date")
+    plt.xticks(rotation=30)
 
     # Set Y axis
     y_tick_spacing = 5  # Specify the interval for y-axis ticks
     plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
-    plt.ylabel("VIX", fontsize=10)
-    plt.yticks(fontsize=8)
+    plt.ylabel("VIX")
+    plt.yticks()
 
     # Set title, layout, grid, and legend
-    plt.title(f"CBOE Volatility Index (VIX), {start_year} - {end_year}", fontsize=12)
+    plt.title(f"CBOE Volatility Index (VIX), {start_year} - {end_year}")
     plt.tight_layout()
     plt.grid(True, linestyle='--', alpha=0.7)
-    plt.legend(fontsize=9)
+    plt.legend()
 
     # Save figure and display plot
     plt.savefig(f"09_VIX_SMA_Spike_{start_year}_{end_year}.png", dpi=300, bbox_inches="tight")
@@ -7758,223 +7782,229 @@ def vix_plot(start_year, end_year):
 
 
 ```python
-for year in range(1990, 2026):
-    vix_plot(str(year), str(year))
+for year in range(1990, 2027):
+    vix_plot(str(year), str(year), x_tick_spacing=1)
 ```
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_0.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_0.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_1.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_1.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_2.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_2.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_3.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_3.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_4.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_4.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_5.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_5.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_6.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_6.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_7.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_7.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_8.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_8.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_9.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_9.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_10.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_10.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_11.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_11.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_12.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_12.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_13.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_13.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_14.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_14.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_15.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_15.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_16.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_16.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_17.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_17.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_18.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_18.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_19.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_19.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_20.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_20.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_21.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_21.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_22.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_22.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_23.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_23.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_24.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_24.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_25.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_25.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_26.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_26.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_27.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_27.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_28.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_28.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_29.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_29.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_30.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_30.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_31.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_31.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_32.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_32.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_33.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_33.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_34.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_34.png)
     
 
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_125_35.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_35.png)
+    
+
+
+
+    
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_124_36.png)
     
 
 
@@ -7984,12 +8014,12 @@ for year in range(1990, 2026):
 
 
 ```python
-vix_plot('1990', '1994')
+vix_plot('1990', '1994', x_tick_spacing=2)
 ```
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_128_0.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_127_0.png)
     
 
 
@@ -7997,12 +8027,12 @@ vix_plot('1990', '1994')
 
 
 ```python
-vix_plot('1995', '1999')
+vix_plot('1995', '1999', x_tick_spacing=2)
 ```
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_130_0.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_129_0.png)
     
 
 
@@ -8010,12 +8040,12 @@ vix_plot('1995', '1999')
 
 
 ```python
-vix_plot('2000', '2004')
+vix_plot('2000', '2004', x_tick_spacing=2)
 ```
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_132_0.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_131_0.png)
     
 
 
@@ -8023,12 +8053,12 @@ vix_plot('2000', '2004')
 
 
 ```python
-vix_plot('2005', '2009')
+vix_plot('2005', '2009', x_tick_spacing=2)
 ```
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_134_0.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_133_0.png)
     
 
 
@@ -8036,12 +8066,12 @@ vix_plot('2005', '2009')
 
 
 ```python
-vix_plot('2010', '2014')
+vix_plot('2010', '2014', x_tick_spacing=2)
 ```
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_136_0.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_135_0.png)
     
 
 
@@ -8049,12 +8079,12 @@ vix_plot('2010', '2014')
 
 
 ```python
-vix_plot('2015', '2019')
+vix_plot('2015', '2019', x_tick_spacing=2)
 ```
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_138_0.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_137_0.png)
     
 
 
@@ -8062,12 +8092,12 @@ vix_plot('2015', '2019')
 
 
 ```python
-vix_plot('2020', '2024')
+vix_plot('2020', '2024', x_tick_spacing=2)
 ```
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_140_0.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_139_0.png)
     
 
 
@@ -8075,12 +8105,12 @@ vix_plot('2020', '2024')
 
 
 ```python
-vix_plot('2025', '2029')
+vix_plot('2025', '2029', x_tick_spacing=1)
 ```
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_142_0.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_141_0.png)
     
 
 
@@ -8312,34 +8342,6 @@ vix_transactions
       <td>...</td>
     </tr>
     <tr>
-      <th>59</th>
-      <td>2025-10-09</td>
-      <td>Sell to Close</td>
-      <td>VIX 11/19/2025 20.00 C</td>
-      <td>10</td>
-      <td>2.08</td>
-      <td>10.81</td>
-      <td>2069.19</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>2025-11-19</td>
-      <td>20.00</td>
-    </tr>
-    <tr>
-      <th>60</th>
-      <td>2025-08-12</td>
-      <td>Buy to Open</td>
-      <td>VIX 11/19/2025 21.00 C</td>
-      <td>10</td>
-      <td>3.00</td>
-      <td>10.81</td>
-      <td>3010.81</td>
-      <td>15.17</td>
-      <td>NaN</td>
-      <td>2025-11-19</td>
-      <td>21.00</td>
-    </tr>
-    <tr>
       <th>61</th>
       <td>2025-10-08</td>
       <td>Sell to Close</td>
@@ -8381,9 +8383,37 @@ vix_transactions
       <td>2025-12-17</td>
       <td>17.00</td>
     </tr>
+    <tr>
+      <th>64</th>
+      <td>2025-12-19</td>
+      <td>Buy to Open</td>
+      <td>VIX 02/18/2026 22.00 C</td>
+      <td>10</td>
+      <td>1.69</td>
+      <td>9.31</td>
+      <td>1699.31</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2026-02-18</td>
+      <td>22.00</td>
+    </tr>
+    <tr>
+      <th>65</th>
+      <td>2026-01-20</td>
+      <td>Sell to Close</td>
+      <td>VIX 02/18/2026 22.00 C</td>
+      <td>10</td>
+      <td>1.74</td>
+      <td>9.31</td>
+      <td>1730.69</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2026-02-18</td>
+      <td>22.00</td>
+    </tr>
   </tbody>
 </table>
-<p>64 rows × 11 columns</p>
+<p>66 rows × 11 columns</p>
 </div>
 
 
@@ -8500,30 +8530,6 @@ vix_transactions_no_exp
       <td>...</td>
     </tr>
     <tr>
-      <th>59</th>
-      <td>2025-10-09</td>
-      <td>Sell to Close</td>
-      <td>VIX 11/19/2025 20.00 C</td>
-      <td>10</td>
-      <td>2.08</td>
-      <td>10.81</td>
-      <td>2069.19</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>60</th>
-      <td>2025-08-12</td>
-      <td>Buy to Open</td>
-      <td>VIX 11/19/2025 21.00 C</td>
-      <td>10</td>
-      <td>3.00</td>
-      <td>10.81</td>
-      <td>3010.81</td>
-      <td>15.17</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
       <th>61</th>
       <td>2025-10-08</td>
       <td>Sell to Close</td>
@@ -8559,9 +8565,33 @@ vix_transactions_no_exp
       <td>NaN</td>
       <td>NaN</td>
     </tr>
+    <tr>
+      <th>64</th>
+      <td>2025-12-19</td>
+      <td>Buy to Open</td>
+      <td>VIX 02/18/2026 22.00 C</td>
+      <td>10</td>
+      <td>1.69</td>
+      <td>9.31</td>
+      <td>1699.31</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>65</th>
+      <td>2026-01-20</td>
+      <td>Sell to Close</td>
+      <td>VIX 02/18/2026 22.00 C</td>
+      <td>10</td>
+      <td>1.74</td>
+      <td>9.31</td>
+      <td>1730.69</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
   </tbody>
 </table>
-<p>64 rows × 9 columns</p>
+<p>66 rows × 9 columns</p>
 </div>
 
 
@@ -8635,7 +8665,7 @@ export_track_md_deps(dep_file=dep_file, md_filename=f"{index_number}_Percent_PnL
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_156_0.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_155_0.png)
     
 
 
@@ -8713,7 +8743,7 @@ export_track_md_deps(dep_file=dep_file, md_filename=f"{index_number}_Percent_PnL
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_158_0.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_157_0.png)
     
 
 
@@ -8791,7 +8821,7 @@ export_track_md_deps(dep_file=dep_file, md_filename=f"{index_number}_Percent_PnL
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_160_0.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_159_0.png)
     
 
 
@@ -8869,7 +8899,7 @@ export_track_md_deps(dep_file=dep_file, md_filename=f"{index_number}_Percent_PnL
 
 
     
-![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_162_0.png)
+![png](investigating-a-vix-trading-signal-part-3-trading_files/investigating-a-vix-trading-signal-part-3-trading_161_0.png)
     
 
 
@@ -8937,8 +8967,3 @@ export_track_md_deps(dep_file=dep_file, md_filename=f"{index_number}_Percent_PnL
     ✅ Exported and tracked: 99_PnL.txt
     ✅ Exported and tracked: 99_Percent_PnL.txt
 
-
-
-```python
-
-```

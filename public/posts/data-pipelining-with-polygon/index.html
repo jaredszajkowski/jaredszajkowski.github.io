@@ -41,8 +41,8 @@
   <link
     type="text/css"
     rel="stylesheet"
-    href="https://www.jaredszajkowski.com/css/main.bundle.min.2f9ad68cf4fbf0c55a7287ce079d8845ea55ec9112cdecd2ffca98862f074e6d.css"
-    integrity="sha256-L5rWjPT78MVacofOB52IRepV7JESzezS/8qYhi8HTm0="
+    href="https://www.jaredszajkowski.com/css/main.bundle.min.8825ac21ae7385ed312a5e0416f9cfa2a8f6dc61ff7a5321f731bda9db024cbc.css"
+    integrity="sha256-iCWsIa5zhe0xKl4EFvnPoqj23GH/elMh9zG9qdsCTLw="
   />
   
     
@@ -205,6 +205,9 @@
 
 
   
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5/dist/photoswipe.css">
   
 </head>
 <body
@@ -1415,6 +1418,30 @@ The PDF export of the jupyter notebook is available <a href="data-pipelining-wit
     </div>
   </div>
   
+  
+    
+<script type="module">
+  import PhotoSwipeLightbox from 'https://cdn.jsdelivr.net/npm/photoswipe@5/dist/photoswipe-lightbox.esm.js';
+
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: '.prose',
+    children: 'img',
+    pswpModule: () => import('https://cdn.jsdelivr.net/npm/photoswipe@5/dist/photoswipe.esm.js'),
+  });
+
+  
+  lightbox.addFilter('itemData', (itemData, index) => {
+    const img = itemData.element;
+    return {
+      src: img.src,
+      width: img.naturalWidth || 1920,
+      height: img.naturalHeight || 1080,
+      alt: img.alt
+    };
+  });
+
+  lightbox.init();
+</script>
   
 </footer>
 <div
