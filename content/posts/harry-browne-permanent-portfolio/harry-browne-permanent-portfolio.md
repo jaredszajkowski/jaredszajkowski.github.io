@@ -77,7 +77,7 @@ for i, path in enumerate(sys.path):
     2: /usr/lib/python3.13/lib-dynload
     3: 
     4: /home/jared/python-virtual-envs/general-venv-p313/lib/python3.13/site-packages
-    5: /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io_congo/src
+    5: /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/src
 
 
 ## Track Index Dependencies
@@ -215,8 +215,8 @@ display(bonds_data.head())
   </thead>
   <tbody>
     <tr>
-      <th>2024-04-30</th>
-      <td>579.02</td>
+      <th>2026-01-30</th>
+      <td>650.17</td>
     </tr>
   </tbody>
 </table>
@@ -361,16 +361,25 @@ display(stocks_data.head())
     <tr style="text-align: right;">
       <th></th>
       <th>Close</th>
+      <th>Open</th>
+      <th>High</th>
+      <th>Low</th>
     </tr>
     <tr>
       <th>Date</th>
+      <th></th>
+      <th></th>
+      <th></th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>1988-01-04</th>
-      <td>256.02</td>
+      <th>1989-09-11</th>
+      <td>369.55</td>
+      <td>369.55</td>
+      <td>369.55</td>
+      <td>369.55</td>
     </tr>
   </tbody>
 </table>
@@ -397,16 +406,25 @@ display(stocks_data.head())
     <tr style="text-align: right;">
       <th></th>
       <th>Close</th>
+      <th>Open</th>
+      <th>High</th>
+      <th>Low</th>
     </tr>
     <tr>
       <th>Date</th>
+      <th></th>
+      <th></th>
+      <th></th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>2024-04-30</th>
-      <td>10951.66</td>
+      <th>2026-01-30</th>
+      <td>15441.15</td>
+      <td>15459.48</td>
+      <td>15496.54</td>
+      <td>15340.40</td>
     </tr>
   </tbody>
 </table>
@@ -437,6 +455,9 @@ display(stocks_data.head())
     <tr style="text-align: right;">
       <th></th>
       <th>Stocks_Close</th>
+      <th>Open</th>
+      <th>High</th>
+      <th>Low</th>
       <th>Stocks_Daily_Return</th>
       <th>Stocks_Total_Return</th>
     </tr>
@@ -445,17 +466,17 @@ display(stocks_data.head())
       <th></th>
       <th></th>
       <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>1990-01-01</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
       <th>1990-01-02</th>
+      <td>386.16</td>
+      <td>386.16</td>
+      <td>386.16</td>
       <td>386.16</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -463,11 +484,17 @@ display(stocks_data.head())
     <tr>
       <th>1990-01-03</th>
       <td>385.17</td>
+      <td>385.17</td>
+      <td>385.17</td>
+      <td>385.17</td>
       <td>-0.00</td>
       <td>1.00</td>
     </tr>
     <tr>
       <th>1990-01-04</th>
+      <td>382.02</td>
+      <td>382.02</td>
+      <td>382.02</td>
       <td>382.02</td>
       <td>-0.01</td>
       <td>0.99</td>
@@ -475,7 +502,19 @@ display(stocks_data.head())
     <tr>
       <th>1990-01-05</th>
       <td>378.30</td>
+      <td>378.30</td>
+      <td>378.30</td>
+      <td>378.30</td>
       <td>-0.01</td>
+      <td>0.98</td>
+    </tr>
+    <tr>
+      <th>1990-01-08</th>
+      <td>380.04</td>
+      <td>380.04</td>
+      <td>380.04</td>
+      <td>380.04</td>
+      <td>0.00</td>
       <td>0.98</td>
     </tr>
   </tbody>
@@ -559,8 +598,8 @@ display(gold_data.head())
   </thead>
   <tbody>
     <tr>
-      <th>1949-12-30</th>
-      <td>34.69</td>
+      <th>1975-01-02</th>
+      <td>175</td>
     </tr>
   </tbody>
 </table>
@@ -595,8 +634,8 @@ display(gold_data.head())
   </thead>
   <tbody>
     <tr>
-      <th>2024-05-01</th>
-      <td>2299.31</td>
+      <th>2026-02-02</th>
+      <td>4664.05</td>
     </tr>
   </tbody>
 </table>
@@ -1601,10 +1640,10 @@ display(all_sum_stats)
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Annualized Mean</th>
+      <th>Annual Mean Return (Arithmetic)</th>
       <th>Annualized Volatility</th>
       <th>Annualized Sharpe Ratio</th>
-      <th>CAGR</th>
+      <th>CAGR (Geometric)</th>
       <th>Daily Max Return</th>
       <th>Daily Max Return (Date)</th>
       <th>Daily Min Return</th>
@@ -1613,7 +1652,7 @@ display(all_sum_stats)
       <th>Peak</th>
       <th>Trough</th>
       <th>Recovery Date</th>
-      <th>Days to Recover</th>
+      <th>Calendar Days to Recovery</th>
       <th>MAR Ratio</th>
     </tr>
   </thead>
