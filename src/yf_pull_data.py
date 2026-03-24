@@ -4,6 +4,7 @@ import yfinance as yf
 
 from IPython.display import display
 
+
 def yf_pull_data(
     base_directory: str,
     ticker: str,
@@ -14,7 +15,6 @@ def yf_pull_data(
     pickle_export: bool,
     output_confirmation: bool,
 ) -> pd.DataFrame:
-    
     """
     Download daily price data from Yahoo Finance and export it.
 
@@ -42,7 +42,7 @@ def yf_pull_data(
     df : pd.DataFrame
         DataFrame containing the downloaded data.
     """
-    
+
     # Download data from YF
     df = yf.download(ticker, start="1900-01-01", auto_adjust=adjusted, progress=False)
 
@@ -56,14 +56,14 @@ def yf_pull_data(
     df.columns.name = None
 
     # Reset date column
-    df['Date'] = df['Date'].dt.tz_localize(None)
+    df["Date"] = df["Date"].dt.tz_localize(None)
 
     # Set 'Date' column as index
-    df = df.set_index('Date', drop=True)
+    df = df.set_index("Date", drop=True)
 
     # Drop data from last day because it's not accurate until end of day
     df = df.drop(df.index[-1])
-    
+
     # Create directory
     directory = f"{base_directory}/{source}/{asset_class}/Daily"
     os.makedirs(directory, exist_ok=True)

@@ -3,6 +3,7 @@ import os
 
 from IPython.display import display
 
+
 def yf_month_end_total_return(
     base_directory,
     ticker: str,
@@ -12,7 +13,6 @@ def yf_month_end_total_return(
     pickle_export: bool,
     output_confirmation: bool,
 ) -> pd.DataFrame:
-    
     """
     Read daily data from an existing excel file and export month-end total return close prices.
 
@@ -45,17 +45,17 @@ def yf_month_end_total_return(
     location = f"{base_directory}/{source}/{asset_class}/Daily/{ticker}.xlsx"
 
     # Read data from excel
-    df = pd.read_excel(location, sheet_name ="data", engine="calamine")
+    df = pd.read_excel(location, sheet_name="data", engine="calamine")
 
     # Keep only required columns
 
     # Check if there is an 'Adj_Close' column
-    if 'Adj Close' in df.columns:
-        df = df[['Date', 'Adj Close']]
+    if "Adj Close" in df.columns:
+        df = df[["Date", "Adj Close"]]
 
     # Check if there is a 'Close' column
-    elif 'Close' in df.columns:
-        df = df[['Date', 'Close']]
+    elif "Close" in df.columns:
+        df = df[["Date", "Close"]]
 
     # If neither is found, print an error message and exit
     else:
@@ -63,7 +63,7 @@ def yf_month_end_total_return(
         exit()
 
     # Set index to date column
-    df.set_index('Date', inplace=True)
+    df.set_index("Date", inplace=True)
 
     # Resample data to month end
     df_month_end_total_return = df.resample("ME").last()
@@ -74,7 +74,9 @@ def yf_month_end_total_return(
 
     # Export to excel
     if excel_export == True:
-        df_month_end_total_return.to_excel(f"{directory}/{ticker}_ME_TR.xlsx", sheet_name="data")
+        df_month_end_total_return.to_excel(
+            f"{directory}/{ticker}_ME_TR.xlsx", sheet_name="data"
+        )
     else:
         pass
 

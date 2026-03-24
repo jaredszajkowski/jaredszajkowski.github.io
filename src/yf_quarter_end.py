@@ -3,6 +3,7 @@ import pandas as pd
 
 from IPython.display import display
 
+
 def yf_quarter_end(
     base_directory,
     ticker: str,
@@ -12,7 +13,6 @@ def yf_quarter_end(
     pickle_export: bool,
     output_confirmation: bool,
 ) -> pd.DataFrame:
-    
     """
     Read daily data from an existing excel file and export quarter-end close prices.
 
@@ -46,11 +46,11 @@ def yf_quarter_end(
     df = pd.read_excel(location, sheet_name="data", engine="calamine")
 
     # Keep only required columns
-    df = df[['Date', 'Close']]
+    df = df[["Date", "Close"]]
 
     # Set index to date column
-    df.set_index('Date', inplace=True)
-    
+    df.set_index("Date", inplace=True)
+
     # Resample data to month end
     df_quarter_end = df.resample("QE").last()
 
@@ -76,5 +76,5 @@ def yf_quarter_end(
         print(f"--------------------")
     else:
         pass
-    
+
     return df_quarter_end

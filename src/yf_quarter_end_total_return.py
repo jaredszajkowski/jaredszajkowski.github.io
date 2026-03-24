@@ -3,6 +3,7 @@ import pandas as pd
 
 from IPython.display import display
 
+
 def yf_quarter_end_total_return(
     base_directory,
     ticker: str,
@@ -12,7 +13,6 @@ def yf_quarter_end_total_return(
     pickle_export: bool,
     output_confirmation: bool,
 ) -> pd.DataFrame:
-    
     """
     Read daily data from an existing excel file and export quarter-end total return close prices.
 
@@ -39,7 +39,7 @@ def yf_quarter_end_total_return(
     --------
     df_quarter_end_total_return : pd.DataFrame
         DataFrame containing quarter-end total return close prices.
-    """   
+    """
 
     # Set location from where to read existing excel file
     location = f"{base_directory}/{source}/{asset_class}/Daily/{ticker}.xlsx"
@@ -50,12 +50,12 @@ def yf_quarter_end_total_return(
     # Keep only required columns
 
     # Check if there is an 'Adj_Close' column
-    if 'Adj Close' in df.columns:
-        df = df[['Date', 'Adj Close']]
+    if "Adj Close" in df.columns:
+        df = df[["Date", "Adj Close"]]
 
     # Check if there is a 'Close' column
-    elif 'Close' in df.columns:
-        df = df[['Date', 'Close']]
+    elif "Close" in df.columns:
+        df = df[["Date", "Close"]]
 
     # If neither is found, print an error message and exit
     else:
@@ -63,8 +63,8 @@ def yf_quarter_end_total_return(
         exit()
 
     # Set index to date column
-    df.set_index('Date', inplace=True)
-    
+    df.set_index("Date", inplace=True)
+
     # Resample data to quarter end
     df_quarter_end_total_return = df.resample("QE").last()
 
@@ -74,7 +74,9 @@ def yf_quarter_end_total_return(
 
     # Export to excel
     if excel_export == True:
-        df_quarter_end_total_return.to_excel(f"{directory}/{ticker}_QE_TR.xlsx", sheet_name="data")
+        df_quarter_end_total_return.to_excel(
+            f"{directory}/{ticker}_QE_TR.xlsx", sheet_name="data"
+        )
     else:
         pass
 

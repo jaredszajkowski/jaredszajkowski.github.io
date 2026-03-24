@@ -3,6 +3,7 @@ import pandas as pd
 
 from IPython.display import display
 
+
 def yf_month_end(
     base_directory,
     ticker: str,
@@ -12,7 +13,6 @@ def yf_month_end(
     pickle_export: bool,
     output_confirmation: bool,
 ) -> pd.DataFrame:
-    
     """
     Read daily data from an existing excel file and export month-end close prices.
 
@@ -43,14 +43,14 @@ def yf_month_end(
     location = f"{base_directory}/{source}/{asset_class}/Daily/{ticker}.xlsx"
 
     # Read data from excel
-    df = pd.read_excel(location, sheet_name ="data", engine="calamine")
+    df = pd.read_excel(location, sheet_name="data", engine="calamine")
 
     # Keep only required columns
-    df = df[['Date', 'Close']]
+    df = df[["Date", "Close"]]
 
     # Set index to date column
-    df.set_index('Date', inplace=True)
-    
+    df.set_index("Date", inplace=True)
+
     # Resample data to month end
     df_month_end = df.resample("ME").last()
 
