@@ -253,14 +253,11 @@ def task_export_post_notebooks():
         yield {
             "name": notebook_name,
             "actions": [
-                # f"jupyter nbconvert --to=html --log-level=WARN --output={html_output} {notebook_path}",
-                # f"jupyter nbconvert --to=pdf --log-level=WARN --output={pdf_output} {notebook_path}",
-                # f"jupyter nbconvert --to=markdown --log-level=WARN --output={notebook_name} --output-dir={subdir} {notebook_path}",
                 f"jupyter nbconvert --to=html --log-level=WARN --output={notebook_name} --output-dir={subdir} {notebook_path}",
                 f"jupyter nbconvert --to=pdf --log-level=WARN --output={notebook_name} --output-dir={subdir} {notebook_path}",
                 (clean_notebook_md_files, [subdir, notebook_name]),
                 f"jupyter nbconvert --to=markdown --log-level=WARN --output={notebook_name} --output-dir={subdir} {notebook_path}",
-                (clean_pdf_export_pngs, [subdir, notebook_name])
+                (clean_pdf_export_pngs, [subdir, notebook_name]),
             ],
             "file_dep": [notebook_path],
             "targets": [html_output, pdf_output, md_output],
@@ -438,23 +435,25 @@ def task_create_schwab_callback():
         "clean": [],  # Don't clean these files by default.
     }
 
-def task_deploy_site():
-    """Prompt for a commit message and push to GitHub"""
-    def commit_and_push():
-        message = input("What is the commit message? ")
-        if not message.strip():
-            print("❌ Commit message cannot be empty.")
-            return 1  # signal failure
+# def task_deploy_site():
+#     """Prompt for a commit message and push to GitHub"""
+#     def commit_and_push():
+#         message = input("What is the commit message? ")
+#         if not message.strip():
+#             print("❌ Commit message cannot be empty.")
+#             return 1  # signal failure
 
-        # Stage and commit all changes
-        subprocess.run(["git", "add", "."], check=True)
-        subprocess.run(["git", "commit", "-am", message], check=True)
-        subprocess.run(["git", "push"], check=True)
-        print("✅ Pushed to GitHub.")
+#         # Stage and commit all changes
+#         subprocess.run(["git", "add", "."], check=True)
+#         subprocess.run(["git", "commit", "-am", message], check=True)
+#         print("✅ All files committed. Run 'git push' to push to GitHub.")
+        
+#         subprocess.run(["git", "push"], check=True)
+#         print("✅ Pushed to GitHub.")
 
-    return {
-        "actions": [commit_and_push],
-        "task_dep": ["create_schwab_callback"],
-        "verbosity": 2,
-        "clean": [],  # Don't clean these files by default.
-    }
+#     return {
+#         "actions": [commit_and_push],
+#         "task_dep": ["create_schwab_callback"],
+#         "verbosity": 2,
+#         "clean": [],  # Don't clean these files by default.
+#     }
