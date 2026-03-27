@@ -144,7 +144,7 @@
     
     
     "mainEntityOfPage": "true",
-    "wordCount": "10788"
+    "wordCount": "11738"
   }
   </script>
     
@@ -639,7 +639,7 @@
   <div class="flex flex-row flex-wrap items-center">
     
     
-      <time datetime="2025-02-02 00:00:01 &#43;0000 &#43;0000">February 2, 2025</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2025-07-28 00:00:01 &#43;0000 &#43;0000">Updated: July 28, 2025</time><span class="px-2 text-primary-500">&middot;</span><span>10788 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">51 mins</span>
+      <time datetime="2025-02-02 00:00:01 &#43;0000 &#43;0000">February 2, 2025</time><span class="px-2 text-primary-500">&middot;</span><time datetime="2025-07-28 00:00:01 &#43;0000 &#43;0000">Updated: July 28, 2025</time><span class="px-2 text-primary-500">&middot;</span><span>11738 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">56 mins</span>
     
 
     
@@ -776,9 +776,10 @@
         <li><a href="#plot_scatter">plot_scatter</a></li>
         <li><a href="#plot_scatter_regression_ffr_vs_returns">plot_scatter_regression_ffr_vs_returns</a></li>
         <li><a href="#plot_stats">plot_stats</a></li>
-        <li><a href="#plot_timeseries">plot_timeseries</a></li>
+        <li><a href="#plot_time_series">plot_time_series</a></li>
         <li><a href="#plot_vix_with_trades">plot_vix_with_trades</a></li>
         <li><a href="#polygon_fetch_full_history">polygon_fetch_full_history</a></li>
+        <li><a href="#polygon_fetch_ticker_details">polygon_fetch_ticker_details</a></li>
         <li><a href="#polygon_pull_data">polygon_pull_data</a></li>
         <li><a href="#run_linear_regression">run_linear_regression</a></li>
         <li><a href="#strategy_harry_brown_perm_port">strategy_harry_brown_perm_port</a></li>
@@ -852,7 +853,7 @@
     <a href="https://www.jaredszajkowski.com/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_stats">plot_stats</a>: Generate a scatter plot for the mean OHLC prices.</li>
 <li>
       
-    <a href="https://www.jaredszajkowski.com/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_timeseries">plot_timeseries</a>: Plot the timeseries data from a DataFrame for a specified date range and columns.</li>
+    <a href="https://www.jaredszajkowski.com/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_time_series">plot_time_series</a>: Plot the time series data from a DataFrame for a specified date range and columns.</li>
 <li>
       
     <a href="https://www.jaredszajkowski.com/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_vix_with_trades">plot_vix_with_trades</a>: Plot the VIX daily high and low prices, along with the VIX spikes, and trades.</li>
@@ -3040,8 +3041,237 @@
 </span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">None</span>
-</span></span></code></pre></div><h3 id="plot_timeseries" class="relative group">plot_timeseries <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#plot_timeseries" aria-label="Anchor">#</a></span></h3><!-- INSERT_plot_timeseries_HERE -->
-<h3 id="plot_vix_with_trades" class="relative group">plot_vix_with_trades <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#plot_vix_with_trades" aria-label="Anchor">#</a></span></h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib.dates</span> <span class="k">as</span> <span class="nn">mdates</span>
+</span></span></code></pre></div><h3 id="plot_time_series" class="relative group">plot_time_series <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#plot_time_series" aria-label="Anchor">#</a></span></h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">math</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib.dates</span> <span class="k">as</span> <span class="nn">mdates</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">matplotlib.ticker</span> <span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">FuncFormatter</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">MultipleLocator</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">PercentFormatter</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">round_to_nice_value</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Round a value to a &#39;nice&#39; number for tick spacing (1, 2, 5 x 10^n).&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">value</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Find order of magnitude</span>
+</span></span><span class="line"><span class="cl">    <span class="n">exp</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">magnitude</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="n">exp</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Get mantissa (value normalized to [1, 10))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">mantissa</span> <span class="o">=</span> <span class="n">value</span> <span class="o">/</span> <span class="n">magnitude</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Round mantissa to 1, 2, or 5</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">mantissa</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">nice_mantissa</span> <span class="o">=</span> <span class="mf">0.1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">mantissa</span> <span class="o">&lt;=</span> <span class="mf">1.5</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">nice_mantissa</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">mantissa</span> <span class="o">&lt;=</span> <span class="mi">3</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">nice_mantissa</span> <span class="o">=</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">mantissa</span> <span class="o">&lt;=</span> <span class="mi">7</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">nice_mantissa</span> <span class="o">=</span> <span class="mi">5</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">nice_mantissa</span> <span class="o">=</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">nice_mantissa</span> <span class="o">*</span> <span class="n">magnitude</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">plot_time_series</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plot_start_date</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plot_end_date</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plot_columns</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x_label</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x_format</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x_tick_spacing</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">x_tick_rotation</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">y_label</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">y_format</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">y_format_decimal_places</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">y_tick_spacing</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">y_tick_rotation</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">grid</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">legend</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">export_plot</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plot_file_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Plot the time series data from a DataFrame for a specified date range and columns.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ----------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    df : pd.DataFrame
+</span></span></span><span class="line"><span class="cl"><span class="s2">        DataFrame containing the time series data to plot.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    plot_start_date : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Start date for the plot in &#39;YYYY-MM-DD&#39; format.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    plot_end_date : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        End date for the plot in &#39;YYYY-MM-DD&#39; format.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    plot_columns : str OR list
+</span></span></span><span class="line"><span class="cl"><span class="s2">        List of columns to plot from the DataFrame. If none, all columns will be plotted.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    title : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Title of the plot.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    x_label : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Label for the x-axis.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    x_format : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Format for the x-axis date labels.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    x_tick_spacing : int
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Spacing for the x-axis ticks.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    x_tick_rotation : int
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Rotation angle for the x-axis tick labels.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    y_label : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Label for the y-axis.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    y_format : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Format for the y-axis labels.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    y_format_decimal_places : int
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Number of decimal places for y-axis labels.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    y_tick_spacing : int
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Spacing for the y-axis ticks.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    y_tick_rotation : int
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Rotation angle for the y-axis tick labels.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    grid : bool
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Whether to display a grid on the plot.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    legend : bool
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Whether to display a legend on the plot.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    export_plot : bool
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Whether to save the figure as a PNG file.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    plot_file_name : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        File name for saving the figure (if save_fig is True).
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns
+</span></span></span><span class="line"><span class="cl"><span class="s2">    -------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    None
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># If start date and end date are None, use the entire DataFrame</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">plot_start_date</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">plot_end_date</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">df_filtered</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># If only end date is specified, filter by end date</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">plot_start_date</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">plot_end_date</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">df_filtered</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;=</span> <span class="n">plot_end_date</span><span class="p">)]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># If only start date is specified, filter by start date</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">plot_start_date</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">plot_end_date</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">df_filtered</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="n">plot_start_date</span><span class="p">)]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># If both start date and end date are specified, filter by both</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">df_filtered</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span>
+</span></span><span class="line"><span class="cl">            <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="n">plot_start_date</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;=</span> <span class="n">plot_end_date</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Set plot figure size and background color</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Plot data</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">plot_columns</span> <span class="o">==</span> <span class="s2">&#34;All&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df_filtered</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="n">df_filtered</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">df_filtered</span><span class="p">[</span><span class="n">col</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                <span class="n">label</span><span class="o">=</span><span class="n">col</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">linestyle</span><span class="o">=</span><span class="s2">&#34;-&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">plot_columns</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="n">df_filtered</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">df_filtered</span><span class="p">[</span><span class="n">col</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">                <span class="n">label</span><span class="o">=</span><span class="n">col</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">linestyle</span><span class="o">=</span><span class="s2">&#34;-&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Format X axis</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">x_format</span> <span class="o">==</span> <span class="s2">&#34;Day&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">DayLocator</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">DateFormatter</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">%d</span><span class="s2"> %b %Y&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">x_format</span> <span class="o">==</span> <span class="s2">&#34;Week&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">WeekdayLocator</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">DateFormatter</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">%d</span><span class="s2"> %b %Y&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">x_format</span> <span class="o">==</span> <span class="s2">&#34;Month&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">MonthLocator</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">DateFormatter</span><span class="p">(</span><span class="s2">&#34;%b %Y&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">x_format</span> <span class="o">==</span> <span class="s2">&#34;Year&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">YearLocator</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="n">x_tick_spacing</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">DateFormatter</span><span class="p">(</span><span class="s2">&#34;%Y&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="sa">f</span><span class="s2">&#34;Unrecognized x_format: </span><span class="si">{</span><span class="n">x_format</span><span class="si">}</span><span class="s2">. Use &#39;Day&#39;, &#39;Week&#39;, &#39;Month&#39;, or &#39;Year&#39;.&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">x_label</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="n">x_tick_rotation</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Format Y axis</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">y_format</span> <span class="o">==</span> <span class="s2">&#34;Decimal&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">FuncFormatter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s2">,.</span><span class="si">{</span><span class="n">y_format_decimal_places</span><span class="si">}</span><span class="s2">f</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">y_format</span> <span class="o">==</span> <span class="s2">&#34;Percentage&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">PercentFormatter</span><span class="p">(</span><span class="n">xmax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">decimals</span><span class="o">=</span><span class="n">y_format_decimal_places</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">y_format</span> <span class="o">==</span> <span class="s2">&#34;Scientific&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">FuncFormatter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s2">.</span><span class="si">{</span><span class="n">y_format_decimal_places</span><span class="si">}</span><span class="s2">e</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">elif</span> <span class="n">y_format</span> <span class="o">==</span> <span class="s2">&#34;Log&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s2">&#34;log&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="sa">f</span><span class="s2">&#34;Unrecognized y_format: </span><span class="si">{</span><span class="n">y_format</span><span class="si">}</span><span class="s2">. Use &#39;Decimal&#39;, &#39;Percentage&#39;, &#39;Scientific&#39;, or &#39;Log&#39;.&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">y_tick_spacing</span> <span class="o">==</span> <span class="s2">&#34;Auto&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">max</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">min</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">plot_columns</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&gt;</span> <span class="nb">max</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">max</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">&lt;</span> <span class="nb">min</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">min</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">raw_y_spacing</span> <span class="o">=</span> <span class="p">(</span><span class="nb">max</span> <span class="o">-</span> <span class="nb">min</span><span class="p">)</span> <span class="o">/</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="cl">        <span class="n">y_tick_spacing</span> <span class="o">=</span> <span class="n">round_to_nice_value</span><span class="p">(</span><span class="n">raw_y_spacing</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">y_tick_spacing</span> <span class="o">=</span> <span class="n">y_tick_spacing</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="n">y_tick_spacing</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">y_label</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="n">y_tick_rotation</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Format title, layout, grid, and legend</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Grid</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">grid</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&#34;--&#34;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Legend</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">legend</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Save figure and display plot</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">export_plot</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">plot_file_name</span><span class="si">}</span><span class="s2">.png&#34;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&#34;tight&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Display the plot</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">None</span>
+</span></span></code></pre></div><h3 id="plot_vix_with_trades" class="relative group">plot_vix_with_trades <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#plot_vix_with_trades" aria-label="Anchor">#</a></span></h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib.dates</span> <span class="k">as</span> <span class="nn">mdates</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </span></span><span class="line"><span class="cl">
@@ -3405,6 +3635,106 @@
 </span></span><span class="line"><span class="cl">        <span class="n">free_tier</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">        <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span></code></pre></div><h3 id="polygon_fetch_ticker_details" class="relative group">polygon_fetch_ticker_details <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#polygon_fetch_ticker_details" aria-label="Anchor">#</a></span></h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">load_api_keys</span> <span class="kn">import</span> <span class="n">load_api_keys</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">massive</span> <span class="kn">import</span> <span class="n">RESTClient</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">settings</span> <span class="kn">import</span> <span class="n">config</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Load API keys from the environment</span>
+</span></span><span class="line"><span class="cl"><span class="n">api_keys</span> <span class="o">=</span> <span class="n">load_api_keys</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Get the environment variable for where data is stored</span>
+</span></span><span class="line"><span class="cl"><span class="n">DATA_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">&#34;DATA_DIR&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Open client connection</span>
+</span></span><span class="line"><span class="cl"><span class="n">client</span> <span class="o">=</span> <span class="n">RESTClient</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="n">api_keys</span><span class="p">[</span><span class="s2">&#34;POLYGON_KEY&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">polygon_fetch_ticker_details</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ticker</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">any</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Fetch detailed information for a given product from Polygon API.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Parameters:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    -----------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    ticker : str
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Ticker symbol to download.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Returns:
+</span></span></span><span class="line"><span class="cl"><span class="s2">    --------
+</span></span></span><span class="line"><span class="cl"><span class="s2">    details : dict
+</span></span></span><span class="line"><span class="cl"><span class="s2">        Dictionary containing detailed information about the ticker.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">details</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_ticker_details</span><span class="p">(</span><span class="n">ticker</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">details</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">###############</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Stock data</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">###############</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">new_equity_tickers</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Put new tickers here that you want to pull details for</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Create empty dictionary</span>
+</span></span><span class="line"><span class="cl">    <span class="n">new_equity</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Read existing data from csv file into equities dictionary</span>
+</span></span><span class="line"><span class="cl">    <span class="n">equities_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">DATA_DIR</span><span class="si">}</span><span class="s2">/Polygon/equities.csv&#34;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">equities</span> <span class="o">=</span> <span class="n">equities_df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()[</span><span class="s2">&#34;Name&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">ticker</span> <span class="ow">in</span> <span class="n">new_equity_tickers</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ticker_details</span> <span class="o">=</span> <span class="n">polygon_fetch_ticker_details</span><span class="p">(</span><span class="n">ticker</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">new_equity</span><span class="p">[</span><span class="n">ticker</span><span class="p">]</span> <span class="o">=</span> <span class="n">ticker_details</span><span class="o">.</span><span class="n">name</span>  <span class="c1"># access name field</span>
+</span></span><span class="line"><span class="cl">        <span class="n">equities</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_equity</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">equities</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">equities</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Updated </span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">equities</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Export equities dictionary to csv file</span>
+</span></span><span class="line"><span class="cl">    <span class="n">equities_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">equities</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">&#34;index&#34;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;Name&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">equities_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">DATA_DIR</span><span class="si">}</span><span class="s2">/Polygon/equities.csv&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">###############</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># ETF data</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">###############</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">new_etf_tickers</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Put new tickers here that you want to pull details for</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Create empty dictionary</span>
+</span></span><span class="line"><span class="cl">    <span class="n">new_etf</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Read existing data from csv file into etfs dictionary</span>
+</span></span><span class="line"><span class="cl">    <span class="n">etfs_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">DATA_DIR</span><span class="si">}</span><span class="s2">/Polygon/etfs.csv&#34;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">etfs</span> <span class="o">=</span> <span class="n">etfs_df</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()[</span><span class="s2">&#34;Name&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">ticker</span> <span class="ow">in</span> <span class="n">new_etf_tickers</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ticker_details</span> <span class="o">=</span> <span class="n">polygon_fetch_ticker_details</span><span class="p">(</span><span class="n">ticker</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">new_etf</span><span class="p">[</span><span class="n">ticker</span><span class="p">]</span> <span class="o">=</span> <span class="n">ticker_details</span><span class="o">.</span><span class="n">name</span>  <span class="c1"># access name field</span>
+</span></span><span class="line"><span class="cl">        <span class="n">etfs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_etf</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">etfs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">etfs</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;Updated </span><span class="si">{</span><span class="n">ticker</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">etfs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Export etfs dictionary to csv file</span>
+</span></span><span class="line"><span class="cl">    <span class="n">etfs_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">etfs</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">&#34;index&#34;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;Name&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">etfs_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;</span><span class="si">{</span><span class="n">DATA_DIR</span><span class="si">}</span><span class="s2">/Polygon/etfs.csv&#34;</span><span class="p">)</span>
 </span></span></code></pre></div><h3 id="polygon_pull_data" class="relative group">polygon_pull_data <span class="absolute top-0 w-6 transition-opacity opacity-0 -start-6 not-prose group-hover:opacity-100"><a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700" style="text-decoration-line: none !important;" href="#polygon_pull_data" aria-label="Anchor">#</a></span></h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
