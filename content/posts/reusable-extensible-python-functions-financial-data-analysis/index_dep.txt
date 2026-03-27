@@ -20,6 +20,7 @@ plot_stats.md
 plot_time_series.md
 plot_vix_with_trades.md
 polygon_fetch_full_history.md
+polygon_fetch_ticker_details.md
 polygon_pull_data.md
 run_linear_regression.md
 strategy_harry_brown_perm_port.md

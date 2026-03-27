@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 
+
 def polygon_quarter_end(
     base_directory,
     ticker: str,
@@ -11,7 +12,6 @@ def polygon_quarter_end(
     pickle_export: bool,
     output_confirmation: bool,
 ) -> pd.DataFrame:
-    
     """
     Read daily data from an existing pickle file and export quarter-end close prices.
 
@@ -39,23 +39,23 @@ def polygon_quarter_end(
     df_quarter_end : pd.DataFrame
         DataFrame containing quarter-end close prices.
     """
-    
+
     # Set location from where to read existing pickle file
     location = f"{base_directory}/{source}/{asset_class}/{timespan}/{ticker}.pkl"
 
     # Read data from pickle
     df = pd.read_pickle(location)
-    
+
     # Reset index if 'Date' is column is the index
-    if 'Date' not in df.columns:
+    if "Date" not in df.columns:
         df = df.reset_index()
 
     # Keep only required columns
-    df = df[['Date', 'close']]
+    df = df[["Date", "close"]]
 
     # Set index to date column
-    df = df.set_index('Date')
-        
+    df = df.set_index("Date")
+
     # Resample data to month end
     df_quarter_end = df.resample("QE").last()
 
@@ -81,5 +81,5 @@ def polygon_quarter_end(
         print(f"--------------------")
     else:
         pass
-    
+
     return df_quarter_end

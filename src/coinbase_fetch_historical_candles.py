@@ -4,13 +4,13 @@ import time
 
 from datetime import datetime
 
+
 def coinbase_fetch_historical_candles(
     product_id: str,
     start: datetime,
     end: datetime,
     granularity: int,
 ) -> pd.DataFrame:
-
     """
     Fetch historical candle data for a given product from Coinbase Exchange API.
 
@@ -31,11 +31,11 @@ def coinbase_fetch_historical_candles(
         DataFrame containing time, low, high, open, close, volume.
     """
 
-    url = f'https://api.exchange.coinbase.com/products/{product_id}/candles'
+    url = f"https://api.exchange.coinbase.com/products/{product_id}/candles"
     params = {
-        'start': start.isoformat(),
-        'end': end.isoformat(),
-        'granularity': granularity
+        "start": start.isoformat(),
+        "end": end.isoformat(),
+        "granularity": granularity,
     }
 
     max_retries = 5
@@ -51,8 +51,10 @@ def coinbase_fetch_historical_candles(
             data = data[::-1]
 
             # Convert to DataFrame
-            df = pd.DataFrame(data, columns=['time', 'low', 'high', 'open', 'close', 'volume'])
-            df['time'] = pd.to_datetime(df['time'], unit='s')
+            df = pd.DataFrame(
+                data, columns=["time", "low", "high", "open", "close", "volume"]
+            )
+            df["time"] = pd.to_datetime(df["time"], unit="s")
             return df
 
         except requests.exceptions.HTTPError as errh:
@@ -77,8 +79,9 @@ def coinbase_fetch_historical_candles(
 
     raise Exception("Failed to fetch data after multiple retries.")
 
+
 if __name__ == "__main__":
-    
+
     # Example usage
     df = coinbase_fetch_historical_candles(
         product_id="BTC-USD",

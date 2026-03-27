@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 
+
 def polygon_month_end(
     base_directory,
     ticker: str,
@@ -11,7 +12,6 @@ def polygon_month_end(
     pickle_export: bool,
     output_confirmation: bool,
 ) -> pd.DataFrame:
-    
     """
     Read daily data from an existing pickle file and export month-end close prices.
 
@@ -45,17 +45,17 @@ def polygon_month_end(
 
     # Read data from pickle
     df = pd.read_pickle(location)
-    
+
     # Reset index if 'Date' is column is the index
-    if 'Date' not in df.columns:
+    if "Date" not in df.columns:
         df = df.reset_index()
 
     # Keep only required columns
-    df = df[['Date', 'close']]
+    df = df[["Date", "close"]]
 
     # Set index to date column
-    df = df.set_index('Date')
-        
+    df = df.set_index("Date")
+
     # Resample data to month end
     df_month_end = df.resample("ME").last()
 
@@ -74,7 +74,7 @@ def polygon_month_end(
         df_month_end.to_pickle(f"{directory}/{ticker}_ME.pkl")
     else:
         pass
-        
+
     # Output confirmation
     if output_confirmation == True:
         print(f"Month end data complete for {ticker}")

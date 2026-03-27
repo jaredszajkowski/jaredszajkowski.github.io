@@ -4,16 +4,16 @@ import time
 from coinbase_fetch_historical_candles import coinbase_fetch_historical_candles
 from datetime import datetime, timedelta
 
+
 def coinbase_fetch_full_history(
     product_id: str,
     start: datetime,
     end: datetime,
     granularity: int,
 ) -> pd.DataFrame:
-    
     """
     Fetch full historical data for a given product from Coinbase Exchange API.
-    
+
     Parameters:
     -----------
     product_id : str
@@ -30,17 +30,21 @@ def coinbase_fetch_full_history(
     pd.DataFrame
         DataFrame containing time, low, high, open, close, volume.
     """
-    
+
     all_data = []
     current_start = start
 
     while current_start < end:
-        current_end = min(current_start + timedelta(seconds=granularity * 300), end)  # Fetch max 300 candles per request
-        df = coinbase_fetch_historical_candles(product_id, current_start, current_end, granularity)
+        current_end = min(
+            current_start + timedelta(seconds=granularity * 300), end
+        )  # Fetch max 300 candles per request
+        df = coinbase_fetch_historical_candles(
+            product_id, current_start, current_end, granularity
+        )
         if df.empty:
             break
         all_data.append(df)
-        current_start = df['time'].iloc[-1] + timedelta(seconds=granularity)
+        current_start = df["time"].iloc[-1] + timedelta(seconds=granularity)
         time.sleep(0.2)  # Small delay to respect rate limits
 
     if all_data:
@@ -48,9 +52,10 @@ def coinbase_fetch_full_history(
         return full_df
     else:
         return pd.DataFrame()
-    
+
+
 if __name__ == "__main__":
-    
+
     # Example usage
     df = coinbase_fetch_full_history(
         product_id="BTC-USD",

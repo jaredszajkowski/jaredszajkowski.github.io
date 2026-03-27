@@ -18,13 +18,13 @@ client = RESTClient(api_key=api_keys["POLYGON_KEY"])
 
 tickers = []
 for t in client.list_tickers(
-	market="indices",
-	search="spx",
-	active="true",
-	order="asc",
-	limit="100",
-	sort="ticker",
-	):
+    market="indices",
+    search="spx",
+    active="true",
+    order="asc",
+    limit="100",
+    sort="ticker",
+):
     tickers.append(t)
 
 print(tickers)

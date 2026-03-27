@@ -1,3 +1,4 @@
+```python
 import pandas as pd
 import time
 
@@ -98,3 +99,5 @@ if __name__ == "__main__":
     # Export etfs dictionary to csv file
     etfs_df = pd.DataFrame.from_dict(etfs, orient="index", columns=["Name"])
     etfs_df.to_csv(f"{DATA_DIR}/Polygon/etfs.csv")
+
+```

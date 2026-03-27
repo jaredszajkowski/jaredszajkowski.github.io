@@ -320,6 +320,17 @@ export_track_md_deps(dep_file=dep_file, md_filename="polygon_fetch_full_history.
 
 
 ```python
+from polygon_fetch_ticker_details import polygon_fetch_ticker_details
+code = Path(SOURCE_DIR / "polygon_fetch_ticker_details.py").read_text()
+# Copy this <!-- INSERT_polygon_fetch_ticker_details_HERE --> to index_temp.md
+export_track_md_deps(dep_file=dep_file, md_filename="polygon_fetch_ticker_details.md", content=code, output_type="python")
+```
+
+    ✅ Exported and tracked: polygon_fetch_ticker_details.md
+
+
+
+```python
 from polygon_pull_data import polygon_pull_data
 code = Path(SOURCE_DIR / "polygon_pull_data.py").read_text()
 # Copy this <!-- INSERT_polygon_pull_data_HERE --> to index_temp.md

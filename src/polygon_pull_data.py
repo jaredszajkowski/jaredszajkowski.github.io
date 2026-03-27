@@ -81,7 +81,9 @@ def polygon_pull_data(
     # Create list of acceptable timespans
     acceptable_timespans = ["minute", "hour", "day"]
     if timespan not in acceptable_timespans:
-        raise Exception(f"Invalid timespan: {timespan}. Acceptable timespans are: {acceptable_timespans}.")
+        raise Exception(
+            f"Invalid timespan: {timespan}. Acceptable timespans are: {acceptable_timespans}."
+        )
 
     # if timespan == "minute":
     #     time_delta = 15
@@ -278,4 +280,3 @@ if __name__ == "__main__":
             time.sleep(12)
         else:
             pass
-        

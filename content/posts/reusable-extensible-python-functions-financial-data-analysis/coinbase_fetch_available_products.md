@@ -2,15 +2,15 @@
 import pandas as pd
 import requests
 
+
 def coinbase_fetch_available_products(
     base_currency: str,
     quote_currency: str,
     status: str,
 ) -> pd.DataFrame:
-
     """
     Fetch available products from Coinbase Exchange API.
-    
+
     Parameters:
     -----------
     base_currency : str, optional
@@ -26,7 +26,7 @@ def coinbase_fetch_available_products(
         DataFrame containing available products with their details.
     """
 
-    url = 'https://api.exchange.coinbase.com/products'
+    url = "https://api.exchange.coinbase.com/products"
     try:
         response = requests.get(url, timeout=10)
         response.raise_for_status()
@@ -34,24 +34,24 @@ def coinbase_fetch_available_products(
 
         # Convert the list of products into a pandas DataFrame
         df = pd.DataFrame(products)
-        
+
         # Filter by base_currency if provided
         if base_currency:
-            df = df[df['base_currency'] == base_currency]
-        
+            df = df[df["base_currency"] == base_currency]
+
         # Filter by quote_currency if provided
         if quote_currency:
-            df = df[df['quote_currency'] == quote_currency]
+            df = df[df["quote_currency"] == quote_currency]
 
         # Filter by status if provided
         if status:
-            df = df[df['status'] == status]
+            df = df[df["status"] == status]
 
         # Sort by "id"
-        df = df.sort_values(by='id')
-        
+        df = df.sort_values(by="id")
+
         return df
-    
+
     except requests.exceptions.HTTPError as errh:
         print(f"HTTP Error: {errh}")
     except requests.exceptions.ConnectionError as errc:
@@ -61,8 +61,9 @@ def coinbase_fetch_available_products(
     except requests.exceptions.RequestException as err:
         print(f"Oops: Something Else {err}")
 
+
 if __name__ == "__main__":
-    
+
     # Example usage
     df = coinbase_fetch_available_products(
         base_currency=None,
@@ -74,4 +75,5 @@ if __name__ == "__main__":
         print(df)
     else:
         print("No data returned.")
+
 ```

@@ -42,6 +42,7 @@ This post intends to provide the code for all of the python functions that I use
 * [plot_timeseries](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_timeseries): Plot the timeseries data from a DataFrame for a specified date range and columns.
 * [plot_vix_with_trades](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_vix_with_trades): Plot the VIX daily high and low prices, along with the VIX spikes, and trades.
 * [polygon_fetch_full_history](/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_fetch_full_history): Fetch full historical data for a given product from Polygon API.
+* [polygon_fetch_ticker_details](/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_fetch_ticker_details): Fetch detailed information for a given product from Polygon API.
 * [polygon_pull_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_pull_data): Read existing data file, download price data from Polygon, and export data.
 * [run_linear_regression](/posts/reusable-extensible-python-functions-financial-data-analysis/#run_linear_regression): Run a linear regression using statsmodels OLS and return the results.
 * [strategy_harry_brown_perm_port](/posts/reusable-extensible-python-functions-financial-data-analysis/#strategy_harry_brown_perm_port): Execute the strategy for the Harry Brown permanent portfolio.
@@ -487,15 +488,15 @@ def calc_vix_trade_pnl(
 import pandas as pd
 import requests
 
+
 def coinbase_fetch_available_products(
     base_currency: str,
     quote_currency: str,
     status: str,
 ) -> pd.DataFrame:
-
     """
     Fetch available products from Coinbase Exchange API.
-    
+
     Parameters:
     -----------
     base_currency : str, optional
@@ -511,7 +512,7 @@ def coinbase_fetch_available_products(
         DataFrame containing available products with their details.
     """
 
-    url = 'https://api.exchange.coinbase.com/products'
+    url = "https://api.exchange.coinbase.com/products"
     try:
         response = requests.get(url, timeout=10)
         response.raise_for_status()
@@ -519,24 +520,24 @@ def coinbase_fetch_available_products(
 
         # Convert the list of products into a pandas DataFrame
         df = pd.DataFrame(products)
-        
+
         # Filter by base_currency if provided
         if base_currency:
-            df = df[df['base_currency'] == base_currency]
-        
+            df = df[df["base_currency"] == base_currency]
+
         # Filter by quote_currency if provided
         if quote_currency:
-            df = df[df['quote_currency'] == quote_currency]
+            df = df[df["quote_currency"] == quote_currency]
 
         # Filter by status if provided
         if status:
-            df = df[df['status'] == status]
+            df = df[df["status"] == status]
 
         # Sort by "id"
-        df = df.sort_values(by='id')
-        
+        df = df.sort_values(by="id")
+
         return df
-    
+
     except requests.exceptions.HTTPError as errh:
         print(f"HTTP Error: {errh}")
     except requests.exceptions.ConnectionError as errc:
@@ -546,8 +547,9 @@ def coinbase_fetch_available_products(
     except requests.exceptions.RequestException as err:
         print(f"Oops: Something Else {err}")
 
+
 if __name__ == "__main__":
-    
+
     # Example usage
     df = coinbase_fetch_available_products(
         base_currency=None,
@@ -559,6 +561,7 @@ if __name__ == "__main__":
         print(df)
     else:
         print("No data returned.")
+
 ```
 
 ### coinbase_fetch_full_history
@@ -570,16 +573,16 @@ import time
 from coinbase_fetch_historical_candles import coinbase_fetch_historical_candles
 from datetime import datetime, timedelta
 
+
 def coinbase_fetch_full_history(
     product_id: str,
     start: datetime,
     end: datetime,
     granularity: int,
 ) -> pd.DataFrame:
-    
     """
     Fetch full historical data for a given product from Coinbase Exchange API.
-    
+
     Parameters:
     -----------
     product_id : str
@@ -596,17 +599,21 @@ def coinbase_fetch_full_history(
     pd.DataFrame
         DataFrame containing time, low, high, open, close, volume.
     """
-    
+
     all_data = []
     current_start = start
 
     while current_start < end:
-        current_end = min(current_start + timedelta(seconds=granularity * 300), end)  # Fetch max 300 candles per request
-        df = coinbase_fetch_historical_candles(product_id, current_start, current_end, granularity)
+        current_end = min(
+            current_start + timedelta(seconds=granularity * 300), end
+        )  # Fetch max 300 candles per request
+        df = coinbase_fetch_historical_candles(
+            product_id, current_start, current_end, granularity
+        )
         if df.empty:
             break
         all_data.append(df)
-        current_start = df['time'].iloc[-1] + timedelta(seconds=granularity)
+        current_start = df["time"].iloc[-1] + timedelta(seconds=granularity)
         time.sleep(0.2)  # Small delay to respect rate limits
 
     if all_data:
@@ -614,9 +621,10 @@ def coinbase_fetch_full_history(
         return full_df
     else:
         return pd.DataFrame()
-    
+
+
 if __name__ == "__main__":
-    
+
     # Example usage
     df = coinbase_fetch_full_history(
         product_id="BTC-USD",
@@ -629,6 +637,7 @@ if __name__ == "__main__":
         print(df)
     else:
         print("No data returned.")
+
 ```
 
 ### coinbase_fetch_historical_candles
@@ -640,13 +649,13 @@ import time
 
 from datetime import datetime
 
+
 def coinbase_fetch_historical_candles(
     product_id: str,
     start: datetime,
     end: datetime,
     granularity: int,
 ) -> pd.DataFrame:
-
     """
     Fetch historical candle data for a given product from Coinbase Exchange API.
 
@@ -667,11 +676,11 @@ def coinbase_fetch_historical_candles(
         DataFrame containing time, low, high, open, close, volume.
     """
 
-    url = f'https://api.exchange.coinbase.com/products/{product_id}/candles'
+    url = f"https://api.exchange.coinbase.com/products/{product_id}/candles"
     params = {
-        'start': start.isoformat(),
-        'end': end.isoformat(),
-        'granularity': granularity
+        "start": start.isoformat(),
+        "end": end.isoformat(),
+        "granularity": granularity,
     }
 
     max_retries = 5
@@ -687,8 +696,10 @@ def coinbase_fetch_historical_candles(
             data = data[::-1]
 
             # Convert to DataFrame
-            df = pd.DataFrame(data, columns=['time', 'low', 'high', 'open', 'close', 'volume'])
-            df['time'] = pd.to_datetime(df['time'], unit='s')
+            df = pd.DataFrame(
+                data, columns=["time", "low", "high", "open", "close", "volume"]
+            )
+            df["time"] = pd.to_datetime(df["time"], unit="s")
             return df
 
         except requests.exceptions.HTTPError as errh:
@@ -713,8 +724,9 @@ def coinbase_fetch_historical_candles(
 
     raise Exception("Failed to fetch data after multiple retries.")
 
+
 if __name__ == "__main__":
-    
+
     # Example usage
     df = coinbase_fetch_historical_candles(
         product_id="BTC-USD",
@@ -727,6 +739,7 @@ if __name__ == "__main__":
         print(df)
     else:
         print("No data returned.")
+
 ```
 
 ### coinbase_pull_data
@@ -744,6 +757,7 @@ from settings import config
 # Get the data directory from the configuration
 DATA_DIR = config("DATA_DIR")
 
+
 def coinbase_pull_data(
     base_directory,
     source: str,
@@ -753,12 +767,14 @@ def coinbase_pull_data(
     output_confirmation: bool,
     base_currency: str,
     quote_currency: str,
-    granularity: int=3600, # 60=minute, 3600=hourly, 86400=daily
-    status: str='online', # default status is 'online'
-    start_date: datetime=datetime(2025, 1, 1), # default start date
-    end_date: datetime=datetime.now() - timedelta(days=1), # updates data through 1 day ago due to lag in data availability
+    granularity: int = 3600,  # 60=minute, 3600=hourly, 86400=daily
+    status: str = "online",  # default status is 'online'
+    start_date: datetime = datetime(2025, 1, 1),  # default start date
+    end_date: datetime = datetime.now()
+    - timedelta(
+        days=1
+    ),  # updates data through 1 day ago due to lag in data availability
 ) -> pd.DataFrame:
-    
     """
     Update existing record or pull full historical data for a given product from Coinbase Exchange API.
 
@@ -795,12 +811,14 @@ def coinbase_pull_data(
     """
 
     # List of crypto assets
-    filtered_products = coinbase_fetch_available_products(base_currency=base_currency, quote_currency=quote_currency, status=status)
-    filtered_products_list = filtered_products['id'].tolist()
+    filtered_products = coinbase_fetch_available_products(
+        base_currency=base_currency, quote_currency=quote_currency, status=status
+    )
+    filtered_products_list = filtered_products["id"].tolist()
     filtered_products_list = sorted(filtered_products_list)
 
     if not filtered_products.empty:
-        print(filtered_products[['id', 'base_currency', 'quote_currency', 'status']])
+        print(filtered_products[["id", "base_currency", "quote_currency", "status"]])
         print(filtered_products_list)
         print(len(filtered_products_list))
 
@@ -814,8 +832,8 @@ def coinbase_pull_data(
 
     # Loop for updates
     for product in filtered_products_list:
-        
-        counter+=1
+
+        counter += 1
         print(f"Updating product {counter} of {num_products}.")
 
         if granularity == 60:
@@ -829,8 +847,10 @@ def coinbase_pull_data(
             break
 
         # Set file location based on parameters
-        file_location = f"{base_directory}/{source}/{asset_class}/{time_length}/{product}.pkl"
-    
+        file_location = (
+            f"{base_directory}/{source}/{asset_class}/{time_length}/{product}.pkl"
+        )
+
         try:
             # Attempt to read existing pickle data file
             ex_data = pd.read_pickle(file_location)
@@ -840,18 +860,22 @@ def coinbase_pull_data(
             print(ex_data)
 
             # Pull recent data
-            new_data = coinbase_fetch_full_history(product, start_date, end_date, granularity)
-            new_data = new_data.rename(columns={'time':'Date'})
-            new_data['Date'] = new_data['Date'].dt.tz_localize(None)
+            new_data = coinbase_fetch_full_history(
+                product, start_date, end_date, granularity
+            )
+            new_data = new_data.rename(columns={"time": "Date"})
+            new_data["Date"] = new_data["Date"].dt.tz_localize(None)
             print("New data:")
             print(new_data)
 
             # Combine existing data with recent data
-            full_history_df = pd.concat([ex_data,new_data[new_data['Date'].isin(ex_data['Date']) == False]])
-            full_history_df = full_history_df.sort_values(by='Date')
-            full_history_df['Date'] = full_history_df['Date'].dt.tz_localize(None)
-            full_history_df = full_history_df.set_index('Date')
-            
+            full_history_df = pd.concat(
+                [ex_data, new_data[new_data["Date"].isin(ex_data["Date"]) == False]]
+            )
+            full_history_df = full_history_df.sort_values(by="Date")
+            full_history_df["Date"] = full_history_df["Date"].dt.tz_localize(None)
+            full_history_df = full_history_df.set_index("Date")
+
             print("Combined data:")
             print(full_history_df)
 
@@ -861,7 +885,9 @@ def coinbase_pull_data(
 
             # Export to excel
             if excel_export == True:
-                full_history_df.to_excel(f"{directory}/{product}.xlsx", sheet_name="data")
+                full_history_df.to_excel(
+                    f"{directory}/{product}.xlsx", sheet_name="data"
+                )
             else:
                 pass
 
@@ -877,53 +903,65 @@ def coinbase_pull_data(
                 print("--------------------")
             else:
                 pass
-            
+
         except FileNotFoundError:
             # Starting year for fetching initial data
             starting_year = 2025
 
             # Print error
-            print(f"File not found...downloading the {product} data starting with {starting_year}.")
+            print(
+                f"File not found...downloading the {product} data starting with {starting_year}."
+            )
 
             def get_full_hist(year):
                 try:
                     # Define the start and end dates
-                    start_date = datetime(year, 1, 1) # Default start date
-                    end_date = datetime.now() - timedelta(days = 1) # Updates data through 1 day ago
+                    start_date = datetime(year, 1, 1)  # Default start date
+                    end_date = datetime.now() - timedelta(
+                        days=1
+                    )  # Updates data through 1 day ago
 
                     # Fetch and process the data
-                    full_history_df = coinbase_fetch_full_history(product, start_date, end_date, granularity)
-                    full_history_df = full_history_df.rename(columns={'time': 'Date'})
-                    full_history_df = full_history_df.sort_values(by='Date')
+                    full_history_df = coinbase_fetch_full_history(
+                        product, start_date, end_date, granularity
+                    )
+                    full_history_df = full_history_df.rename(columns={"time": "Date"})
+                    full_history_df = full_history_df.sort_values(by="Date")
 
                     # Iterate through rows to see if the value of the asset ever exceeds a specified threshold
                     # Default value for the price threshold is 0 USD
                     # If the price never exceeds this threshold, the asset is omitted from the final list
                     def find_first_close_above_threshold(full_history_df, threshold=0):
                         # Ensure 'Date' is the index before proceeding
-                        if 'Date' in full_history_df.columns:
-                            full_history_df.set_index('Date', inplace=True)
+                        if "Date" in full_history_df.columns:
+                            full_history_df.set_index("Date", inplace=True)
                         full_history_df.index = full_history_df.index.tz_localize(None)
-                        
+
                         # Iterate through the DataFrame
                         for index, row in full_history_df.iterrows():
-                            if row['close'] >= threshold:
-                                print(f"First occurrence: {index}, close={row['close']}")
+                            if row["close"] >= threshold:
+                                print(
+                                    f"First occurrence: {index}, close={row['close']}"
+                                )
 
                                 # Return the filtered DataFrame starting from this row
                                 return full_history_df.loc[index:]
-                        
+
                         # If no value meets the condition, return an empty DataFrame
                         print(f"Share price never exceeds {threshold} USD.")
                         omitted_data.append(product)
                         return None
-                    
-                    full_history_above_threshold_df = find_first_close_above_threshold(full_history_df, threshold=0)
+
+                    full_history_above_threshold_df = find_first_close_above_threshold(
+                        full_history_df, threshold=0
+                    )
 
                     return full_history_above_threshold_df
 
                 except KeyError:
-                    print(f"KeyError: No data available for {product} in {year}. Trying next year...")
+                    print(
+                        f"KeyError: No data available for {product} in {year}. Trying next year..."
+                    )
                     next_year = year + 1
 
                     # Base case: Stop if the next year exceeds the current year
@@ -946,7 +984,9 @@ def coinbase_pull_data(
 
                 # Export to excel
                 if excel_export == True:
-                    full_history_df.to_excel(f"{directory}/{product}.xlsx", sheet_name="data")
+                    full_history_df.to_excel(
+                        f"{directory}/{product}.xlsx", sheet_name="data"
+                    )
                 else:
                     pass
 
@@ -958,14 +998,16 @@ def coinbase_pull_data(
 
                 # Output confirmation
                 if output_confirmation == True:
-                    print(f"Initial data fetching completed successfully for {time_length} {product}.")
+                    print(
+                        f"Initial data fetching completed successfully for {time_length} {product}."
+                    )
                     print("--------------------")
                 else:
                     pass
 
             else:
                 print("No data could be fetched for the specified range.")
-                
+
         except Exception as e:
             print(str(e))
 
@@ -987,30 +1029,39 @@ def coinbase_pull_data(
 
     for asset in omitted_data:
         try:
-            print(f"Removing {asset} from the list because the share price never exceeds 1 USD.")
+            print(
+                f"Removing {asset} from the list because the share price never exceeds 1 USD."
+            )
             filtered_products_list.remove(asset)
         except ValueError:
             print(f"{asset} not in list.")
-            pass  
-    
+            pass
+
     # Remove stablecoins from the final list
-    stablecoins_to_remove = ['USDT-USD', 'USDC-USD', 'PAX-USD', 'DAI-USD', 'PYUSD-USD', 'GUSD-USD']
+    stablecoins_to_remove = [
+        "USDT-USD",
+        "USDC-USD",
+        "PAX-USD",
+        "DAI-USD",
+        "PYUSD-USD",
+        "GUSD-USD",
+    ]
     stablecoins_to_remove = sorted(stablecoins_to_remove)
     print(f"Data for stable coins not to be used: {stablecoins_to_remove}")
-    
+
     for asset in stablecoins_to_remove:
         try:
             filtered_products_list.remove(asset)
             # print(f"Removing {asset} from the list because it is a stablecoin.")
         except ValueError:
             # print(f"{asset} not in list.")
-            pass 
+            pass
 
     # Remove the wrapped coins from the final list
-    wrapped_coins_to_remove = ['WAXL-USD', 'WBTC-USD']
+    wrapped_coins_to_remove = ["WAXL-USD", "WBTC-USD"]
     wrapped_coins_to_remove = sorted(wrapped_coins_to_remove)
     print(f"Data for wrapped coins not to be used: {wrapped_coins_to_remove}")
-    
+
     for asset in wrapped_coins_to_remove:
         try:
             filtered_products_list.remove(asset)
@@ -1025,8 +1076,9 @@ def coinbase_pull_data(
 
     return full_history_df
 
+
 if __name__ == "__main__":
-     
+
     # Example usage to pull all data for each month from 2010 to 2024
     for granularity in [60, 3600, 86400]:
         for year in range(2010, 2025):
@@ -1044,8 +1096,8 @@ if __name__ == "__main__":
                         output_confirmation=True,
                         base_currency="BTC",
                         quote_currency="USD",
-                        granularity=granularity, # 60=minute, 3600=hourly, 86400=daily
-                        status='online',
+                        granularity=granularity,  # 60=minute, 3600=hourly, 86400=daily
+                        status="online",
                         start_date=datetime(year, month, 1),
                         end_date=datetime(year, month, last_day),
                     )
@@ -1108,6 +1160,7 @@ if __name__ == "__main__":
     #         start_date=datetime(current_year, current_month - 1, 1), # default start date
     #         end_date=datetime.now() - timedelta(days=1), # updates data through 1 day ago due to lag in data availability
     #     )
+
 ```
 
 ### df_info
@@ -2385,6 +2438,7 @@ api_keys = load_api_keys()
 # Get the environment variable for where data is stored
 DATA_DIR = config("DATA_DIR")
 
+
 def polygon_fetch_full_history(
     client,
     ticker: str,
@@ -2396,7 +2450,6 @@ def polygon_fetch_full_history(
     free_tier: bool,
     verbose: bool,
 ) -> pd.DataFrame:
-
     """
     Fetch full historical data for a given product from Polygon API.
 
@@ -2412,8 +2465,8 @@ def polygon_fetch_full_history(
         Multiplier for the time span (e.g., 1 for daily data).
     adjusted : bool
         If True, return adjusted data; if False, return raw data.
-    full_history_df : pd.DataFrame
-        DataFrame containing the data.
+    existing_history_df : pd.DataFrame
+        DataFrame containing the existing historical data.
     current_start : datetime
         Date for which to start pulling data in datetime format.
     free_tier : bool
@@ -2441,7 +2494,7 @@ def polygon_fetch_full_history(
         time_overlap = 1
     else:
         raise Exception(f"Invalid {timespan}.")
-    
+
     new_data_last_date = None
     new_date_last_date_check = None
 
@@ -2451,7 +2504,9 @@ def polygon_fetch_full_history(
         current_end = current_start + timedelta(days=time_delta)
 
         if verbose == True:
-            print(f"Pulling {timespan} data for {current_start} thru {current_end} for {ticker}...\n")
+            print(
+                f"Pulling {timespan} data for {current_start} thru {current_end} for {ticker}...\n"
+            )
 
         try:
             # Pull new data
@@ -2467,14 +2522,26 @@ def polygon_fetch_full_history(
             )
 
             # if len(aggs) == 0:
-                # raise Exception(f"No data is available for {ticker} for {current_start} thru {current_end}. Please attempt different dates.")
-            
+            # raise Exception(f"No data is available for {ticker} for {current_start} thru {current_end}. Please attempt different dates.")
+
             # Convert to DataFrame
             new_data = pd.DataFrame([bar.__dict__ for bar in aggs])
             new_data["timestamp"] = pd.to_datetime(new_data["timestamp"], unit="ms")
-            new_data = new_data.rename(columns = {'timestamp':'Date'})
-            new_data = new_data[['Date', 'open', 'high', 'low', 'close', 'volume', 'vwap', 'transactions', 'otc']]
-            new_data = new_data.sort_values(by='Date', ascending=True)
+            new_data = new_data.rename(columns={"timestamp": "Date"})
+            new_data = new_data[
+                [
+                    "Date",
+                    "open",
+                    "high",
+                    "low",
+                    "close",
+                    "volume",
+                    "vwap",
+                    "transactions",
+                    "otc",
+                ]
+            ]
+            new_data = new_data.sort_values(by="Date", ascending=True)
 
             # Enforce dtypes to match full_history_df
             new_data = new_data.astype(full_history_df.dtypes.to_dict())
@@ -2483,7 +2550,7 @@ def polygon_fetch_full_history(
             # new_data = new_data[full_history_df.columns]
 
             # Find last date in new_data
-            new_data_last_date = new_data['Date'].max()
+            new_data_last_date = new_data["Date"].max()
 
             if verbose == True:
                 print("New data:")
@@ -2493,16 +2560,18 @@ def polygon_fetch_full_history(
 
             # Check if new data contains 5000 rows
             # if len(new_data) == 5000:
-                # raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
+            # raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
 
             # If full_history_df length is not 0, check to confirm that data overlaps to verify that there were not any splits in the data
             # if not full_history_df.empty:
-                # if not full_history_df['Date'].isin(new_data['Date']).any():
-                    # raise Exception(f"New data does not overlap with existing data.")
+            # if not full_history_df['Date'].isin(new_data['Date']).any():
+            # raise Exception(f"New data does not overlap with existing data.")
 
             if not full_history_df.empty:
                 # Columns present in both frames
-                common_cols = list(full_history_df.columns.intersection(new_data.columns))
+                common_cols = list(
+                    full_history_df.columns.intersection(new_data.columns)
+                )
                 if not common_cols:
                     raise Exception("No common columns to compare.")
 
@@ -2510,7 +2579,7 @@ def polygon_fetch_full_history(
                 # full_dedup = full_history_df[common_cols].drop_duplicates()
                 # new_dedup  = new_data[common_cols].drop_duplicates()
 
-                price_cols = ['open', 'high', 'low', 'close']
+                price_cols = ["open", "high", "low", "close"]
 
                 # Inner join on every shared column = exact row matches
                 # overlap = full_dedup.merge(new_dedup, on=common_cols, how="inner")
@@ -2518,12 +2587,16 @@ def polygon_fetch_full_history(
                 overlap = full_history_df.merge(new_data, on=price_cols, how="inner")
 
                 if overlap.empty:
-                    raise Exception(f"New data does not overlap with existing data (full-row check).")
+                    raise Exception(
+                        f"New data does not overlap with existing data (full-row check)."
+                    )
 
             # Combine existing data with recent data, drop duplicates, sort values, reset index
             full_history_df = pd.concat([full_history_df, new_data])
-            full_history_df = full_history_df.drop_duplicates(subset="Date", keep="last")
-            full_history_df = full_history_df.sort_values(by='Date',ascending=True)
+            full_history_df = full_history_df.drop_duplicates(
+                subset="Date", keep="last"
+            )
+            full_history_df = full_history_df.sort_values(by="Date", ascending=True)
             full_history_df = full_history_df.reset_index(drop=True)
 
             if verbose == True:
@@ -2531,11 +2604,11 @@ def polygon_fetch_full_history(
                 print(full_history_df)
 
         except KeyError as e:
-            print(f"No data is available for {ticker} from {current_start} thru {current_end}.")
-
-            user_choice = input(
-                f"Press Enter to continue, or type 'q' to quit: "
+            print(
+                f"No data is available for {ticker} from {current_start} thru {current_end}."
             )
+
+            user_choice = input(f"Press Enter to continue, or type 'q' to quit: ")
             if user_choice.lower() == "q":
                 print(f"Aborting operation to update {ticker} {timespan} data.")
                 break  # break out of the while loop
@@ -2548,10 +2621,12 @@ def polygon_fetch_full_history(
                 pass
 
         except Exception as e:
-            print(f"Failed to pull {timespan} data for {current_start} thru {current_end} for {ticker}: {e}")
+            print(
+                f"Failed to pull {timespan} data for {current_start} thru {current_end} for {ticker}: {e}"
+            )
             raise  # Re-raise the original exception
 
-        # Break out of loop if data is up-to-date (or close to being up-to-date because it is 
+        # Break out of loop if data is up-to-date (or close to being up-to-date because it is
         # possible that entire range was not pulled due to the way API handles hour data
         # from minute data)
         if current_end > datetime.now():
@@ -2584,6 +2659,7 @@ def polygon_fetch_full_history(
     # Return the DataFrame containing the full history
     return full_history_df
 
+
 if __name__ == "__main__":
 
     current_year = datetime.now().year
@@ -2594,17 +2670,19 @@ if __name__ == "__main__":
     client = RESTClient(api_key=api_keys["POLYGON_KEY"])
 
     # Create an empty DataFrame
-    df = pd.DataFrame({
-        'Date': pd.Series(dtype="datetime64[ns]"),
-        'open': pd.Series(dtype="float64"),
-        'high': pd.Series(dtype="float64"),
-        'low': pd.Series(dtype="float64"),
-        'close': pd.Series(dtype="float64"),
-        'volume': pd.Series(dtype="float64"),
-        'vwap': pd.Series(dtype="float64"),
-        'transactions': pd.Series(dtype="int64"),
-        'otc': pd.Series(dtype="object")
-    })
+    df = pd.DataFrame(
+        {
+            "Date": pd.Series(dtype="datetime64[ns]"),
+            "open": pd.Series(dtype="float64"),
+            "high": pd.Series(dtype="float64"),
+            "low": pd.Series(dtype="float64"),
+            "close": pd.Series(dtype="float64"),
+            "volume": pd.Series(dtype="float64"),
+            "vwap": pd.Series(dtype="float64"),
+            "transactions": pd.Series(dtype="int64"),
+            "otc": pd.Series(dtype="object"),
+        }
+    )
 
     # Example usage - minute
     df = polygon_fetch_full_history(
@@ -2618,6 +2696,7 @@ if __name__ == "__main__":
         free_tier=True,
         verbose=True,
     )
+
 ```
 
 ### polygon_pull_data
@@ -2706,7 +2785,9 @@ def polygon_pull_data(
     # Create list of acceptable timespans
     acceptable_timespans = ["minute", "hour", "day"]
     if timespan not in acceptable_timespans:
-        raise Exception(f"Invalid timespan: {timespan}. Acceptable timespans are: {acceptable_timespans}.")
+        raise Exception(
+            f"Invalid timespan: {timespan}. Acceptable timespans are: {acceptable_timespans}."
+        )
 
     # if timespan == "minute":
     #     time_delta = 15
@@ -2903,7 +2984,7 @@ if __name__ == "__main__":
             time.sleep(12)
         else:
             pass
-        
+
 ```
 
 ### run_linear_regression
