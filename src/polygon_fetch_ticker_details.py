@@ -76,6 +76,7 @@ if __name__ == "__main__":
 
     new_etf_tickers = [
         # Put new tickers here that you want to pull details for
+        "LTL",
     ]
 
     # Create empty dictionary
