@@ -30,6 +30,7 @@ def polygon_pull_data(
     verbose: bool,
     excel_export: bool,
     pickle_export: bool,
+    parquet_export: bool,
     output_confirmation: bool,
 ) -> pd.DataFrame:
     """
@@ -63,6 +64,8 @@ def polygon_pull_data(
         If True, export data to Excel format.
     pickle_export : bool
         If True, export data to Pickle format.
+    parquet_export : bool
+        If True, export data to Parquet format.
     output_confirmation : bool
         If True, print confirmation message.
 
@@ -179,6 +182,11 @@ def polygon_pull_data(
         print(f"Exporting {ticker} {timespan} data to Pickle...")
         full_history_df.to_pickle(f"{directory}/{ticker}.pkl")
 
+    # Export to Parquet
+    if parquet_export == True:
+        print(f"Exporting {ticker} {timespan} data to Parquet...")
+        full_history_df.to_parquet(f"{directory}/{ticker}.parquet")
+
     total_rows = len(full_history_df)
 
     # Output confirmation
@@ -227,6 +235,7 @@ if __name__ == "__main__":
             verbose=False,
             excel_export=True,
             pickle_export=True,
+            parquet_export=True,
             output_confirmation=True,
         )
 
@@ -250,6 +259,7 @@ if __name__ == "__main__":
             verbose=False,
             excel_export=True,
             pickle_export=True,
+            parquet_export=True,
             output_confirmation=True,
         )
 
@@ -273,6 +283,7 @@ if __name__ == "__main__":
             verbose=False,
             excel_export=True,
             pickle_export=True,
+            parquet_export=True,
             output_confirmation=True,
         )
 

@@ -10,6 +10,7 @@ def polygon_month_end(
     timespan: str,
     excel_export: bool,
     pickle_export: bool,
+    parquet_export: bool,
     output_confirmation: bool,
 ) -> pd.DataFrame:
     """
@@ -31,6 +32,8 @@ def polygon_month_end(
         If True, export data to Excel format.
     pickle_export : bool
         If True, export data to Pickle format.
+    parquet_export : bool
+        If True, export data to Parquet format.
     output_confirmation : bool
         If True, print confirmation message.
 
@@ -72,6 +75,12 @@ def polygon_month_end(
     # Export to Pickle
     if pickle_export == True:
         df_month_end.to_pickle(f"{directory}/{ticker}_ME.pkl")
+    else:
+        pass
+
+    # Export to Parquet
+    if parquet_export == True:
+        df_month_end.to_parquet(f"{directory}/{ticker}_ME.parquet")
     else:
         pass
 

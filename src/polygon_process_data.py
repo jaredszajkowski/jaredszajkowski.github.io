@@ -63,6 +63,7 @@ for stock in equities.keys():
             free_tier=GLOBAL_FREE_TIER,
             excel_export=False,
             pickle_export=True,
+            parquet_export=True,
             output_confirmation=True,
         )
 
@@ -88,6 +89,7 @@ for stock in equities.keys():
         free_tier=GLOBAL_FREE_TIER,
         excel_export=True,
         pickle_export=True,
+        parquet_export=True,
         output_confirmation=True,
     )
 
@@ -111,6 +113,7 @@ for stock in equities.keys():
         free_tier=GLOBAL_FREE_TIER,
         excel_export=True,
         pickle_export=True,
+        parquet_export=True,
         output_confirmation=True,
     )
 
@@ -128,6 +131,7 @@ for stock in equities.keys():
         timespan="day",
         excel_export=True,
         pickle_export=True,
+        parquet_export=True,
         output_confirmation=True,
     )
 
@@ -151,6 +155,7 @@ for stock in equities.keys():
         timespan="day",
         excel_export=True,
         pickle_export=True,
+        parquet_export=True,
         output_confirmation=True,
     )
 
@@ -364,6 +369,7 @@ for fund in etfs.keys():
             free_tier=GLOBAL_FREE_TIER,
             excel_export=False,
             pickle_export=True,
+            parquet_export=True,
             output_confirmation=True,
         )
 
@@ -389,6 +395,7 @@ for fund in etfs.keys():
         free_tier=GLOBAL_FREE_TIER,
         excel_export=True,
         pickle_export=True,
+        parquet_export=True,
         output_confirmation=True,
     )
 
@@ -412,6 +419,7 @@ for fund in etfs.keys():
         free_tier=GLOBAL_FREE_TIER,
         excel_export=True,
         pickle_export=True,
+        parquet_export=True,
         output_confirmation=True,
     )
 
@@ -429,6 +437,7 @@ for fund in etfs.keys():
         timespan="day",
         excel_export=True,
         pickle_export=True,
+        parquet_export=True,
         output_confirmation=True,
     )
 
@@ -452,6 +461,7 @@ for fund in etfs.keys():
         timespan="day",
         excel_export=True,
         pickle_export=True,
+        parquet_export=True,
         output_confirmation=True,
     )
 
