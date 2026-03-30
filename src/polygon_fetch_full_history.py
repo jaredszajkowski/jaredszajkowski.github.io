@@ -59,13 +59,13 @@ def polygon_fetch_full_history(
 
     if timespan == "minute":
         time_delta = 15
-        time_overlap = 1
+        time_overlap = 3
     elif timespan == "hour":
         time_delta = 15
-        time_overlap = 1
+        time_overlap = 3
     elif timespan == "day":
         time_delta = 180
-        time_overlap = 1
+        time_overlap = 3
     else:
         raise Exception(f"Invalid {timespan}.")
 
