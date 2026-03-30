@@ -16,6 +16,7 @@ pandas
 pandas-datareader
 pip-autoremove
 plotly
+pyarrow
 python-calamine
 python-decouple
 python-dotenv
