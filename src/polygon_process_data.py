@@ -170,104 +170,120 @@ for stock in equities.keys():
     #     output_confirmation=True,
     # )
 
-# # Index Data
-# indices = ["I:SPX"]
+###############
+# Index data
+# Tickers use the "I:" prefix (e.g., "I:SPX", "I:NDX", "I:DJI", "I:RUT", "I:VIX")
+###############
 
-# # Iterate through each index
-# for index in indices:
-#     # Pull minute data
-#     polygon_pull_data(
-#         base_directory=DATA_DIR,
-#         ticker=index,
-#         source="Polygon",
-#         asset_class="Indices",
-#         start_date=datetime(current_year - 2, current_month, current_day),
-#         timespan="minute",
-#         multiplier=1,
-#         adjusted=True,
-#         force_existing_check=True,
-#         excel_export=True,
-#         pickle_export=True,
-#         output_confirmation=True,
-#     )
+# Read existing data from csv file into indices dictionary
+try:
+    indices_df = pd.read_csv(f"{DATA_DIR}/Polygon/indices.csv", index_col=0)
+    indices = indices_df.to_dict()["Name"]
+except FileNotFoundError:
+    indices = {}
 
-#     # Pull hourly data
-#     polygon_pull_data(
-#         base_directory=DATA_DIR,
-#         ticker=index,
-#         source="Polygon",
-#         asset_class="Indices",
-#         start_date=datetime(current_year - 2, current_month, current_day),
-#         timespan="hour",
-#         multiplier=1,
-#         adjusted=True,
-#         force_existing_check=True,
-#         excel_export=True,
-#         pickle_export=True,
-#         output_confirmation=True,
-#     )
+# Iterate through each index
+for index in indices.keys():
+    if GLOBAL_PULL_MINUTE == True:
+        # Pull minute data
+        polygon_pull_data(
+            base_directory=DATA_DIR,
+            ticker=index,
+            source="Polygon",
+            asset_class="Indices",
+            start_date=datetime(current_year - 2, current_month, current_day),
+            timespan="minute",
+            multiplier=1,
+            adjusted=False,
+            force_existing_check=False,
+            verbose=GLOBAL_VERBOSE,
+            free_tier=GLOBAL_FREE_TIER,
+            excel_export=False,
+            pickle_export=True,
+            parquet_export=True,
+            output_confirmation=True,
+        )
 
-#     # Pull daily data
-#     polygon_pull_data(
-#         base_directory=DATA_DIR,
-#         ticker=index,
-#         source="Polygon",
-#         asset_class="Indices",
-#         start_date=datetime(current_year - 2, current_month, current_day),
-#         timespan="day",
-#         multiplier=1,
-#         adjusted=True,
-#         force_existing_check=True,
-#         excel_export=True,
-#         pickle_export=True,
-#         output_confirmation=True,
-#     )
+        if GLOBAL_FREE_TIER == True:
+            time.sleep(12)
+        else:
+            pass
+    else:
+        pass
 
-#     # Resample to month-end data
-#     polygon_month_end(
-#         base_directory=DATA_DIR,
-#         ticker=index,
-#         source="Polygon",
-#         asset_class="Indices",
-#         timespan="day",
-#         excel_export=True,
-#         pickle_export=False,
-#         output_confirmation=True,
-#     )
+    # Pull hourly data
+    polygon_pull_data(
+        base_directory=DATA_DIR,
+        ticker=index,
+        source="Polygon",
+        asset_class="Indices",
+        start_date=datetime(current_year - 2, current_month, current_day),
+        timespan="hour",
+        multiplier=1,
+        adjusted=False,
+        force_existing_check=False,
+        verbose=GLOBAL_VERBOSE,
+        free_tier=GLOBAL_FREE_TIER,
+        excel_export=True,
+        pickle_export=True,
+        parquet_export=True,
+        output_confirmation=True,
+    )
 
-#     # # Resample to month-end total return data
-#     # ndl_month_end_total_return(
-#     #     base_directory=DATA_DIR,
-#     #     ticker=stock,
-#     #     source="Nasdaq_Data_Link",
-#     #     asset_class="Equities",
-#     #     excel_export=True,
-#     #     pickle_export=False,
-#     #     output_confirmation=True,
-#     # )
+    if GLOBAL_FREE_TIER == True:
+        time.sleep(12)
+    else:
+        pass
 
-#     # Resample to quarter-end data
-#     polygon_quarter_end(
-#         base_directory=DATA_DIR,
-#         ticker=index,
-#         source="Polygon",
-#         asset_class="Indices",
-#         timespan="day",
-#         excel_export=True,
-#         pickle_export=False,
-#         output_confirmation=True,
-#     )
+    # Pull daily data
+    polygon_pull_data(
+        base_directory=DATA_DIR,
+        ticker=index,
+        source="Polygon",
+        asset_class="Indices",
+        start_date=datetime(current_year - 2, current_month, current_day),
+        timespan="day",
+        multiplier=1,
+        adjusted=False,
+        force_existing_check=False,
+        verbose=GLOBAL_VERBOSE,
+        free_tier=GLOBAL_FREE_TIER,
+        excel_export=True,
+        pickle_export=True,
+        parquet_export=True,
+        output_confirmation=True,
+    )
 
-#     # # Resample to quarter-end total return data
-#     # ndl_quarter_end_total_return(
-#     #     base_directory=DATA_DIR,
-#     #     ticker=stock,
-#     #     source="Nasdaq_Data_Link",
-#     #     asset_class="Equities",
-#     #     excel_export=True,
-#     #     pickle_export=False,
-#     #     output_confirmation=True,
-#     # )
+    if GLOBAL_FREE_TIER == True:
+        time.sleep(12)
+    else:
+        pass
+
+    # Resample to month-end data
+    polygon_month_end(
+        base_directory=DATA_DIR,
+        ticker=index,
+        source="Polygon",
+        asset_class="Indices",
+        timespan="day",
+        excel_export=True,
+        pickle_export=True,
+        parquet_export=True,
+        output_confirmation=True,
+    )
+
+    # Resample to quarter-end data
+    polygon_quarter_end(
+        base_directory=DATA_DIR,
+        ticker=index,
+        source="Polygon",
+        asset_class="Indices",
+        timespan="day",
+        excel_export=True,
+        pickle_export=True,
+        parquet_export=True,
+        output_confirmation=True,
+    )
 
 ###############
 # ETF data
@@ -475,6 +491,192 @@ for fund in etfs.keys():
     #     pickle_export=False,
     #     output_confirmation=True,
     # )
+
+###############
+# Options data
+# Tickers use OCC symbology with "O:" prefix:
+#   O:{underlying}{YYMMDD}{C|P}{8-digit strike * 1000}
+#   e.g., "O:SPY251219C00600000" = SPY Dec 19 2025 $600 Call
+# Only hour and day timespans are practical for options; minute data is very large.
+# adjusted=False is appropriate for options contracts.
+###############
+
+# Read existing data from csv file into options dictionary
+try:
+    options_df = pd.read_csv(f"{DATA_DIR}/Polygon/options.csv", index_col=0)
+    options = options_df.to_dict()["Name"]
+except FileNotFoundError:
+    options = {}
+
+# Iterate through each option contract
+for option in options.keys():
+    # Pull hourly data
+    polygon_pull_data(
+        base_directory=DATA_DIR,
+        ticker=option,
+        source="Polygon",
+        asset_class="Options",
+        start_date=datetime(current_year - 2, current_month, current_day),
+        timespan="hour",
+        multiplier=1,
+        adjusted=False,
+        force_existing_check=False,
+        verbose=GLOBAL_VERBOSE,
+        free_tier=GLOBAL_FREE_TIER,
+        excel_export=True,
+        pickle_export=True,
+        parquet_export=True,
+        output_confirmation=True,
+    )
+
+    if GLOBAL_FREE_TIER == True:
+        time.sleep(12)
+    else:
+        pass
+
+    # Pull daily data
+    polygon_pull_data(
+        base_directory=DATA_DIR,
+        ticker=option,
+        source="Polygon",
+        asset_class="Options",
+        start_date=datetime(current_year - 2, current_month, current_day),
+        timespan="day",
+        multiplier=1,
+        adjusted=False,
+        force_existing_check=False,
+        verbose=GLOBAL_VERBOSE,
+        free_tier=GLOBAL_FREE_TIER,
+        excel_export=True,
+        pickle_export=True,
+        parquet_export=True,
+        output_confirmation=True,
+    )
+
+    if GLOBAL_FREE_TIER == True:
+        time.sleep(12)
+    else:
+        pass
+
+###############
+# Futures data
+# Polygon uses "/" prefix for continuous front-month futures contracts
+# (e.g., "/ES" E-mini S&P 500, "/NQ" E-mini Nasdaq 100, "/CL" WTI Crude Oil,
+#  "/GC" Gold, "/SI" Silver, "/ZB" 30-Year Treasury Bond).
+# Specific dated contracts follow exchange symbology (e.g., "/ESH25").
+# adjusted=False is appropriate for futures contracts.
+# Note: futures data requires a Polygon subscription that includes futures.
+###############
+
+# Read existing data from csv file into futures dictionary
+try:
+    futures_df = pd.read_csv(f"{DATA_DIR}/Polygon/futures.csv", index_col=0)
+    futures = futures_df.to_dict()["Name"]
+except FileNotFoundError:
+    futures = {}
+
+# Iterate through each futures contract
+for future in futures.keys():
+    if GLOBAL_PULL_MINUTE == True:
+        # Pull minute data
+        polygon_pull_data(
+            base_directory=DATA_DIR,
+            ticker=future,
+            source="Polygon",
+            asset_class="Futures",
+            start_date=datetime(current_year - 2, current_month, current_day),
+            timespan="minute",
+            multiplier=1,
+            adjusted=False,
+            force_existing_check=False,
+            verbose=GLOBAL_VERBOSE,
+            free_tier=GLOBAL_FREE_TIER,
+            excel_export=False,
+            pickle_export=True,
+            parquet_export=True,
+            output_confirmation=True,
+        )
+
+        if GLOBAL_FREE_TIER == True:
+            time.sleep(12)
+        else:
+            pass
+    else:
+        pass
+
+    # Pull hourly data
+    polygon_pull_data(
+        base_directory=DATA_DIR,
+        ticker=future,
+        source="Polygon",
+        asset_class="Futures",
+        start_date=datetime(current_year - 2, current_month, current_day),
+        timespan="hour",
+        multiplier=1,
+        adjusted=False,
+        force_existing_check=False,
+        verbose=GLOBAL_VERBOSE,
+        free_tier=GLOBAL_FREE_TIER,
+        excel_export=True,
+        pickle_export=True,
+        parquet_export=True,
+        output_confirmation=True,
+    )
+
+    if GLOBAL_FREE_TIER == True:
+        time.sleep(12)
+    else:
+        pass
+
+    # Pull daily data
+    polygon_pull_data(
+        base_directory=DATA_DIR,
+        ticker=future,
+        source="Polygon",
+        asset_class="Futures",
+        start_date=datetime(current_year - 2, current_month, current_day),
+        timespan="day",
+        multiplier=1,
+        adjusted=False,
+        force_existing_check=False,
+        verbose=GLOBAL_VERBOSE,
+        free_tier=GLOBAL_FREE_TIER,
+        excel_export=True,
+        pickle_export=True,
+        parquet_export=True,
+        output_confirmation=True,
+    )
+
+    if GLOBAL_FREE_TIER == True:
+        time.sleep(12)
+    else:
+        pass
+
+    # Resample to month-end data
+    polygon_month_end(
+        base_directory=DATA_DIR,
+        ticker=future,
+        source="Polygon",
+        asset_class="Futures",
+        timespan="day",
+        excel_export=True,
+        pickle_export=True,
+        parquet_export=True,
+        output_confirmation=True,
+    )
+
+    # Resample to quarter-end data
+    polygon_quarter_end(
+        base_directory=DATA_DIR,
+        ticker=future,
+        source="Polygon",
+        asset_class="Futures",
+        timespan="day",
+        excel_export=True,
+        pickle_export=True,
+        parquet_export=True,
+        output_confirmation=True,
+    )
 
 # Mutual Fund Data
 # None

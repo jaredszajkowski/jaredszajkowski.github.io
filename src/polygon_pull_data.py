@@ -82,7 +82,7 @@ def polygon_pull_data(
     file_location = f"{base_directory}/{source}/{asset_class}/{timespan}/{ticker}.pkl"
 
     # Create list of acceptable timespans
-    acceptable_timespans = ["minute", "hour", "day"]
+    acceptable_timespans = ["minute", "hour", "day", "week"]
     if timespan not in acceptable_timespans:
         raise Exception(
             f"Invalid timespan: {timespan}. Acceptable timespans are: {acceptable_timespans}."
@@ -140,7 +140,7 @@ def polygon_pull_data(
                 "close": pd.Series(dtype="float64"),
                 "volume": pd.Series(dtype="float64"),
                 "vwap": pd.Series(dtype="float64"),
-                "transactions": pd.Series(dtype="int64"),
+                "transactions": pd.Series(dtype="Int64"),
                 "otc": pd.Series(dtype="object"),
             }
         )
