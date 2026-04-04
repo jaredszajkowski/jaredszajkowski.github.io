@@ -59,13 +59,13 @@ def polygon_fetch_full_history(
 
     if timespan == "minute":
         time_delta = 15
-        time_overlap = 3
+        time_overlap = 1
     elif timespan == "hour":
         time_delta = 15
-        time_overlap = 3
+        time_overlap = 1
     elif timespan == "day":
         time_delta = 180
-        time_overlap = 3
+        time_overlap = 1
     else:
         raise Exception(f"Invalid {timespan}.")
 
@@ -162,7 +162,8 @@ def polygon_fetch_full_history(
 
                 if overlap.empty:
                     raise Exception(
-                        f"New data does not overlap with existing data (full-row check)."
+                        # f"New data does not overlap with existing data (full-row check)."
+                        f"New data does not overlap with existing data (price data check)."
                     )
 
             # Combine existing data with recent data, drop duplicates, sort values, reset index
@@ -210,10 +211,10 @@ def polygon_fetch_full_history(
             # past current_start
             if new_date_last_date_check == new_data_last_date:
                 current_start = current_end - timedelta(days=time_overlap)
-                new_date_last_date_check = new_data_last_date
             else:
                 current_start = new_data_last_date - timedelta(days=time_overlap)
-                new_date_last_date_check = new_data_last_date
+
+            new_date_last_date_check = new_data_last_date
 
             # Code below is likely not necessary
 
