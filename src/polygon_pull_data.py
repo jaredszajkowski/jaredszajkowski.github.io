@@ -82,7 +82,7 @@ def polygon_pull_data(
     file_location = f"{base_directory}/{source}/{asset_class}/{timespan}/{ticker}.pkl"
 
     # Create list of acceptable timespans
-    acceptable_timespans = ["minute", "hour", "day", "week"]
+    acceptable_timespans = ["minute", "hour", "day"]
     if timespan not in acceptable_timespans:
         raise Exception(
             f"Invalid timespan: {timespan}. Acceptable timespans are: {acceptable_timespans}."

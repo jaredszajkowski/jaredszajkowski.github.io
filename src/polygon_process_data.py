@@ -27,6 +27,7 @@ current_day = datetime.now().day
 GLOBAL_VERBOSE = False
 GLOBAL_FREE_TIER = True
 GLOBAL_PULL_MINUTE = True
+GLOBAL_PARQUET_EXPORT = False
 
 # Crypto Data
 # None
@@ -63,7 +64,7 @@ for stock in equities.keys():
             free_tier=GLOBAL_FREE_TIER,
             excel_export=False,
             pickle_export=True,
-            parquet_export=True,
+            parquet_export=GLOBAL_PARQUET_EXPORT,
             output_confirmation=True,
         )
 
@@ -89,7 +90,7 @@ for stock in equities.keys():
         free_tier=GLOBAL_FREE_TIER,
         excel_export=True,
         pickle_export=True,
-        parquet_export=True,
+        parquet_export=GLOBAL_PARQUET_EXPORT,
         output_confirmation=True,
     )
 
@@ -113,7 +114,7 @@ for stock in equities.keys():
         free_tier=GLOBAL_FREE_TIER,
         excel_export=True,
         pickle_export=True,
-        parquet_export=True,
+        parquet_export=GLOBAL_PARQUET_EXPORT,
         output_confirmation=True,
     )
 
@@ -131,7 +132,7 @@ for stock in equities.keys():
         timespan="day",
         excel_export=True,
         pickle_export=True,
-        parquet_export=True,
+        parquet_export=GLOBAL_PARQUET_EXPORT,
         output_confirmation=True,
     )
 
@@ -155,7 +156,7 @@ for stock in equities.keys():
         timespan="day",
         excel_export=True,
         pickle_export=True,
-        parquet_export=True,
+        parquet_export=GLOBAL_PARQUET_EXPORT,
         output_confirmation=True,
     )
 
@@ -200,7 +201,7 @@ for index in indices.keys():
             free_tier=GLOBAL_FREE_TIER,
             excel_export=False,
             pickle_export=True,
-            parquet_export=True,
+            parquet_export=GLOBAL_PARQUET_EXPORT,
             output_confirmation=True,
         )
 
@@ -226,7 +227,7 @@ for index in indices.keys():
         free_tier=GLOBAL_FREE_TIER,
         excel_export=True,
         pickle_export=True,
-        parquet_export=True,
+        parquet_export=GLOBAL_PARQUET_EXPORT,
         output_confirmation=True,
     )
 
@@ -250,7 +251,7 @@ for index in indices.keys():
         free_tier=GLOBAL_FREE_TIER,
         excel_export=True,
         pickle_export=True,
-        parquet_export=True,
+        parquet_export=GLOBAL_PARQUET_EXPORT,
         output_confirmation=True,
     )
 
@@ -268,7 +269,7 @@ for index in indices.keys():
         timespan="day",
         excel_export=True,
         pickle_export=True,
-        parquet_export=True,
+        parquet_export=GLOBAL_PARQUET_EXPORT,
         output_confirmation=True,
     )
 
@@ -281,7 +282,7 @@ for index in indices.keys():
         timespan="day",
         excel_export=True,
         pickle_export=True,
-        parquet_export=True,
+        parquet_export=GLOBAL_PARQUET_EXPORT,
         output_confirmation=True,
     )
 
@@ -385,7 +386,7 @@ for fund in etfs.keys():
             free_tier=GLOBAL_FREE_TIER,
             excel_export=False,
             pickle_export=True,
-            parquet_export=True,
+            parquet_export=GLOBAL_PARQUET_EXPORT,
             output_confirmation=True,
         )
 
@@ -411,7 +412,7 @@ for fund in etfs.keys():
         free_tier=GLOBAL_FREE_TIER,
         excel_export=True,
         pickle_export=True,
-        parquet_export=True,
+        parquet_export=GLOBAL_PARQUET_EXPORT,
         output_confirmation=True,
     )
 
@@ -435,7 +436,7 @@ for fund in etfs.keys():
         free_tier=GLOBAL_FREE_TIER,
         excel_export=True,
         pickle_export=True,
-        parquet_export=True,
+        parquet_export=GLOBAL_PARQUET_EXPORT,
         output_confirmation=True,
     )
 
@@ -453,7 +454,7 @@ for fund in etfs.keys():
         timespan="day",
         excel_export=True,
         pickle_export=True,
-        parquet_export=True,
+        parquet_export=GLOBAL_PARQUET_EXPORT,
         output_confirmation=True,
     )
 
@@ -477,7 +478,7 @@ for fund in etfs.keys():
         timespan="day",
         excel_export=True,
         pickle_export=True,
-        parquet_export=True,
+        parquet_export=GLOBAL_PARQUET_EXPORT,
         output_confirmation=True,
     )
 
@@ -525,7 +526,7 @@ for option in options.keys():
         free_tier=GLOBAL_FREE_TIER,
         excel_export=True,
         pickle_export=True,
-        parquet_export=True,
+        parquet_export=GLOBAL_PARQUET_EXPORT,
         output_confirmation=True,
     )
 
@@ -549,7 +550,7 @@ for option in options.keys():
         free_tier=GLOBAL_FREE_TIER,
         excel_export=True,
         pickle_export=True,
-        parquet_export=True,
+        parquet_export=GLOBAL_PARQUET_EXPORT,
         output_confirmation=True,
     )
 
@@ -593,7 +594,7 @@ for future in futures.keys():
             free_tier=GLOBAL_FREE_TIER,
             excel_export=False,
             pickle_export=True,
-            parquet_export=True,
+            parquet_export=GLOBAL_PARQUET_EXPORT,
             output_confirmation=True,
         )
 
@@ -619,7 +620,7 @@ for future in futures.keys():
         free_tier=GLOBAL_FREE_TIER,
         excel_export=True,
         pickle_export=True,
-        parquet_export=True,
+        parquet_export=GLOBAL_PARQUET_EXPORT,
         output_confirmation=True,
     )
 
@@ -643,7 +644,7 @@ for future in futures.keys():
         free_tier=GLOBAL_FREE_TIER,
         excel_export=True,
         pickle_export=True,
-        parquet_export=True,
+        parquet_export=GLOBAL_PARQUET_EXPORT,
         output_confirmation=True,
     )
 
@@ -661,7 +662,7 @@ for future in futures.keys():
         timespan="day",
         excel_export=True,
         pickle_export=True,
-        parquet_export=True,
+        parquet_export=GLOBAL_PARQUET_EXPORT,
         output_confirmation=True,
     )
 
@@ -674,7 +675,7 @@ for future in futures.keys():
         timespan="day",
         excel_export=True,
         pickle_export=True,
-        parquet_export=True,
+        parquet_export=GLOBAL_PARQUET_EXPORT,
         output_confirmation=True,
     )
 

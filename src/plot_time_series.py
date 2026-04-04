@@ -29,10 +29,14 @@ def round_to_nice_value(value):
         nice_mantissa = 1
     elif mantissa <= 3:
         nice_mantissa = 2
-    elif mantissa <= 7:
+    elif mantissa <= 10:
         nice_mantissa = 5
-    else:
+    elif mantissa <= 15:
         nice_mantissa = 10
+    elif mantissa <= 30:
+        nice_mantissa = 20
+    else:
+        nice_mantissa = 50
 
     return nice_mantissa * magnitude
 
@@ -170,6 +174,38 @@ def plot_time_series(
     plt.xticks(rotation=x_tick_rotation)
 
     # Format Y axis
+    if y_tick_spacing == "Auto":
+        max_value = 0
+        min_value = 1
+        if plot_columns == "All":
+            for col in df_filtered.columns:
+                if df_filtered[col].max() > max_value:
+                    max_value = df_filtered[col].max()
+
+                if df_filtered[col].min() < min_value:
+                    min_value = df_filtered[col].min()
+        else:
+            for col in plot_columns:
+                if df_filtered[col].max() > max_value:
+                    max_value = df_filtered[col].max()
+
+                if df_filtered[col].min() < min_value:
+                    min_value = df_filtered[col].min()
+
+        raw_y_spacing = (max_value - min_value) / 10
+        y_tick_spacing = round_to_nice_value(raw_y_spacing)
+    else:
+        y_tick_spacing = y_tick_spacing
+
+    if y_format_decimal_places == "Auto":
+        if isinstance(y_tick_spacing, float):
+            y_tick_spacing_decimal_places = max(0, -int(math.floor(math.log10(abs(y_tick_spacing)))))
+        else:
+            y_tick_spacing_decimal_places = 0
+        y_format_decimal_places = y_tick_spacing_decimal_places
+    else:
+        y_format_decimal_places = y_format_decimal_places
+
     if y_format == "Decimal":
         plt.gca().yaxis.set_major_formatter(
             FuncFormatter(lambda x, _: f"{x:,.{y_format_decimal_places}f}")
@@ -188,21 +224,6 @@ def plot_time_series(
         raise ValueError(
             f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', 'Scientific', or 'Log'."
         )
-
-    if y_tick_spacing == "Auto":
-        max = 0
-        min = 1
-        for col in plot_columns:
-            if df[col].max() > max:
-                max = df[col].max()
-
-            if df[col].min() < min:
-                min = df[col].min()
-
-        raw_y_spacing = (max - min) / 10
-        y_tick_spacing = round_to_nice_value(raw_y_spacing)
-    else:
-        y_tick_spacing = y_tick_spacing
 
     plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
     plt.ylabel(y_label)
