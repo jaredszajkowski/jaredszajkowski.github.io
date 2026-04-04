@@ -140,7 +140,7 @@ def polygon_pull_data(
                 "close": pd.Series(dtype="float64"),
                 "volume": pd.Series(dtype="float64"),
                 "vwap": pd.Series(dtype="float64"),
-                "transactions": pd.Series(dtype="int64"),
+                "transactions": pd.Series(dtype="Int64"),
                 "otc": pd.Series(dtype="object"),
             }
         )

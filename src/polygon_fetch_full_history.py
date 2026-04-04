@@ -102,6 +102,13 @@ def polygon_fetch_full_history(
             new_data = pd.DataFrame([bar.__dict__ for bar in aggs])
             new_data["timestamp"] = pd.to_datetime(new_data["timestamp"], unit="ms")
             new_data = new_data.rename(columns={"timestamp": "Date"})
+
+            # Add optional columns if not present in API response (e.g., indices may
+            # omit vwap/transactions/otc)
+            for col in ["vwap", "transactions", "otc"]:
+                if col not in new_data.columns:
+                    new_data[col] = pd.NA
+
             new_data = new_data[
                 [
                     "Date",
@@ -254,7 +261,7 @@ if __name__ == "__main__":
             "close": pd.Series(dtype="float64"),
             "volume": pd.Series(dtype="float64"),
             "vwap": pd.Series(dtype="float64"),
-            "transactions": pd.Series(dtype="int64"),
+            "transactions": pd.Series(dtype="Int64"),
             "otc": pd.Series(dtype="object"),
         }
     )
