@@ -1,0 +1,840 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Schaumburg Boomers//2026 Schedule//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Schaumburg Boomers 2026
+X-WR-TIMEZONE:America/Chicago
+BEGIN:VEVENT
+UID:boomers-2026-0501@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260501T110000
+DTEND;TZID=America/Chicago:20260501T140000
+SUMMARY:Boomers vs. Joliet Slammers (Spring Training)
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Spring Training Exhibition Game\nHome Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0502@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260502T130000
+DTEND;TZID=America/Chicago:20260502T160000
+SUMMARY:Boomers vs. Windy City Thunderbolts (Spring Training)
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Spring Training Exhibition Game\nHome Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0508@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260508T180500
+DTEND;TZID=America/Chicago:20260508T210500
+SUMMARY:Boomers @ Lake Erie Crushers
+LOCATION:Crushers Stadium, Avon, OH
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0509@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260509T180500
+DTEND;TZID=America/Chicago:20260509T210500
+SUMMARY:Boomers @ Lake Erie Crushers
+LOCATION:Crushers Stadium, Avon, OH
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0510@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260510T120500
+DTEND;TZID=America/Chicago:20260510T150500
+SUMMARY:Boomers @ Lake Erie Crushers
+LOCATION:Crushers Stadium, Avon, OH
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0511@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260511T183000
+DTEND;TZID=America/Chicago:20260511T213000
+SUMMARY:Boomers vs. Trois-Rivières Aigles
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0512@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260512T183000
+DTEND;TZID=America/Chicago:20260512T213000
+SUMMARY:Boomers vs. Trois-Rivières Aigles
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0513@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260513T110000
+DTEND;TZID=America/Chicago:20260513T140000
+SUMMARY:Boomers vs. Trois-Rivières Aigles
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0515@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260515T180700
+DTEND;TZID=America/Chicago:20260515T210700
+SUMMARY:Boomers @ Washington Wild Things
+LOCATION:Wild Things Park, Washington, PA
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0516@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260516T180700
+DTEND;TZID=America/Chicago:20260516T210700
+SUMMARY:Boomers @ Washington Wild Things
+LOCATION:Wild Things Park, Washington, PA
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0517@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260517T163700
+DTEND;TZID=America/Chicago:20260517T193700
+SUMMARY:Boomers @ Washington Wild Things
+LOCATION:Wild Things Park, Washington, PA
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0519@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260519T183000
+DTEND;TZID=America/Chicago:20260519T213000
+SUMMARY:Boomers vs. Down East Bird Dawgs
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0520@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260520T183000
+DTEND;TZID=America/Chicago:20260520T213000
+SUMMARY:Boomers vs. Down East Bird Dawgs
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0521@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260521T183000
+DTEND;TZID=America/Chicago:20260521T213000
+SUMMARY:Boomers vs. Down East Bird Dawgs
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0522@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260522T183000
+DTEND;TZID=America/Chicago:20260522T213000
+SUMMARY:Boomers vs. Mississippi Mud Monsters
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0523@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260523T150000
+DTEND;TZID=America/Chicago:20260523T180000
+SUMMARY:Boomers vs. Mississippi Mud Monsters
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0524@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260524T130000
+DTEND;TZID=America/Chicago:20260524T160000
+SUMMARY:Boomers vs. Mississippi Mud Monsters
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0526@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260526T183000
+DTEND;TZID=America/Chicago:20260526T213000
+SUMMARY:Boomers vs. Washington Wild Things
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0527@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260527T183000
+DTEND;TZID=America/Chicago:20260527T213000
+SUMMARY:Boomers vs. Washington Wild Things
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0528@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260528T183000
+DTEND;TZID=America/Chicago:20260528T213000
+SUMMARY:Boomers vs. Washington Wild Things
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0529@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260529T180300
+DTEND;TZID=America/Chicago:20260529T210300
+SUMMARY:Boomers @ Florence Y'alls
+LOCATION:UC Health Stadium, Florence, KY
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0530@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260530T173600
+DTEND;TZID=America/Chicago:20260530T203600
+SUMMARY:Boomers @ Florence Y'alls
+LOCATION:UC Health Stadium, Florence, KY
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0531@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260531T120700
+DTEND;TZID=America/Chicago:20260531T150700
+SUMMARY:Boomers @ Florence Y'alls
+LOCATION:UC Health Stadium, Florence, KY
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0602@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260602T183500
+DTEND;TZID=America/Chicago:20260602T213500
+SUMMARY:Boomers @ Joliet Slammers
+LOCATION:DuPage Medical Group Field, Joliet, IL
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0603@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260603T183500
+DTEND;TZID=America/Chicago:20260603T213500
+SUMMARY:Boomers @ Joliet Slammers
+LOCATION:DuPage Medical Group Field, Joliet, IL
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0604@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260604T183500
+DTEND;TZID=America/Chicago:20260604T213500
+SUMMARY:Boomers @ Joliet Slammers
+LOCATION:DuPage Medical Group Field, Joliet, IL
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0605@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260605T183000
+DTEND;TZID=America/Chicago:20260605T213000
+SUMMARY:Boomers vs. Evansville Otters
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0606@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260606T150000
+DTEND;TZID=America/Chicago:20260606T180000
+SUMMARY:Boomers vs. Evansville Otters
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0607@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260607T130000
+DTEND;TZID=America/Chicago:20260607T160000
+SUMMARY:Boomers vs. Evansville Otters
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0609@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260609T183000
+DTEND;TZID=America/Chicago:20260609T213000
+SUMMARY:Boomers @ Gateway Grizzlies
+LOCATION:GCS Credit Union Ballpark, Sauget, IL
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0610@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260610T183000
+DTEND;TZID=America/Chicago:20260610T213000
+SUMMARY:Boomers @ Gateway Grizzlies
+LOCATION:GCS Credit Union Ballpark, Sauget, IL
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0611@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260611T183000
+DTEND;TZID=America/Chicago:20260611T213000
+SUMMARY:Boomers @ Gateway Grizzlies
+LOCATION:GCS Credit Union Ballpark, Sauget, IL
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0612@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260612T183000
+DTEND;TZID=America/Chicago:20260612T213000
+SUMMARY:Boomers @ Evansville Otters
+LOCATION:Bosse Field, Evansville, IN
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0613@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260613T183000
+DTEND;TZID=America/Chicago:20260613T213000
+SUMMARY:Boomers @ Evansville Otters
+LOCATION:Bosse Field, Evansville, IN
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0614@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260614T183000
+DTEND;TZID=America/Chicago:20260614T213000
+SUMMARY:Boomers @ Evansville Otters
+LOCATION:Bosse Field, Evansville, IN
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0616@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260616T183000
+DTEND;TZID=America/Chicago:20260616T213000
+SUMMARY:Boomers vs. Florence Y'alls
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0617@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260617T183000
+DTEND;TZID=America/Chicago:20260617T213000
+SUMMARY:Boomers vs. Florence Y'alls
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0618@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260618T120000
+DTEND;TZID=America/Chicago:20260618T150000
+SUMMARY:Boomers vs. Florence Y'alls
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0619@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260619T183000
+DTEND;TZID=America/Chicago:20260619T213000
+SUMMARY:Boomers vs. Windy City Thunderbolts
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0620@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260620T183000
+DTEND;TZID=America/Chicago:20260620T213000
+SUMMARY:Boomers vs. Windy City Thunderbolts
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0621@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260621T130000
+DTEND;TZID=America/Chicago:20260621T160000
+SUMMARY:Boomers vs. Windy City Thunderbolts
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0623@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260623T183000
+DTEND;TZID=America/Chicago:20260623T213000
+SUMMARY:Boomers @ Sussex County Miners
+LOCATION:Skylands Stadium, Augusta, NJ
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0624@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260624T183000
+DTEND;TZID=America/Chicago:20260624T213000
+SUMMARY:Boomers @ Sussex County Miners
+LOCATION:Skylands Stadium, Augusta, NJ
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0625@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260625T183000
+DTEND;TZID=America/Chicago:20260625T213000
+SUMMARY:Boomers @ Sussex County Miners
+LOCATION:Skylands Stadium, Augusta, NJ
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0626@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260626T173000
+DTEND;TZID=America/Chicago:20260626T203000
+SUMMARY:Boomers @ Tri-City ValleyCats
+LOCATION:Joseph L. Bruno Stadium, Troy, NY
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0627@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260627T173000
+DTEND;TZID=America/Chicago:20260627T203000
+SUMMARY:Boomers @ Tri-City ValleyCats
+LOCATION:Joseph L. Bruno Stadium, Troy, NY
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0628@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260628T160000
+DTEND;TZID=America/Chicago:20260628T190000
+SUMMARY:Boomers @ Tri-City ValleyCats
+LOCATION:Joseph L. Bruno Stadium, Troy, NY
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0630@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260630T183000
+DTEND;TZID=America/Chicago:20260630T213000
+SUMMARY:Boomers vs. Quebec Capitales
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0701@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260701T183000
+DTEND;TZID=America/Chicago:20260701T213000
+SUMMARY:Boomers vs. Quebec Capitales
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0702@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260702T183000
+DTEND;TZID=America/Chicago:20260702T213000
+SUMMARY:Boomers vs. Quebec Capitales
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0703@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260703T183000
+DTEND;TZID=America/Chicago:20260703T213000
+SUMMARY:Boomers vs. Washington Wild Things
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0704@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260704T183000
+DTEND;TZID=America/Chicago:20260704T213000
+SUMMARY:Boomers vs. Washington Wild Things
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0705@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260705T130000
+DTEND;TZID=America/Chicago:20260705T160000
+SUMMARY:Boomers vs. Washington Wild Things
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0707@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260707T183500
+DTEND;TZID=America/Chicago:20260707T213500
+SUMMARY:Boomers @ Windy City Thunderbolts
+LOCATION:Ozinga Field, Crestwood, IL
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0708@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260708T110000
+DTEND;TZID=America/Chicago:20260708T140000
+SUMMARY:Boomers vs. Windy City Thunderbolts
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0709@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260709T183500
+DTEND;TZID=America/Chicago:20260709T213500
+SUMMARY:Boomers @ Windy City Thunderbolts
+LOCATION:Ozinga Field, Crestwood, IL
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0710@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260710T183000
+DTEND;TZID=America/Chicago:20260710T213000
+SUMMARY:Boomers vs. Gateway Grizzlies
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0711@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260711T183000
+DTEND;TZID=America/Chicago:20260711T213000
+SUMMARY:Boomers vs. Gateway Grizzlies
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0712@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260712T130000
+DTEND;TZID=America/Chicago:20260712T160000
+SUMMARY:Boomers vs. Gateway Grizzlies
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0717@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260717T183000
+DTEND;TZID=America/Chicago:20260717T213000
+SUMMARY:Boomers vs. Joliet Slammers
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0718@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260718T183000
+DTEND;TZID=America/Chicago:20260718T213000
+SUMMARY:Boomers vs. Joliet Slammers
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0719@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260719T130000
+DTEND;TZID=America/Chicago:20260719T160000
+SUMMARY:Boomers vs. Joliet Slammers
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0721@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260721T183500
+DTEND;TZID=America/Chicago:20260721T213500
+SUMMARY:Boomers @ Windy City Thunderbolts
+LOCATION:Ozinga Field, Crestwood, IL
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0722@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260722T103500
+DTEND;TZID=America/Chicago:20260722T133500
+SUMMARY:Boomers @ Windy City Thunderbolts
+LOCATION:Ozinga Field, Crestwood, IL
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0723@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260723T183500
+DTEND;TZID=America/Chicago:20260723T213500
+SUMMARY:Boomers @ Windy City Thunderbolts
+LOCATION:Ozinga Field, Crestwood, IL
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0724@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260724T183000
+DTEND;TZID=America/Chicago:20260724T213000
+SUMMARY:Boomers vs. Joliet Slammers
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0725@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260725T183000
+DTEND;TZID=America/Chicago:20260725T213000
+SUMMARY:Boomers vs. Joliet Slammers
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0726@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260726T130000
+DTEND;TZID=America/Chicago:20260726T160000
+SUMMARY:Boomers vs. Joliet Slammers
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0728@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260728T183000
+DTEND;TZID=America/Chicago:20260728T213000
+SUMMARY:Boomers @ Mississippi Mud Monsters
+LOCATION:Trustmark Bricktown Ballpark, Jackson, MS
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0729@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260729T183000
+DTEND;TZID=America/Chicago:20260729T213000
+SUMMARY:Boomers @ Mississippi Mud Monsters
+LOCATION:Trustmark Bricktown Ballpark, Jackson, MS
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0730@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260730T183000
+DTEND;TZID=America/Chicago:20260730T213000
+SUMMARY:Boomers @ Mississippi Mud Monsters
+LOCATION:Trustmark Bricktown Ballpark, Jackson, MS
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0731@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260731T183000
+DTEND;TZID=America/Chicago:20260731T213000
+SUMMARY:Boomers @ Mississippi Mud Monsters
+LOCATION:Trustmark Bricktown Ballpark, Jackson, MS
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0801@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260801T180000
+DTEND;TZID=America/Chicago:20260801T210000
+SUMMARY:Boomers @ Mississippi Mud Monsters
+LOCATION:Trustmark Bricktown Ballpark, Jackson, MS
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0802@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260802T180000
+DTEND;TZID=America/Chicago:20260802T210000
+SUMMARY:Boomers @ Mississippi Mud Monsters
+LOCATION:Trustmark Bricktown Ballpark, Jackson, MS
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0804@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260804T183000
+DTEND;TZID=America/Chicago:20260804T213000
+SUMMARY:Boomers @ Gateway Grizzlies
+LOCATION:GCS Credit Union Ballpark, Sauget, IL
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0805@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260805T183000
+DTEND;TZID=America/Chicago:20260805T213000
+SUMMARY:Boomers @ Gateway Grizzlies
+LOCATION:GCS Credit Union Ballpark, Sauget, IL
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0806@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260806T183000
+DTEND;TZID=America/Chicago:20260806T213000
+SUMMARY:Boomers @ Gateway Grizzlies
+LOCATION:GCS Credit Union Ballpark, Sauget, IL
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0807@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260807T183000
+DTEND;TZID=America/Chicago:20260807T213000
+SUMMARY:Boomers vs. Mississippi Mud Monsters
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0808@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260808T183000
+DTEND;TZID=America/Chicago:20260808T213000
+SUMMARY:Boomers vs. Mississippi Mud Monsters
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0809@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260809T130000
+DTEND;TZID=America/Chicago:20260809T160000
+SUMMARY:Boomers vs. Mississippi Mud Monsters
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0811@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260811T183500
+DTEND;TZID=America/Chicago:20260811T213500
+SUMMARY:Boomers @ Joliet Slammers
+LOCATION:DuPage Medical Group Field, Joliet, IL
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0812@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260812T183500
+DTEND;TZID=America/Chicago:20260812T213500
+SUMMARY:Boomers @ Joliet Slammers
+LOCATION:DuPage Medical Group Field, Joliet, IL
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0813@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260813T183500
+DTEND;TZID=America/Chicago:20260813T213500
+SUMMARY:Boomers @ Joliet Slammers
+LOCATION:DuPage Medical Group Field, Joliet, IL
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0814@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260814T180300
+DTEND;TZID=America/Chicago:20260814T210300
+SUMMARY:Boomers @ Florence Y'alls
+LOCATION:UC Health Stadium, Florence, KY
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0815@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260815T173600
+DTEND;TZID=America/Chicago:20260815T203600
+SUMMARY:Boomers @ Florence Y'alls
+LOCATION:UC Health Stadium, Florence, KY
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0816@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260816T120700
+DTEND;TZID=America/Chicago:20260816T150700
+SUMMARY:Boomers @ Florence Y'alls
+LOCATION:UC Health Stadium, Florence, KY
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0818@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260818T183500
+DTEND;TZID=America/Chicago:20260818T213500
+SUMMARY:Boomers @ Windy City Thunderbolts
+LOCATION:Ozinga Field, Crestwood, IL
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0819@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260819T120000
+DTEND;TZID=America/Chicago:20260819T150000
+SUMMARY:Boomers vs. Windy City Thunderbolts
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0820@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260820T183000
+DTEND;TZID=America/Chicago:20260820T213000
+SUMMARY:Boomers vs. Windy City Thunderbolts
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0821@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260821T180500
+DTEND;TZID=America/Chicago:20260821T210500
+SUMMARY:Boomers @ Lake Erie Crushers
+LOCATION:Crushers Stadium, Avon, OH
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0822@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260822T180500
+DTEND;TZID=America/Chicago:20260822T210500
+SUMMARY:Boomers @ Lake Erie Crushers
+LOCATION:Crushers Stadium, Avon, OH
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0823@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260823T120500
+DTEND;TZID=America/Chicago:20260823T150500
+SUMMARY:Boomers @ Lake Erie Crushers
+LOCATION:Crushers Stadium, Avon, OH
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0825@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260825T183000
+DTEND;TZID=America/Chicago:20260825T213000
+SUMMARY:Boomers vs. Evansville Otters
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0826@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260826T183000
+DTEND;TZID=America/Chicago:20260826T213000
+SUMMARY:Boomers vs. Evansville Otters
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0827@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260827T183000
+DTEND;TZID=America/Chicago:20260827T213000
+SUMMARY:Boomers vs. Evansville Otters
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0828@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260828T183000
+DTEND;TZID=America/Chicago:20260828T213000
+SUMMARY:Boomers vs. Gateway Grizzlies
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0829@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260829T183000
+DTEND;TZID=America/Chicago:20260829T213000
+SUMMARY:Boomers vs. Gateway Grizzlies
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0830@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260830T130000
+DTEND;TZID=America/Chicago:20260830T160000
+SUMMARY:Boomers vs. Gateway Grizzlies
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0901@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260901T183000
+DTEND;TZID=America/Chicago:20260901T213000
+SUMMARY:Boomers vs. Florence Y'alls
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0902@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260902T183000
+DTEND;TZID=America/Chicago:20260902T213000
+SUMMARY:Boomers vs. Florence Y'alls
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0903@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260903T183000
+DTEND;TZID=America/Chicago:20260903T213000
+SUMMARY:Boomers vs. Florence Y'alls
+LOCATION:Wintrust Field, 1999 S Springinsguth Rd, Schaumburg, IL 60193
+DESCRIPTION:Home Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0904@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260904T180500
+DTEND;TZID=America/Chicago:20260904T210500
+SUMMARY:Boomers @ Washington Wild Things
+LOCATION:Wild Things Park, Washington, PA
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0905@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260905T180500
+DTEND;TZID=America/Chicago:20260905T210500
+SUMMARY:Boomers @ Washington Wild Things
+LOCATION:Wild Things Park, Washington, PA
+DESCRIPTION:Away Game
+END:VEVENT
+BEGIN:VEVENT
+UID:boomers-2026-0906@boomersbaseball.com
+DTSTART;TZID=America/Chicago:20260906T150500
+DTEND;TZID=America/Chicago:20260906T180500
+SUMMARY:Boomers @ Washington Wild Things
+LOCATION:Wild Things Park, Washington, PA
+DESCRIPTION:Away Game
+END:VEVENT
+END:VCALENDAR
