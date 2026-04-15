@@ -2,10 +2,16 @@ import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 
-from sklearn.linear_model import LinearRegression, Ridge, RidgeCV
+from sklearn.linear_model import (
+    LinearRegression, 
+    LogisticRegression, 
+    LogisticRegressionCV,
+    Ridge, 
+    RidgeCV
+)
 
 
-def run_linear_regression(
+def run_regression(
     df: pd.DataFrame,
     x_plot_column: str,
     y_plot_column: str,

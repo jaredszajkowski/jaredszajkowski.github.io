@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 
 from matplotlib.ticker import MultipleLocator, PercentFormatter, FormatStrFormatter
-from run_linear_regression import run_linear_regression
+from run_regression import run_regression
 
 
 def round_to_nice_value(value):
@@ -200,7 +200,7 @@ def plot_scatter(
 
     if plot_OLS_regression_line == True:
 
-        model = run_linear_regression(
+        model = run_regression(
             df=df,
             x_plot_column=x_plot_column,
             y_plot_column=OLS_column,
@@ -226,7 +226,7 @@ def plot_scatter(
 
     if plot_Ridge_regression_line == True:
 
-        model = run_linear_regression(
+        model = run_regression(
             df=df,
             x_plot_column=x_plot_column,
             y_plot_column=Ridge_column,
@@ -254,7 +254,7 @@ def plot_scatter(
 
     if plot_RidgeCV_regression_line == True:
 
-        model = run_linear_regression(
+        model = run_regression(
             df=df,
             x_plot_column=x_plot_column,
             y_plot_column=RidgeCV_column,
