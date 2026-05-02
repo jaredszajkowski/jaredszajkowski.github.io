@@ -10,32 +10,7 @@ from matplotlib.ticker import (
     PercentFormatter,
 )
 
-
-def round_to_nice_value(value):
-    """Round a value to a 'nice' number for tick spacing (1, 2, 5 x 10^n)."""
-    if value <= 0:
-        return value
-
-    # Find order of magnitude
-    exp = math.floor(math.log10(value))
-    magnitude = 10**exp
-
-    # Get mantissa (value normalized to [1, 10))
-    mantissa = value / magnitude
-
-    # Round mantissa to 1, 2, or 5
-    if mantissa <= 1:
-        nice_mantissa = 0.1
-    elif mantissa <= 1.5:
-        nice_mantissa = 1
-    elif mantissa <= 3:
-        nice_mantissa = 2
-    elif mantissa <= 7:
-        nice_mantissa = 5
-    else:
-        nice_mantissa = 10
-
-    return nice_mantissa * magnitude
+from round_to_nice_value import round_to_nice_value
 
 
 def plot_time_series(
@@ -53,10 +28,10 @@ def plot_time_series(
     y_format_decimal_places: int,
     y_tick_spacing: int,
     y_tick_rotation: int,
-    grid: bool,
-    legend: bool,
-    export_plot: bool,
-    plot_file_name: str,
+    grid: bool = True,
+    legend: bool = True,
+    export_plot: bool = False,
+    plot_file_name: str = None,
 ) -> None:
     """
     Plot the time series data from a DataFrame for a specified date range and columns.
@@ -91,14 +66,14 @@ def plot_time_series(
         Spacing for the y-axis ticks.
     y_tick_rotation : int
         Rotation angle for the y-axis tick labels.
-    grid : bool
-        Whether to display a grid on the plot.
-    legend : bool
-        Whether to display a legend on the plot.
-    export_plot : bool
-        Whether to save the figure as a PNG file.
-    plot_file_name : str
-        File name for saving the figure (if save_fig is True).
+    grid : bool, optional
+        Whether to display a grid on the plot (default is True).
+    legend : bool, optional
+        Whether to display a legend on the plot (default is True).
+    export_plot : bool, optional
+        Whether to save the figure as a PNG file (default is False).
+    plot_file_name : str, optional
+        File name for saving the figure (if export_plot is True, default is None).
 
 
     Returns
@@ -128,49 +103,80 @@ def plot_time_series(
     plt.figure(figsize=(10, 6))
 
     # Plot data
-    if plot_columns == "All":
-        for col in df_filtered.columns:
-            plt.plot(
-                df_filtered.index,
-                df_filtered[col],
-                label=col,
-                linestyle="-",
-                linewidth=1.5,
-                alpha=0.7,
-            )
-    else:
-        for col in plot_columns:
-            plt.plot(
-                df_filtered.index,
-                df_filtered[col],
-                label=col,
-                linestyle="-",
-                linewidth=1.5,
-                alpha=0.7,
-            )
+    cols = df_filtered.columns if plot_columns == "All" else plot_columns
+    for col in cols:
+        plt.plot(
+            df_filtered.index,
+            df_filtered[col],
+            label=col,
+            linestyle="-",
+            linewidth=1.5,
+            alpha=0.7,
+        )
 
     # Format X axis
-    if x_format == "Day":
-        plt.gca().xaxis.set_major_locator(mdates.DayLocator())
+    if x_format == "Second":
+        plt.gca().xaxis.set_major_locator(mdates.SecondLocator(interval=x_tick_spacing))
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
+    elif x_format == "Minute":
+        plt.gca().xaxis.set_major_locator(mdates.MinuteLocator(interval=x_tick_spacing))
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M"))
+    elif x_format == "Hour":
+        plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=x_tick_spacing))
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M"))
+    elif x_format == "Day":
+        plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=x_tick_spacing))
         plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
     elif x_format == "Week":
-        plt.gca().xaxis.set_major_locator(mdates.WeekdayLocator())
+        plt.gca().xaxis.set_major_locator(mdates.WeekdayLocator(interval=x_tick_spacing))
         plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
     elif x_format == "Month":
-        plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
+        plt.gca().xaxis.set_major_locator(mdates.MonthLocator(interval=x_tick_spacing))
         plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
     elif x_format == "Year":
         plt.gca().xaxis.set_major_locator(mdates.YearLocator(base=x_tick_spacing))
         plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
     else:
         raise ValueError(
-            f"Unrecognized x_format: {x_format}. Use 'Day', 'Week', 'Month', or 'Year'."
+            f"Unrecognized x_format: {x_format}. Use 'Second', 'Minute', 'Hour', 'Day', 'Week', 'Month', or 'Year'."
         )
 
     plt.xlabel(x_label)
-    plt.xticks(rotation=x_tick_rotation)
+
+    if x_tick_rotation != 0:
+        # Line up the x-ticks with the labels when rotated
+        plt.xticks(rotation=x_tick_rotation, ha="right")
+    else:
+        plt.xticks(rotation=x_tick_rotation)
 
     # Format Y axis
+    if y_tick_spacing == "Auto":
+        max_value = 0
+        min_value = 1_000_000
+        cols = df_filtered.columns if plot_columns == "All" else plot_columns
+        for col in cols:
+            if df_filtered[col].max() > max_value:
+                max_value = df_filtered[col].max()
+
+            if df_filtered[col].min() < min_value:
+                min_value = df_filtered[col].min()
+
+        raw_y_spacing = (max_value - min_value) / 10
+        y_tick_spacing = round_to_nice_value(raw_y_spacing)
+    else:
+        y_tick_spacing = y_tick_spacing
+
+    if y_format_decimal_places == "Auto":
+        if isinstance(y_tick_spacing, float):
+            y_tick_spacing_decimal_places = max(
+                0, -int(math.floor(math.log10(abs(y_tick_spacing))))
+            )
+        else:
+            y_tick_spacing_decimal_places = 0
+        y_format_decimal_places = y_tick_spacing_decimal_places
+    else:
+        y_format_decimal_places = y_format_decimal_places
+
     if y_format == "Decimal":
         plt.gca().yaxis.set_major_formatter(
             FuncFormatter(lambda x, _: f"{x:,.{y_format_decimal_places}f}")
@@ -189,21 +195,6 @@ def plot_time_series(
         raise ValueError(
             f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', 'Scientific', or 'Log'."
         )
-
-    if y_tick_spacing == "Auto":
-        max = 0
-        min = 1
-        for col in plot_columns:
-            if df[col].max() > max:
-                max = df[col].max()
-
-            if df[col].min() < min:
-                min = df[col].min()
-
-        raw_y_spacing = (max - min) / 10
-        y_tick_spacing = round_to_nice_value(raw_y_spacing)
-    else:
-        y_tick_spacing = y_tick_spacing
 
     plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
     plt.ylabel(y_label)

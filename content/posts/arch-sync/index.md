@@ -11,12 +11,12 @@ draft: false
 topics: [
     "Arch Linux",
     "Git",
-    "GitLab",
+    "GitHub",
 ]
 ---
 ## Introduction
 
-I recently released the [arch-sync](https://gitlab.com/jaredszajkowski/arch-sync) repository. From the README:
+I recently released the [arch-sync](https://github.com/jaredszajkowski/arch-sync) repository. From the README:
 
 > This is a template repository for syncing packages and configurations across multiple Arch Linux installations. It includes a script to automate the installation and removal of packages and the synchronization of configuration files.
 

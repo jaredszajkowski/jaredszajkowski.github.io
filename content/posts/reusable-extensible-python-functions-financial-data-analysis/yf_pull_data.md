@@ -26,7 +26,8 @@ def yf_pull_data(
     ticker : str
         Ticker symbol to download.
     adjusted : bool
-        If True, download adjusted price data.
+        If True, download adjusted price data. If False, download both 
+        adjusted close and unadjusted open/high/low/close price data.
     source : str
         Name of the data source (e.g., 'Yahoo').
     asset_class : str

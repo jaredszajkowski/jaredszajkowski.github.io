@@ -2,18 +2,17 @@
 import pandas as pd
 import time
 
-from load_api_keys import load_api_keys
 from massive import RESTClient
 from settings import config
 
-# Load API keys from the environment
-api_keys = load_api_keys()
+# Load API key from the environment variables
+POLYGON_KEY = config("POLYGON_KEY")
 
 # Get the environment variable for where data is stored
 DATA_DIR = config("DATA_DIR")
 
 # Open client connection
-client = RESTClient(api_key=api_keys["POLYGON_KEY"])
+client = RESTClient(api_key=POLYGON_KEY)
 
 
 def polygon_fetch_ticker_details(

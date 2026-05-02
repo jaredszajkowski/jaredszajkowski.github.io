@@ -3,12 +3,11 @@ import pandas as pd
 import time
 
 from datetime import datetime, timedelta
-from load_api_keys import load_api_keys
 from massive import RESTClient
 from settings import config
 
-# Load API keys from the environment
-api_keys = load_api_keys()
+# Load API key from the environment variables
+POLYGON_KEY = config("POLYGON_KEY")
 
 # Get the environment variable for where data is stored
 DATA_DIR = config("DATA_DIR")
@@ -163,7 +162,8 @@ def polygon_fetch_full_history(
 
                 if overlap.empty:
                     raise Exception(
-                        f"New data does not overlap with existing data (full-row check)."
+                        # f"New data does not overlap with existing data (full-row check)."
+                        f"New data does not overlap with existing data (price data check)."
                     )
 
             # Combine existing data with recent data, drop duplicates, sort values, reset index
@@ -211,10 +211,10 @@ def polygon_fetch_full_history(
             # past current_start
             if new_date_last_date_check == new_data_last_date:
                 current_start = current_end - timedelta(days=time_overlap)
-                new_date_last_date_check = new_data_last_date
             else:
                 current_start = new_data_last_date - timedelta(days=time_overlap)
-                new_date_last_date_check = new_data_last_date
+
+            new_date_last_date_check = new_data_last_date
 
             # Code below is likely not necessary
 

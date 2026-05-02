@@ -199,17 +199,6 @@ export_track_md_deps(dep_file=dep_file, md_filename="export_track_md_deps.md", c
 
 
 ```python
-from load_api_keys import load_api_keys
-code = Path(SOURCE_DIR / "load_api_keys.py").read_text()
-# Copy this <!-- INSERT_load_api_keys_HERE --> to index_temp.md
-export_track_md_deps(dep_file=dep_file, md_filename="load_api_keys.md", content=code, output_type="python")
-```
-
-    ✅ Exported and tracked: load_api_keys.md
-
-
-
-```python
 from load_data import load_data
 code = Path(SOURCE_DIR / "load_data.py").read_text()
 # Copy this <!-- INSERT_load_data_HERE --> to index_temp.md
@@ -342,13 +331,13 @@ export_track_md_deps(dep_file=dep_file, md_filename="polygon_pull_data.md", cont
 
 
 ```python
-from run_linear_regression import run_linear_regression
-code = Path(SOURCE_DIR / "run_linear_regression.py").read_text()
-# Copy this <!-- INSERT_run_linear_regression_HERE --> to index_temp.md
-export_track_md_deps(dep_file=dep_file, md_filename="run_linear_regression.md", content=code, output_type="python")
+from run_regression import run_regression
+code = Path(SOURCE_DIR / "run_regression.py").read_text()
+# Copy this <!-- INSERT_run_regression_HERE --> to index_temp.md
+export_track_md_deps(dep_file=dep_file, md_filename="run_regression.md", content=code, output_type="python")
 ```
 
-    ✅ Exported and tracked: run_linear_regression.md
+    ✅ Exported and tracked: run_regression.md
 
 
 

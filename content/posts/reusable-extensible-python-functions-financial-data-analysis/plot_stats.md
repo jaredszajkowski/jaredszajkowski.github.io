@@ -10,7 +10,7 @@ def plot_stats(
     plot_columns,
     title: str,
     x_label: str,
-    x_rotation: int,
+    x_tick_rotation: int,
     x_tick_spacing: int,
     y_label: str,
     y_tick_spacing: int,
@@ -32,7 +32,7 @@ def plot_stats(
         Title of the plot.
     x_label : str
         Label for the x-axis.
-    x_rotation : int
+    x_tick_rotation : int
         Rotation angle for the x-axis date labels.
     x_tick_spacing : int
         Spacing for the x-axis ticks.
@@ -72,7 +72,12 @@ def plot_stats(
     # Format X axis
     plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
     plt.xlabel(x_label)
-    plt.xticks(rotation=x_rotation)
+
+    if x_tick_rotation != 0:
+        # Line up the x-ticks with the labels when rotated
+        plt.xticks(rotation=x_tick_rotation, ha="right")
+    else:
+        plt.xticks(rotation=x_tick_rotation)
 
     # Format Y axis
     plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))

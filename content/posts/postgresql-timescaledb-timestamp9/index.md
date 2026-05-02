@@ -192,8 +192,25 @@ Or just:
 $ psql -d <db>
 ```
 
+## Copy Data Into Your Database
+
+To copy data into your PostgreSQL database, you can use the `COPY` command. For example, if you have a CSV file named `data.csv`, you can run the following command:
+
+```bash
+$ psql -d <db> -c "\COPY <table> FROM 'data.csv' CSV"
+```
+
+## Check The Database Size
+
+To check the size of your PostgreSQL database, you can run the following command:
+
+```bash
+$ psql -d <db> -c "SELECT pg_size_pretty(pg_database_size('<db>'));"
+```
+
 ## References
 
 1. https://wiki.archlinux.org/title/PostgreSQL
 2. https://www.tigerdata.com/docs/self-hosted/latest/install/installation-source
-3. https://github.com/optiver/timestamp9
+3. https://www.tigerdata.com/docs/self-hosted/latest/install/installation-linux
+4. https://github.com/optiver/timestamp9

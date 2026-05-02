@@ -1,34 +1,10 @@
 ```python
-import math
 import matplotlib.pyplot as plt
 import pandas as pd
 
 from matplotlib.ticker import MultipleLocator
 
-
-def round_to_nice_value(value):
-    """Round a value to a 'nice' number for tick spacing (1, 2, 5 × 10^n)."""
-    if value <= 0:
-        return value
-
-    # Find order of magnitude
-    exp = math.floor(math.log10(value))
-    magnitude = 10**exp
-
-    # Get mantissa (value normalized to [1, 10))
-    mantissa = value / magnitude
-
-    # Round mantissa to 1, 2, or 5
-    if mantissa <= 1.5:
-        nice_mantissa = 1
-    elif mantissa <= 3:
-        nice_mantissa = 2
-    elif mantissa <= 7:
-        nice_mantissa = 5
-    else:
-        nice_mantissa = 10
-
-    return nice_mantissa * magnitude
+from round_to_nice_value import round_to_nice_value
 
 
 def plot_histogram(
@@ -88,96 +64,51 @@ def plot_histogram(
     plt.figure(figsize=(10, 6))
 
     # Plot data
-    if plot_columns == "All":
-        for col in df.columns:
-            mean = df[col].mean()
-            std = df[col].std()
-            # Create histogram first to get its color
-            n, bins, patches = plt.hist(
-                df[col], label=col, bins=200, edgecolor="black", alpha=0.7
-            )
-            hist_color = patches[0].get_facecolor()
-            # Use histogram color for vertical lines
-            plt.axvline(
-                mean,
-                color=hist_color,
-                linestyle="dashed",
-                linewidth=1,
-                label=f"Mean: {mean:.3f}",
-            )
-            plt.axvline(
-                mean + std,
-                color=hist_color,
-                linestyle="dashed",
-                linewidth=1,
-                label=f"Mean + 1 std: {mean + std:.3f}",
-            )
-            plt.axvline(
-                mean - std,
-                color=hist_color,
-                linestyle="dashed",
-                linewidth=1,
-                label=f"Mean - 1 std: {mean - std:.3f}",
-            )
-            plt.axvline(
-                mean + 2 * std,
-                color=hist_color,
-                linestyle="dashed",
-                linewidth=1,
-                label=f"Mean + 2 std: {mean + 2 * std:.3f}",
-            )
-            plt.axvline(
-                mean - 2 * std,
-                color=hist_color,
-                linestyle="dashed",
-                linewidth=1,
-                label=f"Mean - 2 std: {mean - 2 * std:.3f}",
-            )
-    else:
-        for col in plot_columns:
-            mean = df[col].mean()
-            std = df[col].std()
-            # Create histogram first to get its color
-            n, bins, patches = plt.hist(
-                df[col], label=col, bins=200, edgecolor="black", alpha=0.7
-            )
-            hist_color = patches[0].get_facecolor()
-            # Use histogram color for vertical lines
-            plt.axvline(
-                mean,
-                color=hist_color,
-                linestyle="dashed",
-                linewidth=1,
-                label=f"Mean: {mean:.3f}",
-            )
-            plt.axvline(
-                mean + std,
-                color=hist_color,
-                linestyle="dashed",
-                linewidth=1,
-                label=f"Mean + 1 std: {mean + std:.3f}",
-            )
-            plt.axvline(
-                mean - std,
-                color=hist_color,
-                linestyle="dashed",
-                linewidth=1,
-                label=f"Mean - 1 std: {mean - std:.3f}",
-            )
-            plt.axvline(
-                mean + 2 * std,
-                color=hist_color,
-                linestyle="dashed",
-                linewidth=1,
-                label=f"Mean + 2 std: {mean + 2 * std:.3f}",
-            )
-            plt.axvline(
-                mean - 2 * std,
-                color=hist_color,
-                linestyle="dashed",
-                linewidth=1,
-                label=f"Mean - 2 std: {mean - 2 * std:.3f}",
-            )
+    cols = df.columns if plot_columns == "All" else plot_columns
+    for col in cols:
+        mean = df[col].mean()
+        std = df[col].std()
+        # Create histogram first to get its color
+        n, bins, patches = plt.hist(
+            df[col], label=col, bins=200, edgecolor="black", alpha=0.7
+        )
+        hist_color = patches[0].get_facecolor()
+        # Use histogram color for vertical lines
+        plt.axvline(
+            mean,
+            color=hist_color,
+            linestyle="dashed",
+            linewidth=1,
+            label=f"Mean: {mean:.3f}",
+        )
+        plt.axvline(
+            mean + std,
+            color=hist_color,
+            linestyle="dashed",
+            linewidth=1,
+            label=f"Mean + 1 std: {mean + std:.3f}",
+        )
+        plt.axvline(
+            mean - std,
+            color=hist_color,
+            linestyle="dashed",
+            linewidth=1,
+            label=f"Mean - 1 std: {mean - std:.3f}",
+        )
+        plt.axvline(
+            mean + 2 * std,
+            color=hist_color,
+            linestyle="dashed",
+            linewidth=1,
+            label=f"Mean + 2 std: {mean + 2 * std:.3f}",
+        )
+        plt.axvline(
+            mean - 2 * std,
+            color=hist_color,
+            linestyle="dashed",
+            linewidth=1,
+            label=f"Mean - 2 std: {mean - 2 * std:.3f}",
+        )
 
     # Format X axis
     if x_tick_spacing == "Auto":
@@ -188,7 +119,12 @@ def plot_histogram(
 
     plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
     plt.xlabel(x_label)
-    plt.xticks(rotation=x_tick_rotation)
+
+    if x_tick_rotation != 0:
+        # Line up the x-ticks with the labels when rotated
+        plt.xticks(rotation=x_tick_rotation, ha="right")
+    else:
+        plt.xticks(rotation=x_tick_rotation)
 
     # Format Y axis
     if y_tick_spacing == "Auto":

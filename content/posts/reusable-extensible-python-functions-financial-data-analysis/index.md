@@ -44,7 +44,7 @@ This post intends to provide the code for all of the python functions that I use
 * [polygon_fetch_full_history](/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_fetch_full_history): Fetch full historical data for a given product from Polygon API.
 * [polygon_fetch_ticker_details](/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_fetch_ticker_details): Fetch detailed information for a given product from Polygon API.
 * [polygon_pull_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_pull_data): Read existing data file, download price data from Polygon, and export data.
-* [run_linear_regression](/posts/reusable-extensible-python-functions-financial-data-analysis/#run_linear_regression): Run a linear regression using statsmodels OLS and return the results.
+* [run_regression](/posts/reusable-extensible-python-functions-financial-data-analysis/#run_regression): Run a regression using a variety of different methods and return the results.
 * [strategy_harry_brown_perm_port](/posts/reusable-extensible-python-functions-financial-data-analysis/#strategy_harry_brown_perm_port): Execute the strategy for the Harry Brown permanent portfolio.
 * [summary_stats](/posts/reusable-extensible-python-functions-financial-data-analysis/#summary_stats): Generate summary statistics for a series of returns.
 * [yf_pull_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#yf_pull_data): Download daily price data from Yahoo Finance and export it.
@@ -1349,64 +1349,7 @@ def export_track_md_deps(
 
 ### load_api_keys
 
-```python
-import os
-
-from dotenv import load_dotenv
-from pathlib import Path
-from settings import config
-
-# Get the environment variable file path from the configuration
-ENV_PATH = config("ENV_PATH")
-
-def load_api_keys(
-    env_path: Path=ENV_PATH
-) -> dict:
-    
-    """
-    Load API keys from a .env file.
-
-    Parameters:
-    -----------
-    env_path : Path
-        Path to the .env file. Default is the ENV_PATH from settings.
-
-    Returns:
-    --------
-    keys : dict
-        Dictionary of API keys.
-    """
-
-    load_dotenv(dotenv_path=env_path)
-
-    keys = {
-        "INFURA_KEY": os.getenv("INFURA_KEY"),
-        "NASDAQ_DATA_LINK_KEY": os.getenv("NASDAQ_DATA_LINK_KEY"),
-        "COINBASE_KEY": os.getenv("COINBASE_KEY"),
-        "COINBASE_SECRET": os.getenv("COINBASE_SECRET"),
-        "SCHWAB_APP_KEY": os.getenv("SCHWAB_APP_KEY"),
-        "SCHWAB_SECRET": os.getenv("SCHWAB_SECRET"),
-        "SCHWAB_ACCOUNT_NUMBER_1": os.getenv("SCHWAB_ACCOUNT_NUMBER_1"),
-        "SCHWAB_ENCRYPTED_ACCOUNT_ID_1": os.getenv("SCHWAB_ENCRYPTED_ACCOUNT_ID_1"),
-        "SCHWAB_ACCOUNT_NUMBER_2": os.getenv("SCHWAB_ACCOUNT_NUMBER_2"),
-        "SCHWAB_ENCRYPTED_ACCOUNT_ID_2": os.getenv("SCHWAB_ENCRYPTED_ACCOUNT_ID_2"),
-        "SCHWAB_ACCOUNT_NUMBER_3": os.getenv("SCHWAB_ACCOUNT_NUMBER_3"),
-        "SCHWAB_ENCRYPTED_ACCOUNT_ID_3": os.getenv("SCHWAB_ENCRYPTED_ACCOUNT_ID_3"),
-        "POLYGON_KEY": os.getenv("POLYGON_KEY"),
-    }
-
-    # Raise error if any key is missing
-    for k, v in keys.items():
-        if not v:
-            raise ValueError(f"Missing environment variable: {k}")
-
-    return keys
-
-if __name__ == "__main__":
-    # Example usage
-    api_keys = load_api_keys()
-    print("API keys loaded successfully.")
-```
+<!-- INSERT_load_api_keys_HERE -->
 
 ### load_data
 
@@ -1596,36 +1539,12 @@ def plot_bar_returns_ffr_change(
 ### plot_histogram
 
 ```python
-import math
 import matplotlib.pyplot as plt
 import pandas as pd
 
 from matplotlib.ticker import MultipleLocator
 
-
-def round_to_nice_value(value):
-    """Round a value to a 'nice' number for tick spacing (1, 2, 5 × 10^n)."""
-    if value <= 0:
-        return value
-
-    # Find order of magnitude
-    exp = math.floor(math.log10(value))
-    magnitude = 10**exp
-
-    # Get mantissa (value normalized to [1, 10))
-    mantissa = value / magnitude
-
-    # Round mantissa to 1, 2, or 5
-    if mantissa <= 1.5:
-        nice_mantissa = 1
-    elif mantissa <= 3:
-        nice_mantissa = 2
-    elif mantissa <= 7:
-        nice_mantissa = 5
-    else:
-        nice_mantissa = 10
-
-    return nice_mantissa * magnitude
+from round_to_nice_value import round_to_nice_value
 
 
 def plot_histogram(
@@ -1685,96 +1604,51 @@ def plot_histogram(
     plt.figure(figsize=(10, 6))
 
     # Plot data
-    if plot_columns == "All":
-        for col in df.columns:
-            mean = df[col].mean()
-            std = df[col].std()
-            # Create histogram first to get its color
-            n, bins, patches = plt.hist(
-                df[col], label=col, bins=200, edgecolor="black", alpha=0.7
-            )
-            hist_color = patches[0].get_facecolor()
-            # Use histogram color for vertical lines
-            plt.axvline(
-                mean,
-                color=hist_color,
-                linestyle="dashed",
-                linewidth=1,
-                label=f"Mean: {mean:.3f}",
-            )
-            plt.axvline(
-                mean + std,
-                color=hist_color,
-                linestyle="dashed",
-                linewidth=1,
-                label=f"Mean + 1 std: {mean + std:.3f}",
-            )
-            plt.axvline(
-                mean - std,
-                color=hist_color,
-                linestyle="dashed",
-                linewidth=1,
-                label=f"Mean - 1 std: {mean - std:.3f}",
-            )
-            plt.axvline(
-                mean + 2 * std,
-                color=hist_color,
-                linestyle="dashed",
-                linewidth=1,
-                label=f"Mean + 2 std: {mean + 2 * std:.3f}",
-            )
-            plt.axvline(
-                mean - 2 * std,
-                color=hist_color,
-                linestyle="dashed",
-                linewidth=1,
-                label=f"Mean - 2 std: {mean - 2 * std:.3f}",
-            )
-    else:
-        for col in plot_columns:
-            mean = df[col].mean()
-            std = df[col].std()
-            # Create histogram first to get its color
-            n, bins, patches = plt.hist(
-                df[col], label=col, bins=200, edgecolor="black", alpha=0.7
-            )
-            hist_color = patches[0].get_facecolor()
-            # Use histogram color for vertical lines
-            plt.axvline(
-                mean,
-                color=hist_color,
-                linestyle="dashed",
-                linewidth=1,
-                label=f"Mean: {mean:.3f}",
-            )
-            plt.axvline(
-                mean + std,
-                color=hist_color,
-                linestyle="dashed",
-                linewidth=1,
-                label=f"Mean + 1 std: {mean + std:.3f}",
-            )
-            plt.axvline(
-                mean - std,
-                color=hist_color,
-                linestyle="dashed",
-                linewidth=1,
-                label=f"Mean - 1 std: {mean - std:.3f}",
-            )
-            plt.axvline(
-                mean + 2 * std,
-                color=hist_color,
-                linestyle="dashed",
-                linewidth=1,
-                label=f"Mean + 2 std: {mean + 2 * std:.3f}",
-            )
-            plt.axvline(
-                mean - 2 * std,
-                color=hist_color,
-                linestyle="dashed",
-                linewidth=1,
-                label=f"Mean - 2 std: {mean - 2 * std:.3f}",
-            )
+    cols = df.columns if plot_columns == "All" else plot_columns
+    for col in cols:
+        mean = df[col].mean()
+        std = df[col].std()
+        # Create histogram first to get its color
+        n, bins, patches = plt.hist(
+            df[col], label=col, bins=200, edgecolor="black", alpha=0.7
+        )
+        hist_color = patches[0].get_facecolor()
+        # Use histogram color for vertical lines
+        plt.axvline(
+            mean,
+            color=hist_color,
+            linestyle="dashed",
+            linewidth=1,
+            label=f"Mean: {mean:.3f}",
+        )
+        plt.axvline(
+            mean + std,
+            color=hist_color,
+            linestyle="dashed",
+            linewidth=1,
+            label=f"Mean + 1 std: {mean + std:.3f}",
+        )
+        plt.axvline(
+            mean - std,
+            color=hist_color,
+            linestyle="dashed",
+            linewidth=1,
+            label=f"Mean - 1 std: {mean - std:.3f}",
+        )
+        plt.axvline(
+            mean + 2 * std,
+            color=hist_color,
+            linestyle="dashed",
+            linewidth=1,
+            label=f"Mean + 2 std: {mean + 2 * std:.3f}",
+        )
+        plt.axvline(
+            mean - 2 * std,
+            color=hist_color,
+            linestyle="dashed",
+            linewidth=1,
+            label=f"Mean - 2 std: {mean - 2 * std:.3f}",
+        )
 
     # Format X axis
     if x_tick_spacing == "Auto":
@@ -1785,7 +1659,12 @@ def plot_histogram(
 
     plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
     plt.xlabel(x_label)
-    plt.xticks(rotation=x_tick_rotation)
+
+    if x_tick_rotation != 0:
+        # Line up the x-ticks with the labels when rotated
+        plt.xticks(rotation=x_tick_rotation, ha="right")
+    else:
+        plt.xticks(rotation=x_tick_rotation)
 
     # Format Y axis
     if y_tick_spacing == "Auto":
@@ -1826,38 +1705,15 @@ def plot_histogram(
 ```python
 import math
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+
 import numpy as np
 import pandas as pd
 
 from matplotlib.ticker import MultipleLocator, PercentFormatter, FormatStrFormatter
-from run_linear_regression import run_linear_regression
+from run_regression import run_regression
 
-
-def round_to_nice_value(value):
-    """Round a value to a 'nice' number for tick spacing (1, 2, 5 x 10^n)."""
-    if value <= 0:
-        return value
-
-    # Find order of magnitude
-    exp = math.floor(math.log10(value))
-    magnitude = 10**exp
-
-    # Get mantissa (value normalized to [1, 10))
-    mantissa = value / magnitude
-
-    # Round mantissa to 1, 2, or 5
-    if mantissa <= 1:
-        nice_mantissa = 0.1
-    elif mantissa <= 1.5:
-        nice_mantissa = 1
-    elif mantissa <= 3:
-        nice_mantissa = 2
-    elif mantissa <= 7:
-        nice_mantissa = 5
-    else:
-        nice_mantissa = 10
-
-    return nice_mantissa * magnitude
+from round_to_nice_value import round_to_nice_value
 
 
 def plot_scatter(
@@ -1875,17 +1731,17 @@ def plot_scatter(
     y_format_decimal_places: int,
     y_tick_spacing: int,
     y_tick_rotation: int,
-    plot_OLS_regression_line: bool,
-    OLS_column: str,
-    plot_Ridge_regression_line: bool,
-    Ridge_column: str,
-    plot_RidgeCV_regression_line: bool,
-    RidgeCV_column: str,
-    regression_constant: bool,
-    grid: bool,
-    legend: bool,
-    export_plot: bool,
-    plot_file_name: str,
+    plot_OLS_regression_line: bool = False,
+    OLS_column: str = None,
+    plot_Ridge_regression_line: bool = False,
+    Ridge_column: str = None,
+    plot_RidgeCV_regression_line: bool = False,
+    RidgeCV_column: str  = None,
+    regression_constant: bool = True,
+    grid: bool = True,
+    legend: bool = True,
+    export_plot: bool = False,
+    plot_file_name: str = None,
 ) -> None:
     """
     Plot the data from a DataFrame for a specified date range and columns.
@@ -1906,8 +1762,8 @@ def plot_scatter(
         Format for the x-axis date labels.
     x_tick_spacing : int
         Spacing for the x-axis ticks.
-    x_tick_rotation : int, optional
-        Rotation angle for the x-axis tick labels (default: 0).
+    x_tick_rotation : int
+        Rotation angle for the x-axis tick labels.
     y_label : str
         Label for the y-axis.
     y_format : str
@@ -1916,30 +1772,30 @@ def plot_scatter(
         Number of decimal places for y-axis labels.
     y_tick_spacing : int
         Spacing for the y-axis ticks.
-    y_tick_rotation : int, optional
-        Rotation angle for the y-axis tick labels (default: 0).
-    plot_OLS_regression_line : bool
-        Whether to plot an OLS regression line on the scatter plot.
-    OLS_column : str
-        Column name for the OLS regression line.
-    plot_Ridge_regression_line : bool
-        Whether to plot a Ridge regression line on the scatter plot.
-    Ridge_column : str
-        Column name for the Ridge regression line.
-    plot_RidgeCV_regression_line : bool
-        Whether to plot a RidgeCV regression line on the scatter plot.
-    RidgeCV_column : str
-        Column name for the RidgeCV regression line.
-    regression_constant : bool
-        Whether to include a constant term in the regression models.
-    grid : bool
-        Whether to display a grid on the plot.
-    legend : bool
-        Whether to display a legend on the plot.
-    export_plot : bool
-        Whether to save the figure as a PNG file.
-    plot_file_name : str
-        File name for saving the figure (if save_fig is True).
+    y_tick_rotation : int
+        Rotation angle for the y-axis tick labels.
+    plot_OLS_regression_line : bool, optional
+        Whether to plot an OLS regression line on the scatter plot (default: False).
+    OLS_column : str, optional
+        Column name for the OLS regression line (default: None).
+    plot_Ridge_regression_line : bool, optional
+        Whether to plot a Ridge regression line on the scatter plot (default: False).
+    Ridge_column : str, optional
+        Column name for the Ridge regression line (default: None).
+    plot_RidgeCV_regression_line : bool, optional
+        Whether to plot a RidgeCV regression line on the scatter plot (default: False).
+    RidgeCV_column : str, optional
+        Column name for the RidgeCV regression line (default: None).
+    regression_constant : bool, optional
+        Whether to include a constant term in the regression models (default: True).
+    grid : bool, optional
+        Whether to display a grid on the plot (default is True).
+    legend : bool, optional
+        Whether to display a legend on the plot (default is True).
+    export_plot : bool, optional
+        Whether to save the figure as a PNG file (default is False).
+    plot_file_name : str, optional
+        File name for saving the figure (if export_plot is True, default is None).
 
     Returns
     -------
@@ -1968,22 +1824,51 @@ def plot_scatter(
         )
     elif x_format == "Log":
         plt.xscale("log")
+    elif x_format == "Second":
+        plt.gca().xaxis.set_major_locator(mdates.SecondLocator(interval=x_tick_spacing))
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
+    elif x_format == "Minute":
+        plt.gca().xaxis.set_major_locator(mdates.MinuteLocator(interval=x_tick_spacing))
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M"))
+    elif x_format == "Hour":
+        plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=x_tick_spacing))
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M"))
+    elif x_format == "Day":
+        plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=x_tick_spacing))
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
+    elif x_format == "Week":
+        plt.gca().xaxis.set_major_locator(mdates.WeekdayLocator(interval=x_tick_spacing))
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
+    elif x_format == "Month":
+        plt.gca().xaxis.set_major_locator(mdates.MonthLocator(interval=x_tick_spacing))
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
+    elif x_format == "Year":
+        plt.gca().xaxis.set_major_locator(mdates.YearLocator(base=x_tick_spacing))
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
     elif x_format == "String":
         pass  # No special formatting for string x-axis
     else:
         raise ValueError(
-            f"Unrecognized x_format: {x_format}. Use 'Decimal', 'Percentage', or 'Scientific'."
+            f"Unrecognized x_format: {x_format}. Use 'Decimal', 'Percentage', 'Scientific', 'Second', 'Minute', 'Hour', 'Day', 'Week', 'Month', 'Year', or 'String'."
         )
 
     if x_tick_spacing == "Auto":
         raw_x_spacing = (df[x_plot_column].max() - df[x_plot_column].min()) / 20
+        print(f"Raw x-tick spacing: {raw_x_spacing}")
         x_tick_spacing = round_to_nice_value(raw_x_spacing)
+        print(f"Rounded x-tick spacing: {x_tick_spacing}")
     else:
         x_tick_spacing = x_tick_spacing
 
-    plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
+    if x_format not in ("Second", "Minute", "Hour", "Day", "Week", "Month", "Year"):
+        plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
     plt.xlabel(x_label)
-    plt.xticks(rotation=x_tick_rotation)
+
+    if x_tick_rotation != 0:
+        # Line up the x-ticks with the labels when rotated
+        plt.xticks(rotation=x_tick_rotation, ha="right")
+    else:
+        plt.xticks(rotation=x_tick_rotation)
 
     # Format Y axis
     if y_format == "Decimal":
@@ -2002,20 +1887,20 @@ def plot_scatter(
         plt.yscale("log")
     else:
         raise ValueError(
-            f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', or 'Scientific'."
+            f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', 'Scientific', or 'Log'."
         )
 
     if y_tick_spacing == "Auto":
-        max = 0
-        min = 1
+        max_value = 0
+        min_value = 1_000_000
         for col in y_plot_columns:
-            if df[col].max() > max:
-                max = df[col].max()
+            if df[col].max() > max_value:
+                max_value = df[col].max()
 
-            if df[col].min() < min:
-                min = df[col].min()
+            if df[col].min() < min_value:
+                min_value = df[col].min()
 
-        raw_y_spacing = (max - min) / 10
+        raw_y_spacing = (max_value - min_value) / 10
         y_tick_spacing = round_to_nice_value(raw_y_spacing)
     else:
         y_tick_spacing = y_tick_spacing
@@ -2026,7 +1911,7 @@ def plot_scatter(
 
     if plot_OLS_regression_line == True:
 
-        model = run_linear_regression(
+        model = run_regression(
             df=df,
             x_plot_column=x_plot_column,
             y_plot_column=OLS_column,
@@ -2052,7 +1937,7 @@ def plot_scatter(
 
     if plot_Ridge_regression_line == True:
 
-        model = run_linear_regression(
+        model = run_regression(
             df=df,
             x_plot_column=x_plot_column,
             y_plot_column=Ridge_column,
@@ -2080,7 +1965,7 @@ def plot_scatter(
 
     if plot_RidgeCV_regression_line == True:
 
-        model = run_linear_regression(
+        model = run_regression(
             df=df,
             x_plot_column=x_plot_column,
             y_plot_column=RidgeCV_column,
@@ -2230,7 +2115,7 @@ def plot_stats(
     plot_columns,
     title: str,
     x_label: str,
-    x_rotation: int,
+    x_tick_rotation: int,
     x_tick_spacing: int,
     y_label: str,
     y_tick_spacing: int,
@@ -2252,7 +2137,7 @@ def plot_stats(
         Title of the plot.
     x_label : str
         Label for the x-axis.
-    x_rotation : int
+    x_tick_rotation : int
         Rotation angle for the x-axis date labels.
     x_tick_spacing : int
         Spacing for the x-axis ticks.
@@ -2292,7 +2177,12 @@ def plot_stats(
     # Format X axis
     plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
     plt.xlabel(x_label)
-    plt.xticks(rotation=x_rotation)
+
+    if x_tick_rotation != 0:
+        # Line up the x-ticks with the labels when rotated
+        plt.xticks(rotation=x_tick_rotation, ha="right")
+    else:
+        plt.xticks(rotation=x_tick_rotation)
 
     # Format Y axis
     plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
@@ -2334,32 +2224,7 @@ from matplotlib.ticker import (
     PercentFormatter,
 )
 
-
-def round_to_nice_value(value):
-    """Round a value to a 'nice' number for tick spacing (1, 2, 5 x 10^n)."""
-    if value <= 0:
-        return value
-
-    # Find order of magnitude
-    exp = math.floor(math.log10(value))
-    magnitude = 10**exp
-
-    # Get mantissa (value normalized to [1, 10))
-    mantissa = value / magnitude
-
-    # Round mantissa to 1, 2, or 5
-    if mantissa <= 1:
-        nice_mantissa = 0.1
-    elif mantissa <= 1.5:
-        nice_mantissa = 1
-    elif mantissa <= 3:
-        nice_mantissa = 2
-    elif mantissa <= 7:
-        nice_mantissa = 5
-    else:
-        nice_mantissa = 10
-
-    return nice_mantissa * magnitude
+from round_to_nice_value import round_to_nice_value
 
 
 def plot_time_series(
@@ -2377,10 +2242,10 @@ def plot_time_series(
     y_format_decimal_places: int,
     y_tick_spacing: int,
     y_tick_rotation: int,
-    grid: bool,
-    legend: bool,
-    export_plot: bool,
-    plot_file_name: str,
+    grid: bool = True,
+    legend: bool = True,
+    export_plot: bool = False,
+    plot_file_name: str = None,
 ) -> None:
     """
     Plot the time series data from a DataFrame for a specified date range and columns.
@@ -2415,14 +2280,14 @@ def plot_time_series(
         Spacing for the y-axis ticks.
     y_tick_rotation : int
         Rotation angle for the y-axis tick labels.
-    grid : bool
-        Whether to display a grid on the plot.
-    legend : bool
-        Whether to display a legend on the plot.
-    export_plot : bool
-        Whether to save the figure as a PNG file.
-    plot_file_name : str
-        File name for saving the figure (if save_fig is True).
+    grid : bool, optional
+        Whether to display a grid on the plot (default is True).
+    legend : bool, optional
+        Whether to display a legend on the plot (default is True).
+    export_plot : bool, optional
+        Whether to save the figure as a PNG file (default is False).
+    plot_file_name : str, optional
+        File name for saving the figure (if export_plot is True, default is None).
 
 
     Returns
@@ -2452,49 +2317,80 @@ def plot_time_series(
     plt.figure(figsize=(10, 6))
 
     # Plot data
-    if plot_columns == "All":
-        for col in df_filtered.columns:
-            plt.plot(
-                df_filtered.index,
-                df_filtered[col],
-                label=col,
-                linestyle="-",
-                linewidth=1.5,
-                alpha=0.7,
-            )
-    else:
-        for col in plot_columns:
-            plt.plot(
-                df_filtered.index,
-                df_filtered[col],
-                label=col,
-                linestyle="-",
-                linewidth=1.5,
-                alpha=0.7,
-            )
+    cols = df_filtered.columns if plot_columns == "All" else plot_columns
+    for col in cols:
+        plt.plot(
+            df_filtered.index,
+            df_filtered[col],
+            label=col,
+            linestyle="-",
+            linewidth=1.5,
+            alpha=0.7,
+        )
 
     # Format X axis
-    if x_format == "Day":
-        plt.gca().xaxis.set_major_locator(mdates.DayLocator())
+    if x_format == "Second":
+        plt.gca().xaxis.set_major_locator(mdates.SecondLocator(interval=x_tick_spacing))
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
+    elif x_format == "Minute":
+        plt.gca().xaxis.set_major_locator(mdates.MinuteLocator(interval=x_tick_spacing))
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M"))
+    elif x_format == "Hour":
+        plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=x_tick_spacing))
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M"))
+    elif x_format == "Day":
+        plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=x_tick_spacing))
         plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
     elif x_format == "Week":
-        plt.gca().xaxis.set_major_locator(mdates.WeekdayLocator())
+        plt.gca().xaxis.set_major_locator(mdates.WeekdayLocator(interval=x_tick_spacing))
         plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
     elif x_format == "Month":
-        plt.gca().xaxis.set_major_locator(mdates.MonthLocator())
+        plt.gca().xaxis.set_major_locator(mdates.MonthLocator(interval=x_tick_spacing))
         plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
     elif x_format == "Year":
         plt.gca().xaxis.set_major_locator(mdates.YearLocator(base=x_tick_spacing))
         plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
     else:
         raise ValueError(
-            f"Unrecognized x_format: {x_format}. Use 'Day', 'Week', 'Month', or 'Year'."
+            f"Unrecognized x_format: {x_format}. Use 'Second', 'Minute', 'Hour', 'Day', 'Week', 'Month', or 'Year'."
         )
 
     plt.xlabel(x_label)
-    plt.xticks(rotation=x_tick_rotation)
+
+    if x_tick_rotation != 0:
+        # Line up the x-ticks with the labels when rotated
+        plt.xticks(rotation=x_tick_rotation, ha="right")
+    else:
+        plt.xticks(rotation=x_tick_rotation)
 
     # Format Y axis
+    if y_tick_spacing == "Auto":
+        max_value = 0
+        min_value = 1_000_000
+        cols = df_filtered.columns if plot_columns == "All" else plot_columns
+        for col in cols:
+            if df_filtered[col].max() > max_value:
+                max_value = df_filtered[col].max()
+
+            if df_filtered[col].min() < min_value:
+                min_value = df_filtered[col].min()
+
+        raw_y_spacing = (max_value - min_value) / 10
+        y_tick_spacing = round_to_nice_value(raw_y_spacing)
+    else:
+        y_tick_spacing = y_tick_spacing
+
+    if y_format_decimal_places == "Auto":
+        if isinstance(y_tick_spacing, float):
+            y_tick_spacing_decimal_places = max(
+                0, -int(math.floor(math.log10(abs(y_tick_spacing))))
+            )
+        else:
+            y_tick_spacing_decimal_places = 0
+        y_format_decimal_places = y_tick_spacing_decimal_places
+    else:
+        y_format_decimal_places = y_format_decimal_places
+
     if y_format == "Decimal":
         plt.gca().yaxis.set_major_formatter(
             FuncFormatter(lambda x, _: f"{x:,.{y_format_decimal_places}f}")
@@ -2513,21 +2409,6 @@ def plot_time_series(
         raise ValueError(
             f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', 'Scientific', or 'Log'."
         )
-
-    if y_tick_spacing == "Auto":
-        max = 0
-        min = 1
-        for col in plot_columns:
-            if df[col].max() > max:
-                max = df[col].max()
-
-            if df[col].min() < min:
-                min = df[col].min()
-
-        raw_y_spacing = (max - min) / 10
-        y_tick_spacing = round_to_nice_value(raw_y_spacing)
-    else:
-        y_tick_spacing = y_tick_spacing
 
     plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
     plt.ylabel(y_label)
@@ -2660,12 +2541,11 @@ import pandas as pd
 import time
 
 from datetime import datetime, timedelta
-from load_api_keys import load_api_keys
 from massive import RESTClient
 from settings import config
 
-# Load API keys from the environment
-api_keys = load_api_keys()
+# Load API key from the environment variables
+POLYGON_KEY = config("POLYGON_KEY")
 
 # Get the environment variable for where data is stored
 DATA_DIR = config("DATA_DIR")
@@ -2820,7 +2700,8 @@ def polygon_fetch_full_history(
 
                 if overlap.empty:
                     raise Exception(
-                        f"New data does not overlap with existing data (full-row check)."
+                        # f"New data does not overlap with existing data (full-row check)."
+                        f"New data does not overlap with existing data (price data check)."
                     )
 
             # Combine existing data with recent data, drop duplicates, sort values, reset index
@@ -2868,10 +2749,10 @@ def polygon_fetch_full_history(
             # past current_start
             if new_date_last_date_check == new_data_last_date:
                 current_start = current_end - timedelta(days=time_overlap)
-                new_date_last_date_check = new_data_last_date
             else:
                 current_start = new_data_last_date - timedelta(days=time_overlap)
-                new_date_last_date_check = new_data_last_date
+
+            new_date_last_date_check = new_data_last_date
 
             # Code below is likely not necessary
 
@@ -2937,18 +2818,17 @@ if __name__ == "__main__":
 import pandas as pd
 import time
 
-from load_api_keys import load_api_keys
 from massive import RESTClient
 from settings import config
 
-# Load API keys from the environment
-api_keys = load_api_keys()
+# Load API key from the environment variables
+POLYGON_KEY = config("POLYGON_KEY")
 
 # Get the environment variable for where data is stored
 DATA_DIR = config("DATA_DIR")
 
 # Open client connection
-client = RESTClient(api_key=api_keys["POLYGON_KEY"])
+client = RESTClient(api_key=POLYGON_KEY)
 
 
 def polygon_fetch_ticker_details(
@@ -3046,13 +2926,12 @@ import time
 
 from datetime import datetime, timedelta
 from IPython.display import display
-from load_api_keys import load_api_keys
 from massive import RESTClient
 from polygon_fetch_full_history import polygon_fetch_full_history
 from settings import config
 
-# Load API keys from the environment
-api_keys = load_api_keys()
+# Load API key from the environment variables
+POLYGON_KEY = config("POLYGON_KEY")
 
 # Get the environment variable for where data is stored
 DATA_DIR = config("DATA_DIR")
@@ -3072,6 +2951,7 @@ def polygon_pull_data(
     verbose: bool,
     excel_export: bool,
     pickle_export: bool,
+    parquet_export: bool,
     output_confirmation: bool,
 ) -> pd.DataFrame:
     """
@@ -3105,6 +2985,8 @@ def polygon_pull_data(
         If True, export data to Excel format.
     pickle_export : bool
         If True, export data to Pickle format.
+    parquet_export : bool
+        If True, export data to Parquet format.
     output_confirmation : bool
         If True, print confirmation message.
 
@@ -3115,7 +2997,7 @@ def polygon_pull_data(
     """
 
     # Open client connection
-    client = RESTClient(api_key=api_keys["POLYGON_KEY"])
+    client = RESTClient(api_key=POLYGON_KEY)
 
     # Set file location based on parameters
     file_location = f"{base_directory}/{source}/{asset_class}/{timespan}/{ticker}.pkl"
@@ -3221,6 +3103,11 @@ def polygon_pull_data(
         print(f"Exporting {ticker} {timespan} data to Pickle...")
         full_history_df.to_pickle(f"{directory}/{ticker}.pkl")
 
+    # Export to Parquet
+    if parquet_export == True:
+        print(f"Exporting {ticker} {timespan} data to Parquet...")
+        full_history_df.to_parquet(f"{directory}/{ticker}.parquet")
+
     total_rows = len(full_history_df)
 
     # Output confirmation
@@ -3269,6 +3156,7 @@ if __name__ == "__main__":
             verbose=False,
             excel_export=True,
             pickle_export=True,
+            parquet_export=True,
             output_confirmation=True,
         )
 
@@ -3292,6 +3180,7 @@ if __name__ == "__main__":
             verbose=False,
             excel_export=True,
             pickle_export=True,
+            parquet_export=True,
             output_confirmation=True,
         )
 
@@ -3315,6 +3204,7 @@ if __name__ == "__main__":
             verbose=False,
             excel_export=True,
             pickle_export=True,
+            parquet_export=True,
             output_confirmation=True,
         )
 
@@ -3325,88 +3215,137 @@ if __name__ == "__main__":
 
 ```
 
-### run_linear_regression
+### run_regression
 
 ```python
 import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 
-from sklearn.linear_model import LinearRegression, Ridge, RidgeCV
+from sklearn.linear_model import (
+    LinearRegression, 
+    LogisticRegression, 
+    LogisticRegressionCV,
+    Ridge, 
+    RidgeCV,
+)
 
 
-def run_linear_regression(
+def run_regression(
     df: pd.DataFrame,
     x_plot_column: str,
     y_plot_column: str,
     regression_model: str,
     regression_constant: bool,
     ridge_alpha: float = None,
+    logistic_C: float = 1.0,
+    logistic_max_iter: int = 1000,
+    logistic_solver: str = "lbfgs",
+    logistic_cv_Cs: int = 10,
 ) -> (
     LinearRegression
     | Ridge
     | RidgeCV
+    | LogisticRegression
+    | LogisticRegressionCV
     | sm.regression.linear_model.RegressionResultsWrapper
 ):
     """
-    Run a linear regression on the specified DataFrame columns, model, and constant.
+    Run a linear regression on the specified DataFrame columns, model, 
+    and constant.
 
     Parameters
     ----------
     df : pd.DataFrame
-        DataFrame containing the price data to plot.
+        DataFrame containing the data to fit.
     x_plot_column : str
-        Column to plot on the x-axis from the DataFrame.
+        Column to use as the feature (X) from the DataFrame.
     y_plot_column : str
-        Column to plot on the y-axis from the DataFrame.
+        Column to use as the target (y) from the DataFrame.
     regression_model : str
-        Type of regression model to use ("OLS-statsmodels", "OLS-sklearn", "Ridge", or "RidgeCV").
+        Type of regression model to use. One of:
+            "OLS-statsmodels", "OLS-sklearn", "Ridge", "RidgeCV",
+            "Logistic", "LogisticCV".
     regression_constant : bool
-        Whether to include a constant term in the regression model.
+        Whether to include a constant/intercept term in the model.
     ridge_alpha : float, optional
         Alpha value for Ridge regression. Required if regression_model is "Ridge".
+    logistic_C : float, optional
+        Inverse of regularization strength for LogisticRegression. Smaller
+        values produce stronger regularization. Default is 1.0.
+    logistic_max_iter : int, optional
+        Maximum number of iterations for the solver. Default is 1000.
+    logistic_solver : str, optional
+        Solver algorithm for LogisticRegression and LogisticRegressionCV.
+        Default is "lbfgs". Other options: "liblinear", "saga", "newton-cg".
+    logistic_cv_Cs : int, optional
+        Number of C values to try in LogisticRegressionCV, spaced
+        logarithmically. Default is 10.
 
     Returns
     -------
-    model : LinearRegression | Ridge | RidgeCV | RegressionResultsWrapper
+    model : LinearRegression | Ridge | RidgeCV | LogisticRegression
+            | LogisticRegressionCV | RegressionResultsWrapper
         The fitted regression model.
+
+    Notes
+    -----
+    Logistic models expect a binary (0/1) or multiclass integer target column.
+    They are classification models, not regression models, so the interpretation
+    of coefficients differs from the linear models above.
     """
 
-    # Align X and y (common to both models)
+    # Align X and y (common to all models)
     data = df[[x_plot_column, y_plot_column]].dropna()
     X = data[[x_plot_column]]
     y = data[y_plot_column]
 
     if regression_model == "OLS-statsmodels":
-        # Add constant if requested
         if regression_constant:
             X_sm = sm.add_constant(X)
         else:
             X_sm = X
-
-        # Fit OLS regression model
         model = sm.OLS(y, X_sm).fit()
 
     elif regression_model == "OLS-sklearn":
-        # Fit OLS regression model
         model = LinearRegression(fit_intercept=regression_constant)
         model.fit(X, y)
 
     elif regression_model == "Ridge":
-        # Fit Ridge regression model with fixed alpha
         model = Ridge(alpha=ridge_alpha, fit_intercept=regression_constant)
         model.fit(X, y)
 
     elif regression_model == "RidgeCV":
-        # Fit Ridge regression model with automatic alpha selection via CV
         alphas = np.logspace(-2, 1, 50)  # 50 values, 0.01 to 10
         model = RidgeCV(alphas=alphas, cv=5, fit_intercept=regression_constant)
         model.fit(X, y)
 
+    elif regression_model == "Logistic":
+        model = LogisticRegression(
+            C=logistic_C,
+            fit_intercept=regression_constant,
+            max_iter=logistic_max_iter,
+            solver=logistic_solver,
+        )
+        model.fit(X, y)
+
+    elif regression_model == "LogisticCV":
+        # Cs can be an int (number of log-spaced values) or an explicit array;
+        # passing the int is the idiomatic sklearn approach here.
+        model = LogisticRegressionCV(
+            Cs=logistic_cv_Cs,
+            fit_intercept=regression_constant,
+            max_iter=logistic_max_iter,
+            solver=logistic_solver,
+            cv=5,
+        )
+        model.fit(X, y)
+
     else:
         raise ValueError(
-            f"Unrecognized regression_model: {regression_model}. "
-            "Currently, only 'OLS-statsmodels', 'OLS-sklearn', 'Ridge', and 'RidgeCV' are supported."
+            f"Unrecognized regression_model: '{regression_model}'. "
+            "Supported models: 'OLS-statsmodels', 'OLS-sklearn', 'Ridge', "
+            "'RidgeCV', 'Logistic', 'LogisticCV'."
         )
 
     return model
@@ -3770,7 +3709,8 @@ def yf_pull_data(
     ticker : str
         Ticker symbol to download.
     adjusted : bool
-        If True, download adjusted price data.
+        If True, download adjusted price data. If False, download both 
+        adjusted close and unadjusted open/high/low/close price data.
     source : str
         Name of the data source (e.g., 'Yahoo').
     asset_class : str

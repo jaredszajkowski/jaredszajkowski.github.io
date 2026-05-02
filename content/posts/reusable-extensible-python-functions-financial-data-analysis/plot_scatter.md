@@ -1,38 +1,15 @@
 ```python
 import math
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+
 import numpy as np
 import pandas as pd
 
 from matplotlib.ticker import MultipleLocator, PercentFormatter, FormatStrFormatter
-from run_linear_regression import run_linear_regression
+from run_regression import run_regression
 
-
-def round_to_nice_value(value):
-    """Round a value to a 'nice' number for tick spacing (1, 2, 5 x 10^n)."""
-    if value <= 0:
-        return value
-
-    # Find order of magnitude
-    exp = math.floor(math.log10(value))
-    magnitude = 10**exp
-
-    # Get mantissa (value normalized to [1, 10))
-    mantissa = value / magnitude
-
-    # Round mantissa to 1, 2, or 5
-    if mantissa <= 1:
-        nice_mantissa = 0.1
-    elif mantissa <= 1.5:
-        nice_mantissa = 1
-    elif mantissa <= 3:
-        nice_mantissa = 2
-    elif mantissa <= 7:
-        nice_mantissa = 5
-    else:
-        nice_mantissa = 10
-
-    return nice_mantissa * magnitude
+from round_to_nice_value import round_to_nice_value
 
 
 def plot_scatter(
@@ -50,17 +27,17 @@ def plot_scatter(
     y_format_decimal_places: int,
     y_tick_spacing: int,
     y_tick_rotation: int,
-    plot_OLS_regression_line: bool,
-    OLS_column: str,
-    plot_Ridge_regression_line: bool,
-    Ridge_column: str,
-    plot_RidgeCV_regression_line: bool,
-    RidgeCV_column: str,
-    regression_constant: bool,
-    grid: bool,
-    legend: bool,
-    export_plot: bool,
-    plot_file_name: str,
+    plot_OLS_regression_line: bool = False,
+    OLS_column: str = None,
+    plot_Ridge_regression_line: bool = False,
+    Ridge_column: str = None,
+    plot_RidgeCV_regression_line: bool = False,
+    RidgeCV_column: str  = None,
+    regression_constant: bool = True,
+    grid: bool = True,
+    legend: bool = True,
+    export_plot: bool = False,
+    plot_file_name: str = None,
 ) -> None:
     """
     Plot the data from a DataFrame for a specified date range and columns.
@@ -81,8 +58,8 @@ def plot_scatter(
         Format for the x-axis date labels.
     x_tick_spacing : int
         Spacing for the x-axis ticks.
-    x_tick_rotation : int, optional
-        Rotation angle for the x-axis tick labels (default: 0).
+    x_tick_rotation : int
+        Rotation angle for the x-axis tick labels.
     y_label : str
         Label for the y-axis.
     y_format : str
@@ -91,30 +68,30 @@ def plot_scatter(
         Number of decimal places for y-axis labels.
     y_tick_spacing : int
         Spacing for the y-axis ticks.
-    y_tick_rotation : int, optional
-        Rotation angle for the y-axis tick labels (default: 0).
-    plot_OLS_regression_line : bool
-        Whether to plot an OLS regression line on the scatter plot.
-    OLS_column : str
-        Column name for the OLS regression line.
-    plot_Ridge_regression_line : bool
-        Whether to plot a Ridge regression line on the scatter plot.
-    Ridge_column : str
-        Column name for the Ridge regression line.
-    plot_RidgeCV_regression_line : bool
-        Whether to plot a RidgeCV regression line on the scatter plot.
-    RidgeCV_column : str
-        Column name for the RidgeCV regression line.
-    regression_constant : bool
-        Whether to include a constant term in the regression models.
-    grid : bool
-        Whether to display a grid on the plot.
-    legend : bool
-        Whether to display a legend on the plot.
-    export_plot : bool
-        Whether to save the figure as a PNG file.
-    plot_file_name : str
-        File name for saving the figure (if save_fig is True).
+    y_tick_rotation : int
+        Rotation angle for the y-axis tick labels.
+    plot_OLS_regression_line : bool, optional
+        Whether to plot an OLS regression line on the scatter plot (default: False).
+    OLS_column : str, optional
+        Column name for the OLS regression line (default: None).
+    plot_Ridge_regression_line : bool, optional
+        Whether to plot a Ridge regression line on the scatter plot (default: False).
+    Ridge_column : str, optional
+        Column name for the Ridge regression line (default: None).
+    plot_RidgeCV_regression_line : bool, optional
+        Whether to plot a RidgeCV regression line on the scatter plot (default: False).
+    RidgeCV_column : str, optional
+        Column name for the RidgeCV regression line (default: None).
+    regression_constant : bool, optional
+        Whether to include a constant term in the regression models (default: True).
+    grid : bool, optional
+        Whether to display a grid on the plot (default is True).
+    legend : bool, optional
+        Whether to display a legend on the plot (default is True).
+    export_plot : bool, optional
+        Whether to save the figure as a PNG file (default is False).
+    plot_file_name : str, optional
+        File name for saving the figure (if export_plot is True, default is None).
 
     Returns
     -------
@@ -143,22 +120,51 @@ def plot_scatter(
         )
     elif x_format == "Log":
         plt.xscale("log")
+    elif x_format == "Second":
+        plt.gca().xaxis.set_major_locator(mdates.SecondLocator(interval=x_tick_spacing))
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
+    elif x_format == "Minute":
+        plt.gca().xaxis.set_major_locator(mdates.MinuteLocator(interval=x_tick_spacing))
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M"))
+    elif x_format == "Hour":
+        plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=x_tick_spacing))
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M"))
+    elif x_format == "Day":
+        plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=x_tick_spacing))
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
+    elif x_format == "Week":
+        plt.gca().xaxis.set_major_locator(mdates.WeekdayLocator(interval=x_tick_spacing))
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
+    elif x_format == "Month":
+        plt.gca().xaxis.set_major_locator(mdates.MonthLocator(interval=x_tick_spacing))
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%b %Y"))
+    elif x_format == "Year":
+        plt.gca().xaxis.set_major_locator(mdates.YearLocator(base=x_tick_spacing))
+        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
     elif x_format == "String":
         pass  # No special formatting for string x-axis
     else:
         raise ValueError(
-            f"Unrecognized x_format: {x_format}. Use 'Decimal', 'Percentage', or 'Scientific'."
+            f"Unrecognized x_format: {x_format}. Use 'Decimal', 'Percentage', 'Scientific', 'Second', 'Minute', 'Hour', 'Day', 'Week', 'Month', 'Year', or 'String'."
         )
 
     if x_tick_spacing == "Auto":
         raw_x_spacing = (df[x_plot_column].max() - df[x_plot_column].min()) / 20
+        print(f"Raw x-tick spacing: {raw_x_spacing}")
         x_tick_spacing = round_to_nice_value(raw_x_spacing)
+        print(f"Rounded x-tick spacing: {x_tick_spacing}")
     else:
         x_tick_spacing = x_tick_spacing
 
-    plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
+    if x_format not in ("Second", "Minute", "Hour", "Day", "Week", "Month", "Year"):
+        plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
     plt.xlabel(x_label)
-    plt.xticks(rotation=x_tick_rotation)
+
+    if x_tick_rotation != 0:
+        # Line up the x-ticks with the labels when rotated
+        plt.xticks(rotation=x_tick_rotation, ha="right")
+    else:
+        plt.xticks(rotation=x_tick_rotation)
 
     # Format Y axis
     if y_format == "Decimal":
@@ -177,20 +183,20 @@ def plot_scatter(
         plt.yscale("log")
     else:
         raise ValueError(
-            f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', or 'Scientific'."
+            f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', 'Scientific', or 'Log'."
         )
 
     if y_tick_spacing == "Auto":
-        max = 0
-        min = 1
+        max_value = 0
+        min_value = 1_000_000
         for col in y_plot_columns:
-            if df[col].max() > max:
-                max = df[col].max()
+            if df[col].max() > max_value:
+                max_value = df[col].max()
 
-            if df[col].min() < min:
-                min = df[col].min()
+            if df[col].min() < min_value:
+                min_value = df[col].min()
 
-        raw_y_spacing = (max - min) / 10
+        raw_y_spacing = (max_value - min_value) / 10
         y_tick_spacing = round_to_nice_value(raw_y_spacing)
     else:
         y_tick_spacing = y_tick_spacing
@@ -201,7 +207,7 @@ def plot_scatter(
 
     if plot_OLS_regression_line == True:
 
-        model = run_linear_regression(
+        model = run_regression(
             df=df,
             x_plot_column=x_plot_column,
             y_plot_column=OLS_column,
@@ -227,7 +233,7 @@ def plot_scatter(
 
     if plot_Ridge_regression_line == True:
 
-        model = run_linear_regression(
+        model = run_regression(
             df=df,
             x_plot_column=x_plot_column,
             y_plot_column=Ridge_column,
@@ -255,7 +261,7 @@ def plot_scatter(
 
     if plot_RidgeCV_regression_line == True:
 
-        model = run_linear_regression(
+        model = run_regression(
             df=df,
             x_plot_column=x_plot_column,
             y_plot_column=RidgeCV_column,

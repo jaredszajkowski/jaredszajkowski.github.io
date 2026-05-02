@@ -6,8 +6,43 @@
     <description>Recent content in Topics on Jared Szajkowski</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 20 Mar 2026 00:00:01 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Apr 2026 00:00:01 +0000</lastBuildDate>
     <atom:link href="https://www.jaredszajkowski.com/topics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Arch Linux</title>
+      <link>https://www.jaredszajkowski.com/topics/arch-linux/</link>
+      <pubDate>Tue, 07 Apr 2026 00:00:01 +0000</pubDate>
+      <guid>https://www.jaredszajkowski.com/topics/arch-linux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Linux</title>
+      <link>https://www.jaredszajkowski.com/topics/linux/</link>
+      <pubDate>Tue, 07 Apr 2026 00:00:01 +0000</pubDate>
+      <guid>https://www.jaredszajkowski.com/topics/linux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>PostgreSQL</title>
+      <link>https://www.jaredszajkowski.com/topics/postgresql/</link>
+      <pubDate>Tue, 07 Apr 2026 00:00:01 +0000</pubDate>
+      <guid>https://www.jaredszajkowski.com/topics/postgresql/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>TimescaleDB</title>
+      <link>https://www.jaredszajkowski.com/topics/timescaledb/</link>
+      <pubDate>Tue, 07 Apr 2026 00:00:01 +0000</pubDate>
+      <guid>https://www.jaredszajkowski.com/topics/timescaledb/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Timestamp9</title>
+      <link>https://www.jaredszajkowski.com/topics/timestamp9/</link>
+      <pubDate>Tue, 07 Apr 2026 00:00:01 +0000</pubDate>
+      <guid>https://www.jaredszajkowski.com/topics/timestamp9/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Exchange Traded Funds</title>
       <link>https://www.jaredszajkowski.com/topics/exchange-traded-funds/</link>
@@ -37,13 +72,6 @@
       <description></description>
     </item>
     <item>
-      <title>Arch Linux</title>
-      <link>https://www.jaredszajkowski.com/topics/arch-linux/</link>
-      <pubDate>Fri, 20 Feb 2026 00:00:01 +0000</pubDate>
-      <guid>https://www.jaredszajkowski.com/topics/arch-linux/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>Git</title>
       <link>https://www.jaredszajkowski.com/topics/git/</link>
       <pubDate>Fri, 20 Feb 2026 00:00:01 +0000</pubDate>
@@ -51,10 +79,10 @@
       <description></description>
     </item>
     <item>
-      <title>GitLab</title>
-      <link>https://www.jaredszajkowski.com/topics/gitlab/</link>
+      <title>GitHub</title>
+      <link>https://www.jaredszajkowski.com/topics/github/</link>
       <pubDate>Fri, 20 Feb 2026 00:00:01 +0000</pubDate>
-      <guid>https://www.jaredszajkowski.com/topics/gitlab/</guid>
+      <guid>https://www.jaredszajkowski.com/topics/github/</guid>
       <description></description>
     </item>
     <item>
@@ -139,20 +167,6 @@
       <link>https://www.jaredszajkowski.com/topics/bash/</link>
       <pubDate>Fri, 12 Jan 2024 00:00:01 +0000</pubDate>
       <guid>https://www.jaredszajkowski.com/topics/bash/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Linux</title>
-      <link>https://www.jaredszajkowski.com/topics/linux/</link>
-      <pubDate>Fri, 12 Jan 2024 00:00:01 +0000</pubDate>
-      <guid>https://www.jaredszajkowski.com/topics/linux/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>GitHub</title>
-      <link>https://www.jaredszajkowski.com/topics/github/</link>
-      <pubDate>Mon, 16 Oct 2023 00:00:00 +0000</pubDate>
-      <guid>https://www.jaredszajkowski.com/topics/github/</guid>
       <description></description>
     </item>
     <item>
