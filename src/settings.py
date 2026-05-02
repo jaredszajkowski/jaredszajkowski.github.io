@@ -213,7 +213,6 @@ def config(
 def create_directories():
     config("DATA_DIR").mkdir(parents=True, exist_ok=True)
     config("DATA_MANUAL_DIR").mkdir(parents=True, exist_ok=True)
-    config("OUTPUT_DIR").mkdir(parents=True, exist_ok=True)
 
 
 if __name__ == "__main__":
