@@ -1,4 +1,5 @@
 import math
+import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import pandas as pd
@@ -12,7 +13,7 @@ from matplotlib.ticker import (
 from round_to_nice_value import round_to_nice_value
 
 
-def plot_time_series(
+def plot_bar(
     df: pd.DataFrame,
     plot_start_date: str,
     plot_end_date: str,
@@ -33,7 +34,7 @@ def plot_time_series(
     plot_file_name: str = None,
 ) -> None:
     """
-    Plot the time series data from a DataFrame for a specified date range and columns.
+    Plot a bar chart from a DataFrame for a specified date range and columns.
 
     Parameters
     ----------
@@ -103,15 +104,14 @@ def plot_time_series(
 
     # Plot data
     cols = df_filtered.columns if plot_columns == "All" else plot_columns
-    for col in cols:
-        plt.plot(
-            df_filtered.index,
-            df_filtered[col],
-            label=col,
-            linestyle="-",
-            linewidth=1.5,
-            alpha=0.7,
-        )
+    n = len(cols)
+    x = mdates.date2num(df_filtered.index)
+    typical_spacing = float(np.median(np.diff(x))) if len(x) > 1 else 1.0
+    width = typical_spacing * 0.8 / n
+    offsets = [width * (i - (n - 1) / 2) for i in range(n)]
+
+    for i, col in enumerate(cols):
+        plt.bar(x + offsets[i], df_filtered[col], width=width, label=col, alpha=0.7)
 
     # Format X axis
     if x_format == "Second":
@@ -152,13 +152,20 @@ def plot_time_series(
     if y_tick_spacing == "Auto":
         max_value = 0
         min_value = 1_000_000
-        cols = df_filtered.columns if plot_columns == "All" else plot_columns
-        for col in cols:
-            if df_filtered[col].max() > max_value:
-                max_value = df_filtered[col].max()
+        if plot_columns == "All":
+            for col in df_filtered.columns:
+                if df_filtered[col].max() > max_value:
+                    max_value = df_filtered[col].max()
 
-            if df_filtered[col].min() < min_value:
-                min_value = df_filtered[col].min()
+                if df_filtered[col].min() < min_value:
+                    min_value = df_filtered[col].min()
+        else:
+            for col in plot_columns:
+                if df_filtered[col].max() > max_value:
+                    max_value = df_filtered[col].max()
+
+                if df_filtered[col].min() < min_value:
+                    min_value = df_filtered[col].min()
 
         raw_y_spacing = (max_value - min_value) / 10
         y_tick_spacing = round_to_nice_value(raw_y_spacing)

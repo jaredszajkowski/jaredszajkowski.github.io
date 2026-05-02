@@ -2,12 +2,11 @@ import pandas as pd
 import time
 
 from datetime import datetime, timedelta
-from load_api_keys import load_api_keys
 from massive import RESTClient
 from settings import config
 
-# Load API keys from the environment
-api_keys = load_api_keys()
+# Load API key from the environment variables
+POLYGON_KEY = config("POLYGON_KEY")
 
 # Get the environment variable for where data is stored
 DATA_DIR = config("DATA_DIR")

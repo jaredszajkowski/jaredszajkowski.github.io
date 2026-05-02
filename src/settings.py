@@ -1,5 +1,6 @@
 """
-Load project configurations from .env files.
+Load project configurations from .env files or from the command line.
+
 Provides easy access to paths and credentials used in the project.
 Meant to be used as an imported module.
 
@@ -18,11 +19,18 @@ need to copy over the settings from one into `.env` to switch
 over to the other configuration, for example.
 """
 
+from decouple import RepositoryEnv
 from decouple import config as _config
 from pandas import to_datetime
 from pathlib import Path
 from platform import system
 
+########################################################
+## Helper functions
+########################################################
+
+
+# OS type
 def get_os():
     os_name = system()
     if os_name == "Windows":
@@ -34,7 +42,8 @@ def get_os():
     else:
         return "unknown"
 
-def if_relative_make_abs(relative_dir, path):
+## File paths
+def if_relative_make_abs(path):
     """If a relative path is given, make it absolute, assuming
     that it is relative to the project root directory (BASE_DIR)
 
@@ -42,43 +51,98 @@ def if_relative_make_abs(relative_dir, path):
     -------
     ```
     >>> if_relative_make_abs(Path('_data'))
-    WindowsPath('C:/Users/jdoe/GitRepositories/blank_project/_data')
+    WindowsPath('C:/Users/jdoe/GitRepositories/cookiecutter_chartbook/_data')
 
-    >>> if_relative_make_abs(Path("C:/Users/jdoe/GitRepositories/blank_project/_output"))
-    WindowsPath('C:/Users/jdoe/GitRepositories/blank_project/_output')
+    >>> if_relative_make_abs(Path("C:/Users/jdoe/GitRepositories/cookiecutter_chartbook/_output"))
+    WindowsPath('C:/Users/jdoe/GitRepositories/cookiecutter_chartbook/_output')
     ```
     """
     path = Path(path)
     if path.is_absolute():
         abs_path = path.resolve()
     else:
-        abs_path = (d[relative_dir] / path).resolve()
+        abs_path = (defaults["BASE_DIR"] / path).resolve()
     return abs_path
 
-# Initialize the dictionary to hold all the settings
-d = {}
-
-# Get the OS type
-d["OS_TYPE"] = get_os()
+########################################################
+## Define defaults dictionary and load .env file
+########################################################
 
 # Absolute path to root directory of the project
-d["BASE_DIR"] = Path(__file__).absolute().parent.parent
+BASE_DIR = Path(__file__).absolute().parent.parent
+WEBSITES_DIR = BASE_DIR.parent
 
-# Get the "Websites" directory
-d["WEBSITES_DIR"] = d["BASE_DIR"].parent
+defaults = {
+    "BASE_DIR": BASE_DIR,
+    "WEBSITES_DIR": WEBSITES_DIR,
+    "CONTENT_DIR": if_relative_make_abs(BASE_DIR / "content"),
+    "POSTS_DIR": if_relative_make_abs(BASE_DIR / "content/posts"),
+    "PAGES_DIR": if_relative_make_abs(BASE_DIR / "content/pages"),
+    "PUBLIC_DIR": if_relative_make_abs(BASE_DIR / "public"),
+    "SOURCE_DIR": if_relative_make_abs(BASE_DIR / "src"),
+    "DATA_DIR": if_relative_make_abs(WEBSITES_DIR / "Data"),
+    "DATA_MANUAL_DIR": if_relative_make_abs(WEBSITES_DIR / "Data_Manual"),
+    "OS_TYPE": get_os(),
+}
+
+# Load .env file and append to defaults
+env_file = RepositoryEnv(BASE_DIR / ".env")
+
+# Append each key-value pair from the .env file to the defaults dictionary
+for key, value in env_file.data.items():
+    defaults[key] = value
+
+
+def config(
+    var_name,
+    default=None,
+    cast=None,
+):
+    if var_name in defaults:
+        var = defaults[var_name]
+        if default is not None:
+            raise ValueError(
+                f"Default for {var_name} already exists. Check your settings.py file."
+            )
+        if cast is not None:
+            # Allows for re-emphasizing the type of the variable
+            # but does not allow for changing the type of the variable
+            # if the variable is defined in the settings.py file
+            if type(cast(var)) is not type(var):
+                raise ValueError(
+                    f"Type for {var_name} is already set. Check your settings.py file."
+                )
+    else:
+        # If the variable is not defined in the settings.py file, raise an error
+        raise Exception(
+            f"{var_name} is not defined in settings.py. Please add it to the settings.py file."
+        )
+    return var
+
+# # Initialize the dictionary to hold all the settings
+# d = {}
+
+# # Get the OS type
+# d["OS_TYPE"] = get_os()
+
+# # Absolute path to root directory of the project
+# d["BASE_DIR"] = Path(__file__).absolute().parent.parent
+
+# # Get the "Websites" directory
+# d["WEBSITES_DIR"] = d["BASE_DIR"].parent
 
 # fmt: off
 ## Other .evn variables
-d["ENV_PATH"] = Path.home() / "Cloud_Storage/Dropbox/.env"
+# d["ENV_PATH"] = Path.home() / "Cloud_Storage/Dropbox/.env"
 
 ## Paths
-d["CONTENT_DIR"] = if_relative_make_abs(relative_dir="BASE_DIR", path=_config('CONTENT_DIR', default=Path('content'), cast=Path))
-d["POSTS_DIR"] = if_relative_make_abs(relative_dir="BASE_DIR", path=_config('POSTS_DIR', default=Path('content/posts'), cast=Path))
-d["PAGES_DIR"] = if_relative_make_abs(relative_dir="BASE_DIR", path=_config('PAGES_DIR', default=Path('content/pages'), cast=Path))
-d["PUBLIC_DIR"] = if_relative_make_abs(relative_dir="BASE_DIR", path=_config('PUBLIC_DIR', default=Path('public'), cast=Path))
-d["SOURCE_DIR"] = if_relative_make_abs(relative_dir="BASE_DIR", path=_config('SOURCE_DIR', default=Path('src'), cast=Path))
-d["DATA_DIR"] = if_relative_make_abs(relative_dir="WEBSITES_DIR", path=_config('DATA_DIR', default=Path('Data'), cast=Path))
-d["DATA_MANUAL_DIR"] = if_relative_make_abs(relative_dir="WEBSITES_DIR", path=_config('DATA_MANUAL_DIR', default=Path('Data_Manual'), cast=Path))
+# d["CONTENT_DIR"] = if_relative_make_abs(relative_dir="BASE_DIR", path=_config('CONTENT_DIR', default=Path('content'), cast=Path))
+# d["POSTS_DIR"] = if_relative_make_abs(relative_dir="BASE_DIR", path=_config('POSTS_DIR', default=Path('content/posts'), cast=Path))
+# d["PAGES_DIR"] = if_relative_make_abs(relative_dir="BASE_DIR", path=_config('PAGES_DIR', default=Path('content/pages'), cast=Path))
+# d["PUBLIC_DIR"] = if_relative_make_abs(relative_dir="BASE_DIR", path=_config('PUBLIC_DIR', default=Path('public'), cast=Path))
+# d["SOURCE_DIR"] = if_relative_make_abs(relative_dir="BASE_DIR", path=_config('SOURCE_DIR', default=Path('src'), cast=Path))
+# d["DATA_DIR"] = if_relative_make_abs(relative_dir="WEBSITES_DIR", path=_config('DATA_DIR', default=Path('Data'), cast=Path))
+# d["DATA_MANUAL_DIR"] = if_relative_make_abs(relative_dir="WEBSITES_DIR", path=_config('DATA_MANUAL_DIR', default=Path('Data_Manual'), cast=Path))
 
 # Old configuration that put DATA_DIR relative to BASE_DIR
 # d["DATA_DIR"] = if_relative_make_abs(_config('DATA_DIR', default=Path('Data'), cast=Path))
@@ -91,39 +155,39 @@ d["DATA_MANUAL_DIR"] = if_relative_make_abs(relative_dir="WEBSITES_DIR", path=_c
 #     print(f"{key}: {value}")
 
 ## Name of Stata Executable in path
-if d["OS_TYPE"] == "windows":
-    d["STATA_EXE"] = _config("STATA_EXE", default="StataMP-64.exe")
-elif d["OS_TYPE"] == "nix":
-    d["STATA_EXE"] = _config("STATA_EXE", default="stata-mp")
-else:
-    raise ValueError("Unknown OS type")
+# if d["OS_TYPE"] == "windows":
+#     d["STATA_EXE"] = _config("STATA_EXE", default="StataMP-64.exe")
+# elif d["OS_TYPE"] == "nix":
+#     d["STATA_EXE"] = _config("STATA_EXE", default="stata-mp")
+# else:
+#     raise ValueError("Unknown OS type")
 
-def config(*args, **kwargs):
-    key = args[0]
-    default = kwargs.get("default", None)
-    cast = kwargs.get("cast", None)
-    if key in d:
-        var = d[key]
-        if default is not None:
-            raise ValueError(
-                f"Default for {key} already exists. Check your settings.py file."
-            )
-        if cast is not None:
-            # Allows for re-emphasizing the type of the variable
-            # But does not allow for changing the type of the variable
-            # if the variable is defined in the settings.py file
-            if type(cast(var)) is not type(var):
-                raise ValueError(
-                    f"Type for {key} is already set. Check your settings.py file."
-                )
-    else:
-        # If the variable is not defined in the settings.py file,
-        # then fall back to using decouple normally.
-        # var = _config(*args, **kwargs)
-        raise Exception(
-            f"{key} is not defined in settings.py. Please add it to the settings.py file."
-        )
-    return var
+# def config(*args, **kwargs):
+#     key = args[0]
+#     default = kwargs.get("default", None)
+#     cast = kwargs.get("cast", None)
+#     if key in d:
+#         var = d[key]
+#         if default is not None:
+#             raise ValueError(
+#                 f"Default for {key} already exists. Check your settings.py file."
+#             )
+#         if cast is not None:
+#             # Allows for re-emphasizing the type of the variable
+#             # But does not allow for changing the type of the variable
+#             # if the variable is defined in the settings.py file
+#             if type(cast(var)) is not type(var):
+#                 raise ValueError(
+#                     f"Type for {key} is already set. Check your settings.py file."
+#                 )
+#     else:
+#         # If the variable is not defined in the settings.py file,
+#         # then fall back to using decouple normally.
+#         # var = _config(*args, **kwargs)
+#         raise Exception(
+#             f"{key} is not defined in settings.py. Please add it to the settings.py file."
+#         )
+#     return var
 
 
 # print(config("DATA_DIR"))
@@ -133,15 +197,24 @@ def config(*args, **kwargs):
 # print(f"Test directory: {test_dir}")
 # print(f"Test directory type: {type(test_dir)}")
 
-def create_dirs():
-    ## If they don't exist, create the _data and _output directories
-    d["CONTENT_DIR"].mkdir(parents=True, exist_ok=True)
-    d["PAGES_DIR"].mkdir(parents=True, exist_ok=True)
-    d["POSTS_DIR"].mkdir(parents=True, exist_ok=True)
-    d["PUBLIC_DIR"].mkdir(parents=True, exist_ok=True)
-    d["SOURCE_DIR"].mkdir(parents=True, exist_ok=True)
-    d["DATA_DIR"].mkdir(parents=True, exist_ok=True)
-    d["DATA_MANUAL_DIR"].mkdir(parents=True, exist_ok=True)
+# def create_dirs():
+#     ## If they don't exist, create the _data and _output directories
+#     d["CONTENT_DIR"].mkdir(parents=True, exist_ok=True)
+#     d["PAGES_DIR"].mkdir(parents=True, exist_ok=True)
+#     d["POSTS_DIR"].mkdir(parents=True, exist_ok=True)
+#     d["PUBLIC_DIR"].mkdir(parents=True, exist_ok=True)
+#     d["SOURCE_DIR"].mkdir(parents=True, exist_ok=True)
+#     d["DATA_DIR"].mkdir(parents=True, exist_ok=True)
+#     d["DATA_MANUAL_DIR"].mkdir(parents=True, exist_ok=True)
+
+# if __name__ == "__main__":
+#     create_dirs()
+
+def create_directories():
+    config("DATA_DIR").mkdir(parents=True, exist_ok=True)
+    config("DATA_MANUAL_DIR").mkdir(parents=True, exist_ok=True)
+    config("OUTPUT_DIR").mkdir(parents=True, exist_ok=True)
+
 
 if __name__ == "__main__":
-    create_dirs()
+    create_directories()
