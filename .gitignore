@@ -29,19 +29,6 @@ drafts/draft_bp.pdf
 # Sphinx build files
 _docs/
 
-##############
-#Excluded PDFs
-##############
-# I've decided to exclude all PDFs unless they're in the literature or papers directory.
-# http://stackoverflow.com/questions/1248570/git-ignore-everything-except-subdirectory
-
-!/related_literature/*
-!/related_literature/
-!/related_literature/*/*
-!/Papers/*
-!/papers/*
-!/literature/*
-
 #########################
 # Exclude Compiled Files
 #########################
@@ -239,8 +226,6 @@ token.json
 # Ignore .insyncdl files used by Insync
 *.insyncdl
 
-# public/
+public/
 .hugo_build.lock
-resources/_gen/
 content/posts/ETF_Trend_Following/
-public/posts/ETF_Trend_Following/
