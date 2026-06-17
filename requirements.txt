@@ -3,7 +3,10 @@
 # pip install -r requirements.txt
 
 black
+black[jupyter]
+coinbase-advanced-py
 colorama
+databento
 doit
 jupyter
 massive
