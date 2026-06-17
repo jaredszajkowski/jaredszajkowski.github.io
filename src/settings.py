@@ -42,6 +42,7 @@ def get_os():
     else:
         return "unknown"
 
+
 ## File paths
 def if_relative_make_abs(path):
     """If a relative path is given, make it absolute, assuming
@@ -64,6 +65,7 @@ def if_relative_make_abs(path):
         abs_path = (defaults["BASE_DIR"] / path).resolve()
     return abs_path
 
+
 ########################################################
 ## Define defaults dictionary and load .env file
 ########################################################
@@ -72,6 +74,7 @@ def if_relative_make_abs(path):
 BASE_DIR = Path(__file__).absolute().parent.parent
 WEBSITES_DIR = BASE_DIR.parent
 
+# Initialize the dictionary to hold all the settings
 defaults = {
     "BASE_DIR": BASE_DIR,
     "WEBSITES_DIR": WEBSITES_DIR,
@@ -119,96 +122,6 @@ def config(
         )
     return var
 
-# # Initialize the dictionary to hold all the settings
-# d = {}
-
-# # Get the OS type
-# d["OS_TYPE"] = get_os()
-
-# # Absolute path to root directory of the project
-# d["BASE_DIR"] = Path(__file__).absolute().parent.parent
-
-# # Get the "Websites" directory
-# d["WEBSITES_DIR"] = d["BASE_DIR"].parent
-
-# fmt: off
-## Other .evn variables
-# d["ENV_PATH"] = Path.home() / "Cloud_Storage/Dropbox/.env"
-
-## Paths
-# d["CONTENT_DIR"] = if_relative_make_abs(relative_dir="BASE_DIR", path=_config('CONTENT_DIR', default=Path('content'), cast=Path))
-# d["POSTS_DIR"] = if_relative_make_abs(relative_dir="BASE_DIR", path=_config('POSTS_DIR', default=Path('content/posts'), cast=Path))
-# d["PAGES_DIR"] = if_relative_make_abs(relative_dir="BASE_DIR", path=_config('PAGES_DIR', default=Path('content/pages'), cast=Path))
-# d["PUBLIC_DIR"] = if_relative_make_abs(relative_dir="BASE_DIR", path=_config('PUBLIC_DIR', default=Path('public'), cast=Path))
-# d["SOURCE_DIR"] = if_relative_make_abs(relative_dir="BASE_DIR", path=_config('SOURCE_DIR', default=Path('src'), cast=Path))
-# d["DATA_DIR"] = if_relative_make_abs(relative_dir="WEBSITES_DIR", path=_config('DATA_DIR', default=Path('Data'), cast=Path))
-# d["DATA_MANUAL_DIR"] = if_relative_make_abs(relative_dir="WEBSITES_DIR", path=_config('DATA_MANUAL_DIR', default=Path('Data_Manual'), cast=Path))
-
-# Old configuration that put DATA_DIR relative to BASE_DIR
-# d["DATA_DIR"] = if_relative_make_abs(_config('DATA_DIR', default=Path('Data'), cast=Path))
-# d["DATA_MANUAL_DIR"] = if_relative_make_abs(_config('DATA_MANUAL_DIR', default=Path('Data_Manual'), cast=Path))
-
-# fmt: on
-
-# # Print the dictionary to check the values
-# for key, value in d.items():
-#     print(f"{key}: {value}")
-
-## Name of Stata Executable in path
-# if d["OS_TYPE"] == "windows":
-#     d["STATA_EXE"] = _config("STATA_EXE", default="StataMP-64.exe")
-# elif d["OS_TYPE"] == "nix":
-#     d["STATA_EXE"] = _config("STATA_EXE", default="stata-mp")
-# else:
-#     raise ValueError("Unknown OS type")
-
-# def config(*args, **kwargs):
-#     key = args[0]
-#     default = kwargs.get("default", None)
-#     cast = kwargs.get("cast", None)
-#     if key in d:
-#         var = d[key]
-#         if default is not None:
-#             raise ValueError(
-#                 f"Default for {key} already exists. Check your settings.py file."
-#             )
-#         if cast is not None:
-#             # Allows for re-emphasizing the type of the variable
-#             # But does not allow for changing the type of the variable
-#             # if the variable is defined in the settings.py file
-#             if type(cast(var)) is not type(var):
-#                 raise ValueError(
-#                     f"Type for {key} is already set. Check your settings.py file."
-#                 )
-#     else:
-#         # If the variable is not defined in the settings.py file,
-#         # then fall back to using decouple normally.
-#         # var = _config(*args, **kwargs)
-#         raise Exception(
-#             f"{key} is not defined in settings.py. Please add it to the settings.py file."
-#         )
-#     return var
-
-
-# print(config("DATA_DIR"))
-# print(type(config("DATA_DIR")))
-
-# test_dir = config("DATA_DIR")
-# print(f"Test directory: {test_dir}")
-# print(f"Test directory type: {type(test_dir)}")
-
-# def create_dirs():
-#     ## If they don't exist, create the _data and _output directories
-#     d["CONTENT_DIR"].mkdir(parents=True, exist_ok=True)
-#     d["PAGES_DIR"].mkdir(parents=True, exist_ok=True)
-#     d["POSTS_DIR"].mkdir(parents=True, exist_ok=True)
-#     d["PUBLIC_DIR"].mkdir(parents=True, exist_ok=True)
-#     d["SOURCE_DIR"].mkdir(parents=True, exist_ok=True)
-#     d["DATA_DIR"].mkdir(parents=True, exist_ok=True)
-#     d["DATA_MANUAL_DIR"].mkdir(parents=True, exist_ok=True)
-
-# if __name__ == "__main__":
-#     create_dirs()
 
 def create_directories():
     config("DATA_DIR").mkdir(parents=True, exist_ok=True)
