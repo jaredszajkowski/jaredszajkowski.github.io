@@ -15,10 +15,7 @@ def plot_bar_returns_ffr_change(
 
         # Create bar plot for cumulative returns
         barplot = sns.barplot(
-            data=cycle_df,
-            x="Label",
-            y="CumulativeReturnPct",
-            palette="coolwarm"
+            data=cycle_df, x="Label", y="CumulativeReturnPct", palette="coolwarm"
         )
 
         # Annotate each bar with cumulative return and Fed rate change
@@ -32,14 +29,14 @@ def plot_bar_returns_ffr_change(
                 # fontsize=10,
             )
 
-    elif annualized_or_cumulative == "Annualized":    
-        
+    elif annualized_or_cumulative == "Annualized":
+
         # Create bar plot for annualized returns
         barplot = sns.barplot(
             data=cycle_df,
             x="Label",  # Date range labels from earlier
             y="AnnualizedReturnPct",
-            palette="coolwarm"
+            palette="coolwarm",
         )
 
         # Annotate each bar with annualized return + annualized FFR change
@@ -62,6 +59,8 @@ def plot_bar_returns_ffr_change(
     # plt.xticks(rotation=45, ha="right", fontsize=12)
     plt.xticks(rotation=45, ha="right")
     # plt.title(f"{asset_label} {annualized_or_cumulative} Return by Fed Policy Cycle With {annualized_or_cumulative} Change in Fed Funds Rate", fontsize=16)
-    plt.title(f"{asset_label} {annualized_or_cumulative} Return by Fed Policy Cycle With {annualized_or_cumulative} Change in Fed Funds Rate")
+    plt.title(
+        f"{asset_label} {annualized_or_cumulative} Return by Fed Policy Cycle With {annualized_or_cumulative} Change in Fed Funds Rate"
+    )
     plt.tight_layout()
     plt.show()

@@ -2,13 +2,13 @@ import pandas as pd
 
 from load_data import load_data
 
+
 def load_crypto_data(
     tickers: list,
     base_directory,
     start_date: str,
     end_date: str,
 ) -> pd.DataFrame:
-    
     """
     Loads minute-level data for multiple crypto tickers from Coinbase source.
 
@@ -32,7 +32,7 @@ def load_crypto_data(
 
     # Create empty DataFrame
     df = pd.DataFrame()
-    
+
     for ticker in tickers:
         # Load data
         temp_df = load_data(
@@ -47,13 +47,15 @@ def load_crypto_data(
         temp_df = temp_df.sort_index()
 
         # Rename columns
-        temp_df = temp_df.rename(columns={
-            "open": f"{ticker}_open",
-            "high": f"{ticker}_high",
-            "low": f"{ticker}_low",
-            "close": f"{ticker}_close",
-            "volume": f"{ticker}_volume",
-        })
+        temp_df = temp_df.rename(
+            columns={
+                "open": f"{ticker}_open",
+                "high": f"{ticker}_high",
+                "low": f"{ticker}_low",
+                "close": f"{ticker}_close",
+                "volume": f"{ticker}_volume",
+            }
+        )
 
         # Merge the data
         df = pd.merge(df, temp_df, how="outer", left_index=True, right_index=True)

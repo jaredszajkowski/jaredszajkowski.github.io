@@ -69,7 +69,7 @@ def plot_histogram(
         std = df[col].std()
         # Create histogram first to get its color
         n, bins, patches = plt.hist(
-            df[col], label=col, bins=200, edgecolor="black", alpha=0.7
+            df[col], label=col, bins=200, edgecolor="black", alpha=0.5
         )
         hist_color = patches[0].get_facecolor()
         # Use histogram color for vertical lines
@@ -142,7 +142,7 @@ def plot_histogram(
 
     # Grid
     if grid == True:
-        plt.grid(True, linestyle="--", alpha=0.7)
+        plt.grid(True, linestyle="--", alpha=0.5)
 
     # Legend
     if legend == True:

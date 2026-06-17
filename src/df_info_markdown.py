@@ -1,6 +1,7 @@
 import io
 import pandas as pd
 
+
 def df_info_markdown(
     df: pd.DataFrame,
     decimal_places: int = 2,
@@ -8,8 +9,8 @@ def df_info_markdown(
     """
     Generate a Markdown-formatted summary of a pandas DataFrame.
 
-    This function captures and formats the output of `df.info()`, `df.head()`, 
-    and `df.tail()` in Markdown for easy inclusion in reports, documentation, 
+    This function captures and formats the output of `df.info()`, `df.head()`,
+    and `df.tail()` in Markdown for easy inclusion in reports, documentation,
     or web-based rendering (e.g., Hugo or Jupyter export workflows).
 
     Parameters:
@@ -20,7 +21,7 @@ def df_info_markdown(
     Returns:
     --------
     str
-        A string containing the DataFrame's info, head, and tail 
+        A string containing the DataFrame's info, head, and tail
         formatted in Markdown.
 
     Example:
@@ -38,7 +39,7 @@ def df_info_markdown(
     The last 5 rows are:
     ...
     """
-    
+
     buffer = io.StringIO()
 
     # Capture df.info() output
@@ -58,7 +59,7 @@ def df_info_markdown(
         # "The first 5 rows are:\n",
         head_str,
         "\nThe last 5 rows are:\n",
-        tail_str
+        tail_str,
     ]
 
     # markdown = [

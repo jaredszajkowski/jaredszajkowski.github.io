@@ -25,7 +25,7 @@ current_day = datetime.now().day
 
 # Set global variables
 GLOBAL_VERBOSE = False
-GLOBAL_FREE_TIER = True
+GLOBAL_FREE_TIER = False
 GLOBAL_PULL_MINUTE = True
 GLOBAL_PARQUET_EXPORT = False
 

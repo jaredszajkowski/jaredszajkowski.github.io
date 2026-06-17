@@ -1,10 +1,10 @@
 import pandas as pd
 from IPython.display import display
 
+
 def df_info(
     df: pd.DataFrame,
 ) -> None:
-    
     """
     Display summary information about a pandas DataFrame.
 
@@ -28,7 +28,7 @@ def df_info(
     --------
     >>> df_info(my_dataframe)
     """
-    
+
     print("The columns, shape, and data types are:")
     print(df.info())
     print("The first 5 rows are:")

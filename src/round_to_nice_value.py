@@ -31,6 +31,7 @@ def round_to_nice_value(value):
 
     return nice_mantissa * magnitude
 
+
 if __name__ == "__main__":
     test_values = [0.03, 0.1, 0.15, 0.5, 1, 2.5, 4, 7, 10.0, 12, 25, 60, 150, 400, 700]
     for val in test_values:

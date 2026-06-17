@@ -14,7 +14,7 @@ def plot_scatter_regression_ffr_vs_returns(
     slope: float,
 ) -> None:
     """
-    Plot a scatter plot of annualized returns vs annualized change in Fed Funds 
+    Plot a scatter plot of annualized returns vs annualized change in Fed Funds
     Rate, with a regression line and annotations for each policy cycle.
 
     Parameters
@@ -46,7 +46,7 @@ def plot_scatter_regression_ffr_vs_returns(
         x="FFR_AnnualizedChange_bps",
         y="AnnualizedReturnPct",
         s=100,
-        color="blue"
+        color="blue",
     )
 
     # Annotate each point with the cycle number or date range, annualized returns and FFR
@@ -59,10 +59,16 @@ def plot_scatter_regression_ffr_vs_returns(
             color="black",
         )
 
-    plt.plot(x_vals, y_vals, color="red", linestyle="--", label=f"OLS Fit: y = {intercept:.1f} + {slope:.2f}x")
+    plt.plot(
+        x_vals,
+        y_vals,
+        color="red",
+        linestyle="--",
+        label=f"OLS Fit: y = {intercept:.1f} + {slope:.2f}x",
+    )
     plt.axhline(0, color="gray", linestyle="--", linewidth=0.8)
     plt.axvline(0, color="gray", linestyle="--", linewidth=0.8)
-    
+
     # Format X axis
     plt.xlabel("Annualized Change In Fed Funds Rate (bps)")
     plt.xticks()
@@ -72,7 +78,9 @@ def plot_scatter_regression_ffr_vs_returns(
     plt.yticks()
 
     # Format title, layout, grid, and legend
-    plt.title(f"{asset_label} Annualized Return vs Annualized Change in Fed Funds Rate by Policy Cycle")
+    plt.title(
+        f"{asset_label} Annualized Return vs Annualized Change in Fed Funds Rate by Policy Cycle"
+    )
     plt.tight_layout()
     plt.grid(True)
     plt.legend()

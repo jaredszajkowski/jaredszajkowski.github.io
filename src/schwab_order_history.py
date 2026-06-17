@@ -12,16 +12,16 @@ api_keys = load_api_keys()
 # Add configured directories
 SOURCE_DIR = config("SOURCE_DIR")
 
+
 def schwab_order_history(
     max_results: int,
     from_entered_time: str,
     to_entered_time: str,
     account_id: str,
 ) -> pd.DataFrame:
-    
     """
     Fetches order history from Schwab API and returns it as a pandas DataFrame.
-    
+
     Parameters:
     -----------
     max_results : int
@@ -32,7 +32,7 @@ def schwab_order_history(
         End date for the order history in ISO 8601 format. (e.g., "2025-03-28T23:59:59.000Z")
     account_id : str
         Schwab account ID to fetch order history for.
-        
+
     Returns:
     --------
     df : pd.DataFrame
@@ -53,10 +53,7 @@ def schwab_order_history(
     else:
         url = f"https://api.schwabapi.com/trader/v1/orders"
 
-    headers = {
-        "Authorization": f"Bearer {access_token}",
-        "Accept": "application/json"
-    }
+    headers = {"Authorization": f"Bearer {access_token}", "Accept": "application/json"}
 
     params = {
         "maxResults": max_results,
@@ -84,17 +81,20 @@ def schwab_order_history(
 
         for activity in order.get("orderActivityCollection", []):
             for exec_leg in activity.get("executionLegs", []):
-                records.append({
-                    "order_id": order.get("orderId"),
-                    "execution_time": exec_leg.get("time"),
-                    "instruction": instruction,
-                    "symbol": symbol,
-                    # "execution_legId": exec_leg.get("legId"),
-                    "execution_quantity": exec_leg.get("quantity"),
-                    "execution_price": exec_leg.get("price"),
-                })
+                records.append(
+                    {
+                        "order_id": order.get("orderId"),
+                        "execution_time": exec_leg.get("time"),
+                        "instruction": instruction,
+                        "symbol": symbol,
+                        # "execution_legId": exec_leg.get("legId"),
+                        "execution_quantity": exec_leg.get("quantity"),
+                        "execution_price": exec_leg.get("price"),
+                    }
+                )
 
     return pd.DataFrame(records)
+
 
 if __name__ == "__main__":
     df = schwab_order_history(

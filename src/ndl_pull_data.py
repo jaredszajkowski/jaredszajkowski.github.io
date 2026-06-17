@@ -14,6 +14,7 @@ api_keys = load_api_keys()
 # Get the environment variable for where data is stored
 DATA_DIR = config("DATA_DIR")
 
+
 def ndl_pull_data(
     base_directory,
     ticker: str,
@@ -23,7 +24,6 @@ def ndl_pull_data(
     pickle_export: bool,
     output_confirmation: bool,
 ) -> pd.DataFrame:
-    
     """
     Download daily price ata from Nasdaq Data Link and add many missing columns and export it.
 
@@ -52,58 +52,76 @@ def ndl_pull_data(
 
     # Command to pull data
     # If start date and end date are not specified the entire data set is included
-    df = nasdaqdatalink.get_table("QUOTEMEDIA/PRICES", ticker=ticker, paginate=True, api_key=api_keys["NASDAQ_DATA_LINK_KEY"])
+    df = nasdaqdatalink.get_table(
+        "QUOTEMEDIA/PRICES",
+        ticker=ticker,
+        paginate=True,
+        api_key=api_keys["NASDAQ_DATA_LINK_KEY"],
+    )
 
     # Sort columns by date ascending
-    df.sort_values('date', ascending = True, inplace = True)
+    df.sort_values("date", ascending=True, inplace=True)
 
     # Rename the date column
-    df.rename(columns = {'date':'Date'}, inplace = True)
+    df.rename(columns={"date": "Date"}, inplace=True)
 
     # Set index to date column
-    df.set_index('Date', inplace = True)
+    df.set_index("Date", inplace=True)
 
     # Replace all split values of 1.0 with NaN
-    df['split'] = df['split'].replace(1.0, np.nan)
+    df["split"] = df["split"].replace(1.0, np.nan)
 
     # Create a new data frame with split values only
-    df_splits = df.drop(columns = {'ticker', 'open', 'high', 'low', 
-                                   'close', 'volume', 'dividend', 
-                                   'adj_open', 'adj_high', 
-                                   'adj_low', 'adj_close', 
-                                   'adj_volume'}).dropna()
+    df_splits = df.drop(
+        columns={
+            "ticker",
+            "open",
+            "high",
+            "low",
+            "close",
+            "volume",
+            "dividend",
+            "adj_open",
+            "adj_high",
+            "adj_low",
+            "adj_close",
+            "adj_volume",
+        }
+    ).dropna()
 
     # Create a new column for cumulative split
-    df_splits['Cum_Split'] = df_splits['split'].cumprod()
+    df_splits["Cum_Split"] = df_splits["split"].cumprod()
 
     # Drop original split column before combining dataframes
-    df_splits.drop(columns = {'split'}, inplace = True)
+    df_splits.drop(columns={"split"}, inplace=True)
 
     # Merge df and df_split dataframes
-    df_comp = pd.merge(df, df_splits, on='Date', how="outer")
+    df_comp = pd.merge(df, df_splits, on="Date", how="outer")
 
     # Forward fill for all cumulative split values
-    df_comp['Cum_Split'] = df_comp['Cum_Split'].ffill()
+    df_comp["Cum_Split"] = df_comp["Cum_Split"].ffill()
 
     # Replace all split and cumulative split values of NaN with 1.0 to have complete split values
-    df_comp['split'] = df_comp['split'].replace(np.nan, 1.0)
-    df_comp['Cum_Split'] = df_comp['Cum_Split'].replace(np.nan, 1.0)
+    df_comp["split"] = df_comp["split"].replace(np.nan, 1.0)
+    df_comp["Cum_Split"] = df_comp["Cum_Split"].replace(np.nan, 1.0)
 
     # Calculate the non adjusted prices based on the splits only
-    df_comp['non_adj_open_split_only'] = df_comp['open'] * df_comp['Cum_Split']
-    df_comp['non_adj_high_split_only'] = df_comp['high'] * df_comp['Cum_Split']
-    df_comp['non_adj_low_split_only'] = df_comp['low'] * df_comp['Cum_Split']
-    df_comp['non_adj_close_split_only'] = df_comp['close'] * df_comp['Cum_Split']
-    df_comp['non_adj_dividend_split_only'] = df_comp['dividend'] * df_comp['Cum_Split']
+    df_comp["non_adj_open_split_only"] = df_comp["open"] * df_comp["Cum_Split"]
+    df_comp["non_adj_high_split_only"] = df_comp["high"] * df_comp["Cum_Split"]
+    df_comp["non_adj_low_split_only"] = df_comp["low"] * df_comp["Cum_Split"]
+    df_comp["non_adj_close_split_only"] = df_comp["close"] * df_comp["Cum_Split"]
+    df_comp["non_adj_dividend_split_only"] = df_comp["dividend"] * df_comp["Cum_Split"]
 
     # Calculate the adjusted prices based on the splits
-    df_comp['Open'] = df_comp['non_adj_open_split_only'] / df_comp['Cum_Split'][-1]
-    df_comp['High'] = df_comp['non_adj_high_split_only'] / df_comp['Cum_Split'][-1]
-    df_comp['Low'] = df_comp['non_adj_low_split_only'] / df_comp['Cum_Split'][-1]
-    df_comp['Close'] = df_comp['non_adj_close_split_only'] / df_comp['Cum_Split'][-1]
-    df_comp['Dividend'] = df_comp['non_adj_dividend_split_only'] / df_comp['Cum_Split'][-1]
-    df_comp['Dividend_Pct_Orig'] = df_comp['dividend'] / df_comp['close']
-    df_comp['Dividend_Pct_Adj'] = df_comp['Dividend'] / df_comp['Close']
+    df_comp["Open"] = df_comp["non_adj_open_split_only"] / df_comp["Cum_Split"][-1]
+    df_comp["High"] = df_comp["non_adj_high_split_only"] / df_comp["Cum_Split"][-1]
+    df_comp["Low"] = df_comp["non_adj_low_split_only"] / df_comp["Cum_Split"][-1]
+    df_comp["Close"] = df_comp["non_adj_close_split_only"] / df_comp["Cum_Split"][-1]
+    df_comp["Dividend"] = (
+        df_comp["non_adj_dividend_split_only"] / df_comp["Cum_Split"][-1]
+    )
+    df_comp["Dividend_Pct_Orig"] = df_comp["dividend"] / df_comp["close"]
+    df_comp["Dividend_Pct_Adj"] = df_comp["Dividend"] / df_comp["Close"]
 
     # Create directory
     directory = f"{base_directory}/{source}/{asset_class}/Daily"
@@ -132,6 +150,7 @@ def ndl_pull_data(
         pass
 
     return df_comp
+
 
 if __name__ == "__main__":
 

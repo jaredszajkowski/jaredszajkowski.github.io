@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 def sm_ols_summary_markdown(result, file_path):
     """
     Convert a statsmodels summary into markdown and save it.

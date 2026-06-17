@@ -49,6 +49,7 @@ CHANNEL = "level2"
 # # # wait 10 seconds
 # ws.run_forever_with_exception_check()
 
+
 def run_websocket():
     def on_message(message):
         print(message)

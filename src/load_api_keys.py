@@ -7,10 +7,8 @@ from settings import config
 # Get the environment variable file path from the configuration
 ENV_PATH = config("ENV_PATH")
 
-def load_api_keys(
-    env_path: Path=ENV_PATH
-) -> dict:
-    
+
+def load_api_keys(env_path: Path = ENV_PATH) -> dict:
     """
     Load API keys from a .env file.
 
@@ -49,6 +47,7 @@ def load_api_keys(
             raise ValueError(f"Missing environment variable: {k}")
 
     return keys
+
 
 if __name__ == "__main__":
     # Example usage

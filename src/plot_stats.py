@@ -59,14 +59,10 @@ def plot_stats(
     # Plot data
     if plot_columns == "All":
         for col in stats_df.columns:
-            plt.scatter(
-                stats_df.index, stats_df[col], label=col, marker="o", alpha=0.7
-            )
+            plt.scatter(stats_df.index, stats_df[col], label=col, marker="o", alpha=0.7)
     else:
         for col in plot_columns:
-            plt.scatter(
-                stats_df.index, stats_df[col], label=col, marker="o", alpha=0.7
-            )
+            plt.scatter(stats_df.index, stats_df[col], label=col, marker="o", alpha=0.7)
 
     # Format X axis
     plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))

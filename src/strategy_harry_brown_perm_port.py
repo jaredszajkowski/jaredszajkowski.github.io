@@ -1,19 +1,19 @@
 import pandas as pd
 
+
 def strategy_harry_brown_perm_port(
-    fund_list: str, 
-    starting_cash: int, 
-    cash_contrib: int, 
-    close_prices_df: pd.DataFrame, 
-    rebal_month: int, 
-    rebal_day: int, 
-    rebal_per_high: float, 
+    fund_list: str,
+    starting_cash: int,
+    cash_contrib: int,
+    close_prices_df: pd.DataFrame,
+    rebal_month: int,
+    rebal_day: int,
+    rebal_per_high: float,
     rebal_per_low: float,
     excel_export: bool,
     pickle_export: bool,
     output_confirmation: bool,
 ) -> pd.DataFrame:
-    
     """
     Execute the re-balance strategy based on specified criteria.
 
@@ -51,22 +51,24 @@ def strategy_harry_brown_perm_port(
     num_funds = len(fund_list)
 
     df = close_prices_df.copy()
-    df.reset_index(inplace = True)
+    df.reset_index(inplace=True)
 
     # Date to be used for annual rebalance
     target_month = rebal_month
     target_day = rebal_day
 
     # Create a dataframe with dates from the specific month
-    rebal_date = df[df['Date'].dt.month == target_month]
+    rebal_date = df[df["Date"].dt.month == target_month]
 
     # Specify the date or the next closest
-    rebal_date = rebal_date[rebal_date['Date'].dt.day >= target_day]
+    rebal_date = rebal_date[rebal_date["Date"].dt.day >= target_day]
 
     # Group by year and take the first entry for each year
-    rebal_dates_by_year = rebal_date.groupby(rebal_date['Date'].dt.year).first().reset_index(drop=True)
+    rebal_dates_by_year = (
+        rebal_date.groupby(rebal_date["Date"].dt.year).first().reset_index(drop=True)
+    )
 
-    '''
+    """
     Column order for the dataframe:
     df[fund + "_BA_Shares"]
     df[fund + "_BA_$_Invested"]
@@ -78,7 +80,7 @@ def strategy_harry_brown_perm_port(
     df[fund + "_AA_$_Invested"]
     df[fund + "_AA_Port_%"]
     df['Total_AA_$_Invested']
-    '''
+    """
 
     # Calculate the columns and initial values for before action (BA) shares, $ invested, and port %
     for fund in fund_list:
@@ -87,18 +89,18 @@ def strategy_harry_brown_perm_port(
         df[fund + "_BA_Port_%"] = 0.25
 
     # Set column values initially
-    df['Total_BA_$_Invested'] = starting_cash
-    df['Contribution'] = cash_contrib
-    df['Rebalance'] = "No"
+    df["Total_BA_$_Invested"] = starting_cash
+    df["Contribution"] = cash_contrib
+    df["Rebalance"] = "No"
 
     # Set columns and values initially for after action (AA) shares, $ invested, and port %
     for fund in fund_list:
         df[fund + "_AA_Shares"] = starting_cash / num_funds / df[fund + "_Close"]
         df[fund + "_AA_$_Invested"] = df[fund + "_AA_Shares"] * df[fund + "_Close"]
         df[fund + "_AA_Port_%"] = 0.25
-        
+
     # Set column value for after action (AA) total $ invested
-    df['Total_AA_$_Invested'] = starting_cash
+    df["Total_AA_$_Invested"] = starting_cash
 
     # Iterate through the dataframe and execute the strategy
     for index, row in df.iterrows():
@@ -111,72 +113,94 @@ def strategy_harry_brown_perm_port(
 
             # Calculate before action (BA) shares and $ invested values
             for fund in fund_list:
-                df.at[index, fund + "_BA_Shares"] = df.at[index - 1, fund + "_AA_Shares"]
-                df.at[index, fund + "_BA_$_Invested"] = df.at[index, fund + "_BA_Shares"] * row[fund + "_Close"]
+                df.at[index, fund + "_BA_Shares"] = df.at[
+                    index - 1, fund + "_AA_Shares"
+                ]
+                df.at[index, fund + "_BA_$_Invested"] = (
+                    df.at[index, fund + "_BA_Shares"] * row[fund + "_Close"]
+                )
 
                 # Sum the asset values to find the total
-                Total_BA_Invested = Total_BA_Invested + df.at[index, fund + "_BA_$_Invested"]
+                Total_BA_Invested = (
+                    Total_BA_Invested + df.at[index, fund + "_BA_$_Invested"]
+                )
 
             # Calculate before action (BA) port % values
             for fund in fund_list:
-                df.at[index, fund + "_BA_Port_%"] = df.at[index, fund + "_BA_$_Invested"] / Total_BA_Invested
+                df.at[index, fund + "_BA_Port_%"] = (
+                    df.at[index, fund + "_BA_$_Invested"] / Total_BA_Invested
+                )
 
             # Set column for before action (BA) total $ invested
-            df.at[index, 'Total_BA_$_Invested'] = Total_BA_Invested
+            df.at[index, "Total_BA_$_Invested"] = Total_BA_Invested
 
             # Initialize variables
             rebalance = "No"
-            date = row['Date']
+            date = row["Date"]
 
             # Check for a specific date annually
             # Simple if statement to check if date_to_check is in jan_28_or_after_each_year
-            if date in rebal_dates_by_year['Date'].values:
+            if date in rebal_dates_by_year["Date"].values:
                 rebalance = "Yes"
             else:
                 pass
 
             # Check to see if any asset has portfolio percentage of greater than 35% or less than 15% and if so set variable
             for fund in fund_list:
-                if df.at[index, fund + "_BA_Port_%"] > rebal_per_high or df.at[index, fund + "_BA_Port_%"] < rebal_per_low:
+                if (
+                    df.at[index, fund + "_BA_Port_%"] > rebal_per_high
+                    or df.at[index, fund + "_BA_Port_%"] < rebal_per_low
+                ):
                     rebalance = "Yes"
                 else:
                     pass
 
             # If rebalance is required, rebalance back to 25% for each asset, else just divide contribution evenly across assets
             if rebalance == "Yes":
-                df.at[index, 'Rebalance'] = rebalance
+                df.at[index, "Rebalance"] = rebalance
                 for fund in fund_list:
-                        df.at[index, fund + "_AA_$_Invested"] = (Total_BA_Invested + df.at[index, 'Contribution']) * 0.25
+                    df.at[index, fund + "_AA_$_Invested"] = (
+                        Total_BA_Invested + df.at[index, "Contribution"]
+                    ) * 0.25
             else:
-                df.at[index, 'Rebalance'] = rebalance
+                df.at[index, "Rebalance"] = rebalance
                 for fund in fund_list:
-                        df.at[index, fund + "_AA_$_Invested"] = df.at[index, fund + "_BA_$_Invested"] + df.at[index, 'Contribution'] * 0.25
+                    df.at[index, fund + "_AA_$_Invested"] = (
+                        df.at[index, fund + "_BA_$_Invested"]
+                        + df.at[index, "Contribution"] * 0.25
+                    )
 
             # Initialize variable
             Total_AA_Invested = 0
 
             # Set column values for after action (AA) shares and port %
             for fund in fund_list:
-                df.at[index, fund + "_AA_Shares"] = df.at[index, fund + "_AA_$_Invested"] / row[fund + "_Close"]
+                df.at[index, fund + "_AA_Shares"] = (
+                    df.at[index, fund + "_AA_$_Invested"] / row[fund + "_Close"]
+                )
 
                 # Sum the asset values to find the total
-                Total_AA_Invested = Total_AA_Invested + df.at[index, fund + "_AA_$_Invested"]
+                Total_AA_Invested = (
+                    Total_AA_Invested + df.at[index, fund + "_AA_$_Invested"]
+                )
 
             # Calculate after action (AA) port % values
             for fund in fund_list:
-                df.at[index, fund + "_AA_Port_%"] = df.at[index, fund + "_AA_$_Invested"] / Total_AA_Invested
+                df.at[index, fund + "_AA_Port_%"] = (
+                    df.at[index, fund + "_AA_$_Invested"] / Total_AA_Invested
+                )
 
             # Set column for after action (AA) total $ invested
-            df.at[index, 'Total_AA_$_Invested'] = Total_AA_Invested
+            df.at[index, "Total_AA_$_Invested"] = Total_AA_Invested
 
         # If this is the first row
         else:
             pass
 
-    df['Return'] = df['Total_AA_$_Invested'].pct_change()
-    df['Cumulative_Return'] = (1 + df['Return']).cumprod()
+    df["Return"] = df["Total_AA_$_Invested"].pct_change()
+    df["Cumulative_Return"] = (1 + df["Return"]).cumprod()
 
-    plan_name = '_'.join(fund_list)
+    plan_name = "_".join(fund_list)
 
     # Export to excel
     if excel_export == True:

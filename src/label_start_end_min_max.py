@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def label_start_end_min_max(
     ax,
     x,
@@ -7,7 +8,6 @@ def label_start_end_min_max(
     fmt: str = "{:.2f}",
     fontsize: int = 9,
 ):
-    
     """
     Annotate start, end, min, and max points on a line plot.
 

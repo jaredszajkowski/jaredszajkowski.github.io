@@ -41,6 +41,7 @@ CHANNEL_NAMES = {
 
 WS_API_URL = "wss://advanced-trade-ws.coinbase.com"
 
+
 def sign_with_jwt(message, channel, products=[]):
     payload = {
         "iss": "coinbase-cloud",
@@ -48,44 +49,41 @@ def sign_with_jwt(message, channel, products=[]):
         "exp": int(time.time()) + 120,
         "sub": API_KEY,
     }
-    headers = {
-        "kid": API_KEY,
-        "nonce": hashlib.sha256(os.urandom(16)).hexdigest()
-    }
+    headers = {"kid": API_KEY, "nonce": hashlib.sha256(os.urandom(16)).hexdigest()}
     token = jwt.encode(payload, API_SECRET, algorithm=ALGORITHM, headers=headers)
-    message['jwt'] = token
+    message["jwt"] = token
     return message
+
 
 def on_message(ws, message):
     data = json.loads(message)
     with open("Output1.txt", "a") as f:
         f.write(json.dumps(data) + "\n")
 
+
 def subscribe_to_products(ws, products, channel_name):
-    message = {
-        "type": "subscribe",
-        "channel": channel_name,
-        "product_ids": products
-    }
+    message = {"type": "subscribe", "channel": channel_name, "product_ids": products}
     signed_message = sign_with_jwt(message, channel_name, products)
     ws.send(json.dumps(signed_message))
 
+
 def unsubscribe_to_products(ws, products, channel_name):
-    message = {
-        "type": "unsubscribe",
-        "channel": channel_name,
-        "product_ids": products
-    }
+    message = {"type": "unsubscribe", "channel": channel_name, "product_ids": products}
     signed_message = sign_with_jwt(message, channel_name, products)
     ws.send(json.dumps(signed_message))
+
 
 def on_open(ws):
     products = ["BTC-USD"]
-    subscribe_to_products(ws=ws, products=products, channel_name=CHANNEL_NAMES["level2"])
+    subscribe_to_products(
+        ws=ws, products=products, channel_name=CHANNEL_NAMES["level2"]
+    )
+
 
 def start_websocket():
     ws = websocket.WebSocketApp(WS_API_URL, on_open=on_open, on_message=on_message)
     ws.run_forever()
+
 
 def main():
     ws_thread = threading.Thread(target=start_websocket)
@@ -105,6 +103,7 @@ def main():
     #         time.sleep(1)
     # except Exception as e:
     #     print(f"Exception: {e}")
+
 
 if __name__ == "__main__":
     main()

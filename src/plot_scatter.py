@@ -1,4 +1,3 @@
-import math
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
@@ -20,6 +19,7 @@ def plot_scatter(
     x_format: str,
     x_format_decimal_places: int,
     x_tick_spacing: int,
+    x_tick_start: str,
     x_tick_rotation: int,
     y_label: str,
     y_format: str,
@@ -31,7 +31,7 @@ def plot_scatter(
     plot_Ridge_regression_line: bool = False,
     Ridge_column: str = None,
     plot_RidgeCV_regression_line: bool = False,
-    RidgeCV_column: str  = None,
+    RidgeCV_column: str = None,
     regression_constant: bool = True,
     grid: bool = True,
     legend: bool = True,
@@ -57,6 +57,8 @@ def plot_scatter(
         Format for the x-axis date labels.
     x_tick_spacing : int
         Spacing for the x-axis ticks.
+    x_tick_start : str
+        Start date for the x-axis ticks.
     x_tick_rotation : int
         Rotation angle for the x-axis tick labels.
     y_label : str
@@ -102,7 +104,19 @@ def plot_scatter(
 
     # Plot data
     for col in y_plot_columns:
-        plt.scatter(df[x_plot_column], df[col], label=col, marker="o", alpha=0.7)
+        plt.scatter(df[x_plot_column], df[col], label=col, marker="o", alpha=0.5)
+
+    # Resolve "Auto" x-tick spacing for numeric x-axes only
+    # (date-based formats use mdates locators and ignore x_tick_spacing as a numeric value)
+    numeric_x_formats = ("Decimal", "Percentage", "Scientific", "Log")
+    if x_tick_spacing == "Auto":
+        if x_format in numeric_x_formats:
+            raw_x_spacing = (df[x_plot_column].max() - df[x_plot_column].min()) / 20
+            x_tick_spacing = round_to_nice_value(raw_x_spacing)
+        else:
+            # Date-based or string x-axis: "Auto" is not meaningful; pick a safe default
+            # so downstream code that may reference x_tick_spacing doesn't fail.
+            x_tick_spacing = 1
 
     # Format X axis
     if x_format == "Decimal":
@@ -120,19 +134,54 @@ def plot_scatter(
     elif x_format == "Log":
         plt.xscale("log")
     elif x_format == "Second":
-        plt.gca().xaxis.set_major_locator(mdates.SecondLocator(interval=x_tick_spacing))
-        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
+        if x_tick_start is not None:
+            ticks = pd.date_range(
+                start=pd.Timestamp(x_tick_start).tz_convert(df[x_plot_column].dt.tz),
+                end=df[x_plot_column].max() + pd.tseries.offsets.Second(x_tick_spacing),
+                freq=pd.tseries.offsets.Second(x_tick_spacing),
+            )
+            plt.gca().set_xticks(ticks)
+            plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
+        else:
+            plt.gca().xaxis.set_major_locator(
+                mdates.SecondLocator(interval=x_tick_spacing)
+            )
+            plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
     elif x_format == "Minute":
-        plt.gca().xaxis.set_major_locator(mdates.MinuteLocator(interval=x_tick_spacing))
-        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M"))
+        if x_tick_start is not None:
+            ticks = pd.date_range(
+                start=pd.Timestamp(x_tick_start).tz_convert(df[x_plot_column].dt.tz),
+                end=df[x_plot_column].max() + pd.tseries.offsets.Minute(x_tick_spacing),
+                freq=pd.tseries.offsets.Minute(x_tick_spacing),
+            )
+            plt.gca().set_xticks(ticks)
+            plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M"))
+        else:
+            plt.gca().xaxis.set_major_locator(
+                mdates.MinuteLocator(interval=x_tick_spacing)
+            )
+            plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M"))
     elif x_format == "Hour":
-        plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=x_tick_spacing))
-        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M"))
+        if x_tick_start is not None:
+            ticks = pd.date_range(
+                start=pd.Timestamp(x_tick_start).tz_convert(df[x_plot_column].dt.tz),
+                end=df[x_plot_column].max() + pd.tseries.offsets.Hour(x_tick_spacing),
+                freq=pd.tseries.offsets.Hour(x_tick_spacing),
+            )
+            plt.gca().set_xticks(ticks)
+            plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M"))
+        else:
+            plt.gca().xaxis.set_major_locator(
+                mdates.HourLocator(interval=x_tick_spacing)
+            )
+            plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M"))
     elif x_format == "Day":
         plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=x_tick_spacing))
         plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
     elif x_format == "Week":
-        plt.gca().xaxis.set_major_locator(mdates.WeekdayLocator(interval=x_tick_spacing))
+        plt.gca().xaxis.set_major_locator(
+            mdates.WeekdayLocator(interval=x_tick_spacing)
+        )
         plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
     elif x_format == "Month":
         plt.gca().xaxis.set_major_locator(mdates.MonthLocator(interval=x_tick_spacing))
@@ -147,15 +196,16 @@ def plot_scatter(
             f"Unrecognized x_format: {x_format}. Use 'Decimal', 'Percentage', 'Scientific', 'Second', 'Minute', 'Hour', 'Day', 'Week', 'Month', 'Year', or 'String'."
         )
 
-    if x_tick_spacing == "Auto":
-        raw_x_spacing = (df[x_plot_column].max() - df[x_plot_column].min()) / 20
-        print(f"Raw x-tick spacing: {raw_x_spacing}")
-        x_tick_spacing = round_to_nice_value(raw_x_spacing)
-        print(f"Rounded x-tick spacing: {x_tick_spacing}")
-    else:
-        x_tick_spacing = x_tick_spacing
-
-    if x_format not in ("Second", "Minute", "Hour", "Day", "Week", "Month", "Year"):
+    if x_format not in (
+        "Second",
+        "Minute",
+        "Hour",
+        "Day",
+        "Week",
+        "Month",
+        "Year",
+        "String",
+    ):
         plt.gca().xaxis.set_major_locator(MultipleLocator(x_tick_spacing))
     plt.xlabel(x_label)
 
@@ -291,7 +341,7 @@ def plot_scatter(
 
     # Grid
     if grid == True:
-        plt.grid(True, linestyle="--", alpha=0.7)
+        plt.grid(True, linestyle="--", alpha=0.5)
 
     # Legend
     if legend == True:

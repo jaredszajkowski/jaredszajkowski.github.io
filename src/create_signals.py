@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 def create_signals(
     tickers: list,
     data: pd.DataFrame,
@@ -31,21 +32,29 @@ def create_signals(
     for ticker in tickers:
         # --- RSI mask ---
         if use_rsi:
-            rsi_mask = df.get(f"{ticker}_RSI_prev", pd.Series(index=df.index, dtype="float64")).lt(rsi_threshold).fillna(False)
+            rsi_mask = (
+                df.get(f"{ticker}_RSI_prev", pd.Series(index=df.index, dtype="float64"))
+                .lt(rsi_threshold)
+                .fillna(False)
+            )
         else:
             rsi_mask = pd.Series(True, index=df.index, dtype="bool")
 
         # --- MA mask ---
         if use_ma:
             if ma_days:
-                ma_cols = [f"{ticker}_MA_{day}d_prev" for day in ma_days if f"{ticker}_MA_{day}d_prev" in df.columns]
+                ma_cols = [
+                    f"{ticker}_MA_{day}d_prev"
+                    for day in ma_days
+                    if f"{ticker}_MA_{day}d_prev" in df.columns
+                ]
                 if not ma_cols:
                     # MA periods requested but none present → this ticker yields no signals
                     continue
 
                 ma_pass_df = pd.concat(
                     [(df[f"{ticker}_close"] > df[col]).rename(col) for col in ma_cols],
-                    axis=1
+                    axis=1,
                 ).fillna(False)
 
                 ma_passes = ma_pass_df.sum(axis=1)
@@ -53,7 +62,9 @@ def create_signals(
                 ma_mask = ma_passes.ge(1)
             else:
                 ma_passes = pd.Series(0, index=df.index, dtype="int64")
-                allocation_pct = pd.Series(1.0, index=df.index, dtype="float64")  # full allocation if no MAs
+                allocation_pct = pd.Series(
+                    1.0, index=df.index, dtype="float64"
+                )  # full allocation if no MAs
                 ma_mask = pd.Series(True, index=df.index, dtype="bool")
 
         # --- Bollinger Bands mask ---
@@ -74,24 +85,24 @@ def create_signals(
             #     # Band position (z-score) using prev values
             #     bb_z_prev = (close_prev - mid_prev) / std_prev
 
-                close_prev = df.get(f"{ticker}_close_prev")
-                low_prev = df.get(f"{ticker}_BB_LOWER_prev")
-                mid_prev = df.get(f"{ticker}_BB_MID_prev")
-                up_prev = df.get(f"{ticker}_BB_UPPER_prev")
-                bb_z_prev = df.get(f"{ticker}_BB_Z_prev")
+            close_prev = df.get(f"{ticker}_close_prev")
+            low_prev = df.get(f"{ticker}_BB_LOWER_prev")
+            mid_prev = df.get(f"{ticker}_BB_MID_prev")
+            up_prev = df.get(f"{ticker}_BB_UPPER_prev")
+            bb_z_prev = df.get(f"{ticker}_BB_Z_prev")
 
-                # Choose BB rule
-                if bb_rule == "below_lower":
-                    bb_mask = close_prev.lt(low_prev)
-                elif bb_rule == "cross_up_from_below":
-                    prev_below = close_prev.shift(1).lt(low_prev.shift(1))
-                    now_at_or_above = close_prev.ge(low_prev)
-                    bb_mask = prev_below & now_at_or_above
-                else:  # "touch_lower"
-                    bb_mask = close_prev.le(low_prev)
+            # Choose BB rule
+            if bb_rule == "below_lower":
+                bb_mask = close_prev.lt(low_prev)
+            elif bb_rule == "cross_up_from_below":
+                prev_below = close_prev.shift(1).lt(low_prev.shift(1))
+                now_at_or_above = close_prev.ge(low_prev)
+                bb_mask = prev_below & now_at_or_above
+            else:  # "touch_lower"
+                bb_mask = close_prev.le(low_prev)
 
-                bb_mask = bb_mask.fillna(False)
-                bb_mid_prev, bb_up_prev, bb_low_prev = mid_prev, up_prev, low_prev
+            bb_mask = bb_mask.fillna(False)
+            bb_mid_prev, bb_up_prev, bb_low_prev = mid_prev, up_prev, low_prev
         else:
             # BB disabled
             bb_mask = pd.Series(True, index=df.index, dtype="bool")
@@ -106,8 +117,10 @@ def create_signals(
         # Collect signal rows
         cols = [
             "Date",
-            f"{ticker}_open", f"{ticker}_high",
-            f"{ticker}_low",  f"{ticker}_close",
+            f"{ticker}_open",
+            f"{ticker}_high",
+            f"{ticker}_low",
+            f"{ticker}_close",
             f"{ticker}_close_prev",
         ]
 
@@ -123,7 +136,9 @@ def create_signals(
         s["bb_mid_prev"] = bb_mid_prev.loc[mask]
         s["bb_up_prev"] = bb_up_prev.loc[mask]
         s["bb_low_prev"] = bb_low_prev.loc[mask]
-        s["bb_z_prev"] = bb_z_prev.loc[mask]  # negative means below mid; ~-2 at/below lower band
+        s["bb_z_prev"] = bb_z_prev.loc[
+            mask
+        ]  # negative means below mid; ~-2 at/below lower band
 
         # Standardize column names
         rename_map = {
@@ -133,19 +148,34 @@ def create_signals(
             f"{ticker}_close": "close",
             f"{ticker}_close_prev": "close_prev",
         }
-        s.rename(columns={k: v for k, v in rename_map.items() if k in s.columns}, inplace=True)
+        s.rename(
+            columns={k: v for k, v in rename_map.items() if k in s.columns},
+            inplace=True,
+        )
 
         signals.append(s)
 
     signals_df = (
         pd.concat(signals, ignore_index=True)
-        if signals else
-        pd.DataFrame(columns=[
-            "Date", "open", "high", "low", "close", "asset",
-            "ma_passes", "allocation_pct",
-            "bb_rule", "bb_mid_prev", "bb_up_prev", "bb_low_prev", "bb_z_prev",
-            "close_prev",
-        ])
+        if signals
+        else pd.DataFrame(
+            columns=[
+                "Date",
+                "open",
+                "high",
+                "low",
+                "close",
+                "asset",
+                "ma_passes",
+                "allocation_pct",
+                "bb_rule",
+                "bb_mid_prev",
+                "bb_up_prev",
+                "bb_low_prev",
+                "bb_z_prev",
+                "close_prev",
+            ]
+        )
     )
 
     # Sort and de-dup (1 per asset per timestamp)

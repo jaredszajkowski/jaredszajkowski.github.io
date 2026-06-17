@@ -21,6 +21,7 @@ def plot_time_series(
     x_label: str,
     x_format: str,
     x_tick_spacing: int,
+    x_tick_start: str,
     x_tick_rotation: int,
     y_label: str,
     y_format: str,
@@ -53,6 +54,8 @@ def plot_time_series(
         Format for the x-axis date labels.
     x_tick_spacing : int
         Spacing for the x-axis ticks.
+    x_tick_start : str
+        Start date for the x-axis ticks.
     x_tick_rotation : int
         Rotation angle for the x-axis tick labels.
     y_label : str
@@ -110,24 +113,59 @@ def plot_time_series(
             label=col,
             linestyle="-",
             linewidth=1.5,
-            alpha=0.7,
+            alpha=0.5,
         )
 
     # Format X axis
     if x_format == "Second":
-        plt.gca().xaxis.set_major_locator(mdates.SecondLocator(interval=x_tick_spacing))
-        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
+        if x_tick_start is not None:
+            ticks = pd.date_range(
+                start=pd.Timestamp(x_tick_start).tz_convert(df_filtered.index.tz),
+                end=df_filtered.index.max() + pd.tseries.offsets.Second(x_tick_spacing),
+                freq=pd.tseries.offsets.Second(x_tick_spacing),
+            )
+            plt.gca().set_xticks(ticks)
+            plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
+        else:
+            plt.gca().xaxis.set_major_locator(
+                mdates.SecondLocator(interval=x_tick_spacing)
+            )
+            plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
     elif x_format == "Minute":
-        plt.gca().xaxis.set_major_locator(mdates.MinuteLocator(interval=x_tick_spacing))
-        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M"))
+        if x_tick_start is not None:
+            ticks = pd.date_range(
+                start=pd.Timestamp(x_tick_start).tz_convert(df_filtered.index.tz),
+                end=df_filtered.index.max() + pd.tseries.offsets.Minute(x_tick_spacing),
+                freq=pd.tseries.offsets.Minute(x_tick_spacing),
+            )
+            plt.gca().set_xticks(ticks)
+            plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M"))
+        else:
+            plt.gca().xaxis.set_major_locator(
+                mdates.MinuteLocator(interval=x_tick_spacing)
+            )
+            plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M"))
     elif x_format == "Hour":
-        plt.gca().xaxis.set_major_locator(mdates.HourLocator(interval=x_tick_spacing))
-        plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M"))
+        if x_tick_start is not None:
+            ticks = pd.date_range(
+                start=pd.Timestamp(x_tick_start).tz_convert(df_filtered.index.tz),
+                end=df_filtered.index.max() + pd.tseries.offsets.Hour(x_tick_spacing),
+                freq=pd.tseries.offsets.Hour(x_tick_spacing),
+            )
+            plt.gca().set_xticks(ticks)
+            plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M"))
+        else:
+            plt.gca().xaxis.set_major_locator(
+                mdates.HourLocator(interval=x_tick_spacing)
+            )
+            plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%H:%M"))
     elif x_format == "Day":
         plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=x_tick_spacing))
         plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
     elif x_format == "Week":
-        plt.gca().xaxis.set_major_locator(mdates.WeekdayLocator(interval=x_tick_spacing))
+        plt.gca().xaxis.set_major_locator(
+            mdates.WeekdayLocator(interval=x_tick_spacing)
+        )
         plt.gca().xaxis.set_major_formatter(mdates.DateFormatter("%d %b %Y"))
     elif x_format == "Month":
         plt.gca().xaxis.set_major_locator(mdates.MonthLocator(interval=x_tick_spacing))
@@ -205,7 +243,7 @@ def plot_time_series(
 
     # Grid
     if grid == True:
-        plt.grid(True, linestyle="--", alpha=0.7)
+        plt.grid(True, linestyle="--", alpha=0.5)
 
     # Legend
     if legend == True:

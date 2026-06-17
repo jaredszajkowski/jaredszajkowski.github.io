@@ -3,6 +3,7 @@ import pandas as pd
 
 from IPython.display import display
 
+
 def ndl_month_end_total_return(
     base_directory,
     ticker: str,
@@ -12,7 +13,6 @@ def ndl_month_end_total_return(
     pickle_export: bool,
     output_confirmation: bool,
 ) -> pd.DataFrame:
-    
     """
     Read daily data from an existing excel file and export month-end total return close prices.
 
@@ -44,13 +44,13 @@ def ndl_month_end_total_return(
 
     # Read data from excel
     df = pd.read_excel(location, sheet_name="data", engine="calamine")
-    
+
     # Keep only required columns
-    df = df[['Date', 'adj_close']]
+    df = df[["Date", "adj_close"]]
 
     # Set index to date column
-    df.set_index('Date', inplace=True)
-        
+    df.set_index("Date", inplace=True)
+
     # Resample data to month end
     df_month_end_total_return = df.resample("ME").last()
 
@@ -60,7 +60,9 @@ def ndl_month_end_total_return(
 
     # Export to excel
     if excel_export == True:
-        df_month_end_total_return.to_excel(f"{directory}/{ticker}_ME_TR.xlsx", sheet_name="data")
+        df_month_end_total_return.to_excel(
+            f"{directory}/{ticker}_ME_TR.xlsx", sheet_name="data"
+        )
     else:
         pass
 
@@ -69,7 +71,7 @@ def ndl_month_end_total_return(
         df_month_end_total_return.to_pickle(f"{directory}/{ticker}_ME_TR.pkl")
     else:
         pass
-        
+
     # Output confirmation
     if output_confirmation == True:
         print(f"Month end total return data complete for {ticker}")

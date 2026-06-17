@@ -4,6 +4,7 @@ import pandas as pd
 
 from IPython.display import display
 
+
 def ndl_month_end(
     base_directory,
     ticker: str,
@@ -13,7 +14,6 @@ def ndl_month_end(
     pickle_export: bool,
     output_confirmation: bool,
 ) -> pd.DataFrame:
-    
     """
     Read daily data from an existing excel file and export month-end close prices.
 
@@ -45,13 +45,13 @@ def ndl_month_end(
 
     # Read data from excel
     df = pd.read_excel(location, sheet_name="data", engine="calamine")
-    
+
     # Keep only required columns
-    df = df[['Date', 'Close', 'Dividend']]
+    df = df[["Date", "Close", "Dividend"]]
 
     # Replace any instances of 0 dividend with np.nan
-    df['Dividend'] = df['Dividend'].replace(0.00, np.nan)
-    
+    df["Dividend"] = df["Dividend"].replace(0.00, np.nan)
+
     # Create variables
     current_month = None
     current_year = None
@@ -59,8 +59,8 @@ def ndl_month_end(
 
     # Loop through the dataframes and forward fill the dividend
     for index, row in df.iterrows():
-        date = row['Date']
-        dividend = row['Dividend']
+        date = row["Date"]
+        dividend = row["Dividend"]
 
         # Check if it's a dividend entry
         if pd.notnull(dividend):
@@ -71,12 +71,16 @@ def ndl_month_end(
                 current_dividend = dividend
 
         # Forward fill the dividend until the end of the month
-        if pd.isnull(dividend) and date.month == current_month and date.year == current_year:
-            df.at[index, 'Dividend'] = current_dividend
+        if (
+            pd.isnull(dividend)
+            and date.month == current_month
+            and date.year == current_year
+        ):
+            df.at[index, "Dividend"] = current_dividend
 
     # Set index to date column
-    df.set_index('Date', inplace=True)
-        
+    df.set_index("Date", inplace=True)
+
     # Resample data to month end
     df_month_end = df.resample("ME").last()
 
@@ -95,7 +99,7 @@ def ndl_month_end(
         df_month_end.to_pickle(f"{directory}/{ticker}_ME.pkl")
     else:
         pass
-        
+
     # Output confirmation
     if output_confirmation == True:
         print(f"Month end data complete for {ticker}")

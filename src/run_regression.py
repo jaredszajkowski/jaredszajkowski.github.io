@@ -3,10 +3,10 @@ import pandas as pd
 import statsmodels.api as sm
 
 from sklearn.linear_model import (
-    LinearRegression, 
-    LogisticRegression, 
+    LinearRegression,
+    LogisticRegression,
     LogisticRegressionCV,
-    Ridge, 
+    Ridge,
     RidgeCV,
 )
 
@@ -31,7 +31,7 @@ def run_regression(
     | sm.regression.linear_model.RegressionResultsWrapper
 ):
     """
-    Run a linear regression on the specified DataFrame columns, model, 
+    Run a linear regression on the specified DataFrame columns, model,
     and constant.
 
     Parameters

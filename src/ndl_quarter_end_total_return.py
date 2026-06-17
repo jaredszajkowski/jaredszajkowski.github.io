@@ -3,6 +3,7 @@ import pandas as pd
 
 from IPython.display import display
 
+
 def ndl_quarter_end_total_return(
     base_directory,
     ticker: str,
@@ -12,7 +13,6 @@ def ndl_quarter_end_total_return(
     pickle_export: bool,
     output_confirmation: bool,
 ) -> pd.DataFrame:
-    
     """
     Read daily data from an existing excel file and export quarter-end total return close prices.
 
@@ -43,11 +43,11 @@ def ndl_quarter_end_total_return(
     df = pd.read_excel(location, sheet_name="data", engine="calamine")
 
     # Keep only required columns
-    df = df[['Date', 'adj_close']]
+    df = df[["Date", "adj_close"]]
 
     # Set index to date column
-    df.set_index('Date', inplace=True)
-    
+    df.set_index("Date", inplace=True)
+
     # Resample data to quarter end
     df_quarter_end_total_return = df.resample("QE").last()
 
@@ -57,7 +57,9 @@ def ndl_quarter_end_total_return(
 
     # Export to excel
     if excel_export == True:
-        df_quarter_end_total_return.to_excel(f"{directory}/{ticker}_QE_TR.xlsx", sheet_name="data")
+        df_quarter_end_total_return.to_excel(
+            f"{directory}/{ticker}_QE_TR.xlsx", sheet_name="data"
+        )
     else:
         pass
 

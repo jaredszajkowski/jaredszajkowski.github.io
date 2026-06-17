@@ -7,17 +7,17 @@ def pandas_set_decimal_places(
     """
     Set the number of decimal places displayed for floating-point numbers in pandas.
 
-    Parameters:
+    Parameters
     ----------
     decimal_places : int
         The number of decimal places to display for float values in pandas DataFrames and Series.
 
-    Returns:
-    --------
+    Returns
+    -------
     None
 
-    Example:
-    --------
+    Example
+    -------
     >>> dp(3)
     >>> pd.DataFrame([1.23456789])
            0
