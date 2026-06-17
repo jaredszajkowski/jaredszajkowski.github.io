@@ -28,10 +28,6 @@ import matplotlib.ticker as mtick
 import seaborn as sns
 from matplotlib.ticker import FormatStrFormatter, FuncFormatter, MultipleLocator
 
-# Data Sources
-import yfinance as yf
-import pandas_datareader.data as web
-
 # Statistical Analysis
 import statsmodels.api as sm
 
@@ -467,103 +463,79 @@ display(fund_data)
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-04-27</th>
-      <td>718.50</td>
-      <td>0.00</td>
-      <td>72.84</td>
-      <td>0.00</td>
-      <td>136.56</td>
-      <td>0.00</td>
-      <td>664.23</td>
-      <td>0.00</td>
-      <td>391.14</td>
-      <td>0.00</td>
-      <td>...</td>
-      <td>429.89</td>
-      <td>-0.01</td>
-      <td>32.88</td>
+      <th>2026-06-09</th>
+      <td>740.75</td>
+      <td>-0.00</td>
+      <td>74.73</td>
       <td>0.01</td>
-      <td>100.83</td>
+      <td>139.89</td>
+      <td>0.01</td>
+      <td>707.83</td>
       <td>-0.01</td>
-      <td>77366.62</td>
+      <td>403.11</td>
+      <td>-0.00</td>
+      <td>...</td>
+      <td>390.78</td>
       <td>-0.02</td>
-      <td>2303.06</td>
+      <td>31.24</td>
+      <td>-0.02</td>
+      <td>103.49</td>
+      <td>0.02</td>
+      <td>61643.78</td>
+      <td>-0.02</td>
+      <td>1637.71</td>
       <td>-0.03</td>
     </tr>
     <tr>
-      <th>2026-04-28</th>
-      <td>714.96</td>
-      <td>-0.00</td>
-      <td>72.11</td>
-      <td>-0.01</td>
-      <td>135.79</td>
-      <td>-0.01</td>
-      <td>657.55</td>
-      <td>-0.01</td>
-      <td>389.07</td>
-      <td>-0.01</td>
-      <td>...</td>
-      <td>421.91</td>
+      <th>2026-06-10</th>
+      <td>728.92</td>
       <td>-0.02</td>
-      <td>33.34</td>
-      <td>0.01</td>
-      <td>101.74</td>
-      <td>0.01</td>
-      <td>76350.67</td>
+      <td>73.65</td>
       <td>-0.01</td>
-      <td>2289.42</td>
+      <td>138.90</td>
       <td>-0.01</td>
-    </tr>
-    <tr>
-      <th>2026-04-29</th>
-      <td>714.89</td>
-      <td>-0.00</td>
-      <td>71.57</td>
-      <td>-0.01</td>
-      <td>134.73</td>
-      <td>-0.01</td>
-      <td>661.57</td>
-      <td>0.01</td>
-      <td>388.87</td>
-      <td>-0.00</td>
-      <td>...</td>
-      <td>417.41</td>
-      <td>-0.01</td>
-      <td>34.56</td>
-      <td>0.04</td>
-      <td>100.90</td>
-      <td>-0.01</td>
-      <td>75776.13</td>
-      <td>-0.01</td>
-      <td>2253.42</td>
+      <td>693.69</td>
       <td>-0.02</td>
-    </tr>
-    <tr>
-      <th>2026-04-30</th>
-      <td>722.07</td>
-      <td>0.01</td>
-      <td>72.77</td>
-      <td>0.02</td>
-      <td>137.10</td>
-      <td>0.02</td>
-      <td>667.74</td>
-      <td>0.01</td>
-      <td>392.83</td>
-      <td>0.01</td>
+      <td>396.80</td>
+      <td>-0.02</td>
       <td>...</td>
-      <td>423.66</td>
+      <td>374.58</td>
+      <td>-0.04</td>
+      <td>31.46</td>
       <td>0.01</td>
-      <td>34.39</td>
-      <td>-0.00</td>
-      <td>102.63</td>
-      <td>0.02</td>
-      <td>76304.32</td>
-      <td>0.01</td>
-      <td>2256.25</td>
+      <td>103.52</td>
       <td>0.00</td>
+      <td>61449.29</td>
+      <td>-0.00</td>
+      <td>1620.14</td>
+      <td>-0.01</td>
     </tr>
     <tr>
-      <th>2026-05-01</th>
+      <th>2026-06-11</th>
+      <td>741.05</td>
+      <td>0.02</td>
+      <td>75.50</td>
+      <td>0.03</td>
+      <td>142.29</td>
+      <td>0.02</td>
+      <td>717.12</td>
+      <td>0.03</td>
+      <td>403.53</td>
+      <td>0.02</td>
+      <td>...</td>
+      <td>386.32</td>
+      <td>0.03</td>
+      <td>30.96</td>
+      <td>-0.02</td>
+      <td>103.45</td>
+      <td>-0.00</td>
+      <td>63561.05</td>
+      <td>0.03</td>
+      <td>1672.28</td>
+      <td>0.03</td>
+    </tr>
+    <tr>
+      <th>2026-06-12</th>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -581,14 +553,38 @@ display(fund_data)
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>78179.00</td>
-      <td>0.02</td>
-      <td>2295.09</td>
-      <td>0.02</td>
+      <td>63543.20</td>
+      <td>-0.00</td>
+      <td>1665.13</td>
+      <td>-0.00</td>
+    </tr>
+    <tr>
+      <th>2026-06-13</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>64421.32</td>
+      <td>0.01</td>
+      <td>1680.21</td>
+      <td>0.01</td>
     </tr>
   </tbody>
 </table>
-<p>8151 rows × 40 columns</p>
+<p>8194 rows × 40 columns</p>
 </div>
 
 
@@ -609,6 +605,7 @@ for ticker in tickers_dict.keys():
         x_label="Date",
         x_format="Year",
         x_tick_spacing=1,
+        x_tick_start=None,
         x_tick_rotation=30,
         y_label="Price ($)",
         y_format="Decimal",
@@ -742,8 +739,6 @@ for ticker in tickers_dict.keys():
     
 
 
-We can see from the plots that are some gaps in the data, so we'll be sure to drop any rows with missing data before we calculate the correlations.
-
 ## Calculate Correlations
 
 Next, we'll calculate the correlation matrix of the daily returns for all of the assets and plot it as a heatmap. We'll do this first without the BTC and ETH data (due to the limited history), and then with the BTC and ETH data.
@@ -770,8 +765,8 @@ correlation_matrix_no_crypto = fund_data_daily_returns_no_crypto.corr()
 display(correlation_matrix_no_crypto)
 ```
 
-    Shape of fund_data_daily_returns_no_crypto: (8151, 18)
-    Rows to drop due to missing data: (4974, 18)
+    Shape of fund_data_daily_returns_no_crypto: (8194, 18)
+    Rows to drop due to missing data: (5003, 18)
 
 
 
@@ -829,11 +824,11 @@ display(correlation_matrix_no_crypto)
       <td>0.86</td>
       <td>-0.23</td>
       <td>-0.30</td>
-      <td>-0.32</td>
+      <td>-0.31</td>
       <td>-0.02</td>
       <td>0.06</td>
       <td>0.38</td>
-      <td>0.77</td>
+      <td>0.76</td>
     </tr>
     <tr>
       <th>IJH_Daily_Return</th>
@@ -853,7 +848,7 @@ display(correlation_matrix_no_crypto)
       <td>-0.30</td>
       <td>-0.01</td>
       <td>0.07</td>
-      <td>0.39</td>
+      <td>0.38</td>
       <td>0.79</td>
     </tr>
     <tr>
@@ -867,13 +862,13 @@ display(correlation_matrix_no_crypto)
       <td>0.90</td>
       <td>0.82</td>
       <td>0.80</td>
-      <td>0.74</td>
+      <td>0.73</td>
       <td>0.78</td>
       <td>-0.20</td>
       <td>-0.28</td>
-      <td>-0.30</td>
-      <td>-0.04</td>
-      <td>0.04</td>
+      <td>-0.29</td>
+      <td>-0.03</td>
+      <td>0.05</td>
       <td>0.36</td>
       <td>0.76</td>
     </tr>
@@ -890,13 +885,13 @@ display(correlation_matrix_no_crypto)
       <td>0.79</td>
       <td>0.76</td>
       <td>0.76</td>
-      <td>-0.20</td>
+      <td>-0.19</td>
       <td>-0.25</td>
-      <td>-0.26</td>
-      <td>-0.00</td>
+      <td>-0.25</td>
+      <td>0.00</td>
       <td>0.05</td>
       <td>0.30</td>
-      <td>0.65</td>
+      <td>0.64</td>
     </tr>
     <tr>
       <th>IWB_Daily_Return</th>
@@ -915,7 +910,7 @@ display(correlation_matrix_no_crypto)
       <td>-0.30</td>
       <td>-0.31</td>
       <td>-0.01</td>
-      <td>0.06</td>
+      <td>0.07</td>
       <td>0.38</td>
       <td>0.77</td>
     </tr>
@@ -953,11 +948,11 @@ display(correlation_matrix_no_crypto)
       <td>0.88</td>
       <td>0.81</td>
       <td>0.87</td>
-      <td>-0.25</td>
-      <td>-0.32</td>
+      <td>-0.24</td>
+      <td>-0.31</td>
       <td>-0.33</td>
       <td>-0.02</td>
-      <td>0.05</td>
+      <td>0.06</td>
       <td>0.40</td>
       <td>0.80</td>
     </tr>
@@ -978,7 +973,7 @@ display(correlation_matrix_no_crypto)
       <td>-0.26</td>
       <td>-0.27</td>
       <td>0.02</td>
-      <td>0.06</td>
+      <td>0.07</td>
       <td>0.34</td>
       <td>0.68</td>
     </tr>
@@ -995,19 +990,19 @@ display(correlation_matrix_no_crypto)
       <td>1.00</td>
       <td>0.88</td>
       <td>0.98</td>
-      <td>-0.19</td>
-      <td>-0.27</td>
+      <td>-0.18</td>
+      <td>-0.26</td>
       <td>-0.29</td>
-      <td>0.03</td>
+      <td>0.04</td>
       <td>0.16</td>
-      <td>0.42</td>
+      <td>0.41</td>
       <td>0.70</td>
     </tr>
     <tr>
       <th>EEM_Daily_Return</th>
       <td>0.82</td>
       <td>0.79</td>
-      <td>0.74</td>
+      <td>0.73</td>
       <td>0.76</td>
       <td>0.82</td>
       <td>0.76</td>
@@ -1015,8 +1010,8 @@ display(correlation_matrix_no_crypto)
       <td>0.78</td>
       <td>0.88</td>
       <td>1.00</td>
-      <td>0.85</td>
-      <td>-0.22</td>
+      <td>0.84</td>
+      <td>-0.21</td>
       <td>-0.27</td>
       <td>-0.27</td>
       <td>-0.01</td>
@@ -1035,11 +1030,11 @@ display(correlation_matrix_no_crypto)
       <td>0.87</td>
       <td>0.80</td>
       <td>0.98</td>
-      <td>0.85</td>
+      <td>0.84</td>
       <td>1.00</td>
-      <td>-0.19</td>
+      <td>-0.18</td>
       <td>-0.27</td>
-      <td>-0.30</td>
+      <td>-0.29</td>
       <td>0.02</td>
       <td>0.16</td>
       <td>0.41</td>
@@ -1050,20 +1045,20 @@ display(correlation_matrix_no_crypto)
       <td>-0.23</td>
       <td>-0.21</td>
       <td>-0.20</td>
-      <td>-0.20</td>
+      <td>-0.19</td>
       <td>-0.23</td>
       <td>-0.20</td>
-      <td>-0.25</td>
+      <td>-0.24</td>
       <td>-0.20</td>
-      <td>-0.19</td>
-      <td>-0.22</td>
-      <td>-0.19</td>
+      <td>-0.18</td>
+      <td>-0.21</td>
+      <td>-0.18</td>
       <td>1.00</td>
       <td>0.76</td>
       <td>0.57</td>
       <td>0.60</td>
       <td>0.22</td>
-      <td>-0.13</td>
+      <td>-0.14</td>
       <td>-0.13</td>
     </tr>
     <tr>
@@ -1074,32 +1069,32 @@ display(correlation_matrix_no_crypto)
       <td>-0.25</td>
       <td>-0.30</td>
       <td>-0.28</td>
-      <td>-0.32</td>
+      <td>-0.31</td>
       <td>-0.26</td>
-      <td>-0.27</td>
+      <td>-0.26</td>
       <td>-0.27</td>
       <td>-0.27</td>
       <td>0.76</td>
       <td>1.00</td>
       <td>0.91</td>
       <td>0.77</td>
-      <td>0.21</td>
+      <td>0.22</td>
       <td>-0.21</td>
-      <td>-0.15</td>
+      <td>-0.14</td>
     </tr>
     <tr>
       <th>TLT_Daily_Return</th>
-      <td>-0.32</td>
+      <td>-0.31</td>
       <td>-0.30</td>
-      <td>-0.30</td>
-      <td>-0.26</td>
+      <td>-0.29</td>
+      <td>-0.25</td>
       <td>-0.31</td>
       <td>-0.29</td>
       <td>-0.33</td>
       <td>-0.27</td>
       <td>-0.29</td>
       <td>-0.27</td>
-      <td>-0.30</td>
+      <td>-0.29</td>
       <td>0.57</td>
       <td>0.91</td>
       <td>1.00</td>
@@ -1112,20 +1107,20 @@ display(correlation_matrix_no_crypto)
       <th>AGG_Daily_Return</th>
       <td>-0.02</td>
       <td>-0.01</td>
-      <td>-0.04</td>
-      <td>-0.00</td>
+      <td>-0.03</td>
+      <td>0.00</td>
       <td>-0.01</td>
       <td>-0.03</td>
       <td>-0.02</td>
       <td>0.02</td>
-      <td>0.03</td>
+      <td>0.04</td>
       <td>-0.01</td>
       <td>0.02</td>
       <td>0.60</td>
       <td>0.77</td>
       <td>0.71</td>
       <td>1.00</td>
-      <td>0.21</td>
+      <td>0.22</td>
       <td>-0.06</td>
       <td>0.03</td>
     </tr>
@@ -1133,19 +1128,19 @@ display(correlation_matrix_no_crypto)
       <th>GLD_Daily_Return</th>
       <td>0.06</td>
       <td>0.07</td>
-      <td>0.04</td>
       <td>0.05</td>
-      <td>0.06</td>
-      <td>0.06</td>
       <td>0.05</td>
+      <td>0.07</td>
       <td>0.06</td>
+      <td>0.06</td>
+      <td>0.07</td>
       <td>0.16</td>
       <td>0.18</td>
       <td>0.16</td>
       <td>0.22</td>
-      <td>0.21</td>
+      <td>0.22</td>
       <td>0.16</td>
-      <td>0.21</td>
+      <td>0.22</td>
       <td>1.00</td>
       <td>0.26</td>
       <td>0.07</td>
@@ -1153,17 +1148,17 @@ display(correlation_matrix_no_crypto)
     <tr>
       <th>GSG_Daily_Return</th>
       <td>0.38</td>
-      <td>0.39</td>
+      <td>0.38</td>
       <td>0.36</td>
       <td>0.30</td>
       <td>0.38</td>
       <td>0.36</td>
       <td>0.40</td>
       <td>0.34</td>
-      <td>0.42</td>
       <td>0.41</td>
       <td>0.41</td>
-      <td>-0.13</td>
+      <td>0.41</td>
+      <td>-0.14</td>
       <td>-0.21</td>
       <td>-0.24</td>
       <td>-0.06</td>
@@ -1173,10 +1168,10 @@ display(correlation_matrix_no_crypto)
     </tr>
     <tr>
       <th>IYR_Daily_Return</th>
-      <td>0.77</td>
+      <td>0.76</td>
       <td>0.79</td>
       <td>0.76</td>
-      <td>0.65</td>
+      <td>0.64</td>
       <td>0.77</td>
       <td>0.77</td>
       <td>0.80</td>
@@ -1185,7 +1180,7 @@ display(correlation_matrix_no_crypto)
       <td>0.67</td>
       <td>0.69</td>
       <td>-0.13</td>
-      <td>-0.15</td>
+      <td>-0.14</td>
       <td>-0.15</td>
       <td>0.03</td>
       <td>0.07</td>
@@ -1209,7 +1204,7 @@ plot_heatmap(
 
 
     
-![png](asset-class-return-correlations_files/asset-class-return-correlations_17_0.png)
+![png](asset-class-return-correlations_files/asset-class-return-correlations_16_0.png)
     
 
 
@@ -1230,8 +1225,8 @@ correlation_matrix = fund_data_daily_returns.corr()
 display(correlation_matrix)
 ```
 
-    Shape of fund_data_daily_returns: (8151, 20)
-    Rows to drop due to missing data: (2127, 20)
+    Shape of fund_data_daily_returns: (8194, 20)
+    Rows to drop due to missing data: (2156, 20)
 
 
 
@@ -1287,14 +1282,14 @@ display(correlation_matrix)
       <td>0.93</td>
       <td>0.96</td>
       <td>0.85</td>
-      <td>0.76</td>
+      <td>0.75</td>
       <td>0.82</td>
-      <td>-0.06</td>
+      <td>-0.05</td>
       <td>-0.12</td>
       <td>-0.15</td>
       <td>0.14</td>
-      <td>0.10</td>
-      <td>0.31</td>
+      <td>0.11</td>
+      <td>0.30</td>
       <td>0.74</td>
       <td>0.30</td>
       <td>0.33</td>
@@ -1306,18 +1301,18 @@ display(correlation_matrix)
       <td>0.96</td>
       <td>0.78</td>
       <td>0.91</td>
-      <td>0.97</td>
+      <td>0.96</td>
       <td>0.94</td>
       <td>0.81</td>
       <td>0.84</td>
       <td>0.72</td>
       <td>0.81</td>
       <td>-0.05</td>
-      <td>-0.12</td>
-      <td>-0.14</td>
+      <td>-0.11</td>
+      <td>-0.13</td>
       <td>0.15</td>
-      <td>0.10</td>
-      <td>0.32</td>
+      <td>0.11</td>
+      <td>0.31</td>
       <td>0.78</td>
       <td>0.29</td>
       <td>0.31</td>
@@ -1335,13 +1330,13 @@ display(correlation_matrix)
       <td>0.79</td>
       <td>0.67</td>
       <td>0.76</td>
-      <td>-0.04</td>
+      <td>-0.03</td>
       <td>-0.10</td>
       <td>-0.13</td>
       <td>0.15</td>
-      <td>0.08</td>
-      <td>0.31</td>
-      <td>0.74</td>
+      <td>0.09</td>
+      <td>0.30</td>
+      <td>0.73</td>
       <td>0.28</td>
       <td>0.30</td>
     </tr>
@@ -1354,15 +1349,15 @@ display(correlation_matrix)
       <td>0.94</td>
       <td>0.77</td>
       <td>0.76</td>
-      <td>0.99</td>
+      <td>0.98</td>
       <td>0.76</td>
       <td>0.73</td>
       <td>0.72</td>
-      <td>-0.03</td>
-      <td>-0.08</td>
-      <td>-0.10</td>
+      <td>-0.02</td>
+      <td>-0.07</td>
+      <td>-0.09</td>
       <td>0.14</td>
-      <td>0.11</td>
+      <td>0.13</td>
       <td>0.24</td>
       <td>0.59</td>
       <td>0.31</td>
@@ -1380,36 +1375,36 @@ display(correlation_matrix)
       <td>0.96</td>
       <td>0.85</td>
       <td>0.76</td>
-      <td>0.83</td>
-      <td>-0.05</td>
-      <td>-0.12</td>
+      <td>0.82</td>
+      <td>-0.04</td>
+      <td>-0.11</td>
       <td>-0.14</td>
-      <td>0.14</td>
-      <td>0.10</td>
-      <td>0.31</td>
-      <td>0.75</td>
+      <td>0.15</td>
+      <td>0.12</td>
+      <td>0.30</td>
+      <td>0.74</td>
       <td>0.30</td>
       <td>0.33</td>
     </tr>
     <tr>
       <th>IWM_Daily_Return</th>
       <td>0.87</td>
-      <td>0.97</td>
+      <td>0.96</td>
       <td>0.98</td>
       <td>0.77</td>
       <td>0.88</td>
       <td>1.00</td>
       <td>0.89</td>
-      <td>0.80</td>
+      <td>0.79</td>
       <td>0.80</td>
       <td>0.71</td>
       <td>0.78</td>
-      <td>-0.03</td>
-      <td>-0.09</td>
-      <td>-0.12</td>
-      <td>0.16</td>
-      <td>0.11</td>
-      <td>0.31</td>
+      <td>-0.02</td>
+      <td>-0.08</td>
+      <td>-0.11</td>
+      <td>0.17</td>
+      <td>0.12</td>
+      <td>0.30</td>
       <td>0.73</td>
       <td>0.31</td>
       <td>0.33</td>
@@ -1432,8 +1427,8 @@ display(correlation_matrix)
       <td>-0.18</td>
       <td>0.12</td>
       <td>0.10</td>
-      <td>0.35</td>
-      <td>0.81</td>
+      <td>0.34</td>
+      <td>0.80</td>
       <td>0.26</td>
       <td>0.28</td>
     </tr>
@@ -1442,20 +1437,20 @@ display(correlation_matrix)
       <td>0.96</td>
       <td>0.81</td>
       <td>0.74</td>
-      <td>0.99</td>
+      <td>0.98</td>
       <td>0.96</td>
-      <td>0.80</td>
+      <td>0.79</td>
       <td>0.80</td>
       <td>1.00</td>
       <td>0.78</td>
       <td>0.73</td>
       <td>0.75</td>
       <td>-0.03</td>
-      <td>-0.08</td>
-      <td>-0.10</td>
+      <td>-0.07</td>
+      <td>-0.09</td>
       <td>0.15</td>
-      <td>0.10</td>
-      <td>0.25</td>
+      <td>0.11</td>
+      <td>0.24</td>
       <td>0.64</td>
       <td>0.31</td>
       <td>0.34</td>
@@ -1473,19 +1468,19 @@ display(correlation_matrix)
       <td>1.00</td>
       <td>0.83</td>
       <td>0.98</td>
-      <td>0.01</td>
-      <td>-0.05</td>
-      <td>-0.10</td>
-      <td>0.20</td>
-      <td>0.23</td>
-      <td>0.30</td>
+      <td>0.02</td>
+      <td>-0.04</td>
+      <td>-0.09</td>
+      <td>0.21</td>
+      <td>0.24</td>
+      <td>0.29</td>
       <td>0.69</td>
       <td>0.29</td>
       <td>0.32</td>
     </tr>
     <tr>
       <th>EEM_Daily_Return</th>
-      <td>0.76</td>
+      <td>0.75</td>
       <td>0.72</td>
       <td>0.67</td>
       <td>0.73</td>
@@ -1496,14 +1491,14 @@ display(correlation_matrix)
       <td>0.83</td>
       <td>1.00</td>
       <td>0.80</td>
-      <td>-0.01</td>
-      <td>-0.07</td>
-      <td>-0.10</td>
-      <td>0.15</td>
-      <td>0.25</td>
-      <td>0.30</td>
-      <td>0.56</td>
-      <td>0.27</td>
+      <td>0.01</td>
+      <td>-0.06</td>
+      <td>-0.09</td>
+      <td>0.16</td>
+      <td>0.26</td>
+      <td>0.28</td>
+      <td>0.54</td>
+      <td>0.26</td>
       <td>0.31</td>
     </tr>
     <tr>
@@ -1512,82 +1507,82 @@ display(correlation_matrix)
       <td>0.81</td>
       <td>0.76</td>
       <td>0.72</td>
-      <td>0.83</td>
+      <td>0.82</td>
       <td>0.78</td>
       <td>0.83</td>
       <td>0.75</td>
       <td>0.98</td>
       <td>0.80</td>
       <td>1.00</td>
-      <td>0.01</td>
-      <td>-0.06</td>
-      <td>-0.10</td>
-      <td>0.20</td>
-      <td>0.22</td>
-      <td>0.29</td>
+      <td>0.02</td>
+      <td>-0.05</td>
+      <td>-0.09</td>
+      <td>0.21</td>
+      <td>0.23</td>
+      <td>0.28</td>
       <td>0.68</td>
       <td>0.29</td>
       <td>0.31</td>
     </tr>
     <tr>
       <th>SHY_Daily_Return</th>
-      <td>-0.06</td>
       <td>-0.05</td>
+      <td>-0.05</td>
+      <td>-0.03</td>
+      <td>-0.02</td>
       <td>-0.04</td>
-      <td>-0.03</td>
-      <td>-0.05</td>
-      <td>-0.03</td>
+      <td>-0.02</td>
       <td>-0.06</td>
       <td>-0.03</td>
+      <td>0.02</td>
       <td>0.01</td>
-      <td>-0.01</td>
-      <td>0.01</td>
+      <td>0.02</td>
       <td>1.00</td>
-      <td>0.81</td>
+      <td>0.82</td>
       <td>0.60</td>
-      <td>0.73</td>
-      <td>0.31</td>
+      <td>0.74</td>
+      <td>0.32</td>
       <td>-0.12</td>
       <td>0.13</td>
       <td>0.03</td>
-      <td>0.02</td>
+      <td>0.03</td>
     </tr>
     <tr>
       <th>IEF_Daily_Return</th>
       <td>-0.12</td>
-      <td>-0.12</td>
+      <td>-0.11</td>
       <td>-0.10</td>
-      <td>-0.08</td>
-      <td>-0.12</td>
-      <td>-0.09</td>
-      <td>-0.14</td>
-      <td>-0.08</td>
-      <td>-0.05</td>
       <td>-0.07</td>
+      <td>-0.11</td>
+      <td>-0.08</td>
+      <td>-0.14</td>
+      <td>-0.07</td>
+      <td>-0.04</td>
       <td>-0.06</td>
-      <td>0.81</td>
+      <td>-0.05</td>
+      <td>0.82</td>
       <td>1.00</td>
       <td>0.91</td>
       <td>0.89</td>
-      <td>0.30</td>
+      <td>0.31</td>
       <td>-0.15</td>
       <td>0.09</td>
-      <td>-0.01</td>
-      <td>-0.01</td>
+      <td>-0.00</td>
+      <td>-0.00</td>
     </tr>
     <tr>
       <th>TLT_Daily_Return</th>
       <td>-0.15</td>
-      <td>-0.14</td>
       <td>-0.13</td>
-      <td>-0.10</td>
+      <td>-0.13</td>
+      <td>-0.09</td>
       <td>-0.14</td>
-      <td>-0.12</td>
+      <td>-0.11</td>
       <td>-0.18</td>
-      <td>-0.10</td>
-      <td>-0.10</td>
-      <td>-0.10</td>
-      <td>-0.10</td>
+      <td>-0.09</td>
+      <td>-0.09</td>
+      <td>-0.09</td>
+      <td>-0.09</td>
       <td>0.60</td>
       <td>0.91</td>
       <td>1.00</td>
@@ -1604,66 +1599,66 @@ display(correlation_matrix)
       <td>0.15</td>
       <td>0.15</td>
       <td>0.14</td>
-      <td>0.14</td>
-      <td>0.16</td>
+      <td>0.15</td>
+      <td>0.17</td>
       <td>0.12</td>
       <td>0.15</td>
-      <td>0.20</td>
-      <td>0.15</td>
-      <td>0.20</td>
-      <td>0.73</td>
+      <td>0.21</td>
+      <td>0.16</td>
+      <td>0.21</td>
+      <td>0.74</td>
       <td>0.89</td>
       <td>0.84</td>
       <td>1.00</td>
-      <td>0.30</td>
-      <td>-0.02</td>
+      <td>0.31</td>
+      <td>-0.03</td>
       <td>0.29</td>
       <td>0.12</td>
       <td>0.11</td>
     </tr>
     <tr>
       <th>GLD_Daily_Return</th>
-      <td>0.10</td>
-      <td>0.10</td>
-      <td>0.08</td>
       <td>0.11</td>
+      <td>0.11</td>
+      <td>0.09</td>
+      <td>0.13</td>
+      <td>0.12</td>
+      <td>0.12</td>
       <td>0.10</td>
       <td>0.11</td>
-      <td>0.10</td>
-      <td>0.10</td>
+      <td>0.24</td>
+      <td>0.26</td>
       <td>0.23</td>
-      <td>0.25</td>
-      <td>0.22</td>
+      <td>0.32</td>
       <td>0.31</td>
-      <td>0.30</td>
       <td>0.23</td>
-      <td>0.30</td>
+      <td>0.31</td>
       <td>1.00</td>
-      <td>0.20</td>
+      <td>0.19</td>
       <td>0.14</td>
       <td>0.11</td>
       <td>0.11</td>
     </tr>
     <tr>
       <th>GSG_Daily_Return</th>
+      <td>0.30</td>
       <td>0.31</td>
-      <td>0.32</td>
-      <td>0.31</td>
+      <td>0.30</td>
       <td>0.24</td>
-      <td>0.31</td>
-      <td>0.31</td>
-      <td>0.35</td>
-      <td>0.25</td>
       <td>0.30</td>
       <td>0.30</td>
+      <td>0.34</td>
+      <td>0.24</td>
       <td>0.29</td>
+      <td>0.28</td>
+      <td>0.28</td>
       <td>-0.12</td>
       <td>-0.15</td>
       <td>-0.17</td>
-      <td>-0.02</td>
-      <td>0.20</td>
+      <td>-0.03</td>
+      <td>0.19</td>
       <td>1.00</td>
-      <td>0.22</td>
+      <td>0.21</td>
       <td>0.09</td>
       <td>0.11</td>
     </tr>
@@ -1671,23 +1666,23 @@ display(correlation_matrix)
       <th>IYR_Daily_Return</th>
       <td>0.74</td>
       <td>0.78</td>
-      <td>0.74</td>
-      <td>0.59</td>
-      <td>0.75</td>
       <td>0.73</td>
-      <td>0.81</td>
+      <td>0.59</td>
+      <td>0.74</td>
+      <td>0.73</td>
+      <td>0.80</td>
       <td>0.64</td>
       <td>0.69</td>
-      <td>0.56</td>
+      <td>0.54</td>
       <td>0.68</td>
       <td>0.13</td>
       <td>0.09</td>
       <td>0.04</td>
       <td>0.29</td>
       <td>0.14</td>
-      <td>0.22</td>
+      <td>0.21</td>
       <td>1.00</td>
-      <td>0.20</td>
+      <td>0.19</td>
       <td>0.21</td>
     </tr>
     <tr>
@@ -1701,15 +1696,15 @@ display(correlation_matrix)
       <td>0.26</td>
       <td>0.31</td>
       <td>0.29</td>
-      <td>0.27</td>
+      <td>0.26</td>
       <td>0.29</td>
       <td>0.03</td>
-      <td>-0.01</td>
+      <td>-0.00</td>
       <td>-0.01</td>
       <td>0.12</td>
       <td>0.11</td>
       <td>0.09</td>
-      <td>0.20</td>
+      <td>0.19</td>
       <td>1.00</td>
       <td>0.80</td>
     </tr>
@@ -1726,8 +1721,8 @@ display(correlation_matrix)
       <td>0.32</td>
       <td>0.31</td>
       <td>0.31</td>
-      <td>0.02</td>
-      <td>-0.01</td>
+      <td>0.03</td>
+      <td>-0.00</td>
       <td>-0.01</td>
       <td>0.11</td>
       <td>0.11</td>
@@ -1753,11 +1748,11 @@ plot_heatmap(
 
 
     
-![png](asset-class-return-correlations_files/asset-class-return-correlations_21_0.png)
+![png](asset-class-return-correlations_files/asset-class-return-correlations_20_0.png)
     
 
 
-These are interesting results, but expected. The stock funds tend to have low correlations withe bond funds, the commodities don't really correlate with anything, etc. But we know that the correlations between these asset classes have changed over time, so let's take a look at how the correlations have evolved over time by calculating rolling correlations.
+These are interesting results, but expected. The stock funds tend to have low correlations with the bond funds, the commodities don't really correlate with anything, etc. But we know that the correlations between these asset classes have changed over time, so let's take a look at how the correlations have evolved over time by calculating rolling correlations.
 
  ## Calculate Rolling Correlations
 
@@ -1773,16 +1768,19 @@ These are interesting results, but expected. The stock funds tend to have low co
 ```python
 # Define rolling windows in trading days
 rolling_windows = {
-    '1mo': 21,     # 1 month (~21 trading days)
-    '3mo': 63,     # 3 months (~63 trading days)
-    '6mo': 126,    # 6 months (~126 trading days)
+    '3d': 3,      # 3 days (~3 trading days)
+    '1w': 5,      # 1 week (~5 trading days)
+    '2w': 10,     # 2 weeks (~10 trading days)
+    '1m': 21,     # 1 month (~21 trading days)
+    '3m': 63,     # 3 months (~63 trading days)
+    '6m': 126,    # 6 months (~126 trading days)
     '1y': 252,    # 1 year (~252 trading days)
     '5y': 1260,   # 5 years (~1260 trading days)
     '10y': 2520,  # 10 years (~2520 trading days)
 }
 ```
 
-Before we run all of these, let's take a quick look at each of the rolling windows to see if they are valid.
+Before we run all of these, let's take a quick look at each of the rolling windows.
 
 
 ```python
@@ -1803,6 +1801,7 @@ for window_name, window_size in rolling_windows.items():
         x_label="Date",
         x_format="Year",
         x_tick_spacing=1,
+        x_tick_start=None,
         x_tick_rotation=30,
         y_label="Correlation",
         y_format="Decimal",
@@ -1822,7 +1821,7 @@ for window_name, window_size in rolling_windows.items():
 
 
     
-![png](asset-class-return-correlations_files/asset-class-return-correlations_26_1.png)
+![png](asset-class-return-correlations_files/asset-class-return-correlations_25_1.png)
     
 
 
@@ -1832,7 +1831,7 @@ for window_name, window_size in rolling_windows.items():
 
 
     
-![png](asset-class-return-correlations_files/asset-class-return-correlations_26_3.png)
+![png](asset-class-return-correlations_files/asset-class-return-correlations_25_3.png)
     
 
 
@@ -1842,7 +1841,7 @@ for window_name, window_size in rolling_windows.items():
 
 
     
-![png](asset-class-return-correlations_files/asset-class-return-correlations_26_5.png)
+![png](asset-class-return-correlations_files/asset-class-return-correlations_25_5.png)
     
 
 
@@ -1852,7 +1851,7 @@ for window_name, window_size in rolling_windows.items():
 
 
     
-![png](asset-class-return-correlations_files/asset-class-return-correlations_26_7.png)
+![png](asset-class-return-correlations_files/asset-class-return-correlations_25_7.png)
     
 
 
@@ -1862,7 +1861,7 @@ for window_name, window_size in rolling_windows.items():
 
 
     
-![png](asset-class-return-correlations_files/asset-class-return-correlations_26_9.png)
+![png](asset-class-return-correlations_files/asset-class-return-correlations_25_9.png)
     
 
 
@@ -1872,11 +1871,43 @@ for window_name, window_size in rolling_windows.items():
 
 
     
-![png](asset-class-return-correlations_files/asset-class-return-correlations_26_11.png)
+![png](asset-class-return-correlations_files/asset-class-return-correlations_25_11.png)
     
 
 
-Some inital thoughts here:
+    Large Cap US Stocks / S&P 500 -- IVV (iShares S&P 500 ETF)
+    Mid Cap US Stocks / S&P MidCap 400 -- IJH (iShares S&P MidCap 400 ETF)
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_25_13.png)
+    
+
+
+    Large Cap US Stocks / S&P 500 -- IVV (iShares S&P 500 ETF)
+    Mid Cap US Stocks / S&P MidCap 400 -- IJH (iShares S&P MidCap 400 ETF)
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_25_15.png)
+    
+
+
+    Large Cap US Stocks / S&P 500 -- IVV (iShares S&P 500 ETF)
+    Mid Cap US Stocks / S&P MidCap 400 -- IJH (iShares S&P MidCap 400 ETF)
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_25_17.png)
+    
+
+
+Need to update 
+
+<!-- Some inital thoughts here:
 * The 1 month and 3 month rolling windows are very noisy... it's going to be difficult to capture any kinds of meaningful trends with these short rolling windows - and these short-term movements are not the point of our investigation here.
 * The 6 months and 1 year rolling windows look like they might be a bit better, but still pretty noisy. We'll keep both of those.
 * The 5 year also looks potentially useful, but the 10 year is too long - it doesn't capture any of the medium-term movements that we are interested in. We'll keep the 5 year and drop the 10 year.
@@ -1886,17 +1917,17 @@ So that leaves us with:
 * 1 year
 * 5 years
 
-We are essentially looking to capture market movements over the months-to-years time frame (from a macro perspective), so the 6 month, 1 year, and 5 year rolling windows are the most appropriate for this analysis.
+We are essentially looking to capture market movements over the months-to-years time frame (from a macro perspective), so the 6 month, 1 year, and 5 year rolling windows are the most appropriate for this analysis. -->
 
 
 ```python
 # Define rolling windows in trading days
 rolling_windows = {
-    '1mo': 21,     # 1 month (~21 trading days)
-    '3mo': 63,     # 3 months (~63 trading days)
-    '6mo': 126,    # 6 months (~126 trading days)
-    '1y': 252,    # 1 year (~252 trading days)
-    '5y': 1260,   # 5 years (~1260 trading days)
+    '3d': 3,      # 3 days (~3 trading days)
+    '1w': 5,      # 1 week (~5 trading days)
+    '2w': 10,     # 2 weeks (~10 trading days)
+    '1m': 21,     # 1 month (~21 trading days)
+    '3m': 63,     # 3 months (~63 trading days)
 }
 ```
 
@@ -2115,6 +2146,8 @@ for ticker1, ticker2 in pairs:
     Small Cap US Stocks / S&P SmallCap 600 -- IJR (iShares S&P SmallCap 600 ETF)
     Mid Cap US Stocks / S&P MidCap 400 -- IJH (iShares S&P MidCap 400 ETF)
     Small Cap US Stocks / S&P SmallCap 600 -- IJR (iShares S&P SmallCap 600 ETF)
+
+
     Mid Cap US Stocks / S&P MidCap 400 -- IJH (iShares S&P MidCap 400 ETF)
     US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)
     Mid Cap US Stocks / S&P MidCap 400 -- IJH (iShares S&P MidCap 400 ETF)
@@ -2139,8 +2172,6 @@ for ticker1, ticker2 in pairs:
     Small Cap US Stocks -- IWM (iShares Russell 2000 ETF)
     Mid Cap US Stocks / S&P MidCap 400 -- IJH (iShares S&P MidCap 400 ETF)
     Small Cap US Stocks -- IWM (iShares Russell 2000 ETF)
-
-
     Mid Cap US Stocks / S&P MidCap 400 -- IJH (iShares S&P MidCap 400 ETF)
     Small Cap US Stocks -- IWM (iShares Russell 2000 ETF)
     Mid Cap US Stocks / S&P MidCap 400 -- IJH (iShares S&P MidCap 400 ETF)
@@ -2231,8 +2262,6 @@ for ticker1, ticker2 in pairs:
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     Mid Cap US Stocks / S&P MidCap 400 -- IJH (iShares S&P MidCap 400 ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
-
-
     Mid Cap US Stocks / S&P MidCap 400 -- IJH (iShares S&P MidCap 400 ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     Mid Cap US Stocks / S&P MidCap 400 -- IJH (iShares S&P MidCap 400 ETF)
@@ -2283,6 +2312,8 @@ for ticker1, ticker2 in pairs:
     US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)
     Small Cap US Stocks / S&P SmallCap 600 -- IJR (iShares S&P SmallCap 600 ETF)
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
+
+
     Small Cap US Stocks / S&P SmallCap 600 -- IJR (iShares S&P SmallCap 600 ETF)
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
     Small Cap US Stocks / S&P SmallCap 600 -- IJR (iShares S&P SmallCap 600 ETF)
@@ -2315,8 +2346,6 @@ for ticker1, ticker2 in pairs:
     Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)
     Small Cap US Stocks / S&P SmallCap 600 -- IJR (iShares S&P SmallCap 600 ETF)
     Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)
-
-
     Small Cap US Stocks / S&P SmallCap 600 -- IJR (iShares S&P SmallCap 600 ETF)
     Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)
     Small Cap US Stocks / S&P SmallCap 600 -- IJR (iShares S&P SmallCap 600 ETF)
@@ -2389,8 +2418,6 @@ for ticker1, ticker2 in pairs:
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     Small Cap US Stocks / S&P SmallCap 600 -- IJR (iShares S&P SmallCap 600 ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
-
-
     Small Cap US Stocks / S&P SmallCap 600 -- IJR (iShares S&P SmallCap 600 ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     Small Cap US Stocks / S&P SmallCap 600 -- IJR (iShares S&P SmallCap 600 ETF)
@@ -2431,6 +2458,8 @@ for ticker1, ticker2 in pairs:
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
     US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
+
+
     US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
     US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)
@@ -2459,8 +2488,6 @@ for ticker1, ticker2 in pairs:
     Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)
     US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)
     Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)
-
-
     US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)
     Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)
     US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)
@@ -2525,8 +2552,6 @@ for ticker1, ticker2 in pairs:
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
     US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
-
-
     US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
     US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)
@@ -2565,6 +2590,8 @@ for ticker1, ticker2 in pairs:
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
     US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
+
+
     US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
     US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)
@@ -2587,10 +2614,10 @@ for ticker1, ticker2 in pairs:
     Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
     Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)
+
+
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
     Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)
-
-
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
     Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
@@ -2647,8 +2674,6 @@ for ticker1, ticker2 in pairs:
     Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
-
-
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
@@ -2699,12 +2724,12 @@ for ticker1, ticker2 in pairs:
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
+
+
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
-
-
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
@@ -2759,8 +2784,6 @@ for ticker1, ticker2 in pairs:
     European Stocks -- IEV (iShares S&P Europe 350 ETF)
     Small Cap US Stocks -- IWM (iShares Russell 2000 ETF)
     European Stocks -- IEV (iShares S&P Europe 350 ETF)
-
-
     Small Cap US Stocks -- IWM (iShares Russell 2000 ETF)
     European Stocks -- IEV (iShares S&P Europe 350 ETF)
     Small Cap US Stocks -- IWM (iShares Russell 2000 ETF)
@@ -2811,12 +2834,12 @@ for ticker1, ticker2 in pairs:
     Gold -- GLD (SPDR Gold Shares)
     Small Cap US Stocks -- IWM (iShares Russell 2000 ETF)
     Gold -- GLD (SPDR Gold Shares)
-
-
     Small Cap US Stocks -- IWM (iShares Russell 2000 ETF)
     Gold -- GLD (SPDR Gold Shares)
     Small Cap US Stocks -- IWM (iShares Russell 2000 ETF)
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
+
+
     Small Cap US Stocks -- IWM (iShares Russell 2000 ETF)
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
     Small Cap US Stocks -- IWM (iShares Russell 2000 ETF)
@@ -2863,8 +2886,6 @@ for ticker1, ticker2 in pairs:
     Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
     Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)
     Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
-
-
     Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)
     Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
     Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)
@@ -2911,8 +2932,6 @@ for ticker1, ticker2 in pairs:
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
     Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
-
-
     Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)
@@ -2925,6 +2944,8 @@ for ticker1, ticker2 in pairs:
     Gold -- GLD (SPDR Gold Shares)
     Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)
     Gold -- GLD (SPDR Gold Shares)
+
+
     Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)
     Gold -- GLD (SPDR Gold Shares)
     Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)
@@ -2961,8 +2982,6 @@ for ticker1, ticker2 in pairs:
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
     Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
-
-
     Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
     Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)
@@ -3007,8 +3026,6 @@ for ticker1, ticker2 in pairs:
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
     Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
-
-
     Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
     Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)
@@ -3021,6 +3038,8 @@ for ticker1, ticker2 in pairs:
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
+
+
     Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)
@@ -3053,8 +3072,6 @@ for ticker1, ticker2 in pairs:
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
     Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
-
-
     Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
     Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)
@@ -3099,8 +3116,6 @@ for ticker1, ticker2 in pairs:
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
-
-
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
@@ -3109,6 +3124,8 @@ for ticker1, ticker2 in pairs:
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
+
+
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
@@ -3119,6 +3136,8 @@ for ticker1, ticker2 in pairs:
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
+
+
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
@@ -3141,8 +3160,6 @@ for ticker1, ticker2 in pairs:
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
-
-
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
@@ -3185,8 +3202,6 @@ for ticker1, ticker2 in pairs:
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
     Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
-
-
     Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
     Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
@@ -3199,36 +3214,36 @@ for ticker1, ticker2 in pairs:
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
     Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
-    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
-    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
-    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
-    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
-    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
-    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
-    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
-    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
-    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
-    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
-    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
-    Gold -- GLD (SPDR Gold Shares)
-    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
-    Gold -- GLD (SPDR Gold Shares)
-    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
-    Gold -- GLD (SPDR Gold Shares)
-    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
-    Gold -- GLD (SPDR Gold Shares)
-    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
-    Gold -- GLD (SPDR Gold Shares)
-    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
-    Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
-    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
-    Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
-    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
-    Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
-    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
-    Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
 
 
+    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
+    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
+    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
+    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
+    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
+    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
+    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
+    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
+    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
+    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
+    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
+    Gold -- GLD (SPDR Gold Shares)
+    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
+    Gold -- GLD (SPDR Gold Shares)
+    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
+    Gold -- GLD (SPDR Gold Shares)
+    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
+    Gold -- GLD (SPDR Gold Shares)
+    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
+    Gold -- GLD (SPDR Gold Shares)
+    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
+    Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
+    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
+    Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
+    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
+    Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
+    Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
+    Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
     Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
     Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
@@ -3269,8 +3284,6 @@ for ticker1, ticker2 in pairs:
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
     European Stocks -- IEV (iShares S&P Europe 350 ETF)
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
-
-
     European Stocks -- IEV (iShares S&P Europe 350 ETF)
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
     European Stocks -- IEV (iShares S&P Europe 350 ETF)
@@ -3281,6 +3294,8 @@ for ticker1, ticker2 in pairs:
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     European Stocks -- IEV (iShares S&P Europe 350 ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
+
+
     European Stocks -- IEV (iShares S&P Europe 350 ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     European Stocks -- IEV (iShares S&P Europe 350 ETF)
@@ -3309,8 +3324,6 @@ for ticker1, ticker2 in pairs:
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
     European Stocks -- IEV (iShares S&P Europe 350 ETF)
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
-
-
     European Stocks -- IEV (iShares S&P Europe 350 ETF)
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
     European Stocks -- IEV (iShares S&P Europe 350 ETF)
@@ -3349,16 +3362,16 @@ for ticker1, ticker2 in pairs:
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
+    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
+    Gold -- GLD (SPDR Gold Shares)
+    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
+    Gold -- GLD (SPDR Gold Shares)
+    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
+    Gold -- GLD (SPDR Gold Shares)
+    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
+    Gold -- GLD (SPDR Gold Shares)
 
 
-    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
-    Gold -- GLD (SPDR Gold Shares)
-    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
-    Gold -- GLD (SPDR Gold Shares)
-    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
-    Gold -- GLD (SPDR Gold Shares)
-    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
-    Gold -- GLD (SPDR Gold Shares)
     Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
     Gold -- GLD (SPDR Gold Shares)
     Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
@@ -3389,8 +3402,6 @@ for ticker1, ticker2 in pairs:
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
-
-
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
@@ -3399,6 +3410,8 @@ for ticker1, ticker2 in pairs:
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
+
+
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
@@ -3427,8 +3440,6 @@ for ticker1, ticker2 in pairs:
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
-
-
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
@@ -3463,10 +3474,10 @@ for ticker1, ticker2 in pairs:
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
+
+
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
-
-
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
@@ -3503,8 +3514,6 @@ for ticker1, ticker2 in pairs:
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
-
-
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
@@ -3517,6 +3526,8 @@ for ticker1, ticker2 in pairs:
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
     Error creating temp_df for AGG and BTC-USD: "['BTC-USD_Daily_Return'] not in index"
     Error creating temp_df for AGG and ETH-USD: "['ETH-USD_Daily_Return'] not in index"
+
+
     Gold -- GLD (SPDR Gold Shares)
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
     Gold -- GLD (SPDR Gold Shares)
@@ -3543,8 +3554,6 @@ for ticker1, ticker2 in pairs:
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
-
-
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
@@ -3555,7 +3564,7 @@ for ticker1, ticker2 in pairs:
     Error creating temp_df for GSG and ETH-USD: "['ETH-USD_Daily_Return'] not in index"
     Error creating temp_df for IYR and BTC-USD: "['BTC-USD_Daily_Return'] not in index"
     Error creating temp_df for IYR and ETH-USD: "['ETH-USD_Daily_Return'] not in index"
-    Error creating temp_df for BTC-USD and ETH-USD: "None of [Index(['BTC-USD_Daily_Return', 'ETH-USD_Daily_Return'], dtype='object')] are in the [columns]"
+    Error creating temp_df for BTC-USD and ETH-USD: "None of [Index(['BTC-USD_Daily_Return', 'ETH-USD_Daily_Return'], dtype='str')] are in the [columns]"
 
 
 
@@ -3582,27 +3591,27 @@ display(rolling_correlation_results_no_crypto_df)
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>IVV_IJH_1mo</th>
-      <th>IVV_IJH_3mo</th>
-      <th>IVV_IJH_6mo</th>
-      <th>IVV_IJH_1y</th>
-      <th>IVV_IJH_5y</th>
-      <th>IVV_IJR_1mo</th>
-      <th>IVV_IJR_3mo</th>
-      <th>IVV_IJR_6mo</th>
-      <th>IVV_IJR_1y</th>
-      <th>IVV_IJR_5y</th>
+      <th>IVV_IJH_3d</th>
+      <th>IVV_IJH_1w</th>
+      <th>IVV_IJH_2w</th>
+      <th>IVV_IJH_1m</th>
+      <th>IVV_IJH_3m</th>
+      <th>IVV_IJR_3d</th>
+      <th>IVV_IJR_1w</th>
+      <th>IVV_IJR_2w</th>
+      <th>IVV_IJR_1m</th>
+      <th>IVV_IJR_3m</th>
       <th>...</th>
-      <th>GLD_IYR_1mo</th>
-      <th>GLD_IYR_3mo</th>
-      <th>GLD_IYR_6mo</th>
-      <th>GLD_IYR_1y</th>
-      <th>GLD_IYR_5y</th>
-      <th>GSG_IYR_1mo</th>
-      <th>GSG_IYR_3mo</th>
-      <th>GSG_IYR_6mo</th>
-      <th>GSG_IYR_1y</th>
-      <th>GSG_IYR_5y</th>
+      <th>GLD_IYR_3d</th>
+      <th>GLD_IYR_1w</th>
+      <th>GLD_IYR_2w</th>
+      <th>GLD_IYR_1m</th>
+      <th>GLD_IYR_3m</th>
+      <th>GSG_IYR_3d</th>
+      <th>GSG_IYR_1w</th>
+      <th>GSG_IYR_2w</th>
+      <th>GSG_IYR_1m</th>
+      <th>GSG_IYR_3m</th>
     </tr>
     <tr>
       <th>Date</th>
@@ -3680,23 +3689,23 @@ display(rolling_correlation_results_no_crypto_df)
     </tr>
     <tr>
       <th>2006-07-26</th>
+      <td>0.97</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>0.96</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>...</td>
+      <td>-0.99</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>0.40</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -3704,23 +3713,23 @@ display(rolling_correlation_results_no_crypto_df)
     </tr>
     <tr>
       <th>2006-07-27</th>
+      <td>0.99</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>0.93</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>...</td>
+      <td>-0.99</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>-0.75</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -3728,24 +3737,24 @@ display(rolling_correlation_results_no_crypto_df)
     </tr>
     <tr>
       <th>2006-07-28</th>
+      <td>1.00</td>
+      <td>0.96</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>0.99</td>
+      <td>0.97</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>...</td>
+      <td>-0.99</td>
+      <td>-0.89</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>-0.91</td>
+      <td>-0.41</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -3775,282 +3784,184 @@ display(rolling_correlation_results_no_crypto_df)
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-04-24</th>
-      <td>0.89</td>
-      <td>0.85</td>
-      <td>0.82</td>
-      <td>0.82</td>
-      <td>0.88</td>
+      <th>2026-06-05</th>
+      <td>0.98</td>
       <td>0.92</td>
-      <td>0.85</td>
-      <td>0.79</td>
-      <td>0.79</td>
-      <td>0.82</td>
-      <td>...</td>
-      <td>0.25</td>
-      <td>0.22</td>
-      <td>0.14</td>
-      <td>0.11</td>
-      <td>0.18</td>
-      <td>-0.45</td>
-      <td>-0.35</td>
-      <td>-0.17</td>
-      <td>-0.17</td>
-      <td>0.11</td>
-    </tr>
-    <tr>
-      <th>2026-04-27</th>
-      <td>0.88</td>
-      <td>0.85</td>
-      <td>0.82</td>
-      <td>0.82</td>
-      <td>0.88</td>
-      <td>0.91</td>
-      <td>0.85</td>
-      <td>0.79</td>
-      <td>0.79</td>
-      <td>0.82</td>
-      <td>...</td>
-      <td>0.24</td>
-      <td>0.22</td>
-      <td>0.15</td>
-      <td>0.11</td>
-      <td>0.18</td>
-      <td>-0.44</td>
-      <td>-0.35</td>
-      <td>-0.17</td>
-      <td>-0.17</td>
-      <td>0.11</td>
-    </tr>
-    <tr>
-      <th>2026-04-28</th>
       <td>0.86</td>
-      <td>0.85</td>
-      <td>0.82</td>
-      <td>0.82</td>
-      <td>0.88</td>
+      <td>0.81</td>
+      <td>0.87</td>
+      <td>0.94</td>
       <td>0.90</td>
-      <td>0.86</td>
       <td>0.79</td>
-      <td>0.79</td>
-      <td>0.82</td>
-      <td>...</td>
-      <td>0.38</td>
-      <td>0.22</td>
-      <td>0.14</td>
-      <td>0.11</td>
-      <td>0.18</td>
-      <td>-0.37</td>
-      <td>-0.34</td>
-      <td>-0.17</td>
-      <td>-0.17</td>
-      <td>0.11</td>
-    </tr>
-    <tr>
-      <th>2026-04-29</th>
+      <td>0.77</td>
       <td>0.85</td>
-      <td>0.85</td>
-      <td>0.82</td>
-      <td>0.82</td>
-      <td>0.88</td>
-      <td>0.89</td>
-      <td>0.86</td>
-      <td>0.80</td>
-      <td>0.79</td>
-      <td>0.82</td>
       <td>...</td>
+      <td>0.50</td>
+      <td>0.28</td>
+      <td>0.03</td>
+      <td>0.28</td>
       <td>0.41</td>
-      <td>0.26</td>
-      <td>0.15</td>
-      <td>0.11</td>
-      <td>0.18</td>
+      <td>-0.60</td>
+      <td>-0.82</td>
+      <td>-0.59</td>
+      <td>-0.39</td>
       <td>-0.43</td>
-      <td>-0.35</td>
-      <td>-0.18</td>
-      <td>-0.17</td>
-      <td>0.11</td>
     </tr>
     <tr>
-      <th>2026-04-30</th>
-      <td>0.78</td>
+      <th>2026-06-08</th>
+      <td>1.00</td>
+      <td>0.95</td>
       <td>0.85</td>
       <td>0.83</td>
-      <td>0.82</td>
-      <td>0.88</td>
+      <td>0.87</td>
+      <td>0.99</td>
+      <td>0.95</td>
+      <td>0.79</td>
+      <td>0.77</td>
+      <td>0.85</td>
+      <td>...</td>
+      <td>-0.08</td>
+      <td>-0.06</td>
+      <td>-0.04</td>
+      <td>0.24</td>
+      <td>0.39</td>
+      <td>-0.79</td>
+      <td>-0.64</td>
+      <td>-0.62</td>
+      <td>-0.39</td>
+      <td>-0.43</td>
+    </tr>
+    <tr>
+      <th>2026-06-09</th>
+      <td>0.93</td>
+      <td>0.92</td>
+      <td>0.81</td>
+      <td>0.80</td>
+      <td>0.86</td>
+      <td>0.97</td>
+      <td>0.93</td>
+      <td>0.73</td>
+      <td>0.73</td>
+      <td>0.84</td>
+      <td>...</td>
+      <td>-0.55</td>
+      <td>-0.17</td>
+      <td>-0.20</td>
+      <td>0.09</td>
+      <td>0.35</td>
+      <td>-0.74</td>
+      <td>-0.71</td>
+      <td>-0.63</td>
+      <td>-0.43</td>
+      <td>-0.44</td>
+    </tr>
+    <tr>
+      <th>2026-06-10</th>
+      <td>0.86</td>
+      <td>0.93</td>
+      <td>0.87</td>
       <td>0.83</td>
       <td>0.86</td>
-      <td>0.80</td>
-      <td>0.79</td>
-      <td>0.82</td>
+      <td>0.91</td>
+      <td>0.98</td>
+      <td>0.74</td>
+      <td>0.75</td>
+      <td>0.84</td>
       <td>...</td>
-      <td>0.36</td>
-      <td>0.27</td>
-      <td>0.15</td>
-      <td>0.11</td>
-      <td>0.18</td>
-      <td>-0.42</td>
-      <td>-0.37</td>
-      <td>-0.21</td>
+      <td>-0.30</td>
+      <td>0.02</td>
       <td>-0.17</td>
-      <td>0.10</td>
+      <td>0.07</td>
+      <td>0.34</td>
+      <td>-0.89</td>
+      <td>-0.71</td>
+      <td>-0.71</td>
+      <td>-0.48</td>
+      <td>-0.43</td>
+    </tr>
+    <tr>
+      <th>2026-06-11</th>
+      <td>0.98</td>
+      <td>0.97</td>
+      <td>0.92</td>
+      <td>0.86</td>
+      <td>0.86</td>
+      <td>0.99</td>
+      <td>0.99</td>
+      <td>0.84</td>
+      <td>0.81</td>
+      <td>0.84</td>
+      <td>...</td>
+      <td>-0.21</td>
+      <td>-0.32</td>
+      <td>-0.13</td>
+      <td>0.05</td>
+      <td>0.32</td>
+      <td>-0.48</td>
+      <td>-0.61</td>
+      <td>-0.65</td>
+      <td>-0.50</td>
+      <td>-0.41</td>
     </tr>
   </tbody>
 </table>
-<p>4974 rows × 765 columns</p>
+<p>5003 rows × 765 columns</p>
 </div>
 
 
 
 ```python
-plot_time_series(
-    df=rolling_correlation_results_no_crypto_df,
-    plot_start_date=None,
-    plot_end_date=None,
-    plot_columns=[col for col in rolling_correlation_results_no_crypto_df.columns if "1mo" in col],
-    title="Rolling 1mo Correlation, No Crypto",
-    x_label="Date",
-    x_format="Year",
-    x_tick_spacing=1,
-    x_tick_rotation=30,
-    y_label="Correlation",
-    y_format="Decimal",
-    y_format_decimal_places="Auto",
-    y_tick_spacing="Auto",
-    y_tick_rotation=0,
-    grid=True,
-    legend=False,
-    export_plot=False,
-    plot_file_name=None,
-)
+for window in rolling_windows.keys():
+    plot_time_series(
+        df=rolling_correlation_results_no_crypto_df,
+        plot_start_date=None,
+        plot_end_date=None,
+        plot_columns=[col for col in rolling_correlation_results_no_crypto_df.columns if f"{window}" in col],
+        title=f"Rolling {window} Correlation, No Crypto",
+        x_label="Date",
+        x_format="Year",
+        x_tick_spacing=1,
+        x_tick_start=None,
+        x_tick_rotation=30,
+        y_label="Correlation",
+        y_format="Decimal",
+        y_format_decimal_places="Auto",
+        y_tick_spacing="Auto",
+        y_tick_rotation=0,
+        grid=True,
+        legend=False,
+        export_plot=False,
+        plot_file_name=None,
+    )
 ```
 
 
     
-![png](asset-class-return-correlations_files/asset-class-return-correlations_31_0.png)
+![png](asset-class-return-correlations_files/asset-class-return-correlations_30_0.png)
     
 
 
 
-```python
-# plot_time_series(
-#     df=rolling_correlation_results_no_crypto_df,
-#     plot_start_date=None,
-#     plot_end_date=None,
-#     plot_columns=[
-#         col for col in rolling_correlation_results_no_crypto_df.columns
-#         if "1y" in col
-#         and any(col.startswith(ticker) for ticker in equity_tickers)
-#         and not any(col.endswith(f"{ticker}_1y") for ticker in bond_tickers + commodity_tickers + real_estate_tickers)
-#     ],
-#     title="Rolling 1y Correlation - Equity ETFs",
-#     x_label="Date",
-#     x_format="Year",
-#     x_tick_spacing=1,
-#     x_tick_rotation=30,
-#     y_label="Correlation",
-#     y_format="Decimal",
-#     y_format_decimal_places="Auto",
-#     y_tick_spacing="Auto",
-#     y_tick_rotation=0,
-#     grid=True,
-#     legend=True,
-#     export_plot=False,
-#     plot_file_name=None,
-# )
-```
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_30_1.png)
+    
 
-
-```python
-# plot_time_series(
-#     df=rolling_correlation_results_no_crypto_df,
-#     plot_start_date=None,
-#     plot_end_date=None,
-#     plot_columns=[
-#         col for col in rolling_correlation_results_no_crypto_df.columns
-#         if "1y" in col
-#         and any(col.startswith(ticker) for ticker in us_equity_tickers)
-#         and not any(col.endswith(f"{ticker}_1y") for ticker in intl_equity_tickers + bond_tickers + commodity_tickers + real_estate_tickers)
-#     ],
-#     title="Rolling 1y Correlation - US Equity ETFs",
-#     x_label="Date",
-#     x_format="Year",
-#     x_tick_spacing=1,
-#     x_tick_rotation=30,
-#     y_label="Correlation",
-#     y_format="Decimal",
-#     y_format_decimal_places="Auto",
-#     y_tick_spacing="Auto",
-#     y_tick_rotation=0,
-#     grid=True,
-#     legend=True,
-#     export_plot=False,
-#     plot_file_name=None,
-# )
-```
-
-
-```python
-# plot_time_series(
-#     df=rolling_correlation_results_no_crypto_df,
-#     plot_start_date=None,
-#     plot_end_date=None,
-#     plot_columns=[
-#         col for col in rolling_correlation_results_no_crypto_df.columns
-#         if "6mo" in col
-#         and any(col.startswith(ticker) for ticker in us_equity_tickers)
-#         and not any(col.startswith("QQQ") for ticker in us_equity_tickers)
-#         and not any(col.endswith(f"{ticker}_6mo") for ticker in intl_equity_tickers + bond_tickers + commodity_tickers + real_estate_tickers + list("QQQ" + "IWD" + "IWF"))
-#     ],
-#     title="Rolling 6mo Correlation - US Equity ETFs",
-#     x_label="Date",
-#     x_format="Year",
-#     x_tick_spacing=1,
-#     x_tick_rotation=30,
-#     y_label="Correlation",
-#     y_format="Decimal",
-#     y_format_decimal_places="Auto",
-#     y_tick_spacing="Auto",
-#     y_tick_rotation=0,
-#     grid=True,
-#     legend=True,
-#     export_plot=False,
-#     plot_file_name=None,
-# )
-```
-
-
-```python
-plot_time_series(
-    df=rolling_correlation_results_no_crypto_df,
-    plot_start_date=None,
-    plot_end_date=None,
-    plot_columns=[
-        col for col in rolling_correlation_results_no_crypto_df.columns
-        if "1mo" in col
-        and any(col.startswith(ticker) for ticker in us_equity_tickers)
-        and not any(col.startswith("QQQ") for ticker in us_equity_tickers)
-        and not any(col.endswith(f"{ticker}_1mo") for ticker in intl_equity_tickers + bond_tickers + commodity_tickers + real_estate_tickers + list("QQQ" + "IWD" + "IWF" + "IWB" + "IWM"))
-    ],
-    title="Rolling 1mo Correlation - US Equity ETFs",
-    x_label="Date",
-    x_format="Year",
-    x_tick_spacing=1,
-    x_tick_rotation=30,
-    y_label="Correlation",
-    y_format="Decimal",
-    y_format_decimal_places="Auto",
-    y_tick_spacing="Auto",
-    y_tick_rotation=0,
-    grid=True,
-    legend=True,
-    export_plot=False,
-    plot_file_name=None,
-)
-```
 
 
     
-![png](asset-class-return-correlations_files/asset-class-return-correlations_35_0.png)
+![png](asset-class-return-correlations_files/asset-class-return-correlations_30_2.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_30_3.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_30_4.png)
     
 
 
@@ -4060,33 +3971,59 @@ We'll now look specifically at the rolling correlations between the US S&P index
 
 
 ```python
-corr_list = ['IVV_IJH_1mo', 'IVV_IJR_1mo', 'IJH_IJR_1mo']
+corr_list = [f'IVV_IJH_{window}', f'IVV_IJR_{window}', f'IJH_IJR_{window}']
 
-plot_time_series(
-    df=rolling_correlation_results_no_crypto_df,
-    plot_start_date=None,
-    plot_end_date=None,
-    plot_columns=corr_list,
-    title="Rolling 6mo Correlation - US Equity ETFs (S&P 500, 400, 600)",
-    x_label="Date",
-    x_format="Year",
-    x_tick_spacing=1,
-    x_tick_rotation=30,
-    y_label="Correlation",
-    y_format="Decimal",
-    y_format_decimal_places="Auto",
-    y_tick_spacing="Auto",
-    y_tick_rotation=0,
-    grid=True,
-    legend=True,
-    export_plot=False,
-    plot_file_name=None,
-)
+for window in rolling_windows.keys():
+    plot_time_series(
+        df=rolling_correlation_results_no_crypto_df,
+        plot_start_date=None,
+        plot_end_date=None,
+        plot_columns=corr_list,
+        title=f"Rolling {window} Correlation - US Equity ETFs (S&P 500, 400, 600)",
+        x_label="Date",
+        x_format="Year",
+        x_tick_spacing=1,
+        x_tick_start=None,
+        x_tick_rotation=30,
+        y_label="Correlation",
+        y_format="Decimal",
+        y_format_decimal_places="Auto",
+        y_tick_spacing="Auto",
+        y_tick_rotation=0,
+        grid=True,
+        legend=True,
+        export_plot=False,
+        plot_file_name=None,
+    )
 ```
 
 
     
-![png](asset-class-return-correlations_files/asset-class-return-correlations_37_0.png)
+![png](asset-class-return-correlations_files/asset-class-return-correlations_32_0.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_32_1.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_32_2.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_32_3.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_32_4.png)
     
 
 
@@ -4107,433 +4044,561 @@ As an attempt to find some kind of signal, let's simply add the three correlatio
 
 
 ```python
-us_sp_etfs = rolling_correlation_results_no_crypto_df[corr_list].dropna()
-
-# Add the correlations together
-us_sp_etfs["total_correlation"] = us_sp_etfs.sum(axis=1)
-
-# Calc the percent change in total correlation
-us_sp_etfs["total_correlation_pct_change"] = us_sp_etfs["total_correlation"].pct_change()
-
-# Merge daily returns into us_sp_etfs for the three ETFs
-us_sp_etfs = us_sp_etfs.merge(
-    fund_data_daily_returns[["IVV_Daily_Return", "IJH_Daily_Return", "IJR_Daily_Return"]],
-    left_index=True,
-    right_index=True,
-    how="left"
-)
-
-windows = [5, 10, 15, 20, 25]
-for window in windows:
-    us_sp_etfs[f"total_correlation_pct_change_{window}d_cum"] = us_sp_etfs["total_correlation_pct_change"].rolling(window=window).apply(lambda x: (1 + x).prod() - 1)
-    us_sp_etfs[f"IVV_Daily_Return_{window}d_cum"] = us_sp_etfs["IVV_Daily_Return"].rolling(window=window).apply(lambda x: (1 + x).prod() - 1)
-    us_sp_etfs[f"IJH_Daily_Return_{window}d_cum"] = us_sp_etfs["IJH_Daily_Return"].rolling(window=window).apply(lambda x: (1 + x).prod() - 1)
-    us_sp_etfs[f"IJR_Daily_Return_{window}d_cum"] = us_sp_etfs["IJR_Daily_Return"].rolling(window=window).apply(lambda x: (1 + x).prod() - 1)
-
-pandas_set_decimal_places(4)
-display(us_sp_etfs)
+# Define rolling windows in trading days
+return_windows = {
+    '1d': 1,      # 1 day (~1 trading day)
+    '3d': 3,      # 3 days (~3 trading days)
+    '1w': 5,      # 1 week (~5 trading days)
+    '2w': 10,     # 2 weeks (~10 trading days)
+    '1m': 21,     # 1 month (~21 trading days)
+    '2m': 42,     # 2 months (~42 trading days)
+    '3m': 63,     # 3 months (~63 trading days)
+    # '4m': 84,     # 4 months (~84 trading days)
+    # '6m': 126,    # 6 months (~126 trading days)
+    # '8m': 168,    # 8 months (~168 trading days)
+    # '10m': 210,   # 10 months (~210 trading days)
+    # '1y': 252,    # 1 year (~252 trading days)
+    # '1y2m': 294,  # 1 year + 2 months (~294 trading days)
+    # '1y4m': 336,  # 1 year + 4 months (~336 trading days)
+    # '1y6m': 378,  # 1 year + 6 months (~378 trading days)
+    # '1y8m': 420,  # 1 year + 8 months (~420 trading days)
+    # '1y10m': 462, # 1 year + 10 months (~462 trading days)
+    # '2y': 504,    # 2 years (~504 trading days)
+}
 ```
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>IVV_IJH_1mo</th>
-      <th>IVV_IJR_1mo</th>
-      <th>IJH_IJR_1mo</th>
-      <th>total_correlation</th>
-      <th>total_correlation_pct_change</th>
-      <th>IVV_Daily_Return</th>
-      <th>IJH_Daily_Return</th>
-      <th>IJR_Daily_Return</th>
-      <th>total_correlation_pct_change_5d_cum</th>
-      <th>IVV_Daily_Return_5d_cum</th>
-      <th>...</th>
-      <th>IJH_Daily_Return_15d_cum</th>
-      <th>IJR_Daily_Return_15d_cum</th>
-      <th>total_correlation_pct_change_20d_cum</th>
-      <th>IVV_Daily_Return_20d_cum</th>
-      <th>IJH_Daily_Return_20d_cum</th>
-      <th>IJR_Daily_Return_20d_cum</th>
-      <th>total_correlation_pct_change_25d_cum</th>
-      <th>IVV_Daily_Return_25d_cum</th>
-      <th>IJH_Daily_Return_25d_cum</th>
-      <th>IJR_Daily_Return_25d_cum</th>
-    </tr>
-    <tr>
-      <th>Date</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>2006-08-21</th>
-      <td>0.9585</td>
-      <td>0.9301</td>
-      <td>0.9665</td>
-      <td>2.8552</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>2006-08-22</th>
-      <td>0.9403</td>
-      <td>0.9066</td>
-      <td>0.9564</td>
-      <td>2.8034</td>
-      <td>-0.0181</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>2006-08-23</th>
-      <td>0.9462</td>
-      <td>0.9109</td>
-      <td>0.9574</td>
-      <td>2.8144</td>
-      <td>0.0040</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>2006-08-24</th>
-      <td>0.9442</td>
-      <td>0.9206</td>
-      <td>0.9623</td>
-      <td>2.8271</td>
-      <td>0.0045</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>2006-08-25</th>
-      <td>0.9515</td>
-      <td>0.9257</td>
-      <td>0.9578</td>
-      <td>2.8350</td>
-      <td>0.0028</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>2026-04-24</th>
-      <td>0.8906</td>
-      <td>0.9159</td>
-      <td>0.9755</td>
-      <td>2.7820</td>
-      <td>-0.0001</td>
-      <td>0.0078</td>
-      <td>0.0021</td>
-      <td>0.0054</td>
-      <td>-0.0104</td>
-      <td>0.0055</td>
-      <td>...</td>
-      <td>0.0676</td>
-      <td>0.0867</td>
-      <td>0.0496</td>
-      <td>0.1069</td>
-      <td>0.0830</td>
-      <td>0.1021</td>
-      <td>0.0592</td>
-      <td>0.0853</td>
-      <td>0.0808</td>
-      <td>0.1102</td>
-    </tr>
-    <tr>
-      <th>2026-04-27</th>
-      <td>0.8768</td>
-      <td>0.9120</td>
-      <td>0.9730</td>
-      <td>2.7618</td>
-      <td>-0.0073</td>
-      <td>0.0017</td>
-      <td>0.0007</td>
-      <td>0.0019</td>
-      <td>-0.0156</td>
-      <td>0.0090</td>
-      <td>...</td>
-      <td>0.0640</td>
-      <td>0.0829</td>
-      <td>0.0223</td>
-      <td>0.1280</td>
-      <td>0.1018</td>
-      <td>0.1216</td>
-      <td>0.0343</td>
-      <td>0.1032</td>
-      <td>0.1058</td>
-      <td>0.1341</td>
-    </tr>
-    <tr>
-      <th>2026-04-28</th>
-      <td>0.8601</td>
-      <td>0.8967</td>
-      <td>0.9685</td>
-      <td>2.7253</td>
-      <td>-0.0132</td>
-      <td>-0.0049</td>
-      <td>-0.0100</td>
-      <td>-0.0056</td>
-      <td>-0.0223</td>
-      <td>0.0109</td>
-      <td>...</td>
-      <td>0.0519</td>
-      <td>0.0733</td>
-      <td>0.0049</td>
-      <td>0.1260</td>
-      <td>0.0994</td>
-      <td>0.1234</td>
-      <td>0.0089</td>
-      <td>0.0860</td>
-      <td>0.0750</td>
-      <td>0.1050</td>
-    </tr>
-    <tr>
-      <th>2026-04-29</th>
-      <td>0.8529</td>
-      <td>0.8854</td>
-      <td>0.9677</td>
-      <td>2.7060</td>
-      <td>-0.0071</td>
-      <td>-0.0001</td>
-      <td>-0.0075</td>
-      <td>-0.0078</td>
-      <td>-0.0132</td>
-      <td>0.0005</td>
-      <td>...</td>
-      <td>0.0147</td>
-      <td>0.0377</td>
-      <td>-0.0318</td>
-      <td>0.0944</td>
-      <td>0.0598</td>
-      <td>0.0838</td>
-      <td>0.0224</td>
-      <td>0.0894</td>
-      <td>0.0583</td>
-      <td>0.0886</td>
-    </tr>
-    <tr>
-      <th>2026-04-30</th>
-      <td>0.7845</td>
-      <td>0.8284</td>
-      <td>0.9588</td>
-      <td>2.5717</td>
-      <td>-0.0496</td>
-      <td>0.0100</td>
-      <td>0.0168</td>
-      <td>0.0176</td>
-      <td>-0.0757</td>
-      <td>0.0145</td>
-      <td>...</td>
-      <td>0.0297</td>
-      <td>0.0486</td>
-      <td>-0.0816</td>
-      <td>0.0973</td>
-      <td>0.0686</td>
-      <td>0.0975</td>
-      <td>-0.0274</td>
-      <td>0.0945</td>
-      <td>0.0667</td>
-      <td>0.0961</td>
-    </tr>
-  </tbody>
-</table>
-<p>4954 rows × 28 columns</p>
-</div>
-
 
 
 ```python
-plot_scatter(
-    df=us_sp_etfs,
-    x_plot_column="total_correlation",
-    y_plot_columns=["IVV_Daily_Return_20d_cum", "IJH_Daily_Return_20d_cum", "IJR_Daily_Return_20d_cum"],
-    title="IVV Daily Return vs Total Correlation Percent Change",
-    x_label="Total Correlation Percent Change",
-    x_format="Decimal",
-    x_format_decimal_places=4,
-    x_tick_spacing="Auto",
-    x_tick_rotation=30,
-    y_label="Daily Return",
-    y_format="Decimal",
-    y_format_decimal_places=2,
-    y_tick_spacing="Auto",
-    y_tick_rotation=0,
-    grid=True,
-    legend=True,
-    export_plot=False,
-    plot_file_name=None,
-)
+corr_list = [f'IVV_IJH_{window}', f'IVV_IJR_{window}', f'IJH_IJR_{window}']
+fund_tickers = ["IVV", "IJH", "IJR"]
+
+for window in rolling_windows.keys():
+    us_sp_etfs = rolling_correlation_results_no_crypto_df[corr_list].dropna()
+
+    # Add the correlations together
+    us_sp_etfs["total_correlation"] = us_sp_etfs.sum(axis=1)
+
+    # Merge daily returns into us_sp_etfs for the three ETFs
+    us_sp_etfs = us_sp_etfs.merge(
+        fund_data_daily_returns_all[[f"{ft}_Daily_Return" for ft in fund_tickers]].dropna(),
+        left_index=True,
+        right_index=True,
+        how="left"
+    )
+
+    plot_time_series(
+        df=us_sp_etfs.dropna(),
+        plot_start_date=None,
+        plot_end_date=None,
+        plot_columns=["total_correlation"],
+        title=f"Rolling {window} Total Correlation - US Equity ETFs (S&P 500, 400, 600)",
+        x_label="Date",
+        x_format="Year",
+        x_tick_spacing=1,
+        x_tick_start=None,
+        x_tick_rotation=30,
+        y_label=f"Rolling {window} Total Correlation",
+        y_format="Decimal",
+        y_format_decimal_places="Auto",
+        y_tick_spacing="Auto",
+        y_tick_rotation=0,
+        grid=True,
+        legend=True,
+        export_plot=False,
+        plot_file_name=None,
+    )
+
+    for rw in return_windows.keys():
+        for ft in fund_tickers:
+            us_sp_etfs[f"{ft}_Daily_Return_{rw}_CRR"] = us_sp_etfs[f"{ft}_Daily_Return"].rolling(window=return_windows[rw]).apply(lambda x: (1 + x).prod() - 1)
+            us_sp_etfs[f"{ft}_Daily_Return_fwd_{rw}_CRR"] = us_sp_etfs[f"{ft}_Daily_Return_{rw}_CRR"].shift(-return_windows[rw])
+
+        plot_scatter(
+            df=us_sp_etfs,
+            x_plot_column="total_correlation",
+            y_plot_columns=[col for col in us_sp_etfs.columns if f"fwd_{rw}_CRR" in col],
+            title=f"Rolling {window} Total Correlation vs Future {rw} Cumulative Rolling Return - US Equity ETFs (S&P 500, 400, 600)",
+            x_label=f"Rolling {window} Total Correlation",
+            x_format="Decimal",
+            x_format_decimal_places=2,
+            x_tick_spacing="Auto",
+            x_tick_start=None,
+            x_tick_rotation=30,
+            y_label=f"Future {rw} Cumulative Rolling Return",
+            y_format="Decimal",
+            y_format_decimal_places=2,
+            y_tick_spacing="Auto",
+            y_tick_rotation=0,
+            grid=True,
+            legend=True,
+            export_plot=False,
+            plot_file_name=None,
+        )
+
+        plot_histogram(
+            df=us_sp_etfs,
+            plot_columns=[col for col in us_sp_etfs.columns if f"fwd_{rw}_CRR" in col],
+            title=f"Rolling {window} Total Correlation, Distribution of Future {rw} Cumulative Rolling Returns - US Equity ETFs (S&P 500, 400, 600)",
+            x_label=f"Rolling {window} Total Correlation",
+            x_tick_spacing="Auto",
+            x_tick_rotation=30,
+            y_label="Frequency",
+            y_tick_spacing="Auto",
+            y_tick_rotation=0,
+            grid=True,
+            legend=True,
+            export_plot=False,
+            plot_file_name=None,
+        )
 ```
 
-    Raw x-tick spacing: 0.12050918913320856
-    Rounded x-tick spacing: 0.1
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_0.png)
+    
 
 
 
     
-![png](asset-class-return-correlations_files/asset-class-return-correlations_40_1.png)
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_1.png)
     
 
 
-Now we'll plot the total correlation metric over time:
 
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_2.png)
+    
 
-```python
-plot_time_series(
-    df=us_sp_etfs.dropna(),
-    plot_start_date=None,
-    plot_end_date=None,
-    plot_columns=["total_correlation"],
-    title="Total Rolling 6mo Correlaation - US Equity ETFs (S&P 500, 400, 600)",
-    x_label="Date",
-    x_format="Year",
-    x_tick_spacing=1,
-    x_tick_rotation=30,
-    y_label="Correlation",
-    y_format="Decimal",
-    y_format_decimal_places="Auto",
-    y_tick_spacing="Auto",
-    y_tick_rotation=0,
-    grid=True,
-    legend=True,
-    export_plot=False,
-    plot_file_name=None,
-)
-```
 
 
     
-![png](asset-class-return-correlations_files/asset-class-return-correlations_42_0.png)
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_3.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_4.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_5.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_6.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_7.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_8.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_9.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_10.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_11.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_12.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_13.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_14.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_15.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_16.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_17.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_18.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_19.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_20.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_21.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_22.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_23.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_24.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_25.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_26.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_27.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_28.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_29.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_30.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_31.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_32.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_33.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_34.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_35.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_36.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_37.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_38.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_39.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_40.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_41.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_42.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_43.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_44.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_45.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_46.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_47.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_48.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_49.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_50.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_51.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_52.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_53.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_54.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_55.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_56.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_57.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_58.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_59.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_60.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_61.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_62.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_63.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_64.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_65.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_66.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_67.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_68.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_69.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_70.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_71.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_72.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_73.png)
+    
+
+
+
+    
+![png](asset-class-return-correlations_files/asset-class-return-correlations_35_74.png)
     
 
 
@@ -4541,7 +4606,7 @@ Now we'll look at a few different moving averages of the total correlation metri
 
 
 ```python
-fund_data_daily_returns_all
+us_sp_etfs
 ```
 
 
@@ -4565,29 +4630,31 @@ fund_data_daily_returns_all
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>IVV_IJH_3m</th>
+      <th>IVV_IJR_3m</th>
+      <th>IJH_IJR_3m</th>
+      <th>total_correlation</th>
       <th>IVV_Daily_Return</th>
       <th>IJH_Daily_Return</th>
       <th>IJR_Daily_Return</th>
-      <th>QQQ_Daily_Return</th>
-      <th>IWB_Daily_Return</th>
-      <th>IWM_Daily_Return</th>
-      <th>IWD_Daily_Return</th>
-      <th>IWF_Daily_Return</th>
-      <th>EFA_Daily_Return</th>
-      <th>EEM_Daily_Return</th>
-      <th>IEV_Daily_Return</th>
-      <th>SHY_Daily_Return</th>
-      <th>IEF_Daily_Return</th>
-      <th>TLT_Daily_Return</th>
-      <th>AGG_Daily_Return</th>
-      <th>GLD_Daily_Return</th>
-      <th>GSG_Daily_Return</th>
-      <th>IYR_Daily_Return</th>
-      <th>BTC-USD_Daily_Return</th>
-      <th>ETH-USD_Daily_Return</th>
+      <th>IVV_Daily_Return_1d_CRR</th>
+      <th>IVV_Daily_Return_fwd_1d_CRR</th>
+      <th>IJH_Daily_Return_1d_CRR</th>
+      <th>...</th>
+      <th>IJH_Daily_Return_2m_CRR</th>
+      <th>IJH_Daily_Return_fwd_2m_CRR</th>
+      <th>IJR_Daily_Return_2m_CRR</th>
+      <th>IJR_Daily_Return_fwd_2m_CRR</th>
+      <th>IVV_Daily_Return_3m_CRR</th>
+      <th>IVV_Daily_Return_fwd_3m_CRR</th>
+      <th>IJH_Daily_Return_3m_CRR</th>
+      <th>IJH_Daily_Return_fwd_3m_CRR</th>
+      <th>IJR_Daily_Return_3m_CRR</th>
+      <th>IJR_Daily_Return_fwd_3m_CRR</th>
     </tr>
     <tr>
       <th>Date</th>
+      <th></th>
       <th></th>
       <th></th>
       <th></th>
@@ -4612,119 +4679,124 @@ fund_data_daily_returns_all
   </thead>
   <tbody>
     <tr>
-      <th>1999-03-10</th>
+      <th>2006-10-19</th>
+      <td>0.92</td>
+      <td>0.90</td>
+      <td>0.96</td>
+      <td>2.78</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>...</td>
       <td>NaN</td>
+      <td>0.03</td>
       <td>NaN</td>
+      <td>0.03</td>
       <td>NaN</td>
+      <td>0.05</td>
       <td>NaN</td>
+      <td>0.04</td>
       <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>0.03</td>
     </tr>
     <tr>
-      <th>1999-03-11</th>
+      <th>2006-10-20</th>
+      <td>0.90</td>
+      <td>0.89</td>
+      <td>0.96</td>
+      <td>2.75</td>
+      <td>0.00</td>
+      <td>-0.01</td>
+      <td>-0.01</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>-0.01</td>
+      <td>...</td>
       <td>NaN</td>
+      <td>0.04</td>
       <td>NaN</td>
+      <td>0.03</td>
       <td>NaN</td>
-      <td>0.0049</td>
+      <td>0.06</td>
       <td>NaN</td>
+      <td>0.06</td>
       <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>0.05</td>
     </tr>
     <tr>
-      <th>1999-03-12</th>
+      <th>2006-10-23</th>
+      <td>0.90</td>
+      <td>0.89</td>
+      <td>0.96</td>
+      <td>2.74</td>
+      <td>0.00</td>
+      <td>0.01</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.01</td>
+      <td>...</td>
       <td>NaN</td>
+      <td>0.03</td>
       <td>NaN</td>
+      <td>0.03</td>
       <td>NaN</td>
-      <td>-0.0244</td>
+      <td>0.04</td>
       <td>NaN</td>
+      <td>0.05</td>
       <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>0.03</td>
     </tr>
     <tr>
-      <th>1999-03-15</th>
+      <th>2006-10-24</th>
+      <td>0.90</td>
+      <td>0.89</td>
+      <td>0.96</td>
+      <td>2.75</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>...</td>
       <td>NaN</td>
+      <td>0.02</td>
       <td>NaN</td>
+      <td>0.02</td>
       <td>NaN</td>
-      <td>0.0287</td>
+      <td>0.04</td>
       <td>NaN</td>
+      <td>0.04</td>
       <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>0.03</td>
     </tr>
     <tr>
-      <th>1999-03-16</th>
+      <th>2006-10-25</th>
+      <td>0.90</td>
+      <td>0.89</td>
+      <td>0.96</td>
+      <td>2.75</td>
+      <td>0.00</td>
+      <td>0.01</td>
+      <td>0.01</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.01</td>
+      <td>...</td>
       <td>NaN</td>
+      <td>0.02</td>
       <td>NaN</td>
+      <td>0.02</td>
       <td>NaN</td>
-      <td>0.0085</td>
+      <td>0.03</td>
       <td>NaN</td>
+      <td>0.04</td>
       <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>0.03</td>
     </tr>
     <tr>
       <th>...</th>
@@ -4748,125 +4820,131 @@ fund_data_daily_returns_all
       <td>...</td>
       <td>...</td>
       <td>...</td>
+      <td>...</td>
     </tr>
     <tr>
-      <th>2026-04-27</th>
-      <td>0.0017</td>
-      <td>0.0007</td>
-      <td>0.0019</td>
-      <td>0.0005</td>
-      <td>0.0011</td>
-      <td>0.0018</td>
-      <td>0.0001</td>
-      <td>0.0017</td>
-      <td>-0.0038</td>
-      <td>-0.0016</td>
-      <td>-0.0052</td>
-      <td>-0.0002</td>
-      <td>-0.0023</td>
-      <td>-0.0050</td>
-      <td>-0.0015</td>
-      <td>-0.0078</td>
-      <td>0.0092</td>
-      <td>-0.0057</td>
-      <td>-0.0164</td>
-      <td>-0.0281</td>
+      <th>2026-06-05</th>
+      <td>0.87</td>
+      <td>0.85</td>
+      <td>0.95</td>
+      <td>2.67</td>
+      <td>-0.03</td>
+      <td>-0.02</td>
+      <td>-0.02</td>
+      <td>-0.03</td>
+      <td>0.00</td>
+      <td>-0.02</td>
+      <td>...</td>
+      <td>0.08</td>
+      <td>NaN</td>
+      <td>0.09</td>
+      <td>NaN</td>
+      <td>0.10</td>
+      <td>NaN</td>
+      <td>0.09</td>
+      <td>NaN</td>
+      <td>0.11</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>2026-04-28</th>
-      <td>-0.0049</td>
-      <td>-0.0100</td>
-      <td>-0.0056</td>
-      <td>-0.0101</td>
-      <td>-0.0053</td>
-      <td>-0.0117</td>
-      <td>-0.0026</td>
-      <td>-0.0076</td>
-      <td>-0.0041</td>
-      <td>-0.0102</td>
-      <td>-0.0052</td>
-      <td>-0.0006</td>
-      <td>-0.0009</td>
-      <td>0.0010</td>
-      <td>-0.0004</td>
-      <td>-0.0186</td>
-      <td>0.0140</td>
-      <td>0.0090</td>
-      <td>-0.0131</td>
-      <td>-0.0059</td>
+      <th>2026-06-08</th>
+      <td>0.87</td>
+      <td>0.85</td>
+      <td>0.95</td>
+      <td>2.67</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.01</td>
+      <td>0.00</td>
+      <td>-0.00</td>
+      <td>0.00</td>
+      <td>...</td>
+      <td>0.05</td>
+      <td>NaN</td>
+      <td>0.07</td>
+      <td>NaN</td>
+      <td>0.09</td>
+      <td>NaN</td>
+      <td>0.08</td>
+      <td>NaN</td>
+      <td>0.11</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>2026-04-29</th>
-      <td>-0.0001</td>
-      <td>-0.0075</td>
-      <td>-0.0078</td>
-      <td>0.0061</td>
-      <td>-0.0005</td>
-      <td>-0.0067</td>
-      <td>-0.0000</td>
-      <td>-0.0023</td>
-      <td>-0.0102</td>
-      <td>-0.0048</td>
-      <td>-0.0116</td>
-      <td>-0.0013</td>
-      <td>-0.0047</td>
-      <td>-0.0078</td>
-      <td>-0.0044</td>
-      <td>-0.0107</td>
-      <td>0.0366</td>
-      <td>-0.0083</td>
-      <td>-0.0075</td>
-      <td>-0.0157</td>
+      <th>2026-06-09</th>
+      <td>0.86</td>
+      <td>0.84</td>
+      <td>0.95</td>
+      <td>2.65</td>
+      <td>-0.00</td>
+      <td>0.01</td>
+      <td>0.01</td>
+      <td>-0.00</td>
+      <td>-0.02</td>
+      <td>0.01</td>
+      <td>...</td>
+      <td>0.06</td>
+      <td>NaN</td>
+      <td>0.07</td>
+      <td>NaN</td>
+      <td>0.09</td>
+      <td>NaN</td>
+      <td>0.09</td>
+      <td>NaN</td>
+      <td>0.12</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>2026-04-30</th>
-      <td>0.0100</td>
-      <td>0.0168</td>
-      <td>0.0176</td>
-      <td>0.0093</td>
-      <td>0.0102</td>
-      <td>0.0216</td>
-      <td>0.0184</td>
-      <td>0.0040</td>
-      <td>0.0239</td>
-      <td>0.0207</td>
-      <td>0.0239</td>
-      <td>0.0011</td>
-      <td>0.0019</td>
-      <td>-0.0009</td>
-      <td>0.0014</td>
-      <td>0.0150</td>
-      <td>-0.0049</td>
-      <td>0.0171</td>
-      <td>0.0070</td>
-      <td>0.0013</td>
+      <th>2026-06-10</th>
+      <td>0.86</td>
+      <td>0.84</td>
+      <td>0.95</td>
+      <td>2.65</td>
+      <td>-0.02</td>
+      <td>-0.01</td>
+      <td>-0.01</td>
+      <td>-0.02</td>
+      <td>0.02</td>
+      <td>-0.01</td>
+      <td>...</td>
+      <td>0.05</td>
+      <td>NaN</td>
+      <td>0.07</td>
+      <td>NaN</td>
+      <td>0.08</td>
+      <td>NaN</td>
+      <td>0.08</td>
+      <td>NaN</td>
+      <td>0.12</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>2026-05-01</th>
+      <th>2026-06-11</th>
+      <td>0.86</td>
+      <td>0.84</td>
+      <td>0.95</td>
+      <td>2.65</td>
+      <td>0.02</td>
+      <td>0.03</td>
+      <td>0.02</td>
+      <td>0.02</td>
       <td>NaN</td>
+      <td>0.03</td>
+      <td>...</td>
+      <td>0.06</td>
       <td>NaN</td>
+      <td>0.08</td>
       <td>NaN</td>
+      <td>0.11</td>
       <td>NaN</td>
+      <td>0.13</td>
       <td>NaN</td>
+      <td>0.17</td>
       <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>0.0246</td>
-      <td>0.0172</td>
     </tr>
   </tbody>
 </table>
-<p>8151 rows × 20 columns</p>
+<p>4941 rows × 49 columns</p>
 </div>
 
 
@@ -4901,16 +4979,16 @@ display(us_sp_etfs)
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>IVV_IJH_1mo</th>
-      <th>IVV_IJR_1mo</th>
-      <th>IJH_IJR_1mo</th>
+      <th>IVV_IJH_3m</th>
+      <th>IVV_IJR_3m</th>
+      <th>IJH_IJR_3m</th>
       <th>total_correlation</th>
-      <th>total_correlation_pct_change</th>
       <th>IVV_Daily_Return</th>
       <th>IJH_Daily_Return</th>
       <th>IJR_Daily_Return</th>
-      <th>total_correlation_pct_change_5d_cum</th>
-      <th>IVV_Daily_Return_5d_cum</th>
+      <th>IVV_Daily_Return_1d_CRR</th>
+      <th>IVV_Daily_Return_fwd_1d_CRR</th>
+      <th>IJH_Daily_Return_1d_CRR</th>
       <th>...</th>
       <th>total_correlation_5d_ma</th>
       <th>total_correlation_diff_5d</th>
@@ -4950,17 +5028,17 @@ display(us_sp_etfs)
   </thead>
   <tbody>
     <tr>
-      <th>2006-08-21</th>
-      <td>0.9585</td>
-      <td>0.9301</td>
-      <td>0.9665</td>
-      <td>2.8552</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <th>2006-10-19</th>
+      <td>0.92</td>
+      <td>0.90</td>
+      <td>0.96</td>
+      <td>2.78</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -4974,17 +5052,17 @@ display(us_sp_etfs)
       <td>NaN</td>
     </tr>
     <tr>
-      <th>2006-08-22</th>
-      <td>0.9403</td>
-      <td>0.9066</td>
-      <td>0.9564</td>
-      <td>2.8034</td>
-      <td>-0.0181</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <th>2006-10-20</th>
+      <td>0.90</td>
+      <td>0.89</td>
+      <td>0.96</td>
+      <td>2.75</td>
+      <td>0.00</td>
+      <td>-0.01</td>
+      <td>-0.01</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>-0.01</td>
       <td>...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -4998,17 +5076,17 @@ display(us_sp_etfs)
       <td>NaN</td>
     </tr>
     <tr>
-      <th>2006-08-23</th>
-      <td>0.9462</td>
-      <td>0.9109</td>
-      <td>0.9574</td>
-      <td>2.8144</td>
-      <td>0.0040</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <th>2006-10-23</th>
+      <td>0.90</td>
+      <td>0.89</td>
+      <td>0.96</td>
+      <td>2.74</td>
+      <td>0.00</td>
+      <td>0.01</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.01</td>
       <td>...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -5022,17 +5100,17 @@ display(us_sp_etfs)
       <td>NaN</td>
     </tr>
     <tr>
-      <th>2006-08-24</th>
-      <td>0.9442</td>
-      <td>0.9206</td>
-      <td>0.9623</td>
-      <td>2.8271</td>
-      <td>0.0045</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <th>2006-10-24</th>
+      <td>0.90</td>
+      <td>0.89</td>
+      <td>0.96</td>
+      <td>2.75</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
       <td>...</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -5046,20 +5124,20 @@ display(us_sp_etfs)
       <td>NaN</td>
     </tr>
     <tr>
-      <th>2006-08-25</th>
-      <td>0.9515</td>
-      <td>0.9257</td>
-      <td>0.9578</td>
-      <td>2.8350</td>
-      <td>0.0028</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <th>2006-10-25</th>
+      <td>0.90</td>
+      <td>0.89</td>
+      <td>0.96</td>
+      <td>2.75</td>
+      <td>0.00</td>
+      <td>0.01</td>
+      <td>0.01</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.01</td>
       <td>...</td>
-      <td>2.8270</td>
-      <td>0.0080</td>
+      <td>2.75</td>
+      <td>-0.00</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -5094,128 +5172,128 @@ display(us_sp_etfs)
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-04-24</th>
-      <td>0.8906</td>
-      <td>0.9159</td>
-      <td>0.9755</td>
-      <td>2.7820</td>
-      <td>-0.0001</td>
-      <td>0.0078</td>
-      <td>0.0021</td>
-      <td>0.0054</td>
-      <td>-0.0104</td>
-      <td>0.0055</td>
+      <th>2026-06-05</th>
+      <td>0.87</td>
+      <td>0.85</td>
+      <td>0.95</td>
+      <td>2.67</td>
+      <td>-0.03</td>
+      <td>-0.02</td>
+      <td>-0.02</td>
+      <td>-0.03</td>
+      <td>0.00</td>
+      <td>-0.02</td>
       <td>...</td>
-      <td>2.7798</td>
-      <td>0.0021</td>
-      <td>2.8053</td>
-      <td>-0.0234</td>
-      <td>2.8245</td>
-      <td>-0.0426</td>
-      <td>2.8094</td>
-      <td>-0.0275</td>
-      <td>2.7801</td>
-      <td>0.0019</td>
+      <td>2.68</td>
+      <td>-0.01</td>
+      <td>2.68</td>
+      <td>-0.01</td>
+      <td>2.69</td>
+      <td>-0.02</td>
+      <td>2.68</td>
+      <td>-0.01</td>
+      <td>2.69</td>
+      <td>-0.02</td>
     </tr>
     <tr>
-      <th>2026-04-27</th>
-      <td>0.8768</td>
-      <td>0.9120</td>
-      <td>0.9730</td>
-      <td>2.7618</td>
-      <td>-0.0073</td>
-      <td>0.0017</td>
-      <td>0.0007</td>
-      <td>0.0019</td>
-      <td>-0.0156</td>
-      <td>0.0090</td>
+      <th>2026-06-08</th>
+      <td>0.87</td>
+      <td>0.85</td>
+      <td>0.95</td>
+      <td>2.67</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.01</td>
+      <td>0.00</td>
+      <td>-0.00</td>
+      <td>0.00</td>
       <td>...</td>
-      <td>2.7711</td>
-      <td>-0.0093</td>
-      <td>2.7948</td>
-      <td>-0.0331</td>
-      <td>2.8195</td>
-      <td>-0.0577</td>
-      <td>2.8125</td>
-      <td>-0.0507</td>
-      <td>2.7837</td>
-      <td>-0.0220</td>
+      <td>2.68</td>
+      <td>-0.01</td>
+      <td>2.68</td>
+      <td>-0.01</td>
+      <td>2.68</td>
+      <td>-0.01</td>
+      <td>2.68</td>
+      <td>-0.01</td>
+      <td>2.69</td>
+      <td>-0.02</td>
     </tr>
     <tr>
-      <th>2026-04-28</th>
-      <td>0.8601</td>
-      <td>0.8967</td>
-      <td>0.9685</td>
-      <td>2.7253</td>
-      <td>-0.0132</td>
-      <td>-0.0049</td>
-      <td>-0.0100</td>
-      <td>-0.0056</td>
-      <td>-0.0223</td>
-      <td>0.0109</td>
+      <th>2026-06-09</th>
+      <td>0.86</td>
+      <td>0.84</td>
+      <td>0.95</td>
+      <td>2.65</td>
+      <td>-0.00</td>
+      <td>0.01</td>
+      <td>0.01</td>
+      <td>-0.00</td>
+      <td>-0.02</td>
+      <td>0.01</td>
       <td>...</td>
-      <td>2.7587</td>
-      <td>-0.0334</td>
-      <td>2.7828</td>
-      <td>-0.0575</td>
-      <td>2.8115</td>
-      <td>-0.0862</td>
-      <td>2.8131</td>
-      <td>-0.0878</td>
-      <td>2.7847</td>
-      <td>-0.0594</td>
+      <td>2.67</td>
+      <td>-0.02</td>
+      <td>2.68</td>
+      <td>-0.03</td>
+      <td>2.68</td>
+      <td>-0.03</td>
+      <td>2.68</td>
+      <td>-0.03</td>
+      <td>2.69</td>
+      <td>-0.03</td>
     </tr>
     <tr>
-      <th>2026-04-29</th>
-      <td>0.8529</td>
-      <td>0.8854</td>
-      <td>0.9677</td>
-      <td>2.7060</td>
-      <td>-0.0071</td>
-      <td>-0.0001</td>
-      <td>-0.0075</td>
-      <td>-0.0078</td>
-      <td>-0.0132</td>
-      <td>0.0005</td>
+      <th>2026-06-10</th>
+      <td>0.86</td>
+      <td>0.84</td>
+      <td>0.95</td>
+      <td>2.65</td>
+      <td>-0.02</td>
+      <td>-0.01</td>
+      <td>-0.01</td>
+      <td>-0.02</td>
+      <td>0.02</td>
+      <td>-0.01</td>
       <td>...</td>
-      <td>2.7514</td>
-      <td>-0.0455</td>
-      <td>2.7723</td>
-      <td>-0.0663</td>
-      <td>2.7999</td>
-      <td>-0.0939</td>
-      <td>2.8087</td>
-      <td>-0.1027</td>
-      <td>2.7871</td>
-      <td>-0.0811</td>
+      <td>2.66</td>
+      <td>-0.01</td>
+      <td>2.68</td>
+      <td>-0.02</td>
+      <td>2.68</td>
+      <td>-0.03</td>
+      <td>2.68</td>
+      <td>-0.03</td>
+      <td>2.68</td>
+      <td>-0.03</td>
     </tr>
     <tr>
-      <th>2026-04-30</th>
-      <td>0.7845</td>
-      <td>0.8284</td>
-      <td>0.9588</td>
-      <td>2.5717</td>
-      <td>-0.0496</td>
-      <td>0.0100</td>
-      <td>0.0168</td>
-      <td>0.0176</td>
-      <td>-0.0757</td>
-      <td>0.0145</td>
+      <th>2026-06-11</th>
+      <td>0.86</td>
+      <td>0.84</td>
+      <td>0.95</td>
+      <td>2.65</td>
+      <td>0.02</td>
+      <td>0.03</td>
+      <td>0.02</td>
+      <td>0.02</td>
+      <td>NaN</td>
+      <td>0.03</td>
       <td>...</td>
-      <td>2.7093</td>
-      <td>-0.1376</td>
-      <td>2.7475</td>
-      <td>-0.1758</td>
-      <td>2.7795</td>
-      <td>-0.2077</td>
-      <td>2.7973</td>
-      <td>-0.2255</td>
-      <td>2.7842</td>
-      <td>-0.2124</td>
+      <td>2.66</td>
+      <td>-0.01</td>
+      <td>2.67</td>
+      <td>-0.02</td>
+      <td>2.68</td>
+      <td>-0.03</td>
+      <td>2.68</td>
+      <td>-0.03</td>
+      <td>2.68</td>
+      <td>-0.03</td>
     </tr>
   </tbody>
 </table>
-<p>4954 rows × 38 columns</p>
+<p>4941 rows × 59 columns</p>
 </div>
 
 
@@ -5245,16 +5323,16 @@ us_sp_etfs[(us_sp_etfs.index >= "2020-01-01") & (us_sp_etfs.index <= "2021-01-01
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>IVV_IJH_1mo</th>
-      <th>IVV_IJR_1mo</th>
-      <th>IJH_IJR_1mo</th>
+      <th>IVV_IJH_3m</th>
+      <th>IVV_IJR_3m</th>
+      <th>IJH_IJR_3m</th>
       <th>total_correlation</th>
-      <th>total_correlation_pct_change</th>
       <th>IVV_Daily_Return</th>
       <th>IJH_Daily_Return</th>
       <th>IJR_Daily_Return</th>
-      <th>total_correlation_pct_change_5d_cum</th>
-      <th>IVV_Daily_Return_5d_cum</th>
+      <th>IVV_Daily_Return_1d_CRR</th>
+      <th>IVV_Daily_Return_fwd_1d_CRR</th>
+      <th>IJH_Daily_Return_1d_CRR</th>
       <th>...</th>
       <th>total_correlation_5d_ma</th>
       <th>total_correlation_diff_5d</th>
@@ -5295,123 +5373,123 @@ us_sp_etfs[(us_sp_etfs.index >= "2020-01-01") & (us_sp_etfs.index <= "2021-01-01
   <tbody>
     <tr>
       <th>2020-01-02</th>
-      <td>0.8117</td>
-      <td>0.5723</td>
-      <td>0.8445</td>
-      <td>2.2285</td>
-      <td>-0.1028</td>
-      <td>0.0095</td>
-      <td>0.0015</td>
-      <td>0.0007</td>
-      <td>-0.1177</td>
-      <td>0.0114</td>
+      <td>0.86</td>
+      <td>0.73</td>
+      <td>0.90</td>
+      <td>2.49</td>
+      <td>0.01</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.01</td>
+      <td>-0.01</td>
+      <td>0.00</td>
       <td>...</td>
-      <td>2.4506</td>
-      <td>-0.2221</td>
-      <td>2.5055</td>
-      <td>-0.2770</td>
-      <td>2.5434</td>
-      <td>-0.3150</td>
-      <td>2.5487</td>
-      <td>-0.3202</td>
-      <td>2.5495</td>
-      <td>-0.3210</td>
+      <td>2.55</td>
+      <td>-0.06</td>
+      <td>2.58</td>
+      <td>-0.09</td>
+      <td>2.59</td>
+      <td>-0.10</td>
+      <td>2.59</td>
+      <td>-0.10</td>
+      <td>2.58</td>
+      <td>-0.10</td>
     </tr>
     <tr>
       <th>2020-01-03</th>
-      <td>0.8043</td>
-      <td>0.5143</td>
-      <td>0.8195</td>
-      <td>2.1381</td>
-      <td>-0.0405</td>
-      <td>-0.0077</td>
-      <td>-0.0050</td>
-      <td>-0.0006</td>
-      <td>-0.1507</td>
-      <td>-0.0016</td>
+      <td>0.86</td>
+      <td>0.73</td>
+      <td>0.90</td>
+      <td>2.49</td>
+      <td>-0.01</td>
+      <td>-0.01</td>
+      <td>-0.00</td>
+      <td>-0.01</td>
+      <td>0.00</td>
+      <td>-0.01</td>
       <td>...</td>
-      <td>2.3747</td>
-      <td>-0.2366</td>
-      <td>2.4589</td>
-      <td>-0.3207</td>
-      <td>2.5130</td>
-      <td>-0.3748</td>
-      <td>2.5311</td>
-      <td>-0.3930</td>
-      <td>2.5343</td>
-      <td>-0.3961</td>
+      <td>2.53</td>
+      <td>-0.04</td>
+      <td>2.56</td>
+      <td>-0.08</td>
+      <td>2.58</td>
+      <td>-0.10</td>
+      <td>2.58</td>
+      <td>-0.10</td>
+      <td>2.58</td>
+      <td>-0.09</td>
     </tr>
     <tr>
       <th>2020-01-06</th>
-      <td>0.7826</td>
-      <td>0.4706</td>
-      <td>0.8061</td>
-      <td>2.0593</td>
-      <td>-0.0369</td>
-      <td>0.0040</td>
-      <td>-0.0003</td>
-      <td>-0.0010</td>
-      <td>-0.1875</td>
-      <td>0.0026</td>
+      <td>0.85</td>
+      <td>0.72</td>
+      <td>0.89</td>
+      <td>2.47</td>
+      <td>0.00</td>
+      <td>-0.00</td>
+      <td>-0.00</td>
+      <td>0.00</td>
+      <td>-0.00</td>
+      <td>-0.00</td>
       <td>...</td>
-      <td>2.2797</td>
-      <td>-0.2204</td>
-      <td>2.4043</td>
-      <td>-0.3451</td>
-      <td>2.4742</td>
-      <td>-0.4150</td>
-      <td>2.5081</td>
-      <td>-0.4489</td>
-      <td>2.5143</td>
-      <td>-0.4550</td>
+      <td>2.51</td>
+      <td>-0.04</td>
+      <td>2.55</td>
+      <td>-0.08</td>
+      <td>2.57</td>
+      <td>-0.10</td>
+      <td>2.58</td>
+      <td>-0.11</td>
+      <td>2.58</td>
+      <td>-0.10</td>
     </tr>
     <tr>
       <th>2020-01-07</th>
-      <td>0.7916</td>
-      <td>0.5078</td>
-      <td>0.8126</td>
-      <td>2.1120</td>
-      <td>0.0256</td>
-      <td>-0.0027</td>
-      <td>-0.0026</td>
-      <td>-0.0057</td>
-      <td>-0.1514</td>
-      <td>0.0052</td>
+      <td>0.85</td>
+      <td>0.73</td>
+      <td>0.90</td>
+      <td>2.48</td>
+      <td>-0.00</td>
+      <td>-0.00</td>
+      <td>-0.01</td>
+      <td>-0.00</td>
+      <td>0.01</td>
+      <td>-0.00</td>
       <td>...</td>
-      <td>2.2043</td>
-      <td>-0.0923</td>
-      <td>2.3618</td>
-      <td>-0.2498</td>
-      <td>2.4396</td>
-      <td>-0.3277</td>
-      <td>2.4837</td>
-      <td>-0.3717</td>
-      <td>2.4940</td>
-      <td>-0.3821</td>
+      <td>2.49</td>
+      <td>-0.01</td>
+      <td>2.54</td>
+      <td>-0.06</td>
+      <td>2.56</td>
+      <td>-0.08</td>
+      <td>2.58</td>
+      <td>-0.10</td>
+      <td>2.57</td>
+      <td>-0.09</td>
     </tr>
     <tr>
       <th>2020-01-08</th>
-      <td>0.7544</td>
-      <td>0.4078</td>
-      <td>0.7530</td>
-      <td>1.9152</td>
-      <td>-0.0932</td>
-      <td>0.0051</td>
-      <td>0.0016</td>
-      <td>0.0022</td>
-      <td>-0.2289</td>
-      <td>0.0081</td>
+      <td>0.82</td>
+      <td>0.69</td>
+      <td>0.89</td>
+      <td>2.39</td>
+      <td>0.01</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.01</td>
+      <td>0.01</td>
+      <td>0.00</td>
       <td>...</td>
-      <td>2.0906</td>
-      <td>-0.1754</td>
-      <td>2.3003</td>
-      <td>-0.3851</td>
-      <td>2.3920</td>
-      <td>-0.4769</td>
-      <td>2.4491</td>
-      <td>-0.5339</td>
-      <td>2.4668</td>
-      <td>-0.5516</td>
+      <td>2.46</td>
+      <td>-0.07</td>
+      <td>2.52</td>
+      <td>-0.13</td>
+      <td>2.55</td>
+      <td>-0.16</td>
+      <td>2.57</td>
+      <td>-0.18</td>
+      <td>2.56</td>
+      <td>-0.17</td>
     </tr>
     <tr>
       <th>...</th>
@@ -5439,127 +5517,127 @@ us_sp_etfs[(us_sp_etfs.index >= "2020-01-01") & (us_sp_etfs.index <= "2021-01-01
     </tr>
     <tr>
       <th>2020-12-24</th>
-      <td>0.8284</td>
-      <td>0.7455</td>
-      <td>0.9679</td>
-      <td>2.5418</td>
-      <td>-0.0276</td>
-      <td>0.0039</td>
-      <td>0.0016</td>
-      <td>0.0009</td>
-      <td>-0.0390</td>
-      <td>-0.0044</td>
+      <td>0.82</td>
+      <td>0.73</td>
+      <td>0.96</td>
+      <td>2.51</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.01</td>
+      <td>0.00</td>
       <td>...</td>
-      <td>2.6042</td>
-      <td>-0.0624</td>
-      <td>2.6308</td>
-      <td>-0.0889</td>
-      <td>2.6132</td>
-      <td>-0.0714</td>
-      <td>2.5459</td>
-      <td>-0.0040</td>
-      <td>2.5405</td>
-      <td>0.0014</td>
+      <td>2.52</td>
+      <td>-0.01</td>
+      <td>2.53</td>
+      <td>-0.02</td>
+      <td>2.54</td>
+      <td>-0.03</td>
+      <td>2.55</td>
+      <td>-0.04</td>
+      <td>2.56</td>
+      <td>-0.05</td>
     </tr>
     <tr>
       <th>2020-12-28</th>
-      <td>0.7470</td>
-      <td>0.7170</td>
-      <td>0.9549</td>
-      <td>2.4188</td>
-      <td>-0.0484</td>
-      <td>0.0087</td>
-      <td>-0.0028</td>
-      <td>0.0038</td>
-      <td>-0.0745</td>
-      <td>0.0082</td>
+      <td>0.80</td>
+      <td>0.71</td>
+      <td>0.96</td>
+      <td>2.47</td>
+      <td>0.01</td>
+      <td>-0.00</td>
+      <td>0.00</td>
+      <td>0.01</td>
+      <td>-0.00</td>
+      <td>-0.00</td>
       <td>...</td>
-      <td>2.5653</td>
-      <td>-0.1465</td>
-      <td>2.6026</td>
-      <td>-0.1838</td>
-      <td>2.6015</td>
-      <td>-0.1827</td>
-      <td>2.5488</td>
-      <td>-0.1300</td>
-      <td>2.5360</td>
-      <td>-0.1172</td>
+      <td>2.51</td>
+      <td>-0.03</td>
+      <td>2.53</td>
+      <td>-0.05</td>
+      <td>2.53</td>
+      <td>-0.06</td>
+      <td>2.54</td>
+      <td>-0.07</td>
+      <td>2.55</td>
+      <td>-0.08</td>
     </tr>
     <tr>
       <th>2020-12-29</th>
-      <td>0.7477</td>
-      <td>0.7148</td>
-      <td>0.9585</td>
-      <td>2.4210</td>
-      <td>0.0009</td>
-      <td>-0.0019</td>
-      <td>-0.0103</td>
-      <td>-0.0171</td>
-      <td>-0.0775</td>
-      <td>0.0096</td>
+      <td>0.80</td>
+      <td>0.71</td>
+      <td>0.96</td>
+      <td>2.46</td>
+      <td>-0.00</td>
+      <td>-0.01</td>
+      <td>-0.02</td>
+      <td>-0.00</td>
+      <td>0.00</td>
+      <td>-0.01</td>
       <td>...</td>
-      <td>2.5246</td>
-      <td>-0.1036</td>
-      <td>2.5777</td>
-      <td>-0.1568</td>
-      <td>2.5916</td>
-      <td>-0.1707</td>
-      <td>2.5505</td>
-      <td>-0.1295</td>
-      <td>2.5316</td>
-      <td>-0.1106</td>
+      <td>2.49</td>
+      <td>-0.03</td>
+      <td>2.52</td>
+      <td>-0.05</td>
+      <td>2.53</td>
+      <td>-0.06</td>
+      <td>2.54</td>
+      <td>-0.07</td>
+      <td>2.55</td>
+      <td>-0.08</td>
     </tr>
     <tr>
       <th>2020-12-30</th>
-      <td>0.7293</td>
-      <td>0.6992</td>
-      <td>0.9490</td>
-      <td>2.3774</td>
-      <td>-0.0180</td>
-      <td>0.0013</td>
-      <td>0.0087</td>
-      <td>0.0101</td>
-      <td>-0.0951</td>
-      <td>0.0129</td>
+      <td>0.80</td>
+      <td>0.71</td>
+      <td>0.96</td>
+      <td>2.47</td>
+      <td>0.00</td>
+      <td>0.01</td>
+      <td>0.01</td>
+      <td>0.00</td>
+      <td>0.01</td>
+      <td>0.01</td>
       <td>...</td>
-      <td>2.4746</td>
-      <td>-0.0972</td>
-      <td>2.5487</td>
-      <td>-0.1713</td>
-      <td>2.5785</td>
-      <td>-0.2011</td>
-      <td>2.5519</td>
-      <td>-0.1745</td>
-      <td>2.5254</td>
-      <td>-0.1480</td>
+      <td>2.48</td>
+      <td>-0.02</td>
+      <td>2.51</td>
+      <td>-0.04</td>
+      <td>2.52</td>
+      <td>-0.05</td>
+      <td>2.53</td>
+      <td>-0.07</td>
+      <td>2.55</td>
+      <td>-0.08</td>
     </tr>
     <tr>
       <th>2020-12-31</th>
-      <td>0.6849</td>
-      <td>0.6787</td>
-      <td>0.9511</td>
-      <td>2.3146</td>
-      <td>-0.0264</td>
-      <td>0.0056</td>
-      <td>0.0008</td>
-      <td>0.0015</td>
-      <td>-0.1146</td>
-      <td>0.0176</td>
+      <td>0.79</td>
+      <td>0.71</td>
+      <td>0.96</td>
+      <td>2.46</td>
+      <td>0.01</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.01</td>
+      <td>-0.01</td>
+      <td>0.00</td>
       <td>...</td>
-      <td>2.4147</td>
-      <td>-0.1001</td>
-      <td>2.5198</td>
-      <td>-0.2052</td>
-      <td>2.5643</td>
-      <td>-0.2497</td>
-      <td>2.5508</td>
-      <td>-0.2362</td>
-      <td>2.5180</td>
-      <td>-0.2034</td>
+      <td>2.47</td>
+      <td>-0.02</td>
+      <td>2.50</td>
+      <td>-0.04</td>
+      <td>2.52</td>
+      <td>-0.06</td>
+      <td>2.53</td>
+      <td>-0.07</td>
+      <td>2.54</td>
+      <td>-0.08</td>
     </tr>
   </tbody>
 </table>
-<p>253 rows × 38 columns</p>
+<p>253 rows × 59 columns</p>
 </div>
 
 
@@ -5575,6 +5653,7 @@ plot_time_series(
     x_label="Date",
     x_format="Year",
     x_tick_spacing=1,
+    x_tick_start=None,
     x_tick_rotation=30,
     y_label="Correlation",
     y_format="Decimal",
@@ -5590,7 +5669,7 @@ plot_time_series(
 
 
     
-![png](asset-class-return-correlations_files/asset-class-return-correlations_47_0.png)
+![png](asset-class-return-correlations_files/asset-class-return-correlations_40_0.png)
     
 
 
@@ -5694,7 +5773,7 @@ fund_data_daily_returns_all
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>0.0049</td>
+      <td>0.00</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -5717,7 +5796,7 @@ fund_data_daily_returns_all
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>-0.0244</td>
+      <td>-0.02</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -5740,7 +5819,7 @@ fund_data_daily_returns_all
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>0.0287</td>
+      <td>0.03</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -5763,7 +5842,7 @@ fund_data_daily_returns_all
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>0.0085</td>
+      <td>0.01</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -5805,99 +5884,99 @@ fund_data_daily_returns_all
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-04-27</th>
-      <td>0.0017</td>
-      <td>0.0007</td>
-      <td>0.0019</td>
-      <td>0.0005</td>
-      <td>0.0011</td>
-      <td>0.0018</td>
-      <td>0.0001</td>
-      <td>0.0017</td>
-      <td>-0.0038</td>
-      <td>-0.0016</td>
-      <td>-0.0052</td>
-      <td>-0.0002</td>
-      <td>-0.0023</td>
-      <td>-0.0050</td>
-      <td>-0.0015</td>
-      <td>-0.0078</td>
-      <td>0.0092</td>
-      <td>-0.0057</td>
-      <td>-0.0164</td>
-      <td>-0.0281</td>
+      <th>2026-06-09</th>
+      <td>-0.00</td>
+      <td>0.01</td>
+      <td>0.01</td>
+      <td>-0.01</td>
+      <td>-0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>-0.01</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.01</td>
+      <td>0.00</td>
+      <td>-0.02</td>
+      <td>-0.02</td>
+      <td>0.02</td>
+      <td>-0.02</td>
+      <td>-0.03</td>
     </tr>
     <tr>
-      <th>2026-04-28</th>
-      <td>-0.0049</td>
-      <td>-0.0100</td>
-      <td>-0.0056</td>
-      <td>-0.0101</td>
-      <td>-0.0053</td>
-      <td>-0.0117</td>
-      <td>-0.0026</td>
-      <td>-0.0076</td>
-      <td>-0.0041</td>
-      <td>-0.0102</td>
-      <td>-0.0052</td>
-      <td>-0.0006</td>
-      <td>-0.0009</td>
-      <td>0.0010</td>
-      <td>-0.0004</td>
-      <td>-0.0186</td>
-      <td>0.0140</td>
-      <td>0.0090</td>
-      <td>-0.0131</td>
-      <td>-0.0059</td>
+      <th>2026-06-10</th>
+      <td>-0.02</td>
+      <td>-0.01</td>
+      <td>-0.01</td>
+      <td>-0.02</td>
+      <td>-0.02</td>
+      <td>-0.01</td>
+      <td>-0.01</td>
+      <td>-0.02</td>
+      <td>-0.01</td>
+      <td>-0.02</td>
+      <td>-0.01</td>
+      <td>0.00</td>
+      <td>-0.00</td>
+      <td>-0.00</td>
+      <td>-0.00</td>
+      <td>-0.04</td>
+      <td>0.01</td>
+      <td>0.00</td>
+      <td>-0.00</td>
+      <td>-0.01</td>
     </tr>
     <tr>
-      <th>2026-04-29</th>
-      <td>-0.0001</td>
-      <td>-0.0075</td>
-      <td>-0.0078</td>
-      <td>0.0061</td>
-      <td>-0.0005</td>
-      <td>-0.0067</td>
-      <td>-0.0000</td>
-      <td>-0.0023</td>
-      <td>-0.0102</td>
-      <td>-0.0048</td>
-      <td>-0.0116</td>
-      <td>-0.0013</td>
-      <td>-0.0047</td>
-      <td>-0.0078</td>
-      <td>-0.0044</td>
-      <td>-0.0107</td>
-      <td>0.0366</td>
-      <td>-0.0083</td>
-      <td>-0.0075</td>
-      <td>-0.0157</td>
+      <th>2026-06-11</th>
+      <td>0.02</td>
+      <td>0.03</td>
+      <td>0.02</td>
+      <td>0.03</td>
+      <td>0.02</td>
+      <td>0.03</td>
+      <td>0.02</td>
+      <td>0.02</td>
+      <td>0.03</td>
+      <td>0.04</td>
+      <td>0.03</td>
+      <td>0.00</td>
+      <td>0.01</td>
+      <td>0.01</td>
+      <td>0.01</td>
+      <td>0.03</td>
+      <td>-0.02</td>
+      <td>-0.00</td>
+      <td>0.03</td>
+      <td>0.03</td>
     </tr>
     <tr>
-      <th>2026-04-30</th>
-      <td>0.0100</td>
-      <td>0.0168</td>
-      <td>0.0176</td>
-      <td>0.0093</td>
-      <td>0.0102</td>
-      <td>0.0216</td>
-      <td>0.0184</td>
-      <td>0.0040</td>
-      <td>0.0239</td>
-      <td>0.0207</td>
-      <td>0.0239</td>
-      <td>0.0011</td>
-      <td>0.0019</td>
-      <td>-0.0009</td>
-      <td>0.0014</td>
-      <td>0.0150</td>
-      <td>-0.0049</td>
-      <td>0.0171</td>
-      <td>0.0070</td>
-      <td>0.0013</td>
+      <th>2026-06-12</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>-0.00</td>
+      <td>-0.00</td>
     </tr>
     <tr>
-      <th>2026-05-01</th>
+      <th>2026-06-13</th>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -5916,12 +5995,12 @@ fund_data_daily_returns_all
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>0.0246</td>
-      <td>0.0172</td>
+      <td>0.01</td>
+      <td>0.01</td>
     </tr>
   </tbody>
 </table>
-<p>8151 rows × 20 columns</p>
+<p>8194 rows × 20 columns</p>
 </div>
 
 
@@ -5939,6 +6018,7 @@ for ticker in us_equity_tickers:
         x_label="Date",
         x_format="Year",
         x_tick_spacing=1,
+        x_tick_start=None,
         x_tick_rotation=30,
         y_label="Price ($)",
         y_format="Decimal",
@@ -5954,35 +6034,33 @@ for ticker in us_equity_tickers:
 
 
     
-![png](asset-class-return-correlations_files/asset-class-return-correlations_49_0.png)
+![png](asset-class-return-correlations_files/asset-class-return-correlations_42_0.png)
     
 
 
 
     
-![png](asset-class-return-correlations_files/asset-class-return-correlations_49_1.png)
+![png](asset-class-return-correlations_files/asset-class-return-correlations_42_1.png)
     
 
 
 
     
-![png](asset-class-return-correlations_files/asset-class-return-correlations_49_2.png)
+![png](asset-class-return-correlations_files/asset-class-return-correlations_42_2.png)
     
 
 
 
     
-![png](asset-class-return-correlations_files/asset-class-return-correlations_49_3.png)
+![png](asset-class-return-correlations_files/asset-class-return-correlations_42_3.png)
     
 
 
 
     
-![png](asset-class-return-correlations_files/asset-class-return-correlations_49_4.png)
+![png](asset-class-return-correlations_files/asset-class-return-correlations_42_4.png)
     
 
-
-Now that we have the plots, we can proceed with an analysis of the rolling correlations and attempt to tie the changes in the rolling correlations to specific market events (e.g. the 2008 financial crisis, the COVID-19 pandemic, etc.) or broader market trends. Essentially, we want to find out if there are any interesting market trends or regimes that are precipitated by changes in the rolling correlations between asset classes. It's a common belief that correlations between assets classes increase (go towards 1) during times of market stress, so we will be looking to see if this is the case and if so does this change in correlation in any way predict market returns.
 
 ## Future Investigation
 
