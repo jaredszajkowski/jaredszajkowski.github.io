@@ -12,6 +12,7 @@ topics: [
     "Arch Linux",
     "Python",
     "Pip",
+    "uv",
 ]
 ---
 ## Python Module Management
@@ -89,6 +90,18 @@ pip will then install all the required package and module versions based on the 
 ## Maintaining Across Multiple Systems
 
 To avoid having to redundantly install modules on different systems, after I make a change to the virtual environment I can zip the entire `~/python-virtual-envs/` directory (or any of the individual directories of the virtual environments) and upload the zip file to Dropbox. This takes only a few minutes, and if I am working on a different system can simply extract the archive and have a completely up-to-date and current virtual environment to work in.
+
+## UV
+
+I've recently started using the `uv` tool - but not for managing virtual environments, but updating Python packages installed via pip. Quite simply, it is much faster than native `pip` for installing and updating packages.
+
+To install a packagege, run the following command:
+
+    $ uv pip install <module-name>
+
+To update all packages in a virtual environment, simply run the following command:
+
+    $ uv pip install --upgrade -r requirements.txt
 
 ## References
 
