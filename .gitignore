@@ -94,7 +94,7 @@ target/
 *.blg
 *.fdb_latexmk
 *.fls
-*.log
+# *.log
 *.out
 *.nav
 *.pdfsync
@@ -206,7 +206,7 @@ vignettes/*.pdf
 *.graphml
 *.gz
 *.ini
-*.log
+# *.log
 *.out
 *.vrb
 *.xdv
