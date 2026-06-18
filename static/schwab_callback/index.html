@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Schwab OAuth Code</title>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const code = params.get("code");
+        document.write("<h1>Authorization Code:</h1><p>" + code + "</p>");
+    </script>
+</head>
+<body></body>
+</html>
