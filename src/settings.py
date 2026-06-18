@@ -82,6 +82,7 @@ defaults = {
     "POSTS_DIR": if_relative_make_abs(BASE_DIR / "content/posts"),
     "PAGES_DIR": if_relative_make_abs(BASE_DIR / "content/pages"),
     "PUBLIC_DIR": if_relative_make_abs(BASE_DIR / "public"),
+    "STATIC_DIR": if_relative_make_abs(BASE_DIR / "static"),
     "SOURCE_DIR": if_relative_make_abs(BASE_DIR / "src"),
     "DATA_DIR": if_relative_make_abs(WEBSITES_DIR / "Data"),
     "DATA_MANUAL_DIR": if_relative_make_abs(WEBSITES_DIR / "Data_Manual"),
