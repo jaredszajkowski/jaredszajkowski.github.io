@@ -82,6 +82,7 @@ CONTENT_DIR = config("CONTENT_DIR")
 POSTS_DIR = config("POSTS_DIR")
 PAGES_DIR = config("PAGES_DIR")
 PUBLIC_DIR = config("PUBLIC_DIR")
+STATIC_DIR = config("STATIC_DIR")
 SOURCE_DIR = config("SOURCE_DIR")
 DATA_DIR = config("DATA_DIR")
 DATA_MANUAL_DIR = config("DATA_MANUAL_DIR")
@@ -361,9 +362,9 @@ def task_copy_notebook_exports():
             # target_path = public_path / f"{slug}.html"
 
             # New functionality to ignore date and just use slug
-            # Format path like: public/posts/slug/
+            # Format path like: static/posts/slug/
             date_obj = datetime.fromisoformat(date_str)
-            public_path = PUBLIC_DIR / "posts" / slug
+            public_path = STATIC_DIR / "posts" / slug
             target_path = public_path / f"{slug}.html"
 
             def copy_html(src=html_file, dest=target_path):
@@ -382,9 +383,9 @@ def task_copy_notebook_exports():
             }
 
 def task_copy_projects_research_exports():
-    """Copy all HTML files from the projects-research page to the Hugo public/ folder"""
+    """Copy all HTML files from the projects-research page to the Hugo static/ folder"""
     src_dir = PAGES_DIR / "projects-research"
-    dest_dir = PUBLIC_DIR / "projects-research"
+    dest_dir = STATIC_DIR / "projects-research"
 
     html_files = list(src_dir.glob("*.html"))
     if not html_files:
@@ -407,9 +408,9 @@ def task_copy_projects_research_exports():
     }
 
 def task_create_schwab_callback():
-    """Create a Schwab callback URL by creating /public/schwab_callback/index.html and placing the html code in it"""
+    """Create a Schwab callback URL by creating /static/schwab_callback/index.html and placing the html code in it"""
     def create_callback():
-        callback_path = PUBLIC_DIR / "schwab_callback" / "index.html"
+        callback_path = STATIC_DIR / "schwab_callback" / "index.html"
         callback_path.parent.mkdir(parents=True, exist_ok=True)
         html = """<!DOCTYPE html>
 <html lang="en">
