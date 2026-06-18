@@ -142,35 +142,41 @@ bond_tickers = ["SHY", "IEF", "TLT", "AGG"]
 commodity_tickers = ["GLD", "GSG"]
 real_estate_tickers = ["IYR"]
 cryptoasset_tickers = ["BTC-USD", "ETH-USD"]
-etf_tickers = us_equity_tickers + intl_equity_tickers + bond_tickers + commodity_tickers + real_estate_tickers
+etf_tickers = (
+    us_equity_tickers
+    + intl_equity_tickers
+    + bond_tickers
+    + commodity_tickers
+    + real_estate_tickers
+)
 tickers_dict = {
-    "IVV" : "Large Cap US Stocks / S&P 500 -- IVV (iShares S&P 500 ETF)",
-    "IJH" : "Mid Cap US Stocks / S&P MidCap 400 -- IJH (iShares S&P MidCap 400 ETF)",
-    "IJR" : "Small Cap US Stocks / S&P SmallCap 600 -- IJR (iShares S&P SmallCap 600 ETF)",
-    "QQQ" : "US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)",
-    "IWB" : "Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)",
-    "IWM" : "Small Cap US Stocks -- IWM (iShares Russell 2000 ETF)",
-    "IWD" : "Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)",
-    "IWF" : "Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)",
-    "EFA" : "International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)",
-    "EEM" : "Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)",
-    "IEV" : "European Stocks -- IEV (iShares S&P Europe 350 ETF)",
-    "SHY" : "Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)",
-    "IEF" : "Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)",
-    "TLT" : "Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)",
-    "AGG" : "Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)",
-    "GLD" : "Gold -- GLD (SPDR Gold Shares)",
-    "GSG" : "Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)",
-    "IYR" : "Real Estate -- IYR (iShares U.S. Real Estate ETF)",
-    "BTC-USD" : "Bitcoin -- BTC-USD (Bitcoin USD)",
-    "ETH-USD" : "Ethereum -- ETH-USD (Ethereum USD)",
+    "IVV": "Large Cap US Stocks / S&P 500 -- IVV (iShares S&P 500 ETF)",
+    "IJH": "Mid Cap US Stocks / S&P MidCap 400 -- IJH (iShares S&P MidCap 400 ETF)",
+    "IJR": "Small Cap US Stocks / S&P SmallCap 600 -- IJR (iShares S&P SmallCap 600 ETF)",
+    "QQQ": "US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)",
+    "IWB": "Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)",
+    "IWM": "Small Cap US Stocks -- IWM (iShares Russell 2000 ETF)",
+    "IWD": "Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)",
+    "IWF": "Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)",
+    "EFA": "International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)",
+    "EEM": "Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)",
+    "IEV": "European Stocks -- IEV (iShares S&P Europe 350 ETF)",
+    "SHY": "Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)",
+    "IEF": "Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)",
+    "TLT": "Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)",
+    "AGG": "Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)",
+    "GLD": "Gold -- GLD (SPDR Gold Shares)",
+    "GSG": "Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)",
+    "IYR": "Real Estate -- IYR (iShares U.S. Real Estate ETF)",
+    "BTC-USD": "Bitcoin -- BTC-USD (Bitcoin USD)",
+    "ETH-USD": "Ethereum -- ETH-USD (Ethereum USD)",
 }
 ```
 
 
 ```python
 for ticker in etf_tickers:
-     yf_pull_data(
+    yf_pull_data(
         base_directory=DATA_DIR,
         ticker=ticker,
         adjusted=False,
@@ -182,7 +188,7 @@ for ticker in etf_tickers:
     )
 
 for ticker in cryptoasset_tickers:
-     yf_pull_data(
+    yf_pull_data(
         base_directory=DATA_DIR,
         ticker=ticker,
         adjusted=False,
@@ -191,7 +197,7 @@ for ticker in cryptoasset_tickers:
         excel_export=True,
         pickle_export=True,
         output_confirmation=False,
-     )
+    )
 ```
 
 We'll then peform the following:
@@ -216,14 +222,16 @@ for ticker in etf_tickers:
     )
 
     # Rename columns to "QQQ_Close", etc.
-    data = data.rename(columns={
-        "Adj Close": f"{ticker}_Adj_Close",
-        "Close": f"{ticker}_Close",
-        "High": f"{ticker}_High",
-        "Low": f"{ticker}_Low",
-        "Open": f"{ticker}_Open",
-        "Volume": f"{ticker}_Volume"
-    })
+    data = data.rename(
+        columns={
+            "Adj Close": f"{ticker}_Adj_Close",
+            "Close": f"{ticker}_Close",
+            "High": f"{ticker}_High",
+            "Low": f"{ticker}_Low",
+            "Open": f"{ticker}_Open",
+            "Volume": f"{ticker}_Volume",
+        }
+    )
 
     # Drop all columns except for the adjusted close price and date index
     data = data[[f"{ticker}_Adj_Close"]]
@@ -245,14 +253,16 @@ for ticker in cryptoasset_tickers:
     )
 
     # Rename columns to "BTC-USD_Close", etc.
-    data = data.rename(columns={
-        "Adj Close": f"{ticker}_Adj_Close",
-        "Close": f"{ticker}_Close",
-        "High": f"{ticker}_High",
-        "Low": f"{ticker}_Low",
-        "Open": f"{ticker}_Open",
-        "Volume": f"{ticker}_Volume"
-    })
+    data = data.rename(
+        columns={
+            "Adj Close": f"{ticker}_Adj_Close",
+            "Close": f"{ticker}_Close",
+            "High": f"{ticker}_High",
+            "Low": f"{ticker}_Low",
+            "Open": f"{ticker}_Open",
+            "Volume": f"{ticker}_Volume",
+        }
+    )
 
     # Drop all columns except for the adjusted close price and date index
     data = data[[f"{ticker}_Adj_Close"]]
@@ -478,96 +488,24 @@ display(fund_data)
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-06-09</th>
-      <td>740.75</td>
-      <td>-0.00</td>
-      <td>74.73</td>
-      <td>0.01</td>
-      <td>139.89</td>
-      <td>0.01</td>
-      <td>707.83</td>
-      <td>-0.01</td>
-      <td>403.11</td>
-      <td>-0.00</td>
-      <td>...</td>
-      <td>390.78</td>
-      <td>-0.02</td>
-      <td>31.24</td>
-      <td>-0.02</td>
-      <td>103.49</td>
-      <td>0.02</td>
-      <td>61643.78</td>
-      <td>-0.02</td>
-      <td>1637.71</td>
-      <td>-0.03</td>
-    </tr>
-    <tr>
-      <th>2026-06-10</th>
-      <td>728.92</td>
-      <td>-0.02</td>
-      <td>73.65</td>
-      <td>-0.01</td>
-      <td>138.90</td>
-      <td>-0.01</td>
-      <td>693.69</td>
-      <td>-0.02</td>
-      <td>396.80</td>
-      <td>-0.02</td>
-      <td>...</td>
-      <td>374.58</td>
-      <td>-0.04</td>
-      <td>31.46</td>
-      <td>0.01</td>
-      <td>103.52</td>
-      <td>0.00</td>
-      <td>61449.29</td>
-      <td>-0.00</td>
-      <td>1620.14</td>
-      <td>-0.01</td>
-    </tr>
-    <tr>
-      <th>2026-06-11</th>
-      <td>741.05</td>
-      <td>0.02</td>
-      <td>75.50</td>
-      <td>0.03</td>
-      <td>142.29</td>
-      <td>0.02</td>
-      <td>717.12</td>
-      <td>0.03</td>
-      <td>403.53</td>
-      <td>0.02</td>
-      <td>...</td>
-      <td>386.32</td>
-      <td>0.03</td>
-      <td>30.96</td>
-      <td>-0.02</td>
-      <td>103.45</td>
-      <td>-0.00</td>
-      <td>63561.05</td>
-      <td>0.03</td>
-      <td>1672.28</td>
-      <td>0.03</td>
-    </tr>
-    <tr>
       <th>2026-06-12</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>743.14</td>
+      <td>0.01</td>
+      <td>75.85</td>
+      <td>0.01</td>
+      <td>143.24</td>
+      <td>0.01</td>
+      <td>721.34</td>
+      <td>0.01</td>
+      <td>404.77</td>
+      <td>0.01</td>
       <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>386.54</td>
+      <td>0.00</td>
+      <td>30.58</td>
+      <td>-0.01</td>
+      <td>103.86</td>
+      <td>0.01</td>
       <td>63543.20</td>
       <td>-0.00</td>
       <td>1665.13</td>
@@ -597,9 +535,81 @@ display(fund_data)
       <td>1680.21</td>
       <td>0.01</td>
     </tr>
+    <tr>
+      <th>2026-06-14</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>65710.40</td>
+      <td>0.02</td>
+      <td>1724.61</td>
+      <td>0.03</td>
+    </tr>
+    <tr>
+      <th>2026-06-15</th>
+      <td>756.35</td>
+      <td>0.02</td>
+      <td>76.16</td>
+      <td>0.00</td>
+      <td>143.39</td>
+      <td>0.00</td>
+      <td>744.00</td>
+      <td>0.03</td>
+      <td>411.73</td>
+      <td>0.02</td>
+      <td>...</td>
+      <td>396.55</td>
+      <td>0.03</td>
+      <td>30.13</td>
+      <td>-0.01</td>
+      <td>103.08</td>
+      <td>-0.01</td>
+      <td>66289.50</td>
+      <td>0.01</td>
+      <td>1794.96</td>
+      <td>0.04</td>
+    </tr>
+    <tr>
+      <th>2026-06-16</th>
+      <td>752.01</td>
+      <td>-0.01</td>
+      <td>75.93</td>
+      <td>-0.00</td>
+      <td>142.62</td>
+      <td>-0.01</td>
+      <td>729.86</td>
+      <td>-0.02</td>
+      <td>409.23</td>
+      <td>-0.01</td>
+      <td>...</td>
+      <td>397.63</td>
+      <td>0.00</td>
+      <td>29.66</td>
+      <td>-0.02</td>
+      <td>103.34</td>
+      <td>0.00</td>
+      <td>65600.64</td>
+      <td>-0.01</td>
+      <td>1790.40</td>
+      <td>-0.00</td>
+    </tr>
   </tbody>
 </table>
-<p>8194 rows × 40 columns</p>
+<p>8197 rows × 40 columns</p>
 </div>
 
 
@@ -611,7 +621,7 @@ We'll then plot the time series of the adjusted close prices for each of the ass
 all_tickers = etf_tickers + cryptoasset_tickers
 
 for ticker in tickers_dict.keys():
-     plot_time_series(
+    plot_time_series(
         df=fund_data,
         plot_start_date=None,
         plot_end_date=None,
@@ -765,11 +775,17 @@ daily_return_columns = [f"{ticker}_Daily_Return" for ticker in tickers_dict.keys
 fund_data_daily_returns_all = fund_data[daily_return_columns]
 
 # Drop the BTC and ETH daily return columns due to the limited history
-fund_data_daily_returns_no_crypto = fund_data_daily_returns_all.drop(columns=["BTC-USD_Daily_Return", "ETH-USD_Daily_Return"])
+fund_data_daily_returns_no_crypto = fund_data_daily_returns_all.drop(
+    columns=["BTC-USD_Daily_Return", "ETH-USD_Daily_Return"]
+)
 
 # Print the shape of the fund_data_daily_returns_no_crypto DataFrame to confirm that the rows with missing data have been dropped
-print(f"Shape of fund_data_daily_returns_no_crypto: {fund_data_daily_returns_no_crypto.shape}")
-print(f"Rows to drop due to missing data: {fund_data_daily_returns_no_crypto.dropna().shape}")
+print(
+    f"Shape of fund_data_daily_returns_no_crypto: {fund_data_daily_returns_no_crypto.shape}"
+)
+print(
+    f"Rows to drop due to missing data: {fund_data_daily_returns_no_crypto.dropna().shape}"
+)
 
 # Drop the NaN values
 fund_data_daily_returns_no_crypto = fund_data_daily_returns_no_crypto.dropna()
@@ -780,8 +796,8 @@ correlation_matrix_no_crypto = fund_data_daily_returns_no_crypto.corr()
 display(correlation_matrix_no_crypto)
 ```
 
-    Shape of fund_data_daily_returns_no_crypto: (8194, 18)
-    Rows to drop due to missing data: (5003, 18)
+    Shape of fund_data_daily_returns_no_crypto: (8197, 18)
+    Rows to drop due to missing data: (5006, 18)
 
 
 
@@ -856,7 +872,7 @@ display(correlation_matrix_no_crypto)
       <td>0.94</td>
       <td>0.88</td>
       <td>0.85</td>
-      <td>0.79</td>
+      <td>0.78</td>
       <td>0.83</td>
       <td>-0.21</td>
       <td>-0.29</td>
@@ -1016,7 +1032,7 @@ display(correlation_matrix_no_crypto)
     <tr>
       <th>EEM_Daily_Return</th>
       <td>0.82</td>
-      <td>0.79</td>
+      <td>0.78</td>
       <td>0.73</td>
       <td>0.76</td>
       <td>0.82</td>
@@ -1240,8 +1256,8 @@ correlation_matrix = fund_data_daily_returns.corr()
 display(correlation_matrix)
 ```
 
-    Shape of fund_data_daily_returns: (8194, 20)
-    Rows to drop due to missing data: (2156, 20)
+    Shape of fund_data_daily_returns: (8197, 20)
+    Rows to drop due to missing data: (2159, 20)
 
 
 
@@ -1314,7 +1330,7 @@ display(correlation_matrix)
       <td>0.90</td>
       <td>1.00</td>
       <td>0.96</td>
-      <td>0.78</td>
+      <td>0.77</td>
       <td>0.91</td>
       <td>0.96</td>
       <td>0.94</td>
@@ -1358,7 +1374,7 @@ display(correlation_matrix)
     <tr>
       <th>QQQ_Daily_Return</th>
       <td>0.94</td>
-      <td>0.78</td>
+      <td>0.77</td>
       <td>0.71</td>
       <td>1.00</td>
       <td>0.94</td>
@@ -1412,7 +1428,7 @@ display(correlation_matrix)
       <td>0.89</td>
       <td>0.79</td>
       <td>0.80</td>
-      <td>0.71</td>
+      <td>0.70</td>
       <td>0.78</td>
       <td>-0.02</td>
       <td>-0.08</td>
@@ -1441,7 +1457,7 @@ display(correlation_matrix)
       <td>-0.14</td>
       <td>-0.18</td>
       <td>0.12</td>
-      <td>0.10</td>
+      <td>0.11</td>
       <td>0.34</td>
       <td>0.80</td>
       <td>0.26</td>
@@ -1466,7 +1482,7 @@ display(correlation_matrix)
       <td>0.15</td>
       <td>0.11</td>
       <td>0.24</td>
-      <td>0.64</td>
+      <td>0.63</td>
       <td>0.31</td>
       <td>0.34</td>
     </tr>
@@ -1488,7 +1504,7 @@ display(correlation_matrix)
       <td>-0.09</td>
       <td>0.21</td>
       <td>0.24</td>
-      <td>0.29</td>
+      <td>0.28</td>
       <td>0.69</td>
       <td>0.29</td>
       <td>0.32</td>
@@ -1500,7 +1516,7 @@ display(correlation_matrix)
       <td>0.67</td>
       <td>0.73</td>
       <td>0.76</td>
-      <td>0.71</td>
+      <td>0.70</td>
       <td>0.71</td>
       <td>0.73</td>
       <td>0.83</td>
@@ -1639,7 +1655,7 @@ display(correlation_matrix)
       <td>0.13</td>
       <td>0.12</td>
       <td>0.12</td>
-      <td>0.10</td>
+      <td>0.11</td>
       <td>0.11</td>
       <td>0.24</td>
       <td>0.26</td>
@@ -1664,7 +1680,7 @@ display(correlation_matrix)
       <td>0.30</td>
       <td>0.34</td>
       <td>0.24</td>
-      <td>0.29</td>
+      <td>0.28</td>
       <td>0.28</td>
       <td>0.28</td>
       <td>-0.12</td>
@@ -1686,7 +1702,7 @@ display(correlation_matrix)
       <td>0.74</td>
       <td>0.73</td>
       <td>0.80</td>
-      <td>0.64</td>
+      <td>0.63</td>
       <td>0.69</td>
       <td>0.54</td>
       <td>0.68</td>
@@ -1783,15 +1799,15 @@ These are interesting results, but expected. The stock funds tend to have low co
 ```python
 # Define rolling windows in trading days
 rolling_windows = {
-    '3d': 3,      # 3 days (~3 trading days)
-    '1w': 5,      # 1 week (~5 trading days)
-    '2w': 10,     # 2 weeks (~10 trading days)
-    '1m': 21,     # 1 month (~21 trading days)
-    '3m': 63,     # 3 months (~63 trading days)
-    '6m': 126,    # 6 months (~126 trading days)
-    '1y': 252,    # 1 year (~252 trading days)
-    '5y': 1260,   # 5 years (~1260 trading days)
-    '10y': 2520,  # 10 years (~2520 trading days)
+    "3d": 3,  # 3 days (~3 trading days)
+    "1w": 5,  # 1 week (~5 trading days)
+    "2w": 10,  # 2 weeks (~10 trading days)
+    "1m": 21,  # 1 month (~21 trading days)
+    "3m": 63,  # 3 months (~63 trading days)
+    "6m": 126,  # 6 months (~126 trading days)
+    "1y": 252,  # 1 year (~252 trading days)
+    "5y": 1260,  # 5 years (~1260 trading days)
+    "10y": 2520,  # 10 years (~2520 trading days)
 }
 ```
 
@@ -1802,7 +1818,11 @@ Before we run all of these, let's take a quick look at each of the rolling windo
 temp_df = fund_data_daily_returns_all[["IVV_Daily_Return", "IJH_Daily_Return"]].dropna()
 
 for window_name, window_size in rolling_windows.items():
-    rolling_corr = temp_df["IVV_Daily_Return"].rolling(window=window_size).corr(temp_df["IJH_Daily_Return"])
+    rolling_corr = (
+        temp_df["IVV_Daily_Return"]
+        .rolling(window=window_size)
+        .corr(temp_df["IJH_Daily_Return"])
+    )
 
     print(tickers_dict["IVV"])
     print(tickers_dict["IJH"])
@@ -1920,7 +1940,7 @@ for window_name, window_size in rolling_windows.items():
     
 
 
-Need to update 
+Need to update
 
 <!-- Some inital thoughts here:
 * The 1 month and 3 month rolling windows are very noisy... it's going to be difficult to capture any kinds of meaningful trends with these short rolling windows - and these short-term movements are not the point of our investigation here.
@@ -1938,11 +1958,11 @@ We are essentially looking to capture market movements over the months-to-years 
 ```python
 # Define rolling windows in trading days
 rolling_windows = {
-    '3d': 3,      # 3 days (~3 trading days)
-    '1w': 5,      # 1 week (~5 trading days)
-    '2w': 10,     # 2 weeks (~10 trading days)
-    '1m': 21,     # 1 month (~21 trading days)
-    '3m': 63,     # 3 months (~63 trading days)
+    "3d": 3,  # 3 days (~3 trading days)
+    "1w": 5,  # 1 week (~5 trading days)
+    "2w": 10,  # 2 weeks (~10 trading days)
+    "1m": 21,  # 1 month (~21 trading days)
+    "3m": 63,  # 3 months (~63 trading days)
 }
 ```
 
@@ -1960,23 +1980,39 @@ rolling_correlation_results_no_crypto_df = pd.DataFrame()
 
 for ticker1, ticker2 in pairs:
     try:
-        temp_df = fund_data_daily_returns_no_crypto[[f"{ticker1}_Daily_Return", f"{ticker2}_Daily_Return"]].dropna()
+        temp_df = fund_data_daily_returns_no_crypto[
+            [f"{ticker1}_Daily_Return", f"{ticker2}_Daily_Return"]
+        ].dropna()
     except Exception as e:
         print(f"Error creating temp_df for {ticker1} and {ticker2}: {e}")
         continue
-        
+
     for window_name, window_size in rolling_windows.items():
         try:
-            rolling_corr = temp_df[f"{ticker1}_Daily_Return"].rolling(window=window_size).corr(temp_df[f"{ticker2}_Daily_Return"])
+            rolling_corr = (
+                temp_df[f"{ticker1}_Daily_Return"]
+                .rolling(window=window_size)
+                .corr(temp_df[f"{ticker2}_Daily_Return"])
+            )
 
             print(tickers_dict[f"{ticker1}"])
             print(tickers_dict[f"{ticker2}"])
 
-            rolling_correlation_results_no_crypto_dict[f"{ticker1}_{ticker2}_{window_name}"] = rolling_corr
-            rolling_correlation_results_no_crypto_df = pd.concat([rolling_correlation_results_no_crypto_df, rolling_corr.to_frame(name=f"{ticker1}_{ticker2}_{window_name}")], axis=1)
+            rolling_correlation_results_no_crypto_dict[
+                f"{ticker1}_{ticker2}_{window_name}"
+            ] = rolling_corr
+            rolling_correlation_results_no_crypto_df = pd.concat(
+                [
+                    rolling_correlation_results_no_crypto_df,
+                    rolling_corr.to_frame(name=f"{ticker1}_{ticker2}_{window_name}"),
+                ],
+                axis=1,
+            )
 
         except Exception as e:
-            print(f"Error calculating rolling correlation for {ticker1} and {ticker2} with window {window_name}: {e}")
+            print(
+                f"Error calculating rolling correlation for {ticker1} and {ticker2} with window {window_name}: {e}"
+            )
 ```
 
     Large Cap US Stocks / S&P 500 -- IVV (iShares S&P 500 ETF)
@@ -2161,8 +2197,6 @@ for ticker1, ticker2 in pairs:
     Small Cap US Stocks / S&P SmallCap 600 -- IJR (iShares S&P SmallCap 600 ETF)
     Mid Cap US Stocks / S&P MidCap 400 -- IJH (iShares S&P MidCap 400 ETF)
     Small Cap US Stocks / S&P SmallCap 600 -- IJR (iShares S&P SmallCap 600 ETF)
-
-
     Mid Cap US Stocks / S&P MidCap 400 -- IJH (iShares S&P MidCap 400 ETF)
     US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)
     Mid Cap US Stocks / S&P MidCap 400 -- IJH (iShares S&P MidCap 400 ETF)
@@ -2175,6 +2209,8 @@ for ticker1, ticker2 in pairs:
     US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)
     Mid Cap US Stocks / S&P MidCap 400 -- IJH (iShares S&P MidCap 400 ETF)
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
+
+
     Mid Cap US Stocks / S&P MidCap 400 -- IJH (iShares S&P MidCap 400 ETF)
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
     Mid Cap US Stocks / S&P MidCap 400 -- IJH (iShares S&P MidCap 400 ETF)
@@ -2327,8 +2363,6 @@ for ticker1, ticker2 in pairs:
     US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)
     Small Cap US Stocks / S&P SmallCap 600 -- IJR (iShares S&P SmallCap 600 ETF)
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
-
-
     Small Cap US Stocks / S&P SmallCap 600 -- IJR (iShares S&P SmallCap 600 ETF)
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
     Small Cap US Stocks / S&P SmallCap 600 -- IJR (iShares S&P SmallCap 600 ETF)
@@ -2351,6 +2385,8 @@ for ticker1, ticker2 in pairs:
     Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)
     Small Cap US Stocks / S&P SmallCap 600 -- IJR (iShares S&P SmallCap 600 ETF)
     Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)
+
+
     Small Cap US Stocks / S&P SmallCap 600 -- IJR (iShares S&P SmallCap 600 ETF)
     Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)
     Small Cap US Stocks / S&P SmallCap 600 -- IJR (iShares S&P SmallCap 600 ETF)
@@ -2473,8 +2509,6 @@ for ticker1, ticker2 in pairs:
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
     US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
-
-
     US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
     US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)
@@ -2505,6 +2539,8 @@ for ticker1, ticker2 in pairs:
     Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)
     US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)
     Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)
+
+
     US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)
     Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)
     US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)
@@ -2605,8 +2641,6 @@ for ticker1, ticker2 in pairs:
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
     US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
-
-
     US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
     US Tech Stocks / Nasdaq 100 -- QQQ (Invesco QQQ Trust, Series 1)
@@ -2629,8 +2663,6 @@ for ticker1, ticker2 in pairs:
     Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
     Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)
-
-
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
     Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
@@ -2651,6 +2683,8 @@ for ticker1, ticker2 in pairs:
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
+
+
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
@@ -2699,6 +2733,8 @@ for ticker1, ticker2 in pairs:
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
+
+
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
@@ -2739,8 +2775,6 @@ for ticker1, ticker2 in pairs:
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
-
-
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
     Large & Mid Cap US Stocks -- IWB (iShares Russell 1000 ETF)
@@ -2823,6 +2857,8 @@ for ticker1, ticker2 in pairs:
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
     Small Cap US Stocks -- IWM (iShares Russell 2000 ETF)
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
+
+
     Small Cap US Stocks -- IWM (iShares Russell 2000 ETF)
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
     Small Cap US Stocks -- IWM (iShares Russell 2000 ETF)
@@ -2853,8 +2889,6 @@ for ticker1, ticker2 in pairs:
     Gold -- GLD (SPDR Gold Shares)
     Small Cap US Stocks -- IWM (iShares Russell 2000 ETF)
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
-
-
     Small Cap US Stocks -- IWM (iShares Russell 2000 ETF)
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
     Small Cap US Stocks -- IWM (iShares Russell 2000 ETF)
@@ -2947,6 +2981,8 @@ for ticker1, ticker2 in pairs:
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
     Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
+
+
     Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)
@@ -2959,8 +2995,6 @@ for ticker1, ticker2 in pairs:
     Gold -- GLD (SPDR Gold Shares)
     Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)
     Gold -- GLD (SPDR Gold Shares)
-
-
     Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)
     Gold -- GLD (SPDR Gold Shares)
     Large & Mid Cap US Value Stocks -- IWD (iShares Russell 1000 Value ETF)
@@ -3053,12 +3087,12 @@ for ticker1, ticker2 in pairs:
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
-
-
     Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
+
+
     Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     Large & Mid Cap US Growth Stocks -- IWF (iShares Russell 1000 Growth ETF)
@@ -3139,8 +3173,6 @@ for ticker1, ticker2 in pairs:
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
-
-
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
@@ -3151,13 +3183,13 @@ for ticker1, ticker2 in pairs:
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
+    International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
+    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
 
 
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
-    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
-    International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
     Gold -- GLD (SPDR Gold Shares)
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
     Gold -- GLD (SPDR Gold Shares)
@@ -3175,6 +3207,8 @@ for ticker1, ticker2 in pairs:
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
+
+
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
     International Developed Market Stocks -- EFA (iShares MSCI EAFE ETF)
@@ -3229,8 +3263,6 @@ for ticker1, ticker2 in pairs:
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
     Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
-
-
     Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
@@ -3263,6 +3295,8 @@ for ticker1, ticker2 in pairs:
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
     Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
+
+
     Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
     Emerging Market Stocks -- EEM (iShares MSCI Emerging Markets ETF)
@@ -3309,8 +3343,6 @@ for ticker1, ticker2 in pairs:
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     European Stocks -- IEV (iShares S&P Europe 350 ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
-
-
     European Stocks -- IEV (iShares S&P Europe 350 ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     European Stocks -- IEV (iShares S&P Europe 350 ETF)
@@ -3351,42 +3383,42 @@ for ticker1, ticker2 in pairs:
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
     Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
-    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
-    Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
-    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
-    Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
-    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
-    Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
-    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
-    Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
-    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
-    Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
-    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
-    Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
-    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
-    Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
-    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
-    Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
-    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
-    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
-    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
-    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
-    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
-    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
-    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
-    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
-    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
-    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
-    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
-    Gold -- GLD (SPDR Gold Shares)
-    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
-    Gold -- GLD (SPDR Gold Shares)
-    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
-    Gold -- GLD (SPDR Gold Shares)
-    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
-    Gold -- GLD (SPDR Gold Shares)
 
 
+    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
+    Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
+    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
+    Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
+    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
+    Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
+    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
+    Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
+    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
+    Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
+    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
+    Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
+    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
+    Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
+    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
+    Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
+    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
+    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
+    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
+    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
+    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
+    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
+    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
+    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
+    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
+    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
+    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
+    Gold -- GLD (SPDR Gold Shares)
+    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
+    Gold -- GLD (SPDR Gold Shares)
+    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
+    Gold -- GLD (SPDR Gold Shares)
+    Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
+    Gold -- GLD (SPDR Gold Shares)
     Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
     Gold -- GLD (SPDR Gold Shares)
     Short-Term US Treasuries -- SHY (iShares 1-3 Year Treasury Bond ETF)
@@ -3425,19 +3457,19 @@ for ticker1, ticker2 in pairs:
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
+    Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
+    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
+    Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
+    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
+    Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
+    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
+    Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
+    Gold -- GLD (SPDR Gold Shares)
+    Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
+    Gold -- GLD (SPDR Gold Shares)
 
 
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
-    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
-    Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
-    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
-    Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
-    Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
-    Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
-    Gold -- GLD (SPDR Gold Shares)
-    Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
-    Gold -- GLD (SPDR Gold Shares)
-    Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
     Gold -- GLD (SPDR Gold Shares)
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
     Gold -- GLD (SPDR Gold Shares)
@@ -3449,6 +3481,8 @@ for ticker1, ticker2 in pairs:
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
+
+
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
     Medium-Term US Treasuries -- IEF (iShares 7-10 Year Treasury Bond ETF)
@@ -3489,8 +3523,6 @@ for ticker1, ticker2 in pairs:
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
-
-
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
     Long-Term US Treasuries -- TLT (iShares 20+ Year Treasury Bond ETF)
@@ -3525,6 +3557,8 @@ for ticker1, ticker2 in pairs:
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
+
+
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
     Aggregate Bonds -- AGG (iShares Core U.S. Aggregate Bond ETF)
@@ -3541,8 +3575,6 @@ for ticker1, ticker2 in pairs:
     Real Estate -- IYR (iShares U.S. Real Estate ETF)
     Error creating temp_df for AGG and BTC-USD: "['BTC-USD_Daily_Return'] not in index"
     Error creating temp_df for AGG and ETH-USD: "['ETH-USD_Daily_Return'] not in index"
-
-
     Gold -- GLD (SPDR Gold Shares)
     Commodities -- GSG (iShares S&P GSCI Commodity-Indexed Trust)
     Gold -- GLD (SPDR Gold Shares)
@@ -3799,78 +3831,6 @@ display(rolling_correlation_results_no_crypto_df)
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-06-05</th>
-      <td>0.98</td>
-      <td>0.92</td>
-      <td>0.86</td>
-      <td>0.81</td>
-      <td>0.87</td>
-      <td>0.94</td>
-      <td>0.90</td>
-      <td>0.79</td>
-      <td>0.77</td>
-      <td>0.85</td>
-      <td>...</td>
-      <td>0.50</td>
-      <td>0.28</td>
-      <td>0.03</td>
-      <td>0.28</td>
-      <td>0.41</td>
-      <td>-0.60</td>
-      <td>-0.82</td>
-      <td>-0.59</td>
-      <td>-0.39</td>
-      <td>-0.43</td>
-    </tr>
-    <tr>
-      <th>2026-06-08</th>
-      <td>1.00</td>
-      <td>0.95</td>
-      <td>0.85</td>
-      <td>0.83</td>
-      <td>0.87</td>
-      <td>0.99</td>
-      <td>0.95</td>
-      <td>0.79</td>
-      <td>0.77</td>
-      <td>0.85</td>
-      <td>...</td>
-      <td>-0.08</td>
-      <td>-0.06</td>
-      <td>-0.04</td>
-      <td>0.24</td>
-      <td>0.39</td>
-      <td>-0.79</td>
-      <td>-0.64</td>
-      <td>-0.62</td>
-      <td>-0.39</td>
-      <td>-0.43</td>
-    </tr>
-    <tr>
-      <th>2026-06-09</th>
-      <td>0.93</td>
-      <td>0.92</td>
-      <td>0.81</td>
-      <td>0.80</td>
-      <td>0.86</td>
-      <td>0.97</td>
-      <td>0.93</td>
-      <td>0.73</td>
-      <td>0.73</td>
-      <td>0.84</td>
-      <td>...</td>
-      <td>-0.55</td>
-      <td>-0.17</td>
-      <td>-0.20</td>
-      <td>0.09</td>
-      <td>0.35</td>
-      <td>-0.74</td>
-      <td>-0.71</td>
-      <td>-0.63</td>
-      <td>-0.43</td>
-      <td>-0.44</td>
-    </tr>
-    <tr>
       <th>2026-06-10</th>
       <td>0.86</td>
       <td>0.93</td>
@@ -3918,9 +3878,81 @@ display(rolling_correlation_results_no_crypto_df)
       <td>-0.50</td>
       <td>-0.41</td>
     </tr>
+    <tr>
+      <th>2026-06-12</th>
+      <td>0.99</td>
+      <td>0.94</td>
+      <td>0.93</td>
+      <td>0.89</td>
+      <td>0.86</td>
+      <td>0.99</td>
+      <td>0.96</td>
+      <td>0.92</td>
+      <td>0.85</td>
+      <td>0.84</td>
+      <td>...</td>
+      <td>-0.00</td>
+      <td>-0.25</td>
+      <td>-0.04</td>
+      <td>0.07</td>
+      <td>0.32</td>
+      <td>-0.28</td>
+      <td>-0.67</td>
+      <td>-0.73</td>
+      <td>-0.53</td>
+      <td>-0.42</td>
+    </tr>
+    <tr>
+      <th>2026-06-15</th>
+      <td>0.30</td>
+      <td>0.77</td>
+      <td>0.86</td>
+      <td>0.84</td>
+      <td>0.85</td>
+      <td>0.07</td>
+      <td>0.62</td>
+      <td>0.80</td>
+      <td>0.77</td>
+      <td>0.82</td>
+      <td>...</td>
+      <td>-0.83</td>
+      <td>-0.42</td>
+      <td>-0.26</td>
+      <td>-0.01</td>
+      <td>0.29</td>
+      <td>0.73</td>
+      <td>-0.23</td>
+      <td>-0.47</td>
+      <td>-0.49</td>
+      <td>-0.40</td>
+    </tr>
+    <tr>
+      <th>2026-06-16</th>
+      <td>0.66</td>
+      <td>0.84</td>
+      <td>0.87</td>
+      <td>0.83</td>
+      <td>0.85</td>
+      <td>0.40</td>
+      <td>0.72</td>
+      <td>0.81</td>
+      <td>0.75</td>
+      <td>0.82</td>
+      <td>...</td>
+      <td>-0.95</td>
+      <td>-0.34</td>
+      <td>-0.27</td>
+      <td>-0.11</td>
+      <td>0.29</td>
+      <td>0.61</td>
+      <td>0.05</td>
+      <td>-0.48</td>
+      <td>-0.46</td>
+      <td>-0.41</td>
+    </tr>
   </tbody>
 </table>
-<p>5003 rows × 765 columns</p>
+<p>5006 rows × 765 columns</p>
 </div>
 
 
@@ -3931,7 +3963,11 @@ for window in rolling_windows.keys():
         df=rolling_correlation_results_no_crypto_df,
         plot_start_date=None,
         plot_end_date=None,
-        plot_columns=[col for col in rolling_correlation_results_no_crypto_df.columns if f"{window}" in col],
+        plot_columns=[
+            col
+            for col in rolling_correlation_results_no_crypto_df.columns
+            if f"{window}" in col
+        ],
         title=f"Rolling {window} Correlation, No Crypto",
         x_label="Date",
         x_format="Year",
@@ -3986,7 +4022,7 @@ We'll now look specifically at the rolling correlations between the US S&P index
 
 
 ```python
-corr_list = [f'IVV_IJH_{window}', f'IVV_IJR_{window}', f'IJH_IJR_{window}']
+corr_list = [f"IVV_IJH_{window}", f"IVV_IJR_{window}", f"IJH_IJR_{window}"]
 
 for window in rolling_windows.keys():
     plot_time_series(
@@ -4061,13 +4097,13 @@ As an attempt to find some kind of signal, let's simply add the three correlatio
 ```python
 # Define rolling windows in trading days
 return_windows = {
-    '1d': 1,      # 1 day (~1 trading day)
-    '3d': 3,      # 3 days (~3 trading days)
-    '1w': 5,      # 1 week (~5 trading days)
-    '2w': 10,     # 2 weeks (~10 trading days)
-    '1m': 21,     # 1 month (~21 trading days)
-    '2m': 42,     # 2 months (~42 trading days)
-    '3m': 63,     # 3 months (~63 trading days)
+    "1d": 1,  # 1 day (~1 trading day)
+    "3d": 3,  # 3 days (~3 trading days)
+    "1w": 5,  # 1 week (~5 trading days)
+    "2w": 10,  # 2 weeks (~10 trading days)
+    "1m": 21,  # 1 month (~21 trading days)
+    "2m": 42,  # 2 months (~42 trading days)
+    "3m": 63,  # 3 months (~63 trading days)
     # '4m': 84,     # 4 months (~84 trading days)
     # '6m': 126,    # 6 months (~126 trading days)
     # '8m': 168,    # 8 months (~168 trading days)
@@ -4084,7 +4120,7 @@ return_windows = {
 
 
 ```python
-corr_list = [f'IVV_IJH_{window}', f'IVV_IJR_{window}', f'IJH_IJR_{window}']
+corr_list = [f"IVV_IJH_{window}", f"IVV_IJR_{window}", f"IJH_IJR_{window}"]
 fund_tickers = ["IVV", "IJH", "IJR"]
 
 for window in rolling_windows.keys():
@@ -4095,10 +4131,12 @@ for window in rolling_windows.keys():
 
     # Merge daily returns into us_sp_etfs for the three ETFs
     us_sp_etfs = us_sp_etfs.merge(
-        fund_data_daily_returns_all[[f"{ft}_Daily_Return" for ft in fund_tickers]].dropna(),
+        fund_data_daily_returns_all[
+            [f"{ft}_Daily_Return" for ft in fund_tickers]
+        ].dropna(),
         left_index=True,
         right_index=True,
-        how="left"
+        how="left",
     )
 
     plot_time_series(
@@ -4125,13 +4163,21 @@ for window in rolling_windows.keys():
 
     for rw in return_windows.keys():
         for ft in fund_tickers:
-            us_sp_etfs[f"{ft}_Daily_Return_{rw}_CRR"] = us_sp_etfs[f"{ft}_Daily_Return"].rolling(window=return_windows[rw]).apply(lambda x: (1 + x).prod() - 1)
-            us_sp_etfs[f"{ft}_Daily_Return_fwd_{rw}_CRR"] = us_sp_etfs[f"{ft}_Daily_Return_{rw}_CRR"].shift(-return_windows[rw])
+            us_sp_etfs[f"{ft}_Daily_Return_{rw}_CRR"] = (
+                us_sp_etfs[f"{ft}_Daily_Return"]
+                .rolling(window=return_windows[rw])
+                .apply(lambda x: (1 + x).prod() - 1)
+            )
+            us_sp_etfs[f"{ft}_Daily_Return_fwd_{rw}_CRR"] = us_sp_etfs[
+                f"{ft}_Daily_Return_{rw}_CRR"
+            ].shift(-return_windows[rw])
 
         plot_scatter(
             df=us_sp_etfs,
             x_plot_column="total_correlation",
-            y_plot_columns=[col for col in us_sp_etfs.columns if f"fwd_{rw}_CRR" in col],
+            y_plot_columns=[
+                col for col in us_sp_etfs.columns if f"fwd_{rw}_CRR" in col
+            ],
             title=f"Rolling {window} Total Correlation vs Future {rw} Cumulative Rolling Return - US Equity ETFs (S&P 500, 400, 600)",
             x_label=f"Rolling {window} Total Correlation",
             x_format="Decimal",
@@ -4838,78 +4884,6 @@ us_sp_etfs
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-06-05</th>
-      <td>0.87</td>
-      <td>0.85</td>
-      <td>0.95</td>
-      <td>2.67</td>
-      <td>-0.03</td>
-      <td>-0.02</td>
-      <td>-0.02</td>
-      <td>-0.03</td>
-      <td>0.00</td>
-      <td>-0.02</td>
-      <td>...</td>
-      <td>0.08</td>
-      <td>NaN</td>
-      <td>0.09</td>
-      <td>NaN</td>
-      <td>0.10</td>
-      <td>NaN</td>
-      <td>0.09</td>
-      <td>NaN</td>
-      <td>0.11</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>2026-06-08</th>
-      <td>0.87</td>
-      <td>0.85</td>
-      <td>0.95</td>
-      <td>2.67</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.01</td>
-      <td>0.00</td>
-      <td>-0.00</td>
-      <td>0.00</td>
-      <td>...</td>
-      <td>0.05</td>
-      <td>NaN</td>
-      <td>0.07</td>
-      <td>NaN</td>
-      <td>0.09</td>
-      <td>NaN</td>
-      <td>0.08</td>
-      <td>NaN</td>
-      <td>0.11</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>2026-06-09</th>
-      <td>0.86</td>
-      <td>0.84</td>
-      <td>0.95</td>
-      <td>2.65</td>
-      <td>-0.00</td>
-      <td>0.01</td>
-      <td>0.01</td>
-      <td>-0.00</td>
-      <td>-0.02</td>
-      <td>0.01</td>
-      <td>...</td>
-      <td>0.06</td>
-      <td>NaN</td>
-      <td>0.07</td>
-      <td>NaN</td>
-      <td>0.09</td>
-      <td>NaN</td>
-      <td>0.09</td>
-      <td>NaN</td>
-      <td>0.12</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
       <th>2026-06-10</th>
       <td>0.86</td>
       <td>0.84</td>
@@ -4943,7 +4917,7 @@ us_sp_etfs
       <td>0.03</td>
       <td>0.02</td>
       <td>0.02</td>
-      <td>NaN</td>
+      <td>0.01</td>
       <td>0.03</td>
       <td>...</td>
       <td>0.06</td>
@@ -4957,9 +4931,81 @@ us_sp_etfs
       <td>0.17</td>
       <td>NaN</td>
     </tr>
+    <tr>
+      <th>2026-06-12</th>
+      <td>0.86</td>
+      <td>0.84</td>
+      <td>0.95</td>
+      <td>2.65</td>
+      <td>0.01</td>
+      <td>0.01</td>
+      <td>0.01</td>
+      <td>0.01</td>
+      <td>0.02</td>
+      <td>0.01</td>
+      <td>...</td>
+      <td>0.06</td>
+      <td>NaN</td>
+      <td>0.08</td>
+      <td>NaN</td>
+      <td>0.12</td>
+      <td>NaN</td>
+      <td>0.14</td>
+      <td>NaN</td>
+      <td>0.18</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2026-06-15</th>
+      <td>0.85</td>
+      <td>0.82</td>
+      <td>0.95</td>
+      <td>2.61</td>
+      <td>0.02</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.02</td>
+      <td>-0.01</td>
+      <td>0.00</td>
+      <td>...</td>
+      <td>0.07</td>
+      <td>NaN</td>
+      <td>0.09</td>
+      <td>NaN</td>
+      <td>0.13</td>
+      <td>NaN</td>
+      <td>0.14</td>
+      <td>NaN</td>
+      <td>0.17</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2026-06-16</th>
+      <td>0.85</td>
+      <td>0.82</td>
+      <td>0.95</td>
+      <td>2.62</td>
+      <td>-0.01</td>
+      <td>-0.00</td>
+      <td>-0.01</td>
+      <td>-0.01</td>
+      <td>NaN</td>
+      <td>-0.00</td>
+      <td>...</td>
+      <td>0.06</td>
+      <td>NaN</td>
+      <td>0.08</td>
+      <td>NaN</td>
+      <td>0.12</td>
+      <td>NaN</td>
+      <td>0.12</td>
+      <td>NaN</td>
+      <td>0.16</td>
+      <td>NaN</td>
+    </tr>
   </tbody>
 </table>
-<p>4941 rows × 49 columns</p>
+<p>4944 rows × 49 columns</p>
 </div>
 
 
@@ -4969,8 +5015,12 @@ us_sp_etfs
 ma_windows = [5, 10, 15, 20, 25]
 
 for window in ma_windows:
-    us_sp_etfs[f"total_correlation_{window}d_ma"] = us_sp_etfs["total_correlation"].rolling(window=window).mean()
-    us_sp_etfs[f"total_correlation_diff_{window}d"] = us_sp_etfs["total_correlation"] - us_sp_etfs[f"total_correlation_{window}d_ma"]
+    us_sp_etfs[f"total_correlation_{window}d_ma"] = (
+        us_sp_etfs["total_correlation"].rolling(window=window).mean()
+    )
+    us_sp_etfs[f"total_correlation_diff_{window}d"] = (
+        us_sp_etfs["total_correlation"] - us_sp_etfs[f"total_correlation_{window}d_ma"]
+    )
 
 display(us_sp_etfs)
 ```
@@ -5187,78 +5237,6 @@ display(us_sp_etfs)
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-06-05</th>
-      <td>0.87</td>
-      <td>0.85</td>
-      <td>0.95</td>
-      <td>2.67</td>
-      <td>-0.03</td>
-      <td>-0.02</td>
-      <td>-0.02</td>
-      <td>-0.03</td>
-      <td>0.00</td>
-      <td>-0.02</td>
-      <td>...</td>
-      <td>2.68</td>
-      <td>-0.01</td>
-      <td>2.68</td>
-      <td>-0.01</td>
-      <td>2.69</td>
-      <td>-0.02</td>
-      <td>2.68</td>
-      <td>-0.01</td>
-      <td>2.69</td>
-      <td>-0.02</td>
-    </tr>
-    <tr>
-      <th>2026-06-08</th>
-      <td>0.87</td>
-      <td>0.85</td>
-      <td>0.95</td>
-      <td>2.67</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.01</td>
-      <td>0.00</td>
-      <td>-0.00</td>
-      <td>0.00</td>
-      <td>...</td>
-      <td>2.68</td>
-      <td>-0.01</td>
-      <td>2.68</td>
-      <td>-0.01</td>
-      <td>2.68</td>
-      <td>-0.01</td>
-      <td>2.68</td>
-      <td>-0.01</td>
-      <td>2.69</td>
-      <td>-0.02</td>
-    </tr>
-    <tr>
-      <th>2026-06-09</th>
-      <td>0.86</td>
-      <td>0.84</td>
-      <td>0.95</td>
-      <td>2.65</td>
-      <td>-0.00</td>
-      <td>0.01</td>
-      <td>0.01</td>
-      <td>-0.00</td>
-      <td>-0.02</td>
-      <td>0.01</td>
-      <td>...</td>
-      <td>2.67</td>
-      <td>-0.02</td>
-      <td>2.68</td>
-      <td>-0.03</td>
-      <td>2.68</td>
-      <td>-0.03</td>
-      <td>2.68</td>
-      <td>-0.03</td>
-      <td>2.69</td>
-      <td>-0.03</td>
-    </tr>
-    <tr>
       <th>2026-06-10</th>
       <td>0.86</td>
       <td>0.84</td>
@@ -5292,7 +5270,7 @@ display(us_sp_etfs)
       <td>0.03</td>
       <td>0.02</td>
       <td>0.02</td>
-      <td>NaN</td>
+      <td>0.01</td>
       <td>0.03</td>
       <td>...</td>
       <td>2.66</td>
@@ -5306,9 +5284,81 @@ display(us_sp_etfs)
       <td>2.68</td>
       <td>-0.03</td>
     </tr>
+    <tr>
+      <th>2026-06-12</th>
+      <td>0.86</td>
+      <td>0.84</td>
+      <td>0.95</td>
+      <td>2.65</td>
+      <td>0.01</td>
+      <td>0.01</td>
+      <td>0.01</td>
+      <td>0.01</td>
+      <td>0.02</td>
+      <td>0.01</td>
+      <td>...</td>
+      <td>2.65</td>
+      <td>-0.00</td>
+      <td>2.67</td>
+      <td>-0.02</td>
+      <td>2.67</td>
+      <td>-0.02</td>
+      <td>2.68</td>
+      <td>-0.03</td>
+      <td>2.68</td>
+      <td>-0.03</td>
+    </tr>
+    <tr>
+      <th>2026-06-15</th>
+      <td>0.85</td>
+      <td>0.82</td>
+      <td>0.95</td>
+      <td>2.61</td>
+      <td>0.02</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.02</td>
+      <td>-0.01</td>
+      <td>0.00</td>
+      <td>...</td>
+      <td>2.64</td>
+      <td>-0.03</td>
+      <td>2.66</td>
+      <td>-0.05</td>
+      <td>2.67</td>
+      <td>-0.06</td>
+      <td>2.67</td>
+      <td>-0.06</td>
+      <td>2.68</td>
+      <td>-0.06</td>
+    </tr>
+    <tr>
+      <th>2026-06-16</th>
+      <td>0.85</td>
+      <td>0.82</td>
+      <td>0.95</td>
+      <td>2.62</td>
+      <td>-0.01</td>
+      <td>-0.00</td>
+      <td>-0.01</td>
+      <td>-0.01</td>
+      <td>NaN</td>
+      <td>-0.00</td>
+      <td>...</td>
+      <td>2.64</td>
+      <td>-0.02</td>
+      <td>2.65</td>
+      <td>-0.03</td>
+      <td>2.66</td>
+      <td>-0.05</td>
+      <td>2.67</td>
+      <td>-0.05</td>
+      <td>2.67</td>
+      <td>-0.05</td>
+    </tr>
   </tbody>
 </table>
-<p>4941 rows × 59 columns</p>
+<p>4944 rows × 59 columns</p>
 </div>
 
 
@@ -5660,10 +5710,16 @@ us_sp_etfs[(us_sp_etfs.index >= "2020-01-01") & (us_sp_etfs.index <= "2021-01-01
 
 ```python
 plot_time_series(
-    df=us_sp_etfs[(us_sp_etfs.index >= "2020-01-01") & (us_sp_etfs.index <= "2021-01-01")],
+    df=us_sp_etfs[
+        (us_sp_etfs.index >= "2020-01-01") & (us_sp_etfs.index <= "2021-01-01")
+    ],
     plot_start_date=None,
     plot_end_date=None,
-    plot_columns=[col for col in us_sp_etfs.columns if "total_correlation" in col and "diff" not in col],
+    plot_columns=[
+        col
+        for col in us_sp_etfs.columns
+        if "total_correlation" in col and "diff" not in col
+    ],
     title="Total Correlation - US Equity ETFs (S&P 500, 400, 600)",
     x_label="Date",
     x_format="Year",
@@ -5899,94 +5955,25 @@ fund_data_daily_returns_all
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-06-09</th>
-      <td>-0.00</td>
-      <td>0.01</td>
-      <td>0.01</td>
-      <td>-0.01</td>
-      <td>-0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>-0.01</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.01</td>
-      <td>0.00</td>
-      <td>-0.02</td>
-      <td>-0.02</td>
-      <td>0.02</td>
-      <td>-0.02</td>
-      <td>-0.03</td>
-    </tr>
-    <tr>
-      <th>2026-06-10</th>
-      <td>-0.02</td>
-      <td>-0.01</td>
-      <td>-0.01</td>
-      <td>-0.02</td>
-      <td>-0.02</td>
-      <td>-0.01</td>
-      <td>-0.01</td>
-      <td>-0.02</td>
-      <td>-0.01</td>
-      <td>-0.02</td>
-      <td>-0.01</td>
-      <td>0.00</td>
-      <td>-0.00</td>
-      <td>-0.00</td>
-      <td>-0.00</td>
-      <td>-0.04</td>
-      <td>0.01</td>
-      <td>0.00</td>
-      <td>-0.00</td>
-      <td>-0.01</td>
-    </tr>
-    <tr>
-      <th>2026-06-11</th>
-      <td>0.02</td>
-      <td>0.03</td>
-      <td>0.02</td>
-      <td>0.03</td>
-      <td>0.02</td>
-      <td>0.03</td>
-      <td>0.02</td>
-      <td>0.02</td>
-      <td>0.03</td>
-      <td>0.04</td>
-      <td>0.03</td>
-      <td>0.00</td>
-      <td>0.01</td>
-      <td>0.01</td>
-      <td>0.01</td>
-      <td>0.03</td>
-      <td>-0.02</td>
-      <td>-0.00</td>
-      <td>0.03</td>
-      <td>0.03</td>
-    </tr>
-    <tr>
       <th>2026-06-12</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>0.01</td>
+      <td>0.01</td>
+      <td>0.01</td>
+      <td>0.01</td>
+      <td>0.01</td>
+      <td>0.01</td>
+      <td>0.01</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.01</td>
+      <td>0.00</td>
+      <td>-0.00</td>
+      <td>-0.00</td>
+      <td>-0.00</td>
+      <td>-0.00</td>
+      <td>0.00</td>
+      <td>-0.01</td>
+      <td>0.01</td>
       <td>-0.00</td>
       <td>-0.00</td>
     </tr>
@@ -6013,9 +6000,78 @@ fund_data_daily_returns_all
       <td>0.01</td>
       <td>0.01</td>
     </tr>
+    <tr>
+      <th>2026-06-14</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.02</td>
+      <td>0.03</td>
+    </tr>
+    <tr>
+      <th>2026-06-15</th>
+      <td>0.02</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.03</td>
+      <td>0.02</td>
+      <td>0.01</td>
+      <td>0.01</td>
+      <td>0.02</td>
+      <td>0.01</td>
+      <td>0.03</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>-0.00</td>
+      <td>0.00</td>
+      <td>0.03</td>
+      <td>-0.01</td>
+      <td>-0.01</td>
+      <td>0.01</td>
+      <td>0.04</td>
+    </tr>
+    <tr>
+      <th>2026-06-16</th>
+      <td>-0.01</td>
+      <td>-0.00</td>
+      <td>-0.01</td>
+      <td>-0.02</td>
+      <td>-0.01</td>
+      <td>-0.01</td>
+      <td>-0.00</td>
+      <td>-0.01</td>
+      <td>0.00</td>
+      <td>-0.02</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.01</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>-0.02</td>
+      <td>0.00</td>
+      <td>-0.01</td>
+      <td>-0.00</td>
+    </tr>
   </tbody>
 </table>
-<p>8194 rows × 20 columns</p>
+<p>8197 rows × 20 columns</p>
 </div>
 
 
@@ -6025,26 +6081,28 @@ fund_data_daily_returns_all
 for ticker in us_equity_tickers:
     if ticker not in ["QQQ", "IWD", "IWF"]:
         plot_time_series(
-            df=fund_data[(fund_data.index >= "2020-01-01") & (fund_data.index <= "2021-01-01")],
+            df=fund_data[
+                (fund_data.index >= "2020-01-01") & (fund_data.index <= "2021-01-01")
+            ],
             plot_start_date=None,
             plot_end_date=None,
             plot_columns=[f"{ticker}_Adj_Close"],
-        title=f"{tickers_dict[ticker]} Adjusted Close Price",
-        x_label="Date",
-        x_format="Year",
-        x_tick_spacing=1,
-        x_tick_start=None,
-        x_tick_rotation=30,
-        y_label="Price ($)",
-        y_format="Decimal",
-        y_format_decimal_places="Auto",
-        y_tick_spacing="Auto",
-        y_tick_rotation=0,
-        grid=True,
-        legend=False,
-        export_plot=False,
-        plot_file_name=None,
-    )
+            title=f"{tickers_dict[ticker]} Adjusted Close Price",
+            x_label="Date",
+            x_format="Year",
+            x_tick_spacing=1,
+            x_tick_start=None,
+            x_tick_rotation=30,
+            y_label="Price ($)",
+            y_format="Decimal",
+            y_format_decimal_places="Auto",
+            y_tick_spacing="Auto",
+            y_tick_rotation=0,
+            grid=True,
+            legend=False,
+            export_plot=False,
+            plot_file_name=None,
+        )
 ```
 
 
