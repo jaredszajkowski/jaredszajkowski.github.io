@@ -11,6 +11,12 @@ defaultContentLanguage = "en"
 enableRobotsTXT = true
 summaryLength = 0
 
+# Notebook/export .html files live alongside posts and the projects-research page.
+# They are copied into public/ verbatim by the PyDoit pipeline (copy_notebook_exports,
+# copy_projects_research_exports), so Hugo must NOT treat them as content pages.
+# (Hugo v0.158+ also blocks text/html content via security.allowContent.)
+ignoreFiles = ['\.html$']
+
 [pagination]
   pagerSize = 10
 
