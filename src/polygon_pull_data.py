@@ -212,81 +212,37 @@ if __name__ == "__main__":
     current_day = datetime.now().day
 
     # Set global variables
-    GLOBAL_FREE_TIER = True
+    GLOBAL_FREE_TIER = False
 
     # Stock Data
-    equities = ["AMZN", "AAPL"]
+    equities = ["BKNG"]
+
+    # Timespans
+    timespans = ["day"]
 
     # Iterate through each stock
     for stock in equities:
-        # Example usage - minute
-        polygon_pull_data(
-            base_directory=DATA_DIR,
-            ticker=stock,
-            source="Polygon",
-            asset_class="Equities",
-            start_date=datetime(current_year - 2, current_month, current_day),
-            timespan="minute",
-            multiplier=1,
-            adjusted=True,
-            force_existing_check=False,
-            free_tier=GLOBAL_FREE_TIER,
-            verbose=False,
-            excel_export=True,
-            pickle_export=True,
-            parquet_export=True,
-            output_confirmation=True,
-        )
+        for timespan in timespans:
+            polygon_pull_data(
+                base_directory=DATA_DIR,
+                ticker=stock,
+                source="Polygon",
+                asset_class="Equities",
+                start_date=datetime(current_year - 5, current_month, current_day),
+                timespan=timespan,
+                multiplier=1,
+                adjusted=False,
+                force_existing_check=False,
+                free_tier=GLOBAL_FREE_TIER,
+                verbose=False,
+                excel_export=True,
+                pickle_export=True,
+                parquet_export=True,
+                output_confirmation=True,
+            )
 
-        if GLOBAL_FREE_TIER == True:
-            time.sleep(12)
-        else:
-            pass
+            if GLOBAL_FREE_TIER == True:
+                time.sleep(12)
+            else:
+                pass
 
-        # Example usage - hourly
-        polygon_pull_data(
-            base_directory=DATA_DIR,
-            ticker=stock,
-            source="Polygon",
-            asset_class="Equities",
-            start_date=datetime(current_year - 2, current_month, current_day),
-            timespan="hour",
-            multiplier=1,
-            adjusted=True,
-            force_existing_check=False,
-            free_tier=GLOBAL_FREE_TIER,
-            verbose=False,
-            excel_export=True,
-            pickle_export=True,
-            parquet_export=True,
-            output_confirmation=True,
-        )
-
-        if GLOBAL_FREE_TIER == True:
-            time.sleep(12)
-        else:
-            pass
-
-        # Example usage - daily
-        polygon_pull_data(
-            base_directory=DATA_DIR,
-            ticker=stock,
-            source="Polygon",
-            asset_class="Equities",
-            start_date=datetime(current_year - 2, current_month, current_day),
-            timespan="day",
-            multiplier=1,
-            adjusted=True,
-            force_existing_check=False,
-            free_tier=GLOBAL_FREE_TIER,
-            verbose=False,
-            excel_export=True,
-            pickle_export=True,
-            parquet_export=True,
-            output_confirmation=True,
-        )
-
-        if GLOBAL_FREE_TIER == True:
-            time.sleep(12)
-        else:
-            pass
