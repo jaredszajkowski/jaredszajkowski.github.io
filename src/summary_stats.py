@@ -56,6 +56,12 @@ def summary_stats(
 
     df_stats = pd.DataFrame(df.mean(axis=0) * timeframe)  # annualized
     df_stats.columns = ["Annual Mean Return (Arithmetic)"]
+    df_stats["Number of Observations"] = df.count()
+    data_start_date = df.index.min().strftime("%Y-%m-%d")
+    data_end_date = df.index.max().strftime("%Y-%m-%d")
+    df_stats["Data Start Date"] = data_start_date
+    df_stats["Data End Date"] = data_end_date
+    df_stats = df_stats[["Number of Observations", "Data Start Date", "Data End Date", "Annual Mean Return (Arithmetic)"]]
     df_stats["Annualized Volatility"] = df.std() * np.sqrt(timeframe)  # annualized
     df_stats["Annualized Sharpe Ratio"] = (
         df_stats["Annual Mean Return (Arithmetic)"] / df_stats["Annualized Volatility"]
