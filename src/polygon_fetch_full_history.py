@@ -241,7 +241,7 @@ if __name__ == "__main__":
     current_day = datetime.now().day
 
     # Open client connection
-    client = RESTClient(api_key=api_keys["POLYGON_KEY"])
+    client = RESTClient(api_key=POLYGON_KEY)
 
     # Create an empty DataFrame
     df = pd.DataFrame(
