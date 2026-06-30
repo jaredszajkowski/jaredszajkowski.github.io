@@ -229,7 +229,5 @@ token.json
 public/
 .hugo_build.lock
 content/posts/ETF_Trend_Following/
-content/posts/predictive-power-moving-averages/
-
 .vscode/
 .claude/

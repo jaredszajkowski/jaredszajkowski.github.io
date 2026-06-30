@@ -9,13 +9,13 @@ colorama
 databento
 doit
 jupyter
-massive
+massive>=2.8.0
 matplotlib
 nasdaq-data-link
 numpy
 openpyxl
 optuna
-pandas
+pandas>=3.0.3
 pandas-datareader
 pip-autoremove
 plotly
@@ -29,6 +29,7 @@ seaborn
 setuptools
 statsmodels
 tabulate
+uv
 wrds
 xgboost
 yfinance

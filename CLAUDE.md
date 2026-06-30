@@ -28,7 +28,7 @@ doit <task_name>     # Run a specific task (e.g., doit run_post_notebooks)
 5. `build_post_indices` — combine `frontmatter.md` + notebook `.md` → `index.md`
 6. `clean_public` — remove `public/`
 7. `build_site` — run `hugo`
-8. `copy_notebook_exports` — copy `.html` exports into `public/posts/<slug>/`
+8. `copy_notebook_exports` — copy `.html` exports into `static/posts/<slug>/`
 9. `copy_projects_research_exports` — copy research HTML into `public/projects-research/`
 10. `create_schwab_callback` — write OAuth callback page
 
@@ -53,10 +53,12 @@ Each post lives in `content/posts/<post-name>/` and follows one of two patterns:
 - `dodo.py` combines these: `frontmatter.md` + exported `<post-name>.md` → `index.md`, then appends a `{{< post-files >}}` shortcode
 
 **Template-driven posts**:
-- `index_temp.md` + `index_dep.txt` — `src/build_index.py` assembles `index.md` from these
+- `index_temp.md` contains `<!-- INSERT_<name>_HERE -->` comment placeholders
+- `index_dep.txt` lists the markdown snippet files to inject (e.g. `00_df_info_markdown.md`)
+- `src/build_index.py` assembles `index.md` by replacing each placeholder with the contents of the corresponding snippet file
 
 ### Configuration
-- `src/settings.py` is the single source of truth for all directory paths. It uses `python-decouple` and reads from `.env` at the repo root (`BASE_DIR / .env`). All path variables (`BASE_DIR`, `WEBSITES_DIR`, `CONTENT_DIR`, `POSTS_DIR`, `PAGES_DIR`, `PUBLIC_DIR`, `SOURCE_DIR`, `DATA_DIR`, `DATA_MANUAL_DIR`, `OS_TYPE`) are defined in a `defaults` dict and exposed via `config(var_name)`; values from the `.env` file are merged on top of these defaults. `dodo.py` imports `config` and resolves all paths through it.
+- `src/settings.py` is the single source of truth for all directory paths. It uses `python-decouple` and reads from `.env` at the repo root (`BASE_DIR / .env`). All path variables (`BASE_DIR`, `WEBSITES_DIR`, `CONTENT_DIR`, `POSTS_DIR`, `PAGES_DIR`, `PUBLIC_DIR`, `STATIC_DIR`, `SOURCE_DIR`, `DATA_DIR`, `DATA_MANUAL_DIR`, `OS_TYPE`) are defined in a `defaults` dict and exposed via `config(var_name)`; values from the `.env` file are merged on top of these defaults. `dodo.py` imports `config` and resolves all paths through it.
 - Data directories (`Data/`, `Data_Manual/`) live one level up from the repo root, inside the shared `Websites/` parent.
 - Hugo config is split across `config/_default/`: `hugo.toml` (core), `params.toml` (Congo theme), `languages.en.toml`, `menus.en.toml`.
 
@@ -78,8 +80,10 @@ Scripts are standalone and follow naming conventions:
 Congo theme is installed as a git submodule under `themes/congo/`. Custom color overrides live in `assets/css/custom.css`.
 
 ### Deployment
-GitHub Actions (`.github/workflows/hugo.yaml`) builds and deploys to GitHub Pages on push to `main` (or via `workflow_dispatch`). It caches Hugo's image processing output. The workflow uses Hugo 0.158.0 (extended), Node.js 24.14.0, Go 1.26.1, and Dart Sass 1.98.0, and checks out submodules recursively so the Congo theme is included.
+GitHub Actions (`.github/workflows/hugo.yaml`) builds and deploys to GitHub Pages on push to `main` (or via `workflow_dispatch`). It caches Hugo's image processing output. The workflow uses Hugo 0.163.0 (extended), Node.js 24.16.0, Go 1.26.3, and Dart Sass 1.100.0, and checks out submodules recursively so the Congo theme is included.
 
 ### Notes / gotchas
 - The `doit deploy_site` task is currently commented out in `dodo.py`; commits and pushes are done manually.
-- `task_copy_notebook_exports` writes notebook HTML to `public/posts/<slug>/<slug>.html` (date-based paths are no longer used; the date in front matter is parsed but not used in the output path).
+- `task_copy_notebook_exports` writes notebook HTML to `static/posts/<slug>/<slug>.html` (not `public/`). Date-based paths are no longer used; the date in front matter is parsed but only to confirm it exists, not to construct the output path.
+- The `{{< post-files >}}` shortcode (appended automatically by `task_build_post_indices`) links to `<slug>.ipynb`, `<slug>.html`, and `<slug>.pdf` using `.Page.Slug`. The `slug` field in `frontmatter.md` must match the actual filenames in the post directory.
+- Hugo front matter in this repo uses `topics` (not `tags`/`categories`) and `feature` (not `image`) for the cover image — these are Congo theme conventions.
