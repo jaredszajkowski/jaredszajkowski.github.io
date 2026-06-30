@@ -30,6 +30,8 @@ def plot_time_series(
     y_tick_rotation: int,
     grid: bool = True,
     legend: bool = True,
+    legend_location: str = "best",
+    legend_anchor: tuple = None,
     export_plot: bool = False,
     plot_file_name: str = None,
 ) -> None:
@@ -72,11 +74,15 @@ def plot_time_series(
         Whether to display a grid on the plot (default is True).
     legend : bool, optional
         Whether to display a legend on the plot (default is True).
+    legend_location : str, optional
+        Location of the legend on the plot (default is "best").
+    legend_anchor : tuple, optional
+        Anchor point (x, y) for placing the legend relative to the axes,
+        e.g. (1, 1) to move it outside the plot (default is None).
     export_plot : bool, optional
         Whether to save the figure as a PNG file (default is False).
     plot_file_name : str, optional
         File name for saving the figure (if export_plot is True, default is None).
-
 
     Returns
     -------
@@ -247,7 +253,10 @@ def plot_time_series(
 
     # Legend
     if legend == True:
-        plt.legend()
+        if legend_anchor is not None:
+            plt.legend(loc=legend_location, bbox_to_anchor=legend_anchor)
+        else:
+            plt.legend(loc=legend_location)
 
     # Save figure and display plot
     if export_plot == True:

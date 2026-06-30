@@ -35,6 +35,8 @@ def plot_scatter(
     regression_constant: bool = True,
     grid: bool = True,
     legend: bool = True,
+    legend_location: str = "best",
+    legend_anchor: tuple = None,
     export_plot: bool = False,
     plot_file_name: str = None,
 ) -> None:
@@ -89,6 +91,11 @@ def plot_scatter(
         Whether to display a grid on the plot (default is True).
     legend : bool, optional
         Whether to display a legend on the plot (default is True).
+    legend_location : str, optional
+        Location of the legend on the plot (default is "best").
+    legend_anchor : tuple, optional
+        Anchor point (x, y) for placing the legend relative to the axes,
+        e.g. (1, 1) to move it outside the plot (default is None).
     export_plot : bool, optional
         Whether to save the figure as a PNG file (default is False).
     plot_file_name : str, optional
@@ -272,12 +279,13 @@ def plot_scatter(
         # Plot regression line
         intercept = model.intercept_
         slope = model.coef_[0]
+        r_squared = model.score(df[[x_plot_column]], df[OLS_column])
         plt.plot(
             X_vals,
             Y_vals,
             color="red",
             linestyle="--",
-            label=f"OLS Fit: y = {intercept:.1f} + {slope:.2f}x",
+            label=f"OLS Fit: y = {intercept:.1f} + {slope:.2f}x (R² = {r_squared:.2f})",
         )
 
     if plot_Ridge_regression_line == True:
@@ -300,12 +308,13 @@ def plot_scatter(
         intercept = model.intercept_
         slope = model.coef_[0]
         alpha_value = model.alpha_ if hasattr(model, "alpha_") else 1.0
+        r_squared = model.score(df[[x_plot_column]], df[Ridge_column])
         plt.plot(
             X_vals,
             Y_vals,
             color="blue",
             linestyle="--",
-            label=f"Ridge Fit (α={alpha_value:.2f}): y = {intercept:.1f} + {slope:.2f}x",
+            label=f"Ridge Fit (α={alpha_value:.2f}): y = {intercept:.1f} + {slope:.2f}x (R² = {r_squared:.2f})",
         )
 
     if plot_RidgeCV_regression_line == True:
@@ -327,12 +336,13 @@ def plot_scatter(
         intercept = model.intercept_
         slope = model.coef_[0]
         alpha_value = model.alpha_ if hasattr(model, "alpha_") else 1.0
+        r_squared = model.score(df[[x_plot_column]], df[RidgeCV_column])
         plt.plot(
             X_vals,
             Y_vals,
             color="green",
             linestyle="--",
-            label=f"RidgeCV Fit (α={alpha_value:.2f}): y = {intercept:.1f} + {slope:.2f}x",
+            label=f"RidgeCV Fit (α={alpha_value:.2f}): y = {intercept:.1f} + {slope:.2f}x (R² = {r_squared:.2f})",
         )
 
     # Format title, layout, grid, and legend
@@ -345,7 +355,10 @@ def plot_scatter(
 
     # Legend
     if legend == True:
-        plt.legend()
+        if legend_anchor is not None:
+            plt.legend(loc=legend_location, bbox_to_anchor=legend_anchor)
+        else:
+            plt.legend(loc=legend_location)
 
     # Save figure and display plot
     if export_plot == True:
