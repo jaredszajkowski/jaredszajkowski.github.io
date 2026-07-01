@@ -24,10 +24,11 @@ current_month = datetime.now().month
 current_day = datetime.now().day
 
 # Set global variables
-GLOBAL_VERBOSE = False
 GLOBAL_FREE_TIER = False
-GLOBAL_PULL_MINUTE = True
 GLOBAL_PARQUET_EXPORT = False
+GLOBAL_PULL_MINUTE = True
+GLOBAL_START_DATE = datetime(current_year - 5, current_month, current_day)
+GLOBAL_VERBOSE = False
 
 # Crypto Data
 # None
@@ -49,7 +50,7 @@ for stock in equities.keys():
             ticker=stock,
             source="Polygon",
             asset_class="Equities",
-            start_date=datetime(current_year - 2, current_month, current_day),
+            start_date=GLOBAL_START_DATE,
             timespan="minute",
             multiplier=1,
             adjusted=True,
@@ -75,7 +76,7 @@ for stock in equities.keys():
         ticker=stock,
         source="Polygon",
         asset_class="Equities",
-        start_date=datetime(current_year - 2, current_month, current_day),
+        start_date=GLOBAL_START_DATE,
         timespan="hour",
         multiplier=1,
         adjusted=True,
@@ -99,7 +100,7 @@ for stock in equities.keys():
         ticker=stock,
         source="Polygon",
         asset_class="Equities",
-        start_date=datetime(current_year - 2, current_month, current_day),
+        start_date=GLOBAL_START_DATE,
         timespan="day",
         multiplier=1,
         adjusted=True,
@@ -176,7 +177,7 @@ for stock in equities.keys():
 #         ticker=index,
 #         source="Polygon",
 #         asset_class="Indices",
-#         start_date=datetime(current_year - 2, current_month, current_day),
+#         start_date=GLOBAL_START_DATE,
 #         timespan="minute",
 #         multiplier=1,
 #         adjusted=True,
@@ -192,7 +193,7 @@ for stock in equities.keys():
 #         ticker=index,
 #         source="Polygon",
 #         asset_class="Indices",
-#         start_date=datetime(current_year - 2, current_month, current_day),
+#         start_date=GLOBAL_START_DATE,
 #         timespan="hour",
 #         multiplier=1,
 #         adjusted=True,
@@ -208,7 +209,7 @@ for stock in equities.keys():
 #         ticker=index,
 #         source="Polygon",
 #         asset_class="Indices",
-#         start_date=datetime(current_year - 2, current_month, current_day),
+#         start_date=GLOBAL_START_DATE,
 #         timespan="day",
 #         multiplier=1,
 #         adjusted=True,
@@ -283,7 +284,7 @@ for fund in etfs.keys():
             ticker=fund,
             source="Polygon",
             asset_class="Exchange_Traded_Funds",
-            start_date=datetime(current_year - 2, current_month, current_day),
+            start_date=GLOBAL_START_DATE,
             timespan="minute",
             multiplier=1,
             adjusted=True,
@@ -309,7 +310,7 @@ for fund in etfs.keys():
         ticker=fund,
         source="Polygon",
         asset_class="Exchange_Traded_Funds",
-        start_date=datetime(current_year - 2, current_month, current_day),
+        start_date=GLOBAL_START_DATE,
         timespan="hour",
         multiplier=1,
         adjusted=True,
@@ -333,7 +334,7 @@ for fund in etfs.keys():
         ticker=fund,
         source="Polygon",
         asset_class="Exchange_Traded_Funds",
-        start_date=datetime(current_year - 2, current_month, current_day),
+        start_date=GLOBAL_START_DATE,
         timespan="day",
         multiplier=1,
         adjusted=True,
