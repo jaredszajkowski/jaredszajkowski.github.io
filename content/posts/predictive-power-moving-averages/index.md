@@ -19,7 +19,9 @@ topics: [
 
 ## Introduction
 
-The idea of time series momentum (AKA, trend following) heavily relies on the idea that if a price is higher than its recent moving average, it is more likely to continue to be higher than its moving average in the future, and vice versa. In this post, we will investigate the idea of moving averages, and whether at a given point in time a price that is higher or lower than the moving average up until that point in time has any predictive power for future returns. 
+The idea of time series momentum (AKA, trend following) heavily relies on the idea that, for an asset experiencing upward momentum, if the price at time t is higher than the price at time t-x, then the price at time t+y is likely to be higher than the price at time t.
+
+In this post, we will investigate the idea of moving averages, and whether if the price at time t is higher or lower than the moving average up until time t (for several different lookback periods) has any predictive power for forward returns (for several different horizons). 
 
  ## Python Imports
 
@@ -293,15 +295,6 @@ for fund, data in fund_data.items():
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-06-22</th>
-      <td>747.78</td>
-      <td>747.78</td>
-      <td>753.66</td>
-      <td>746.58</td>
-      <td>751.16</td>
-      <td>16420300</td>
-    </tr>
-    <tr>
       <th>2026-06-23</th>
       <td>737.14</td>
       <td>737.14</td>
@@ -337,9 +330,18 @@ for fund, data in fund_data.items():
       <td>732.29</td>
       <td>5944000</td>
     </tr>
+    <tr>
+      <th>2026-06-29</th>
+      <td>744.19</td>
+      <td>744.19</td>
+      <td>744.98</td>
+      <td>735.63</td>
+      <td>740.01</td>
+      <td>5056300</td>
+    </tr>
   </tbody>
 </table>
-<p>6564 rows × 6 columns</p>
+<p>6565 rows × 6 columns</p>
 </div>
 
 
@@ -441,15 +443,6 @@ for fund, data in fund_data.items():
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-06-22</th>
-      <td>104.58</td>
-      <td>104.58</td>
-      <td>104.84</td>
-      <td>104.43</td>
-      <td>104.59</td>
-      <td>9596200</td>
-    </tr>
-    <tr>
       <th>2026-06-23</th>
       <td>102.46</td>
       <td>102.46</td>
@@ -485,9 +478,18 @@ for fund, data in fund_data.items():
       <td>102.46</td>
       <td>21219200</td>
     </tr>
+    <tr>
+      <th>2026-06-29</th>
+      <td>103.45</td>
+      <td>103.45</td>
+      <td>103.47</td>
+      <td>102.22</td>
+      <td>102.87</td>
+      <td>10788600</td>
+    </tr>
   </tbody>
 </table>
-<p>6244 rows × 6 columns</p>
+<p>6245 rows × 6 columns</p>
 </div>
 
 
@@ -589,15 +591,6 @@ for fund, data in fund_data.items():
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-06-22</th>
-      <td>71.21</td>
-      <td>71.21</td>
-      <td>71.57</td>
-      <td>70.99</td>
-      <td>71.29</td>
-      <td>25302200</td>
-    </tr>
-    <tr>
       <th>2026-06-23</th>
       <td>67.17</td>
       <td>67.17</td>
@@ -633,9 +626,18 @@ for fund, data in fund_data.items():
       <td>66.34</td>
       <td>24158700</td>
     </tr>
+    <tr>
+      <th>2026-06-29</th>
+      <td>67.43</td>
+      <td>67.43</td>
+      <td>67.46</td>
+      <td>66.00</td>
+      <td>66.99</td>
+      <td>18609700</td>
+    </tr>
   </tbody>
 </table>
-<p>5838 rows × 6 columns</p>
+<p>5839 rows × 6 columns</p>
 </div>
 
 
@@ -737,15 +739,6 @@ for fund, data in fund_data.items():
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-06-22</th>
-      <td>29.25</td>
-      <td>29.25</td>
-      <td>29.38</td>
-      <td>29.12</td>
-      <td>29.34</td>
-      <td>567600</td>
-    </tr>
-    <tr>
       <th>2026-06-23</th>
       <td>28.95</td>
       <td>28.95</td>
@@ -781,9 +774,18 @@ for fund, data in fund_data.items():
       <td>28.46</td>
       <td>510000</td>
     </tr>
+    <tr>
+      <th>2026-06-29</th>
+      <td>28.44</td>
+      <td>28.44</td>
+      <td>28.55</td>
+      <td>28.34</td>
+      <td>28.45</td>
+      <td>749400</td>
+    </tr>
   </tbody>
 </table>
-<p>5014 rows × 6 columns</p>
+<p>5015 rows × 6 columns</p>
 </div>
 
 
@@ -885,15 +887,6 @@ for fund, data in fund_data.items():
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-06-22</th>
-      <td>78.80</td>
-      <td>78.80</td>
-      <td>79.18</td>
-      <td>78.42</td>
-      <td>78.75</td>
-      <td>9674400</td>
-    </tr>
-    <tr>
       <th>2026-06-23</th>
       <td>77.33</td>
       <td>77.33</td>
@@ -929,9 +922,18 @@ for fund, data in fund_data.items():
       <td>76.29</td>
       <td>4671800</td>
     </tr>
+    <tr>
+      <th>2026-06-29</th>
+      <td>75.53</td>
+      <td>75.53</td>
+      <td>76.05</td>
+      <td>75.21</td>
+      <td>75.96</td>
+      <td>4262200</td>
+    </tr>
   </tbody>
 </table>
-<p>5386 rows × 6 columns</p>
+<p>5387 rows × 6 columns</p>
 </div>
 
 
@@ -1033,15 +1035,6 @@ for fund, data in fund_data.items():
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-06-22</th>
-      <td>94.00</td>
-      <td>94.00</td>
-      <td>94.13</td>
-      <td>93.97</td>
-      <td>94.11</td>
-      <td>4572200</td>
-    </tr>
-    <tr>
       <th>2026-06-23</th>
       <td>94.12</td>
       <td>94.12</td>
@@ -1077,9 +1070,18 @@ for fund, data in fund_data.items():
       <td>94.83</td>
       <td>5584100</td>
     </tr>
+    <tr>
+      <th>2026-06-29</th>
+      <td>95.06</td>
+      <td>95.06</td>
+      <td>95.07</td>
+      <td>94.93</td>
+      <td>94.98</td>
+      <td>5901500</td>
+    </tr>
   </tbody>
 </table>
-<p>6016 rows × 6 columns</p>
+<p>6017 rows × 6 columns</p>
 </div>
 
 
@@ -1181,15 +1183,6 @@ for fund, data in fund_data.items():
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-06-22</th>
-      <td>86.09</td>
-      <td>86.09</td>
-      <td>86.33</td>
-      <td>85.97</td>
-      <td>86.30</td>
-      <td>28595100</td>
-    </tr>
-    <tr>
       <th>2026-06-23</th>
       <td>86.20</td>
       <td>86.20</td>
@@ -1225,9 +1218,18 @@ for fund, data in fund_data.items():
       <td>87.01</td>
       <td>21650800</td>
     </tr>
+    <tr>
+      <th>2026-06-29</th>
+      <td>87.45</td>
+      <td>87.45</td>
+      <td>87.54</td>
+      <td>87.30</td>
+      <td>87.36</td>
+      <td>19457200</td>
+    </tr>
   </tbody>
 </table>
-<p>6016 rows × 6 columns</p>
+<p>6017 rows × 6 columns</p>
 </div>
 
 
@@ -1467,30 +1469,6 @@ display(data_merged)
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-06-22</th>
-      <td>747.78</td>
-      <td>-0.00</td>
-      <td>7.47</td>
-      <td>-0.02</td>
-      <td>104.58</td>
-      <td>0.00</td>
-      <td>3.78</td>
-      <td>0.00</td>
-      <td>71.21</td>
-      <td>0.01</td>
-      <td>...</td>
-      <td>8.23</td>
-      <td>-0.22</td>
-      <td>94.00</td>
-      <td>-0.00</td>
-      <td>1.32</td>
-      <td>-0.11</td>
-      <td>86.09</td>
-      <td>-0.01</td>
-      <td>1.39</td>
-      <td>-0.40</td>
-    </tr>
-    <tr>
       <th>2026-06-23</th>
       <td>737.14</td>
       <td>-0.01</td>
@@ -1586,9 +1564,33 @@ display(data_merged)
       <td>1.43</td>
       <td>-0.39</td>
     </tr>
+    <tr>
+      <th>2026-06-29</th>
+      <td>744.19</td>
+      <td>0.02</td>
+      <td>7.42</td>
+      <td>-0.02</td>
+      <td>103.45</td>
+      <td>0.01</td>
+      <td>3.73</td>
+      <td>-0.01</td>
+      <td>67.43</td>
+      <td>0.00</td>
+      <td>...</td>
+      <td>7.85</td>
+      <td>-0.26</td>
+      <td>95.06</td>
+      <td>0.00</td>
+      <td>1.34</td>
+      <td>-0.10</td>
+      <td>87.45</td>
+      <td>0.00</td>
+      <td>1.43</td>
+      <td>-0.39</td>
+    </tr>
   </tbody>
 </table>
-<p>6564 rows × 28 columns</p>
+<p>6565 rows × 28 columns</p>
 </div>
 
 
@@ -1888,30 +1890,6 @@ display(data_merged_aligned)
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-06-22</th>
-      <td>747.78</td>
-      <td>104.58</td>
-      <td>71.21</td>
-      <td>29.25</td>
-      <td>78.80</td>
-      <td>94.00</td>
-      <td>86.09</td>
-      <td>-0.00</td>
-      <td>7.70</td>
-      <td>-0.02</td>
-      <td>...</td>
-      <td>-0.62</td>
-      <td>-0.01</td>
-      <td>5.37</td>
-      <td>-0.22</td>
-      <td>-0.00</td>
-      <td>0.95</td>
-      <td>-0.11</td>
-      <td>-0.01</td>
-      <td>0.89</td>
-      <td>-0.40</td>
-    </tr>
-    <tr>
       <th>2026-06-23</th>
       <td>737.14</td>
       <td>102.46</td>
@@ -2007,9 +1985,33 @@ display(data_merged_aligned)
       <td>0.92</td>
       <td>-0.39</td>
     </tr>
+    <tr>
+      <th>2026-06-29</th>
+      <td>744.19</td>
+      <td>103.45</td>
+      <td>67.43</td>
+      <td>28.44</td>
+      <td>75.53</td>
+      <td>95.06</td>
+      <td>87.45</td>
+      <td>0.02</td>
+      <td>7.66</td>
+      <td>-0.02</td>
+      <td>...</td>
+      <td>-0.63</td>
+      <td>-0.01</td>
+      <td>5.11</td>
+      <td>-0.26</td>
+      <td>0.00</td>
+      <td>0.97</td>
+      <td>-0.10</td>
+      <td>0.00</td>
+      <td>0.92</td>
+      <td>-0.39</td>
+    </tr>
   </tbody>
 </table>
-<p>5014 rows × 28 columns</p>
+<p>5015 rows × 28 columns</p>
 </div>
 
 
@@ -2144,13 +2146,13 @@ display(sum_stats)
   <tbody>
     <tr>
       <th>IVV_Return</th>
-      <td>6563</td>
+      <td>6564</td>
       <td>2000-05-22</td>
-      <td>2026-06-26</td>
+      <td>2026-06-29</td>
       <td>0.10</td>
       <td>0.19</td>
-      <td>0.52</td>
-      <td>0.08</td>
+      <td>0.53</td>
+      <td>0.09</td>
       <td>0.11</td>
       <td>2008-10-28</td>
       <td>-0.12</td>
@@ -2164,12 +2166,12 @@ display(sum_stats)
     </tr>
     <tr>
       <th>EFA_Return</th>
-      <td>6243</td>
+      <td>6244</td>
       <td>2001-08-28</td>
-      <td>2026-06-26</td>
+      <td>2026-06-29</td>
       <td>0.08</td>
       <td>0.21</td>
-      <td>0.40</td>
+      <td>0.41</td>
       <td>0.06</td>
       <td>0.16</td>
       <td>2008-10-13</td>
@@ -2184,9 +2186,9 @@ display(sum_stats)
     </tr>
     <tr>
       <th>EEM_Return</th>
-      <td>5837</td>
+      <td>5838</td>
       <td>2003-04-15</td>
-      <td>2026-06-26</td>
+      <td>2026-06-29</td>
       <td>0.13</td>
       <td>0.27</td>
       <td>0.49</td>
@@ -2204,12 +2206,12 @@ display(sum_stats)
     </tr>
     <tr>
       <th>GSG_Return</th>
-      <td>5013</td>
+      <td>5014</td>
       <td>2006-07-24</td>
-      <td>2026-06-26</td>
-      <td>-0.00</td>
+      <td>2026-06-29</td>
+      <td>0.00</td>
       <td>0.23</td>
-      <td>-0.00</td>
+      <td>0.00</td>
       <td>-0.03</td>
       <td>0.08</td>
       <td>2008-11-04</td>
@@ -2224,9 +2226,9 @@ display(sum_stats)
     </tr>
     <tr>
       <th>IAU_Return</th>
-      <td>5385</td>
+      <td>5386</td>
       <td>2005-01-31</td>
-      <td>2026-06-26</td>
+      <td>2026-06-29</td>
       <td>0.12</td>
       <td>0.18</td>
       <td>0.65</td>
@@ -2244,9 +2246,9 @@ display(sum_stats)
     </tr>
     <tr>
       <th>IEF_Return</th>
-      <td>6015</td>
+      <td>6016</td>
       <td>2002-07-31</td>
-      <td>2026-06-26</td>
+      <td>2026-06-29</td>
       <td>0.04</td>
       <td>0.07</td>
       <td>0.56</td>
@@ -2264,9 +2266,9 @@ display(sum_stats)
     </tr>
     <tr>
       <th>TLT_Return</th>
-      <td>6015</td>
+      <td>6016</td>
       <td>2002-07-31</td>
-      <td>2026-06-26</td>
+      <td>2026-06-29</td>
       <td>0.05</td>
       <td>0.14</td>
       <td>0.33</td>
@@ -2502,7 +2504,7 @@ display(ma_prediction_results)
       <td>0.71</td>
       <td>0.34</td>
       <td>-0.01</td>
-      <td>0.30</td>
+      <td>0.29</td>
       <td>0.00</td>
       <td>0.02</td>
       <td>0.15</td>

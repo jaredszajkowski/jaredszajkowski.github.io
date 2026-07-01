@@ -19,7 +19,9 @@
 # ## Introduction
 
 # %% [markdown]
-# The idea of time series momentum (AKA, trend following) heavily relies on the idea that if a price is higher than its recent moving average, it is more likely to continue to be higher than its moving average in the future, and vice versa. In this post, we will investigate the idea of moving averages, and whether at a given point in time a price that is higher or lower than the moving average up until that point in time has any predictive power for future returns. 
+# The idea of time series momentum (AKA, trend following) heavily relies on the idea that, for an asset experiencing upward momentum, if the price at time t is higher than the price at time t-x, then the price at time t+y is likely to be higher than the price at time t.
+#
+# In this post, we will investigate the idea of moving averages, and whether if the price at time t is higher or lower than the moving average up until time t (for several different lookback periods) has any predictive power for forward returns (for several different horizons). 
 
 # %% [markdown]
 #  ## Python Imports
