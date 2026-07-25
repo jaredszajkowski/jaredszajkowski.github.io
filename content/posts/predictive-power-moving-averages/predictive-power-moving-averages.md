@@ -1,8 +1,8 @@
 ## Introduction
 
-The idea of time series momentum (AKA, trend following) heavily relies on the idea that, for an asset experiencing upward momentum, if the price at time t is higher than the price at time t-x, then the price at time t+y is likely to be higher than the price at time t.
+The theory of time series momentum (AKA, trend following) heavily relies on the idea that if the price at time t is higher than the price at time t-x, then the price at time t+y is likely to be higher than the price at time t.
 
-In this post, we will investigate the idea of moving averages, and whether if the price at time t is higher or lower than the moving average up until time t (for several different lookback periods) has any predictive power for forward returns (for several different horizons). 
+In this post, we will investigate the idea of moving averages, and whether if the price at time t is higher or lower than the moving average up until time t (for several different lookback periods) has any predictive power for forward returns (for several different time horizons). 
 
  ## Python Imports
 
@@ -276,53 +276,53 @@ for fund, data in fund_data.items():
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-06-23</th>
-      <td>737.14</td>
-      <td>737.14</td>
-      <td>743.02</td>
-      <td>735.75</td>
-      <td>737.15</td>
-      <td>15553500</td>
+      <th>2026-07-17</th>
+      <td>746.72</td>
+      <td>746.72</td>
+      <td>750.79</td>
+      <td>744.29</td>
+      <td>745.57</td>
+      <td>7603700</td>
     </tr>
     <tr>
-      <th>2026-06-24</th>
-      <td>736.66</td>
-      <td>736.66</td>
-      <td>743.40</td>
-      <td>734.26</td>
-      <td>738.56</td>
-      <td>9014700</td>
+      <th>2026-07-20</th>
+      <td>745.36</td>
+      <td>745.36</td>
+      <td>752.17</td>
+      <td>745.05</td>
+      <td>750.58</td>
+      <td>4727900</td>
     </tr>
     <tr>
-      <th>2026-06-25</th>
-      <td>736.50</td>
-      <td>736.50</td>
-      <td>742.80</td>
-      <td>733.04</td>
-      <td>742.32</td>
-      <td>25573300</td>
+      <th>2026-07-21</th>
+      <td>751.95</td>
+      <td>751.95</td>
+      <td>752.54</td>
+      <td>747.74</td>
+      <td>749.83</td>
+      <td>3457700</td>
     </tr>
     <tr>
-      <th>2026-06-26</th>
-      <td>730.17</td>
-      <td>730.17</td>
-      <td>739.97</td>
-      <td>728.74</td>
-      <td>732.29</td>
-      <td>5944000</td>
+      <th>2026-07-22</th>
+      <td>750.93</td>
+      <td>750.93</td>
+      <td>753.56</td>
+      <td>749.91</td>
+      <td>750.26</td>
+      <td>3643700</td>
     </tr>
     <tr>
-      <th>2026-06-29</th>
-      <td>744.19</td>
-      <td>744.19</td>
-      <td>744.98</td>
-      <td>735.63</td>
-      <td>740.01</td>
-      <td>5056300</td>
+      <th>2026-07-23</th>
+      <td>741.62</td>
+      <td>741.62</td>
+      <td>746.04</td>
+      <td>738.67</td>
+      <td>742.70</td>
+      <td>7865500</td>
     </tr>
   </tbody>
 </table>
-<p>6565 rows × 6 columns</p>
+<p>6582 rows × 6 columns</p>
 </div>
 
 
@@ -424,53 +424,53 @@ for fund, data in fund_data.items():
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-06-23</th>
-      <td>102.46</td>
-      <td>102.46</td>
-      <td>103.02</td>
-      <td>102.32</td>
-      <td>102.38</td>
-      <td>17425700</td>
+      <th>2026-07-17</th>
+      <td>103.33</td>
+      <td>103.33</td>
+      <td>103.51</td>
+      <td>102.51</td>
+      <td>102.51</td>
+      <td>10969800</td>
     </tr>
     <tr>
-      <th>2026-06-24</th>
-      <td>102.26</td>
-      <td>102.26</td>
-      <td>102.65</td>
-      <td>101.92</td>
-      <td>102.24</td>
-      <td>12504200</td>
+      <th>2026-07-20</th>
+      <td>102.57</td>
+      <td>102.57</td>
+      <td>103.49</td>
+      <td>102.47</td>
+      <td>103.34</td>
+      <td>14834400</td>
     </tr>
     <tr>
-      <th>2026-06-25</th>
-      <td>103.15</td>
-      <td>103.15</td>
-      <td>103.73</td>
-      <td>102.73</td>
-      <td>103.48</td>
-      <td>13135400</td>
+      <th>2026-07-21</th>
+      <td>104.06</td>
+      <td>104.06</td>
+      <td>104.19</td>
+      <td>103.09</td>
+      <td>103.51</td>
+      <td>9826900</td>
     </tr>
     <tr>
-      <th>2026-06-26</th>
+      <th>2026-07-22</th>
+      <td>104.25</td>
+      <td>104.25</td>
+      <td>104.64</td>
+      <td>104.22</td>
+      <td>104.44</td>
+      <td>14694400</td>
+    </tr>
+    <tr>
+      <th>2026-07-23</th>
+      <td>102.90</td>
+      <td>102.90</td>
+      <td>103.29</td>
       <td>102.54</td>
-      <td>102.54</td>
-      <td>103.07</td>
-      <td>102.30</td>
-      <td>102.46</td>
-      <td>21219200</td>
-    </tr>
-    <tr>
-      <th>2026-06-29</th>
-      <td>103.45</td>
-      <td>103.45</td>
-      <td>103.47</td>
-      <td>102.22</td>
-      <td>102.87</td>
-      <td>10788600</td>
+      <td>102.76</td>
+      <td>12596100</td>
     </tr>
   </tbody>
 </table>
-<p>6245 rows × 6 columns</p>
+<p>6262 rows × 6 columns</p>
 </div>
 
 
@@ -572,53 +572,53 @@ for fund, data in fund_data.items():
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-06-23</th>
-      <td>67.17</td>
-      <td>67.17</td>
-      <td>68.23</td>
-      <td>67.07</td>
-      <td>67.25</td>
-      <td>39069000</td>
+      <th>2026-07-17</th>
+      <td>63.29</td>
+      <td>63.29</td>
+      <td>63.89</td>
+      <td>62.01</td>
+      <td>62.30</td>
+      <td>35145100</td>
     </tr>
     <tr>
-      <th>2026-06-24</th>
-      <td>67.25</td>
-      <td>67.25</td>
-      <td>67.61</td>
-      <td>66.60</td>
-      <td>67.38</td>
-      <td>22973300</td>
+      <th>2026-07-20</th>
+      <td>63.56</td>
+      <td>63.56</td>
+      <td>64.17</td>
+      <td>63.48</td>
+      <td>64.04</td>
+      <td>19269600</td>
     </tr>
     <tr>
-      <th>2026-06-25</th>
-      <td>67.96</td>
-      <td>67.96</td>
-      <td>68.99</td>
-      <td>67.27</td>
-      <td>68.91</td>
-      <td>24474400</td>
+      <th>2026-07-21</th>
+      <td>65.34</td>
+      <td>65.34</td>
+      <td>65.50</td>
+      <td>64.82</td>
+      <td>65.12</td>
+      <td>20839300</td>
     </tr>
     <tr>
-      <th>2026-06-26</th>
-      <td>67.19</td>
-      <td>67.19</td>
-      <td>67.72</td>
-      <td>66.27</td>
-      <td>66.34</td>
-      <td>24158700</td>
+      <th>2026-07-22</th>
+      <td>64.99</td>
+      <td>64.99</td>
+      <td>65.19</td>
+      <td>64.63</td>
+      <td>64.64</td>
+      <td>13399800</td>
     </tr>
     <tr>
-      <th>2026-06-29</th>
-      <td>67.43</td>
-      <td>67.43</td>
-      <td>67.46</td>
-      <td>66.00</td>
-      <td>66.99</td>
-      <td>18609700</td>
+      <th>2026-07-23</th>
+      <td>64.60</td>
+      <td>64.60</td>
+      <td>65.04</td>
+      <td>63.99</td>
+      <td>64.49</td>
+      <td>13003300</td>
     </tr>
   </tbody>
 </table>
-<p>5839 rows × 6 columns</p>
+<p>5856 rows × 6 columns</p>
 </div>
 
 
@@ -720,53 +720,53 @@ for fund, data in fund_data.items():
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-06-23</th>
-      <td>28.95</td>
-      <td>28.95</td>
-      <td>28.99</td>
-      <td>28.79</td>
-      <td>28.86</td>
-      <td>572000</td>
+      <th>2026-07-17</th>
+      <td>31.40</td>
+      <td>31.40</td>
+      <td>31.51</td>
+      <td>31.15</td>
+      <td>31.23</td>
+      <td>328900</td>
     </tr>
     <tr>
-      <th>2026-06-24</th>
-      <td>28.23</td>
-      <td>28.23</td>
-      <td>28.46</td>
-      <td>28.21</td>
-      <td>28.26</td>
-      <td>600700</td>
+      <th>2026-07-20</th>
+      <td>31.63</td>
+      <td>31.63</td>
+      <td>31.77</td>
+      <td>31.40</td>
+      <td>31.48</td>
+      <td>363400</td>
     </tr>
     <tr>
-      <th>2026-06-25</th>
-      <td>28.88</td>
-      <td>28.88</td>
-      <td>28.93</td>
-      <td>28.35</td>
-      <td>28.35</td>
-      <td>556900</td>
+      <th>2026-07-21</th>
+      <td>32.16</td>
+      <td>32.16</td>
+      <td>32.16</td>
+      <td>31.92</td>
+      <td>32.07</td>
+      <td>498000</td>
     </tr>
     <tr>
-      <th>2026-06-26</th>
-      <td>28.39</td>
-      <td>28.39</td>
-      <td>28.49</td>
-      <td>28.27</td>
-      <td>28.46</td>
-      <td>510000</td>
+      <th>2026-07-22</th>
+      <td>32.45</td>
+      <td>32.45</td>
+      <td>32.61</td>
+      <td>32.36</td>
+      <td>32.40</td>
+      <td>282300</td>
     </tr>
     <tr>
-      <th>2026-06-29</th>
-      <td>28.44</td>
-      <td>28.44</td>
-      <td>28.55</td>
-      <td>28.34</td>
-      <td>28.45</td>
-      <td>749400</td>
+      <th>2026-07-23</th>
+      <td>33.14</td>
+      <td>33.14</td>
+      <td>33.47</td>
+      <td>33.05</td>
+      <td>33.09</td>
+      <td>540800</td>
     </tr>
   </tbody>
 </table>
-<p>5015 rows × 6 columns</p>
+<p>5032 rows × 6 columns</p>
 </div>
 
 
@@ -868,53 +868,53 @@ for fund, data in fund_data.items():
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-06-23</th>
-      <td>77.33</td>
-      <td>77.33</td>
-      <td>77.94</td>
-      <td>77.29</td>
-      <td>77.40</td>
-      <td>4652100</td>
+      <th>2026-07-17</th>
+      <td>75.50</td>
+      <td>75.50</td>
+      <td>75.65</td>
+      <td>74.55</td>
+      <td>74.60</td>
+      <td>6288100</td>
     </tr>
     <tr>
-      <th>2026-06-24</th>
-      <td>74.99</td>
-      <td>74.99</td>
-      <td>76.01</td>
-      <td>74.44</td>
-      <td>74.78</td>
-      <td>10609200</td>
-    </tr>
-    <tr>
-      <th>2026-06-25</th>
-      <td>75.71</td>
-      <td>75.71</td>
-      <td>76.04</td>
+      <th>2026-07-20</th>
+      <td>75.35</td>
+      <td>75.35</td>
+      <td>75.58</td>
       <td>75.18</td>
-      <td>75.63</td>
-      <td>6287200</td>
+      <td>75.37</td>
+      <td>7583800</td>
     </tr>
     <tr>
-      <th>2026-06-26</th>
-      <td>76.56</td>
-      <td>76.56</td>
-      <td>77.02</td>
-      <td>76.07</td>
+      <th>2026-07-21</th>
+      <td>76.82</td>
+      <td>76.82</td>
+      <td>76.85</td>
+      <td>76.06</td>
+      <td>76.17</td>
+      <td>3570000</td>
+    </tr>
+    <tr>
+      <th>2026-07-22</th>
+      <td>77.69</td>
+      <td>77.69</td>
+      <td>78.33</td>
+      <td>77.63</td>
+      <td>77.72</td>
+      <td>7764900</td>
+    </tr>
+    <tr>
+      <th>2026-07-23</th>
+      <td>76.15</td>
+      <td>76.15</td>
+      <td>76.46</td>
+      <td>75.95</td>
       <td>76.29</td>
-      <td>4671800</td>
-    </tr>
-    <tr>
-      <th>2026-06-29</th>
-      <td>75.53</td>
-      <td>75.53</td>
-      <td>76.05</td>
-      <td>75.21</td>
-      <td>75.96</td>
-      <td>4262200</td>
+      <td>4105300</td>
     </tr>
   </tbody>
 </table>
-<p>5387 rows × 6 columns</p>
+<p>5404 rows × 6 columns</p>
 </div>
 
 
@@ -963,7 +963,7 @@ for fund, data in fund_data.items():
   <tbody>
     <tr>
       <th>2002-07-30</th>
-      <td>40.55</td>
+      <td>40.42</td>
       <td>81.77</td>
       <td>82.12</td>
       <td>81.70</td>
@@ -972,7 +972,7 @@ for fund, data in fund_data.items():
     </tr>
     <tr>
       <th>2002-07-31</th>
-      <td>40.93</td>
+      <td>40.79</td>
       <td>82.52</td>
       <td>82.58</td>
       <td>82.05</td>
@@ -981,7 +981,7 @@ for fund, data in fund_data.items():
     </tr>
     <tr>
       <th>2002-08-01</th>
-      <td>41.10</td>
+      <td>40.96</td>
       <td>82.86</td>
       <td>82.90</td>
       <td>82.52</td>
@@ -990,7 +990,7 @@ for fund, data in fund_data.items():
     </tr>
     <tr>
       <th>2002-08-02</th>
-      <td>41.41</td>
+      <td>41.28</td>
       <td>83.50</td>
       <td>83.70</td>
       <td>82.90</td>
@@ -999,7 +999,7 @@ for fund, data in fund_data.items():
     </tr>
     <tr>
       <th>2002-08-05</th>
-      <td>41.62</td>
+      <td>41.48</td>
       <td>83.92</td>
       <td>83.92</td>
       <td>83.53</td>
@@ -1016,53 +1016,53 @@ for fund, data in fund_data.items():
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-06-23</th>
-      <td>94.12</td>
-      <td>94.12</td>
-      <td>94.26</td>
-      <td>94.09</td>
-      <td>94.16</td>
-      <td>6504600</td>
+      <th>2026-07-17</th>
+      <td>93.84</td>
+      <td>93.84</td>
+      <td>94.10</td>
+      <td>93.82</td>
+      <td>93.96</td>
+      <td>7561300</td>
     </tr>
     <tr>
-      <th>2026-06-24</th>
-      <td>94.73</td>
-      <td>94.73</td>
-      <td>94.78</td>
-      <td>94.56</td>
-      <td>94.57</td>
-      <td>5179800</td>
+      <th>2026-07-20</th>
+      <td>93.54</td>
+      <td>93.54</td>
+      <td>93.76</td>
+      <td>93.44</td>
+      <td>93.74</td>
+      <td>3784800</td>
     </tr>
     <tr>
-      <th>2026-06-25</th>
-      <td>94.79</td>
-      <td>94.79</td>
-      <td>95.02</td>
-      <td>94.78</td>
-      <td>94.86</td>
-      <td>5630500</td>
+      <th>2026-07-21</th>
+      <td>93.31</td>
+      <td>93.31</td>
+      <td>93.42</td>
+      <td>93.26</td>
+      <td>93.40</td>
+      <td>2786200</td>
     </tr>
     <tr>
-      <th>2026-06-26</th>
-      <td>95.03</td>
-      <td>95.03</td>
-      <td>95.08</td>
-      <td>94.83</td>
-      <td>94.83</td>
-      <td>5584100</td>
+      <th>2026-07-22</th>
+      <td>93.10</td>
+      <td>93.10</td>
+      <td>93.29</td>
+      <td>93.08</td>
+      <td>93.28</td>
+      <td>3428200</td>
     </tr>
     <tr>
-      <th>2026-06-29</th>
-      <td>95.06</td>
-      <td>95.06</td>
-      <td>95.07</td>
-      <td>94.93</td>
-      <td>94.98</td>
-      <td>5901500</td>
+      <th>2026-07-23</th>
+      <td>92.85</td>
+      <td>92.85</td>
+      <td>92.90</td>
+      <td>92.76</td>
+      <td>92.80</td>
+      <td>5002200</td>
     </tr>
   </tbody>
 </table>
-<p>6017 rows × 6 columns</p>
+<p>6034 rows × 6 columns</p>
 </div>
 
 
@@ -1111,7 +1111,7 @@ for fund, data in fund_data.items():
   <tbody>
     <tr>
       <th>2002-07-30</th>
-      <td>35.97</td>
+      <td>35.84</td>
       <td>81.52</td>
       <td>81.90</td>
       <td>81.52</td>
@@ -1120,7 +1120,7 @@ for fund, data in fund_data.items():
     </tr>
     <tr>
       <th>2002-07-31</th>
-      <td>36.41</td>
+      <td>36.28</td>
       <td>82.53</td>
       <td>82.80</td>
       <td>81.90</td>
@@ -1129,7 +1129,7 @@ for fund, data in fund_data.items():
     </tr>
     <tr>
       <th>2002-08-01</th>
-      <td>36.62</td>
+      <td>36.49</td>
       <td>83.00</td>
       <td>83.02</td>
       <td>82.54</td>
@@ -1138,7 +1138,7 @@ for fund, data in fund_data.items():
     </tr>
     <tr>
       <th>2002-08-02</th>
-      <td>37.00</td>
+      <td>36.86</td>
       <td>83.85</td>
       <td>84.10</td>
       <td>82.88</td>
@@ -1147,7 +1147,7 @@ for fund, data in fund_data.items():
     </tr>
     <tr>
       <th>2002-08-05</th>
-      <td>37.16</td>
+      <td>37.02</td>
       <td>84.22</td>
       <td>84.44</td>
       <td>83.85</td>
@@ -1164,53 +1164,53 @@ for fund, data in fund_data.items():
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-06-23</th>
-      <td>86.20</td>
-      <td>86.20</td>
-      <td>86.43</td>
-      <td>86.10</td>
-      <td>86.12</td>
-      <td>19145500</td>
+      <th>2026-07-17</th>
+      <td>84.52</td>
+      <td>84.52</td>
+      <td>84.82</td>
+      <td>84.49</td>
+      <td>84.62</td>
+      <td>22065600</td>
     </tr>
     <tr>
-      <th>2026-06-24</th>
-      <td>87.38</td>
-      <td>87.38</td>
-      <td>87.47</td>
-      <td>87.12</td>
-      <td>87.15</td>
-      <td>41837000</td>
+      <th>2026-07-20</th>
+      <td>83.89</td>
+      <td>83.89</td>
+      <td>84.34</td>
+      <td>83.82</td>
+      <td>84.31</td>
+      <td>24289000</td>
     </tr>
     <tr>
-      <th>2026-06-25</th>
-      <td>87.35</td>
-      <td>87.35</td>
-      <td>87.79</td>
-      <td>87.29</td>
-      <td>87.58</td>
-      <td>28380000</td>
+      <th>2026-07-21</th>
+      <td>83.66</td>
+      <td>83.66</td>
+      <td>83.77</td>
+      <td>83.43</td>
+      <td>83.74</td>
+      <td>14287500</td>
     </tr>
     <tr>
-      <th>2026-06-26</th>
-      <td>87.36</td>
-      <td>87.36</td>
-      <td>87.37</td>
-      <td>87.00</td>
-      <td>87.01</td>
-      <td>21650800</td>
+      <th>2026-07-22</th>
+      <td>83.44</td>
+      <td>83.44</td>
+      <td>83.70</td>
+      <td>83.38</td>
+      <td>83.61</td>
+      <td>15988400</td>
     </tr>
     <tr>
-      <th>2026-06-29</th>
-      <td>87.45</td>
-      <td>87.45</td>
-      <td>87.54</td>
-      <td>87.30</td>
-      <td>87.36</td>
-      <td>19457200</td>
+      <th>2026-07-23</th>
+      <td>83.17</td>
+      <td>83.17</td>
+      <td>83.25</td>
+      <td>82.96</td>
+      <td>82.99</td>
+      <td>29152800</td>
     </tr>
   </tbody>
 </table>
-<p>6017 rows × 6 columns</p>
+<p>6034 rows × 6 columns</p>
 </div>
 
 
@@ -1450,128 +1450,128 @@ display(data_merged)
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-06-23</th>
-      <td>737.14</td>
+      <th>2026-07-17</th>
+      <td>746.72</td>
       <td>-0.01</td>
-      <td>7.34</td>
-      <td>-0.03</td>
-      <td>102.46</td>
+      <td>7.45</td>
       <td>-0.02</td>
-      <td>3.69</td>
+      <td>103.33</td>
+      <td>-0.00</td>
+      <td>3.73</td>
       <td>-0.02</td>
-      <td>67.17</td>
-      <td>-0.06</td>
+      <td>63.29</td>
+      <td>-0.01</td>
       <td>...</td>
-      <td>8.06</td>
-      <td>-0.24</td>
-      <td>94.12</td>
+      <td>7.84</td>
+      <td>-0.26</td>
+      <td>93.84</td>
       <td>0.00</td>
       <td>1.32</td>
       <td>-0.11</td>
-      <td>86.20</td>
+      <td>84.52</td>
       <td>0.00</td>
-      <td>1.40</td>
-      <td>-0.40</td>
+      <td>1.36</td>
+      <td>-0.41</td>
     </tr>
     <tr>
-      <th>2026-06-24</th>
-      <td>736.66</td>
+      <th>2026-07-20</th>
+      <td>745.36</td>
       <td>-0.00</td>
-      <td>7.34</td>
-      <td>-0.03</td>
-      <td>102.26</td>
-      <td>-0.00</td>
-      <td>3.68</td>
+      <td>7.44</td>
       <td>-0.02</td>
-      <td>67.25</td>
-      <td>0.00</td>
-      <td>...</td>
-      <td>7.78</td>
-      <td>-0.26</td>
-      <td>94.73</td>
-      <td>0.01</td>
-      <td>1.34</td>
-      <td>-0.11</td>
-      <td>87.38</td>
-      <td>0.01</td>
-      <td>1.43</td>
-      <td>-0.39</td>
-    </tr>
-    <tr>
-      <th>2026-06-25</th>
-      <td>736.50</td>
-      <td>-0.00</td>
-      <td>7.34</td>
-      <td>-0.03</td>
-      <td>103.15</td>
-      <td>0.01</td>
-      <td>3.72</td>
-      <td>-0.01</td>
-      <td>67.96</td>
-      <td>0.01</td>
-      <td>...</td>
-      <td>7.87</td>
-      <td>-0.25</td>
-      <td>94.79</td>
-      <td>0.00</td>
-      <td>1.34</td>
-      <td>-0.11</td>
-      <td>87.35</td>
-      <td>-0.00</td>
-      <td>1.43</td>
-      <td>-0.39</td>
-    </tr>
-    <tr>
-      <th>2026-06-26</th>
-      <td>730.17</td>
-      <td>-0.01</td>
-      <td>7.27</td>
-      <td>-0.04</td>
-      <td>102.54</td>
+      <td>102.57</td>
       <td>-0.01</td>
       <td>3.69</td>
-      <td>-0.02</td>
-      <td>67.19</td>
-      <td>-0.01</td>
+      <td>-0.03</td>
+      <td>63.56</td>
+      <td>0.00</td>
       <td>...</td>
-      <td>7.97</td>
-      <td>-0.25</td>
-      <td>95.03</td>
-      <td>0.00</td>
+      <td>7.83</td>
+      <td>-0.26</td>
+      <td>93.54</td>
+      <td>-0.00</td>
+      <td>1.31</td>
+      <td>-0.11</td>
+      <td>83.89</td>
+      <td>-0.01</td>
       <td>1.34</td>
-      <td>-0.10</td>
-      <td>87.36</td>
-      <td>0.00</td>
-      <td>1.43</td>
-      <td>-0.39</td>
+      <td>-0.41</td>
     </tr>
     <tr>
-      <th>2026-06-29</th>
-      <td>744.19</td>
-      <td>0.02</td>
-      <td>7.42</td>
-      <td>-0.02</td>
-      <td>103.45</td>
+      <th>2026-07-21</th>
+      <td>751.95</td>
       <td>0.01</td>
-      <td>3.73</td>
+      <td>7.51</td>
       <td>-0.01</td>
-      <td>67.43</td>
-      <td>0.00</td>
+      <td>104.06</td>
+      <td>0.01</td>
+      <td>3.76</td>
+      <td>-0.01</td>
+      <td>65.34</td>
+      <td>0.03</td>
       <td>...</td>
-      <td>7.85</td>
-      <td>-0.26</td>
-      <td>95.06</td>
+      <td>8.00</td>
+      <td>-0.24</td>
+      <td>93.31</td>
+      <td>-0.00</td>
+      <td>1.31</td>
+      <td>-0.12</td>
+      <td>83.66</td>
+      <td>-0.00</td>
+      <td>1.33</td>
+      <td>-0.41</td>
+    </tr>
+    <tr>
+      <th>2026-07-22</th>
+      <td>750.93</td>
+      <td>-0.00</td>
+      <td>7.50</td>
+      <td>-0.01</td>
+      <td>104.25</td>
       <td>0.00</td>
-      <td>1.34</td>
-      <td>-0.10</td>
-      <td>87.45</td>
-      <td>0.00</td>
-      <td>1.43</td>
-      <td>-0.39</td>
+      <td>3.77</td>
+      <td>-0.01</td>
+      <td>64.99</td>
+      <td>-0.01</td>
+      <td>...</td>
+      <td>8.10</td>
+      <td>-0.24</td>
+      <td>93.10</td>
+      <td>-0.00</td>
+      <td>1.30</td>
+      <td>-0.12</td>
+      <td>83.44</td>
+      <td>-0.00</td>
+      <td>1.33</td>
+      <td>-0.42</td>
+    </tr>
+    <tr>
+      <th>2026-07-23</th>
+      <td>741.62</td>
+      <td>-0.01</td>
+      <td>7.40</td>
+      <td>-0.03</td>
+      <td>102.90</td>
+      <td>-0.01</td>
+      <td>3.71</td>
+      <td>-0.02</td>
+      <td>64.60</td>
+      <td>-0.01</td>
+      <td>...</td>
+      <td>7.92</td>
+      <td>-0.25</td>
+      <td>92.85</td>
+      <td>-0.00</td>
+      <td>1.30</td>
+      <td>-0.12</td>
+      <td>83.17</td>
+      <td>-0.00</td>
+      <td>1.32</td>
+      <td>-0.42</td>
     </tr>
   </tbody>
 </table>
-<p>6565 rows × 28 columns</p>
+<p>6582 rows × 28 columns</p>
 </div>
 
 
@@ -1733,8 +1733,8 @@ display(data_merged_aligned)
       <td>19.76</td>
       <td>49.25</td>
       <td>12.37</td>
-      <td>48.32</td>
-      <td>45.51</td>
+      <td>48.16</td>
+      <td>45.35</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1757,8 +1757,8 @@ display(data_merged_aligned)
       <td>20.65</td>
       <td>49.70</td>
       <td>12.22</td>
-      <td>48.32</td>
-      <td>45.49</td>
+      <td>48.16</td>
+      <td>45.32</td>
       <td>0.02</td>
       <td>0.02</td>
       <td>0.00</td>
@@ -1781,8 +1781,8 @@ display(data_merged_aligned)
       <td>20.70</td>
       <td>49.25</td>
       <td>12.34</td>
-      <td>48.28</td>
-      <td>45.35</td>
+      <td>48.12</td>
+      <td>45.19</td>
       <td>0.00</td>
       <td>0.02</td>
       <td>0.00</td>
@@ -1805,8 +1805,8 @@ display(data_merged_aligned)
       <td>20.62</td>
       <td>49.62</td>
       <td>12.40</td>
-      <td>48.40</td>
-      <td>45.52</td>
+      <td>48.24</td>
+      <td>45.35</td>
       <td>0.00</td>
       <td>0.02</td>
       <td>0.00</td>
@@ -1829,8 +1829,8 @@ display(data_merged_aligned)
       <td>20.90</td>
       <td>50.15</td>
       <td>12.59</td>
-      <td>48.39</td>
-      <td>45.45</td>
+      <td>48.23</td>
+      <td>45.28</td>
       <td>-0.00</td>
       <td>0.02</td>
       <td>-0.00</td>
@@ -1871,128 +1871,128 @@ display(data_merged_aligned)
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-06-23</th>
-      <td>737.14</td>
-      <td>102.46</td>
-      <td>67.17</td>
-      <td>28.95</td>
-      <td>77.33</td>
-      <td>94.12</td>
-      <td>86.20</td>
+      <th>2026-07-17</th>
+      <td>746.72</td>
+      <td>103.33</td>
+      <td>63.29</td>
+      <td>31.40</td>
+      <td>75.50</td>
+      <td>93.84</td>
+      <td>84.52</td>
       <td>-0.01</td>
-      <td>7.57</td>
-      <td>-0.03</td>
-      <td>...</td>
-      <td>-0.62</td>
+      <td>7.69</td>
       <td>-0.02</td>
-      <td>5.25</td>
-      <td>-0.24</td>
+      <td>...</td>
+      <td>-0.59</td>
+      <td>0.01</td>
+      <td>5.10</td>
+      <td>-0.26</td>
       <td>0.00</td>
       <td>0.95</td>
       <td>-0.11</td>
       <td>0.00</td>
-      <td>0.89</td>
-      <td>-0.40</td>
+      <td>0.86</td>
+      <td>-0.41</td>
     </tr>
     <tr>
-      <th>2026-06-24</th>
-      <td>736.66</td>
-      <td>102.26</td>
-      <td>67.25</td>
-      <td>28.23</td>
-      <td>74.99</td>
-      <td>94.73</td>
-      <td>87.38</td>
+      <th>2026-07-20</th>
+      <td>745.36</td>
+      <td>102.57</td>
+      <td>63.56</td>
+      <td>31.63</td>
+      <td>75.35</td>
+      <td>93.54</td>
+      <td>83.89</td>
       <td>-0.00</td>
-      <td>7.57</td>
-      <td>-0.03</td>
-      <td>...</td>
-      <td>-0.63</td>
-      <td>-0.03</td>
-      <td>5.06</td>
-      <td>-0.26</td>
-      <td>0.01</td>
-      <td>0.96</td>
-      <td>-0.11</td>
-      <td>0.01</td>
-      <td>0.92</td>
-      <td>-0.39</td>
-    </tr>
-    <tr>
-      <th>2026-06-25</th>
-      <td>736.50</td>
-      <td>103.15</td>
-      <td>67.96</td>
-      <td>28.88</td>
-      <td>75.71</td>
-      <td>94.79</td>
-      <td>87.35</td>
-      <td>-0.00</td>
-      <td>7.57</td>
-      <td>-0.03</td>
-      <td>...</td>
-      <td>-0.62</td>
-      <td>0.01</td>
-      <td>5.12</td>
-      <td>-0.25</td>
-      <td>0.00</td>
-      <td>0.96</td>
-      <td>-0.11</td>
-      <td>-0.00</td>
-      <td>0.92</td>
-      <td>-0.39</td>
-    </tr>
-    <tr>
-      <th>2026-06-26</th>
-      <td>730.17</td>
-      <td>102.54</td>
-      <td>67.19</td>
-      <td>28.39</td>
-      <td>76.56</td>
-      <td>95.03</td>
-      <td>87.36</td>
-      <td>-0.01</td>
-      <td>7.49</td>
-      <td>-0.04</td>
-      <td>...</td>
-      <td>-0.63</td>
-      <td>0.01</td>
-      <td>5.19</td>
-      <td>-0.25</td>
-      <td>0.00</td>
-      <td>0.97</td>
-      <td>-0.10</td>
-      <td>0.00</td>
-      <td>0.92</td>
-      <td>-0.39</td>
-    </tr>
-    <tr>
-      <th>2026-06-29</th>
-      <td>744.19</td>
-      <td>103.45</td>
-      <td>67.43</td>
-      <td>28.44</td>
-      <td>75.53</td>
-      <td>95.06</td>
-      <td>87.45</td>
-      <td>0.02</td>
-      <td>7.66</td>
+      <td>7.67</td>
       <td>-0.02</td>
       <td>...</td>
-      <td>-0.63</td>
-      <td>-0.01</td>
-      <td>5.11</td>
+      <td>-0.59</td>
+      <td>-0.00</td>
+      <td>5.09</td>
       <td>-0.26</td>
-      <td>0.00</td>
-      <td>0.97</td>
-      <td>-0.10</td>
-      <td>0.00</td>
-      <td>0.92</td>
-      <td>-0.39</td>
+      <td>-0.00</td>
+      <td>0.94</td>
+      <td>-0.11</td>
+      <td>-0.01</td>
+      <td>0.85</td>
+      <td>-0.41</td>
+    </tr>
+    <tr>
+      <th>2026-07-21</th>
+      <td>751.95</td>
+      <td>104.06</td>
+      <td>65.34</td>
+      <td>32.16</td>
+      <td>76.82</td>
+      <td>93.31</td>
+      <td>83.66</td>
+      <td>0.01</td>
+      <td>7.75</td>
+      <td>-0.01</td>
+      <td>...</td>
+      <td>-0.58</td>
+      <td>0.02</td>
+      <td>5.21</td>
+      <td>-0.24</td>
+      <td>-0.00</td>
+      <td>0.94</td>
+      <td>-0.12</td>
+      <td>-0.00</td>
+      <td>0.84</td>
+      <td>-0.41</td>
+    </tr>
+    <tr>
+      <th>2026-07-22</th>
+      <td>750.93</td>
+      <td>104.25</td>
+      <td>64.99</td>
+      <td>32.45</td>
+      <td>77.69</td>
+      <td>93.10</td>
+      <td>83.44</td>
+      <td>-0.00</td>
+      <td>7.73</td>
+      <td>-0.01</td>
+      <td>...</td>
+      <td>-0.58</td>
+      <td>0.01</td>
+      <td>5.28</td>
+      <td>-0.24</td>
+      <td>-0.00</td>
+      <td>0.93</td>
+      <td>-0.12</td>
+      <td>-0.00</td>
+      <td>0.84</td>
+      <td>-0.42</td>
+    </tr>
+    <tr>
+      <th>2026-07-23</th>
+      <td>741.62</td>
+      <td>102.90</td>
+      <td>64.60</td>
+      <td>33.14</td>
+      <td>76.15</td>
+      <td>92.85</td>
+      <td>83.17</td>
+      <td>-0.01</td>
+      <td>7.63</td>
+      <td>-0.03</td>
+      <td>...</td>
+      <td>-0.57</td>
+      <td>-0.02</td>
+      <td>5.16</td>
+      <td>-0.25</td>
+      <td>-0.00</td>
+      <td>0.93</td>
+      <td>-0.12</td>
+      <td>-0.00</td>
+      <td>0.83</td>
+      <td>-0.42</td>
     </tr>
   </tbody>
 </table>
-<p>5015 rows × 28 columns</p>
+<p>5032 rows × 28 columns</p>
 </div>
 
 
@@ -2127,13 +2127,13 @@ display(sum_stats)
   <tbody>
     <tr>
       <th>IVV_Return</th>
-      <td>6564</td>
+      <td>6581</td>
       <td>2000-05-22</td>
-      <td>2026-06-29</td>
+      <td>2026-07-23</td>
       <td>0.10</td>
       <td>0.19</td>
-      <td>0.53</td>
-      <td>0.09</td>
+      <td>0.52</td>
+      <td>0.08</td>
       <td>0.11</td>
       <td>2008-10-28</td>
       <td>-0.12</td>
@@ -2147,12 +2147,12 @@ display(sum_stats)
     </tr>
     <tr>
       <th>EFA_Return</th>
-      <td>6244</td>
+      <td>6261</td>
       <td>2001-08-28</td>
-      <td>2026-06-29</td>
+      <td>2026-07-23</td>
       <td>0.08</td>
       <td>0.21</td>
-      <td>0.41</td>
+      <td>0.40</td>
       <td>0.06</td>
       <td>0.16</td>
       <td>2008-10-13</td>
@@ -2167,12 +2167,12 @@ display(sum_stats)
     </tr>
     <tr>
       <th>EEM_Return</th>
-      <td>5838</td>
+      <td>5855</td>
       <td>2003-04-15</td>
-      <td>2026-06-29</td>
+      <td>2026-07-23</td>
       <td>0.13</td>
       <td>0.27</td>
-      <td>0.49</td>
+      <td>0.48</td>
       <td>0.10</td>
       <td>0.23</td>
       <td>2008-10-13</td>
@@ -2187,13 +2187,13 @@ display(sum_stats)
     </tr>
     <tr>
       <th>GSG_Return</th>
-      <td>5014</td>
+      <td>5031</td>
       <td>2006-07-24</td>
-      <td>2026-06-29</td>
-      <td>0.00</td>
+      <td>2026-07-23</td>
+      <td>0.01</td>
       <td>0.23</td>
-      <td>0.00</td>
-      <td>-0.03</td>
+      <td>0.03</td>
+      <td>-0.02</td>
       <td>0.08</td>
       <td>2008-11-04</td>
       <td>-0.12</td>
@@ -2203,13 +2203,13 @@ display(sum_stats)
       <td>2020-04-28</td>
       <td>NaT</td>
       <td>NaN</td>
-      <td>-0.03</td>
+      <td>-0.02</td>
     </tr>
     <tr>
       <th>IAU_Return</th>
-      <td>5386</td>
+      <td>5403</td>
       <td>2005-01-31</td>
-      <td>2026-06-29</td>
+      <td>2026-07-23</td>
       <td>0.12</td>
       <td>0.18</td>
       <td>0.65</td>
@@ -2227,12 +2227,12 @@ display(sum_stats)
     </tr>
     <tr>
       <th>IEF_Return</th>
-      <td>6016</td>
+      <td>6033</td>
       <td>2002-07-31</td>
-      <td>2026-06-29</td>
+      <td>2026-07-23</td>
       <td>0.04</td>
       <td>0.07</td>
-      <td>0.56</td>
+      <td>0.54</td>
       <td>0.04</td>
       <td>0.03</td>
       <td>2009-03-18</td>
@@ -2247,12 +2247,12 @@ display(sum_stats)
     </tr>
     <tr>
       <th>TLT_Return</th>
-      <td>6016</td>
+      <td>6033</td>
       <td>2002-07-31</td>
-      <td>2026-06-29</td>
+      <td>2026-07-23</td>
       <td>0.05</td>
       <td>0.14</td>
-      <td>0.33</td>
+      <td>0.32</td>
       <td>0.04</td>
       <td>0.08</td>
       <td>2020-03-20</td>
@@ -2263,7 +2263,7 @@ display(sum_stats)
       <td>2023-10-19</td>
       <td>NaT</td>
       <td>NaN</td>
-      <td>0.08</td>
+      <td>0.07</td>
     </tr>
   </tbody>
 </table>
@@ -2375,7 +2375,9 @@ for fund, data in fund_data.items():
             # 12 windows. (Dropping NaN on every column collapsed every pair onto the 12m-MA /
             # 12m-forward overlap, discarding most of the data for the shorter windows.)
             pair_data = data.dropna(subset=[f"{fund}_MA_{ma_label}", fr_col])
-            # pair_data = pair_data.resample("W").last()
+            
+            # This will resample the data to monthly frequency, taking the last observation of each month.
+            pair_data = pair_data.resample("ME").last()
 
             overall_accuracy = (pair_data[pred_col] == pair_data[actual_col]).mean()
             pos_accuracy = ((pair_data[pred_col] == 1) & (pair_data[actual_col] == 1)).sum() / (pair_data[pred_col] == 1).sum()
@@ -2481,72 +2483,72 @@ display(ma_prediction_results)
       <td>IVV</td>
       <td>3m</td>
       <td>3m</td>
-      <td>0.59</td>
+      <td>0.57</td>
       <td>0.71</td>
-      <td>0.34</td>
-      <td>-0.01</td>
-      <td>0.29</td>
-      <td>0.00</td>
+      <td>0.30</td>
       <td>0.02</td>
+      <td>0.73</td>
+      <td>0.00</td>
+      <td>0.03</td>
       <td>0.15</td>
       <td>-0.10</td>
-      <td>0.02</td>
-      <td>0.23</td>
-      <td>-0.18</td>
+      <td>0.03</td>
+      <td>0.22</td>
+      <td>-0.17</td>
     </tr>
     <tr>
       <th>1</th>
       <td>IVV</td>
       <td>3m</td>
       <td>4m</td>
-      <td>0.61</td>
-      <td>0.73</td>
-      <td>0.35</td>
-      <td>0.02</td>
+      <td>0.58</td>
+      <td>0.72</td>
+      <td>0.31</td>
       <td>0.05</td>
+      <td>0.42</td>
       <td>0.00</td>
       <td>0.03</td>
       <td>0.18</td>
       <td>-0.11</td>
       <td>0.03</td>
-      <td>0.26</td>
-      <td>-0.21</td>
+      <td>0.27</td>
+      <td>-0.20</td>
     </tr>
     <tr>
       <th>2</th>
       <td>IVV</td>
       <td>3m</td>
       <td>5m</td>
-      <td>0.64</td>
-      <td>0.76</td>
-      <td>0.36</td>
-      <td>0.03</td>
-      <td>0.02</td>
+      <td>0.63</td>
+      <td>0.77</td>
+      <td>0.35</td>
+      <td>0.04</td>
+      <td>0.46</td>
       <td>0.00</td>
       <td>0.04</td>
-      <td>0.21</td>
+      <td>0.20</td>
       <td>-0.12</td>
-      <td>0.03</td>
-      <td>0.30</td>
-      <td>-0.24</td>
+      <td>0.04</td>
+      <td>0.31</td>
+      <td>-0.23</td>
     </tr>
     <tr>
       <th>3</th>
       <td>IVV</td>
       <td>3m</td>
       <td>6m</td>
-      <td>0.64</td>
+      <td>0.62</td>
       <td>0.77</td>
-      <td>0.35</td>
-      <td>0.02</td>
-      <td>0.10</td>
+      <td>0.32</td>
+      <td>0.04</td>
+      <td>0.51</td>
       <td>0.00</td>
       <td>0.05</td>
-      <td>0.24</td>
-      <td>-0.14</td>
-      <td>0.04</td>
-      <td>0.33</td>
-      <td>-0.25</td>
+      <td>0.23</td>
+      <td>-0.13</td>
+      <td>0.05</td>
+      <td>0.34</td>
+      <td>-0.24</td>
     </tr>
     <tr>
       <th>4</th>
@@ -2554,13 +2556,13 @@ display(ma_prediction_results)
       <td>3m</td>
       <td>7m</td>
       <td>0.66</td>
-      <td>0.80</td>
+      <td>0.82</td>
       <td>0.36</td>
-      <td>0.04</td>
-      <td>0.00</td>
-      <td>0.00</td>
+      <td>0.08</td>
+      <td>0.19</td>
+      <td>0.01</td>
       <td>0.06</td>
-      <td>0.27</td>
+      <td>0.26</td>
       <td>-0.14</td>
       <td>0.05</td>
       <td>0.36</td>
@@ -2591,34 +2593,34 @@ display(ma_prediction_results)
       <td>8m</td>
       <td>0.46</td>
       <td>0.54</td>
-      <td>0.34</td>
-      <td>-0.07</td>
+      <td>0.33</td>
+      <td>-0.05</td>
+      <td>0.38</td>
       <td>0.00</td>
-      <td>0.01</td>
       <td>0.02</td>
       <td>0.23</td>
-      <td>-0.19</td>
-      <td>0.04</td>
-      <td>0.26</td>
       <td>-0.18</td>
+      <td>0.04</td>
+      <td>0.27</td>
+      <td>-0.19</td>
     </tr>
     <tr>
       <th>696</th>
       <td>TLT</td>
       <td>12m</td>
       <td>9m</td>
-      <td>0.46</td>
-      <td>0.56</td>
-      <td>0.31</td>
-      <td>-0.06</td>
+      <td>0.48</td>
+      <td>0.58</td>
+      <td>0.30</td>
+      <td>-0.05</td>
+      <td>0.44</td>
       <td>0.00</td>
-      <td>0.00</td>
-      <td>0.03</td>
-      <td>0.25</td>
-      <td>-0.20</td>
-      <td>0.04</td>
-      <td>0.27</td>
+      <td>0.02</td>
+      <td>0.24</td>
       <td>-0.19</td>
+      <td>0.04</td>
+      <td>0.29</td>
+      <td>-0.21</td>
     </tr>
     <tr>
       <th>697</th>
@@ -2626,17 +2628,17 @@ display(ma_prediction_results)
       <td>12m</td>
       <td>10m</td>
       <td>0.47</td>
-      <td>0.58</td>
+      <td>0.57</td>
       <td>0.31</td>
-      <td>-0.06</td>
-      <td>0.00</td>
+      <td>-0.05</td>
+      <td>0.44</td>
       <td>0.00</td>
       <td>0.03</td>
-      <td>0.27</td>
+      <td>0.26</td>
       <td>-0.21</td>
       <td>0.04</td>
       <td>0.29</td>
-      <td>-0.20</td>
+      <td>-0.21</td>
     </tr>
     <tr>
       <th>698</th>
@@ -2644,15 +2646,15 @@ display(ma_prediction_results)
       <td>12m</td>
       <td>11m</td>
       <td>0.49</td>
-      <td>0.61</td>
+      <td>0.60</td>
       <td>0.32</td>
       <td>-0.04</td>
-      <td>0.01</td>
+      <td>0.56</td>
       <td>0.00</td>
-      <td>0.04</td>
+      <td>0.03</td>
       <td>0.28</td>
       <td>-0.21</td>
-      <td>0.05</td>
+      <td>0.04</td>
       <td>0.30</td>
       <td>-0.21</td>
     </tr>
@@ -2661,17 +2663,17 @@ display(ma_prediction_results)
       <td>TLT</td>
       <td>12m</td>
       <td>12m</td>
-      <td>0.50</td>
-      <td>0.63</td>
-      <td>0.33</td>
+      <td>0.51</td>
+      <td>0.62</td>
+      <td>0.34</td>
       <td>-0.02</td>
-      <td>0.13</td>
+      <td>0.70</td>
       <td>0.00</td>
       <td>0.04</td>
       <td>0.30</td>
       <td>-0.22</td>
       <td>0.05</td>
-      <td>0.31</td>
+      <td>0.32</td>
       <td>-0.22</td>
     </tr>
   </tbody>

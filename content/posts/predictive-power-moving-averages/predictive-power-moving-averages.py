@@ -19,9 +19,9 @@
 # ## Introduction
 
 # %% [markdown]
-# The idea of time series momentum (AKA, trend following) heavily relies on the idea that, for an asset experiencing upward momentum, if the price at time t is higher than the price at time t-x, then the price at time t+y is likely to be higher than the price at time t.
+# The theory of time series momentum (AKA, trend following) heavily relies on the idea that if the price at time t is higher than the price at time t-x, then the price at time t+y is likely to be higher than the price at time t.
 #
-# In this post, we will investigate the idea of moving averages, and whether if the price at time t is higher or lower than the moving average up until time t (for several different lookback periods) has any predictive power for forward returns (for several different horizons). 
+# In this post, we will investigate the idea of moving averages, and whether if the price at time t is higher or lower than the moving average up until time t (for several different lookback periods) has any predictive power for forward returns (for several different time horizons). 
 
 # %% [markdown]
 #  ## Python Imports
@@ -464,7 +464,9 @@ for fund, data in fund_data.items():
             # 12 windows. (Dropping NaN on every column collapsed every pair onto the 12m-MA /
             # 12m-forward overlap, discarding most of the data for the shorter windows.)
             pair_data = data.dropna(subset=[f"{fund}_MA_{ma_label}", fr_col])
-            # pair_data = pair_data.resample("W").last()
+            
+            # This will resample the data to monthly frequency, taking the last observation of each month.
+            pair_data = pair_data.resample("ME").last()
 
             overall_accuracy = (pair_data[pred_col] == pair_data[actual_col]).mean()
             pos_accuracy = ((pair_data[pred_col] == 1) & (pair_data[actual_col] == 1)).sum() / (pair_data[pred_col] == 1).sum()
