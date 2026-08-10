@@ -4,11 +4,12 @@ description: How to create a GPX file from raw Oura data.
 summary: How to create a GPX file from raw Oura data.
 slug: creating-gpx-oura-data
 date: 2026-07-25 00:00:01+0000
-lastmod: 2026-07-25 00:00:00+0000
+lastmod: 2026-08-09 00:00:01+0000
 feature: henry-ren-8Eg9-cPCt00-unsplash.jpg
 coverCaption: Photo by <a href="https://unsplash.com/@henryren?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Henry Ren</a> on <a href="https://unsplash.com/photos/a-spectator-holds-up-a-sign-at-a-running-race-8Eg9-cPCt00?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
 draft: false
 topics: [
+    "Claude",
     "Git",
     "GitHub",
     "GPX",
@@ -19,7 +20,7 @@ topics: [
 ---
 ## Introduction
 
-I wear an Oura ring daily to track sleep, readiness, workouts, etc. I also use Strava to view and gain insights from the workouts, and the sync from Oura to Strava normally happens without issue, with a few small tricks.
+I wear an Oura ring daily to track sleep, readiness, workouts, etc. I also use Strava to view and gain insights from the workouts, and the sync from Oura to Strava normally happens without issue.
 
 As long as you manually track the workout in Oura (not an automatically detected activity), then end and save the workout, and then open the Strava app, Strava should automatically open the workout and prompt for additional details before saving it.
 
@@ -48,9 +49,9 @@ In short order, after a dozen or so prompt iterations, I created a Python script
 
 There were a few clarifications along the way:
 
-1. Claude wanted to know if I wanted sidecar JSON and Markdown files for data points that are not pat of the GPX standard
-2. The script needed to isolate timestamps from the location file, based on the start and end times of the workout
-3. The timezone for the location data was UTC, not CT/CST, so Claude needed to correct for that
+1. Claude wanted to know if I wanted sidecar JSON and Markdown files for data points that are not part of the GPX standard.
+2. The script needed to isolate timestamps from the location file, based on the start and end times of the workout.
+3. The timezone for the location data was UTC, not CT/CST, so Claude needed to correct for that.
 
 After churning, it gave me the following response:
 
@@ -131,13 +132,28 @@ After churning, it gave me the following response:
   temperature that most tools will interpret as air temperature.
 ```
 
-I tested it on a few workouts, and compared the resulting GPX file data to the native Oura data, and it matched up within reason (17.88 mi vs 17.71 mi, average pace of 14.4 mph vs 14.2 mph), certainly close enough for my purposes.
+I tested it on a few workouts, and compared the resulting GPX file data to the native Oura data, and it matched up within reason (distance of 17.88 mi vs 17.71 mi, average speed of 14.4 mph vs 14.2 mph), certainly close enough for my purposes. Also note that the GPX file did upload to Strava without issue, including the map, distance, pace, speed, and heart rate data.
 
 The one issue I encountered was that the GPX file for a cycling workout contained cadence data - which is not natively recorded by Oura. After bringing that issue to Claude's attention, it gated the cadence field for step-based workouts only (hiking, running, walking, etc.) to avoid incorrectly including cadence data.
 
-I then asked Claude to create a new repo under my GitHub account, update the README, and push the changes to the repo, which can be found [here](https://github.com/jaredszajkowski/oura-data-analysis). See the README for complete instructions and other info.
+I then asked Claude to create a new repo under my GitHub account, update the README, and push the changes to the repo, which can be found [here](https://github.com/jaredszajkowski/oura-data-analysis).
 
-Note that the Oura data is only stored locally and not uploaded to GitHub for privacy reasons (see the .gitignore file).
+## Creating the GPX file using the script
+
+The README has complete instructions and other info, but here's a quick summary of the steps to create a GPX file from Oura data:
+
+1. Clone the repo to your local machine.
+2. Export your raw Oura data from the membership hub to `data`. In the `data` directory, you should see directories for `App Data` and `Subscriptions`.
+3. Review the `workout.csv` file (located in the `App Data` directory) to find the workout ID of the workout you want to create a GPX file for.
+4. Run the script with the workout ID of the workout you want to create a GPX file for:
+
+   ```bash
+   $ python src/extract_session_create_gpx.py <workout_id>
+   ```
+
+5. Find the GPX file in the `sessions/<workout_id>` folder.
+
+Note that the Oura data is only stored locally and not uploaded to GitHub for privacy reasons (see the `.gitignore` file).
 
 ## Conclusion
 
@@ -148,4 +164,4 @@ I'm certainly open to any feedback or suggestions for improvement, and I hope th
 1. https://membership.ouraring.com/data-export
 2. https://support.strava.com/en-us/articles/15402066-how-to-get-your-activities-to-strava
 3. https://www.topografix.com/gpx.asp
-4. [Claude session history](Extract_data_for_a_specific_session.txt)
+4. [Claude session history](Extract_data_for_a_specific_workout.txt), which contains the full prompt and response history for creating the script (~1,300 lines)
