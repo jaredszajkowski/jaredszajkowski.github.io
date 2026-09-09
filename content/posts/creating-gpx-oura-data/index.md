@@ -4,7 +4,7 @@ description: How to create a GPX file from raw Oura data.
 summary: How to create a GPX file from raw Oura data.
 slug: creating-gpx-oura-data
 date: 2026-07-25 00:00:01+0000
-lastmod: 2026-08-09 00:00:01+0000
+lastmod: 2026-09-08 00:00:01+0000
 feature: henry-ren-8Eg9-cPCt00-unsplash.jpg
 coverCaption: Photo by <a href="https://unsplash.com/@henryren?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Henry Ren</a> on <a href="https://unsplash.com/photos/a-spectator-holds-up-a-sign-at-a-running-race-8Eg9-cPCt00?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
 draft: false
@@ -18,6 +18,10 @@ topics: [
     "Strava",
 ]
 ---
+## Post Updates
+
+Update 9/8/2026: [Added a section](https://www.jaredszajkowski.com/posts/creating-gpx-oura-data/#script-versions) documenting the three versions of the extraction script, and updated the usage instructions to point at the current version.
+
 ## Introduction
 
 I wear an Oura ring daily to track sleep, readiness, workouts, etc. I also use Strava to view and gain insights from the workouts, and the sync from Oura to Strava normally happens without issue.
@@ -27,6 +31,8 @@ As long as you manually track the workout in Oura (not an automatically detected
 Recently, I tracked a workout with the Oura ring, but when I opened Strava to sync the workout, it didn't show the map, distance, or heart rate, which was a little disappointing. I ended up deleting that workout from Strava. My guess is that I hadn't opened Strava since the upgrade to Android 17 on my Pixel 7, and something happened with the cached data or the app simply just glitched.
 
 I did some research through the Oura and Strava documentation, as well as numerous Reddit threads, but ultimately it seemed that if the workout didn't successfully sync to Strava on the first attempt, there was no way to attempt the sync again or add the workout manually.
+
+The script has continued to evolve since I first published this post, mostly around cleaning up the raw GPS data - see [Script versions](#script-versions) below for what changed and why.
 
 ## Oura data export
 
@@ -138,6 +144,25 @@ The one issue I encountered was that the GPX file for a cycling workout containe
 
 I then asked Claude to create a new repo under my GitHub account, update the README, and push the changes to the repo, which can be found [here](https://github.com/jaredszajkowski/oura-data-analysis).
 
+## Script versions
+
+After using the script for a few weeks, I noticed the GPX tracks were inconsistent compared to the distance Oura itself reported, including roughly 10-15% short or long on distance, and 3-4x high on elevation gain. Rather than editing the script in place, I had Claude keep each iteration as a standalone file, so any change in output could be diffed against the version it replaced.
+
+| Script | What it adds |
+| --- | --- |
+| `extract_session_create_gpx_v1.py` | The original. Emits every raw GPS fix as a trackpoint, in a single segment, with no cleanup. |
+| `extract_session_create_gpx_v2_gap_adjusted.py` | Resamples the fixes onto a whole-second grid, and splits the track at app pauses and GPS dropouts instead of drawing a line across them. |
+| `extract_session_create_gpx_v3_doppler_check.py` | Current. Drops bad fixes before resampling - re-emitted stale positions, and positions that contradict the receiver's own Doppler speed. |
+
+Two separate problems drove those changes:
+
+1. **`rawlocation.csv` logs faster than 1 Hz.** Fixes land at irregular sub-second offsets, and roughly 40% of seconds carry two of them a few hundred milliseconds apart. That pair is GPS jitter, not movement, so summing all of it is what inflates distance and elevation. Version 2 interpolates onto an exact whole-second grid, which is what Oura's own GPX export does.
+2. **Some fixes are simply wrong.** The ring re-emits earlier positions out of order (on a couple of my rides, 47% of the fixes were stale repeats), and coming out of a GPS dropout the first fixes back are placed tens of meters behind the true position and then snap forward, charging several seconds of travel to a single step. Version 3 drops both before resampling, using the `speed` column as the arbiter, because it's Doppler-derived rather than computed by differencing positions, which makes it the only check on position that doesn't actually depend on the position data.
+
+The difference is easiest to see at the top end. On a ride from 7/31/2026, max speed dropped from 28.3 mph to 22.1 mph (Strava reports 22.2 mph from Oura's own GPX file for that ride), and the worst single step went from 46 mph to 29 mph. I'd love to be riding 28.3 (or 46) mph, but it's not reality. :)
+
+Version 3 is the one to use; passing `--no-doppler-filter` reproduces version 2's output if you want to compare.
+
 ## Creating the GPX file using the script
 
 The README has complete instructions and other info, but here's a quick summary of the steps to create a GPX file from Oura data:
@@ -148,7 +173,7 @@ The README has complete instructions and other info, but here's a quick summary 
 4. Run the script with the workout ID of the workout you want to create a GPX file for:
 
    ```bash
-   $ python src/extract_session_create_gpx.py <workout_id>
+   $ python src/extract_session_create_gpx_v3_doppler_check.py <workout_id>
    ```
 
 5. Find the GPX file in the `sessions/<workout_id>` folder.
