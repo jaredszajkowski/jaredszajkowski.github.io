@@ -12,9 +12,7 @@ showComments: false
 
 Jared is a seasoned civil engineer with extensive experience in infrastructure design and construction, specifically within the heavy highway and telecommunications sectors. With a strong foundation in field operations, contract administration, and project cost forecasting, Jared has consistently demonstrated the ability to drive projects to success through aggressive problem-solving and meticulous planning.
 
-After spending the first part of his career in engineering, Jared decided to follow his passion for financial markets by enrolling in the [Financial Mathematics](https://finmath.uchicago.edu/) graduate program at the University of Chicago in the fall of 2022. This rigorous program, known for its emphasis on quantitative analysis, stochastic processes, and financial modeling, has equipped Jared with advanced skills in data-driven decision-making, risk management, and derivative pricing. He will complete the program in the spring of 2026.
-
-Jared aims to leverage his prior professional experience, analytical skills, business acumen, and attention to detail to a new career in the financial services industry.
+After spending the first part of his career in engineering, Jared decided to follow his passion for financial markets by enrolling in the [Financial Mathematics](https://finmath.uchicago.edu/) graduate program at the University of Chicago in the fall of 2022. This rigorous program, known for its emphasis on quantitative analysis, stochastic processes, and financial modeling, has equipped Jared with advanced skills in data-driven decision-making, risk management, and derivative pricing. Jared graduated from the program in June of 2026 and now aims to leverage his prior professional experience, analytical skills, business acumen, and attention to detail to a new career in the financial services industry.
 
 ## Undergraduate Education
 
@@ -38,11 +36,9 @@ Jared has completed the following graduate courses in the Univeristy of Chicago 
 * [**FINM 32900 - Full-Stack Quantitative Finance**](https://finmath.uchicago.edu/curriculum/degree-concentrations/financial-computing/finm-32900/)
 * [**BUSN 41204 - Machine Learning**](https://apps.chicagobooth.edu/PublicApps/CourseSearch/CourseSearchFilter) (search "41204" in the search under "Course Number")
 * [**FINM 36000 - Project Lab**](https://finmath.uchicago.edu/curriculum/project-lab/)
-
-Jared currently plans to graduate in the spring of 2026 after completing the following courses:
-
 * [**FINM 37400 - Fixed Income**](https://finmath.uchicago.edu/curriculum/degree-concentrations/rates-and-credit/finm-37400/)
-* [**FINM 35700 - Credit Markets**](https://finmath.uchicago.edu/curriculum/degree-concentrations/rates-and-credit/finm-35700/)
+* [**FINM 33200 - Generative and Agentic AI for Finance**](https://finmath.uchicago.edu/curriculum/degree-concentrations/financial-computing/finm-33200/)
+* [**FINM 36001 - Project Lab**](https://finmath.uchicago.edu/curriculum/project-lab/)
 
 ## Professional Certifications
 
