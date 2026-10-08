@@ -251,13 +251,20 @@ def task_export_post_notebooks():
         if not notebook_path.exists():
             continue
 
+        # Cells tagged "remove_input" contribute narrative prose that quotes computed
+        # figures, so only their rendered output belongs in the post - not the source.
+        remove_input = (
+            "--TagRemovePreprocessor.enabled=True "
+            "--TagRemovePreprocessor.remove_input_tags=remove_input"
+        )
+
         yield {
             "name": notebook_name,
             "actions": [
-                f"jupyter nbconvert --to=html --log-level=WARN --output={notebook_name} --output-dir={subdir} {notebook_path}",
-                f"jupyter nbconvert --to=pdf --log-level=WARN --output={notebook_name} --output-dir={subdir} {notebook_path}",
+                f"jupyter nbconvert --to=html --log-level=WARN {remove_input} --output={notebook_name} --output-dir={subdir} {notebook_path}",
+                f"jupyter nbconvert --to=pdf --log-level=WARN {remove_input} --output={notebook_name} --output-dir={subdir} {notebook_path}",
                 (clean_notebook_md_files, [subdir, notebook_name]),
-                f"jupyter nbconvert --to=markdown --log-level=WARN --output={notebook_name} --output-dir={subdir} {notebook_path}",
+                f"jupyter nbconvert --to=markdown --log-level=WARN {remove_input} --output={notebook_name} --output-dir={subdir} {notebook_path}",
                 (clean_pdf_export_pngs, [subdir, notebook_name]),
             ],
             "file_dep": [notebook_path],
@@ -314,60 +321,39 @@ def task_build_post_indices():
                 "clean": [],  # Don't clean these files by default.
             }
 
-def task_clean_public():
-    """Remove the Hugo public directory before rebuilding the site."""
-    def remove_public():
-        if PUBLIC_DIR.exists():
-            shutil.rmtree(PUBLIC_DIR)
-            print(f"🧹 Deleted {PUBLIC_DIR}")
-        else:
-            print(f"ℹ️  {PUBLIC_DIR} does not exist, nothing to delete.")
-    return {
-        "actions": [remove_public],
-        "task_dep": ["build_post_indices"],
-        "verbosity": 2,
-        "clean": [],  # Don't clean these files by default.
-    }
-
-def task_build_site():
-    """Build the Hugo static site"""
-    return {
-        "actions": ["hugo"],
-        "task_dep": ["clean_public"],
-        "verbosity": 2,
-        "clean": [],  # Don't clean these files by default.
-    }
-
 def task_copy_notebook_exports():
-    """Copy notebook HTML exports into the correct Hugo public/ date-based folders"""
+    """Copy notebook HTML exports into the Hugo static/posts/<slug>/ folders"""
     for subdir in POSTS_DIR.iterdir():
         if subdir.is_dir():
+            notebook_file = subdir / f"{subdir.name}.ipynb"
             html_file = subdir / f"{subdir.name}.html"
             index_md = subdir / "index.md"
 
-            if not html_file.exists() or not index_md.exists():
+            # Gate on the notebook rather than on the export and index.md: for a
+            # brand-new post those two are produced earlier in this same run, so
+            # testing them here - while the task list is still being built - would
+            # silently skip the post.
+            if not notebook_file.exists():
                 continue
 
-            # Extract slug and date from front matter
-            front_matter = extract_front_matter(index_md)
-            slug = front_matter.get("slug", subdir.name)
-            date_str = front_matter.get("date")
-            if not date_str:
-                continue
+            def copy_html(src=html_file, index=index_md, name=subdir.name):
+                # Extract slug and date from front matter
+                front_matter = extract_front_matter(index)
+                slug = front_matter.get("slug", name)
+                date_str = front_matter.get("date")
+                if not date_str:
+                    print(f"⏩ Skipped {src.name}: no date in front matter")
+                    return
 
-            # Old functionality to format path based on date
-            # # Format path like: public/YYYY/MM/DD/slug/
-            # date_obj = datetime.fromisoformat(date_str)
-            # public_path = PUBLIC_DIR / f"{date_obj:%Y/%m/%d}" / slug
-            # target_path = public_path / f"{slug}.html"
+                # Old functionality to format path based on date
+                # # Format path like: public/YYYY/MM/DD/slug/
+                # date_obj = datetime.fromisoformat(date_str)
+                # public_path = PUBLIC_DIR / f"{date_obj:%Y/%m/%d}" / slug
+                # target_path = public_path / f"{slug}.html"
 
-            # New functionality to ignore date and just use slug
-            # Format path like: static/posts/slug/
-            date_obj = datetime.fromisoformat(date_str)
-            public_path = STATIC_DIR / "posts" / slug
-            target_path = public_path / f"{slug}.html"
-
-            def copy_html(src=html_file, dest=target_path):
+                # New functionality to ignore date and just use slug
+                # Format path like: static/posts/slug/
+                dest = STATIC_DIR / "posts" / slug / f"{slug}.html"
                 dest.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(src, dest)
                 print(f"✅ Copied {src} → {dest}")
@@ -375,9 +361,12 @@ def task_copy_notebook_exports():
             yield {
                 "name": subdir.name,
                 "actions": [copy_html],
+                # No "targets": the slug, and so the destination path, is only
+                # known once index.md has been generated - which happens after
+                # this task list is built. file_dep alone drives the up-to-date
+                # check, and the copy itself is cheap and idempotent.
                 "file_dep": [html_file, index_md],
-                "targets": [target_path],
-                "task_dep": ["build_site"],
+                "task_dep": ["build_post_indices"],
                 "verbosity": 2,
                 "clean": [],  # Don't clean these files by default.
             }
@@ -436,6 +425,35 @@ def task_create_schwab_callback():
         "clean": [],  # Don't clean these files by default.
     }
 
+def task_clean_public():
+    """Remove the Hugo public directory before rebuilding the site."""
+    def remove_public():
+        if PUBLIC_DIR.exists():
+            shutil.rmtree(PUBLIC_DIR)
+            print(f"🧹 Deleted {PUBLIC_DIR}")
+        else:
+            print(f"ℹ️  {PUBLIC_DIR} does not exist, nothing to delete.")
+    return {
+        "actions": [remove_public],
+        "task_dep": ["create_schwab_callback"],
+        "verbosity": 2,
+        "clean": [],  # Don't clean these files by default.
+    }
+
+def task_build_site():
+    """Build the Hugo static site.
+
+    Runs last: `hugo` copies static/ into public/, so every task that writes
+    into static/ has to have finished before this point or its output misses
+    the build and only lands in public/ on the following run.
+    """
+    return {
+        "actions": ["hugo"],
+        "task_dep": ["clean_public"],
+        "verbosity": 2,
+        "clean": [],  # Don't clean these files by default.
+    }
+
 # def task_deploy_site():
 #     """Prompt for a commit message and push to GitHub"""
 #     def commit_and_push():
@@ -454,7 +472,7 @@ def task_create_schwab_callback():
 
 #     return {
 #         "actions": [commit_and_push],
-#         "task_dep": ["create_schwab_callback"],
+#         "task_dep": ["build_site"],
 #         "verbosity": 2,
 #         "clean": [],  # Don't clean these files by default.
 #     }
