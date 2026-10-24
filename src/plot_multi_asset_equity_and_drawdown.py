@@ -15,6 +15,7 @@ def plot_multi_asset_equity_and_drawdown(
     show_plot: bool,
     export_plot: bool,
     export_dir: Path | str = None,  # <-- new optional parameter
+    caption: str = None,
 ) -> None:
     """
     Plots:
@@ -41,6 +42,8 @@ def plot_multi_asset_equity_and_drawdown(
         Whether to save the plot as a PNG file.
     export_dir : Path | str, optional
         Directory to save the plot if export_plot is True. Defaults to current directory.
+    caption : str, optional
+        Caption drawn centered below the figure, e.g. "Figure 1". Defaults to None.
 
     Returns:
     --------
@@ -250,11 +253,19 @@ def plot_multi_asset_equity_and_drawdown(
     fig.suptitle(title, fontsize=16, y=0.99)
     plt.tight_layout()
 
+    # Caption
+    if caption is not None:
+        fig.text(0.5, 0, caption, ha="center", va="top", fontsize=9)
+
     # Export plot as PNG
     if export_plot:
         export_dir = Path(export_dir) if export_dir else Path.cwd()
         export_dir.mkdir(parents=True, exist_ok=True)
-        plt.savefig(export_dir / "multi_asset_strategy.png")
+        # Expand the saved image to include a caption below the figure
+        plt.savefig(
+            export_dir / "multi_asset_strategy.png",
+            bbox_inches="tight" if caption is not None else None,
+        )
 
     # Show the plot
     if show_plot == True:

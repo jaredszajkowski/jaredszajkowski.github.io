@@ -25,15 +25,19 @@ def plot_time_series(
     x_tick_rotation: int,
     y_label: str,
     y_format: str,
-    y_format_decimal_places: int,
-    y_tick_spacing: int,
+    y_format_decimal_places: int | str,
+    y_tick_spacing: int | float | str,
     y_tick_rotation: int,
+    emphasis_columns: str | list[str] = None,
+    emphasis_linewidth: float = 3.0,
+    emphasis_alpha: float = 1.0,
     grid: bool = True,
     legend: bool = True,
     legend_location: str = "best",
     legend_anchor: tuple = None,
     export_plot: bool = False,
     plot_file_name: str = None,
+    caption: str = None,
 ) -> None:
     """
     Plot the time series data from a DataFrame for a specified date range and columns.
@@ -47,7 +51,8 @@ def plot_time_series(
     plot_end_date : str
         End date for the plot in 'YYYY-MM-DD' format.
     plot_columns : str OR list
-        List of columns to plot from the DataFrame. If none, all columns will be plotted.
+        Column or list of columns to plot from the DataFrame, or "All" to plot
+        every column.
     title : str
         Title of the plot.
     x_label : str
@@ -63,13 +68,25 @@ def plot_time_series(
     y_label : str
         Label for the y-axis.
     y_format : str
-        Format for the y-axis labels.
-    y_format_decimal_places : int
-        Number of decimal places for y-axis labels.
-    y_tick_spacing : int
-        Spacing for the y-axis ticks.
+        Format for the y-axis labels: "Decimal", "Percentage", "Scientific", or
+        "Log".
+    y_format_decimal_places : int OR str
+        Number of decimal places for y-axis labels, or "Auto" to infer it from
+        the y-axis tick spacing.
+    y_tick_spacing : int OR float OR str
+        Spacing for the y-axis ticks, or "Auto" to derive it from the range of
+        the plotted data. Ignored when y_format is "Log".
     y_tick_rotation : int
         Rotation angle for the y-axis tick labels.
+    emphasis_columns : str OR list, optional
+        Column(s) to draw with emphasis: full opacity and drawn on top of the
+        other series, plus a heavier line weight if emphasis_linewidth is
+        raised. Colors are unchanged, and the non-emphasized series keep their
+        normal styling (default is None).
+    emphasis_linewidth : float, optional
+        Line width used for emphasized columns (default is 3.0).
+    emphasis_alpha : float, optional
+        Opacity used for emphasized columns (default is 1.0).
     grid : bool, optional
         Whether to display a grid on the plot (default is True).
     legend : bool, optional
@@ -83,6 +100,9 @@ def plot_time_series(
         Whether to save the figure as a PNG file (default is False).
     plot_file_name : str, optional
         File name for saving the figure (if export_plot is True, default is None).
+    caption : str, optional
+        Caption drawn centered below the figure, e.g. "Figure 1" (default is
+        None).
 
     Returns
     -------
@@ -112,14 +132,35 @@ def plot_time_series(
 
     # Plot data
     cols = df_filtered.columns if plot_columns == "All" else plot_columns
+
+    # Normalize emphasis columns to a set for membership testing
+    if emphasis_columns is None:
+        emphasis_cols = set()
+    elif isinstance(emphasis_columns, str):
+        emphasis_cols = {emphasis_columns}
+    else:
+        emphasis_cols = set(emphasis_columns)
+
+    # Catch typos rather than silently plotting without emphasis
+    unrecognized = emphasis_cols - set(cols)
+    if unrecognized:
+        raise ValueError(
+            f"Unrecognized emphasis_columns: {sorted(unrecognized)}. "
+            f"Columns being plotted: {sorted(cols)}."
+        )
+
     for col in cols:
+        emphasized = col in emphasis_cols
         plt.plot(
             df_filtered.index,
             df_filtered[col],
             label=col,
             linestyle="-",
-            linewidth=1.5,
-            alpha=0.5,
+            linewidth=emphasis_linewidth if emphasized else 1.5,
+            alpha=emphasis_alpha if emphasized else 0.5,
+            # Layer emphasized series on top without reordering the loop, which
+            # would shift the color cycle and the legend order
+            zorder=3 if emphasized else 2,
         )
 
     # Format X axis
@@ -194,8 +235,8 @@ def plot_time_series(
 
     # Format Y axis
     if y_tick_spacing == "Auto":
-        max_value = 0
-        min_value = 1_000_000
+        max_value = -math.inf
+        min_value = math.inf
         cols = df_filtered.columns if plot_columns == "All" else plot_columns
         for col in cols:
             if df_filtered[col].max() > max_value:
@@ -206,8 +247,6 @@ def plot_time_series(
 
         raw_y_spacing = (max_value - min_value) / 10
         y_tick_spacing = round_to_nice_value(raw_y_spacing)
-    else:
-        y_tick_spacing = y_tick_spacing
 
     if y_format_decimal_places == "Auto":
         if isinstance(y_tick_spacing, float):
@@ -216,9 +255,12 @@ def plot_time_series(
             )
         else:
             y_tick_spacing_decimal_places = 0
+
+        # PercentFormatter shows the value x 100, which needs 2 fewer decimals
+        if y_format == "Percentage":
+            y_tick_spacing_decimal_places = max(0, y_tick_spacing_decimal_places - 2)
+
         y_format_decimal_places = y_tick_spacing_decimal_places
-    else:
-        y_format_decimal_places = y_format_decimal_places
 
     if y_format == "Decimal":
         plt.gca().yaxis.set_major_formatter(
@@ -239,7 +281,10 @@ def plot_time_series(
             f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', 'Scientific', or 'Log'."
         )
 
-    plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
+    # Linear tick spacing would override the log locator
+    if y_format != "Log":
+        plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
+
     plt.ylabel(y_label)
     plt.yticks(rotation=y_tick_rotation)
 
@@ -257,6 +302,10 @@ def plot_time_series(
             plt.legend(loc=legend_location, bbox_to_anchor=legend_anchor)
         else:
             plt.legend(loc=legend_location)
+
+    # Caption
+    if caption is not None:
+        plt.gcf().text(0.5, 0, caption, ha="center", va="top", fontsize=9)
 
     # Save figure and display plot
     if export_plot == True:

@@ -14,6 +14,7 @@ def plot_vix_with_trades(
     y_tick_spacing: int,
     index_number: str,
     export_plot: bool,
+    caption: str = None,
 ) -> pd.DataFrame:
     """
     Plot the VIX daily high and low prices, along with the VIX spikes, and trades.
@@ -32,6 +33,9 @@ def plot_vix_with_trades(
         Index number to be used in the file name of the plot export.
     export_plot : bool
         Whether to save the figure as a PNG file.
+    caption : str, optional
+        Caption drawn centered below the figure, e.g. "Figure 1" (default
+        is None).
 
     Returns:
     --------
@@ -111,6 +115,10 @@ def plot_vix_with_trades(
     plt.tight_layout()
     plt.grid(True, linestyle="--", alpha=0.7)
     plt.legend(fontsize=9)
+
+    # Caption
+    if caption is not None:
+        plt.gcf().text(0.5, 0, caption, ha="center", va="top", fontsize=9)
 
     # Save figure and display plot
     if export_plot == True:

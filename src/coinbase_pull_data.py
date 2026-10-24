@@ -1,415 +1,313 @@
-import calendar
 import os
 import pandas as pd
 
 from coinbase_fetch_available_products import coinbase_fetch_available_products
 from coinbase_fetch_full_history import coinbase_fetch_full_history
 from datetime import datetime, timedelta
+from IPython.display import display
 from settings import config
 
 # Get the data directory from the configuration
 DATA_DIR = config("DATA_DIR")
 
+# Supported granularities, in seconds, mapped to the subdirectory the data is
+# stored in
+GRANULARITY_DIRECTORIES = {
+    60: "Minute",
+    3600: "Hourly",
+    86400: "Daily",
+}
 
-def coinbase_pull_data(
-    base_directory,
-    source: str,
-    asset_class: str,
-    excel_export: bool,
-    pickle_export: bool,
-    output_confirmation: bool,
-    base_currency: str,
-    quote_currency: str,
-    granularity: int = 3600,  # 60=minute, 3600=hourly, 86400=daily
-    status: str = "online",  # default status is 'online'
-    start_date: datetime = datetime(2025, 1, 1),  # default start date
-    end_date: datetime = datetime.now()
-    - timedelta(
-        days=1
-    ),  # updates data through 1 day ago due to lag in data availability
-) -> pd.DataFrame:
+
+def _find_first_available_date(
+    product_id: str,
+    start_date: datetime,
+    end_date: datetime,
+) -> datetime:
     """
-    Update existing record or pull full historical data for a given product from Coinbase Exchange API.
+    Locate the first date with data for a product using daily candles.
+
+    Pulling at daily granularity covers 300 days per request, so scanning a
+    range of years costs only a handful of requests. Scanning the same range at
+    minute granularity, where each request covers 5 hours, would take thousands.
 
     Parameters:
     -----------
-    base_directory
+    product_id : str
+        The trading pair (e.g., 'BTC-USD').
+    start_date : datetime
+        Earliest date to consider.
+    end_date : datetime
+        Latest date to consider.
+
+    Returns:
+    --------
+    datetime
+        Date of the first available candle, or None if the product has no data.
+    """
+
+    daily_history_df = coinbase_fetch_full_history(
+        product_id, start_date, end_date, 86400
+    )
+
+    if daily_history_df.empty:
+        return None
+
+    return daily_history_df["time"].min()
+
+
+def coinbase_pull_data(
+    base_directory,
+    product_id: str,
+    source: str,
+    asset_class: str,
+    granularity: int = 3600,  # 60=minute, 3600=hourly, 86400=daily
+    start_date: datetime = datetime(2010, 1, 1),
+    end_date: datetime = None,  # defaults to 1 day ago due to lag in data availability
+    force_existing_check: bool = False,
+    excel_export: bool = False,
+    pickle_export: bool = True,
+    parquet_export: bool = False,
+    output_confirmation: bool = True,
+    verbose: bool = False,
+) -> pd.DataFrame:
+    """
+    Read existing data file, download price data from Coinbase, and export data.
+
+    Parameters:
+    -----------
+    base_directory : any
         Root path to store downloaded data.
+    product_id : str
+        The trading pair to download (e.g., 'BTC-USD').
     source : str
-        Name of the data source (e.g., 'Nasdaq_Data_Link').
+        Name of the data source (e.g., 'Coinbase').
     asset_class : str
-        Asset class name (e.g., 'Equities').
+        Asset class name (e.g., 'Cryptocurrencies').
+    granularity : int
+        Time slice in seconds (60=minute, 3600=hourly, 86400=daily).
+    start_date : datetime
+        Earliest date to consider. Only used when no existing record is found;
+        where a record exists it is resumed from its last stored candle.
+    end_date : datetime, optional
+        End date in UTC. Defaults to 1 day ago due to lag in data availability.
+    force_existing_check : bool
+        If True, re-pull from start_date rather than resuming, to fill any gaps
+        in an existing data file.
     excel_export : bool
         If True, export data to Excel format.
     pickle_export : bool
         If True, export data to Pickle format.
+    parquet_export : bool
+        If True, export data to Parquet format.
     output_confirmation : bool
         If True, print confirmation message.
-    base_currency : str
-        The base currency (e.g., 'BTC').
-    quote_currency : str
-        The quote currency (e.g., 'USD').
-    status : str, optional
-        Filter products by status (default is 'online').
-    granularity : int
-        Time slice in seconds (e.g., 3600 for hourly candles).
-    start_date : str, optional
-        Start date in UTC (ISO format).
-    end_date : str, optional
-        End date in UTC (ISO format).
+    verbose : bool
+        If True, print detailed information about the data being processed.
 
     Returns:
     --------
-    None
+    pd.DataFrame
+        DataFrame containing the updated price data, indexed by Date.
     """
 
-    # List of crypto assets
-    filtered_products = coinbase_fetch_available_products(
-        base_currency=base_currency, quote_currency=quote_currency, status=status
-    )
-    filtered_products_list = filtered_products["id"].tolist()
-    filtered_products_list = sorted(filtered_products_list)
+    # Resolved here rather than in the signature so that the default tracks the
+    # current date instead of the moment this module was imported
+    if end_date is None:
+        end_date = datetime.now() - timedelta(days=1)
 
-    if not filtered_products.empty:
-        print(filtered_products[["id", "base_currency", "quote_currency", "status"]])
-        print(filtered_products_list)
-        print(len(filtered_products_list))
-
-    else:
-        print("No products found with the specified base and/or quote currencies.")
-
-    missing_data = []
-    omitted_data = []
-    num_products = len(filtered_products_list)
-    counter = 0
-
-    # Loop for updates
-    for product in filtered_products_list:
-
-        counter += 1
-        print(f"Updating product {counter} of {num_products}.")
-
-        if granularity == 60:
-            time_length = "Minute"
-        elif granularity == 3600:
-            time_length = "Hourly"
-        elif granularity == 86400:
-            time_length = "Daily"
-        else:
-            print("Error - please confirm timeframe.")
-            break
-
-        # Set file location based on parameters
-        file_location = (
-            f"{base_directory}/{source}/{asset_class}/{time_length}/{product}.pkl"
+    if granularity not in GRANULARITY_DIRECTORIES:
+        raise ValueError(
+            f"Invalid granularity: {granularity}. Acceptable values are: {sorted(GRANULARITY_DIRECTORIES)}."
         )
 
-        try:
-            # Attempt to read existing pickle data file
-            ex_data = pd.read_pickle(file_location)
-            ex_data = ex_data.reset_index()
-            print(f"File found...updating the {product} data")
-            print("Existing data:")
-            print(ex_data)
+    time_length = GRANULARITY_DIRECTORIES[granularity]
 
-            # Pull recent data
-            new_data = coinbase_fetch_full_history(
-                product, start_date, end_date, granularity
-            )
-            new_data = new_data.rename(columns={"time": "Date"})
-            new_data["Date"] = new_data["Date"].dt.tz_localize(None)
+    # Set file location based on parameters
+    directory = f"{base_directory}/{source}/{asset_class}/{time_length}"
+    file_location = f"{directory}/{product_id}.pkl"
+
+    try:
+        # Attempt to read existing pickle data file
+        existing_history_df = pd.read_pickle(file_location)
+
+        # Reset index if 'Date' is the index
+        if "Date" not in existing_history_df.columns:
+            existing_history_df = existing_history_df.reset_index()
+
+        print(f"File found...updating the {product_id} {time_length} data.")
+
+        if verbose == True:
+            print("Existing data:")
+            print(existing_history_df)
+
+        # Find last date in existing data
+        last_data_date = existing_history_df["Date"].max()
+        starting_rows = len(existing_history_df)
+        print(f"Last date in existing data: {last_data_date}")
+        print(f"Number of rows in existing data: {starting_rows}")
+
+        # Resume from the last stored candle. It is re-fetched because the
+        # period may still have been in progress when it was written
+        current_start = last_data_date
+
+    except FileNotFoundError:
+        # Print error
+        print(f"File not found...downloading the {product_id} {time_length} data.")
+
+        # Create an empty DataFrame so that both paths converge on the same
+        # fetch and merge below
+        existing_history_df = pd.DataFrame(
+            {
+                "Date": pd.Series(dtype="datetime64[ns]"),
+                "low": pd.Series(dtype="float64"),
+                "high": pd.Series(dtype="float64"),
+                "open": pd.Series(dtype="float64"),
+                "close": pd.Series(dtype="float64"),
+                "volume": pd.Series(dtype="float64"),
+            }
+        )
+
+        # Set the number of starting rows to be 0
+        starting_rows = 0
+
+        # Find where the product's data actually begins rather than walking
+        # forward from start_date at the requested granularity
+        first_available_date = _find_first_available_date(
+            product_id, start_date, end_date
+        )
+
+        if first_available_date is None:
+            print(f"No data available for {product_id}.")
+            return existing_history_df.set_index("Date")
+
+        print(f"First available candle for {product_id}: {first_available_date}")
+        current_start = first_available_date
+
+    # Check for force_existing_check flag
+    if force_existing_check == True:
+        print("Forcing check of existing data...")
+        current_start = start_date
+
+    # Pull the data
+    new_data = coinbase_fetch_full_history(
+        product_id, current_start, end_date, granularity
+    )
+
+    if new_data.empty:
+        # Nothing returned means the record is already current
+        print(f"No new data returned...{product_id} {time_length} data is up to date.")
+        full_history_df = existing_history_df.copy()
+
+    else:
+        new_data = new_data.rename(columns={"time": "Date"})
+
+        if verbose == True:
             print("New data:")
             print(new_data)
 
-            # Combine existing data with recent data
-            full_history_df = pd.concat(
-                [ex_data, new_data[new_data["Date"].isin(ex_data["Date"]) == False]]
-            )
-            full_history_df = full_history_df.sort_values(by="Date")
-            full_history_df["Date"] = full_history_df["Date"].dt.tz_localize(None)
-            full_history_df = full_history_df.set_index("Date")
+        # Combine existing data with recent data, keeping the newly fetched row
+        # where a date appears in both so that a partial candle is replaced by
+        # its completed version
+        full_history_df = pd.concat([existing_history_df, new_data])
+        full_history_df = full_history_df.drop_duplicates(subset="Date", keep="last")
+        full_history_df = full_history_df.sort_values(by="Date", ascending=True)
+        full_history_df = full_history_df.reset_index(drop=True)
 
+        if verbose == True:
             print("Combined data:")
             print(full_history_df)
 
-            # Create directory
-            directory = f"{base_directory}/{source}/{asset_class}/{time_length}"
-            os.makedirs(directory, exist_ok=True)
+    # Store with Date as the index, matching the existing data files
+    full_history_df = full_history_df.set_index("Date")
 
-            # Export to excel
-            if excel_export == True:
-                full_history_df.to_excel(
-                    f"{directory}/{product}.xlsx", sheet_name="data"
-                )
-            else:
-                pass
+    # Create directory
+    os.makedirs(directory, exist_ok=True)
 
-            # Export to pickle
-            if pickle_export == True:
-                full_history_df.to_pickle(f"{directory}/{product}.pkl")
-            else:
-                pass
+    # Export to Excel
+    if excel_export == True:
+        print(f"Exporting {product_id} {time_length} data to Excel...")
+        full_history_df.to_excel(f"{directory}/{product_id}.xlsx", sheet_name="data")
 
-            # Output confirmation
-            if output_confirmation == True:
-                print(f"Data update complete for {time_length} {product}.")
-                print("--------------------")
-            else:
-                pass
+    # Export to Pickle
+    if pickle_export == True:
+        print(f"Exporting {product_id} {time_length} data to Pickle...")
+        full_history_df.to_pickle(f"{directory}/{product_id}.pkl")
 
-        except FileNotFoundError:
-            # Starting year for fetching initial data
-            starting_year = 2025
+    # Export to Parquet
+    if parquet_export == True:
+        print(f"Exporting {product_id} {time_length} data to Parquet...")
+        full_history_df.to_parquet(f"{directory}/{product_id}.parquet")
 
-            # Print error
-            print(
-                f"File not found...downloading the {product} data starting with {starting_year}."
-            )
+    total_rows = len(full_history_df)
 
-            def get_full_hist(year):
-                try:
-                    # Define the start and end dates
-                    start_date = datetime(year, 1, 1)  # Default start date
-                    end_date = datetime.now() - timedelta(
-                        days=1
-                    )  # Updates data through 1 day ago
+    # Output confirmation
+    if output_confirmation == True:
+        print(f"The first and last date of {time_length} data for {product_id} is: ")
+        display(full_history_df[:1])
+        display(full_history_df[-1:])
+        print(f"Number of rows after data update: {total_rows}")
 
-                    # Fetch and process the data
-                    full_history_df = coinbase_fetch_full_history(
-                        product, start_date, end_date, granularity
-                    )
-                    full_history_df = full_history_df.rename(columns={"time": "Date"})
-                    full_history_df = full_history_df.sort_values(by="Date")
+        if starting_rows:
+            print(f"Number of rows added during update: {total_rows - starting_rows}")
 
-                    # Iterate through rows to see if the value of the asset ever exceeds a specified threshold
-                    # Default value for the price threshold is 0 USD
-                    # If the price never exceeds this threshold, the asset is omitted from the final list
-                    def find_first_close_above_threshold(full_history_df, threshold=0):
-                        # Ensure 'Date' is the index before proceeding
-                        if "Date" in full_history_df.columns:
-                            full_history_df.set_index("Date", inplace=True)
-                        full_history_df.index = full_history_df.index.tz_localize(None)
-
-                        # Iterate through the DataFrame
-                        for index, row in full_history_df.iterrows():
-                            if row["close"] >= threshold:
-                                print(
-                                    f"First occurrence: {index}, close={row['close']}"
-                                )
-
-                                # Return the filtered DataFrame starting from this row
-                                return full_history_df.loc[index:]
-
-                        # If no value meets the condition, return an empty DataFrame
-                        print(f"Share price never exceeds {threshold} USD.")
-                        omitted_data.append(product)
-                        return None
-
-                    full_history_above_threshold_df = find_first_close_above_threshold(
-                        full_history_df, threshold=0
-                    )
-
-                    return full_history_above_threshold_df
-
-                except KeyError:
-                    print(
-                        f"KeyError: No data available for {product} in {year}. Trying next year..."
-                    )
-                    next_year = year + 1
-
-                    # Base case: Stop if the next year exceeds the current year
-                    if next_year > datetime.now().year:
-                        print("No more data available for any future years.")
-                        missing_data.append(product)
-                        return None
-
-                    # Recursive call for the next year
-                    return get_full_hist(year=next_year)
-
-            # Fetch the full history starting from the given year
-            full_history_df = get_full_hist(year=starting_year)
-
-            if full_history_df is not None:
-
-                # Create directory
-                directory = f"{base_directory}/{source}/{asset_class}/{time_length}"
-                os.makedirs(directory, exist_ok=True)
-
-                # Export to excel
-                if excel_export == True:
-                    full_history_df.to_excel(
-                        f"{directory}/{product}.xlsx", sheet_name="data"
-                    )
-                else:
-                    pass
-
-                # Export to pickle
-                if pickle_export == True:
-                    full_history_df.to_pickle(f"{directory}/{product}.pkl")
-                else:
-                    pass
-
-                # Output confirmation
-                if output_confirmation == True:
-                    print(
-                        f"Initial data fetching completed successfully for {time_length} {product}."
-                    )
-                    print("--------------------")
-                else:
-                    pass
-
-            else:
-                print("No data could be fetched for the specified range.")
-
-        except Exception as e:
-            print(str(e))
-
-    # Remove the cryptocurrencies with missing data from the final list
-    missing_data = sorted(missing_data)
-    print(f"Data missing for: {missing_data}")
-
-    for asset in missing_data:
-        try:
-            print(f"Removing {asset} from the list because it is missing data.")
-            filtered_products_list.remove(asset)
-        except ValueError:
-            print(f"{asset} not in list.")
-            pass
-
-    # Remove the cryptocurrencies with share prices that never exceed 1 USD from the final list
-    omitted_data = sorted(omitted_data)
-    print(f"Data omitted due to price for: {omitted_data}")
-
-    for asset in omitted_data:
-        try:
-            print(
-                f"Removing {asset} from the list because the share price never exceeds 1 USD."
-            )
-            filtered_products_list.remove(asset)
-        except ValueError:
-            print(f"{asset} not in list.")
-            pass
-
-    # Remove stablecoins from the final list
-    stablecoins_to_remove = [
-        "USDT-USD",
-        "USDC-USD",
-        "PAX-USD",
-        "DAI-USD",
-        "PYUSD-USD",
-        "GUSD-USD",
-    ]
-    stablecoins_to_remove = sorted(stablecoins_to_remove)
-    print(f"Data for stable coins not to be used: {stablecoins_to_remove}")
-
-    for asset in stablecoins_to_remove:
-        try:
-            filtered_products_list.remove(asset)
-            # print(f"Removing {asset} from the list because it is a stablecoin.")
-        except ValueError:
-            # print(f"{asset} not in list.")
-            pass
-
-    # Remove the wrapped coins from the final list
-    wrapped_coins_to_remove = ["WAXL-USD", "WBTC-USD"]
-    wrapped_coins_to_remove = sorted(wrapped_coins_to_remove)
-    print(f"Data for wrapped coins not to be used: {wrapped_coins_to_remove}")
-
-    for asset in wrapped_coins_to_remove:
-        try:
-            filtered_products_list.remove(asset)
-            # print(f"Removing {asset} from the list because it is a wrapped coin.")
-        except ValueError:
-            # print(f"{asset} not in list.")
-            pass
-
-    # Print the final list of token and the length of the list
-    print(f"Final list of tokens: {filtered_products_list}")
-    print(f"Length of final list of tokens: {len(filtered_products_list)}")
+        print(f"Coinbase data complete for {product_id} {time_length} data.")
+        print(f"--------------------")
 
     return full_history_df
 
 
 if __name__ == "__main__":
 
-    # Example usage to pull all data for each month from 2010 to 2024
-    for granularity in [60, 3600, 86400]:
-        for year in range(2010, 2025):
-            for month in range(1, 13):
-                print(f"Pulling data for {year}-{month:02d}...")
-                try:
-                    # Get the last day of the month
-                    last_day = calendar.monthrange(year, month)[1]
-                    coinbase_pull_data(
-                        base_directory=DATA_DIR,
-                        source="Coinbase",
-                        asset_class="Cryptocurrencies",
-                        excel_export=False,
-                        pickle_export=True,
-                        output_confirmation=True,
-                        base_currency="BTC",
-                        quote_currency="USD",
-                        granularity=granularity,  # 60=minute, 3600=hourly, 86400=daily
-                        status="online",
-                        start_date=datetime(year, month, 1),
-                        end_date=datetime(year, month, last_day),
-                    )
-                except Exception as e:
-                    print(f"Failed to pull data for {year}-{month:02d}: {e}")
+    # Stablecoins and wrapped coins are not useful for analysis
+    excluded_products = [
+        "DAI-USD",
+        "GUSD-USD",
+        "PAX-USD",
+        "PYUSD-USD",
+        "USDC-USD",
+        "USDT-USD",
+        "WAXL-USD",
+        "WBTC-USD",
+    ]
 
-    # current_year = datetime.now().year
-    # current_month = datetime.now().month
-    # current_day = datetime.now().day
+    # Identify the products to pull
+    available_products = coinbase_fetch_available_products(
+        base_currency=None,
+        quote_currency="USD",
+        status="online",
+    )
+    product_list = sorted(
+        product
+        for product in available_products["id"]
+        if product not in excluded_products
+    )
 
-    # # Crypto Data
-    # currencies = ["BTC", "ETH", "SOL", "XRP"]
+    # Limit to a subset of currencies for this example
+    currencies = ["BTC", "ETH", "SOL", "XRP"]
+    product_list = [
+        product for product in product_list if product.split("-")[0] in currencies
+    ]
 
-    # # Iterate through each currency
-    # for cur in currencies:
-    #     # Example usage - minute
-    #     coinbase_pull_data(
-    #         base_directory=DATA_DIR,
-    #         source="Coinbase",
-    #         asset_class="Cryptocurrencies",
-    #         excel_export=False,
-    #         pickle_export=True,
-    #         output_confirmation=True,
-    #         base_currency=cur,
-    #         quote_currency="USD",
-    #         granularity=60, # 60=minute, 3600=hourly, 86400=daily
-    #         status='online', # default status is 'online'
-    #         start_date=datetime(current_year, current_month - 1, 1), # default start date
-    #         end_date=datetime.now() - timedelta(days=1), # updates data through 1 day ago due to lag in data availability
-    #     )
+    # Timespans
+    granularities = [60, 3600, 86400]
 
-    #     # Example usage - hourly
-    #     coinbase_pull_data(
-    #         base_directory=DATA_DIR,
-    #         source="Coinbase",
-    #         asset_class="Cryptocurrencies",
-    #         excel_export=True,
-    #         pickle_export=True,
-    #         output_confirmation=True,
-    #         base_currency=cur,
-    #         quote_currency="USD",
-    #         granularity=3600, # 60=minute, 3600=hourly, 86400=daily
-    #         status='online', # default status is 'online'
-    #         start_date=datetime(current_year, current_month - 1, 1), # default start date
-    #         end_date=datetime.now() - timedelta(days=1), # updates data through 1 day ago due to lag in data availability
-    #     )
-
-    #     # Example usage - daily
-    #     coinbase_pull_data(
-    #         base_directory=DATA_DIR,
-    #         source="Coinbase",
-    #         asset_class="Cryptocurrencies",
-    #         excel_export=True,
-    #         pickle_export=True,
-    #         output_confirmation=True,
-    #         base_currency=cur,
-    #         quote_currency="USD",
-    #         granularity=86400, # 60=minute, 3600=hourly, 86400=daily
-    #         status='online', # default status is 'online'
-    #         start_date=datetime(current_year, current_month - 1, 1), # default start date
-    #         end_date=datetime.now() - timedelta(days=1), # updates data through 1 day ago due to lag in data availability
-    #     )
+    # Iterate through each product
+    for product in product_list:
+        for granularity in granularities:
+            try:
+                coinbase_pull_data(
+                    base_directory=DATA_DIR,
+                    product_id=product,
+                    source="Coinbase",
+                    asset_class="Cryptocurrencies",
+                    granularity=granularity,
+                    force_existing_check=False,
+                    excel_export=granularity != 60,  # minute data is pickle only
+                    pickle_export=True,
+                    parquet_export=False,
+                    output_confirmation=True,
+                    verbose=False,
+                )
+            except Exception as e:
+                print(f"Failed to pull {product} at granularity {granularity}: {e}")

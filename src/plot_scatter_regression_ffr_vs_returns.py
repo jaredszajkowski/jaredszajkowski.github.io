@@ -12,6 +12,7 @@ def plot_scatter_regression_ffr_vs_returns(
     y_vals: np.ndarray,
     intercept: float,
     slope: float,
+    caption: str = None,
 ) -> None:
     """
     Plot a scatter plot of annualized returns vs annualized change in Fed Funds
@@ -31,6 +32,9 @@ def plot_scatter_regression_ffr_vs_returns(
         Intercept of the OLS regression line.
     slope : float
         Slope of the OLS regression line.
+    caption : str, optional
+        Caption drawn centered below the figure, e.g. "Figure 1" (default is
+        None).
 
     Returns
     -------
@@ -84,6 +88,10 @@ def plot_scatter_regression_ffr_vs_returns(
     plt.tight_layout()
     plt.grid(True)
     plt.legend()
+
+    # Caption
+    if caption is not None:
+        plt.gcf().text(0.5, 0, caption, ha="center", va="top", fontsize=9)
 
     # Display the plot
     plt.show()

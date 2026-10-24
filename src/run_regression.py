@@ -17,6 +17,8 @@ def run_regression(
     y_plot_column: str,
     regression_model: str,
     regression_constant: bool,
+    cov_type: str = None,
+    cov_kwds: dict = None,
     ridge_alpha: float = None,
     logistic_C: float = 1.0,
     logistic_max_iter: int = 1000,
@@ -48,6 +50,15 @@ def run_regression(
             "Logistic", "LogisticCV".
     regression_constant : bool
         Whether to include a constant/intercept term in the model.
+    cov_type : str, optional
+        Covariance estimator passed to statsmodels' ``.fit()`` for the
+        "OLS-statsmodels" model (e.g. "HAC" for Newey-West heteroskedasticity-
+        and autocorrelation-consistent standard errors). If None (default), the
+        standard non-robust covariance is used. Passing it with any other
+        model raises a ValueError.
+    cov_kwds : dict, optional
+        Keyword arguments for the chosen ``cov_type`` (e.g. {"maxlags": 12} for
+        "HAC"). Only used when ``cov_type`` is set.
     ridge_alpha : float, optional
         Alpha value for Ridge regression. Required if regression_model is "Ridge".
     logistic_C : float, optional
@@ -75,6 +86,12 @@ def run_regression(
     of coefficients differs from the linear models above.
     """
 
+    if cov_type is not None and regression_model != "OLS-statsmodels":
+        raise ValueError(
+            f"cov_type is only supported for 'OLS-statsmodels', "
+            f"not '{regression_model}'."
+        )
+
     # Align X and y (common to all models)
     data = df[[x_plot_column, y_plot_column]].dropna()
     X = data[[x_plot_column]]
@@ -85,7 +102,10 @@ def run_regression(
             X_sm = sm.add_constant(X)
         else:
             X_sm = X
-        model = sm.OLS(y, X_sm).fit()
+        if cov_type is not None:
+            model = sm.OLS(y, X_sm).fit(cov_type=cov_type, cov_kwds=cov_kwds)
+        else:
+            model = sm.OLS(y, X_sm).fit()
 
     elif regression_model == "OLS-sklearn":
         model = LinearRegression(fit_intercept=regression_constant)

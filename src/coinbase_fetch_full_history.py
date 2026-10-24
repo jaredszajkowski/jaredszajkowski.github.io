@@ -33,18 +33,24 @@ def coinbase_fetch_full_history(
 
     all_data = []
     current_start = start
+    window = timedelta(seconds=granularity * 300)  # Fetch max 300 candles per request
 
     while current_start < end:
-        current_end = min(
-            current_start + timedelta(seconds=granularity * 300), end
-        )  # Fetch max 300 candles per request
+        current_end = min(current_start + window, end)
         df = coinbase_fetch_historical_candles(
             product_id, current_start, current_end, granularity
         )
+
         if df.empty:
-            break
-        all_data.append(df)
-        current_start = df["time"].iloc[-1] + timedelta(seconds=granularity)
+            # No candles in this window. Step over it rather than stopping: a
+            # gap in the data longer than the window would otherwise truncate
+            # the history at that point. This matters most at minute
+            # granularity, where a window spans only 5 hours
+            current_start = current_end
+        else:
+            all_data.append(df)
+            current_start = df["time"].iloc[-1] + timedelta(seconds=granularity)
+
         time.sleep(0.2)  # Small delay to respect rate limits
 
     if all_data:

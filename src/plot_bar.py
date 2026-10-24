@@ -26,8 +26,8 @@ def plot_bar(
     x_tick_rotation: int,
     y_label: str,
     y_format: str,
-    y_format_decimal_places: int,
-    y_tick_spacing: int,
+    y_format_decimal_places: int | str,
+    y_tick_spacing: int | float | str,
     y_tick_rotation: int,
     grid: bool = True,
     legend: bool = True,
@@ -35,6 +35,7 @@ def plot_bar(
     legend_anchor: tuple = None,
     export_plot: bool = False,
     plot_file_name: str = None,
+    caption: str = None,
 ) -> None:
     """
     Plot a bar chart from a DataFrame for a specified date range and columns.
@@ -48,7 +49,8 @@ def plot_bar(
     plot_end_date : str
         End date for the plot in 'YYYY-MM-DD' format.
     plot_columns : str OR list
-        List of columns to plot from the DataFrame. If none, all columns will be plotted.
+        Column or list of columns to plot from the DataFrame, or "All" to plot
+        every column.
     title : str
         Title of the plot.
     x_label : str
@@ -64,11 +66,15 @@ def plot_bar(
     y_label : str
         Label for the y-axis.
     y_format : str
-        Format for the y-axis labels.
-    y_format_decimal_places : int
-        Number of decimal places for y-axis labels.
-    y_tick_spacing : int
-        Spacing for the y-axis ticks.
+        Format for the y-axis labels: "Decimal", "Percentage", "Scientific", or
+        "Log".
+    y_format_decimal_places : int OR str
+        Number of decimal places for y-axis labels, or "Auto" to infer it from
+        the y-axis tick spacing.
+    y_tick_spacing : int OR float OR str
+        Spacing for the y-axis ticks, or "Auto" to derive it from the range of
+        the plotted data, including 0 since the bars start there. Ignored when
+        y_format is "Log".
     y_tick_rotation : int
         Rotation angle for the y-axis tick labels.
     grid : bool, optional
@@ -84,6 +90,9 @@ def plot_bar(
         Whether to save the figure as a PNG file (default is False).
     plot_file_name : str, optional
         File name for saving the figure (if export_plot is True, default is None).
+    caption : str, optional
+        Caption drawn centered below the figure, e.g. "Figure 1" (default is
+        None).
 
 
     Returns
@@ -195,27 +204,21 @@ def plot_bar(
 
     # Format Y axis
     if y_tick_spacing == "Auto":
-        max_value = 0
-        min_value = 1_000_000
-        if plot_columns == "All":
-            for col in df_filtered.columns:
-                if df_filtered[col].max() > max_value:
-                    max_value = df_filtered[col].max()
+        max_value = -math.inf
+        min_value = math.inf
+        for col in cols:
+            if df_filtered[col].max() > max_value:
+                max_value = df_filtered[col].max()
 
-                if df_filtered[col].min() < min_value:
-                    min_value = df_filtered[col].min()
-        else:
-            for col in plot_columns:
-                if df_filtered[col].max() > max_value:
-                    max_value = df_filtered[col].max()
+            if df_filtered[col].min() < min_value:
+                min_value = df_filtered[col].min()
 
-                if df_filtered[col].min() < min_value:
-                    min_value = df_filtered[col].min()
+        # Bars are drawn from 0, so the visible axis always includes 0
+        max_value = max(max_value, 0)
+        min_value = min(min_value, 0)
 
         raw_y_spacing = (max_value - min_value) / 10
         y_tick_spacing = round_to_nice_value(raw_y_spacing)
-    else:
-        y_tick_spacing = y_tick_spacing
 
     if y_format_decimal_places == "Auto":
         if isinstance(y_tick_spacing, float):
@@ -224,9 +227,12 @@ def plot_bar(
             )
         else:
             y_tick_spacing_decimal_places = 0
+
+        # PercentFormatter shows the value x 100, which needs 2 fewer decimals
+        if y_format == "Percentage":
+            y_tick_spacing_decimal_places = max(0, y_tick_spacing_decimal_places - 2)
+
         y_format_decimal_places = y_tick_spacing_decimal_places
-    else:
-        y_format_decimal_places = y_format_decimal_places
 
     if y_format == "Decimal":
         plt.gca().yaxis.set_major_formatter(
@@ -247,7 +253,10 @@ def plot_bar(
             f"Unrecognized y_format: {y_format}. Use 'Decimal', 'Percentage', 'Scientific', or 'Log'."
         )
 
-    plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
+    # Linear tick spacing would override the log locator
+    if y_format != "Log":
+        plt.gca().yaxis.set_major_locator(MultipleLocator(y_tick_spacing))
+
     plt.ylabel(y_label)
     plt.yticks(rotation=y_tick_rotation)
 
@@ -265,6 +274,10 @@ def plot_bar(
             plt.legend(loc=legend_location, bbox_to_anchor=legend_anchor)
         else:
             plt.legend(loc=legend_location)
+
+    # Caption
+    if caption is not None:
+        plt.gcf().text(0.5, 0, caption, ha="center", va="top", fontsize=9)
 
     # Save figure and display plot
     if export_plot == True:

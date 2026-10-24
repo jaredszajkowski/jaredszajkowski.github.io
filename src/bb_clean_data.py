@@ -38,25 +38,45 @@ def bb_clean_data(
     -------
     df : pd.DataFrame
         DataFrame containing cleaned data prices.
+
+    Raises
+    ------
+    FileNotFoundError:
+        If the excel export for `fund_ticker_name` has not been downloaded.
+    ValueError:
+        If the export contains no header row beginning with "Date".
     """
 
     # Set location from where to read existing excel file
     location = f"{base_directory}/{source}/{asset_class}/Daily/{fund_ticker_name}.xlsx"
 
-    # Read data from excel
+    # Read data from excel, treating every row as data so the header row can be
+    # located below
     try:
-        df = pd.read_excel(location, sheet_name="Worksheet", engine="calamine")
-    except FileNotFoundError:
-        print(f"File not found...please download the data for {fund_ticker_name}")
+        df = pd.read_excel(
+            location, sheet_name="Worksheet", engine="calamine", header=None
+        )
+    except FileNotFoundError as e:
+        raise FileNotFoundError(
+            f"File not found...please download the data for {fund_ticker_name}: {location}"
+        ) from e
 
-    # Set the column headings from row 5 (which is physically row 6)
-    df.columns = df.iloc[5]
+    # Find the header row - Bloomberg writes a variable number of metadata rows
+    # (Security, Start Date, End Date, Period, and sometimes Currency or Pricing
+    # Source) above the row whose first cell is "Date"
+    header_rows = df.index[df.iloc[:, 0].astype(str).str.strip() == "Date"]
+    if len(header_rows) == 0:
+        raise ValueError(f"No row starting with 'Date' found in {location}")
+    header_row = header_rows[0]
+
+    # Set the column headings from the header row
+    df.columns = df.iloc[header_row]
 
     # Set the column heading for the index to be "None"
     df.rename_axis(None, axis=1, inplace=True)
 
-    # Drop the first 6 rows, 0 - 5
-    df.drop(df.index[0:6], inplace=True)
+    # Drop the metadata rows along with the header row itself
+    df.drop(df.index[0 : header_row + 1], inplace=True)
 
     # Set the date column as the index
     df.set_index("Date", inplace=True)

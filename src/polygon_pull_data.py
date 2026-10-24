@@ -87,18 +87,6 @@ def polygon_pull_data(
             f"Invalid timespan: {timespan}. Acceptable timespans are: {acceptable_timespans}."
         )
 
-    # if timespan == "minute":
-    #     time_delta = 15
-    #     time_overlap = 1
-    # elif timespan == "hour":
-    #     time_delta = 15
-    #     time_overlap = 1
-    # elif timespan == "day":
-    #     time_delta = 180
-    #     time_overlap = 1
-    # else:
-    #     raise Exception(f"Invalid {timespan}.")
-
     try:
         # Attempt to read existing pickle data file
         existing_history_df = pd.read_pickle(file_location)
@@ -245,4 +233,3 @@ if __name__ == "__main__":
                 time.sleep(12)
             else:
                 pass
-

@@ -13,6 +13,7 @@ def strategy_harry_brown_perm_port(
     excel_export: bool,
     pickle_export: bool,
     output_confirmation: bool,
+    target_weights: dict = None,
 ) -> pd.DataFrame:
     """
     Execute the re-balance strategy based on specified criteria.
@@ -32,15 +33,23 @@ def strategy_harry_brown_perm_port(
     rebal_day (int):
         Day for annual rebalance.
     rebal_per_high (float):
-        High percentage for rebalance.
+        High rebalance band, as a multiple of each fund's target weight. A value of
+        1.40 rebalances a fund once it exceeds 140% of its target, which for an
+        evenly weighted four asset portfolio is Browne's 35% upper bound.
     rebal_per_low (float):
-        Low percentage for rebalance.
+        Low rebalance band, as a multiple of each fund's target weight. A value of
+        0.60 rebalances a fund once it falls below 60% of its target, which for an
+        evenly weighted four asset portfolio is Browne's 15% lower bound.
     excel_export : bool
         If True, export data to Excel format.
     pickle_export : bool
         If True, export data to Pickle format.
     output_confirmation : bool
         If True, print confirmation message.
+    target_weights (dict):
+        Target portfolio weight for each fund, keyed by fund name, as decimals summing
+        to 1.0 (for example {"Stocks": 0.30, "Bonds": 0.30, "Gold": 0.30, "Cash": 0.10}).
+        If None, every fund is weighted equally, which is Browne's original 25% each.
 
     Returns:
     --------
@@ -49,6 +58,20 @@ def strategy_harry_brown_perm_port(
     """
 
     num_funds = len(fund_list)
+
+    # Weight each fund evenly unless explicit target weights were provided
+    if target_weights is None:
+        target_weights = {fund: 1 / num_funds for fund in fund_list}
+    else:
+        missing = [fund for fund in fund_list if fund not in target_weights]
+        if missing:
+            raise KeyError(f"target_weights is missing a weight for: {missing}")
+
+        weight_total = sum(target_weights[fund] for fund in fund_list)
+        if abs(weight_total - 1) > 1e-9:
+            raise ValueError(
+                f"target_weights for {fund_list} sum to {weight_total}, expected 1.0"
+            )
 
     df = close_prices_df.copy()
     df.reset_index(inplace=True)
@@ -84,23 +107,27 @@ def strategy_harry_brown_perm_port(
 
     # Calculate the columns and initial values for before action (BA) shares, $ invested, and port %
     for fund in fund_list:
-        df[fund + "_BA_Shares"] = starting_cash / num_funds / df[fund + "_Close"]
+        df[fund + "_BA_Shares"] = (
+            starting_cash * target_weights[fund] / df[fund + "_Close"]
+        )
         df[fund + "_BA_$_Invested"] = df[fund + "_BA_Shares"] * df[fund + "_Close"]
-        df[fund + "_BA_Port_%"] = 0.25
+        df[fund + "_BA_Port_%"] = target_weights[fund]
 
     # Set column values initially
-    df["Total_BA_$_Invested"] = starting_cash
+    df["Total_BA_$_Invested"] = float(starting_cash)
     df["Contribution"] = cash_contrib
     df["Rebalance"] = "No"
 
     # Set columns and values initially for after action (AA) shares, $ invested, and port %
     for fund in fund_list:
-        df[fund + "_AA_Shares"] = starting_cash / num_funds / df[fund + "_Close"]
+        df[fund + "_AA_Shares"] = (
+            starting_cash * target_weights[fund] / df[fund + "_Close"]
+        )
         df[fund + "_AA_$_Invested"] = df[fund + "_AA_Shares"] * df[fund + "_Close"]
-        df[fund + "_AA_Port_%"] = 0.25
+        df[fund + "_AA_Port_%"] = target_weights[fund]
 
     # Set column value for after action (AA) total $ invested
-    df["Total_AA_$_Invested"] = starting_cash
+    df["Total_AA_$_Invested"] = float(starting_cash)
 
     # Iterate through the dataframe and execute the strategy
     for index, row in df.iterrows():
@@ -145,29 +172,33 @@ def strategy_harry_brown_perm_port(
             else:
                 pass
 
-            # Check to see if any asset has portfolio percentage of greater than 35% or less than 15% and if so set variable
+            # Check to see if any asset has drifted outside its rebalance band, which is
+            # set as a multiple of that asset's target weight, and if so set variable
             for fund in fund_list:
                 if (
-                    df.at[index, fund + "_BA_Port_%"] > rebal_per_high
-                    or df.at[index, fund + "_BA_Port_%"] < rebal_per_low
+                    df.at[index, fund + "_BA_Port_%"]
+                    > target_weights[fund] * rebal_per_high
+                    or df.at[index, fund + "_BA_Port_%"]
+                    < target_weights[fund] * rebal_per_low
                 ):
                     rebalance = "Yes"
                 else:
                     pass
 
-            # If rebalance is required, rebalance back to 25% for each asset, else just divide contribution evenly across assets
+            # If rebalance is required, rebalance back to each asset's target weight,
+            # else just divide the contribution across assets by their target weights
             if rebalance == "Yes":
                 df.at[index, "Rebalance"] = rebalance
                 for fund in fund_list:
                     df.at[index, fund + "_AA_$_Invested"] = (
                         Total_BA_Invested + df.at[index, "Contribution"]
-                    ) * 0.25
+                    ) * target_weights[fund]
             else:
                 df.at[index, "Rebalance"] = rebalance
                 for fund in fund_list:
                     df.at[index, fund + "_AA_$_Invested"] = (
                         df.at[index, fund + "_BA_$_Invested"]
-                        + df.at[index, "Contribution"] * 0.25
+                        + df.at[index, "Contribution"] * target_weights[fund]
                     )
 
             # Initialize variable

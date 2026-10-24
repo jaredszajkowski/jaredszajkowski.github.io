@@ -17,6 +17,7 @@ def plot_stats(
     legend: bool,
     export_plot: bool,
     plot_file_name: str,
+    caption: str = None,
 ) -> None:
     """
     Plot the price data from a DataFrame for a specified date range and columns.
@@ -47,6 +48,9 @@ def plot_stats(
         Whether to save the figure as a PNG file.
     plot_file_name : str
         File name for saving the figure (if save_fig is True).
+    caption : str, optional
+        Caption drawn centered below the figure, e.g. "Figure 1" (default
+        is None).
 
     Returns:
     --------
@@ -88,6 +92,10 @@ def plot_stats(
 
     if legend == True:
         plt.legend()
+
+    # Caption
+    if caption is not None:
+        plt.gcf().text(0.5, 0, caption, ha="center", va="top", fontsize=9)
 
     # Save figure and display plot
     if export_plot == True:
