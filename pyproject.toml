@@ -1,0 +1,69 @@
+[project]
+name = "jaredszajkowski-github-io"
+version = "0.1.0"
+description = "Quantitative finance blog built with Hugo, Jupyter notebooks, and PyDoit"
+authors = [
+    { name = "Jared Szajkowski", email = "" },
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "coinbase-advanced-py",
+    "colorama",
+    "databento",
+    "doit",
+    "jupyter",
+    "massive>=2.8.0",
+    "matplotlib",
+    "nasdaq-data-link",
+    "nbformat",
+    "numpy",
+    "openpyxl",
+    "optuna",
+    "pandas>=3.0.3",
+    "pandas-datareader",
+    "plotly",
+    "pyarrow",
+    "pyjwt[crypto]",
+    "python-calamine",
+    "python-decouple",
+    "python-dotenv",
+    "pyyaml",
+    "regex",
+    "requests",
+    "ruff",
+    "scikit-learn",
+    "scipy",
+    "seaborn",
+    "setuptools",  # pandas-datareader still imports distutils (removed in Python 3.12)
+    "statsmodels",
+    "tabulate",
+    "tqdm",
+    "websocket-client",
+    "wrds",
+    "xgboost",
+    "yfinance",
+]
+
+[dependency-groups]
+dev = [
+    "black[jupyter]",
+    "jupytext",
+]
+
+[tool.uv]
+# src/ is a flat directory of scripts, not an installable package
+package = false
+
+[tool.pytest.ini_options]
+# testpaths = ["src"]
+
+[tool.ruff]
+# line-length = 88
+
+[tool.ruff.lint]
+# select = ["E", "F", "I"]
+
+# Note: To ignore the .venv folder in Dropbox, run the following:
+# mkdir -p .venv
+# attr -s com.dropbox.ignored -V 1 .venv
