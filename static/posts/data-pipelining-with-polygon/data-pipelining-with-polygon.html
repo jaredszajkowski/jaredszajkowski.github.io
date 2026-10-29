@@ -7332,7 +7332,12 @@ a.anchor-link {
     if (!diagrams.length) {
       return;
     }
-    const mermaid = (await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.esm.min.mjs")).default;
+    const mermaid = (await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.0/mermaid.esm.min.mjs")).default;
+    const elkUrl = "https://cdnjs.cloudflare.com/ajax/libs/mermaid-layout-elk/0.1.9/mermaid-layout-elk.esm.min.mjs";
+    if(elkUrl) {
+      const elkLayouts = (await import(elkUrl)).default;
+      mermaid.registerLayoutLoaders(elkLayouts);
+    }
     const parser = new DOMParser();
 
     mermaid.initialize({
@@ -7429,7 +7434,8 @@ a.anchor-link {
      * Post-process to ensure mermaid diagrams contain only valid SVG and XHTML.
      */
     function cleanMermaidSvg(svg) {
-      return svg.replace(RE_VOID_ELEMENT, replaceVoidElement);
+      svg = svg.replace(RE_VOID_ELEMENT, replaceVoidElement);
+      return `${SVG_XML_HEADER}${svg}`;
     }
 
 
@@ -7455,6 +7461,285 @@ a.anchor-link {
       }
       return `<${tag} ${rest}>`;
     }
+
+
+  /**
+   * Named HTML entities with their decimal equivalent codes.
+   *
+   * @see https://www.w3.org/TR/WD-html40-970708/sgml/entities.html
+   * */
+  const HTML_ENTITIES = `<!ENTITY Aacute "&#193;">
+<!ENTITY aacute "&#225;">
+<!ENTITY Acirc "&#194;">
+<!ENTITY acirc "&#226;">
+<!ENTITY acute "&#180;">
+<!ENTITY AElig "&#198;">
+<!ENTITY aelig "&#230;">
+<!ENTITY Agrave "&#192;">
+<!ENTITY agrave "&#224;">
+<!ENTITY alefsym "&#8501;">
+<!ENTITY Alpha "&#913;">
+<!ENTITY alpha "&#945;">
+<!ENTITY amp "&#38;">
+<!ENTITY and "&#8869;">
+<!ENTITY ang "&#8736;">
+<!ENTITY Aring "&#197;">
+<!ENTITY aring "&#229;">
+<!ENTITY asymp "&#8776;">
+<!ENTITY Atilde "&#195;">
+<!ENTITY atilde "&#227;">
+<!ENTITY Auml "&#196;">
+<!ENTITY auml "&#228;">
+<!ENTITY bdquo "&#8222;">
+<!ENTITY Beta "&#914;">
+<!ENTITY beta "&#946;">
+<!ENTITY brvbar "&#166;">
+<!ENTITY bull "&#8226;">
+<!ENTITY cap "&#8745;">
+<!ENTITY Ccedil "&#199;">
+<!ENTITY ccedil "&#231;">
+<!ENTITY cedil "&#184;">
+<!ENTITY cent "&#162;">
+<!ENTITY Chi "&#935;">
+<!ENTITY chi "&#967;">
+<!ENTITY circ "&#710;">
+<!ENTITY clubs "&#9827;">
+<!ENTITY cong "&#8773;">
+<!ENTITY copy "&#169;">
+<!ENTITY crarr "&#8629;">
+<!ENTITY cup "&#8746;">
+<!ENTITY curren "&#164;">
+<!ENTITY dagger "&#8224;">
+<!ENTITY Dagger "&#8225;">
+<!ENTITY darr "&#8595;">
+<!ENTITY dArr "&#8659;">
+<!ENTITY deg "&#176;">
+<!ENTITY Delta "&#916;">
+<!ENTITY delta "&#948;">
+<!ENTITY diams "&#9830;">
+<!ENTITY divide "&#247;">
+<!ENTITY Eacute "&#201;">
+<!ENTITY eacute "&#233;">
+<!ENTITY Ecirc "&#202;">
+<!ENTITY ecirc "&#234;">
+<!ENTITY Egrave "&#200;">
+<!ENTITY egrave "&#232;">
+<!ENTITY empty "&#8709;">
+<!ENTITY emsp "&#8195;">
+<!ENTITY ensp "&#8194;">
+<!ENTITY epsilon "&#949;">
+<!ENTITY Epsilon "&#917;">
+<!ENTITY equiv "&#8801;">
+<!ENTITY Eta "&#919;">
+<!ENTITY eta "&#951;">
+<!ENTITY ETH "&#208;">
+<!ENTITY eth "&#240;">
+<!ENTITY Euml "&#203;">
+<!ENTITY euml "&#235;">
+<!ENTITY exist "&#8707;">
+<!ENTITY fnof "&#402;">
+<!ENTITY forall "&#8704;">
+<!ENTITY frac12 "&#189;">
+<!ENTITY frac14 "&#188;">
+<!ENTITY frac34 "&#190;">
+<!ENTITY frasl "&#8260;">
+<!ENTITY Gamma "&#915;">
+<!ENTITY gamma "&#947;">
+<!ENTITY ge "&#8805;">
+<!ENTITY gt "&#62;">
+<!ENTITY harr "&#8596;">
+<!ENTITY hArr "&#8660;">
+<!ENTITY hearts "&#9829;">
+<!ENTITY hellip "&#8230;">
+<!ENTITY Iacute "&#205;">
+<!ENTITY iacute "&#237;">
+<!ENTITY Icirc "&#206;">
+<!ENTITY icirc "&#238;">
+<!ENTITY iexcl "&#161;">
+<!ENTITY Igrave "&#204;">
+<!ENTITY igrave "&#236;">
+<!ENTITY image "&#8465;">
+<!ENTITY infin "&#8734;">
+<!ENTITY int "&#8747;">
+<!ENTITY Iota "&#921;">
+<!ENTITY iota "&#953;">
+<!ENTITY iquest "&#191;">
+<!ENTITY isin "&#8712;">
+<!ENTITY Iuml "&#207;">
+<!ENTITY iuml "&#239;">
+<!ENTITY Kappa "&#922;">
+<!ENTITY kappa "&#954;">
+<!ENTITY Lambda "&#923;">
+<!ENTITY lambda "&#955;">
+<!ENTITY lang "&#9001;">
+<!ENTITY laquo "&#171;">
+<!ENTITY larr "&#8592;">
+<!ENTITY lArr "&#8656;">
+<!ENTITY lceil "&#8968;">
+<!ENTITY ldquo "&#8220;">
+<!ENTITY le "&#8804;">
+<!ENTITY lfloor "&#8970;">
+<!ENTITY lowast "&#8727;">
+<!ENTITY loz "&#9674;">
+<!ENTITY lrm "&#8206;">
+<!ENTITY lsaquo "&#8249;">
+<!ENTITY lsquo "&#8216;">
+<!ENTITY lt "&#60;">
+<!ENTITY macr "&#175;">
+<!ENTITY mdash "&#8212;">
+<!ENTITY micro "&#181;">
+<!ENTITY middot "&#183;">
+<!ENTITY minus "&#8722;">
+<!ENTITY Mu "&#924;">
+<!ENTITY mu "&#956;">
+<!ENTITY nabla "&#8711;">
+<!ENTITY nbsp "&#160;">
+<!ENTITY ndash "&#8211;">
+<!ENTITY ne "&#8800;">
+<!ENTITY ni "&#8715;">
+<!ENTITY not "&#172;">
+<!ENTITY notin "&#8713;">
+<!ENTITY nsub "&#8836;">
+<!ENTITY Ntilde "&#209;">
+<!ENTITY ntilde "&#241;">
+<!ENTITY Nu "&#925;">
+<!ENTITY nu "&#957;">
+<!ENTITY Oacute "&#211;">
+<!ENTITY oacute "&#243;">
+<!ENTITY Ocirc "&#212;">
+<!ENTITY ocirc "&#244;">
+<!ENTITY OElig "&#338;">
+<!ENTITY oelig "&#339;">
+<!ENTITY Ograve "&#210;">
+<!ENTITY ograve "&#242;">
+<!ENTITY oline "&#8254;">
+<!ENTITY Omega "&#937;">
+<!ENTITY omega "&#969;">
+<!ENTITY Omicron "&#927;">
+<!ENTITY omicron "&#959;">
+<!ENTITY oplus "&#8853;">
+<!ENTITY or "&#8870;">
+<!ENTITY ordf "&#170;">
+<!ENTITY ordm "&#186;">
+<!ENTITY Oslash "&#216;">
+<!ENTITY oslash "&#248;">
+<!ENTITY Otilde "&#213;">
+<!ENTITY otilde "&#245;">
+<!ENTITY otimes "&#8855;">
+<!ENTITY Ouml "&#214;">
+<!ENTITY ouml "&#246;">
+<!ENTITY para "&#182;">
+<!ENTITY part "&#8706;">
+<!ENTITY permil "&#8240;">
+<!ENTITY perp "&#8869;">
+<!ENTITY Phi "&#934;">
+<!ENTITY phi "&#966;">
+<!ENTITY Pi "&#928;">
+<!ENTITY pi "&#960;">
+<!ENTITY piv "&#982;">
+<!ENTITY plusmn "&#177;">
+<!ENTITY pound "&#163;">
+<!ENTITY prime "&#8242;">
+<!ENTITY Prime "&#8243;">
+<!ENTITY prod "&#8719;">
+<!ENTITY prop "&#8733;">
+<!ENTITY Psi "&#936;">
+<!ENTITY psi "&#968;">
+<!ENTITY quot "&#34;">
+<!ENTITY radic "&#8730;">
+<!ENTITY rang "&#9002;">
+<!ENTITY raquo "&#187;">
+<!ENTITY rarr "&#8594;">
+<!ENTITY rArr "&#8658;">
+<!ENTITY rceil "&#8969;">
+<!ENTITY rdquo "&#8221;">
+<!ENTITY real "&#8476;">
+<!ENTITY reg "&#174;">
+<!ENTITY rfloor "&#8971;">
+<!ENTITY Rho "&#929;">
+<!ENTITY rho "&#961;">
+<!ENTITY rlm "&#8207;">
+<!ENTITY rsaquo "&#8250;">
+<!ENTITY rsquo "&#8217;">
+<!ENTITY sbquo "&#8218;">
+<!ENTITY Scaron "&#352;">
+<!ENTITY scaron "&#353;">
+<!ENTITY sdot "&#8901;">
+<!ENTITY sect "&#167;">
+<!ENTITY shy "&#173;">
+<!ENTITY Sigma "&#931;">
+<!ENTITY sigma "&#963;">
+<!ENTITY sigmaf "&#962;">
+<!ENTITY sim "&#8764;">
+<!ENTITY spades "&#9824;">
+<!ENTITY sub "&#8834;">
+<!ENTITY sube "&#8838;">
+<!ENTITY sum "&#8721;">
+<!ENTITY sup "&#8835;">
+<!ENTITY sup1 "&#185;">
+<!ENTITY sup2 "&#178;">
+<!ENTITY sup3 "&#179;">
+<!ENTITY supe "&#8839;">
+<!ENTITY szlig "&#223;">
+<!ENTITY Tau "&#932;">
+<!ENTITY tau "&#964;">
+<!ENTITY there4 "&#8756;">
+<!ENTITY Theta "&#920;">
+<!ENTITY theta "&#952;">
+<!ENTITY thetasym "&#977;">
+<!ENTITY thinsp "&#8201;">
+<!ENTITY THORN "&#222;">
+<!ENTITY thorn "&#254;">
+<!ENTITY tilde "&#732;">
+<!ENTITY times "&#215;">
+<!ENTITY trade "&#8482;">
+<!ENTITY Uacute "&#218;">
+<!ENTITY uacute "&#250;">
+<!ENTITY uarr "&#8593;">
+<!ENTITY uArr "&#8657;">
+<!ENTITY Ucirc "&#219;">
+<!ENTITY ucirc "&#251;">
+<!ENTITY Ugrave "&#217;">
+<!ENTITY ugrave "&#249;">
+<!ENTITY uml "&#168;">
+<!ENTITY upsih "&#978;">
+<!ENTITY Upsilon "&#933;">
+<!ENTITY upsilon "&#965;">
+<!ENTITY Uuml "&#220;">
+<!ENTITY uuml "&#252;">
+<!ENTITY weierp "&#8472;">
+<!ENTITY Xi "&#926;">
+<!ENTITY xi "&#958;">
+<!ENTITY Yacute "&#221;">
+<!ENTITY yacute "&#253;">
+<!ENTITY yen "&#165;">
+<!ENTITY Yuml "&#376;">
+<!ENTITY yuml "&#255;">
+<!ENTITY Zeta "&#918;">
+<!ENTITY zeta "&#950;">
+<!ENTITY zwj "&#8205;">
+<!ENTITY zwnj "&#8204;">`.replace(/\n/g, ' ');
+
+  /**
+   * A reasonably strict xml declaration.
+   */
+  const XML_DECL = '<?xml version="1.0" standalone="no"?>';
+
+  /**
+   * The beginning of the XML doctype declaration.
+   */
+  const DOCTYPE_START = `<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [`;
+
+  /**
+   * The end of the XML docype declaration.
+   */
+  const DOCTYPE_END = ']>';
+
+  /**
+   * A full header for an SVG XML document.
+   */
+  const SVG_XML_HEADER = `${XML_DECL}
+    ${DOCTYPE_START}${HTML_ENTITIES}${DOCTYPE_END}`;
 
     void Promise.all([...diagrams].map(renderOneMarmaid));
   });
@@ -7511,18 +7796,53 @@ a.anchor-link {
 <!-- End of mermaid configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
 <main>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=307fa821">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ad81906b">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Data-Pipelining-With-Polygon">Data Pipelining With Polygon<a class="anchor-link" href="#Data-Pipelining-With-Polygon">¶</a></h1>
+<h2 id="Post-Updates">Post Updates<a class="anchor-link" href="#Post-Updates">¶</a></h2>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=547ce63e">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4a184e46">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Update 8/6/2026: Brought the post back in line with the current source. Polygon.io has rebranded to Massive and the Python client is now imported as <code>massive</code>, <code>polygon_pull_data</code> gained a <code>parquet_export</code> parameter and returns the resulting DataFrame, and <code>polygon_fetch_full_history</code> renamed its <code>full_history_df</code> parameter to <code>existing_history_df</code>. Replaced the reproduced docstrings with prose descriptions, added the free tier constraints that shape the design, and documented the on-disk layout the data lands in.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=eb61a092">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">¶</a></h2>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cfcf9462">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Where the <a href="/posts/data-pipelining-with-coinbase/">previous post on collecting crypto asset data from Coinbase</a> covered digital assets, this one covers the equity side. The two functions below pull minute, hour, and daily bars for equities and ETFs from Polygon.io, since rebranded as <a href="https://massive.com">Massive</a>.</p>
+<p>Two constraints from the free tier drive most of the design. The first is a two year limit on historical data, which is why the examples below start from a date two years back rather than attempting to pull an asset's full history. The second is a rate limit of five API requests per minute, which is what the <code>free_tier</code> flag handles. When using the free tier, the fetch pauses for twelve seconds between requests. A single API call also returns at most 5,000 records, so any meaningful date range has to be walked through in chunks and reassembled.</p>
+<p>The work is split across two functions that build on one another. <code>polygon_fetch_full_history</code> walks a date range and returns it as a single dataframe. <code>polygon_pull_data</code> wraps that to maintain pickle, Excel, and Parquet files on disk, extending an existing record with the rows it is missing, or creating a new record where none exists.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8b52ebdd">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7532,7 +7852,7 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=72a6dbc5">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=a6921028">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7541,37 +7861,16 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Standard Library</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
 <span class="c1"># Data Handling</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-
-<span class="c1"># Data Visualization</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.dates</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mdates</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.ticker</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mtick</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.ticker</span><span class="w"> </span><span class="kn">import</span> <span class="n">FormatStrFormatter</span><span class="p">,</span> <span class="n">FuncFormatter</span><span class="p">,</span> <span class="n">MultipleLocator</span>
-
-<span class="c1"># Data Sources</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">yfinance</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">yf</span>
-
-<span class="c1"># Statistical Analysis</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">statsmodels.api</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sm</span>
-
-<span class="c1"># Machine Learning</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
 
 <span class="c1"># Suppress warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">"ignore"</span><span class="p">)</span>
@@ -7580,18 +7879,7 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b5d3911f">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Add-Directories-To-Path">Add Directories To Path<a class="anchor-link" href="#Add-Directories-To-Path">¶</a></h2>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=eaed08fd">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=b615d7a2">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7621,74 +7909,13 @@ a.anchor-link {
 <span class="n">SOURCE_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">"SOURCE_DIR"</span><span class="p">)</span>
 <span class="n">DATA_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">"DATA_DIR"</span><span class="p">)</span>
 <span class="n">DATA_MANUAL_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">"DATA_MANUAL_DIR"</span><span class="p">)</span>
-
-<span class="c1"># Print system path</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>0: /usr/lib/python313.zip
-1: /usr/lib/python3.13
-2: /usr/lib/python3.13/lib-dynload
-3: 
-4: /home/jared/python-virtual-envs/general-venv-p313/lib/python3.13/site-packages
-5: /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/src
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bfcc2cb6">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Track-Index-Dependencies">Track Index Dependencies<a class="anchor-link" href="#Track-Index-Dependencies">¶</a></h2>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=273bf49c">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Create file to track markdown dependencies</span>
-<span class="n">dep_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"index_dep.txt"</span><span class="p">)</span>
-<span class="n">dep_file</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s2">""</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[3]:</div>
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
-<pre>0</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cb0b2cef">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b4b65458">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7698,16 +7925,30 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=8db0f9f2">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=be858ca3">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Here are the functions needed for this project, listed in the order they build on one another:</p>
+<ul>
+<li><a href="/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_fetch_full_history">polygon_fetch_full_history</a>: Fetch full historical data for a given product from Polygon API.</li>
+<li><a href="/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_pull_data">polygon_pull_data</a>: Read existing data file, download price data from Polygon, and export data.</li>
+</ul>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=ed4dc53a">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">export_track_md_deps</span><span class="w"> </span><span class="kn">import</span> <span class="n">export_track_md_deps</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">polygon_fetch_full_history</span><span class="w"> </span><span class="kn">import</span> <span class="n">polygon_fetch_full_history</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">polygon_fetch_full_history</span><span class="w"> </span><span class="kn">import</span> <span class="n">polygon_fetch_full_history</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">polygon_pull_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">polygon_pull_data</span>
 </pre></div>
 </div>
@@ -7715,7 +7956,18 @@ a.anchor-link {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3069fc09">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e040d8cc">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>One naming note before the code: Polygon.io has rebranded to Massive, and the official Python client followed. The package is now <a href="https://pypi.org/project/massive/"><code>massive</code></a> rather than <code>polygon-api-client</code>, so the import below reads <code>from massive import RESTClient</code>. The API surface is otherwise unchanged, and I've kept "Polygon" in the function names and directory layout since that's what the existing data is filed under.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=14ddc9c2">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7726,7 +7978,18 @@ a.anchor-link {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=035870c5">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=958f0dea">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Both examples below use daily bars, but switching to minute or hour data is a matter of changing the <code>timespan</code> and <code>multiplier</code> arguments, with everything else unchanged. Note that finer granularity burns through the free tier rate limit considerably faster, since each request covers a much shorter window. Massive actually aggregates minute data into hour bars, so the time to pull minute and hour data is actually the same. Both functions accept only <code>minute</code>, <code>hour</code>, or <code>day</code> for <code>timespan</code> and raise an exception otherwise, since the window sizing logic is only defined for those three.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f93e9c27">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7736,25 +7999,36 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=8121e09a">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fce76b25">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>This is the lower level of the two functions. Starting from <code>current_start</code>, it walks forward through the date range in fixed size windows - 180 days for daily data, 15 days for minute and hour data - requests each window from the API, and appends the results to the dataframe passed in as <code>existing_history_df</code>, stopping once it reaches the present. Because each request is capped at 5,000 records, ranges spanning years are handled the same way as the single window below: the individual responses are concatenated and returned as one dataframe.</p>
+<p>The API key is read through <code>config</code>, which merges everything in the <code>.env</code> file into the settings defaults, so <code>config("POLYGON_KEY")</code> resolves without any further setup:</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=0e5e899d">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">load_api_keys</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_api_keys</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">massive</span><span class="w"> </span><span class="kn">import</span> <span class="n">RESTClient</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">massive</span><span class="w"> </span><span class="kn">import</span> <span class="n">RESTClient</span>
 
-<span class="c1"># Load API keys from the environment</span>
-<span class="n">api_keys</span> <span class="o">=</span> <span class="n">load_api_keys</span><span class="p">()</span>
+<span class="c1"># Load API key from the environment variables</span>
+<span class="n">POLYGON_KEY</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">"POLYGON_KEY"</span><span class="p">)</span>
 
 <span class="c1"># Get the environment variable for where data is stored</span>
 <span class="n">DATA_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">"DATA_DIR"</span><span class="p">)</span>
 
 <span class="c1"># Open client connection</span>
-<span class="n">client</span> <span class="o">=</span> <span class="n">RESTClient</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="n">api_keys</span><span class="p">[</span><span class="s2">"POLYGON_KEY"</span><span class="p">])</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">RESTClient</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="n">POLYGON_KEY</span><span class="p">)</span>
 
 <span class="c1"># Create an empty DataFrame</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
@@ -7769,7 +8043,7 @@ a.anchor-link {
     <span class="s1">'otc'</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s2">"object"</span><span class="p">)</span>
 <span class="p">})</span>
 
-<span class="c1"># Example usage - minute</span>
+<span class="c1"># Example usage - daily</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">polygon_fetch_full_history</span><span class="p">(</span>
     <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
     <span class="n">ticker</span><span class="o">=</span><span class="s2">"AMZN"</span><span class="p">,</span>
@@ -7779,334 +8053,35 @@ a.anchor-link {
     <span class="n">existing_history_df</span><span class="o">=</span><span class="n">df</span><span class="p">,</span>
     <span class="n">current_start</span><span class="o">=</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
     <span class="n">free_tier</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>  <span class="c1"># Sleep for 2 seconds to avoid hitting rate limits</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>  <span class="c1"># Sleep for 12 seconds to avoid hitting rate limits</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Pulling day data for 2025-01-01 00:00:00 thru 2025-06-30 00:00:00 for AMZN...
-
-</pre>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=732e70bb">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>New data:
-                   Date     open     high      low   close       volume  \
-0   2025-01-02 05:00:00  222.030  225.150  218.190  220.22   33956579.0   
-1   2025-01-03 05:00:00  222.505  225.360  221.620  224.19   27515606.0   
-2   2025-01-06 05:00:00  226.780  228.835  224.840  227.61   31849831.0   
-3   2025-01-07 05:00:00  227.900  228.381  221.460  222.11   28084164.0   
-4   2025-01-08 05:00:00  223.185  223.520  220.200  222.13   25033292.0   
-..                  ...      ...      ...      ...     ...          ...   
-117 2025-06-24 04:00:00  212.135  214.340  211.045  212.77   38378757.0   
-118 2025-06-25 04:00:00  214.615  216.030  211.110  211.99   31755698.0   
-119 2025-06-26 04:00:00  213.120  218.035  212.010  217.12   50480814.0   
-120 2025-06-27 04:00:00  219.920  223.300  216.740  223.30  119217138.0   
-121 2025-06-30 04:00:00  223.520  223.820  219.120  219.39   58887780.0   
-
-         vwap  transactions   otc  
-0    221.2745        449631  None  
-1    223.7050        346976  None  
-2    227.0921        410686  None  
-3    223.4033        379570  None  
-4    222.0414        325539  None  
-..        ...           ...   ...  
-117  213.1129        459901  None  
-118  212.8066        417565  None  
-119  216.0944        572822  None  
-120  221.7267        750603  None  
-121  220.6316        673189  None  
-
-[122 rows x 9 columns]
-Combined data:
-                   Date     open     high      low   close       volume  \
-0   2025-01-02 05:00:00  222.030  225.150  218.190  220.22   33956579.0   
-1   2025-01-03 05:00:00  222.505  225.360  221.620  224.19   27515606.0   
-2   2025-01-06 05:00:00  226.780  228.835  224.840  227.61   31849831.0   
-3   2025-01-07 05:00:00  227.900  228.381  221.460  222.11   28084164.0   
-4   2025-01-08 05:00:00  223.185  223.520  220.200  222.13   25033292.0   
-..                  ...      ...      ...      ...     ...          ...   
-117 2025-06-24 04:00:00  212.135  214.340  211.045  212.77   38378757.0   
-118 2025-06-25 04:00:00  214.615  216.030  211.110  211.99   31755698.0   
-119 2025-06-26 04:00:00  213.120  218.035  212.010  217.12   50480814.0   
-120 2025-06-27 04:00:00  219.920  223.300  216.740  223.30  119217138.0   
-121 2025-06-30 04:00:00  223.520  223.820  219.120  219.39   58887780.0   
-
-         vwap  transactions   otc  
-0    221.2745        449631  None  
-1    223.7050        346976  None  
-2    227.0921        410686  None  
-3    223.4033        379570  None  
-4    222.0414        325539  None  
-..        ...           ...   ...  
-117  213.1129        459901  None  
-118  212.8066        417565  None  
-119  216.0944        572822  None  
-120  221.7267        750603  None  
-121  220.6316        673189  None  
-
-[122 rows x 9 columns]
-Sleeping for 12 seconds to avoid hitting API rate limits...
-
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Pulling day data for 2025-06-29 04:00:00 thru 2025-12-26 04:00:00 for AMZN...
-
-New data:
-                   Date     open     high     low   close      volume  \
-0   2025-06-30 04:00:00  223.520  223.820  219.12  219.39  58887780.0   
-1   2025-07-01 04:00:00  219.500  221.875  217.93  220.46  39256830.0   
-2   2025-07-02 04:00:00  219.730  221.600  219.06  219.92  30894178.0   
-3   2025-07-03 04:00:00  221.820  224.010  221.36  223.41  29632353.0   
-4   2025-07-07 04:00:00  223.000  224.290  222.37  223.47  36604139.0   
-..                  ...      ...      ...     ...     ...         ...   
-120 2025-12-18 05:00:00  225.705  229.225  224.41  226.76  50272419.0   
-121 2025-12-19 05:00:00  226.760  229.125  225.58  227.35  85544374.0   
-122 2025-12-22 05:00:00  228.610  229.480  226.71  228.43  32261329.0   
-123 2025-12-23 05:00:00  229.055  232.445  228.73  232.14  29230233.0   
-124 2025-12-24 05:00:00  232.130  232.950  231.33  232.38  11420543.0   
-
-         vwap  transactions   otc  
-0    220.6316        673189  None  
-1    220.1508        544150  None  
-2    220.2103        429633  None  
-3    222.8867        364422  None  
-4    223.4121        513469  None  
-..        ...           ...   ...  
-120  226.8047        511173  None  
-121  227.4217        474053  None  
-122  228.1120        466788  None  
-123  231.3567        435724  None  
-124  232.3354        193852  None  
-
-[125 rows x 9 columns]
-Combined data:
-                   Date     open     high     low   close      volume  \
-0   2025-01-02 05:00:00  222.030  225.150  218.19  220.22  33956579.0   
-1   2025-01-03 05:00:00  222.505  225.360  221.62  224.19  27515606.0   
-2   2025-01-06 05:00:00  226.780  228.835  224.84  227.61  31849831.0   
-3   2025-01-07 05:00:00  227.900  228.381  221.46  222.11  28084164.0   
-4   2025-01-08 05:00:00  223.185  223.520  220.20  222.13  25033292.0   
-..                  ...      ...      ...     ...     ...         ...   
-241 2025-12-18 05:00:00  225.705  229.225  224.41  226.76  50272419.0   
-242 2025-12-19 05:00:00  226.760  229.125  225.58  227.35  85544374.0   
-243 2025-12-22 05:00:00  228.610  229.480  226.71  228.43  32261329.0   
-244 2025-12-23 05:00:00  229.055  232.445  228.73  232.14  29230233.0   
-245 2025-12-24 05:00:00  232.130  232.950  231.33  232.38  11420543.0   
-
-         vwap  transactions   otc  
-0    221.2745        449631  None  
-1    223.7050        346976  None  
-2    227.0921        410686  None  
-3    223.4033        379570  None  
-4    222.0414        325539  None  
-..        ...           ...   ...  
-241  226.8047        511173  None  
-242  227.4217        474053  None  
-243  228.1120        466788  None  
-244  231.3567        435724  None  
-245  232.3354        193852  None  
-
-[246 rows x 9 columns]
-Sleeping for 12 seconds to avoid hitting API rate limits...
-
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Pulling day data for 2025-12-23 05:00:00 thru 2026-06-21 05:00:00 for AMZN...
-
-New data:
-                  Date     open      high      low   close        volume  \
-0  2025-12-23 05:00:00  229.055  232.4450  228.730  232.14  2.923023e+07   
-1  2025-12-24 05:00:00  232.130  232.9500  231.330  232.38  1.142054e+07   
-2  2025-12-26 05:00:00  232.035  232.9900  231.180  232.52  1.599473e+07   
-3  2025-12-29 05:00:00  231.940  232.6000  230.770  232.07  1.979791e+07   
-4  2025-12-30 05:00:00  231.205  232.7700  230.200  232.53  2.191045e+07   
-5  2025-12-31 05:00:00  232.905  232.9900  230.120  230.82  2.438375e+07   
-6  2026-01-02 05:00:00  231.340  235.4580  224.700  226.50  5.145623e+07   
-7  2026-01-05 05:00:00  228.840  234.0000  227.180  233.06  4.973335e+07   
-8  2026-01-06 05:00:00  232.100  243.1800  232.070  240.93  5.376468e+07   
-9  2026-01-07 05:00:00  239.610  245.2900  239.520  241.56  4.223653e+07   
-10 2026-01-08 05:00:00  243.060  246.4100  241.880  246.29  3.950984e+07   
-11 2026-01-09 05:00:00  244.568  247.8600  242.240  247.38  3.455996e+07   
-12 2026-01-12 05:00:00  246.730  248.9400  245.960  246.47  3.586777e+07   
-13 2026-01-13 05:00:00  246.530  247.6600  240.250  242.60  3.837178e+07   
-14 2026-01-14 05:00:00  241.150  241.2800  236.220  236.65  4.141058e+07   
-15 2026-01-15 05:00:00  239.310  240.6500  236.630  238.18  4.300357e+07   
-16 2026-01-16 05:00:00  239.085  239.5700  236.410  239.12  4.588828e+07   
-17 2026-01-20 05:00:00  233.760  235.0900  229.340  231.00  4.773785e+07   
-18 2026-01-21 05:00:00  231.085  232.3000  226.880  231.31  4.727609e+07   
-19 2026-01-22 05:00:00  234.045  235.7200  230.900  234.34  3.191332e+07   
-20 2026-01-23 05:00:00  234.955  240.4500  234.570  239.16  3.377848e+07   
-21 2026-01-26 05:00:00  239.980  240.9500  237.540  238.42  3.282553e+07   
-22 2026-01-27 05:00:00  239.685  244.8800  238.080  244.68  3.802922e+07   
-23 2026-01-28 05:00:00  246.365  247.7750  241.530  243.01  4.088266e+07   
-24 2026-01-29 05:00:00  242.820  243.0000  236.742  241.73  4.722964e+07   
-25 2026-01-30 05:00:00  239.890  243.3150  237.640  239.30  4.658502e+07   
-26 2026-02-02 05:00:00  238.310  245.6299  238.170  242.96  3.754610e+07   
-27 2026-02-03 05:00:00  244.975  246.3500  235.450  238.62  5.383130e+07   
-28 2026-02-04 05:00:00  238.860  238.8600  231.820  232.99  5.129995e+07   
-29 2026-02-05 05:00:00  224.910  226.3100  220.380  222.69  1.035092e+08   
-30 2026-02-06 05:00:00  202.700  211.4400  200.310  210.32  1.792109e+08   
-31 2026-02-09 05:00:00  208.970  212.8100  203.350  208.72  9.117844e+07   
-32 2026-02-10 05:00:00  208.795  212.6499  206.411  206.96  6.717503e+07   
-33 2026-02-11 05:00:00  208.060  208.5700  202.490  204.08  6.554546e+07   
-34 2026-02-12 05:00:00  203.960  203.9600  197.560  199.60  8.397539e+07   
-35 2026-02-13 05:00:00  198.880  201.1600  197.275  198.79  6.632159e+07   
-36 2026-02-17 05:00:00  198.125  201.7362  196.000  201.15  6.987920e+07   
-37 2026-02-18 05:00:00  202.070  206.8600  201.510  204.79  5.100330e+07   
-38 2026-02-19 05:00:00  203.800  205.6396  202.810  204.86  3.566961e+07   
-39 2026-02-20 05:00:00  204.760  211.1700  203.750  210.11  6.588161e+07   
-40 2026-02-23 05:00:00  208.095  208.4300  203.110  205.27  5.358151e+07   
-41 2026-02-24 05:00:00  205.470  210.3600  203.250  208.56  4.113716e+07   
-42 2026-02-25 05:00:00  210.460  211.5900  208.930  210.64  4.134638e+07   
-43 2026-02-26 05:00:00  210.730  211.0500  205.345  207.92  4.775677e+07   
-44 2026-02-27 05:00:00  206.830  210.3300  205.200  210.00  5.742278e+07   
-45 2026-03-02 05:00:00  204.550  209.7300  203.460  208.39  4.600101e+07   
-46 2026-03-03 05:00:00  203.100  209.1780  202.480  208.73  4.318492e+07   
-47 2026-03-04 05:00:00  210.470  217.5400  210.150  216.82  5.473110e+07   
-48 2026-03-05 05:00:00  215.980  220.4700  215.590  218.94  6.094345e+07   
-49 2026-03-06 05:00:00  214.990  217.3200  212.530  213.21  5.115272e+07   
-50 2026-03-09 04:00:00  210.450  213.8200  207.110  213.49  5.464293e+07   
-51 2026-03-10 04:00:00  214.190  215.6500  212.430  214.33  3.567883e+07   
-52 2026-03-11 04:00:00  215.705  217.0000  211.350  212.65  3.419930e+07   
-53 2026-03-12 04:00:00  210.390  211.7100  208.150  209.53  4.434950e+07   
-54 2026-03-13 04:00:00  209.605  210.5600  206.220  207.67  3.566214e+07   
-55 2026-03-16 04:00:00  208.350  212.7240  207.445  211.74  4.220932e+07   
-56 2026-03-17 04:00:00  212.820  215.7000  212.430  215.20  4.496994e+07   
-57 2026-03-18 04:00:00  213.925  215.1401  208.825  209.87  3.784664e+07   
-58 2026-03-19 04:00:00  207.060  209.1200  206.050  208.76  3.644062e+07   
-59 2026-03-20 04:00:00  207.400  207.5400  204.316  205.37  6.369460e+07   
-
-        vwap  transactions   otc  
-0   231.3567        435724  None  
-1   232.3354        193852  None  
-2   232.4647        278360  None  
-3   231.8925        352880  None  
-4   231.7815        322423  None  
-5   231.2767        322950  None  
-6   228.0134        750788  None  
-7   232.1786        678867  None  
-8   239.6475        767759  None  
-9   242.9662        623031  None  
-10  245.1880        537907  None  
-11  246.0666        487691  None  
-12  247.2996        520852  None  
-13  243.3866        559247  None  
-14  237.6446        582230  None  
-15  238.3037        567069  None  
-16  238.4963        424842  None  
-17  231.9376        749010  None  
-18  230.2750        654920  None  
-19  234.0045        447829  None  
-20  238.6065        482481  None  
-21  239.0048        450743  None  
-22  242.5484        534761  None  
-23  243.7026        562838  None  
-24  239.9506        645863  None  
-25  240.1518        585809  None  
-26  243.3060        555842  None  
-27  238.9230        737062  None  
-28  234.5082        740163  None  
-29  218.4456       1494388  None  
-30  205.9207       2493168  None  
-31  208.5553       1240407  None  
-32  208.8341        858073  None  
-33  204.7400        945594  None  
-34  199.8434       1214199  None  
-35  199.0395        877591  None  
-36  199.8964        916823  None  
-37  205.0854        726231  None  
-38  204.5252        503852  None  
-39  208.9412        831775  None  
-40  204.9027        796501  None  
-41  208.0772        594489  None  
-42  210.1640        552150  None  
-43  207.8749        687335  None  
-44  208.7455        659180  None  
-45  207.8504        650470  None  
-46  206.3465        676042  None  
-47  215.5907        775240  None  
-48  218.1345        810343  None  
-49  214.4868        676403  None  
-50  210.7315        754427  None  
-51  214.3507        529805  None  
-52  213.2448        509470  None  
-53  209.8179        586943  None  
-54  208.1566        544761  None  
-55  210.4039        596171  None  
-56  214.4323        569506  None  
-57  211.1293        536059  None  
-58  207.8313        543363  None  
-59  206.0983        563846  None  
-Combined data:
-                   Date     open      high      low   close        volume  \
-0   2025-01-02 05:00:00  222.030  225.1500  218.190  220.22  3.395658e+07   
-1   2025-01-03 05:00:00  222.505  225.3600  221.620  224.19  2.751561e+07   
-2   2025-01-06 05:00:00  226.780  228.8350  224.840  227.61  3.184983e+07   
-3   2025-01-07 05:00:00  227.900  228.3810  221.460  222.11  2.808416e+07   
-4   2025-01-08 05:00:00  223.185  223.5200  220.200  222.13  2.503329e+07   
-..                  ...      ...       ...      ...     ...           ...   
-299 2026-03-16 04:00:00  208.350  212.7240  207.445  211.74  4.220932e+07   
-300 2026-03-17 04:00:00  212.820  215.7000  212.430  215.20  4.496994e+07   
-301 2026-03-18 04:00:00  213.925  215.1401  208.825  209.87  3.784664e+07   
-302 2026-03-19 04:00:00  207.060  209.1200  206.050  208.76  3.644062e+07   
-303 2026-03-20 04:00:00  207.400  207.5400  204.316  205.37  6.369460e+07   
-
-         vwap  transactions   otc  
-0    221.2745        449631  None  
-1    223.7050        346976  None  
-2    227.0921        410686  None  
-3    223.4033        379570  None  
-4    222.0414        325539  None  
-..        ...           ...   ...  
-299  210.4039        596171  None  
-300  214.4323        569506  None  
-301  211.1293        536059  None  
-302  207.8313        543363  None  
-303  206.0983        563846  None  
-
-[304 rows x 9 columns]
-</pre>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>The example above pulls daily data starting from 1/1/2025. Here are the first five rows:</p>
 </div>
 </div>
 </div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=69ebae61">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=4b6f0f62">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Copy this &lt;!-- INSERT_polygon_fetch_full_history_HERE --&gt; to index_temp.md</span>
-<span class="n">export_track_md_deps</span><span class="p">(</span>
-    <span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> 
-    <span class="n">md_filename</span><span class="o">=</span><span class="s2">"polygon_fetch_full_history.md"</span><span class="p">,</span> 
-    <span class="n">content</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">floatfmt</span><span class="o">=</span><span class="s2">".5f"</span><span class="p">),</span>
-    <span class="n">output_type</span><span class="o">=</span><span class="s2">"markdown"</span><span class="p">,</span>
-<span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -8118,15 +8093,106 @@ Combined data:
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>✅ Exported and tracked: polygon_fetch_full_history.md
-</pre>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Date</th>
+<th>open</th>
+<th>high</th>
+<th>low</th>
+<th>close</th>
+<th>volume</th>
+<th>vwap</th>
+<th>transactions</th>
+<th>otc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>2025-01-02 05:00:00</td>
+<td>222.030</td>
+<td>225.150</td>
+<td>218.19</td>
+<td>220.22</td>
+<td>33956579.0</td>
+<td>221.2745</td>
+<td>449631</td>
+<td>None</td>
+</tr>
+<tr>
+<th>1</th>
+<td>2025-01-03 05:00:00</td>
+<td>222.505</td>
+<td>225.360</td>
+<td>221.62</td>
+<td>224.19</td>
+<td>27503606.0</td>
+<td>223.7046</td>
+<td>346975</td>
+<td>None</td>
+</tr>
+<tr>
+<th>2</th>
+<td>2025-01-06 05:00:00</td>
+<td>226.780</td>
+<td>228.835</td>
+<td>224.84</td>
+<td>227.61</td>
+<td>31849831.0</td>
+<td>227.0921</td>
+<td>410686</td>
+<td>None</td>
+</tr>
+<tr>
+<th>3</th>
+<td>2025-01-07 05:00:00</td>
+<td>227.900</td>
+<td>228.381</td>
+<td>221.46</td>
+<td>222.11</td>
+<td>28084164.0</td>
+<td>223.4033</td>
+<td>379570</td>
+<td>None</td>
+</tr>
+<tr>
+<th>4</th>
+<td>2025-01-08 05:00:00</td>
+<td>223.185</td>
+<td>223.520</td>
+<td>220.20</td>
+<td>222.13</td>
+<td>25033292.0</td>
+<td>222.0414</td>
+<td>325539</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9ce2e265">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=16cfffd4">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8136,12 +8202,47 @@ Combined data:
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=b0aa739f">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1d957ff5">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>This function wraps the one above and performs the following:</p>
+<ol>
+<li>Attempt to read an existing pickle data file.</li>
+<li>If a data file exists, then pull updated data starting from the last date on record.</li>
+<li>Otherwise, pull all historical data available for that asset for the past 2 years (or chosen interval).</li>
+<li>Store Pickle, Excel, and/or Parquet files of the data in the specified directories.</li>
+<li>Return the resulting dataframe.</li>
+</ol>
+<p>Setting <code>force_existing_check</code> re-pulls the entire range rather than starting from the last date on record, which is how gaps in an existing file get filled.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=13551ef5">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>The <code>base_directory</code>, <code>source</code>, <code>asset_class</code>, and <code>timespan</code> arguments together tell the function where in the local filesystem to look for an existing pickle file, and where to store the updated exports. They assemble into a path of the form <code>{base_directory}/{source}/{asset_class}/{timespan}/{ticker}</code>, so the example below reads and writes:</p>
+<div class="highlight"><pre><span></span>Data/Polygon/Equities/day/AMZN.pkl
+Data/Polygon/Equities/day/AMZN.xlsx
+Data/Polygon/Equities/day/AMZN.parquet
+</pre></div>
+<p>Keeping the timespan in the path means minute, hour, and daily records for the same ticker sit side by side without overwriting one another.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=fd30568c">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">current_year</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">year</span>
@@ -8160,13 +8261,14 @@ Combined data:
     <span class="n">adjusted</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">force_existing_check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">free_tier</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">excel_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">pickle_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">parquet_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">output_confirmation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>  <span class="c1"># Sleep for 2 seconds to avoid hitting rate limits</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>  <span class="c1"># Sleep for 12 seconds to avoid hitting rate limits</span>
 </pre></div>
 </div>
 </div>
@@ -8180,364 +8282,25 @@ Combined data:
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>File found...updating the AMZN day data.
-Existing data:
-                   Date     open      high       low   close        volume  \
-0   2023-07-28 04:00:00  129.690  133.0100  129.3300  132.21  4.626978e+07   
-1   2023-07-31 04:00:00  133.200  133.8700  132.3800  133.68  4.190152e+07   
-2   2023-08-01 04:00:00  133.550  133.6900  131.6199  131.69  4.225099e+07   
-3   2023-08-02 04:00:00  130.154  130.2300  126.8200  128.21  5.098861e+07   
-4   2023-08-03 04:00:00  127.480  129.8400  126.4100  128.91  9.085574e+07   
-..                  ...      ...       ...       ...     ...           ...   
-659 2026-03-16 04:00:00  208.350  212.7240  207.4450  211.74  4.220932e+07   
-660 2026-03-17 04:00:00  212.820  215.7000  212.4300  215.20  4.496994e+07   
-661 2026-03-18 04:00:00  213.925  215.1401  208.8250  209.87  3.784664e+07   
-662 2026-03-19 04:00:00  207.060  209.1200  206.0500  208.76  3.644062e+07   
-663 2026-03-20 04:00:00  207.400  207.5400  204.3160  205.37  6.369460e+07   
-
-         vwap  transactions   otc  
-0    131.8837        413438  None  
-1    133.3410        406644  None  
-2    132.2470        385743  None  
-3    128.3973        532942  None  
-4    131.4941        746639  None  
-..        ...           ...   ...  
-659  210.4039        596171  None  
-660  214.4323        569506  None  
-661  211.1293        536059  None  
-662  207.8313        543363  None  
-663  206.0983        563846  None  
-
-[664 rows x 9 columns]
-Last date in existing data: 2026-03-20 04:00:00
-Number of rows in existing data: 664
+Last date in existing data: 2026-10-29 04:00:00
+Number of rows in existing data: 818
 Forcing check of existing data...
-Pulling day data for 2024-03-23 00:00:00 thru 2024-09-19 00:00:00 for AMZN...
-
-New data:
-                   Date    open    high       low   close      volume  \
-0   2024-03-25 04:00:00  178.01  180.99  177.2400  179.71  29815464.0   
-1   2024-03-26 04:00:00  180.15  180.45  177.9500  178.30  29658982.0   
-2   2024-03-27 04:00:00  179.88  180.00  177.3099  179.83  33272551.0   
-3   2024-03-28 04:00:00  180.17  181.70  179.2600  180.38  38051588.0   
-4   2024-04-01 04:00:00  180.79  183.00  179.9500  180.97  29174521.0   
-..                  ...     ...     ...       ...     ...         ...   
-119 2024-09-13 04:00:00  187.00  188.50  185.9100  186.49  26495351.0   
-120 2024-09-16 04:00:00  185.29  185.81  183.3600  184.89  26065485.0   
-121 2024-09-17 04:00:00  186.85  189.45  186.1400  186.88  26091682.0   
-122 2024-09-18 04:00:00  186.45  188.80  185.0600  186.43  34448130.0   
-123 2024-09-19 04:00:00  190.04  190.99  188.4700  189.87  39543168.0   
-
-         vwap  transactions   otc  
-0    179.6492        352597  None  
-1    179.1228        326743  None  
-2    179.1069        341921  None  
-3    180.4863        364803  None  
-4    180.9175        370612  None  
-..        ...           ...   ...  
-119  187.1696        338171  None  
-120  184.6797        353780  None  
-121  187.5174        351410  None  
-122  186.7645        381348  None  
-123  189.6779        422926  None  
-
-[124 rows x 9 columns]
-Combined data:
-                   Date     open      high       low   close        volume  \
-0   2023-07-28 04:00:00  129.690  133.0100  129.3300  132.21  4.626978e+07   
-1   2023-07-31 04:00:00  133.200  133.8700  132.3800  133.68  4.190152e+07   
-2   2023-08-01 04:00:00  133.550  133.6900  131.6199  131.69  4.225099e+07   
-3   2023-08-02 04:00:00  130.154  130.2300  126.8200  128.21  5.098861e+07   
-4   2023-08-03 04:00:00  127.480  129.8400  126.4100  128.91  9.085574e+07   
-..                  ...      ...       ...       ...     ...           ...   
-659 2026-03-16 04:00:00  208.350  212.7240  207.4450  211.74  4.220932e+07   
-660 2026-03-17 04:00:00  212.820  215.7000  212.4300  215.20  4.496994e+07   
-661 2026-03-18 04:00:00  213.925  215.1401  208.8250  209.87  3.784664e+07   
-662 2026-03-19 04:00:00  207.060  209.1200  206.0500  208.76  3.644062e+07   
-663 2026-03-20 04:00:00  207.400  207.5400  204.3160  205.37  6.369460e+07   
-
-         vwap  transactions   otc  
-0    131.8837        413438  None  
-1    133.3410        406644  None  
-2    132.2470        385743  None  
-3    128.3973        532942  None  
-4    131.4941        746639  None  
-..        ...           ...   ...  
-659  210.4039        596171  None  
-660  214.4323        569506  None  
-661  211.1293        536059  None  
-662  207.8313        543363  None  
-663  206.0983        563846  None  
-
-[664 rows x 9 columns]
-Sleeping for 12 seconds to avoid hitting API rate limits...
-
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Pulling day data for 2024-09-18 04:00:00 thru 2025-03-17 04:00:00 for AMZN...
-
-New data:
-                   Date     open      high       low   close       volume  \
-0   2024-09-18 04:00:00  186.450  188.8000  185.0600  186.43   34448130.0   
-1   2024-09-19 04:00:00  190.040  190.9900  188.4700  189.87   39543168.0   
-2   2024-09-20 04:00:00  190.230  191.8400  187.4100  191.60  100378553.0   
-3   2024-09-23 04:00:00  191.640  194.4500  190.5700  193.88   36993111.0   
-4   2024-09-24 04:00:00  194.270  195.3700  190.1300  193.96   43478926.0   
-..                  ...      ...       ...       ...     ...          ...   
-118 2025-03-11 04:00:00  193.900  200.1800  193.4000  196.59   54002880.0   
-119 2025-03-12 04:00:00  200.720  201.5200  195.2900  198.89   43679284.0   
-120 2025-03-13 04:00:00  198.165  198.8799  191.8200  193.89   41270761.0   
-121 2025-03-14 04:00:00  197.410  198.6500  195.3200  197.95   38096663.0   
-122 2025-03-17 04:00:00  198.770  199.0000  194.3247  195.74   47341752.0   
-
-         vwap  transactions   otc  
-0    186.7645        381348  None  
-1    189.6779        422926  None  
-2    190.8708        430701  None  
-3    193.0995        405139  None  
-4    193.0480        404498  None  
-..        ...           ...   ...  
-118  196.8215        668549  None  
-119  198.8820        573896  None  
-120  194.3326        588538  None  
-121  197.4359        470644  None  
-122  196.4612        568556  None  
-
-[123 rows x 9 columns]
-Combined data:
-                   Date     open      high       low   close        volume  \
-0   2023-07-28 04:00:00  129.690  133.0100  129.3300  132.21  4.626978e+07   
-1   2023-07-31 04:00:00  133.200  133.8700  132.3800  133.68  4.190152e+07   
-2   2023-08-01 04:00:00  133.550  133.6900  131.6199  131.69  4.225099e+07   
-3   2023-08-02 04:00:00  130.154  130.2300  126.8200  128.21  5.098861e+07   
-4   2023-08-03 04:00:00  127.480  129.8400  126.4100  128.91  9.085574e+07   
-..                  ...      ...       ...       ...     ...           ...   
-659 2026-03-16 04:00:00  208.350  212.7240  207.4450  211.74  4.220932e+07   
-660 2026-03-17 04:00:00  212.820  215.7000  212.4300  215.20  4.496994e+07   
-661 2026-03-18 04:00:00  213.925  215.1401  208.8250  209.87  3.784664e+07   
-662 2026-03-19 04:00:00  207.060  209.1200  206.0500  208.76  3.644062e+07   
-663 2026-03-20 04:00:00  207.400  207.5400  204.3160  205.37  6.369460e+07   
-
-         vwap  transactions   otc  
-0    131.8837        413438  None  
-1    133.3410        406644  None  
-2    132.2470        385743  None  
-3    128.3973        532942  None  
-4    131.4941        746639  None  
-..        ...           ...   ...  
-659  210.4039        596171  None  
-660  214.4323        569506  None  
-661  211.1293        536059  None  
-662  207.8313        543363  None  
-663  206.0983        563846  None  
-
-[664 rows x 9 columns]
-Sleeping for 12 seconds to avoid hitting API rate limits...
-
+<pre>Exporting AMZN day data to Excel...
+Exporting AMZN day data to Pickle...
+Exporting AMZN day data to Parquet...
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Pulling day data for 2025-03-16 04:00:00 thru 2025-09-12 04:00:00 for AMZN...
-
-New data:
-                   Date     open     high       low   close      volume  \
-0   2025-03-17 04:00:00  198.770  199.000  194.3247  195.74  47341752.0   
-1   2025-03-18 04:00:00  192.520  194.000  189.3800  192.82  40414867.0   
-2   2025-03-19 04:00:00  193.380  195.965  191.9600  195.54  39442878.0   
-3   2025-03-20 04:00:00  193.070  199.320  192.3000  194.95  38921113.0   
-4   2025-03-21 04:00:00  192.900  196.990  192.5200  196.21  60056917.0   
-..                  ...      ...      ...       ...     ...         ...   
-120 2025-09-08 04:00:00  234.940  237.600  233.7500  235.84  33947104.0   
-121 2025-09-09 04:00:00  236.355  238.850  235.0800  238.24  27033778.0   
-122 2025-09-10 04:00:00  237.515  237.680  229.0962  230.33  60907714.0   
-123 2025-09-11 04:00:00  231.490  231.530  229.3377  229.95  37485598.0   
-124 2025-09-12 04:00:00  230.350  230.790  226.2900  228.15  38496218.0   
-
-         vwap  transactions   otc  
-0    196.4612        568556  None  
-1    192.0851        554394  None  
-2    194.2885        445698  None  
-3    195.6360        455391  None  
-4    195.3015        394836  None  
-..        ...           ...   ...  
-120  235.9162        489481  None  
-121  237.3524        391877  None  
-122  231.8609        806586  None  
-123  230.5074        465912  None  
-124  228.4349        534413  None  
-
-[125 rows x 9 columns]
-Combined data:
-                   Date     open      high       low   close        volume  \
-0   2023-07-28 04:00:00  129.690  133.0100  129.3300  132.21  4.626978e+07   
-1   2023-07-31 04:00:00  133.200  133.8700  132.3800  133.68  4.190152e+07   
-2   2023-08-01 04:00:00  133.550  133.6900  131.6199  131.69  4.225099e+07   
-3   2023-08-02 04:00:00  130.154  130.2300  126.8200  128.21  5.098861e+07   
-4   2023-08-03 04:00:00  127.480  129.8400  126.4100  128.91  9.085574e+07   
-..                  ...      ...       ...       ...     ...           ...   
-659 2026-03-16 04:00:00  208.350  212.7240  207.4450  211.74  4.220932e+07   
-660 2026-03-17 04:00:00  212.820  215.7000  212.4300  215.20  4.496994e+07   
-661 2026-03-18 04:00:00  213.925  215.1401  208.8250  209.87  3.784664e+07   
-662 2026-03-19 04:00:00  207.060  209.1200  206.0500  208.76  3.644062e+07   
-663 2026-03-20 04:00:00  207.400  207.5400  204.3160  205.37  6.369460e+07   
-
-         vwap  transactions   otc  
-0    131.8837        413438  None  
-1    133.3410        406644  None  
-2    132.2470        385743  None  
-3    128.3973        532942  None  
-4    131.4941        746639  None  
-..        ...           ...   ...  
-659  210.4039        596171  None  
-660  214.4323        569506  None  
-661  211.1293        536059  None  
-662  207.8313        543363  None  
-663  206.0983        563846  None  
-
-[664 rows x 9 columns]
-Sleeping for 12 seconds to avoid hitting API rate limits...
-
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Pulling day data for 2025-09-11 04:00:00 thru 2026-03-10 04:00:00 for AMZN...
-
-New data:
-                   Date     open    high       low   close        volume  \
-0   2025-09-11 04:00:00  231.490  231.53  229.3377  229.95  3.748560e+07   
-1   2025-09-12 04:00:00  230.350  230.79  226.2900  228.15  3.849622e+07   
-2   2025-09-15 04:00:00  230.625  233.73  230.3200  231.43  3.324333e+07   
-3   2025-09-16 04:00:00  232.935  235.90  232.2300  234.05  3.820391e+07   
-4   2025-09-17 04:00:00  233.770  234.30  228.7100  231.62  4.281523e+07   
-..                  ...      ...     ...       ...     ...           ...   
-119 2026-03-04 05:00:00  210.470  217.54  210.1500  216.82  5.473110e+07   
-120 2026-03-05 05:00:00  215.980  220.47  215.5900  218.94  6.094345e+07   
-121 2026-03-06 05:00:00  214.990  217.32  212.5300  213.21  5.115272e+07   
-122 2026-03-09 04:00:00  210.450  213.82  207.1100  213.49  5.464293e+07   
-123 2026-03-10 04:00:00  214.190  215.65  212.4300  214.33  3.567883e+07   
-
-         vwap  transactions   otc  
-0    230.5074        465912  None  
-1    228.4349        534413  None  
-2    231.6848        488104  None  
-3    234.4088        497761  None  
-4    231.1429        528520  None  
-..        ...           ...   ...  
-119  215.5907        775240  None  
-120  218.1345        810343  None  
-121  214.4868        676403  None  
-122  210.7315        754427  None  
-123  214.3507        529805  None  
-
-[124 rows x 9 columns]
-Combined data:
-                   Date     open      high       low   close        volume  \
-0   2023-07-28 04:00:00  129.690  133.0100  129.3300  132.21  4.626978e+07   
-1   2023-07-31 04:00:00  133.200  133.8700  132.3800  133.68  4.190152e+07   
-2   2023-08-01 04:00:00  133.550  133.6900  131.6199  131.69  4.225099e+07   
-3   2023-08-02 04:00:00  130.154  130.2300  126.8200  128.21  5.098861e+07   
-4   2023-08-03 04:00:00  127.480  129.8400  126.4100  128.91  9.085574e+07   
-..                  ...      ...       ...       ...     ...           ...   
-659 2026-03-16 04:00:00  208.350  212.7240  207.4450  211.74  4.220932e+07   
-660 2026-03-17 04:00:00  212.820  215.7000  212.4300  215.20  4.496994e+07   
-661 2026-03-18 04:00:00  213.925  215.1401  208.8250  209.87  3.784664e+07   
-662 2026-03-19 04:00:00  207.060  209.1200  206.0500  208.76  3.644062e+07   
-663 2026-03-20 04:00:00  207.400  207.5400  204.3160  205.37  6.369460e+07   
-
-         vwap  transactions   otc  
-0    131.8837        413438  None  
-1    133.3410        406644  None  
-2    132.2470        385743  None  
-3    128.3973        532942  None  
-4    131.4941        746639  None  
-..        ...           ...   ...  
-659  210.4039        596171  None  
-660  214.4323        569506  None  
-661  211.1293        536059  None  
-662  207.8313        543363  None  
-663  206.0983        563846  None  
-
-[664 rows x 9 columns]
-Sleeping for 12 seconds to avoid hitting API rate limits...
-
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Pulling day data for 2026-03-09 04:00:00 thru 2026-09-05 04:00:00 for AMZN...
-
-New data:
-                 Date     open      high      low   close        volume  \
-0 2026-03-09 04:00:00  210.450  213.8200  207.110  213.49  5.464293e+07   
-1 2026-03-10 04:00:00  214.190  215.6500  212.430  214.33  3.567883e+07   
-2 2026-03-11 04:00:00  215.705  217.0000  211.350  212.65  3.419930e+07   
-3 2026-03-12 04:00:00  210.390  211.7100  208.150  209.53  4.434950e+07   
-4 2026-03-13 04:00:00  209.605  210.5600  206.220  207.67  3.566214e+07   
-5 2026-03-16 04:00:00  208.350  212.7240  207.445  211.74  4.220932e+07   
-6 2026-03-17 04:00:00  212.820  215.7000  212.430  215.20  4.496994e+07   
-7 2026-03-18 04:00:00  213.925  215.1401  208.825  209.87  3.784664e+07   
-8 2026-03-19 04:00:00  207.060  209.1200  206.050  208.76  3.644062e+07   
-9 2026-03-20 04:00:00  207.400  207.5400  204.316  205.37  6.369460e+07   
-
-       vwap  transactions   otc  
-0  210.7315        754427  None  
-1  214.3507        529805  None  
-2  213.2448        509470  None  
-3  209.8179        586943  None  
-4  208.1566        544761  None  
-5  210.4039        596171  None  
-6  214.4323        569506  None  
-7  211.1293        536059  None  
-8  207.8313        543363  None  
-9  206.0983        563846  None  
-Combined data:
-                   Date     open      high       low   close        volume  \
-0   2023-07-28 04:00:00  129.690  133.0100  129.3300  132.21  4.626978e+07   
-1   2023-07-31 04:00:00  133.200  133.8700  132.3800  133.68  4.190152e+07   
-2   2023-08-01 04:00:00  133.550  133.6900  131.6199  131.69  4.225099e+07   
-3   2023-08-02 04:00:00  130.154  130.2300  126.8200  128.21  5.098861e+07   
-4   2023-08-03 04:00:00  127.480  129.8400  126.4100  128.91  9.085574e+07   
-..                  ...      ...       ...       ...     ...           ...   
-659 2026-03-16 04:00:00  208.350  212.7240  207.4450  211.74  4.220932e+07   
-660 2026-03-17 04:00:00  212.820  215.7000  212.4300  215.20  4.496994e+07   
-661 2026-03-18 04:00:00  213.925  215.1401  208.8250  209.87  3.784664e+07   
-662 2026-03-19 04:00:00  207.060  209.1200  206.0500  208.76  3.644062e+07   
-663 2026-03-20 04:00:00  207.400  207.5400  204.3160  205.37  6.369460e+07   
-
-         vwap  transactions   otc  
-0    131.8837        413438  None  
-1    133.3410        406644  None  
-2    132.2470        385743  None  
-3    128.3973        532942  None  
-4    131.4941        746639  None  
-..        ...           ...   ...  
-659  210.4039        596171  None  
-660  214.4323        569506  None  
-661  211.1293        536059  None  
-662  207.8313        543363  None  
-663  206.0983        563846  None  
-
-[664 rows x 9 columns]
-Exporting AMZN day data to Excel...
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Exporting AMZN day data to Pickle...
-The first and last date of day data for AMZN is: 
+<pre>The first and last date of day data for AMZN is: 
 </pre>
 </div>
 </div>
@@ -8625,15 +8388,15 @@ The first and last date of day data for AMZN is:
 </thead>
 <tbody>
 <tr>
-<th>663</th>
-<td>2026-03-20 04:00:00</td>
-<td>207.4</td>
-<td>207.54</td>
-<td>204.316</td>
-<td>205.37</td>
-<td>6.369460e+07</td>
-<td>206.0983</td>
-<td>563846</td>
+<th>817</th>
+<td>2026-10-29 04:00:00</td>
+<td>246.95</td>
+<td>249.14</td>
+<td>241.24</td>
+<td>246.36</td>
+<td>2.899970e+07</td>
+<td>246.0853</td>
+<td>458904</td>
 <td>None</td>
 </tr>
 </tbody>
@@ -8644,7 +8407,7 @@ The first and last date of day data for AMZN is:
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Number of rows after data update: 664
+<pre>Number of rows after data update: 818
 Number of rows added during update: 0
 Polygon data complete for AMZN day data.
 --------------------
@@ -8653,21 +8416,26 @@ Polygon data complete for AMZN day data.
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=0431814c">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=946eedec">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>And here are the first five rows of the returned dataframe:</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=ea071546">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Copy this &lt;!-- INSERT_polygon_pull_data_HERE --&gt; to index_temp.md</span>
-<span class="n">export_track_md_deps</span><span class="p">(</span>
-    <span class="n">dep_file</span><span class="o">=</span><span class="n">dep_file</span><span class="p">,</span> 
-    <span class="n">md_filename</span><span class="o">=</span><span class="s2">"polygon_pull_data.md"</span><span class="p">,</span> 
-    <span class="n">content</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">floatfmt</span><span class="o">=</span><span class="s2">".5f"</span><span class="p">),</span>
-    <span class="n">output_type</span><span class="o">=</span><span class="s2">"markdown"</span><span class="p">,</span>
-<span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -8679,10 +8447,164 @@ Polygon data complete for AMZN day data.
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>✅ Exported and tracked: polygon_pull_data.md
-</pre>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Date</th>
+<th>open</th>
+<th>high</th>
+<th>low</th>
+<th>close</th>
+<th>volume</th>
+<th>vwap</th>
+<th>transactions</th>
+<th>otc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>2023-07-28 04:00:00</td>
+<td>129.690</td>
+<td>133.01</td>
+<td>129.3300</td>
+<td>132.21</td>
+<td>46269781.0</td>
+<td>131.8837</td>
+<td>413438</td>
+<td>None</td>
+</tr>
+<tr>
+<th>1</th>
+<td>2023-07-31 04:00:00</td>
+<td>133.200</td>
+<td>133.87</td>
+<td>132.3800</td>
+<td>133.68</td>
+<td>41901516.0</td>
+<td>133.3410</td>
+<td>406644</td>
+<td>None</td>
+</tr>
+<tr>
+<th>2</th>
+<td>2023-08-01 04:00:00</td>
+<td>133.550</td>
+<td>133.69</td>
+<td>131.6199</td>
+<td>131.69</td>
+<td>42250989.0</td>
+<td>132.2470</td>
+<td>385743</td>
+<td>None</td>
+</tr>
+<tr>
+<th>3</th>
+<td>2023-08-02 04:00:00</td>
+<td>130.154</td>
+<td>130.23</td>
+<td>126.8200</td>
+<td>128.21</td>
+<td>50988614.0</td>
+<td>128.3973</td>
+<td>532942</td>
+<td>None</td>
+</tr>
+<tr>
+<th>4</th>
+<td>2023-08-03 04:00:00</td>
+<td>127.480</td>
+<td>129.84</td>
+<td>126.4100</td>
+<td>128.91</td>
+<td>90855736.0</td>
+<td>131.4941</td>
+<td>746639</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
 </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e65d6332">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Note that <code>Date</code> is returned as a regular column with a plain integer index rather than as the index itself. That is deliberate, and any downstream analysis can call <code>set_index("Date")</code> as needed.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e29cb0f9">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Future-Investigation">Future Investigation<a class="anchor-link" href="#Future-Investigation">¶</a></h2>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4db46dfa">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<ol>
+<li>Calculate adjusted open/high/low/close prices using the dividend adjustment factor.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=51eda898">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="References">References<a class="anchor-link" href="#References">¶</a></h2>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c2cf6233">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<ol>
+<li><a href="https://massive.com">Massive (formerly Polygon.io)</a></li>
+<li><a href="https://massive.com/docs/rest/quickstart">Massive REST API quickstart</a></li>
+<li><a href="https://pypi.org/project/massive/">massive on PyPI</a></li>
+<li><a href="https://github.com/massive-com/client-python">massive-com/client-python on GitHub</a></li>
+<li><a href="/posts/reusable-extensible-python-functions-financial-data-analysis/">Reusable &amp; Extensible Python Functions For Financial Data Analysis</a></li>
+</ol>
 </div>
 </div>
 </div>

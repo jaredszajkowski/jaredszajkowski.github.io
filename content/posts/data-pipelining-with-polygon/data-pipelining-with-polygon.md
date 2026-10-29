@@ -1,47 +1,34 @@
-# Data Pipelining With Polygon
+## Post Updates
+
+Update 8/6/2026: Brought the post back in line with the current source. Polygon.io has rebranded to Massive and the Python client is now imported as `massive`, `polygon_pull_data` gained a `parquet_export` parameter and returns the resulting DataFrame, and `polygon_fetch_full_history` renamed its `full_history_df` parameter to `existing_history_df`. Replaced the reproduced docstrings with prose descriptions, added the free tier constraints that shape the design, and documented the on-disk layout the data lands in.
+
+## Introduction
+
+Where the [previous post on collecting crypto asset data from Coinbase](/posts/data-pipelining-with-coinbase/) covered digital assets, this one covers the equity side. The two functions below pull minute, hour, and daily bars for equities and ETFs from Polygon.io, since rebranded as [Massive](https://massive.com).
+
+Two constraints from the free tier drive most of the design. The first is a two year limit on historical data, which is why the examples below start from a date two years back rather than attempting to pull an asset's full history. The second is a rate limit of five API requests per minute, which is what the `free_tier` flag handles. When using the free tier, the fetch pauses for twelve seconds between requests. A single API call also returns at most 5,000 records, so any meaningful date range has to be walked through in chunks and reassembled.
+
+The work is split across two functions that build on one another. `polygon_fetch_full_history` walks a date range and returns it as a single dataframe. `polygon_pull_data` wraps that to maintain pickle, Excel, and Parquet files on disk, extending an existing record with the rows it is missing, or creating a new record where none exists.
 
 ## Python Imports
 
 
 ```python
 # Standard Library
-import datetime
-import io
 import os
-import random
 import sys
 import time
 import warnings
 
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
 
 # Data Handling
-import numpy as np
 import pandas as pd
-
-# Data Visualization
-import matplotlib.dates as mdates
-import matplotlib.pyplot as plt
-import matplotlib.ticker as mtick
-import seaborn as sns
-from matplotlib.ticker import FormatStrFormatter, FuncFormatter, MultipleLocator
-
-# Data Sources
-import yfinance as yf
-
-# Statistical Analysis
-import statsmodels.api as sm
-
-# Machine Learning
-from sklearn.decomposition import PCA
-from sklearn.preprocessing import StandardScaler
 
 # Suppress warnings
 warnings.filterwarnings("ignore")
 ```
-
-## Add Directories To Path
 
 
 ```python
@@ -67,62 +54,45 @@ PUBLIC_DIR = config("PUBLIC_DIR")
 SOURCE_DIR = config("SOURCE_DIR")
 DATA_DIR = config("DATA_DIR")
 DATA_MANUAL_DIR = config("DATA_MANUAL_DIR")
-
-# Print system path
-for i, path in enumerate(sys.path):
-    print(f"{i}: {path}")
 ```
-
-    0: /usr/lib/python313.zip
-    1: /usr/lib/python3.13
-    2: /usr/lib/python3.13/lib-dynload
-    3: 
-    4: /home/jared/python-virtual-envs/general-venv-p313/lib/python3.13/site-packages
-    5: /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/src
-
-
-## Track Index Dependencies
-
-
-```python
-# Create file to track markdown dependencies
-dep_file = Path("index_dep.txt")
-dep_file.write_text("")
-```
-
-
-
-
-    0
-
-
 
 ## Python Functions
 
+Here are the functions needed for this project, listed in the order they build on one another:
+
+* [polygon_fetch_full_history](/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_fetch_full_history): Fetch full historical data for a given product from Polygon API.
+* [polygon_pull_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_pull_data): Read existing data file, download price data from Polygon, and export data.
+
 
 ```python
-from export_track_md_deps import export_track_md_deps
 from polygon_fetch_full_history import polygon_fetch_full_history
 from polygon_pull_data import polygon_pull_data
 ```
 
+One naming note before the code: Polygon.io has rebranded to Massive, and the official Python client followed. The package is now [`massive`](https://pypi.org/project/massive/) rather than `polygon-api-client`, so the import below reads `from massive import RESTClient`. The API surface is otherwise unchanged, and I've kept "Polygon" in the function names and directory layout since that's what the existing data is filed under.
+
 ## Function Usage
+
+Both examples below use daily bars, but switching to minute or hour data is a matter of changing the `timespan` and `multiplier` arguments, with everything else unchanged. Note that finer granularity burns through the free tier rate limit considerably faster, since each request covers a much shorter window. Massive actually aggregates minute data into hour bars, so the time to pull minute and hour data is actually the same. Both functions accept only `minute`, `hour`, or `day` for `timespan` and raise an exception otherwise, since the window sizing logic is only defined for those three.
 
 ### Polygon Fetch Full History
 
+This is the lower level of the two functions. Starting from `current_start`, it walks forward through the date range in fixed size windows - 180 days for daily data, 15 days for minute and hour data - requests each window from the API, and appends the results to the dataframe passed in as `existing_history_df`, stopping once it reaches the present. Because each request is capped at 5,000 records, ranges spanning years are handled the same way as the single window below: the individual responses are concatenated and returned as one dataframe.
+
+The API key is read through `config`, which merges everything in the `.env` file into the settings defaults, so `config("POLYGON_KEY")` resolves without any further setup:
+
 
 ```python
-from load_api_keys import load_api_keys
 from massive import RESTClient
 
-# Load API keys from the environment
-api_keys = load_api_keys()
+# Load API key from the environment variables
+POLYGON_KEY = config("POLYGON_KEY")
 
 # Get the environment variable for where data is stored
 DATA_DIR = config("DATA_DIR")
 
 # Open client connection
-client = RESTClient(api_key=api_keys["POLYGON_KEY"])
+client = RESTClient(api_key=POLYGON_KEY)
 
 # Create an empty DataFrame
 df = pd.DataFrame({
@@ -137,7 +107,7 @@ df = pd.DataFrame({
     'otc': pd.Series(dtype="object")
 })
 
-# Example usage - minute
+# Example usage - daily
 df = polygon_fetch_full_history(
     client=client,
     ticker="AMZN",
@@ -147,309 +117,136 @@ df = polygon_fetch_full_history(
     existing_history_df=df,
     current_start=datetime(2025, 1, 1),
     free_tier=True,
-    verbose=True,
+    verbose=False,
 )
 
-time.sleep(12)  # Sleep for 2 seconds to avoid hitting rate limits
+time.sleep(12)  # Sleep for 12 seconds to avoid hitting rate limits
 ```
 
-    Pulling day data for 2025-01-01 00:00:00 thru 2025-06-30 00:00:00 for AMZN...
-    
-
-
-    New data:
-                       Date     open     high      low   close       volume  \
-    0   2025-01-02 05:00:00  222.030  225.150  218.190  220.22   33956579.0   
-    1   2025-01-03 05:00:00  222.505  225.360  221.620  224.19   27515606.0   
-    2   2025-01-06 05:00:00  226.780  228.835  224.840  227.61   31849831.0   
-    3   2025-01-07 05:00:00  227.900  228.381  221.460  222.11   28084164.0   
-    4   2025-01-08 05:00:00  223.185  223.520  220.200  222.13   25033292.0   
-    ..                  ...      ...      ...      ...     ...          ...   
-    117 2025-06-24 04:00:00  212.135  214.340  211.045  212.77   38378757.0   
-    118 2025-06-25 04:00:00  214.615  216.030  211.110  211.99   31755698.0   
-    119 2025-06-26 04:00:00  213.120  218.035  212.010  217.12   50480814.0   
-    120 2025-06-27 04:00:00  219.920  223.300  216.740  223.30  119217138.0   
-    121 2025-06-30 04:00:00  223.520  223.820  219.120  219.39   58887780.0   
-    
-             vwap  transactions   otc  
-    0    221.2745        449631  None  
-    1    223.7050        346976  None  
-    2    227.0921        410686  None  
-    3    223.4033        379570  None  
-    4    222.0414        325539  None  
-    ..        ...           ...   ...  
-    117  213.1129        459901  None  
-    118  212.8066        417565  None  
-    119  216.0944        572822  None  
-    120  221.7267        750603  None  
-    121  220.6316        673189  None  
-    
-    [122 rows x 9 columns]
-    Combined data:
-                       Date     open     high      low   close       volume  \
-    0   2025-01-02 05:00:00  222.030  225.150  218.190  220.22   33956579.0   
-    1   2025-01-03 05:00:00  222.505  225.360  221.620  224.19   27515606.0   
-    2   2025-01-06 05:00:00  226.780  228.835  224.840  227.61   31849831.0   
-    3   2025-01-07 05:00:00  227.900  228.381  221.460  222.11   28084164.0   
-    4   2025-01-08 05:00:00  223.185  223.520  220.200  222.13   25033292.0   
-    ..                  ...      ...      ...      ...     ...          ...   
-    117 2025-06-24 04:00:00  212.135  214.340  211.045  212.77   38378757.0   
-    118 2025-06-25 04:00:00  214.615  216.030  211.110  211.99   31755698.0   
-    119 2025-06-26 04:00:00  213.120  218.035  212.010  217.12   50480814.0   
-    120 2025-06-27 04:00:00  219.920  223.300  216.740  223.30  119217138.0   
-    121 2025-06-30 04:00:00  223.520  223.820  219.120  219.39   58887780.0   
-    
-             vwap  transactions   otc  
-    0    221.2745        449631  None  
-    1    223.7050        346976  None  
-    2    227.0921        410686  None  
-    3    223.4033        379570  None  
-    4    222.0414        325539  None  
-    ..        ...           ...   ...  
-    117  213.1129        459901  None  
-    118  212.8066        417565  None  
-    119  216.0944        572822  None  
-    120  221.7267        750603  None  
-    121  220.6316        673189  None  
-    
-    [122 rows x 9 columns]
-    Sleeping for 12 seconds to avoid hitting API rate limits...
-    
-
-
-    Pulling day data for 2025-06-29 04:00:00 thru 2025-12-26 04:00:00 for AMZN...
-    
-    New data:
-                       Date     open     high     low   close      volume  \
-    0   2025-06-30 04:00:00  223.520  223.820  219.12  219.39  58887780.0   
-    1   2025-07-01 04:00:00  219.500  221.875  217.93  220.46  39256830.0   
-    2   2025-07-02 04:00:00  219.730  221.600  219.06  219.92  30894178.0   
-    3   2025-07-03 04:00:00  221.820  224.010  221.36  223.41  29632353.0   
-    4   2025-07-07 04:00:00  223.000  224.290  222.37  223.47  36604139.0   
-    ..                  ...      ...      ...     ...     ...         ...   
-    120 2025-12-18 05:00:00  225.705  229.225  224.41  226.76  50272419.0   
-    121 2025-12-19 05:00:00  226.760  229.125  225.58  227.35  85544374.0   
-    122 2025-12-22 05:00:00  228.610  229.480  226.71  228.43  32261329.0   
-    123 2025-12-23 05:00:00  229.055  232.445  228.73  232.14  29230233.0   
-    124 2025-12-24 05:00:00  232.130  232.950  231.33  232.38  11420543.0   
-    
-             vwap  transactions   otc  
-    0    220.6316        673189  None  
-    1    220.1508        544150  None  
-    2    220.2103        429633  None  
-    3    222.8867        364422  None  
-    4    223.4121        513469  None  
-    ..        ...           ...   ...  
-    120  226.8047        511173  None  
-    121  227.4217        474053  None  
-    122  228.1120        466788  None  
-    123  231.3567        435724  None  
-    124  232.3354        193852  None  
-    
-    [125 rows x 9 columns]
-    Combined data:
-                       Date     open     high     low   close      volume  \
-    0   2025-01-02 05:00:00  222.030  225.150  218.19  220.22  33956579.0   
-    1   2025-01-03 05:00:00  222.505  225.360  221.62  224.19  27515606.0   
-    2   2025-01-06 05:00:00  226.780  228.835  224.84  227.61  31849831.0   
-    3   2025-01-07 05:00:00  227.900  228.381  221.46  222.11  28084164.0   
-    4   2025-01-08 05:00:00  223.185  223.520  220.20  222.13  25033292.0   
-    ..                  ...      ...      ...     ...     ...         ...   
-    241 2025-12-18 05:00:00  225.705  229.225  224.41  226.76  50272419.0   
-    242 2025-12-19 05:00:00  226.760  229.125  225.58  227.35  85544374.0   
-    243 2025-12-22 05:00:00  228.610  229.480  226.71  228.43  32261329.0   
-    244 2025-12-23 05:00:00  229.055  232.445  228.73  232.14  29230233.0   
-    245 2025-12-24 05:00:00  232.130  232.950  231.33  232.38  11420543.0   
-    
-             vwap  transactions   otc  
-    0    221.2745        449631  None  
-    1    223.7050        346976  None  
-    2    227.0921        410686  None  
-    3    223.4033        379570  None  
-    4    222.0414        325539  None  
-    ..        ...           ...   ...  
-    241  226.8047        511173  None  
-    242  227.4217        474053  None  
-    243  228.1120        466788  None  
-    244  231.3567        435724  None  
-    245  232.3354        193852  None  
-    
-    [246 rows x 9 columns]
-    Sleeping for 12 seconds to avoid hitting API rate limits...
-    
-
-
-    Pulling day data for 2025-12-23 05:00:00 thru 2026-06-21 05:00:00 for AMZN...
-    
-    New data:
-                      Date     open      high      low   close        volume  \
-    0  2025-12-23 05:00:00  229.055  232.4450  228.730  232.14  2.923023e+07   
-    1  2025-12-24 05:00:00  232.130  232.9500  231.330  232.38  1.142054e+07   
-    2  2025-12-26 05:00:00  232.035  232.9900  231.180  232.52  1.599473e+07   
-    3  2025-12-29 05:00:00  231.940  232.6000  230.770  232.07  1.979791e+07   
-    4  2025-12-30 05:00:00  231.205  232.7700  230.200  232.53  2.191045e+07   
-    5  2025-12-31 05:00:00  232.905  232.9900  230.120  230.82  2.438375e+07   
-    6  2026-01-02 05:00:00  231.340  235.4580  224.700  226.50  5.145623e+07   
-    7  2026-01-05 05:00:00  228.840  234.0000  227.180  233.06  4.973335e+07   
-    8  2026-01-06 05:00:00  232.100  243.1800  232.070  240.93  5.376468e+07   
-    9  2026-01-07 05:00:00  239.610  245.2900  239.520  241.56  4.223653e+07   
-    10 2026-01-08 05:00:00  243.060  246.4100  241.880  246.29  3.950984e+07   
-    11 2026-01-09 05:00:00  244.568  247.8600  242.240  247.38  3.455996e+07   
-    12 2026-01-12 05:00:00  246.730  248.9400  245.960  246.47  3.586777e+07   
-    13 2026-01-13 05:00:00  246.530  247.6600  240.250  242.60  3.837178e+07   
-    14 2026-01-14 05:00:00  241.150  241.2800  236.220  236.65  4.141058e+07   
-    15 2026-01-15 05:00:00  239.310  240.6500  236.630  238.18  4.300357e+07   
-    16 2026-01-16 05:00:00  239.085  239.5700  236.410  239.12  4.588828e+07   
-    17 2026-01-20 05:00:00  233.760  235.0900  229.340  231.00  4.773785e+07   
-    18 2026-01-21 05:00:00  231.085  232.3000  226.880  231.31  4.727609e+07   
-    19 2026-01-22 05:00:00  234.045  235.7200  230.900  234.34  3.191332e+07   
-    20 2026-01-23 05:00:00  234.955  240.4500  234.570  239.16  3.377848e+07   
-    21 2026-01-26 05:00:00  239.980  240.9500  237.540  238.42  3.282553e+07   
-    22 2026-01-27 05:00:00  239.685  244.8800  238.080  244.68  3.802922e+07   
-    23 2026-01-28 05:00:00  246.365  247.7750  241.530  243.01  4.088266e+07   
-    24 2026-01-29 05:00:00  242.820  243.0000  236.742  241.73  4.722964e+07   
-    25 2026-01-30 05:00:00  239.890  243.3150  237.640  239.30  4.658502e+07   
-    26 2026-02-02 05:00:00  238.310  245.6299  238.170  242.96  3.754610e+07   
-    27 2026-02-03 05:00:00  244.975  246.3500  235.450  238.62  5.383130e+07   
-    28 2026-02-04 05:00:00  238.860  238.8600  231.820  232.99  5.129995e+07   
-    29 2026-02-05 05:00:00  224.910  226.3100  220.380  222.69  1.035092e+08   
-    30 2026-02-06 05:00:00  202.700  211.4400  200.310  210.32  1.792109e+08   
-    31 2026-02-09 05:00:00  208.970  212.8100  203.350  208.72  9.117844e+07   
-    32 2026-02-10 05:00:00  208.795  212.6499  206.411  206.96  6.717503e+07   
-    33 2026-02-11 05:00:00  208.060  208.5700  202.490  204.08  6.554546e+07   
-    34 2026-02-12 05:00:00  203.960  203.9600  197.560  199.60  8.397539e+07   
-    35 2026-02-13 05:00:00  198.880  201.1600  197.275  198.79  6.632159e+07   
-    36 2026-02-17 05:00:00  198.125  201.7362  196.000  201.15  6.987920e+07   
-    37 2026-02-18 05:00:00  202.070  206.8600  201.510  204.79  5.100330e+07   
-    38 2026-02-19 05:00:00  203.800  205.6396  202.810  204.86  3.566961e+07   
-    39 2026-02-20 05:00:00  204.760  211.1700  203.750  210.11  6.588161e+07   
-    40 2026-02-23 05:00:00  208.095  208.4300  203.110  205.27  5.358151e+07   
-    41 2026-02-24 05:00:00  205.470  210.3600  203.250  208.56  4.113716e+07   
-    42 2026-02-25 05:00:00  210.460  211.5900  208.930  210.64  4.134638e+07   
-    43 2026-02-26 05:00:00  210.730  211.0500  205.345  207.92  4.775677e+07   
-    44 2026-02-27 05:00:00  206.830  210.3300  205.200  210.00  5.742278e+07   
-    45 2026-03-02 05:00:00  204.550  209.7300  203.460  208.39  4.600101e+07   
-    46 2026-03-03 05:00:00  203.100  209.1780  202.480  208.73  4.318492e+07   
-    47 2026-03-04 05:00:00  210.470  217.5400  210.150  216.82  5.473110e+07   
-    48 2026-03-05 05:00:00  215.980  220.4700  215.590  218.94  6.094345e+07   
-    49 2026-03-06 05:00:00  214.990  217.3200  212.530  213.21  5.115272e+07   
-    50 2026-03-09 04:00:00  210.450  213.8200  207.110  213.49  5.464293e+07   
-    51 2026-03-10 04:00:00  214.190  215.6500  212.430  214.33  3.567883e+07   
-    52 2026-03-11 04:00:00  215.705  217.0000  211.350  212.65  3.419930e+07   
-    53 2026-03-12 04:00:00  210.390  211.7100  208.150  209.53  4.434950e+07   
-    54 2026-03-13 04:00:00  209.605  210.5600  206.220  207.67  3.566214e+07   
-    55 2026-03-16 04:00:00  208.350  212.7240  207.445  211.74  4.220932e+07   
-    56 2026-03-17 04:00:00  212.820  215.7000  212.430  215.20  4.496994e+07   
-    57 2026-03-18 04:00:00  213.925  215.1401  208.825  209.87  3.784664e+07   
-    58 2026-03-19 04:00:00  207.060  209.1200  206.050  208.76  3.644062e+07   
-    59 2026-03-20 04:00:00  207.400  207.5400  204.316  205.37  6.369460e+07   
-    
-            vwap  transactions   otc  
-    0   231.3567        435724  None  
-    1   232.3354        193852  None  
-    2   232.4647        278360  None  
-    3   231.8925        352880  None  
-    4   231.7815        322423  None  
-    5   231.2767        322950  None  
-    6   228.0134        750788  None  
-    7   232.1786        678867  None  
-    8   239.6475        767759  None  
-    9   242.9662        623031  None  
-    10  245.1880        537907  None  
-    11  246.0666        487691  None  
-    12  247.2996        520852  None  
-    13  243.3866        559247  None  
-    14  237.6446        582230  None  
-    15  238.3037        567069  None  
-    16  238.4963        424842  None  
-    17  231.9376        749010  None  
-    18  230.2750        654920  None  
-    19  234.0045        447829  None  
-    20  238.6065        482481  None  
-    21  239.0048        450743  None  
-    22  242.5484        534761  None  
-    23  243.7026        562838  None  
-    24  239.9506        645863  None  
-    25  240.1518        585809  None  
-    26  243.3060        555842  None  
-    27  238.9230        737062  None  
-    28  234.5082        740163  None  
-    29  218.4456       1494388  None  
-    30  205.9207       2493168  None  
-    31  208.5553       1240407  None  
-    32  208.8341        858073  None  
-    33  204.7400        945594  None  
-    34  199.8434       1214199  None  
-    35  199.0395        877591  None  
-    36  199.8964        916823  None  
-    37  205.0854        726231  None  
-    38  204.5252        503852  None  
-    39  208.9412        831775  None  
-    40  204.9027        796501  None  
-    41  208.0772        594489  None  
-    42  210.1640        552150  None  
-    43  207.8749        687335  None  
-    44  208.7455        659180  None  
-    45  207.8504        650470  None  
-    46  206.3465        676042  None  
-    47  215.5907        775240  None  
-    48  218.1345        810343  None  
-    49  214.4868        676403  None  
-    50  210.7315        754427  None  
-    51  214.3507        529805  None  
-    52  213.2448        509470  None  
-    53  209.8179        586943  None  
-    54  208.1566        544761  None  
-    55  210.4039        596171  None  
-    56  214.4323        569506  None  
-    57  211.1293        536059  None  
-    58  207.8313        543363  None  
-    59  206.0983        563846  None  
-    Combined data:
-                       Date     open      high      low   close        volume  \
-    0   2025-01-02 05:00:00  222.030  225.1500  218.190  220.22  3.395658e+07   
-    1   2025-01-03 05:00:00  222.505  225.3600  221.620  224.19  2.751561e+07   
-    2   2025-01-06 05:00:00  226.780  228.8350  224.840  227.61  3.184983e+07   
-    3   2025-01-07 05:00:00  227.900  228.3810  221.460  222.11  2.808416e+07   
-    4   2025-01-08 05:00:00  223.185  223.5200  220.200  222.13  2.503329e+07   
-    ..                  ...      ...       ...      ...     ...           ...   
-    299 2026-03-16 04:00:00  208.350  212.7240  207.445  211.74  4.220932e+07   
-    300 2026-03-17 04:00:00  212.820  215.7000  212.430  215.20  4.496994e+07   
-    301 2026-03-18 04:00:00  213.925  215.1401  208.825  209.87  3.784664e+07   
-    302 2026-03-19 04:00:00  207.060  209.1200  206.050  208.76  3.644062e+07   
-    303 2026-03-20 04:00:00  207.400  207.5400  204.316  205.37  6.369460e+07   
-    
-             vwap  transactions   otc  
-    0    221.2745        449631  None  
-    1    223.7050        346976  None  
-    2    227.0921        410686  None  
-    3    223.4033        379570  None  
-    4    222.0414        325539  None  
-    ..        ...           ...   ...  
-    299  210.4039        596171  None  
-    300  214.4323        569506  None  
-    301  211.1293        536059  None  
-    302  207.8313        543363  None  
-    303  206.0983        563846  None  
-    
-    [304 rows x 9 columns]
-
+The example above pulls daily data starting from 1/1/2025. Here are the first five rows:
 
 
 ```python
-# Copy this <!-- INSERT_polygon_fetch_full_history_HERE --> to index_temp.md
-export_track_md_deps(
-    dep_file=dep_file, 
-    md_filename="polygon_fetch_full_history.md", 
-    content=df.head().to_markdown(floatfmt=".5f"),
-    output_type="markdown",
-)
+display(df.head())
 ```
 
-    ✅ Exported and tracked: polygon_fetch_full_history.md
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>open</th>
+      <th>high</th>
+      <th>low</th>
+      <th>close</th>
+      <th>volume</th>
+      <th>vwap</th>
+      <th>transactions</th>
+      <th>otc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2025-01-02 05:00:00</td>
+      <td>222.030</td>
+      <td>225.150</td>
+      <td>218.19</td>
+      <td>220.22</td>
+      <td>33956579.0</td>
+      <td>221.2745</td>
+      <td>449631</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2025-01-03 05:00:00</td>
+      <td>222.505</td>
+      <td>225.360</td>
+      <td>221.62</td>
+      <td>224.19</td>
+      <td>27503606.0</td>
+      <td>223.7046</td>
+      <td>346975</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2025-01-06 05:00:00</td>
+      <td>226.780</td>
+      <td>228.835</td>
+      <td>224.84</td>
+      <td>227.61</td>
+      <td>31849831.0</td>
+      <td>227.0921</td>
+      <td>410686</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2025-01-07 05:00:00</td>
+      <td>227.900</td>
+      <td>228.381</td>
+      <td>221.46</td>
+      <td>222.11</td>
+      <td>28084164.0</td>
+      <td>223.4033</td>
+      <td>379570</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2025-01-08 05:00:00</td>
+      <td>223.185</td>
+      <td>223.520</td>
+      <td>220.20</td>
+      <td>222.13</td>
+      <td>25033292.0</td>
+      <td>222.0414</td>
+      <td>325539</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 
 ### Polygon Pull Data
+
+This function wraps the one above and performs the following:
+
+1. Attempt to read an existing pickle data file.
+2. If a data file exists, then pull updated data starting from the last date on record.
+3. Otherwise, pull all historical data available for that asset for the past 2 years (or chosen interval).
+4. Store Pickle, Excel, and/or Parquet files of the data in the specified directories.
+5. Return the resulting dataframe.
+
+Setting `force_existing_check` re-pulls the entire range rather than starting from the last date on record, which is how gaps in an existing file get filled.
+
+The `base_directory`, `source`, `asset_class`, and `timespan` arguments together tell the function where in the local filesystem to look for an existing pickle file, and where to store the updated exports. They assemble into a path of the form `{base_directory}/{source}/{asset_class}/{timespan}/{ticker}`, so the example below reads and writes:
+
+```text
+Data/Polygon/Equities/day/AMZN.pkl
+Data/Polygon/Equities/day/AMZN.xlsx
+Data/Polygon/Equities/day/AMZN.parquet
+```
+
+Keeping the timespan in the path means minute, hour, and daily records for the same ticker sit side by side without overwriting one another.
 
 
 ```python
@@ -469,353 +266,27 @@ df = polygon_pull_data(
     adjusted=True,
     force_existing_check=True,
     free_tier=True,
-    verbose=True,
+    verbose=False,
     excel_export=True,
     pickle_export=True,
+    parquet_export=True,
     output_confirmation=True,
 )
 
-time.sleep(12)  # Sleep for 2 seconds to avoid hitting rate limits
+time.sleep(12)  # Sleep for 12 seconds to avoid hitting rate limits
 ```
 
     File found...updating the AMZN day data.
-    Existing data:
-                       Date     open      high       low   close        volume  \
-    0   2023-07-28 04:00:00  129.690  133.0100  129.3300  132.21  4.626978e+07   
-    1   2023-07-31 04:00:00  133.200  133.8700  132.3800  133.68  4.190152e+07   
-    2   2023-08-01 04:00:00  133.550  133.6900  131.6199  131.69  4.225099e+07   
-    3   2023-08-02 04:00:00  130.154  130.2300  126.8200  128.21  5.098861e+07   
-    4   2023-08-03 04:00:00  127.480  129.8400  126.4100  128.91  9.085574e+07   
-    ..                  ...      ...       ...       ...     ...           ...   
-    659 2026-03-16 04:00:00  208.350  212.7240  207.4450  211.74  4.220932e+07   
-    660 2026-03-17 04:00:00  212.820  215.7000  212.4300  215.20  4.496994e+07   
-    661 2026-03-18 04:00:00  213.925  215.1401  208.8250  209.87  3.784664e+07   
-    662 2026-03-19 04:00:00  207.060  209.1200  206.0500  208.76  3.644062e+07   
-    663 2026-03-20 04:00:00  207.400  207.5400  204.3160  205.37  6.369460e+07   
-    
-             vwap  transactions   otc  
-    0    131.8837        413438  None  
-    1    133.3410        406644  None  
-    2    132.2470        385743  None  
-    3    128.3973        532942  None  
-    4    131.4941        746639  None  
-    ..        ...           ...   ...  
-    659  210.4039        596171  None  
-    660  214.4323        569506  None  
-    661  211.1293        536059  None  
-    662  207.8313        543363  None  
-    663  206.0983        563846  None  
-    
-    [664 rows x 9 columns]
-    Last date in existing data: 2026-03-20 04:00:00
-    Number of rows in existing data: 664
+    Last date in existing data: 2026-10-29 04:00:00
+    Number of rows in existing data: 818
     Forcing check of existing data...
-    Pulling day data for 2024-03-23 00:00:00 thru 2024-09-19 00:00:00 for AMZN...
-    
-    New data:
-                       Date    open    high       low   close      volume  \
-    0   2024-03-25 04:00:00  178.01  180.99  177.2400  179.71  29815464.0   
-    1   2024-03-26 04:00:00  180.15  180.45  177.9500  178.30  29658982.0   
-    2   2024-03-27 04:00:00  179.88  180.00  177.3099  179.83  33272551.0   
-    3   2024-03-28 04:00:00  180.17  181.70  179.2600  180.38  38051588.0   
-    4   2024-04-01 04:00:00  180.79  183.00  179.9500  180.97  29174521.0   
-    ..                  ...     ...     ...       ...     ...         ...   
-    119 2024-09-13 04:00:00  187.00  188.50  185.9100  186.49  26495351.0   
-    120 2024-09-16 04:00:00  185.29  185.81  183.3600  184.89  26065485.0   
-    121 2024-09-17 04:00:00  186.85  189.45  186.1400  186.88  26091682.0   
-    122 2024-09-18 04:00:00  186.45  188.80  185.0600  186.43  34448130.0   
-    123 2024-09-19 04:00:00  190.04  190.99  188.4700  189.87  39543168.0   
-    
-             vwap  transactions   otc  
-    0    179.6492        352597  None  
-    1    179.1228        326743  None  
-    2    179.1069        341921  None  
-    3    180.4863        364803  None  
-    4    180.9175        370612  None  
-    ..        ...           ...   ...  
-    119  187.1696        338171  None  
-    120  184.6797        353780  None  
-    121  187.5174        351410  None  
-    122  186.7645        381348  None  
-    123  189.6779        422926  None  
-    
-    [124 rows x 9 columns]
-    Combined data:
-                       Date     open      high       low   close        volume  \
-    0   2023-07-28 04:00:00  129.690  133.0100  129.3300  132.21  4.626978e+07   
-    1   2023-07-31 04:00:00  133.200  133.8700  132.3800  133.68  4.190152e+07   
-    2   2023-08-01 04:00:00  133.550  133.6900  131.6199  131.69  4.225099e+07   
-    3   2023-08-02 04:00:00  130.154  130.2300  126.8200  128.21  5.098861e+07   
-    4   2023-08-03 04:00:00  127.480  129.8400  126.4100  128.91  9.085574e+07   
-    ..                  ...      ...       ...       ...     ...           ...   
-    659 2026-03-16 04:00:00  208.350  212.7240  207.4450  211.74  4.220932e+07   
-    660 2026-03-17 04:00:00  212.820  215.7000  212.4300  215.20  4.496994e+07   
-    661 2026-03-18 04:00:00  213.925  215.1401  208.8250  209.87  3.784664e+07   
-    662 2026-03-19 04:00:00  207.060  209.1200  206.0500  208.76  3.644062e+07   
-    663 2026-03-20 04:00:00  207.400  207.5400  204.3160  205.37  6.369460e+07   
-    
-             vwap  transactions   otc  
-    0    131.8837        413438  None  
-    1    133.3410        406644  None  
-    2    132.2470        385743  None  
-    3    128.3973        532942  None  
-    4    131.4941        746639  None  
-    ..        ...           ...   ...  
-    659  210.4039        596171  None  
-    660  214.4323        569506  None  
-    661  211.1293        536059  None  
-    662  207.8313        543363  None  
-    663  206.0983        563846  None  
-    
-    [664 rows x 9 columns]
-    Sleeping for 12 seconds to avoid hitting API rate limits...
-    
 
 
-    Pulling day data for 2024-09-18 04:00:00 thru 2025-03-17 04:00:00 for AMZN...
-    
-    New data:
-                       Date     open      high       low   close       volume  \
-    0   2024-09-18 04:00:00  186.450  188.8000  185.0600  186.43   34448130.0   
-    1   2024-09-19 04:00:00  190.040  190.9900  188.4700  189.87   39543168.0   
-    2   2024-09-20 04:00:00  190.230  191.8400  187.4100  191.60  100378553.0   
-    3   2024-09-23 04:00:00  191.640  194.4500  190.5700  193.88   36993111.0   
-    4   2024-09-24 04:00:00  194.270  195.3700  190.1300  193.96   43478926.0   
-    ..                  ...      ...       ...       ...     ...          ...   
-    118 2025-03-11 04:00:00  193.900  200.1800  193.4000  196.59   54002880.0   
-    119 2025-03-12 04:00:00  200.720  201.5200  195.2900  198.89   43679284.0   
-    120 2025-03-13 04:00:00  198.165  198.8799  191.8200  193.89   41270761.0   
-    121 2025-03-14 04:00:00  197.410  198.6500  195.3200  197.95   38096663.0   
-    122 2025-03-17 04:00:00  198.770  199.0000  194.3247  195.74   47341752.0   
-    
-             vwap  transactions   otc  
-    0    186.7645        381348  None  
-    1    189.6779        422926  None  
-    2    190.8708        430701  None  
-    3    193.0995        405139  None  
-    4    193.0480        404498  None  
-    ..        ...           ...   ...  
-    118  196.8215        668549  None  
-    119  198.8820        573896  None  
-    120  194.3326        588538  None  
-    121  197.4359        470644  None  
-    122  196.4612        568556  None  
-    
-    [123 rows x 9 columns]
-    Combined data:
-                       Date     open      high       low   close        volume  \
-    0   2023-07-28 04:00:00  129.690  133.0100  129.3300  132.21  4.626978e+07   
-    1   2023-07-31 04:00:00  133.200  133.8700  132.3800  133.68  4.190152e+07   
-    2   2023-08-01 04:00:00  133.550  133.6900  131.6199  131.69  4.225099e+07   
-    3   2023-08-02 04:00:00  130.154  130.2300  126.8200  128.21  5.098861e+07   
-    4   2023-08-03 04:00:00  127.480  129.8400  126.4100  128.91  9.085574e+07   
-    ..                  ...      ...       ...       ...     ...           ...   
-    659 2026-03-16 04:00:00  208.350  212.7240  207.4450  211.74  4.220932e+07   
-    660 2026-03-17 04:00:00  212.820  215.7000  212.4300  215.20  4.496994e+07   
-    661 2026-03-18 04:00:00  213.925  215.1401  208.8250  209.87  3.784664e+07   
-    662 2026-03-19 04:00:00  207.060  209.1200  206.0500  208.76  3.644062e+07   
-    663 2026-03-20 04:00:00  207.400  207.5400  204.3160  205.37  6.369460e+07   
-    
-             vwap  transactions   otc  
-    0    131.8837        413438  None  
-    1    133.3410        406644  None  
-    2    132.2470        385743  None  
-    3    128.3973        532942  None  
-    4    131.4941        746639  None  
-    ..        ...           ...   ...  
-    659  210.4039        596171  None  
-    660  214.4323        569506  None  
-    661  211.1293        536059  None  
-    662  207.8313        543363  None  
-    663  206.0983        563846  None  
-    
-    [664 rows x 9 columns]
-    Sleeping for 12 seconds to avoid hitting API rate limits...
-    
-
-
-    Pulling day data for 2025-03-16 04:00:00 thru 2025-09-12 04:00:00 for AMZN...
-    
-    New data:
-                       Date     open     high       low   close      volume  \
-    0   2025-03-17 04:00:00  198.770  199.000  194.3247  195.74  47341752.0   
-    1   2025-03-18 04:00:00  192.520  194.000  189.3800  192.82  40414867.0   
-    2   2025-03-19 04:00:00  193.380  195.965  191.9600  195.54  39442878.0   
-    3   2025-03-20 04:00:00  193.070  199.320  192.3000  194.95  38921113.0   
-    4   2025-03-21 04:00:00  192.900  196.990  192.5200  196.21  60056917.0   
-    ..                  ...      ...      ...       ...     ...         ...   
-    120 2025-09-08 04:00:00  234.940  237.600  233.7500  235.84  33947104.0   
-    121 2025-09-09 04:00:00  236.355  238.850  235.0800  238.24  27033778.0   
-    122 2025-09-10 04:00:00  237.515  237.680  229.0962  230.33  60907714.0   
-    123 2025-09-11 04:00:00  231.490  231.530  229.3377  229.95  37485598.0   
-    124 2025-09-12 04:00:00  230.350  230.790  226.2900  228.15  38496218.0   
-    
-             vwap  transactions   otc  
-    0    196.4612        568556  None  
-    1    192.0851        554394  None  
-    2    194.2885        445698  None  
-    3    195.6360        455391  None  
-    4    195.3015        394836  None  
-    ..        ...           ...   ...  
-    120  235.9162        489481  None  
-    121  237.3524        391877  None  
-    122  231.8609        806586  None  
-    123  230.5074        465912  None  
-    124  228.4349        534413  None  
-    
-    [125 rows x 9 columns]
-    Combined data:
-                       Date     open      high       low   close        volume  \
-    0   2023-07-28 04:00:00  129.690  133.0100  129.3300  132.21  4.626978e+07   
-    1   2023-07-31 04:00:00  133.200  133.8700  132.3800  133.68  4.190152e+07   
-    2   2023-08-01 04:00:00  133.550  133.6900  131.6199  131.69  4.225099e+07   
-    3   2023-08-02 04:00:00  130.154  130.2300  126.8200  128.21  5.098861e+07   
-    4   2023-08-03 04:00:00  127.480  129.8400  126.4100  128.91  9.085574e+07   
-    ..                  ...      ...       ...       ...     ...           ...   
-    659 2026-03-16 04:00:00  208.350  212.7240  207.4450  211.74  4.220932e+07   
-    660 2026-03-17 04:00:00  212.820  215.7000  212.4300  215.20  4.496994e+07   
-    661 2026-03-18 04:00:00  213.925  215.1401  208.8250  209.87  3.784664e+07   
-    662 2026-03-19 04:00:00  207.060  209.1200  206.0500  208.76  3.644062e+07   
-    663 2026-03-20 04:00:00  207.400  207.5400  204.3160  205.37  6.369460e+07   
-    
-             vwap  transactions   otc  
-    0    131.8837        413438  None  
-    1    133.3410        406644  None  
-    2    132.2470        385743  None  
-    3    128.3973        532942  None  
-    4    131.4941        746639  None  
-    ..        ...           ...   ...  
-    659  210.4039        596171  None  
-    660  214.4323        569506  None  
-    661  211.1293        536059  None  
-    662  207.8313        543363  None  
-    663  206.0983        563846  None  
-    
-    [664 rows x 9 columns]
-    Sleeping for 12 seconds to avoid hitting API rate limits...
-    
-
-
-    Pulling day data for 2025-09-11 04:00:00 thru 2026-03-10 04:00:00 for AMZN...
-    
-    New data:
-                       Date     open    high       low   close        volume  \
-    0   2025-09-11 04:00:00  231.490  231.53  229.3377  229.95  3.748560e+07   
-    1   2025-09-12 04:00:00  230.350  230.79  226.2900  228.15  3.849622e+07   
-    2   2025-09-15 04:00:00  230.625  233.73  230.3200  231.43  3.324333e+07   
-    3   2025-09-16 04:00:00  232.935  235.90  232.2300  234.05  3.820391e+07   
-    4   2025-09-17 04:00:00  233.770  234.30  228.7100  231.62  4.281523e+07   
-    ..                  ...      ...     ...       ...     ...           ...   
-    119 2026-03-04 05:00:00  210.470  217.54  210.1500  216.82  5.473110e+07   
-    120 2026-03-05 05:00:00  215.980  220.47  215.5900  218.94  6.094345e+07   
-    121 2026-03-06 05:00:00  214.990  217.32  212.5300  213.21  5.115272e+07   
-    122 2026-03-09 04:00:00  210.450  213.82  207.1100  213.49  5.464293e+07   
-    123 2026-03-10 04:00:00  214.190  215.65  212.4300  214.33  3.567883e+07   
-    
-             vwap  transactions   otc  
-    0    230.5074        465912  None  
-    1    228.4349        534413  None  
-    2    231.6848        488104  None  
-    3    234.4088        497761  None  
-    4    231.1429        528520  None  
-    ..        ...           ...   ...  
-    119  215.5907        775240  None  
-    120  218.1345        810343  None  
-    121  214.4868        676403  None  
-    122  210.7315        754427  None  
-    123  214.3507        529805  None  
-    
-    [124 rows x 9 columns]
-    Combined data:
-                       Date     open      high       low   close        volume  \
-    0   2023-07-28 04:00:00  129.690  133.0100  129.3300  132.21  4.626978e+07   
-    1   2023-07-31 04:00:00  133.200  133.8700  132.3800  133.68  4.190152e+07   
-    2   2023-08-01 04:00:00  133.550  133.6900  131.6199  131.69  4.225099e+07   
-    3   2023-08-02 04:00:00  130.154  130.2300  126.8200  128.21  5.098861e+07   
-    4   2023-08-03 04:00:00  127.480  129.8400  126.4100  128.91  9.085574e+07   
-    ..                  ...      ...       ...       ...     ...           ...   
-    659 2026-03-16 04:00:00  208.350  212.7240  207.4450  211.74  4.220932e+07   
-    660 2026-03-17 04:00:00  212.820  215.7000  212.4300  215.20  4.496994e+07   
-    661 2026-03-18 04:00:00  213.925  215.1401  208.8250  209.87  3.784664e+07   
-    662 2026-03-19 04:00:00  207.060  209.1200  206.0500  208.76  3.644062e+07   
-    663 2026-03-20 04:00:00  207.400  207.5400  204.3160  205.37  6.369460e+07   
-    
-             vwap  transactions   otc  
-    0    131.8837        413438  None  
-    1    133.3410        406644  None  
-    2    132.2470        385743  None  
-    3    128.3973        532942  None  
-    4    131.4941        746639  None  
-    ..        ...           ...   ...  
-    659  210.4039        596171  None  
-    660  214.4323        569506  None  
-    661  211.1293        536059  None  
-    662  207.8313        543363  None  
-    663  206.0983        563846  None  
-    
-    [664 rows x 9 columns]
-    Sleeping for 12 seconds to avoid hitting API rate limits...
-    
-
-
-    Pulling day data for 2026-03-09 04:00:00 thru 2026-09-05 04:00:00 for AMZN...
-    
-    New data:
-                     Date     open      high      low   close        volume  \
-    0 2026-03-09 04:00:00  210.450  213.8200  207.110  213.49  5.464293e+07   
-    1 2026-03-10 04:00:00  214.190  215.6500  212.430  214.33  3.567883e+07   
-    2 2026-03-11 04:00:00  215.705  217.0000  211.350  212.65  3.419930e+07   
-    3 2026-03-12 04:00:00  210.390  211.7100  208.150  209.53  4.434950e+07   
-    4 2026-03-13 04:00:00  209.605  210.5600  206.220  207.67  3.566214e+07   
-    5 2026-03-16 04:00:00  208.350  212.7240  207.445  211.74  4.220932e+07   
-    6 2026-03-17 04:00:00  212.820  215.7000  212.430  215.20  4.496994e+07   
-    7 2026-03-18 04:00:00  213.925  215.1401  208.825  209.87  3.784664e+07   
-    8 2026-03-19 04:00:00  207.060  209.1200  206.050  208.76  3.644062e+07   
-    9 2026-03-20 04:00:00  207.400  207.5400  204.316  205.37  6.369460e+07   
-    
-           vwap  transactions   otc  
-    0  210.7315        754427  None  
-    1  214.3507        529805  None  
-    2  213.2448        509470  None  
-    3  209.8179        586943  None  
-    4  208.1566        544761  None  
-    5  210.4039        596171  None  
-    6  214.4323        569506  None  
-    7  211.1293        536059  None  
-    8  207.8313        543363  None  
-    9  206.0983        563846  None  
-    Combined data:
-                       Date     open      high       low   close        volume  \
-    0   2023-07-28 04:00:00  129.690  133.0100  129.3300  132.21  4.626978e+07   
-    1   2023-07-31 04:00:00  133.200  133.8700  132.3800  133.68  4.190152e+07   
-    2   2023-08-01 04:00:00  133.550  133.6900  131.6199  131.69  4.225099e+07   
-    3   2023-08-02 04:00:00  130.154  130.2300  126.8200  128.21  5.098861e+07   
-    4   2023-08-03 04:00:00  127.480  129.8400  126.4100  128.91  9.085574e+07   
-    ..                  ...      ...       ...       ...     ...           ...   
-    659 2026-03-16 04:00:00  208.350  212.7240  207.4450  211.74  4.220932e+07   
-    660 2026-03-17 04:00:00  212.820  215.7000  212.4300  215.20  4.496994e+07   
-    661 2026-03-18 04:00:00  213.925  215.1401  208.8250  209.87  3.784664e+07   
-    662 2026-03-19 04:00:00  207.060  209.1200  206.0500  208.76  3.644062e+07   
-    663 2026-03-20 04:00:00  207.400  207.5400  204.3160  205.37  6.369460e+07   
-    
-             vwap  transactions   otc  
-    0    131.8837        413438  None  
-    1    133.3410        406644  None  
-    2    132.2470        385743  None  
-    3    128.3973        532942  None  
-    4    131.4941        746639  None  
-    ..        ...           ...   ...  
-    659  210.4039        596171  None  
-    660  214.4323        569506  None  
-    661  211.1293        536059  None  
-    662  207.8313        543363  None  
-    663  206.0983        563846  None  
-    
-    [664 rows x 9 columns]
     Exporting AMZN day data to Excel...
-
-
     Exporting AMZN day data to Pickle...
+    Exporting AMZN day data to Parquet...
+
+
     The first and last date of day data for AMZN is: 
 
 
@@ -899,15 +370,15 @@ time.sleep(12)  # Sleep for 2 seconds to avoid hitting rate limits
   </thead>
   <tbody>
     <tr>
-      <th>663</th>
-      <td>2026-03-20 04:00:00</td>
-      <td>207.4</td>
-      <td>207.54</td>
-      <td>204.316</td>
-      <td>205.37</td>
-      <td>6.369460e+07</td>
-      <td>206.0983</td>
-      <td>563846</td>
+      <th>817</th>
+      <td>2026-10-29 04:00:00</td>
+      <td>246.95</td>
+      <td>249.14</td>
+      <td>241.24</td>
+      <td>246.36</td>
+      <td>2.899970e+07</td>
+      <td>246.0853</td>
+      <td>458904</td>
       <td>None</td>
     </tr>
   </tbody>
@@ -915,22 +386,125 @@ time.sleep(12)  # Sleep for 2 seconds to avoid hitting rate limits
 </div>
 
 
-    Number of rows after data update: 664
+    Number of rows after data update: 818
     Number of rows added during update: 0
     Polygon data complete for AMZN day data.
     --------------------
 
 
+And here are the first five rows of the returned dataframe:
+
 
 ```python
-# Copy this <!-- INSERT_polygon_pull_data_HERE --> to index_temp.md
-export_track_md_deps(
-    dep_file=dep_file, 
-    md_filename="polygon_pull_data.md", 
-    content=df.head().to_markdown(floatfmt=".5f"),
-    output_type="markdown",
-)
+display(df.head())
 ```
 
-    ✅ Exported and tracked: polygon_pull_data.md
 
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>open</th>
+      <th>high</th>
+      <th>low</th>
+      <th>close</th>
+      <th>volume</th>
+      <th>vwap</th>
+      <th>transactions</th>
+      <th>otc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2023-07-28 04:00:00</td>
+      <td>129.690</td>
+      <td>133.01</td>
+      <td>129.3300</td>
+      <td>132.21</td>
+      <td>46269781.0</td>
+      <td>131.8837</td>
+      <td>413438</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2023-07-31 04:00:00</td>
+      <td>133.200</td>
+      <td>133.87</td>
+      <td>132.3800</td>
+      <td>133.68</td>
+      <td>41901516.0</td>
+      <td>133.3410</td>
+      <td>406644</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2023-08-01 04:00:00</td>
+      <td>133.550</td>
+      <td>133.69</td>
+      <td>131.6199</td>
+      <td>131.69</td>
+      <td>42250989.0</td>
+      <td>132.2470</td>
+      <td>385743</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2023-08-02 04:00:00</td>
+      <td>130.154</td>
+      <td>130.23</td>
+      <td>126.8200</td>
+      <td>128.21</td>
+      <td>50988614.0</td>
+      <td>128.3973</td>
+      <td>532942</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2023-08-03 04:00:00</td>
+      <td>127.480</td>
+      <td>129.84</td>
+      <td>126.4100</td>
+      <td>128.91</td>
+      <td>90855736.0</td>
+      <td>131.4941</td>
+      <td>746639</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+Note that `Date` is returned as a regular column with a plain integer index rather than as the index itself. That is deliberate, and any downstream analysis can call `set_index("Date")` as needed.
+
+## Future Investigation
+
+1. Calculate adjusted open/high/low/close prices using the dividend adjustment factor.
+
+## References
+
+1. [Massive (formerly Polygon.io)](https://massive.com)
+2. [Massive REST API quickstart](https://massive.com/docs/rest/quickstart)
+3. [massive on PyPI](https://pypi.org/project/massive/)
+4. [massive-com/client-python on GitHub](https://github.com/massive-com/client-python)
+5. [Reusable & Extensible Python Functions For Financial Data Analysis](/posts/reusable-extensible-python-functions-financial-data-analysis/)
