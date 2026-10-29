@@ -1,3 +1,15 @@
 01_Imports.md
 02_Print_Green.md
 03_Directory_Variables.md
+04_Helper_Functions.md
+05_task_config.md
+06_task_list_posts_subdirs.md
+07_task_run_post_notebooks.md
+08_task_export_post_notebooks.md
+09_task_build_post_indices.md
+10_task_clean_public.md
+11_task_build_site.md
+12_task_copy_notebook_exports.md
+13_task_copy_projects_research_exports.md
+14_task_create_schwab_callback.md
+15_task_deploy_site.md
