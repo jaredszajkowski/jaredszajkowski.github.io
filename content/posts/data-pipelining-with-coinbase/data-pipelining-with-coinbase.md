@@ -1,6 +1,16 @@
+## Post Updates
+
+Update 8/8/2026: Reworked `coinbase_pull_data` so that a new record is built from 2010 forward and an existing record resumes from its last stored candle, rather than the initial pull starting at a fixed year and updates re-fetching a caller-supplied range. Revised the walkthrough of that function to match.
+
+Update 8/6/2026: Clarified how the initial pull differs from an incremental update, documented the asset filtering performed by `coinbase_pull_data`, reordered the function list to build from the lowest-level function upward, and replaced the historical candles example with an hourly range that returns more than a single row.
+
 ## Introduction
 
-This is a quick post to illustrate how I collect and store crypto asset data from Coinbase. Essentially, the scripts below pull minute, hour, and daily data for the specified assets and if there is an existing data record, then the existing record is updated to include the most recent data. If there is not an existing data record, then the complete historical record from coinbase is pulled and stored.
+This post covers how I collect and store minute, hour, and daily crypto asset data from Coinbase. Since I first published it I have expanded the walkthrough to cover how the initial pull differs from an incremental update, and the filtering that gets applied to the asset list along the way.
+
+The work is split across four functions that build on one another. `coinbase_fetch_historical_candles` wraps a single request to the Coinbase Exchange candles endpoint. `coinbase_fetch_full_history` pages that endpoint to cover an arbitrary date range. `coinbase_fetch_available_products` lists the tradeable pairs. And `coinbase_pull_data` combines all three to maintain a directory of pickle files on disk, resuming an existing data file from its last stored candle, or building a new record from scratch where none exists.
+
+The first three functions are executed below. `coinbase_pull_data` is shown but not run, since it writes to the filesystem and can run for a long time against a full asset list.
 
 ## Python Imports
 
@@ -18,8 +28,6 @@ from pathlib import Path
 # Suppress warnings
 warnings.filterwarnings("ignore")
 ```
-
-## Add Directories To Path
 
 
 ```python
@@ -49,18 +57,18 @@ DATA_MANUAL_DIR = config("DATA_MANUAL_DIR")
 
 ## Python Functions
 
-Here are the functions needed for this project:
+Here are the functions needed for this project, listed in the order they build on one another:
 
 * [coinbase_fetch_available_products](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_available_products): Fetch available products from Coinbase Exchange API.
-* [coinbase_fetch_full_history](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_full_history): Fetch full historical data for a given product from Coinbase Exchange API.
 * [coinbase_fetch_historical_candles](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_historical_candles): Fetch historical candle data for a given product from Coinbase Exchange API.
+* [coinbase_fetch_full_history](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_full_history): Fetch full historical data for a given product from Coinbase Exchange API.
 * [coinbase_pull_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_pull_data): Update existing record or pull full historical data for a given product from Coinbase Exchange API.
 
 
 ```python
 from coinbase_fetch_available_products import coinbase_fetch_available_products
-from coinbase_fetch_full_history import coinbase_fetch_full_history
 from coinbase_fetch_historical_candles import coinbase_fetch_historical_candles
+from coinbase_fetch_full_history import coinbase_fetch_full_history
 from coinbase_pull_data import coinbase_pull_data
 ```
 
@@ -68,7 +76,7 @@ from coinbase_pull_data import coinbase_pull_data
 
 ### Coinbase Fetch Available Products
 
-This script pulls the list of available assets based on the inputs for base and quote currency. Here's an example:
+This function pulls the list of available assets based on the inputs for base and quote currency. In the example below the `quote_currency` is provided as "USD", so the function returns every asset priced against USD:
 
 
 ```python
@@ -77,13 +85,8 @@ df = coinbase_fetch_available_products(
     quote_currency="USD",
     status="online",
 )
-```
 
-In this example, the `quote_currency` is provided as "USD". This script checks all available assets that are priced against USD and returns a dataframe listing all available assets:
-
-
-```python
-display(df)
+display(df[["id", "base_currency", "quote_currency", "status"]])
 ```
 
 
@@ -108,128 +111,44 @@ display(df)
       <th>id</th>
       <th>base_currency</th>
       <th>quote_currency</th>
-      <th>quote_increment</th>
-      <th>base_increment</th>
-      <th>display_name</th>
-      <th>min_market_funds</th>
-      <th>margin_enabled</th>
-      <th>post_only</th>
-      <th>limit_only</th>
-      <th>cancel_only</th>
       <th>status</th>
-      <th>status_message</th>
-      <th>trading_disabled</th>
-      <th>fx_stablecoin</th>
-      <th>max_slippage_percentage</th>
-      <th>auction_mode</th>
-      <th>high_bid_limit_percentage</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>645</th>
+      <th>655</th>
       <td>00-USD</td>
       <td>00</td>
       <td>USD</td>
-      <td>0.0001</td>
-      <td>0.01</td>
-      <td>00-USD</td>
-      <td>1</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
       <td>online</td>
-      <td></td>
-      <td>False</td>
-      <td>False</td>
-      <td>0.03000000</td>
-      <td>False</td>
-      <td></td>
     </tr>
     <tr>
-      <th>292</th>
+      <th>155</th>
       <td>1INCH-USD</td>
       <td>1INCH</td>
       <td>USD</td>
-      <td>0.001</td>
-      <td>0.01</td>
-      <td>1INCH-USD</td>
-      <td>1</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
       <td>online</td>
-      <td></td>
-      <td>False</td>
-      <td>False</td>
-      <td>0.03000000</td>
-      <td>False</td>
-      <td></td>
     </tr>
     <tr>
-      <th>40</th>
+      <th>497</th>
       <td>2Z-USD</td>
       <td>2Z</td>
       <td>USD</td>
-      <td>0.00001</td>
-      <td>0.01</td>
-      <td>2Z/USD</td>
-      <td>1</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
       <td>online</td>
-      <td></td>
-      <td>False</td>
-      <td>False</td>
-      <td>0.03000000</td>
-      <td>False</td>
-      <td></td>
     </tr>
     <tr>
-      <th>308</th>
+      <th>815</th>
       <td>A8-USD</td>
       <td>A8</td>
       <td>USD</td>
-      <td>0.0001</td>
-      <td>0.01</td>
-      <td>A8/USD</td>
-      <td>1</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
       <td>online</td>
-      <td></td>
-      <td>False</td>
-      <td>False</td>
-      <td>0.03000000</td>
-      <td>False</td>
-      <td></td>
     </tr>
     <tr>
-      <th>695</th>
+      <th>563</th>
       <td>AAVE-USD</td>
       <td>AAVE</td>
       <td>USD</td>
-      <td>0.01</td>
-      <td>0.001</td>
-      <td>AAVE-USD</td>
-      <td>1</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
       <td>online</td>
-      <td></td>
-      <td>False</td>
-      <td>False</td>
-      <td>0.03000000</td>
-      <td>False</td>
-      <td></td>
     </tr>
     <tr>
       <th>...</th>
@@ -237,150 +156,63 @@ display(df)
       <td>...</td>
       <td>...</td>
       <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
     </tr>
     <tr>
-      <th>15</th>
+      <th>608</th>
       <td>ZKC-USD</td>
       <td>ZKC</td>
       <td>USD</td>
-      <td>0.0001</td>
-      <td>0.01</td>
-      <td>ZKC/USD</td>
-      <td>1</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
       <td>online</td>
-      <td></td>
-      <td>False</td>
-      <td>False</td>
-      <td>0.03000000</td>
-      <td>False</td>
-      <td></td>
     </tr>
     <tr>
-      <th>534</th>
+      <th>835</th>
       <td>ZKP-USD</td>
       <td>ZKP</td>
       <td>USD</td>
-      <td>0.00001</td>
-      <td>0.1</td>
-      <td>ZKP/USD</td>
-      <td>1</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
       <td>online</td>
-      <td></td>
-      <td>False</td>
-      <td>False</td>
-      <td>0.03000000</td>
-      <td>False</td>
-      <td></td>
     </tr>
     <tr>
-      <th>456</th>
+      <th>778</th>
       <td>ZORA-USD</td>
       <td>ZORA</td>
       <td>USD</td>
-      <td>0.00001</td>
-      <td>1</td>
-      <td>ZORA/USD</td>
-      <td>1</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
       <td>online</td>
-      <td></td>
-      <td>False</td>
-      <td>False</td>
-      <td>0.03000000</td>
-      <td>False</td>
-      <td></td>
     </tr>
     <tr>
-      <th>322</th>
+      <th>282</th>
       <td>ZRO-USD</td>
       <td>ZRO</td>
       <td>USD</td>
-      <td>0.001</td>
-      <td>0.01</td>
-      <td>ZRO/USD</td>
-      <td>1</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
       <td>online</td>
-      <td></td>
-      <td>False</td>
-      <td>False</td>
-      <td>0.03000000</td>
-      <td>False</td>
-      <td></td>
     </tr>
     <tr>
-      <th>609</th>
+      <th>20</th>
       <td>ZRX-USD</td>
       <td>ZRX</td>
       <td>USD</td>
-      <td>0.000001</td>
-      <td>0.00001</td>
-      <td>ZRX-USD</td>
-      <td>1</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
       <td>online</td>
-      <td></td>
-      <td>False</td>
-      <td>False</td>
-      <td>0.03000000</td>
-      <td>False</td>
-      <td></td>
     </tr>
   </tbody>
 </table>
-<p>379 rows × 18 columns</p>
+<p>402 rows × 4 columns</p>
 </div>
 
 
+The API returns eighteen columns per product, but the four shown above are the ones that matter downstream, and are the same four that `coinbase_pull_data` prints when it builds its working list.
+
 ### Coinbase Fetch Historical Candles
 
-This script pulls the historical candles:
+This is the lowest-level of the four functions, and maps to a single request against the Coinbase Exchange candles endpoint. It returns the date/time, open, high, low, close, and volume for each period in the requested range. The example below pulls hourly candles from the start of 2025:
 
 
 ```python
 df = coinbase_fetch_historical_candles(
     product_id="BTC-USD",
     start=datetime(2025, 1, 1),
-    end=datetime(2025, 1, 1),
-    granularity=86_400,
+    end=datetime(2025, 1, 1, 6),
+    granularity=3_600,
 )
-```
 
-Specifically, the date/time, open, high, low, close, and volume levels:
-
-
-```python
 display(df)
 ```
 
@@ -414,21 +246,77 @@ display(df)
   <tbody>
     <tr>
       <th>0</th>
-      <td>2025-01-01</td>
-      <td>92743.63</td>
-      <td>94960.91</td>
+      <td>2025-01-01 00:00:00</td>
+      <td>93281.63</td>
+      <td>94321.25</td>
       <td>93347.59</td>
-      <td>94383.59</td>
-      <td>6871.738482</td>
+      <td>94209.02</td>
+      <td>337.581664</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2025-01-01 01:00:00</td>
+      <td>93393.06</td>
+      <td>94224.30</td>
+      <td>94207.31</td>
+      <td>93423.47</td>
+      <td>198.579180</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2025-01-01 02:00:00</td>
+      <td>93400.00</td>
+      <td>93894.04</td>
+      <td>93423.48</td>
+      <td>93882.09</td>
+      <td>154.768788</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2025-01-01 03:00:00</td>
+      <td>93524.35</td>
+      <td>93885.00</td>
+      <td>93885.00</td>
+      <td>93635.54</td>
+      <td>127.391075</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2025-01-01 04:00:00</td>
+      <td>93305.54</td>
+      <td>93637.33</td>
+      <td>93635.54</td>
+      <td>93358.58</td>
+      <td>257.394980</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2025-01-01 05:00:00</td>
+      <td>93323.88</td>
+      <td>93708.79</td>
+      <td>93358.33</td>
+      <td>93572.80</td>
+      <td>146.990291</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2025-01-01 06:00:00</td>
+      <td>93354.99</td>
+      <td>93575.73</td>
+      <td>93575.72</td>
+      <td>93551.21</td>
+      <td>138.098835</td>
     </tr>
   </tbody>
 </table>
 </div>
 
 
+Two details are worth noting here. The endpoint returns at most 300 candles per request no matter how wide a range is asked for, which is the constraint that the next function exists to work around. And the response arrives in reverse chronological order, so the function reverses it before building the dataframe. Rate limiting (HTTP 429) is retried up to five times with an exponential backoff.
+
 ### Coinbase Fetch Full History
 
-This script pulls the full history for a specified asset:
+This function pulls an arbitrary date range for a specified asset by paging the function above. Because a single request is capped at 300 candles, it walks the range in windows of `granularity * 300` seconds, advancing from the timestamp of the last candle it received and pausing 0.2 seconds between requests to stay within the rate limits. The individual responses are concatenated into one dataframe, so a range of years is handled exactly the same way as the single month below:
 
 
 ```python
@@ -438,12 +326,7 @@ df = coinbase_fetch_full_history(
     end=datetime(2025, 1, 31),
     granularity=86_400,
 )
-```
 
-The example above pulls the daily data for 1 month, but can handle data ranges of years because it uses the `coinbase_fetch_historical_candles` to pull 300 candles at a time to ensure that the API is not overloaded and drops data. Here's the results for the above:
-
-
-```python
 display(df)
 ```
 
@@ -761,14 +644,16 @@ display(df)
 
 ### Coinbase Pull Data
 
-This script combines the above functions to perform the following:
+This function combines the three above to perform the following:
 
-1. Attempt to read an existing pickle data file
-2. If a data file exists, then pull updated data
-3. Otherwise, pull all historical data available for that asset on Coinbase
-4. Store pickle and/or excel files of the data in the specified directories
+1. Resolve the list of products to update from the `base_currency` and `quote_currency` arguments.
+2. Attempt to read an existing pickle data file for each product.
+3. If a data file exists, resume from its last stored candle and pull forward to the present.
+4. Otherwise, pull the available historical data for that asset and create a new record.
+5. Store pickle and/or excel files of the data in the specified directories.
+6. Prune the resulting product list down to the assets worth carrying forward.
 
-Through the `base_directory`, `source`, and `asset_class` variables the script knows where in the local filesystem to look for an existing pickle file and the store the resulting updated pickle and/or excel files:
+Through the `base_directory`, `source`, and `asset_class` variables the function knows where in the local filesystem to look for an existing pickle file and where to store the resulting updated pickle and/or excel files:
 
 ```python
 df = coinbase_pull_data(
@@ -782,12 +667,18 @@ df = coinbase_pull_data(
     quote_currency="USD",
     granularity=60, # 60=minute, 3600=hourly, 86400=daily
     status='online', # default status is 'online'
-    start_date=datetime(current_year, current_month - 1, 1), # default start date
-    end_date=datetime.now() - timedelta(days=1), # updates data through 1 day ago due to lag in data availability
 )
 ```
 
-By passing `None` as the `base_currency` and/or the `quote_currency`, the script will use the `coinbase_fetch_available_products` function to pull the list of all the available products, and then pulls data for all assets in that list. This functionality is incredibly useful, and makes acquiring data very straightforward, especially for a set of products for a specific `base_currency` or `quote_currency`.
+Note that no dates are passed. `start_date` defaults to 1/1/2010 and only applies when there is no existing record, and `end_date` defaults to one day ago to account for the lag in data availability, so a single call per product and granularity is enough to either create a record or bring one current.
+
+By passing `None` as the `base_currency` and/or the `quote_currency`, the function uses `coinbase_fetch_available_products` to build the product list, so a single call can pull every USD-quoted pair on Coinbase.
+
+On an update, the existing record is read back and the fetch resumes from the last date it contains. That final candle is deliberately re-fetched, since the period may still have been in progress when it was written; where a date appears in both the stored and the newly fetched data, the new row wins, so a partial candle is replaced by its completed version rather than left stale. The same range can therefore be pulled repeatedly without duplicating or corrupting anything.
+
+The initial pull works differently. With no pickle file to resume from, there is no last date to start at, so the function falls back to `start_date` and works forward a year at a time until the API returns something. Coinbase has nothing for any of these pairs in 2010, so the first several attempts come back empty and are skipped; for BTC-USD the data begins on 7/20/2015, which is where the record actually starts.
+
+The function also prunes the product list it returns. Assets with no data available, assets whose closing price never exceeds the price threshold, stablecoins (USDT, USDC, PAX, DAI, PYUSD, GUSD), and wrapped coins (WAXL, WBTC) are all removed. What remains is the set of assets actually useful for analysis, which matters when the starting product list runs to several hundred entries.
 
 The example above pulls the data for BTC-USD, and stores it in the following system directory:
 
@@ -826,6 +717,11 @@ Coinbase/
 5 directories, 20 files
 ```
 
+Note that the `Minute` directory holds only pickle files. Minute data runs to hundreds of thousands of rows per asset, which makes the excel export slow and unwieldy, so `excel_export` is left as `False` at that granularity.
+
 ## References
 
-1. https://www.coinbase.com/
+1. [Coinbase](https://www.coinbase.com/)
+2. Coinbase Exchange API, products endpoint: `https://api.exchange.coinbase.com/products`
+3. Coinbase Exchange API, candles endpoint: `https://api.exchange.coinbase.com/products/{product_id}/candles`
+4. [Reusable & Extensible Python Functions For Financial Data Analysis](/posts/reusable-extensible-python-functions-financial-data-analysis/)

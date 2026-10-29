@@ -7332,7 +7332,12 @@ a.anchor-link {
     if (!diagrams.length) {
       return;
     }
-    const mermaid = (await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.esm.min.mjs")).default;
+    const mermaid = (await import("https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.10.0/mermaid.esm.min.mjs")).default;
+    const elkUrl = "https://cdnjs.cloudflare.com/ajax/libs/mermaid-layout-elk/0.1.9/mermaid-layout-elk.esm.min.mjs";
+    if(elkUrl) {
+      const elkLayouts = (await import(elkUrl)).default;
+      mermaid.registerLayoutLoaders(elkLayouts);
+    }
     const parser = new DOMParser();
 
     mermaid.initialize({
@@ -7429,7 +7434,8 @@ a.anchor-link {
      * Post-process to ensure mermaid diagrams contain only valid SVG and XHTML.
      */
     function cleanMermaidSvg(svg) {
-      return svg.replace(RE_VOID_ELEMENT, replaceVoidElement);
+      svg = svg.replace(RE_VOID_ELEMENT, replaceVoidElement);
+      return `${SVG_XML_HEADER}${svg}`;
     }
 
 
@@ -7455,6 +7461,285 @@ a.anchor-link {
       }
       return `<${tag} ${rest}>`;
     }
+
+
+  /**
+   * Named HTML entities with their decimal equivalent codes.
+   *
+   * @see https://www.w3.org/TR/WD-html40-970708/sgml/entities.html
+   * */
+  const HTML_ENTITIES = `<!ENTITY Aacute "&#193;">
+<!ENTITY aacute "&#225;">
+<!ENTITY Acirc "&#194;">
+<!ENTITY acirc "&#226;">
+<!ENTITY acute "&#180;">
+<!ENTITY AElig "&#198;">
+<!ENTITY aelig "&#230;">
+<!ENTITY Agrave "&#192;">
+<!ENTITY agrave "&#224;">
+<!ENTITY alefsym "&#8501;">
+<!ENTITY Alpha "&#913;">
+<!ENTITY alpha "&#945;">
+<!ENTITY amp "&#38;">
+<!ENTITY and "&#8869;">
+<!ENTITY ang "&#8736;">
+<!ENTITY Aring "&#197;">
+<!ENTITY aring "&#229;">
+<!ENTITY asymp "&#8776;">
+<!ENTITY Atilde "&#195;">
+<!ENTITY atilde "&#227;">
+<!ENTITY Auml "&#196;">
+<!ENTITY auml "&#228;">
+<!ENTITY bdquo "&#8222;">
+<!ENTITY Beta "&#914;">
+<!ENTITY beta "&#946;">
+<!ENTITY brvbar "&#166;">
+<!ENTITY bull "&#8226;">
+<!ENTITY cap "&#8745;">
+<!ENTITY Ccedil "&#199;">
+<!ENTITY ccedil "&#231;">
+<!ENTITY cedil "&#184;">
+<!ENTITY cent "&#162;">
+<!ENTITY Chi "&#935;">
+<!ENTITY chi "&#967;">
+<!ENTITY circ "&#710;">
+<!ENTITY clubs "&#9827;">
+<!ENTITY cong "&#8773;">
+<!ENTITY copy "&#169;">
+<!ENTITY crarr "&#8629;">
+<!ENTITY cup "&#8746;">
+<!ENTITY curren "&#164;">
+<!ENTITY dagger "&#8224;">
+<!ENTITY Dagger "&#8225;">
+<!ENTITY darr "&#8595;">
+<!ENTITY dArr "&#8659;">
+<!ENTITY deg "&#176;">
+<!ENTITY Delta "&#916;">
+<!ENTITY delta "&#948;">
+<!ENTITY diams "&#9830;">
+<!ENTITY divide "&#247;">
+<!ENTITY Eacute "&#201;">
+<!ENTITY eacute "&#233;">
+<!ENTITY Ecirc "&#202;">
+<!ENTITY ecirc "&#234;">
+<!ENTITY Egrave "&#200;">
+<!ENTITY egrave "&#232;">
+<!ENTITY empty "&#8709;">
+<!ENTITY emsp "&#8195;">
+<!ENTITY ensp "&#8194;">
+<!ENTITY epsilon "&#949;">
+<!ENTITY Epsilon "&#917;">
+<!ENTITY equiv "&#8801;">
+<!ENTITY Eta "&#919;">
+<!ENTITY eta "&#951;">
+<!ENTITY ETH "&#208;">
+<!ENTITY eth "&#240;">
+<!ENTITY Euml "&#203;">
+<!ENTITY euml "&#235;">
+<!ENTITY exist "&#8707;">
+<!ENTITY fnof "&#402;">
+<!ENTITY forall "&#8704;">
+<!ENTITY frac12 "&#189;">
+<!ENTITY frac14 "&#188;">
+<!ENTITY frac34 "&#190;">
+<!ENTITY frasl "&#8260;">
+<!ENTITY Gamma "&#915;">
+<!ENTITY gamma "&#947;">
+<!ENTITY ge "&#8805;">
+<!ENTITY gt "&#62;">
+<!ENTITY harr "&#8596;">
+<!ENTITY hArr "&#8660;">
+<!ENTITY hearts "&#9829;">
+<!ENTITY hellip "&#8230;">
+<!ENTITY Iacute "&#205;">
+<!ENTITY iacute "&#237;">
+<!ENTITY Icirc "&#206;">
+<!ENTITY icirc "&#238;">
+<!ENTITY iexcl "&#161;">
+<!ENTITY Igrave "&#204;">
+<!ENTITY igrave "&#236;">
+<!ENTITY image "&#8465;">
+<!ENTITY infin "&#8734;">
+<!ENTITY int "&#8747;">
+<!ENTITY Iota "&#921;">
+<!ENTITY iota "&#953;">
+<!ENTITY iquest "&#191;">
+<!ENTITY isin "&#8712;">
+<!ENTITY Iuml "&#207;">
+<!ENTITY iuml "&#239;">
+<!ENTITY Kappa "&#922;">
+<!ENTITY kappa "&#954;">
+<!ENTITY Lambda "&#923;">
+<!ENTITY lambda "&#955;">
+<!ENTITY lang "&#9001;">
+<!ENTITY laquo "&#171;">
+<!ENTITY larr "&#8592;">
+<!ENTITY lArr "&#8656;">
+<!ENTITY lceil "&#8968;">
+<!ENTITY ldquo "&#8220;">
+<!ENTITY le "&#8804;">
+<!ENTITY lfloor "&#8970;">
+<!ENTITY lowast "&#8727;">
+<!ENTITY loz "&#9674;">
+<!ENTITY lrm "&#8206;">
+<!ENTITY lsaquo "&#8249;">
+<!ENTITY lsquo "&#8216;">
+<!ENTITY lt "&#60;">
+<!ENTITY macr "&#175;">
+<!ENTITY mdash "&#8212;">
+<!ENTITY micro "&#181;">
+<!ENTITY middot "&#183;">
+<!ENTITY minus "&#8722;">
+<!ENTITY Mu "&#924;">
+<!ENTITY mu "&#956;">
+<!ENTITY nabla "&#8711;">
+<!ENTITY nbsp "&#160;">
+<!ENTITY ndash "&#8211;">
+<!ENTITY ne "&#8800;">
+<!ENTITY ni "&#8715;">
+<!ENTITY not "&#172;">
+<!ENTITY notin "&#8713;">
+<!ENTITY nsub "&#8836;">
+<!ENTITY Ntilde "&#209;">
+<!ENTITY ntilde "&#241;">
+<!ENTITY Nu "&#925;">
+<!ENTITY nu "&#957;">
+<!ENTITY Oacute "&#211;">
+<!ENTITY oacute "&#243;">
+<!ENTITY Ocirc "&#212;">
+<!ENTITY ocirc "&#244;">
+<!ENTITY OElig "&#338;">
+<!ENTITY oelig "&#339;">
+<!ENTITY Ograve "&#210;">
+<!ENTITY ograve "&#242;">
+<!ENTITY oline "&#8254;">
+<!ENTITY Omega "&#937;">
+<!ENTITY omega "&#969;">
+<!ENTITY Omicron "&#927;">
+<!ENTITY omicron "&#959;">
+<!ENTITY oplus "&#8853;">
+<!ENTITY or "&#8870;">
+<!ENTITY ordf "&#170;">
+<!ENTITY ordm "&#186;">
+<!ENTITY Oslash "&#216;">
+<!ENTITY oslash "&#248;">
+<!ENTITY Otilde "&#213;">
+<!ENTITY otilde "&#245;">
+<!ENTITY otimes "&#8855;">
+<!ENTITY Ouml "&#214;">
+<!ENTITY ouml "&#246;">
+<!ENTITY para "&#182;">
+<!ENTITY part "&#8706;">
+<!ENTITY permil "&#8240;">
+<!ENTITY perp "&#8869;">
+<!ENTITY Phi "&#934;">
+<!ENTITY phi "&#966;">
+<!ENTITY Pi "&#928;">
+<!ENTITY pi "&#960;">
+<!ENTITY piv "&#982;">
+<!ENTITY plusmn "&#177;">
+<!ENTITY pound "&#163;">
+<!ENTITY prime "&#8242;">
+<!ENTITY Prime "&#8243;">
+<!ENTITY prod "&#8719;">
+<!ENTITY prop "&#8733;">
+<!ENTITY Psi "&#936;">
+<!ENTITY psi "&#968;">
+<!ENTITY quot "&#34;">
+<!ENTITY radic "&#8730;">
+<!ENTITY rang "&#9002;">
+<!ENTITY raquo "&#187;">
+<!ENTITY rarr "&#8594;">
+<!ENTITY rArr "&#8658;">
+<!ENTITY rceil "&#8969;">
+<!ENTITY rdquo "&#8221;">
+<!ENTITY real "&#8476;">
+<!ENTITY reg "&#174;">
+<!ENTITY rfloor "&#8971;">
+<!ENTITY Rho "&#929;">
+<!ENTITY rho "&#961;">
+<!ENTITY rlm "&#8207;">
+<!ENTITY rsaquo "&#8250;">
+<!ENTITY rsquo "&#8217;">
+<!ENTITY sbquo "&#8218;">
+<!ENTITY Scaron "&#352;">
+<!ENTITY scaron "&#353;">
+<!ENTITY sdot "&#8901;">
+<!ENTITY sect "&#167;">
+<!ENTITY shy "&#173;">
+<!ENTITY Sigma "&#931;">
+<!ENTITY sigma "&#963;">
+<!ENTITY sigmaf "&#962;">
+<!ENTITY sim "&#8764;">
+<!ENTITY spades "&#9824;">
+<!ENTITY sub "&#8834;">
+<!ENTITY sube "&#8838;">
+<!ENTITY sum "&#8721;">
+<!ENTITY sup "&#8835;">
+<!ENTITY sup1 "&#185;">
+<!ENTITY sup2 "&#178;">
+<!ENTITY sup3 "&#179;">
+<!ENTITY supe "&#8839;">
+<!ENTITY szlig "&#223;">
+<!ENTITY Tau "&#932;">
+<!ENTITY tau "&#964;">
+<!ENTITY there4 "&#8756;">
+<!ENTITY Theta "&#920;">
+<!ENTITY theta "&#952;">
+<!ENTITY thetasym "&#977;">
+<!ENTITY thinsp "&#8201;">
+<!ENTITY THORN "&#222;">
+<!ENTITY thorn "&#254;">
+<!ENTITY tilde "&#732;">
+<!ENTITY times "&#215;">
+<!ENTITY trade "&#8482;">
+<!ENTITY Uacute "&#218;">
+<!ENTITY uacute "&#250;">
+<!ENTITY uarr "&#8593;">
+<!ENTITY uArr "&#8657;">
+<!ENTITY Ucirc "&#219;">
+<!ENTITY ucirc "&#251;">
+<!ENTITY Ugrave "&#217;">
+<!ENTITY ugrave "&#249;">
+<!ENTITY uml "&#168;">
+<!ENTITY upsih "&#978;">
+<!ENTITY Upsilon "&#933;">
+<!ENTITY upsilon "&#965;">
+<!ENTITY Uuml "&#220;">
+<!ENTITY uuml "&#252;">
+<!ENTITY weierp "&#8472;">
+<!ENTITY Xi "&#926;">
+<!ENTITY xi "&#958;">
+<!ENTITY Yacute "&#221;">
+<!ENTITY yacute "&#253;">
+<!ENTITY yen "&#165;">
+<!ENTITY Yuml "&#376;">
+<!ENTITY yuml "&#255;">
+<!ENTITY Zeta "&#918;">
+<!ENTITY zeta "&#950;">
+<!ENTITY zwj "&#8205;">
+<!ENTITY zwnj "&#8204;">`.replace(/\n/g, ' ');
+
+  /**
+   * A reasonably strict xml declaration.
+   */
+  const XML_DECL = '<?xml version="1.0" standalone="no"?>';
+
+  /**
+   * The beginning of the XML doctype declaration.
+   */
+  const DOCTYPE_START = `<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [`;
+
+  /**
+   * The end of the XML docype declaration.
+   */
+  const DOCTYPE_END = ']>';
+
+  /**
+   * A full header for an SVG XML document.
+   */
+  const SVG_XML_HEADER = `${XML_DECL}
+    ${DOCTYPE_START}${HTML_ENTITIES}${DOCTYPE_END}`;
 
     void Promise.all([...diagrams].map(renderOneMarmaid));
   });
@@ -7517,7 +7802,43 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">¶</a></h2><p>This is a quick post to illustrate how I collect and store crypto asset data from Coinbase. Essentially, the scripts below pull minute, hour, and daily data for the specified assets and if there is an existing data record, then the existing record is updated to include the most recent data. If there is not an existing data record, then the complete historical record from coinbase is pulled and stored.</p>
+<h2 id="Post-Updates">Post Updates<a class="anchor-link" href="#Post-Updates">¶</a></h2>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e3e089a0">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Update 8/8/2026: Reworked <code>coinbase_pull_data</code> so that a new record is built from 2010 forward and an existing record resumes from its last stored candle, rather than the initial pull starting at a fixed year and updates re-fetching a caller-supplied range. Revised the walkthrough of that function to match.</p>
+<p>Update 8/6/2026: Clarified how the initial pull differs from an incremental update, documented the asset filtering performed by <code>coinbase_pull_data</code>, reordered the function list to build from the lowest-level function upward, and replaced the historical candles example with an hourly range that returns more than a single row.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=19eaa7fa">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">¶</a></h2>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=42258256">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>This post covers how I collect and store minute, hour, and daily crypto asset data from Coinbase. Since I first published it I have expanded the walkthrough to cover how the initial pull differs from an incremental update, and the filtering that gets applied to the asset list along the way.</p>
+<p>The work is split across four functions that build on one another. <code>coinbase_fetch_historical_candles</code> wraps a single request to the Coinbase Exchange candles endpoint. <code>coinbase_fetch_full_history</code> pages that endpoint to cover an arbitrary date range. <code>coinbase_fetch_available_products</code> lists the tradeable pairs. And <code>coinbase_pull_data</code> combines all three to maintain a directory of pickle files on disk, resuming an existing data file from its last stored candle, or building a new record from scratch where none exists.</p>
+<p>The first three functions are executed below. <code>coinbase_pull_data</code> is shown but not run, since it writes to the filesystem and can run for a long time against a full asset list.</p>
 </div>
 </div>
 </div>
@@ -7553,17 +7874,6 @@ a.anchor-link {
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">"ignore"</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b5d3911f">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Add-Directories-To-Path">Add Directories To Path<a class="anchor-link" href="#Add-Directories-To-Path">¶</a></h2>
 </div>
 </div>
 </div>
@@ -7609,11 +7919,22 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Python-Functions">Python Functions<a class="anchor-link" href="#Python-Functions">¶</a></h2><p>Here are the functions needed for this project:</p>
+<h2 id="Python-Functions">Python Functions<a class="anchor-link" href="#Python-Functions">¶</a></h2>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=7da13781">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Here are the functions needed for this project, listed in the order they build on one another:</p>
 <ul>
 <li><a href="/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_available_products">coinbase_fetch_available_products</a>: Fetch available products from Coinbase Exchange API.</li>
-<li><a href="/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_full_history">coinbase_fetch_full_history</a>: Fetch full historical data for a given product from Coinbase Exchange API.</li>
 <li><a href="/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_historical_candles">coinbase_fetch_historical_candles</a>: Fetch historical candle data for a given product from Coinbase Exchange API.</li>
+<li><a href="/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_full_history">coinbase_fetch_full_history</a>: Fetch full historical data for a given product from Coinbase Exchange API.</li>
 <li><a href="/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_pull_data">coinbase_pull_data</a>: Update existing record or pull full historical data for a given product from Coinbase Exchange API.</li>
 </ul>
 </div>
@@ -7628,8 +7949,8 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_fetch_available_products</span><span class="w"> </span><span class="kn">import</span> <span class="n">coinbase_fetch_available_products</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_fetch_full_history</span><span class="w"> </span><span class="kn">import</span> <span class="n">coinbase_fetch_full_history</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_fetch_historical_candles</span><span class="w"> </span><span class="kn">import</span> <span class="n">coinbase_fetch_historical_candles</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_fetch_full_history</span><span class="w"> </span><span class="kn">import</span> <span class="n">coinbase_fetch_full_history</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">coinbase_pull_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">coinbase_pull_data</span>
 </pre></div>
 </div>
@@ -7643,11 +7964,33 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Function-Usage">Function Usage<a class="anchor-link" href="#Function-Usage">¶</a></h2><h3 id="Coinbase-Fetch-Available-Products">Coinbase Fetch Available Products<a class="anchor-link" href="#Coinbase-Fetch-Available-Products">¶</a></h3><p>This script pulls the list of available assets based on the inputs for base and quote currency. Here's an example:</p>
+<h2 id="Function-Usage">Function Usage<a class="anchor-link" href="#Function-Usage">¶</a></h2>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=d2677589">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c5f424f7">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Coinbase-Fetch-Available-Products">Coinbase Fetch Available Products<a class="anchor-link" href="#Coinbase-Fetch-Available-Products">¶</a></h3>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d3d41529">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>This function pulls the list of available assets based on the inputs for base and quote currency. In the example below the <code>quote_currency</code> is provided as "USD", so the function returns every asset priced against USD:</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=d2677589">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7660,31 +8003,8 @@ a.anchor-link {
     <span class="n">quote_currency</span><span class="o">=</span><span class="s2">"USD"</span><span class="p">,</span>
     <span class="n">status</span><span class="o">=</span><span class="s2">"online"</span><span class="p">,</span>
 <span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=63e34620">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>In this example, the <code>quote_currency</code> is provided as "USD". This script checks all available assets that are priced against USD and returns a dataframe listing all available assets:</p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=b2295c04">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"base_currency"</span><span class="p">,</span> <span class="s2">"quote_currency"</span><span class="p">,</span> <span class="s2">"status"</span><span class="p">]])</span>
 </pre></div>
 </div>
 </div>
@@ -7718,128 +8038,44 @@ a.anchor-link {
 <th>id</th>
 <th>base_currency</th>
 <th>quote_currency</th>
-<th>quote_increment</th>
-<th>base_increment</th>
-<th>display_name</th>
-<th>min_market_funds</th>
-<th>margin_enabled</th>
-<th>post_only</th>
-<th>limit_only</th>
-<th>cancel_only</th>
 <th>status</th>
-<th>status_message</th>
-<th>trading_disabled</th>
-<th>fx_stablecoin</th>
-<th>max_slippage_percentage</th>
-<th>auction_mode</th>
-<th>high_bid_limit_percentage</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<th>645</th>
+<th>655</th>
 <td>00-USD</td>
 <td>00</td>
 <td>USD</td>
-<td>0.0001</td>
-<td>0.01</td>
-<td>00-USD</td>
-<td>1</td>
-<td>False</td>
-<td>False</td>
-<td>False</td>
-<td>False</td>
 <td>online</td>
-<td></td>
-<td>False</td>
-<td>False</td>
-<td>0.03000000</td>
-<td>False</td>
-<td></td>
 </tr>
 <tr>
-<th>292</th>
+<th>155</th>
 <td>1INCH-USD</td>
 <td>1INCH</td>
 <td>USD</td>
-<td>0.001</td>
-<td>0.01</td>
-<td>1INCH-USD</td>
-<td>1</td>
-<td>False</td>
-<td>False</td>
-<td>False</td>
-<td>False</td>
 <td>online</td>
-<td></td>
-<td>False</td>
-<td>False</td>
-<td>0.03000000</td>
-<td>False</td>
-<td></td>
 </tr>
 <tr>
-<th>40</th>
+<th>497</th>
 <td>2Z-USD</td>
 <td>2Z</td>
 <td>USD</td>
-<td>0.00001</td>
-<td>0.01</td>
-<td>2Z/USD</td>
-<td>1</td>
-<td>False</td>
-<td>False</td>
-<td>False</td>
-<td>False</td>
 <td>online</td>
-<td></td>
-<td>False</td>
-<td>False</td>
-<td>0.03000000</td>
-<td>False</td>
-<td></td>
 </tr>
 <tr>
-<th>308</th>
+<th>815</th>
 <td>A8-USD</td>
 <td>A8</td>
 <td>USD</td>
-<td>0.0001</td>
-<td>0.01</td>
-<td>A8/USD</td>
-<td>1</td>
-<td>False</td>
-<td>False</td>
-<td>False</td>
-<td>False</td>
 <td>online</td>
-<td></td>
-<td>False</td>
-<td>False</td>
-<td>0.03000000</td>
-<td>False</td>
-<td></td>
 </tr>
 <tr>
-<th>695</th>
+<th>563</th>
 <td>AAVE-USD</td>
 <td>AAVE</td>
 <td>USD</td>
-<td>0.01</td>
-<td>0.001</td>
-<td>AAVE-USD</td>
-<td>1</td>
-<td>False</td>
-<td>False</td>
-<td>False</td>
-<td>False</td>
 <td>online</td>
-<td></td>
-<td>False</td>
-<td>False</td>
-<td>0.03000000</td>
-<td>False</td>
-<td></td>
 </tr>
 <tr>
 <th>...</th>
@@ -7847,184 +8083,99 @@ a.anchor-link {
 <td>...</td>
 <td>...</td>
 <td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
 </tr>
 <tr>
-<th>15</th>
+<th>608</th>
 <td>ZKC-USD</td>
 <td>ZKC</td>
 <td>USD</td>
-<td>0.0001</td>
-<td>0.01</td>
-<td>ZKC/USD</td>
-<td>1</td>
-<td>False</td>
-<td>False</td>
-<td>False</td>
-<td>False</td>
 <td>online</td>
-<td></td>
-<td>False</td>
-<td>False</td>
-<td>0.03000000</td>
-<td>False</td>
-<td></td>
 </tr>
 <tr>
-<th>534</th>
+<th>835</th>
 <td>ZKP-USD</td>
 <td>ZKP</td>
 <td>USD</td>
-<td>0.00001</td>
-<td>0.1</td>
-<td>ZKP/USD</td>
-<td>1</td>
-<td>False</td>
-<td>False</td>
-<td>False</td>
-<td>False</td>
 <td>online</td>
-<td></td>
-<td>False</td>
-<td>False</td>
-<td>0.03000000</td>
-<td>False</td>
-<td></td>
 </tr>
 <tr>
-<th>456</th>
+<th>778</th>
 <td>ZORA-USD</td>
 <td>ZORA</td>
 <td>USD</td>
-<td>0.00001</td>
-<td>1</td>
-<td>ZORA/USD</td>
-<td>1</td>
-<td>False</td>
-<td>False</td>
-<td>False</td>
-<td>False</td>
 <td>online</td>
-<td></td>
-<td>False</td>
-<td>False</td>
-<td>0.03000000</td>
-<td>False</td>
-<td></td>
 </tr>
 <tr>
-<th>322</th>
+<th>282</th>
 <td>ZRO-USD</td>
 <td>ZRO</td>
 <td>USD</td>
-<td>0.001</td>
-<td>0.01</td>
-<td>ZRO/USD</td>
-<td>1</td>
-<td>False</td>
-<td>False</td>
-<td>False</td>
-<td>False</td>
 <td>online</td>
-<td></td>
-<td>False</td>
-<td>False</td>
-<td>0.03000000</td>
-<td>False</td>
-<td></td>
 </tr>
 <tr>
-<th>609</th>
+<th>20</th>
 <td>ZRX-USD</td>
 <td>ZRX</td>
 <td>USD</td>
-<td>0.000001</td>
-<td>0.00001</td>
-<td>ZRX-USD</td>
-<td>1</td>
-<td>False</td>
-<td>False</td>
-<td>False</td>
-<td>False</td>
 <td>online</td>
-<td></td>
-<td>False</td>
-<td>False</td>
-<td>0.03000000</td>
-<td>False</td>
-<td></td>
 </tr>
 </tbody>
 </table>
-<p>379 rows × 18 columns</p>
+<p>402 rows × 4 columns</p>
 </div>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=37ba22e6">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=63e34620">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Coinbase-Fetch-Historical-Candles">Coinbase Fetch Historical Candles<a class="anchor-link" href="#Coinbase-Fetch-Historical-Candles">¶</a></h3><p>This script pulls the historical candles:</p>
+<p>The API returns eighteen columns per product, but the four shown above are the ones that matter downstream, and are the same four that <code>coinbase_pull_data</code> prints when it builds its working list.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=98caf842">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ad8a8caf">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Coinbase-Fetch-Historical-Candles">Coinbase Fetch Historical Candles<a class="anchor-link" href="#Coinbase-Fetch-Historical-Candles">¶</a></h3>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4182802f">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>This is the lowest-level of the four functions, and maps to a single request against the Coinbase Exchange candles endpoint. It returns the date/time, open, high, low, close, and volume for each period in the requested range. The example below pulls hourly candles from the start of 2025:</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=b2295c04">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">coinbase_fetch_historical_candles</span><span class="p">(</span>
     <span class="n">product_id</span><span class="o">=</span><span class="s2">"BTC-USD"</span><span class="p">,</span>
     <span class="n">start</span><span class="o">=</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-    <span class="n">end</span><span class="o">=</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-    <span class="n">granularity</span><span class="o">=</span><span class="mi">86_400</span><span class="p">,</span>
+    <span class="n">end</span><span class="o">=</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+    <span class="n">granularity</span><span class="o">=</span><span class="mi">3_600</span><span class="p">,</span>
 <span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9d474469">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Specifically, the date/time, open, high, low, close, and volume levels:</p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=72490633">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -8066,12 +8217,66 @@ a.anchor-link {
 <tbody>
 <tr>
 <th>0</th>
-<td>2025-01-01</td>
-<td>92743.63</td>
-<td>94960.91</td>
+<td>2025-01-01 00:00:00</td>
+<td>93281.63</td>
+<td>94321.25</td>
 <td>93347.59</td>
-<td>94383.59</td>
-<td>6871.738482</td>
+<td>94209.02</td>
+<td>337.581664</td>
+</tr>
+<tr>
+<th>1</th>
+<td>2025-01-01 01:00:00</td>
+<td>93393.06</td>
+<td>94224.30</td>
+<td>94207.31</td>
+<td>93423.47</td>
+<td>198.579180</td>
+</tr>
+<tr>
+<th>2</th>
+<td>2025-01-01 02:00:00</td>
+<td>93400.00</td>
+<td>93894.04</td>
+<td>93423.48</td>
+<td>93882.09</td>
+<td>154.768788</td>
+</tr>
+<tr>
+<th>3</th>
+<td>2025-01-01 03:00:00</td>
+<td>93524.35</td>
+<td>93885.00</td>
+<td>93885.00</td>
+<td>93635.54</td>
+<td>127.391075</td>
+</tr>
+<tr>
+<th>4</th>
+<td>2025-01-01 04:00:00</td>
+<td>93305.54</td>
+<td>93637.33</td>
+<td>93635.54</td>
+<td>93358.58</td>
+<td>257.394980</td>
+</tr>
+<tr>
+<th>5</th>
+<td>2025-01-01 05:00:00</td>
+<td>93323.88</td>
+<td>93708.79</td>
+<td>93358.33</td>
+<td>93572.80</td>
+<td>146.990291</td>
+</tr>
+<tr>
+<th>6</th>
+<td>2025-01-01 06:00:00</td>
+<td>93354.99</td>
+<td>93575.73</td>
+<td>93575.72</td>
+<td>93551.21</td>
+<td>138.098835</td>
 </tr>
 </tbody>
 </table>
@@ -8081,22 +8286,44 @@ a.anchor-link {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=035870c5">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=37ba22e6">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Coinbase-Fetch-Full-History">Coinbase Fetch Full History<a class="anchor-link" href="#Coinbase-Fetch-Full-History">¶</a></h3><p>This script pulls the full history for a specified asset:</p>
+<p>Two details are worth noting here. The endpoint returns at most 300 candles per request no matter how wide a range is asked for, which is the constraint that the next function exists to work around. And the response arrives in reverse chronological order, so the function reverses it before building the dataframe. Rate limiting (HTTP 429) is retried up to five times with an exponential backoff.</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=8121e09a">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=aec4a17e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Coinbase-Fetch-Full-History">Coinbase Fetch Full History<a class="anchor-link" href="#Coinbase-Fetch-Full-History">¶</a></h3>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1bbe8152">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>This function pulls an arbitrary date range for a specified asset by paging the function above. Because a single request is capped at 300 candles, it walks the range in windows of <code>granularity * 300</code> seconds, advancing from the timestamp of the last candle it received and pausing 0.2 seconds between requests to stay within the rate limits. The individual responses are concatenated into one dataframe, so a range of years is handled exactly the same way as the single month below:</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=98caf842">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">coinbase_fetch_full_history</span><span class="p">(</span>
@@ -8105,31 +8332,8 @@ a.anchor-link {
     <span class="n">end</span><span class="o">=</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">31</span><span class="p">),</span>
     <span class="n">granularity</span><span class="o">=</span><span class="mi">86_400</span><span class="p">,</span>
 <span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=075f5879">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>The example above pulls the daily data for 1 month, but can handle data ranges of years because it uses the <code>coinbase_fetch_historical_candles</code> to pull 300 candles at a time to ensure that the API is not overloaded and drops data. Here's the results for the above:</p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=69ebae61">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -8456,20 +8660,33 @@ a.anchor-link {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9ce2e265">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9d474469">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Coinbase-Pull-Data">Coinbase Pull Data<a class="anchor-link" href="#Coinbase-Pull-Data">¶</a></h3><p>This script combines the above functions to perform the following:</p>
+<h3 id="Coinbase-Pull-Data">Coinbase Pull Data<a class="anchor-link" href="#Coinbase-Pull-Data">¶</a></h3>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=18860e08">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>This function combines the three above to perform the following:</p>
 <ol>
-<li>Attempt to read an existing pickle data file</li>
-<li>If a data file exists, then pull updated data</li>
-<li>Otherwise, pull all historical data available for that asset on Coinbase</li>
-<li>Store pickle and/or excel files of the data in the specified directories</li>
+<li>Resolve the list of products to update from the <code>base_currency</code> and <code>quote_currency</code> arguments.</li>
+<li>Attempt to read an existing pickle data file for each product.</li>
+<li>If a data file exists, resume from its last stored candle and pull forward to the present.</li>
+<li>Otherwise, pull the available historical data for that asset and create a new record.</li>
+<li>Store pickle and/or excel files of the data in the specified directories.</li>
+<li>Prune the resulting product list down to the assets worth carrying forward.</li>
 </ol>
-<p>Through the <code>base_directory</code>, <code>source</code>, and <code>asset_class</code> variables the script knows where in the local filesystem to look for an existing pickle file and the store the resulting updated pickle and/or excel files:</p>
+<p>Through the <code>base_directory</code>, <code>source</code>, and <code>asset_class</code> variables the function knows where in the local filesystem to look for an existing pickle file and where to store the resulting updated pickle and/or excel files:</p>
 <div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">coinbase_pull_data</span><span class="p">(</span>
     <span class="n">base_directory</span><span class="o">=</span><span class="n">DATA_DIR</span><span class="p">,</span>
     <span class="n">source</span><span class="o">=</span><span class="s2">"Coinbase"</span><span class="p">,</span>
@@ -8481,11 +8698,33 @@ a.anchor-link {
     <span class="n">quote_currency</span><span class="o">=</span><span class="s2">"USD"</span><span class="p">,</span>
     <span class="n">granularity</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="c1"># 60=minute, 3600=hourly, 86400=daily</span>
     <span class="n">status</span><span class="o">=</span><span class="s1">'online'</span><span class="p">,</span> <span class="c1"># default status is 'online'</span>
-    <span class="n">start_date</span><span class="o">=</span><span class="n">datetime</span><span class="p">(</span><span class="n">current_year</span><span class="p">,</span> <span class="n">current_month</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="c1"># default start date</span>
-    <span class="n">end_date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="c1"># updates data through 1 day ago due to lag in data availability</span>
 <span class="p">)</span>
 </pre></div>
-<p>By passing <code>None</code> as the <code>base_currency</code> and/or the <code>quote_currency</code>, the script will use the <code>coinbase_fetch_available_products</code> function to pull the list of all the available products, and then pulls data for all assets in that list. This functionality is incredibly useful, and makes acquiring data very straightforward, especially for a set of products for a specific <code>base_currency</code> or <code>quote_currency</code>.</p>
+<p>Note that no dates are passed. <code>start_date</code> defaults to 1/1/2010 and only applies when there is no existing record, and <code>end_date</code> defaults to one day ago to account for the lag in data availability, so a single call per product and granularity is enough to either create a record or bring one current.</p>
+<p>By passing <code>None</code> as the <code>base_currency</code> and/or the <code>quote_currency</code>, the function uses <code>coinbase_fetch_available_products</code> to build the product list, so a single call can pull every USD-quoted pair on Coinbase.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2bf9bdfb">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>On an update, the existing record is read back and the fetch resumes from the last date it contains. That final candle is deliberately re-fetched, since the period may still have been in progress when it was written; where a date appears in both the stored and the newly fetched data, the new row wins, so a partial candle is replaced by its completed version rather than left stale. The same range can therefore be pulled repeatedly without duplicating or corrupting anything.</p>
+<p>The initial pull works differently. With no pickle file to resume from, there is no last date to start at, so the function falls back to <code>start_date</code> and works forward a year at a time until the API returns something. Coinbase has nothing for any of these pairs in 2010, so the first several attempts come back empty and are skipped; for BTC-USD the data begins on 7/20/2015, which is where the record actually starts.</p>
+<p>The function also prunes the product list it returns. Assets with no data available, assets whose closing price never exceeds the price threshold, stablecoins (USDT, USDC, PAX, DAI, PYUSD, GUSD), and wrapped coins (WAXL, WBTC) are all removed. What remains is the set of assets actually useful for analysis, which matters when the starting product list runs to several hundred entries.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6b43c482">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>The example above pulls the data for BTC-USD, and stores it in the following system directory:</p>
 <p><strong>DATA_DIR/Coinbase/Cryptocurrencies/Minute</strong></p>
 <p>And here is the filesystem tree output for the <code>Coinbase</code> directory:</p>
@@ -8518,18 +8757,33 @@ Coinbase/
 
 <span class="m">5</span><span class="w"> </span>directories,<span class="w"> </span><span class="m">20</span><span class="w"> </span>files
 </pre></div>
+<p>Note that the <code>Minute</code> directory holds only pickle files. Minute data runs to hundreds of thousands of rows per asset, which makes the excel export slow and unwieldy, so <code>excel_export</code> is left as <code>False</code> at that granularity.</p>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=02b87071">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8b8d04ee">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="References">References<a class="anchor-link" href="#References">¶</a></h2><ol>
-<li><a href="https://www.coinbase.com/">https://www.coinbase.com/</a></li>
+<h2 id="References">References<a class="anchor-link" href="#References">¶</a></h2>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3aee68c1">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<ol>
+<li><a href="https://www.coinbase.com/">Coinbase</a></li>
+<li>Coinbase Exchange API, products endpoint: <code>https://api.exchange.coinbase.com/products</code></li>
+<li>Coinbase Exchange API, candles endpoint: <code>https://api.exchange.coinbase.com/products/{product_id}/candles</code></li>
+<li><a href="/posts/reusable-extensible-python-functions-financial-data-analysis/">Reusable &amp; Extensible Python Functions For Financial Data Analysis</a></li>
 </ol>
 </div>
 </div>

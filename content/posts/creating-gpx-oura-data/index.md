@@ -138,9 +138,9 @@ After churning, it gave me the following response:
   temperature that most tools will interpret as air temperature.
 ```
 
-I tested it on a few workouts, and compared the resulting GPX file data to the native Oura data, and it matched up within reason (distance of 17.88 mi vs 17.71 mi, average speed of 14.4 mph vs 14.2 mph), certainly close enough for my purposes. Also note that the GPX file did upload to Strava without issue, including the map, distance, pace, speed, and heart rate data.
+I tested it on a few workouts, and compared the resulting GPX file data to the native Oura data, and it matched up within reason (distance of 17.88 mi vs 17.71 mi, average speed of 14.4 mph vs 14.2 mph), close enough for my purposes. Also note that the GPX file did upload to Strava without issue, including the map, distance, pace, speed, and heart rate data.
 
-The one issue I encountered was that the GPX file for a cycling workout contained cadence data - which is not natively recorded by Oura. After bringing that issue to Claude's attention, it gated the cadence field for step-based workouts only (hiking, running, walking, etc.) to avoid incorrectly including cadence data.
+The one issue I encountered was that the GPX file for a cycling workout contained cadence data, which is not natively recorded by Oura because it does not contain a sensor to measure pedal cadence. After bringing that issue to Claude's attention, it gated the cadence field for step-based workouts only (hiking, running, walking, etc.) to avoid incorrectly including cadence data.
 
 I then asked Claude to create a new repo under my GitHub account, update the README, and push the changes to the repo, which can be found [here](https://github.com/jaredszajkowski/oura-data-analysis).
 
@@ -152,14 +152,14 @@ After using the script for a few weeks, I noticed the GPX tracks were inconsiste
 | --- | --- |
 | `extract_session_create_gpx_v1.py` | The original. Emits every raw GPS fix as a trackpoint, in a single segment, with no cleanup. |
 | `extract_session_create_gpx_v2_gap_adjusted.py` | Resamples the fixes onto a whole-second grid, and splits the track at app pauses and GPS dropouts instead of drawing a line across them. |
-| `extract_session_create_gpx_v3_doppler_check.py` | Current. Drops bad fixes before resampling - re-emitted stale positions, and positions that contradict the receiver's own Doppler speed. |
+| `extract_session_create_gpx_v3_doppler_check.py` | Current. Drops bad fixes before resampling, including both re-emitted stale positions and positions that contradict the receiver's own Doppler speed. |
 
 Two separate problems drove those changes:
 
 1. **`rawlocation.csv` logs faster than 1 Hz.** Fixes land at irregular sub-second offsets, and roughly 40% of seconds carry two of them a few hundred milliseconds apart. That pair is GPS jitter, not movement, so summing all of it is what inflates distance and elevation. Version 2 interpolates onto an exact whole-second grid, which is what Oura's own GPX export does.
 2. **Some fixes are simply wrong.** The ring re-emits earlier positions out of order (on a couple of my rides, 47% of the fixes were stale repeats), and coming out of a GPS dropout the first fixes back are placed tens of meters behind the true position and then snap forward, charging several seconds of travel to a single step. Version 3 drops both before resampling, using the `speed` column as the arbiter, because it's Doppler-derived rather than computed by differencing positions, which makes it the only check on position that doesn't actually depend on the position data.
 
-The difference is easiest to see at the top end. On a ride from 7/31/2026, max speed dropped from 28.3 mph to 22.1 mph (Strava reports 22.2 mph from Oura's own GPX file for that ride), and the worst single step went from 46 mph to 29 mph. I'd love to be riding 28.3 (or 46) mph, but it's not reality. :)
+The difference is easiest to see at the top end. On a ride from 7/31/2026, max speed dropped from 28.3 mph to 22.1 mph (Strava reports 22.2 mph from Oura's own GPX file for that ride), and the worst single step went from 46 mph to 29 mph. I'd love to be riding 28.3 (or 46) mph, but it's not reality. :-)
 
 Version 3 is the one to use; passing `--no-doppler-filter` reproduces version 2's output if you want to compare.
 
@@ -182,7 +182,7 @@ Note that the Oura data is only stored locally and not uploaded to GitHub for pr
 
 ## Conclusion
 
-I'm certainly open to any feedback or suggestions for improvement, and I hope this is helpful to anyone else who may be in a similar situation.
+I'm open to any feedback or suggestions for improvement, and I hope this is helpful to anyone else who may be in a similar situation.
 
 ## References
 
