@@ -10,7 +10,7 @@
 #       format_version: '1.3'
 #       jupytext_version: 1.19.6
 #   kernelspec:
-#     display_name: Python 3
+#     display_name: general-venv-p313 (3.13.17)
 #     language: python
 #     name: python3
 # ---
@@ -38,6 +38,7 @@ import os
 import sys
 import warnings
 
+from IPython.display import display, Markdown
 from pathlib import Path
 
 # Data Handling
@@ -45,6 +46,9 @@ import pandas as pd
 
 # Suppress warnings
 warnings.filterwarnings("ignore")
+
+# Pandas display options
+pd.set_option("display.float_format", lambda x: f"%.2f" % x)
 
 # %%
 # Add the source subdirectory to the system path to allow import config from settings.py
@@ -89,7 +93,6 @@ DATA_MANUAL_DIR = config("DATA_MANUAL_DIR")
 
 # %%
 from load_data import load_data
-from pandas_set_decimal_places import pandas_set_decimal_places
 from plot_time_series import plot_time_series
 from run_regression import run_regression
 from summary_stats import summary_stats
@@ -132,8 +135,6 @@ from yf_pull_data import yf_pull_data
 # First, let's get the data for these ETFs. If we already have the desired data, we can load it from a local pickle file. Otherwise, we can download it from Yahoo Finance using the `yf_pull_data` function.
 
 # %%
-pandas_set_decimal_places(2)
-
 # Create a list of the ETF tickers
 fund_list = [
     "TQQQ",
@@ -367,7 +368,7 @@ df = combine_normalize(
     end_date=end_date,
 )
 
-print(f"Table E1: {lev_etf} & {etf} Normalized Data")
+display(Markdown(f"Table E1: {lev_etf} & {etf} Normalized Data"))
 display(df)
 
 # %%
@@ -386,7 +387,7 @@ sum_stats = calculate_returns_stats(
 
 all_sum_stats = pd.concat([all_sum_stats, sum_stats])
 
-print("Table E2: Leveraged and Non-Leveraged ETF Summary Statistics")
+display(Markdown("Table E2: Leveraged and Non-Leveraged ETF Summary Statistics"))
 display(all_sum_stats)
 
 # %% [markdown]
@@ -437,7 +438,7 @@ df = combine_normalize(
     end_date=end_date,
 )
 
-print(f"Table E3: {lev_etf} & {etf} Normalized Data")
+display(Markdown(f"Table E3: {lev_etf} & {etf} Normalized Data"))
 display(df)
 
 # %%
@@ -452,7 +453,7 @@ sum_stats = calculate_returns_stats(
 
 all_sum_stats = pd.concat([all_sum_stats, sum_stats])
 
-print("Table E4: Leveraged and Non-Leveraged ETF Summary Statistics")
+display(Markdown("Table E4: Leveraged and Non-Leveraged ETF Summary Statistics"))
 display(all_sum_stats)
 
 # %% [markdown]
@@ -497,7 +498,7 @@ df = combine_normalize(
     end_date=end_date,
 )
 
-print(f"Table E5: {lev_etf} & {etf} Normalized Data")
+display(Markdown(f"Table E5: {lev_etf} & {etf} Normalized Data"))
 display(df)
 
 # %%
@@ -512,7 +513,7 @@ sum_stats = calculate_returns_stats(
 
 all_sum_stats = pd.concat([all_sum_stats, sum_stats])
 
-print("Table E6: Leveraged and Non-Leveraged ETF Summary Statistics")
+display(Markdown("Table E6: Leveraged and Non-Leveraged ETF Summary Statistics"))
 display(all_sum_stats)
 
 # %% [markdown]
@@ -557,7 +558,7 @@ df = combine_normalize(
     end_date=end_date,
 )
 
-print(f"Table E7: {lev_etf} & {etf} Normalized Data")
+display(Markdown(f"Table E7: {lev_etf} & {etf} Normalized Data"))
 display(df)
 
 # %%
@@ -572,7 +573,7 @@ sum_stats = calculate_returns_stats(
 
 all_sum_stats = pd.concat([all_sum_stats, sum_stats])
 
-print("Table E8: Leveraged and Non-Leveraged ETF Summary Statistics")
+display(Markdown("Table E8: Leveraged and Non-Leveraged ETF Summary Statistics"))
 display(all_sum_stats)
 
 # %% [markdown]
@@ -622,7 +623,7 @@ df = combine_normalize(
     end_date=end_date,
 )
 
-print(f"Table E9: {lev_etf} & {etf} Normalized Data")
+display(Markdown(f"Table E9: {lev_etf} & {etf} Normalized Data"))
 display(df)
 
 # %%
@@ -637,7 +638,7 @@ sum_stats = calculate_returns_stats(
 
 all_sum_stats = pd.concat([all_sum_stats, sum_stats])
 
-print("Table E10: Leveraged and Non-Leveraged ETF Summary Statistics")
+display(Markdown("Table E10: Leveraged and Non-Leveraged ETF Summary Statistics"))
 display(all_sum_stats)
 
 # %% [markdown]
@@ -682,7 +683,7 @@ df = combine_normalize(
     end_date=end_date,
 )
 
-print(f"Table E11: {lev_etf} & {etf} Normalized Data")
+display(Markdown(f"Table E11: {lev_etf} & {etf} Normalized Data"))
 display(df)
 
 # %%
@@ -697,7 +698,7 @@ sum_stats = calculate_returns_stats(
 
 all_sum_stats = pd.concat([all_sum_stats, sum_stats])
 
-print("Table E12: Leveraged and Non-Leveraged ETF Summary Statistics")
+display(Markdown("Table E12: Leveraged and Non-Leveraged ETF Summary Statistics"))
 display(all_sum_stats)
 
 # %% [markdown]
@@ -745,10 +746,10 @@ corr_data = corr_data.dropna()
 corr_data = corr_data[corr_data.index >= "2010-02-11"]
 corr_data = corr_data[corr_data.index <= "2020-10-04"]
 
-print("Table E13: QQQ, SPY, DIA, and TLT Daily Returns")
+display(Markdown("Table E13: QQQ, SPY, DIA, and TLT Daily Returns"))
 display(corr_data)
 
-print("Table E14: Correlation Matrix of QQQ, SPY, DIA, and TLT Daily Returns")
+display(Markdown("Table E14: Correlation Matrix of QQQ, SPY, DIA, and TLT Daily Returns"))
 display(corr_data.corr())
 
 # %% [markdown]
@@ -767,10 +768,10 @@ for fund in ["TQQQ", "UPRO", "UDOW", "TMF"]:
 lev_corr_data = lev_corr_data.dropna()
 lev_corr_data = lev_corr_data[lev_corr_data.index <= "2020-10-04"]
 
-print("Table E15: TQQQ, UPRO, UDOW, and TMF Daily Returns")
+display(Markdown("Table E15: TQQQ, UPRO, UDOW, and TMF Daily Returns"))
 display(lev_corr_data)
 
-print("Table E16: Correlation Matrix of TQQQ, UPRO, UDOW, and TMF Daily Returns")
+display(Markdown("Table E16: Correlation Matrix of TQQQ, UPRO, UDOW, and TMF Daily Returns"))
 display(lev_corr_data.corr())
 
 # %% [markdown]
@@ -925,7 +926,7 @@ tqqq_tmf = rebalance_strategy(
     end_date="2020-10-04",
 )
 
-print("Table E17: TQQQ/TMF Rebalance Strategy Data")
+display(Markdown("Table E17: TQQQ/TMF Rebalance Strategy Data"))
 display(tqqq_tmf)
 
 # %% [markdown]
@@ -980,7 +981,7 @@ tmf_sum_stats.index = ["TMF"]
 
 all_strat_sum_stats = pd.concat([all_strat_sum_stats, tmf_sum_stats])
 
-print("Table E18: Strategy Summary Statistics")
+display(Markdown("Table E18: Strategy Summary Statistics"))
 display(all_strat_sum_stats)
 
 # %% [markdown]
@@ -1139,7 +1140,7 @@ for k in rebalance_interval_results.index:
         )
         rebalance_interval_results.loc[k, col] = df_k["Strategy_Adj_Close"].iloc[-1]
 
-print("Figure 10: Strategy performance on 9/2/20 as a function of rebalancing interval")
+display(Markdown("Figure 10: Strategy performance on 9/2/20 as a function of rebalancing interval"))
 display(rebalance_interval_results)
 
 # %% [markdown]
@@ -1429,7 +1430,7 @@ tqqq_tmf_bs = rebalance_strategy_bs(
     end_date="2020-10-04",
 )
 
-print("Table E19: TQQQ/TMF Black Swan Strategy Data")
+display(Markdown("Table E19: TQQQ/TMF Black Swan Strategy Data"))
 display(tqqq_tmf_bs)
 
 # %% [markdown]
@@ -1451,7 +1452,7 @@ tqqq_tmf_bs_sum_stats.index = ["TQQQ/TMF BS"]
 
 all_strat_sum_stats = pd.concat([all_strat_sum_stats, tqqq_tmf_bs_sum_stats])
 
-print("Table E20: Strategy Summary Statistics")
+display(Markdown("Table E20: Strategy Summary Statistics"))
 display(all_strat_sum_stats)
 
 # %% [markdown]
@@ -1629,7 +1630,7 @@ tqqq_tmf_full = rebalance_strategy(
     end_date=None,
 )
 
-print("Table E21: TQQQ/TMF Rebalance Strategy Data (Full Period)")
+display(Markdown("Table E21: TQQQ/TMF Rebalance Strategy Data (Full Period)"))
 display(tqqq_tmf_full)
 
 # %%
@@ -1648,7 +1649,7 @@ tqqq_tmf_full_sum_stats.index = ["TQQQ/TMF Full Strategy"]
 
 all_strat_sum_stats = pd.concat([all_strat_sum_stats, tqqq_tmf_full_sum_stats])
 
-print("Table E22: Strategy Summary Statistics")
+display(Markdown("Table E22: Strategy Summary Statistics"))
 display(all_strat_sum_stats)
 
 # %% [markdown]
@@ -1690,7 +1691,7 @@ df = combine_normalize(
     end_date=end_date,
 )
 
-print(f"Table E23: {lev_etf} & {etf} Normalized Data (Full Period)")
+display(Markdown(f"Table E23: {lev_etf} & {etf} Normalized Data (Full Period)"))
 display(df)
 
 # %%
@@ -1777,7 +1778,7 @@ annual_corr = (
 )
 annual_corr.index.name = "Year"
 
-print("Table E24: Annual Correlation of TQQQ and TMF Daily Returns")
+display(Markdown("Table E24: Annual Correlation of TQQQ and TMF Daily Returns"))
 display(annual_corr)
 
 # %%
@@ -1831,7 +1832,7 @@ tqqq_tmf_bs_full = rebalance_strategy_bs(
     end_date=None,
 )
 
-print("Table E25: TQQQ/TMF Black Swan Strategy Data (Full Period)")
+display(Markdown("Table E25: TQQQ/TMF Black Swan Strategy Data (Full Period)"))
 display(tqqq_tmf_bs_full)
 
 # %%
@@ -1850,7 +1851,7 @@ tqqq_tmf_bs_full_sum_stats.index = ["TQQQ/TMF Full BS"]
 
 all_strat_sum_stats = pd.concat([all_strat_sum_stats, tqqq_tmf_bs_full_sum_stats])
 
-print("Table E26: Strategy Summary Statistics")
+display(Markdown("Table E26: Strategy Summary Statistics"))
 display(all_strat_sum_stats)
 
 # %%
@@ -1956,7 +1957,7 @@ upro_agg_full = rebalance_strategy(
     end_date=None,
 )
 
-print("Table E27: UPRO/AGG Rebalance Strategy Data")
+display(Markdown("Table E27: UPRO/AGG Rebalance Strategy Data"))
 display(upro_agg_full)
 
 # %%
@@ -1975,7 +1976,7 @@ upro_agg_full_sum_stats.index = ["UPRO/AGG Full Strategy"]
 
 all_strat_sum_stats = pd.concat([all_strat_sum_stats, upro_agg_full_sum_stats])
 
-print("Table E28: Strategy Summary Statistics")
+display(Markdown("Table E28: Strategy Summary Statistics"))
 display(all_strat_sum_stats)
 
 # %% [markdown]
@@ -2118,7 +2119,7 @@ upro_spy_model = run_regression(
 alpha = upro_spy_model.params.iloc[0]
 beta = upro_spy_model.params.iloc[1]
 
-print("Table E29: Regression of UPRO Daily Returns on SPY Daily Returns")
+display(Markdown("Table E29: Regression of UPRO Daily Returns on SPY Daily Returns"))
 display(upro_spy_model.summary())
 
 # %% [markdown]
@@ -2137,7 +2138,7 @@ fit_check = pd.DataFrame(
 years = len(fit_check) / 252
 fit_check_cagr = ((1 + fit_check).prod() ** (1 / years) - 1).to_frame(name="CAGR")
 
-print("Table E30: CAGR of Actual UPRO vs Returns Constructed From SPY")
+display(Markdown("Table E30: CAGR of Actual UPRO vs Returns Constructed From SPY"))
 display(fit_check_cagr)
 
 # %% [markdown]
@@ -2173,7 +2174,7 @@ fund_data["UPRO_Extrap"] = upro_extrap[["UPRO_Adj_Close"]].rename(
     columns={"UPRO_Adj_Close": "UPRO_Extrap_Adj_Close"}
 )
 
-print("Table E31: Extrapolated UPRO Data Around the Inception of UPRO")
+display(Markdown("Table E31: Extrapolated UPRO Data Around the Inception of UPRO"))
 display(upro_extrap.iloc[splice_loc - 3 : splice_loc + 3])
 
 # %% [markdown]
@@ -2191,7 +2192,7 @@ upro_extrap_vbmfx_full = rebalance_strategy(
     end_date=None,
 )
 
-print("Table E32: UPRO (Extrap)/VBMFX Rebalance Strategy Data")
+display(Markdown("Table E32: UPRO (Extrap)/VBMFX Rebalance Strategy Data"))
 display(upro_extrap_vbmfx_full)
 
 spy_vbmfx_full = rebalance_strategy(
@@ -2205,7 +2206,7 @@ spy_vbmfx_full = rebalance_strategy(
     end_date=None,
 )
 
-print("Table E33: SPY/VBMFX Rebalance Strategy Data")
+display(Markdown("Table E33: SPY/VBMFX Rebalance Strategy Data"))
 display(spy_vbmfx_full)
 
 # %%
@@ -2269,7 +2270,7 @@ spy_sum_stats.index = ["SPY"]
 
 all_strat_sum_stats = pd.concat([all_strat_sum_stats, spy_sum_stats])
 
-print("Table E34: Strategy Summary Statistics")
+display(Markdown("Table E34: Strategy Summary Statistics"))
 display(all_strat_sum_stats)
 
 # %% [markdown]

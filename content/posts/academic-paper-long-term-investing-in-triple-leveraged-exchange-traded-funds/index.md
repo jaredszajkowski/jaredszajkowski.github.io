@@ -38,6 +38,7 @@ import os
 import sys
 import warnings
 
+from IPython.display import display, Markdown
 from pathlib import Path
 
 # Data Handling
@@ -45,6 +46,9 @@ import pandas as pd
 
 # Suppress warnings
 warnings.filterwarnings("ignore")
+
+# Pandas display options
+pd.set_option("display.float_format", lambda x: f"%.2f" % x)
 ```
 
 
@@ -91,7 +95,6 @@ Here are the functions needed for this project:
 
 ```python
 from load_data import load_data
-from pandas_set_decimal_places import pandas_set_decimal_places
 from plot_time_series import plot_time_series
 from run_regression import run_regression
 from summary_stats import summary_stats
@@ -132,8 +135,6 @@ First, let's get the data for these ETFs. If we already have the desired data, w
 
 
 ```python
-pandas_set_decimal_places(2)
-
 # Create a list of the ETF tickers
 fund_list = [
     "TQQQ",
@@ -367,11 +368,12 @@ df = combine_normalize(
     end_date=end_date,
 )
 
-print(f"Table E1: {lev_etf} & {etf} Normalized Data")
+display(Markdown(f"Table E1: {lev_etf} & {etf} Normalized Data"))
 display(df)
 ```
 
-    Table E1: TQQQ & QQQ Normalized Data
+
+Table E1: TQQQ & QQQ Normalized Data
 
 
 
@@ -613,11 +615,12 @@ sum_stats = calculate_returns_stats(
 
 all_sum_stats = pd.concat([all_sum_stats, sum_stats])
 
-print("Table E2: Leveraged and Non-Leveraged ETF Summary Statistics")
+display(Markdown("Table E2: Leveraged and Non-Leveraged ETF Summary Statistics"))
 display(all_sum_stats)
 ```
 
-    Table E2: Leveraged and Non-Leveraged ETF Summary Statistics
+
+Table E2: Leveraged and Non-Leveraged ETF Summary Statistics
 
 
 
@@ -764,11 +767,12 @@ df = combine_normalize(
     end_date=end_date,
 )
 
-print(f"Table E3: {lev_etf} & {etf} Normalized Data")
+display(Markdown(f"Table E3: {lev_etf} & {etf} Normalized Data"))
 display(df)
 ```
 
-    Table E3: UPRO & SPY Normalized Data
+
+Table E3: UPRO & SPY Normalized Data
 
 
 
@@ -1004,11 +1008,12 @@ sum_stats = calculate_returns_stats(
 
 all_sum_stats = pd.concat([all_sum_stats, sum_stats])
 
-print("Table E4: Leveraged and Non-Leveraged ETF Summary Statistics")
+display(Markdown("Table E4: Leveraged and Non-Leveraged ETF Summary Statistics"))
 display(all_sum_stats)
 ```
 
-    Table E4: Leveraged and Non-Leveraged ETF Summary Statistics
+
+Table E4: Leveraged and Non-Leveraged ETF Summary Statistics
 
 
 
@@ -1193,11 +1198,12 @@ df = combine_normalize(
     end_date=end_date,
 )
 
-print(f"Table E5: {lev_etf} & {etf} Normalized Data")
+display(Markdown(f"Table E5: {lev_etf} & {etf} Normalized Data"))
 display(df)
 ```
 
-    Table E5: UDOW & DIA Normalized Data
+
+Table E5: UDOW & DIA Normalized Data
 
 
 
@@ -1433,11 +1439,12 @@ sum_stats = calculate_returns_stats(
 
 all_sum_stats = pd.concat([all_sum_stats, sum_stats])
 
-print("Table E6: Leveraged and Non-Leveraged ETF Summary Statistics")
+display(Markdown("Table E6: Leveraged and Non-Leveraged ETF Summary Statistics"))
 display(all_sum_stats)
 ```
 
-    Table E6: Leveraged and Non-Leveraged ETF Summary Statistics
+
+Table E6: Leveraged and Non-Leveraged ETF Summary Statistics
 
 
 
@@ -1666,11 +1673,12 @@ df = combine_normalize(
     end_date=end_date,
 )
 
-print(f"Table E7: {lev_etf} & {etf} Normalized Data")
+display(Markdown(f"Table E7: {lev_etf} & {etf} Normalized Data"))
 display(df)
 ```
 
-    Table E7: TNA & IWM Normalized Data
+
+Table E7: TNA & IWM Normalized Data
 
 
 
@@ -1906,11 +1914,12 @@ sum_stats = calculate_returns_stats(
 
 all_sum_stats = pd.concat([all_sum_stats, sum_stats])
 
-print("Table E8: Leveraged and Non-Leveraged ETF Summary Statistics")
+display(Markdown("Table E8: Leveraged and Non-Leveraged ETF Summary Statistics"))
 display(all_sum_stats)
 ```
 
-    Table E8: Leveraged and Non-Leveraged ETF Summary Statistics
+
+Table E8: Leveraged and Non-Leveraged ETF Summary Statistics
 
 
 
@@ -2187,11 +2196,12 @@ df = combine_normalize(
     end_date=end_date,
 )
 
-print(f"Table E9: {lev_etf} & {etf} Normalized Data")
+display(Markdown(f"Table E9: {lev_etf} & {etf} Normalized Data"))
 display(df)
 ```
 
-    Table E9: TMF & TLT Normalized Data
+
+Table E9: TMF & TLT Normalized Data
 
 
 
@@ -2427,11 +2437,12 @@ sum_stats = calculate_returns_stats(
 
 all_sum_stats = pd.concat([all_sum_stats, sum_stats])
 
-print("Table E10: Leveraged and Non-Leveraged ETF Summary Statistics")
+display(Markdown("Table E10: Leveraged and Non-Leveraged ETF Summary Statistics"))
 display(all_sum_stats)
 ```
 
-    Table E10: Leveraged and Non-Leveraged ETF Summary Statistics
+
+Table E10: Leveraged and Non-Leveraged ETF Summary Statistics
 
 
 
@@ -2748,11 +2759,12 @@ df = combine_normalize(
     end_date=end_date,
 )
 
-print(f"Table E11: {lev_etf} & {etf} Normalized Data")
+display(Markdown(f"Table E11: {lev_etf} & {etf} Normalized Data"))
 display(df)
 ```
 
-    Table E11: EDC & EEM Normalized Data
+
+Table E11: EDC & EEM Normalized Data
 
 
 
@@ -2988,11 +3000,12 @@ sum_stats = calculate_returns_stats(
 
 all_sum_stats = pd.concat([all_sum_stats, sum_stats])
 
-print("Table E12: Leveraged and Non-Leveraged ETF Summary Statistics")
+display(Markdown("Table E12: Leveraged and Non-Leveraged ETF Summary Statistics"))
 display(all_sum_stats)
 ```
 
-    Table E12: Leveraged and Non-Leveraged ETF Summary Statistics
+
+Table E12: Leveraged and Non-Leveraged ETF Summary Statistics
 
 
 
@@ -3356,14 +3369,15 @@ corr_data = corr_data.dropna()
 corr_data = corr_data[corr_data.index >= "2010-02-11"]
 corr_data = corr_data[corr_data.index <= "2020-10-04"]
 
-print("Table E13: QQQ, SPY, DIA, and TLT Daily Returns")
+display(Markdown("Table E13: QQQ, SPY, DIA, and TLT Daily Returns"))
 display(corr_data)
 
-print("Table E14: Correlation Matrix of QQQ, SPY, DIA, and TLT Daily Returns")
+display(Markdown("Table E14: Correlation Matrix of QQQ, SPY, DIA, and TLT Daily Returns"))
 display(corr_data.corr())
 ```
 
-    Table E13: QQQ, SPY, DIA, and TLT Daily Returns
+
+Table E13: QQQ, SPY, DIA, and TLT Daily Returns
 
 
 
@@ -3482,7 +3496,8 @@ display(corr_data.corr())
 </div>
 
 
-    Table E14: Correlation Matrix of QQQ, SPY, DIA, and TLT Daily Returns
+
+Table E14: Correlation Matrix of QQQ, SPY, DIA, and TLT Daily Returns
 
 
 
@@ -3560,14 +3575,15 @@ for fund in ["TQQQ", "UPRO", "UDOW", "TMF"]:
 lev_corr_data = lev_corr_data.dropna()
 lev_corr_data = lev_corr_data[lev_corr_data.index <= "2020-10-04"]
 
-print("Table E15: TQQQ, UPRO, UDOW, and TMF Daily Returns")
+display(Markdown("Table E15: TQQQ, UPRO, UDOW, and TMF Daily Returns"))
 display(lev_corr_data)
 
-print("Table E16: Correlation Matrix of TQQQ, UPRO, UDOW, and TMF Daily Returns")
+display(Markdown("Table E16: Correlation Matrix of TQQQ, UPRO, UDOW, and TMF Daily Returns"))
 display(lev_corr_data.corr())
 ```
 
-    Table E15: TQQQ, UPRO, UDOW, and TMF Daily Returns
+
+Table E15: TQQQ, UPRO, UDOW, and TMF Daily Returns
 
 
 
@@ -3686,7 +3702,8 @@ display(lev_corr_data.corr())
 </div>
 
 
-    Table E16: Correlation Matrix of TQQQ, UPRO, UDOW, and TMF Daily Returns
+
+Table E16: Correlation Matrix of TQQQ, UPRO, UDOW, and TMF Daily Returns
 
 
 
@@ -3899,11 +3916,12 @@ tqqq_tmf = rebalance_strategy(
     end_date="2020-10-04",
 )
 
-print("Table E17: TQQQ/TMF Rebalance Strategy Data")
+display(Markdown("Table E17: TQQQ/TMF Rebalance Strategy Data"))
 display(tqqq_tmf)
 ```
 
-    Table E17: TQQQ/TMF Rebalance Strategy Data
+
+Table E17: TQQQ/TMF Rebalance Strategy Data
 
 
 
@@ -4230,11 +4248,12 @@ tmf_sum_stats.index = ["TMF"]
 
 all_strat_sum_stats = pd.concat([all_strat_sum_stats, tmf_sum_stats])
 
-print("Table E18: Strategy Summary Statistics")
+display(Markdown("Table E18: Strategy Summary Statistics"))
 display(all_strat_sum_stats)
 ```
 
-    Table E18: Strategy Summary Statistics
+
+Table E18: Strategy Summary Statistics
 
 
 
@@ -4519,11 +4538,12 @@ for k in rebalance_interval_results.index:
         )
         rebalance_interval_results.loc[k, col] = df_k["Strategy_Adj_Close"].iloc[-1]
 
-print("Figure 10: Strategy performance on 9/2/20 as a function of rebalancing interval")
+display(Markdown("Figure 10: Strategy performance on 9/2/20 as a function of rebalancing interval"))
 display(rebalance_interval_results)
 ```
 
-    Figure 10: Strategy performance on 9/2/20 as a function of rebalancing interval
+
+Figure 10: Strategy performance on 9/2/20 as a function of rebalancing interval
 
 
 
@@ -4706,42 +4726,6 @@ yf_pull_data(
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-10-16</th>
-      <td>90.42</td>
-      <td>90.42</td>
-      <td>90.54</td>
-      <td>90.12</td>
-      <td>90.15</td>
-      <td>10831400</td>
-    </tr>
-    <tr>
-      <th>2026-10-19</th>
-      <td>90.08</td>
-      <td>90.08</td>
-      <td>90.38</td>
-      <td>90.02</td>
-      <td>90.32</td>
-      <td>10400200</td>
-    </tr>
-    <tr>
-      <th>2026-10-20</th>
-      <td>90.25</td>
-      <td>90.25</td>
-      <td>90.50</td>
-      <td>90.12</td>
-      <td>90.29</td>
-      <td>8956100</td>
-    </tr>
-    <tr>
-      <th>2026-10-21</th>
-      <td>90.23</td>
-      <td>90.23</td>
-      <td>90.47</td>
-      <td>90.00</td>
-      <td>90.39</td>
-      <td>8909200</td>
-    </tr>
-    <tr>
       <th>2026-10-22</th>
       <td>91.20</td>
       <td>91.20</td>
@@ -4750,9 +4734,45 @@ yf_pull_data(
       <td>90.75</td>
       <td>16518600</td>
     </tr>
+    <tr>
+      <th>2026-10-23</th>
+      <td>91.05</td>
+      <td>91.05</td>
+      <td>91.25</td>
+      <td>91.01</td>
+      <td>91.23</td>
+      <td>32715900</td>
+    </tr>
+    <tr>
+      <th>2026-10-26</th>
+      <td>91.12</td>
+      <td>91.12</td>
+      <td>91.27</td>
+      <td>91.04</td>
+      <td>91.16</td>
+      <td>11267200</td>
+    </tr>
+    <tr>
+      <th>2026-10-27</th>
+      <td>91.10</td>
+      <td>91.10</td>
+      <td>91.16</td>
+      <td>90.99</td>
+      <td>91.06</td>
+      <td>19236700</td>
+    </tr>
+    <tr>
+      <th>2026-10-28</th>
+      <td>90.85</td>
+      <td>90.85</td>
+      <td>91.09</td>
+      <td>90.74</td>
+      <td>91.06</td>
+      <td>10812000</td>
+    </tr>
   </tbody>
 </table>
-<p>6098 rows × 6 columns</p>
+<p>6102 rows × 6 columns</p>
 </div>
 
 
@@ -5021,11 +5041,12 @@ tqqq_tmf_bs = rebalance_strategy_bs(
     end_date="2020-10-04",
 )
 
-print("Table E19: TQQQ/TMF Black Swan Strategy Data")
+display(Markdown("Table E19: TQQQ/TMF Black Swan Strategy Data"))
 display(tqqq_tmf_bs)
 ```
 
-    Table E19: TQQQ/TMF Black Swan Strategy Data
+
+Table E19: TQQQ/TMF Black Swan Strategy Data
 
 
 
@@ -5371,11 +5392,12 @@ tqqq_tmf_bs_sum_stats.index = ["TQQQ/TMF BS"]
 
 all_strat_sum_stats = pd.concat([all_strat_sum_stats, tqqq_tmf_bs_sum_stats])
 
-print("Table E20: Strategy Summary Statistics")
+display(Markdown("Table E20: Strategy Summary Statistics"))
 display(all_strat_sum_stats)
 ```
 
-    Table E20: Strategy Summary Statistics
+
+Table E20: Strategy Summary Statistics
 
 
 
@@ -5707,11 +5729,12 @@ tqqq_tmf_full = rebalance_strategy(
     end_date=None,
 )
 
-print("Table E21: TQQQ/TMF Rebalance Strategy Data (Full Period)")
+display(Markdown("Table E21: TQQQ/TMF Rebalance Strategy Data (Full Period)"))
 display(tqqq_tmf_full)
 ```
 
-    Table E21: TQQQ/TMF Rebalance Strategy Data (Full Period)
+
+Table E21: TQQQ/TMF Rebalance Strategy Data (Full Period)
 
 
 
@@ -5886,82 +5909,6 @@ display(tqqq_tmf_full)
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-10-16</th>
-      <td>332.43</td>
-      <td>0.48</td>
-      <td>-0.08</td>
-      <td>0.00</td>
-      <td>-0.21</td>
-      <td>-0.93</td>
-      <td>-0.82</td>
-      <td>-0.94</td>
-      <td>15.13</td>
-      <td>18.89</td>
-      <td>34.02</td>
-      <td>-0.03</td>
-      <td>-0.46</td>
-      <td>-0.78</td>
-      <td>False</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>2026-10-19</th>
-      <td>344.27</td>
-      <td>0.47</td>
-      <td>0.04</td>
-      <td>-0.02</td>
-      <td>-0.19</td>
-      <td>-0.94</td>
-      <td>-0.82</td>
-      <td>-0.94</td>
-      <td>15.67</td>
-      <td>18.48</td>
-      <td>34.15</td>
-      <td>0.00</td>
-      <td>-0.46</td>
-      <td>-0.78</td>
-      <td>False</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>2026-10-20</th>
-      <td>343.15</td>
-      <td>0.48</td>
-      <td>-0.00</td>
-      <td>0.02</td>
-      <td>-0.19</td>
-      <td>-0.93</td>
-      <td>-0.82</td>
-      <td>-0.94</td>
-      <td>15.61</td>
-      <td>18.93</td>
-      <td>34.54</td>
-      <td>0.01</td>
-      <td>-0.46</td>
-      <td>-0.78</td>
-      <td>False</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>2026-10-21</th>
-      <td>353.88</td>
-      <td>0.48</td>
-      <td>0.03</td>
-      <td>0.00</td>
-      <td>-0.16</td>
-      <td>-0.93</td>
-      <td>-0.82</td>
-      <td>-0.94</td>
-      <td>16.10</td>
-      <td>19.02</td>
-      <td>35.12</td>
-      <td>0.02</td>
-      <td>-0.45</td>
-      <td>-0.78</td>
-      <td>False</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
       <th>2026-10-22</th>
       <td>323.71</td>
       <td>0.51</td>
@@ -5980,9 +5927,85 @@ display(tqqq_tmf_full)
       <td>False</td>
       <td>0.00</td>
     </tr>
+    <tr>
+      <th>2026-10-23</th>
+      <td>323.07</td>
+      <td>0.50</td>
+      <td>-0.00</td>
+      <td>-0.01</td>
+      <td>-0.24</td>
+      <td>-0.93</td>
+      <td>-0.82</td>
+      <td>-0.94</td>
+      <td>14.70</td>
+      <td>19.78</td>
+      <td>34.49</td>
+      <td>-0.01</td>
+      <td>-0.46</td>
+      <td>-0.78</td>
+      <td>False</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>2026-10-26</th>
+      <td>333.50</td>
+      <td>0.51</td>
+      <td>0.03</td>
+      <td>0.01</td>
+      <td>-0.21</td>
+      <td>-0.93</td>
+      <td>-0.82</td>
+      <td>-0.94</td>
+      <td>15.18</td>
+      <td>20.01</td>
+      <td>35.19</td>
+      <td>0.02</td>
+      <td>-0.45</td>
+      <td>-0.78</td>
+      <td>False</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>2026-10-27</th>
+      <td>346.22</td>
+      <td>0.51</td>
+      <td>0.04</td>
+      <td>-0.00</td>
+      <td>-0.18</td>
+      <td>-0.93</td>
+      <td>-0.82</td>
+      <td>-0.94</td>
+      <td>15.75</td>
+      <td>19.97</td>
+      <td>35.73</td>
+      <td>0.02</td>
+      <td>-0.44</td>
+      <td>-0.78</td>
+      <td>False</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>2026-10-28</th>
+      <td>352.66</td>
+      <td>0.49</td>
+      <td>0.02</td>
+      <td>-0.02</td>
+      <td>-0.17</td>
+      <td>-0.93</td>
+      <td>-0.82</td>
+      <td>-0.94</td>
+      <td>16.05</td>
+      <td>19.50</td>
+      <td>35.55</td>
+      <td>-0.01</td>
+      <td>-0.44</td>
+      <td>-0.78</td>
+      <td>False</td>
+      <td>0.00</td>
+    </tr>
   </tbody>
 </table>
-<p>4200 rows × 16 columns</p>
+<p>4204 rows × 16 columns</p>
 </div>
 
 
@@ -6003,11 +6026,12 @@ tqqq_tmf_full_sum_stats.index = ["TQQQ/TMF Full Strategy"]
 
 all_strat_sum_stats = pd.concat([all_strat_sum_stats, tqqq_tmf_full_sum_stats])
 
-print("Table E22: Strategy Summary Statistics")
+display(Markdown("Table E22: Strategy Summary Statistics"))
 display(all_strat_sum_stats)
 ```
 
-    Table E22: Strategy Summary Statistics
+
+Table E22: Strategy Summary Statistics
 
 
 
@@ -6131,12 +6155,12 @@ display(all_strat_sum_stats)
     </tr>
     <tr>
       <th>TQQQ/TMF Full Strategy</th>
-      <td>4199</td>
+      <td>4203</td>
       <td>2010-02-12</td>
-      <td>2026-10-22</td>
+      <td>2026-10-28</td>
       <td>0.27</td>
-      <td>0.34</td>
-      <td>0.80</td>
+      <td>0.33</td>
+      <td>0.81</td>
       <td>0.24</td>
       <td>0.17</td>
       <td>2022-11-10</td>
@@ -6147,7 +6171,7 @@ display(all_strat_sum_stats)
       <td>2022-11-09</td>
       <td>NaT</td>
       <td>NaN</td>
-      <td>0.30</td>
+      <td>0.31</td>
     </tr>
   </tbody>
 </table>
@@ -6200,11 +6224,12 @@ df = combine_normalize(
     end_date=end_date,
 )
 
-print(f"Table E23: {lev_etf} & {etf} Normalized Data (Full Period)")
+display(Markdown(f"Table E23: {lev_etf} & {etf} Normalized Data (Full Period)"))
 display(df)
 ```
 
-    Table E23: TMF & TLT Normalized Data (Full Period)
+
+Table E23: TMF & TLT Normalized Data (Full Period)
 
 
 
@@ -6347,66 +6372,6 @@ display(df)
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-10-16</th>
-      <td>0.29</td>
-      <td>0.19</td>
-      <td>0.19</td>
-      <td>0.19</td>
-      <td>0.19</td>
-      <td>1451.62</td>
-      <td>1.31</td>
-      <td>0.78</td>
-      <td>0.78</td>
-      <td>0.78</td>
-      <td>0.77</td>
-      <td>40.17</td>
-    </tr>
-    <tr>
-      <th>2026-10-19</th>
-      <td>0.28</td>
-      <td>0.19</td>
-      <td>0.19</td>
-      <td>0.19</td>
-      <td>0.19</td>
-      <td>1054.76</td>
-      <td>1.30</td>
-      <td>0.77</td>
-      <td>0.77</td>
-      <td>0.77</td>
-      <td>0.78</td>
-      <td>29.34</td>
-    </tr>
-    <tr>
-      <th>2026-10-20</th>
-      <td>0.29</td>
-      <td>0.19</td>
-      <td>0.19</td>
-      <td>0.19</td>
-      <td>0.19</td>
-      <td>1008.60</td>
-      <td>1.31</td>
-      <td>0.78</td>
-      <td>0.78</td>
-      <td>0.78</td>
-      <td>0.78</td>
-      <td>26.97</td>
-    </tr>
-    <tr>
-      <th>2026-10-21</th>
-      <td>0.29</td>
-      <td>0.19</td>
-      <td>0.19</td>
-      <td>0.19</td>
-      <td>0.19</td>
-      <td>910.70</td>
-      <td>1.32</td>
-      <td>0.78</td>
-      <td>0.78</td>
-      <td>0.78</td>
-      <td>0.78</td>
-      <td>34.37</td>
-    </tr>
-    <tr>
       <th>2026-10-22</th>
       <td>0.31</td>
       <td>0.20</td>
@@ -6421,9 +6386,69 @@ display(df)
       <td>0.79</td>
       <td>62.18</td>
     </tr>
+    <tr>
+      <th>2026-10-23</th>
+      <td>0.30</td>
+      <td>0.20</td>
+      <td>0.20</td>
+      <td>0.20</td>
+      <td>0.20</td>
+      <td>923.75</td>
+      <td>1.33</td>
+      <td>0.79</td>
+      <td>0.79</td>
+      <td>0.79</td>
+      <td>0.80</td>
+      <td>33.30</td>
+    </tr>
+    <tr>
+      <th>2026-10-26</th>
+      <td>0.31</td>
+      <td>0.20</td>
+      <td>0.20</td>
+      <td>0.20</td>
+      <td>0.20</td>
+      <td>687.50</td>
+      <td>1.34</td>
+      <td>0.79</td>
+      <td>0.79</td>
+      <td>0.79</td>
+      <td>0.79</td>
+      <td>23.38</td>
+    </tr>
+    <tr>
+      <th>2026-10-27</th>
+      <td>0.30</td>
+      <td>0.20</td>
+      <td>0.20</td>
+      <td>0.20</td>
+      <td>0.20</td>
+      <td>763.49</td>
+      <td>1.34</td>
+      <td>0.79</td>
+      <td>0.79</td>
+      <td>0.79</td>
+      <td>0.79</td>
+      <td>18.52</td>
+    </tr>
+    <tr>
+      <th>2026-10-28</th>
+      <td>0.30</td>
+      <td>0.20</td>
+      <td>0.20</td>
+      <td>0.20</td>
+      <td>0.20</td>
+      <td>1301.67</td>
+      <td>1.33</td>
+      <td>0.79</td>
+      <td>0.79</td>
+      <td>0.79</td>
+      <td>0.79</td>
+      <td>33.28</td>
+    </tr>
   </tbody>
 </table>
-<p>4408 rows × 12 columns</p>
+<p>4412 rows × 12 columns</p>
 </div>
 
 
@@ -6533,11 +6558,12 @@ annual_corr = (
 )
 annual_corr.index.name = "Year"
 
-print("Table E24: Annual Correlation of TQQQ and TMF Daily Returns")
+display(Markdown("Table E24: Annual Correlation of TQQQ and TMF Daily Returns"))
 display(annual_corr)
 ```
 
-    Table E24: Annual Correlation of TQQQ and TMF Daily Returns
+
+Table E24: Annual Correlation of TQQQ and TMF Daily Returns
 
 
 
@@ -6696,11 +6722,12 @@ tqqq_tmf_bs_full = rebalance_strategy_bs(
     end_date=None,
 )
 
-print("Table E25: TQQQ/TMF Black Swan Strategy Data (Full Period)")
+display(Markdown("Table E25: TQQQ/TMF Black Swan Strategy Data (Full Period)"))
 display(tqqq_tmf_bs_full)
 ```
 
-    Table E25: TQQQ/TMF Black Swan Strategy Data (Full Period)
+
+Table E25: TQQQ/TMF Black Swan Strategy Data (Full Period)
 
 
 
@@ -6907,98 +6934,6 @@ display(tqqq_tmf_bs_full)
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-10-16</th>
-      <td>332.43</td>
-      <td>0.48</td>
-      <td>1.47</td>
-      <td>-0.08</td>
-      <td>0.00</td>
-      <td>-0.21</td>
-      <td>-0.93</td>
-      <td>-0.82</td>
-      <td>-0.94</td>
-      <td>14.33</td>
-      <td>17.90</td>
-      <td>0.00</td>
-      <td>32.23</td>
-      <td>-0.03</td>
-      <td>-0.46</td>
-      <td>-0.78</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>2026-10-19</th>
-      <td>344.27</td>
-      <td>0.47</td>
-      <td>1.47</td>
-      <td>0.04</td>
-      <td>-0.02</td>
-      <td>-0.19</td>
-      <td>-0.94</td>
-      <td>-0.82</td>
-      <td>-0.94</td>
-      <td>14.84</td>
-      <td>17.51</td>
-      <td>0.00</td>
-      <td>32.35</td>
-      <td>0.00</td>
-      <td>-0.46</td>
-      <td>-0.78</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>2026-10-20</th>
-      <td>343.15</td>
-      <td>0.48</td>
-      <td>1.47</td>
-      <td>-0.00</td>
-      <td>0.02</td>
-      <td>-0.19</td>
-      <td>-0.93</td>
-      <td>-0.82</td>
-      <td>-0.94</td>
-      <td>14.79</td>
-      <td>17.93</td>
-      <td>0.00</td>
-      <td>32.72</td>
-      <td>0.01</td>
-      <td>-0.46</td>
-      <td>-0.78</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>2026-10-21</th>
-      <td>353.88</td>
-      <td>0.48</td>
-      <td>1.47</td>
-      <td>0.03</td>
-      <td>0.00</td>
-      <td>-0.16</td>
-      <td>-0.93</td>
-      <td>-0.82</td>
-      <td>-0.94</td>
-      <td>15.25</td>
-      <td>18.01</td>
-      <td>0.00</td>
-      <td>33.26</td>
-      <td>0.02</td>
-      <td>-0.45</td>
-      <td>-0.78</td>
-      <td>False</td>
-      <td>False</td>
-      <td>False</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
       <th>2026-10-22</th>
       <td>323.71</td>
       <td>0.51</td>
@@ -7021,9 +6956,101 @@ display(tqqq_tmf_bs_full)
       <td>False</td>
       <td>0.00</td>
     </tr>
+    <tr>
+      <th>2026-10-23</th>
+      <td>323.07</td>
+      <td>0.50</td>
+      <td>1.48</td>
+      <td>-0.00</td>
+      <td>-0.01</td>
+      <td>-0.24</td>
+      <td>-0.93</td>
+      <td>-0.82</td>
+      <td>-0.94</td>
+      <td>13.92</td>
+      <td>18.74</td>
+      <td>0.00</td>
+      <td>32.66</td>
+      <td>-0.01</td>
+      <td>-0.46</td>
+      <td>-0.78</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>2026-10-26</th>
+      <td>333.50</td>
+      <td>0.51</td>
+      <td>1.48</td>
+      <td>0.03</td>
+      <td>0.01</td>
+      <td>-0.21</td>
+      <td>-0.93</td>
+      <td>-0.82</td>
+      <td>-0.94</td>
+      <td>14.37</td>
+      <td>18.96</td>
+      <td>0.00</td>
+      <td>33.33</td>
+      <td>0.02</td>
+      <td>-0.45</td>
+      <td>-0.78</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>2026-10-27</th>
+      <td>346.22</td>
+      <td>0.51</td>
+      <td>1.48</td>
+      <td>0.04</td>
+      <td>-0.00</td>
+      <td>-0.18</td>
+      <td>-0.93</td>
+      <td>-0.82</td>
+      <td>-0.94</td>
+      <td>14.92</td>
+      <td>18.92</td>
+      <td>0.00</td>
+      <td>33.84</td>
+      <td>0.02</td>
+      <td>-0.44</td>
+      <td>-0.78</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>2026-10-28</th>
+      <td>352.66</td>
+      <td>0.49</td>
+      <td>1.48</td>
+      <td>0.02</td>
+      <td>-0.02</td>
+      <td>-0.17</td>
+      <td>-0.93</td>
+      <td>-0.82</td>
+      <td>-0.94</td>
+      <td>15.20</td>
+      <td>18.47</td>
+      <td>0.00</td>
+      <td>33.67</td>
+      <td>-0.01</td>
+      <td>-0.44</td>
+      <td>-0.78</td>
+      <td>False</td>
+      <td>False</td>
+      <td>False</td>
+      <td>0.00</td>
+    </tr>
   </tbody>
 </table>
-<p>4200 rows × 20 columns</p>
+<p>4204 rows × 20 columns</p>
 </div>
 
 
@@ -7044,11 +7071,12 @@ tqqq_tmf_bs_full_sum_stats.index = ["TQQQ/TMF Full BS"]
 
 all_strat_sum_stats = pd.concat([all_strat_sum_stats, tqqq_tmf_bs_full_sum_stats])
 
-print("Table E26: Strategy Summary Statistics")
+display(Markdown("Table E26: Strategy Summary Statistics"))
 display(all_strat_sum_stats)
 ```
 
-    Table E26: Strategy Summary Statistics
+
+Table E26: Strategy Summary Statistics
 
 
 
@@ -7172,12 +7200,12 @@ display(all_strat_sum_stats)
     </tr>
     <tr>
       <th>TQQQ/TMF Full Strategy</th>
-      <td>4199</td>
+      <td>4203</td>
       <td>2010-02-12</td>
-      <td>2026-10-22</td>
+      <td>2026-10-28</td>
       <td>0.27</td>
-      <td>0.34</td>
-      <td>0.80</td>
+      <td>0.33</td>
+      <td>0.81</td>
       <td>0.24</td>
       <td>0.17</td>
       <td>2022-11-10</td>
@@ -7188,13 +7216,13 @@ display(all_strat_sum_stats)
       <td>2022-11-09</td>
       <td>NaT</td>
       <td>NaN</td>
-      <td>0.30</td>
+      <td>0.31</td>
     </tr>
     <tr>
       <th>TQQQ/TMF Full BS</th>
-      <td>4199</td>
+      <td>4203</td>
       <td>2010-02-12</td>
-      <td>2026-10-22</td>
+      <td>2026-10-28</td>
       <td>0.26</td>
       <td>0.32</td>
       <td>0.81</td>
@@ -7374,42 +7402,6 @@ yf_pull_data(
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-10-16</th>
-      <td>95.38</td>
-      <td>95.38</td>
-      <td>95.58</td>
-      <td>95.22</td>
-      <td>95.29</td>
-      <td>11389000</td>
-    </tr>
-    <tr>
-      <th>2026-10-19</th>
-      <td>95.11</td>
-      <td>95.11</td>
-      <td>95.39</td>
-      <td>95.04</td>
-      <td>95.34</td>
-      <td>10400500</td>
-    </tr>
-    <tr>
-      <th>2026-10-20</th>
-      <td>95.27</td>
-      <td>95.27</td>
-      <td>95.51</td>
-      <td>95.16</td>
-      <td>95.31</td>
-      <td>9952700</td>
-    </tr>
-    <tr>
-      <th>2026-10-21</th>
-      <td>95.30</td>
-      <td>95.30</td>
-      <td>95.50</td>
-      <td>95.11</td>
-      <td>95.40</td>
-      <td>9833700</td>
-    </tr>
-    <tr>
       <th>2026-10-22</th>
       <td>96.12</td>
       <td>96.12</td>
@@ -7418,9 +7410,45 @@ yf_pull_data(
       <td>95.69</td>
       <td>10825400</td>
     </tr>
+    <tr>
+      <th>2026-10-23</th>
+      <td>95.96</td>
+      <td>95.96</td>
+      <td>96.13</td>
+      <td>95.91</td>
+      <td>96.10</td>
+      <td>7447200</td>
+    </tr>
+    <tr>
+      <th>2026-10-26</th>
+      <td>96.05</td>
+      <td>96.05</td>
+      <td>96.20</td>
+      <td>95.99</td>
+      <td>96.10</td>
+      <td>9410800</td>
+    </tr>
+    <tr>
+      <th>2026-10-27</th>
+      <td>96.09</td>
+      <td>96.09</td>
+      <td>96.14</td>
+      <td>95.98</td>
+      <td>96.01</td>
+      <td>8173800</td>
+    </tr>
+    <tr>
+      <th>2026-10-28</th>
+      <td>95.89</td>
+      <td>95.89</td>
+      <td>96.12</td>
+      <td>95.78</td>
+      <td>96.08</td>
+      <td>14611900</td>
+    </tr>
   </tbody>
 </table>
-<p>5804 rows × 6 columns</p>
+<p>5808 rows × 6 columns</p>
 </div>
 
 
@@ -7471,11 +7499,12 @@ upro_agg_full = rebalance_strategy(
     end_date=None,
 )
 
-print("Table E27: UPRO/AGG Rebalance Strategy Data")
+display(Markdown("Table E27: UPRO/AGG Rebalance Strategy Data"))
 display(upro_agg_full)
 ```
 
-    Table E27: UPRO/AGG Rebalance Strategy Data
+
+Table E27: UPRO/AGG Rebalance Strategy Data
 
 
 
@@ -7650,82 +7679,6 @@ display(upro_agg_full)
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-10-16</th>
-      <td>82.92</td>
-      <td>1.47</td>
-      <td>-0.03</td>
-      <td>-0.00</td>
-      <td>-0.07</td>
-      <td>-0.04</td>
-      <td>-0.77</td>
-      <td>-0.18</td>
-      <td>8.44</td>
-      <td>8.58</td>
-      <td>17.03</td>
-      <td>-0.02</td>
-      <td>-0.04</td>
-      <td>-0.43</td>
-      <td>False</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>2026-10-19</th>
-      <td>83.96</td>
-      <td>1.46</td>
-      <td>0.01</td>
-      <td>-0.00</td>
-      <td>-0.06</td>
-      <td>-0.04</td>
-      <td>-0.77</td>
-      <td>-0.18</td>
-      <td>8.55</td>
-      <td>8.56</td>
-      <td>17.11</td>
-      <td>0.00</td>
-      <td>-0.04</td>
-      <td>-0.43</td>
-      <td>False</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>2026-10-20</th>
-      <td>84.70</td>
-      <td>1.47</td>
-      <td>0.01</td>
-      <td>0.00</td>
-      <td>-0.05</td>
-      <td>-0.04</td>
-      <td>-0.77</td>
-      <td>-0.18</td>
-      <td>8.63</td>
-      <td>8.57</td>
-      <td>17.20</td>
-      <td>0.01</td>
-      <td>-0.03</td>
-      <td>-0.43</td>
-      <td>False</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>2026-10-21</th>
-      <td>86.08</td>
-      <td>1.47</td>
-      <td>0.02</td>
-      <td>0.00</td>
-      <td>-0.03</td>
-      <td>-0.04</td>
-      <td>-0.77</td>
-      <td>-0.18</td>
-      <td>8.77</td>
-      <td>8.57</td>
-      <td>17.34</td>
-      <td>0.01</td>
-      <td>-0.03</td>
-      <td>-0.43</td>
-      <td>False</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
       <th>2026-10-22</th>
       <td>82.98</td>
       <td>1.48</td>
@@ -7744,9 +7697,85 @@ display(upro_agg_full)
       <td>False</td>
       <td>0.00</td>
     </tr>
+    <tr>
+      <th>2026-10-23</th>
+      <td>81.57</td>
+      <td>1.48</td>
+      <td>-0.02</td>
+      <td>-0.00</td>
+      <td>-0.08</td>
+      <td>-0.03</td>
+      <td>-0.77</td>
+      <td>-0.18</td>
+      <td>8.31</td>
+      <td>8.63</td>
+      <td>16.94</td>
+      <td>-0.01</td>
+      <td>-0.05</td>
+      <td>-0.43</td>
+      <td>False</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>2026-10-26</th>
+      <td>83.27</td>
+      <td>1.48</td>
+      <td>0.02</td>
+      <td>0.00</td>
+      <td>-0.07</td>
+      <td>-0.03</td>
+      <td>-0.77</td>
+      <td>-0.18</td>
+      <td>8.48</td>
+      <td>8.64</td>
+      <td>17.12</td>
+      <td>0.01</td>
+      <td>-0.04</td>
+      <td>-0.43</td>
+      <td>False</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>2026-10-27</th>
+      <td>84.69</td>
+      <td>1.48</td>
+      <td>0.02</td>
+      <td>0.00</td>
+      <td>-0.05</td>
+      <td>-0.03</td>
+      <td>-0.77</td>
+      <td>-0.18</td>
+      <td>8.62</td>
+      <td>8.65</td>
+      <td>17.27</td>
+      <td>0.01</td>
+      <td>-0.03</td>
+      <td>-0.43</td>
+      <td>False</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>2026-10-28</th>
+      <td>85.59</td>
+      <td>1.48</td>
+      <td>0.01</td>
+      <td>-0.00</td>
+      <td>-0.04</td>
+      <td>-0.03</td>
+      <td>-0.77</td>
+      <td>-0.18</td>
+      <td>8.72</td>
+      <td>8.63</td>
+      <td>17.34</td>
+      <td>0.00</td>
+      <td>-0.03</td>
+      <td>-0.43</td>
+      <td>False</td>
+      <td>0.00</td>
+    </tr>
   </tbody>
 </table>
-<p>4200 rows × 16 columns</p>
+<p>4204 rows × 16 columns</p>
 </div>
 
 
@@ -7767,11 +7796,12 @@ upro_agg_full_sum_stats.index = ["UPRO/AGG Full Strategy"]
 
 all_strat_sum_stats = pd.concat([all_strat_sum_stats, upro_agg_full_sum_stats])
 
-print("Table E28: Strategy Summary Statistics")
+display(Markdown("Table E28: Strategy Summary Statistics"))
 display(all_strat_sum_stats)
 ```
 
-    Table E28: Strategy Summary Statistics
+
+Table E28: Strategy Summary Statistics
 
 
 
@@ -7895,12 +7925,12 @@ display(all_strat_sum_stats)
     </tr>
     <tr>
       <th>TQQQ/TMF Full Strategy</th>
-      <td>4199</td>
+      <td>4203</td>
       <td>2010-02-12</td>
-      <td>2026-10-22</td>
+      <td>2026-10-28</td>
       <td>0.27</td>
-      <td>0.34</td>
-      <td>0.80</td>
+      <td>0.33</td>
+      <td>0.81</td>
       <td>0.24</td>
       <td>0.17</td>
       <td>2022-11-10</td>
@@ -7911,13 +7941,13 @@ display(all_strat_sum_stats)
       <td>2022-11-09</td>
       <td>NaT</td>
       <td>NaN</td>
-      <td>0.30</td>
+      <td>0.31</td>
     </tr>
     <tr>
       <th>TQQQ/TMF Full BS</th>
-      <td>4199</td>
+      <td>4203</td>
       <td>2010-02-12</td>
-      <td>2026-10-22</td>
+      <td>2026-10-28</td>
       <td>0.26</td>
       <td>0.32</td>
       <td>0.81</td>
@@ -7935,9 +7965,9 @@ display(all_strat_sum_stats)
     </tr>
     <tr>
       <th>UPRO/AGG Full Strategy</th>
-      <td>4199</td>
+      <td>4203</td>
       <td>2010-02-12</td>
-      <td>2026-10-22</td>
+      <td>2026-10-28</td>
       <td>0.20</td>
       <td>0.24</td>
       <td>0.83</td>
@@ -8166,33 +8196,6 @@ yf_pull_data(
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-10-16</th>
-      <td>9.32</td>
-      <td>9.32</td>
-      <td>9.32</td>
-      <td>9.32</td>
-      <td>9.32</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>2026-10-19</th>
-      <td>9.29</td>
-      <td>9.29</td>
-      <td>9.29</td>
-      <td>9.29</td>
-      <td>9.29</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>2026-10-20</th>
-      <td>9.30</td>
-      <td>9.30</td>
-      <td>9.30</td>
-      <td>9.30</td>
-      <td>9.30</td>
-      <td>0</td>
-    </tr>
-    <tr>
       <th>2026-10-21</th>
       <td>9.30</td>
       <td>9.30</td>
@@ -8210,9 +8213,36 @@ yf_pull_data(
       <td>9.38</td>
       <td>0</td>
     </tr>
+    <tr>
+      <th>2026-10-23</th>
+      <td>9.36</td>
+      <td>9.36</td>
+      <td>9.36</td>
+      <td>9.36</td>
+      <td>9.36</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2026-10-26</th>
+      <td>9.37</td>
+      <td>9.37</td>
+      <td>9.37</td>
+      <td>9.37</td>
+      <td>9.37</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2026-10-27</th>
+      <td>9.37</td>
+      <td>9.37</td>
+      <td>9.37</td>
+      <td>9.37</td>
+      <td>9.37</td>
+      <td>0</td>
+    </tr>
   </tbody>
 </table>
-<p>10042 rows × 6 columns</p>
+<p>10045 rows × 6 columns</p>
 </div>
 
 
@@ -8267,11 +8297,12 @@ upro_spy_model = run_regression(
 alpha = upro_spy_model.params.iloc[0]
 beta = upro_spy_model.params.iloc[1]
 
-print("Table E29: Regression of UPRO Daily Returns on SPY Daily Returns")
+display(Markdown("Table E29: Regression of UPRO Daily Returns on SPY Daily Returns"))
 display(upro_spy_model.summary())
 ```
 
-    Table E29: Regression of UPRO Daily Returns on SPY Daily Returns
+
+Table E29: Regression of UPRO Daily Returns on SPY Daily Returns
 
 
 
@@ -8284,19 +8315,19 @@ display(upro_spy_model.summary())
   <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared:    </th>  <td>   0.997</td> 
 </tr>
 <tr>
-  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th>  <td>1.257e+06</td>
+  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th>  <td>1.259e+06</td>
 </tr>
 <tr>
-  <th>Date:</th>             <td>Sat, 24 Oct 2026</td> <th>  Prob (F-statistic):</th>   <td>  0.00</td>  
+  <th>Date:</th>             <td>Thu, 29 Oct 2026</td> <th>  Prob (F-statistic):</th>   <td>  0.00</td>  
 </tr>
 <tr>
-  <th>Time:</th>                 <td>18:28:23</td>     <th>  Log-Likelihood:    </th>  <td>  21156.</td> 
+  <th>Time:</th>                 <td>10:23:22</td>     <th>  Log-Likelihood:    </th>  <td>  21177.</td> 
 </tr>
 <tr>
-  <th>No. Observations:</th>      <td>  4358</td>      <th>  AIC:               </th> <td>-4.231e+04</td>
+  <th>No. Observations:</th>      <td>  4362</td>      <th>  AIC:               </th> <td>-4.235e+04</td>
 </tr>
 <tr>
-  <th>Df Residuals:</th>          <td>  4356</td>      <th>  BIC:               </th> <td>-4.230e+04</td>
+  <th>Df Residuals:</th>          <td>  4360</td>      <th>  BIC:               </th> <td>-4.234e+04</td>
 </tr>
 <tr>
   <th>Df Model:</th>              <td>     1</td>      <th>                     </th>      <td> </td>    
@@ -8310,24 +8341,24 @@ display(upro_spy_model.summary())
        <td></td>         <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
 </tr>
 <tr>
-  <th>const</th>      <td>   -0.0002</td> <td> 2.86e-05</td> <td>   -6.754</td> <td> 0.000</td> <td>   -0.000</td> <td>   -0.000</td>
+  <th>const</th>      <td>   -0.0002</td> <td> 2.86e-05</td> <td>   -6.763</td> <td> 0.000</td> <td>   -0.000</td> <td>   -0.000</td>
 </tr>
 <tr>
-  <th>SPY_Return</th> <td>    2.9894</td> <td>    0.003</td> <td> 1121.375</td> <td> 0.000</td> <td>    2.984</td> <td>    2.995</td>
+  <th>SPY_Return</th> <td>    2.9894</td> <td>    0.003</td> <td> 1121.954</td> <td> 0.000</td> <td>    2.984</td> <td>    2.995</td>
 </tr>
 </table>
 <table class="simpletable">
 <tr>
-  <th>Omnibus:</th>       <td>2146.529</td> <th>  Durbin-Watson:     </th>  <td>   2.969</td>  
+  <th>Omnibus:</th>       <td>2148.969</td> <th>  Durbin-Watson:     </th>  <td>   2.969</td>  
 </tr>
 <tr>
-  <th>Prob(Omnibus):</th>  <td> 0.000</td>  <th>  Jarque-Bera (JB):  </th> <td>3412005.980</td>
+  <th>Prob(Omnibus):</th>  <td> 0.000</td>  <th>  Jarque-Bera (JB):  </th> <td>3419824.543</td>
 </tr>
 <tr>
   <th>Skew:</th>           <td>-0.729</td>  <th>  Prob(JB):          </th>  <td>    0.00</td>  
 </tr>
 <tr>
-  <th>Kurtosis:</th>       <td>140.070</td> <th>  Cond. No.          </th>  <td>    93.3</td>  
+  <th>Kurtosis:</th>       <td>140.164</td> <th>  Cond. No.          </th>  <td>    93.3</td>  
 </tr>
 </table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
 
@@ -8348,11 +8379,12 @@ fit_check = pd.DataFrame(
 years = len(fit_check) / 252
 fit_check_cagr = ((1 + fit_check).prod() ** (1 / years) - 1).to_frame(name="CAGR")
 
-print("Table E30: CAGR of Actual UPRO vs Returns Constructed From SPY")
+display(Markdown("Table E30: CAGR of Actual UPRO vs Returns Constructed From SPY"))
 display(fit_check_cagr)
 ```
 
-    Table E30: CAGR of Actual UPRO vs Returns Constructed From SPY
+
+Table E30: CAGR of Actual UPRO vs Returns Constructed From SPY
 
 
 
@@ -8428,11 +8460,12 @@ fund_data["UPRO_Extrap"] = upro_extrap[["UPRO_Adj_Close"]].rename(
     columns={"UPRO_Adj_Close": "UPRO_Extrap_Adj_Close"}
 )
 
-print("Table E31: Extrapolated UPRO Data Around the Inception of UPRO")
+display(Markdown("Table E31: Extrapolated UPRO Data Around the Inception of UPRO"))
 display(upro_extrap.iloc[splice_loc - 3 : splice_loc + 3])
 ```
 
-    Table E31: Extrapolated UPRO Data Around the Inception of UPRO
+
+Table E31: Extrapolated UPRO Data Around the Inception of UPRO
 
 
 
@@ -8530,7 +8563,7 @@ upro_extrap_vbmfx_full = rebalance_strategy(
     end_date=None,
 )
 
-print("Table E32: UPRO (Extrap)/VBMFX Rebalance Strategy Data")
+display(Markdown("Table E32: UPRO (Extrap)/VBMFX Rebalance Strategy Data"))
 display(upro_extrap_vbmfx_full)
 
 spy_vbmfx_full = rebalance_strategy(
@@ -8544,11 +8577,12 @@ spy_vbmfx_full = rebalance_strategy(
     end_date=None,
 )
 
-print("Table E33: SPY/VBMFX Rebalance Strategy Data")
+display(Markdown("Table E33: SPY/VBMFX Rebalance Strategy Data"))
 display(spy_vbmfx_full)
 ```
 
-    Table E32: UPRO (Extrap)/VBMFX Rebalance Strategy Data
+
+Table E32: UPRO (Extrap)/VBMFX Rebalance Strategy Data
 
 
 
@@ -8723,65 +8757,8 @@ display(spy_vbmfx_full)
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-10-16</th>
-      <td>183.52</td>
-      <td>4.00</td>
-      <td>-0.03</td>
-      <td>0.00</td>
-      <td>-0.07</td>
-      <td>-0.05</td>
-      <td>-0.98</td>
-      <td>-0.19</td>
-      <td>31.96</td>
-      <td>32.27</td>
-      <td>64.23</td>
-      <td>-0.02</td>
-      <td>-0.04</td>
-      <td>-0.72</td>
-      <td>False</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>2026-10-19</th>
-      <td>185.82</td>
-      <td>3.99</td>
-      <td>0.01</td>
-      <td>-0.00</td>
-      <td>-0.06</td>
-      <td>-0.05</td>
-      <td>-0.98</td>
-      <td>-0.19</td>
-      <td>32.37</td>
-      <td>32.17</td>
-      <td>64.53</td>
-      <td>0.00</td>
-      <td>-0.04</td>
-      <td>-0.72</td>
-      <td>False</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>2026-10-20</th>
-      <td>187.46</td>
-      <td>4.00</td>
-      <td>0.01</td>
-      <td>0.00</td>
-      <td>-0.05</td>
-      <td>-0.05</td>
-      <td>-0.98</td>
-      <td>-0.19</td>
-      <td>32.65</td>
-      <td>32.20</td>
-      <td>64.85</td>
-      <td>0.00</td>
-      <td>-0.04</td>
-      <td>-0.72</td>
-      <td>False</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
       <th>2026-10-21</th>
-      <td>190.51</td>
+      <td>190.43</td>
       <td>4.00</td>
       <td>0.02</td>
       <td>0.00</td>
@@ -8790,8 +8767,8 @@ display(spy_vbmfx_full)
       <td>-0.98</td>
       <td>-0.19</td>
       <td>33.18</td>
-      <td>32.20</td>
-      <td>65.38</td>
+      <td>32.19</td>
+      <td>65.37</td>
       <td>0.01</td>
       <td>-0.03</td>
       <td>-0.72</td>
@@ -8800,7 +8777,7 @@ display(spy_vbmfx_full)
     </tr>
     <tr>
       <th>2026-10-22</th>
-      <td>183.64</td>
+      <td>183.57</td>
       <td>4.03</td>
       <td>-0.04</td>
       <td>0.01</td>
@@ -8808,22 +8785,80 @@ display(spy_vbmfx_full)
       <td>-0.04</td>
       <td>-0.98</td>
       <td>-0.19</td>
-      <td>31.99</td>
-      <td>32.48</td>
-      <td>64.46</td>
+      <td>31.98</td>
+      <td>32.47</td>
+      <td>64.45</td>
       <td>-0.01</td>
       <td>-0.04</td>
       <td>-0.72</td>
       <td>False</td>
       <td>0.00</td>
     </tr>
+    <tr>
+      <th>2026-10-23</th>
+      <td>180.45</td>
+      <td>4.02</td>
+      <td>-0.02</td>
+      <td>-0.00</td>
+      <td>-0.08</td>
+      <td>-0.05</td>
+      <td>-0.98</td>
+      <td>-0.19</td>
+      <td>31.44</td>
+      <td>32.40</td>
+      <td>63.84</td>
+      <td>-0.01</td>
+      <td>-0.05</td>
+      <td>-0.72</td>
+      <td>False</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>2026-10-26</th>
+      <td>184.22</td>
+      <td>4.03</td>
+      <td>0.02</td>
+      <td>0.00</td>
+      <td>-0.07</td>
+      <td>-0.04</td>
+      <td>-0.98</td>
+      <td>-0.19</td>
+      <td>32.09</td>
+      <td>32.44</td>
+      <td>64.53</td>
+      <td>0.01</td>
+      <td>-0.04</td>
+      <td>-0.72</td>
+      <td>False</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>2026-10-27</th>
+      <td>187.35</td>
+      <td>4.03</td>
+      <td>0.02</td>
+      <td>0.00</td>
+      <td>-0.05</td>
+      <td>-0.04</td>
+      <td>-0.98</td>
+      <td>-0.19</td>
+      <td>32.64</td>
+      <td>32.44</td>
+      <td>65.07</td>
+      <td>0.01</td>
+      <td>-0.03</td>
+      <td>-0.72</td>
+      <td>False</td>
+      <td>0.00</td>
+    </tr>
   </tbody>
 </table>
-<p>8491 rows × 16 columns</p>
+<p>8494 rows × 16 columns</p>
 </div>
 
 
-    Table E33: SPY/VBMFX Rebalance Strategy Data
+
+Table E33: SPY/VBMFX Rebalance Strategy Data
 
 
 
@@ -8998,63 +9033,6 @@ display(spy_vbmfx_full)
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-10-16</th>
-      <td>31.73</td>
-      <td>4.00</td>
-      <td>-0.01</td>
-      <td>0.00</td>
-      <td>-0.02</td>
-      <td>-0.05</td>
-      <td>-0.55</td>
-      <td>-0.19</td>
-      <td>6.13</td>
-      <td>6.06</td>
-      <td>12.19</td>
-      <td>-0.01</td>
-      <td>-0.02</td>
-      <td>-0.30</td>
-      <td>False</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>2026-10-19</th>
-      <td>31.87</td>
-      <td>3.99</td>
-      <td>0.00</td>
-      <td>-0.00</td>
-      <td>-0.02</td>
-      <td>-0.05</td>
-      <td>-0.55</td>
-      <td>-0.19</td>
-      <td>6.16</td>
-      <td>6.04</td>
-      <td>12.19</td>
-      <td>0.00</td>
-      <td>-0.02</td>
-      <td>-0.30</td>
-      <td>False</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
-      <th>2026-10-20</th>
-      <td>31.97</td>
-      <td>4.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>-0.01</td>
-      <td>-0.05</td>
-      <td>-0.55</td>
-      <td>-0.19</td>
-      <td>6.18</td>
-      <td>6.04</td>
-      <td>12.22</td>
-      <td>0.00</td>
-      <td>-0.01</td>
-      <td>-0.30</td>
-      <td>False</td>
-      <td>0.00</td>
-    </tr>
-    <tr>
       <th>2026-10-21</th>
       <td>32.14</td>
       <td>4.00</td>
@@ -9092,9 +9070,66 @@ display(spy_vbmfx_full)
       <td>False</td>
       <td>0.00</td>
     </tr>
+    <tr>
+      <th>2026-10-23</th>
+      <td>31.59</td>
+      <td>4.02</td>
+      <td>-0.01</td>
+      <td>-0.00</td>
+      <td>-0.02</td>
+      <td>-0.05</td>
+      <td>-0.55</td>
+      <td>-0.19</td>
+      <td>6.10</td>
+      <td>6.08</td>
+      <td>12.19</td>
+      <td>-0.00</td>
+      <td>-0.02</td>
+      <td>-0.30</td>
+      <td>False</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>2026-10-26</th>
+      <td>31.82</td>
+      <td>4.03</td>
+      <td>0.01</td>
+      <td>0.00</td>
+      <td>-0.02</td>
+      <td>-0.04</td>
+      <td>-0.55</td>
+      <td>-0.19</td>
+      <td>6.15</td>
+      <td>6.09</td>
+      <td>12.24</td>
+      <td>0.00</td>
+      <td>-0.01</td>
+      <td>-0.30</td>
+      <td>False</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>2026-10-27</th>
+      <td>32.00</td>
+      <td>4.03</td>
+      <td>0.01</td>
+      <td>0.00</td>
+      <td>-0.01</td>
+      <td>-0.04</td>
+      <td>-0.55</td>
+      <td>-0.19</td>
+      <td>6.18</td>
+      <td>6.09</td>
+      <td>12.27</td>
+      <td>0.00</td>
+      <td>-0.01</td>
+      <td>-0.30</td>
+      <td>False</td>
+      <td>0.00</td>
+    </tr>
   </tbody>
 </table>
-<p>8491 rows × 16 columns</p>
+<p>8494 rows × 16 columns</p>
 </div>
 
 
@@ -9160,11 +9195,12 @@ spy_sum_stats.index = ["SPY"]
 
 all_strat_sum_stats = pd.concat([all_strat_sum_stats, spy_sum_stats])
 
-print("Table E34: Strategy Summary Statistics")
+display(Markdown("Table E34: Strategy Summary Statistics"))
 display(all_strat_sum_stats)
 ```
 
-    Table E34: Strategy Summary Statistics
+
+Table E34: Strategy Summary Statistics
 
 
 
@@ -9288,12 +9324,12 @@ display(all_strat_sum_stats)
     </tr>
     <tr>
       <th>TQQQ/TMF Full Strategy</th>
-      <td>4199</td>
+      <td>4203</td>
       <td>2010-02-12</td>
-      <td>2026-10-22</td>
+      <td>2026-10-28</td>
       <td>0.27</td>
-      <td>0.34</td>
-      <td>0.80</td>
+      <td>0.33</td>
+      <td>0.81</td>
       <td>0.24</td>
       <td>0.17</td>
       <td>2022-11-10</td>
@@ -9304,13 +9340,13 @@ display(all_strat_sum_stats)
       <td>2022-11-09</td>
       <td>NaT</td>
       <td>NaN</td>
-      <td>0.30</td>
+      <td>0.31</td>
     </tr>
     <tr>
       <th>TQQQ/TMF Full BS</th>
-      <td>4199</td>
+      <td>4203</td>
       <td>2010-02-12</td>
-      <td>2026-10-22</td>
+      <td>2026-10-28</td>
       <td>0.26</td>
       <td>0.32</td>
       <td>0.81</td>
@@ -9328,9 +9364,9 @@ display(all_strat_sum_stats)
     </tr>
     <tr>
       <th>UPRO/AGG Full Strategy</th>
-      <td>4199</td>
+      <td>4203</td>
       <td>2010-02-12</td>
-      <td>2026-10-22</td>
+      <td>2026-10-28</td>
       <td>0.20</td>
       <td>0.24</td>
       <td>0.83</td>
@@ -9348,9 +9384,9 @@ display(all_strat_sum_stats)
     </tr>
     <tr>
       <th>UPRO (Extrap)/VBMFX Full Strategy</th>
-      <td>8490</td>
+      <td>8493</td>
       <td>1993-02-01</td>
-      <td>2026-10-22</td>
+      <td>2026-10-27</td>
       <td>0.16</td>
       <td>0.26</td>
       <td>0.61</td>
@@ -9368,9 +9404,9 @@ display(all_strat_sum_stats)
     </tr>
     <tr>
       <th>UPRO (Extrap)</th>
-      <td>8490</td>
+      <td>8493</td>
       <td>1993-02-01</td>
-      <td>2026-10-22</td>
+      <td>2026-10-27</td>
       <td>0.31</td>
       <td>0.55</td>
       <td>0.56</td>
@@ -9388,9 +9424,9 @@ display(all_strat_sum_stats)
     </tr>
     <tr>
       <th>SPY/VBMFX Full Strategy</th>
-      <td>8490</td>
+      <td>8493</td>
       <td>1993-02-01</td>
-      <td>2026-10-22</td>
+      <td>2026-10-27</td>
       <td>0.08</td>
       <td>0.09</td>
       <td>0.86</td>
@@ -9408,9 +9444,9 @@ display(all_strat_sum_stats)
     </tr>
     <tr>
       <th>SPY</th>
-      <td>8490</td>
+      <td>8493</td>
       <td>1993-02-01</td>
-      <td>2026-10-22</td>
+      <td>2026-10-27</td>
       <td>0.12</td>
       <td>0.19</td>
       <td>0.65</td>
