@@ -55,20 +55,19 @@ From the course description:
 > The final project is your opportunity to apply the tools and concepts from this course to a real problem in finance. You will either:
 >
 > 1. **Conduct original research** related to generative or agentic AI in finance, or
->
 > 2. **Build a tool** — a generative or agentic AI application that is useful in finance.
 >
 > This is not a traditional research paper. Think of your deliverable as something closer to a **blog post**, a **tool demo**, or a **startup pitch with a working prototype**. The goal is to showcase something concrete and practical — a new benchmark, a model comparison, a useful tool, or a compelling product idea backed by a working demo.
 
 We elected to extend research done by Chen, Kelly, and Xiu (2022) on the paper entitled "Expected Returns and Large Language Models". From our [final project repository README](https://github.com/jaredszajkowski/finm33200_final_project):
 
-> ## Description
+> #### Description
 >
 > In HW2, we produced a modified replication of the Chen, Kelly, and Xiu (2022) paper entitled "Expected Returns and Large Language Models" using independently scraped news headlines instead of Thomson Reuters full articles. The [README for HW2](README_HW2.md) provides detailed context on the original paper's methodology and our replication approach.
 >
 > In this final project (referred to as "Sector Sentiment", going forward), we build on that foundation with completion of a similar set of data cleaning, headline embedding, and training tasks, but extend the investigation with a focus on *sector-level* sentiment signals.
 >
-> ## Thesis
+> #### Thesis
 >
 > Our thesis is based on the following ideas:
 >
@@ -77,7 +76,7 @@ We elected to extend research done by Chen, Kelly, and Xiu (2022) on the paper e
 > 3. Implementing a trading/investing strategy based on daily stock-level sentiment signals is often impractical due to the magnitude of trades required to capture the signal, but sector-level signals can be actionable due to the instruments available (e.g., sector ETFs).
 > 4. Given the results from Chen et al. showing that smaller LLMs can perform nearly as well as larger ones for embedding tasks, we can process data locally and avoid the need to send headline text to external APIs. Processing data locally results in a much larger sample size of headlines.
 >
-> ### Sector Sentiment
+> #### Sector Sentiment
 >
 > As with HW2, we do not have access to Thomson Reuters full-text articles. However, instead of using **independently scraped news headlines** mreged with **RavenPack** metadata (entity IDs, sentiment scores, relevance, timestamps, etc.), as was required in HW2 due to the RavenPack licensing, our approach with sector sentiment is to use the RavenPack data in its entirety. We run local models for the embedding, and are therefore not sending any of the headline text to OpenAI or any other external API.
 >
