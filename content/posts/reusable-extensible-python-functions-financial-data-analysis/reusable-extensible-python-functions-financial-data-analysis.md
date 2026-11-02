@@ -1,3 +1,9 @@
+## Post Updates
+
+Update 11/1/2026: Added `backtest_dca_strategy` and `calc_money_weighted_return`, the functions behind the dollar cost averaging post.
+
+Update 10/31/2026: Added `add_rsi_ma_bb`, `analyze_trades`, `backtest_rsi_multi_asset_strategy`, `calculate_rsi`, `compute_daily_performance`, `create_signals`, `filter_top_percent`, `load_crypto_data`, `plot_iteration_results`, and `plot_multi_asset_equity_and_drawdown`, the functions behind the trend following and RSI crypto strategy posts.
+
 ## Introduction
 
 This post intends to provide the code for all of the python functions that I use in my analysis. The goal here is that when writing another post I will simply be able to link to the functions below as opposed to providing the function code in each post.
@@ -41,23 +47,33 @@ sys.path.append(str(Path(SOURCE_DIR))) if str(Path(SOURCE_DIR)) not in sys.path 
 
 ## Function Index
 
+* [add_rsi_ma_bb](/posts/reusable-extensible-python-functions-financial-data-analysis/#add_rsi_ma_bb): Add RSI, moving averages, and Bollinger Bands for each crypto asset.
+* [analyze_trades](/posts/reusable-extensible-python-functions-financial-data-analysis/#analyze_trades): Summarize a set of trades: win rate, returns, PnL, and maximum drawdown.
+* [backtest_rsi_multi_asset_strategy](/posts/reusable-extensible-python-functions-financial-data-analysis/#backtest_rsi_multi_asset_strategy): Backtest an RSI entry strategy across one or more assets, with limit or market entries, a trailing stop exit, and trading fees.
 * [backtest_target_weight_portfolio](/posts/reusable-extensible-python-functions-financial-data-analysis/#backtest_target_weight_portfolio): Backtest a portfolio that periodically rebalances toward a set of target weights.
 * [bb_clean_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#bb_clean_data): Takes an Excel export from Bloomberg, removes the miscellaneous headings/rows, and returns a DataFrame.
 * [build_index](/posts/reusable-extensible-python-functions-financial-data-analysis/#build_index): Reads the `index_temp.md` markdown file, inserts the markdown dependencies where indicated, and then saves the file as `index.md`.
 * [calc_fed_cycle_asset_performance](/posts/reusable-extensible-python-functions-financial-data-analysis/#calc_fed_cycle_asset_performance): Calculates metrics for an asset based on a specified Fed tightening/easing cycle.
 * [calc_vix_trade_pnl](/posts/reusable-extensible-python-functions-financial-data-analysis/#calc_vix_trade_pnl): Calculates the profit/loss from VIX options trades.
+* [calculate_rsi](/posts/reusable-extensible-python-functions-financial-data-analysis/#calculate_rsi): Calculate the Relative Strength Index for a price series using Wilder's smoothing.
 * [coinbase_fetch_available_products](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_available_products): Fetch available products from Coinbase Exchange API.
 * [coinbase_fetch_full_history](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_full_history): Fetch full historical data for a given product from Coinbase Exchange API.
 * [coinbase_fetch_historical_candles](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_historical_candles): Fetch historical candle data for a given product from Coinbase Exchange API.
 * [coinbase_pull_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_pull_data): Update existing record or pull full historical data for a given product from Coinbase Exchange API.
+* [compute_daily_performance](/posts/reusable-extensible-python-functions-financial-data-analysis/#compute_daily_performance): Build the daily equity, cash, position, return, and drawdown series from a set of trades.
 * [create_ma_trend_signals](/posts/reusable-extensible-python-functions-financial-data-analysis/#create_ma_trend_signals): Generate multi-asset trend following target weights from a grid of moving averages.
+* [create_signals](/posts/reusable-extensible-python-functions-financial-data-analysis/#create_signals): Generate entry signals combining RSI, an optional moving average filter, and optional Bollinger Bands.
 * [df_info](/posts/reusable-extensible-python-functions-financial-data-analysis/#df_info): A simple function to display the information about a DataFrame and the first five rows and last five rows.
 * [df_info_markdown](/posts/reusable-extensible-python-functions-financial-data-analysis/#df_info_markdown): Similar to the `df_info` function above, except that it coverts the output to markdown.
 * [export_track_md_deps](/posts/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps): Exports various text outputs to markdown files, which are included in the `index.md` file created when building the site with Hugo.
+* [filter_top_percent](/posts/reusable-extensible-python-functions-financial-data-analysis/#filter_top_percent): Filter a DataFrame to the rows in the top X% for one or more columns.
+* [load_crypto_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#load_crypto_data): Load minute-level data for one or more crypto assets from Coinbase and merge it into a single DataFrame.
 * [load_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#load_data): Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.
 * [pandas_set_decimal_places](/posts/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places): Set the number of decimal places displayed for floating-point numbers in pandas.
 * [plot_bar_returns_ffr_change](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_bar_returns_ffr_change): Plot the bar chart of the cumulative or annualized returns for the asset class along with the change in the Fed Funds Rate.
 * [plot_histogram](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_histogram): Plot the histogram of a data set from a DataFrame.
+* [plot_iteration_results](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_iteration_results): Plot the distribution of backtest parameter sweep results, and the MAR ratio against each parameter and statistic.
+* [plot_multi_asset_equity_and_drawdown](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_multi_asset_equity_and_drawdown): Plot equity, cumulative return, drawdown, and each asset's price history with trades.
 * [plot_scatter](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_scatter): Plot the data from a DataFrame for a specified date range and columns.
 * [plot_scatter_regression_ffr_vs_returns](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_scatter_regression_ffr_vs_returns): Plot a scatter plot of annualized returns vs annualized change in Fed Funds Rate, with a regression line and annotations for each policy cycle.
 * [plot_stats](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_stats): Generate a scatter plot for the mean OHLC prices.
@@ -72,6 +88,602 @@ sys.path.append(str(Path(SOURCE_DIR))) if str(Path(SOURCE_DIR)) not in sys.path 
 * [yf_pull_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#yf_pull_data): Download daily price data from Yahoo Finance and export it.
 
 ## Python Functions
+
+### add_rsi_ma_bb
+
+
+```python
+import pandas as pd
+
+from calculate_rsi import calculate_rsi
+
+
+def add_rsi_ma_bb(
+    tickers: list,
+    data: pd.DataFrame,
+    rsi_period: int,
+    ma_days: list,
+    bb_window: int,
+    bb_num_std: float,
+) -> pd.DataFrame:
+    """
+    Adds RSI, moving averages,and Bollinger bands for each crypto asset.
+
+    Parameters
+    ----------
+    tickers : list
+        List of crypto tickers, e.g., ["BTC-USD", "ETH-USD", "SOL-USD"].
+    data : pd.DataFrame
+        DataFrame containing merged price data for all tickers.
+    rsi_period : int
+        RSI lookback period.
+    ma_days : list
+        List of moving average durations in days.
+
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame containing merged data for all tickers with RSI, moving averages,
+        and bollinger bands.
+    """
+
+    # Copy the data dataframe
+    df = data.copy()
+
+    for ticker in tickers:
+        # Shift close by 1 row
+        df[f"{ticker}_close_prev"] = df[f"{ticker}_close"].shift(1)
+
+        # ----- RSI -----
+
+        # Calc RSI and shift by 1 row
+        df[f"{ticker}_RSI"] = calculate_rsi(df[f"{ticker}_close"], period=rsi_period)
+        df[f"{ticker}_RSI_prev"] = df[f"{ticker}_RSI"].shift(1)
+
+        # ----- Moving Averages -----
+
+        # Calc moving averages and shift by 1 row
+        for day in ma_days:
+            window = 1440 * day  # 1440 minutes in a day
+            df[f"{ticker}_MA_{day}d"] = (
+                df[f"{ticker}_close"].rolling(window=window, min_periods=1).mean()
+            )
+            df[f"{ticker}_MA_{day}d_prev"] = df[f"{ticker}_MA_{day}d"].shift(1)
+
+        # ----- Bollinger Bands -----
+        rolling = df[f"{ticker}_close_prev"].rolling(
+            window=bb_window, min_periods=bb_window
+        )
+        df[f"{ticker}_BB_MID_prev"] = rolling.mean()
+        df[f"{ticker}_BB_STD_prev"] = rolling.std()
+        df[f"{ticker}_BB_UPPER_prev"] = df[f"{ticker}_BB_MID_prev"] + (
+            bb_num_std * df[f"{ticker}_BB_STD_prev"]
+        )
+        df[f"{ticker}_BB_LOWER_prev"] = df[f"{ticker}_BB_MID_prev"] - (
+            bb_num_std * df[f"{ticker}_BB_STD_prev"]
+        )
+        df[f"{ticker}_BB_Z_prev"] = (
+            df[f"{ticker}_close_prev"] - df[f"{ticker}_BB_MID_prev"]
+        ) / df[f"{ticker}_BB_STD_prev"]
+
+    return df
+```
+
+
+### analyze_trades
+
+
+```python
+import pandas as pd
+
+
+def analyze_trades(
+    trades_df: pd.DataFrame,
+    daily_perf_df: pd.DataFrame,
+    print_summary: bool,
+) -> tuple[int, float, float, float, float, float, float, float, float, float, float]:
+
+    # Filter trades to only those that traded an actual position
+    filtered_trades = trades_df[trades_df["quantity"] > 0.01]
+
+    total_trades = len(filtered_trades)
+    win_rate = len(filtered_trades[filtered_trades["return"] > 0]) / len(
+        filtered_trades
+    )
+    total_return = daily_perf_df["Cum_Return"].iloc[-1]
+    average_return_per_trade = filtered_trades["return"].mean()
+    max_trade_gain_return = filtered_trades["return"].max()
+    max_trade_loss_return = filtered_trades["return"].min()
+    total_pnl = filtered_trades["pnl"].sum()
+    average_pnl_per_trade = filtered_trades["pnl"].mean()
+    max_trade_gain_pnl = filtered_trades["pnl"].max()
+    max_trade_loss_pnl = filtered_trades["pnl"].min()
+    max_drawdown = daily_perf_df["Drawdown"].min() * 100
+
+    if print_summary:
+        print("\nTrade Summary:")
+        print(f"Total Trades: {total_trades}")
+        print(f"Win Rate (%): {win_rate * 100:.2f}%")
+        print(f"Total Return (%): {total_return * 100:.2f}%")
+        print(f"Average Return Per Trade: {average_return_per_trade * 100:.2f}%")
+        print(f"Max Trade Gain (%): {max_trade_gain_return * 100:.2f}%")
+        print(f"Max Trade Loss (%): {max_trade_loss_return * 100:.2f}%")
+        print(f"Total PnL ($): ${total_pnl:,.2f}")
+        print(f"Average PnL Per Trade ($): ${average_pnl_per_trade:,.2f}")
+        print(f"Max Trade Gain ($): ${max_trade_gain_pnl:,.2f}")
+        print(f"Max Trade Loss ($): ${max_trade_loss_pnl:,.2f}")
+        print(f"Max Drawdown (%): {max_drawdown:.2f}%")
+
+    # Return all metrics as a tuple
+    return (
+        total_trades,
+        win_rate,
+        total_return,
+        average_return_per_trade,
+        max_trade_gain_return,
+        max_trade_loss_return,
+        total_pnl,
+        average_pnl_per_trade,
+        max_trade_gain_pnl,
+        max_trade_loss_pnl,
+        max_drawdown,
+    )
+```
+
+
+### backtest_dca_strategy
+
+
+```python
+import numpy as np
+import pandas as pd
+
+
+def backtest_dca_strategy(
+    fund: str,
+    price_df: pd.DataFrame,
+    price_column: str,
+    contribution: float,
+    drawdown_threshold: float | None,
+    cash_yield: float | pd.Series,
+    start_date: str,
+    excel_export: bool,
+    pickle_export: bool,
+    output_confirmation: bool,
+) -> pd.DataFrame:
+    """
+    Backtest dollar cost averaging into a single fund, optionally only buying
+    while the fund is in a drawdown.
+
+    A fixed contribution arrives in cash on the last trading day of each month.
+    With no threshold, it is invested at that day's close. With a threshold, the
+    entire cash balance is invested at that day's close only if the fund's
+    drawdown is deeper than the threshold, and otherwise stays in cash earning
+    ``cash_yield``. Shares are never sold.
+
+    The backtest starts on the first month end on or after ``start_date``, which
+    is the first day the portfolio has any value, and treats the final row of
+    ``price_df`` as a month end. Trim a partial trailing month before calling, or
+    the final row will receive a contribution early.
+
+    Notes
+    -----
+    The buy decision uses the same close the trade executes at, the month end
+    convention also used by ``create_ma_trend_signals`` with ``signal_lag=0``.
+    There are no transaction costs.
+
+    Parameters
+    ----------
+    fund : str
+        Fund to invest in, e.g. ``"SPY"``.
+    price_df : pd.DataFrame
+        Date-indexed DataFrame with a daily price column named
+        ``f"{fund}_{price_column}"``. Include history before ``start_date``, since
+        the drawdown is measured from the running peak of the full series.
+    price_column : str
+        Suffix of the price column, e.g. ``"Adj_Close"``. With a total return
+        series such as adjusted close, dividends are implicitly reinvested.
+    contribution : float
+        Dollars added to cash on the last trading day of each month.
+    drawdown_threshold : float | None
+        Drawdown required to buy, as a positive decimal, e.g. ``0.10`` buys only
+        when the fund is more than 10% below its peak. ``None`` buys every month.
+    cash_yield : float | pd.Series
+        Annual interest rate earned on cash, in decimal form. Pass a float for a
+        flat rate or a date-indexed Series of annual rates. A Series is reindexed
+        onto the backtest calendar and forward filled. Interest accrues on the
+        balance carried in from the prior row, over the calendar days elapsed on
+        a 365 day basis.
+    start_date : str
+        Start date for the backtest in ``"YYYY-MM-DD"`` format.
+    excel_export : bool
+        If True, export data to Excel format.
+    pickle_export : bool
+        If True, export data to Pickle format.
+    output_confirmation : bool
+        If True, print confirmation message.
+
+    Returns
+    -------
+    pd.DataFrame
+        Date-indexed DataFrame containing ``Price``, ``Drawdown``, ``Month_End``,
+        ``Contribution``, ``Cash_Interest``, ``Buy``, ``Purchase``, ``Shares``,
+        ``Invested``, ``Cash``, ``Total_Value``, ``Cash_%``,
+        ``Cum_Contributions``, ``Cum_Cash_Interest``, ``Cum_Purchases``,
+        ``Return`` and ``Cumulative_Return``.
+
+        ``Return`` is net of that day's contribution,
+        ``(Total_Value - Contribution) / prior Total_Value - 1``, so that a
+        deposit does not count as a gain.
+
+    Raises
+    ------
+    ValueError
+        If ``contribution`` is not positive, ``drawdown_threshold`` is negative,
+        the price column is missing, or no month end falls on or after
+        ``start_date``.
+    """
+
+    if contribution <= 0:
+        raise ValueError(f"❌ contribution must be > 0, got {contribution}.")
+
+    if drawdown_threshold is not None and drawdown_threshold < 0:
+        raise ValueError(
+            f"❌ drawdown_threshold must be >= 0 or None, got {drawdown_threshold}."
+        )
+
+    column = f"{fund}_{price_column}"
+    if column not in price_df.columns:
+        raise ValueError(f"❌ price_df is missing required column: {column}")
+
+    prices = price_df[column].dropna().sort_index()
+
+    # Measure the drawdown before trimming, so that earlier peaks still count
+    drawdown = prices / prices.cummax() - 1
+
+    # Mark the last row of each month, treating the final row as a month end
+    month = prices.index.to_period("M")
+    month_end = pd.Series(
+        np.append(month[:-1] != month[1:], True),
+        index=prices.index,
+    )
+
+    # Start on the first month end, since nothing is held before it
+    eligible = month_end[(month_end.index >= start_date) & month_end]
+    if eligible.empty:
+        raise ValueError(
+            f"❌ No month end on or after start_date {start_date}. "
+            f"Price data ends {prices.index.max()}."
+        )
+    first_date = eligible.index[0]
+
+    prices = prices[prices.index >= first_date]
+    drawdown = drawdown[drawdown.index >= first_date]
+    month_end = month_end[month_end.index >= first_date]
+
+    num_rows = prices.shape[0]
+    price_arr = prices.to_numpy(dtype=float)
+    drawdown_arr = drawdown.to_numpy(dtype=float)
+    month_end_arr = month_end.to_numpy(dtype=bool)
+
+    # Annual cash rate per row, either flat or tracking a supplied short rate
+    if isinstance(cash_yield, pd.Series):
+        cash_rate = (
+            cash_yield.reindex(prices.index).ffill().fillna(0).to_numpy(dtype=float)
+        )
+    else:
+        cash_rate = np.full(num_rows, float(cash_yield))
+
+    # The first row has no prior balance to accrue on, so its elapsed count is zero
+    days_elapsed = (
+        prices.index.to_series().diff().dt.days.fillna(0).to_numpy(dtype=float)
+    )
+    interest_factor = cash_rate * days_elapsed / 365
+
+    # Output arrays
+    contributions = np.where(month_end_arr, float(contribution), 0.0)
+    cash_interest = np.zeros(num_rows)
+    buy = np.zeros(num_rows, dtype=bool)
+    purchase = np.zeros(num_rows)
+    shares = np.zeros(num_rows)
+    cash = np.zeros(num_rows)
+
+    prev_shares = 0.0
+    prev_cash = 0.0
+
+    for i in range(num_rows):
+        interest = prev_cash * interest_factor[i]
+        cash_in = prev_cash + interest + contributions[i]
+
+        # Only month ends can trade, and the threshold must be strictly exceeded
+        if month_end_arr[i] and (
+            drawdown_threshold is None or drawdown_arr[i] < -drawdown_threshold
+        ):
+            buy[i] = True
+            purchase[i] = cash_in
+
+        shares[i] = prev_shares + purchase[i] / price_arr[i]
+        cash[i] = cash_in - purchase[i]
+        cash_interest[i] = interest
+
+        prev_shares = shares[i]
+        prev_cash = cash[i]
+
+    # Assemble the output frame in the documented column order
+    out = pd.DataFrame(index=prices.index)
+    out["Price"] = price_arr
+    out["Drawdown"] = drawdown_arr
+    out["Month_End"] = month_end_arr
+    out["Contribution"] = contributions
+    out["Cash_Interest"] = cash_interest
+    out["Buy"] = buy
+    out["Purchase"] = purchase
+    out["Shares"] = shares
+    out["Invested"] = shares * price_arr
+    out["Cash"] = cash
+    out["Total_Value"] = out["Invested"] + out["Cash"]
+    out["Cash_%"] = out["Cash"] / out["Total_Value"]
+    out["Cum_Contributions"] = out["Contribution"].cumsum()
+    out["Cum_Cash_Interest"] = out["Cash_Interest"].cumsum()
+    out["Cum_Purchases"] = out["Purchase"].cumsum()
+
+    # Performance, net of each day's contribution
+    out["Return"] = (out["Total_Value"] - out["Contribution"]) / out[
+        "Total_Value"
+    ].shift(1) - 1
+    out["Cumulative_Return"] = (1 + out["Return"]).cumprod()
+
+    threshold_label = (
+        "Every_Month"
+        if drawdown_threshold is None
+        else f"{drawdown_threshold:.0%}_Drawdown"
+    )
+    plan_name = f"{fund}_DCA_{threshold_label}"
+
+    # Export to excel
+    if excel_export == True:
+        out.to_excel(f"{plan_name}_Strategy.xlsx", sheet_name="data")
+    else:
+        pass
+
+    # Export to pickle
+    if pickle_export == True:
+        out.to_pickle(f"{plan_name}_Strategy.pkl")
+    else:
+        pass
+
+    # Output confirmation
+    if output_confirmation == True:
+        print(
+            f"Strategy complete for {plan_name}, "
+            f"buying in {buy.sum()} of {month_end_arr.sum()} months"
+        )
+    else:
+        pass
+
+    return out
+```
+
+
+### backtest_rsi_multi_asset_strategy
+
+
+```python
+import numpy as np
+import pandas as pd
+
+
+def backtest_rsi_multi_asset_strategy(
+    tickers: list,
+    prices: pd.DataFrame,
+    signals: pd.DataFrame,
+    initial_capital: float,
+    rsi_threshold: float,  # kept for signature compatibility (unused here)
+    trailing_stop_pct: float,
+    ma_days: list,  # kept for signature compatibility (unused here)
+    order_entry: str,
+    trading_fees: bool,
+    trade_taker_fee: float,  # market order fee
+    trade_maker_fee: float,  # limit order fee
+) -> pd.DataFrame:
+    """
+    Optimized backtest with legacy 'no-exit leaves cash stuck' behavior:
+    - If no exit is found from entry to the end of data, cash is NOT refunded and the
+      trade remains open (matching your original implementation).
+    - Avoids copying prices_df inside the loop; uses NumPy views for speed.
+    """
+
+    # Stable sort; shallow (meta-only) copy to avoid duplicating data
+    prices_df = prices.copy(deep=False).sort_values(by="Date", kind="mergesort")
+    date_idx = prices_df["Date"].to_numpy()
+
+    # Create dictionary of prices as numpy arrays
+    prices_dict = {}
+    for t in tickers:
+        prices_dict[t] = (
+            prices_df[f"{t}_open"].to_numpy(),
+            prices_df[f"{t}_high"].to_numpy(),
+            prices_df[f"{t}_low"].to_numpy(),
+        )
+
+    # Chronological signals; shallow copy to keep memory low
+    signals_sorted_df = signals.copy(deep=False).sort_values(
+        by="Date", kind="mergesort"
+    )
+    signals_grouped_df = signals_sorted_df.groupby("Date", sort=True)
+
+    # Initialize tracking variables
+    cash = initial_capital
+
+    # Initialize trading fee
+    trade_entry_fee_dec = 0.0
+    trade_exit_fee_dec = 0.0
+
+    # Create list for trades
+    trades = []
+
+    # Start with the first timestamp
+    next_timestamp = prices_df["Date"].iloc[0]
+
+    # Iterate through signals DataFrame
+    for timestamp, signal_rows in signals_grouped_df:
+
+        # Check if signal was during a previous trade
+        if timestamp <= next_timestamp:
+            continue
+
+        # Iterate over each asset
+        for signal in signal_rows.itertuples(index=False):
+
+            # -------- ENTRY --------
+
+            # Get the ticker
+            ticker = getattr(signal, "asset")
+
+            # Set the entry timestamp
+            entry_timestamp = timestamp
+
+            # Get the allocation
+            allocation_pct = getattr(signal, "allocation_pct")
+
+            # Calc capital based on number of assets and allocation_pct
+            capital_to_use = cash / len(tickers) * allocation_pct
+
+            # # Shared capital, scaled by allocation
+            # capital_to_use = (cash / max(1, len(tickers))) * allocation_pct
+            # if capital_to_use <= 0:
+            #     continue
+
+            # Get entry price and trade entry fee percentage
+            # Entry on open for a market order
+            if order_entry == "market":
+                entry_price = getattr(signal, "open")
+                if trading_fees:
+                    trade_entry_fee_dec = trade_taker_fee
+            # Entry on a limit order set at previous candle close
+            elif order_entry == "limit":
+                close_prev = getattr(signal, "close_prev")
+                high = getattr(signal, "high")
+                low = getattr(signal, "low")
+
+                if close_prev >= low and close_prev <= high:
+                    entry_price = getattr(signal, "close_prev")
+                    if trading_fees:
+                        trade_entry_fee_dec = trade_maker_fee
+                else:
+                    continue
+
+            # Calc entry value and entry fee
+            entry_value = capital_to_use / (1.0 + trade_entry_fee_dec)
+            entry_fee = capital_to_use - entry_value
+
+            # Calc quantity to buy
+            quantity = entry_value / entry_price
+
+            # Update cash position based on entry
+            cash -= entry_value
+            cash -= entry_fee
+
+            # -------- EXIT --------
+
+            # Extract numpy arrays
+            open_nparray, high_nparray, low_nparray = prices_dict[ticker]
+
+            # Find signal timestamp in prices date index, start is index value
+            start = np.searchsorted(
+                date_idx, np.datetime64(entry_timestamp), side="left"
+            )
+            if start >= len(date_idx):
+                # No bars remain; legacy behavior: keep cash debited, position stays open
+                continue
+
+            # Slices from the price numpy arrays
+            o_sub = open_nparray[start:]
+            h_sub = high_nparray[start:]
+            l_sub = low_nparray[start:]
+            d_sub = date_idx[start:]
+
+            # Running peak (never below entry price)
+            peak_price = np.maximum.accumulate(np.maximum(h_sub, entry_price))
+            stop_price = peak_price * (1.0 - trailing_stop_pct)
+
+            # Gap-breach first: open <= stop and low <= stop -> exit at open
+            gap_idx = np.flatnonzero((l_sub <= stop_price) & (o_sub <= stop_price))
+
+            # Regular breach: low <= stop -> exit at stop price
+            br_idx = np.flatnonzero(l_sub <= stop_price)
+
+            i_gap = int(gap_idx[0]) if gap_idx.size else np.inf
+            i_br = int(br_idx[0]) if br_idx.size else np.inf
+
+            if np.isinf(min(i_gap, i_br)):
+                # ---- LEGACY QUIRK: no exit to end of data -> keep cash debited, stay open
+                continue
+
+            if i_gap <= i_br:
+                # Gap-breach is earlier (or same bar) -> exit at open
+                i = i_gap
+                exit_timestamp = pd.Timestamp(d_sub[i].astype("datetime64[ns]"))
+                exit_price = float(o_sub[i])
+                order_exit = "exit at open (gap)"
+            else:
+                # Regular breach is earlier -> exit at stop level of that bar
+                i = i_br
+                exit_timestamp = pd.Timestamp(d_sub[i].astype("datetime64[ns]"))
+                exit_price = float(stop_price[i])
+                order_exit = "trailing stop"
+
+            # Get trade exit fee percentage
+            if trading_fees:
+                trade_exit_fee_dec = trade_taker_fee
+
+            # Calc exit value and exit fee
+            exit_value = quantity * exit_price
+            exit_fee = exit_value * trade_exit_fee_dec
+
+            # Update cash position based on exit
+            cash += exit_value
+            cash -= exit_fee
+
+            # Calc pnl, return
+            pnl = (exit_value - exit_fee) - (entry_value + entry_fee)
+            return_dec = pnl / capital_to_use
+
+            # Add to trades list
+            trades.append(
+                {
+                    "asset": ticker,
+                    "entry_time": entry_timestamp,
+                    "entry_type": order_entry,
+                    "entry_price": entry_price,
+                    "exit_time": exit_timestamp,
+                    "exit_type": order_exit,
+                    "exit_price": exit_price,
+                    "quantity": quantity,
+                    "allocation_pct": allocation_pct,
+                    "pnl": pnl,
+                    "return": return_dec,
+                    "cash": cash,
+                    "entry_fee": entry_fee,
+                    "exit_fee": exit_fee,
+                }
+            )
+
+            # Update next_timestamp
+            next_timestamp = exit_timestamp
+
+    # Create new dataframe for trades
+    trades_df = pd.DataFrame(trades)
+
+    # If there are entries, calc cumulative pnl, equity, cumulative return
+    if not trades_df.empty:
+        trades_df["cumulative_pnl"] = trades_df["pnl"].cumsum()
+        trades_df["equity"] = trades_df["cumulative_pnl"] + initial_capital
+        trades_df["cumulative_return"] = trades_df["equity"] / initial_capital - 1
+
+    return trades_df
+```
+
 
 ### backtest_target_weight_portfolio
 
@@ -791,6 +1403,72 @@ def calc_fed_cycle_asset_performance(
 ```
 
 
+### calc_money_weighted_return
+
+
+```python
+import pandas as pd
+
+from scipy.optimize import brentq
+
+
+def calc_money_weighted_return(
+    contributions: pd.Series,
+    terminal_value: float,
+    terminal_date: pd.Timestamp,
+) -> float:
+    """
+    Calculate the annualized money weighted return (IRR) of a series of deposits.
+
+    Finds the annual rate at which every deposit, compounded from its own date to
+    ``terminal_date`` on a 365 day basis, grows to exactly ``terminal_value``.
+
+    Parameters
+    ----------
+    contributions : pd.Series
+        Date-indexed Series of dollars deposited. Zero entries are ignored.
+    terminal_value : float
+        Portfolio value at ``terminal_date``, including any uninvested cash.
+    terminal_date : pd.Timestamp
+        Date the portfolio is valued.
+
+    Returns
+    -------
+    float
+        Annualized money weighted return in decimal form, e.g. 0.08 for 8%.
+
+    Raises
+    ------
+    ValueError
+        If there are no deposits, or no rate between -99% and 1000% matches
+        ``terminal_value``.
+
+    Example
+    -------
+    >>> deposits = pd.Series([100.0], index=[pd.Timestamp("2020-01-01")])
+    >>> calc_money_weighted_return(deposits, 110.0, pd.Timestamp("2020-12-31"))
+    0.1002...
+    """
+
+    deposits = contributions[contributions != 0]
+    if deposits.empty:
+        raise ValueError("❌ contributions contains no deposits.")
+
+    years = (terminal_date - deposits.index).days.to_numpy(dtype=float) / 365
+    amounts = deposits.to_numpy(dtype=float)
+
+    def valuation_error(rate: float) -> float:
+        return (amounts * (1 + rate) ** years).sum() - terminal_value
+
+    if valuation_error(-0.99) * valuation_error(10.0) > 0:
+        raise ValueError(
+            f"❌ No rate between -99% and 1000% matches terminal value {terminal_value}."
+        )
+
+    return brentq(valuation_error, -0.99, 10.0, xtol=1e-10)
+```
+
+
 ### calc_vix_trade_pnl
 
 
@@ -954,6 +1632,28 @@ def calc_vix_trade_pnl(
         total_opened_pos_mkt_val_str,
         total_closed_pos_mkt_val_str,
     )
+```
+
+
+### calculate_rsi
+
+
+```python
+import pandas as pd
+
+
+def calculate_rsi(prices: pd.Series, period: int = 14) -> pd.Series:
+    """Calculates the Relative Strength Index (RSI) for a price series."""
+    delta = prices.diff()
+    gain = delta.clip(lower=0)
+    loss = -delta.clip(upper=0)
+
+    avg_gain = gain.ewm(alpha=1 / period, adjust=False).mean()
+    avg_loss = loss.ewm(alpha=1 / period, adjust=False).mean()
+
+    rs = avg_gain / avg_loss
+    rsi = 100 - (100 / (1 + rs))
+    return rsi
 ```
 
 
@@ -1546,6 +2246,188 @@ if __name__ == "__main__":
 ```
 
 
+### compute_daily_performance
+
+
+```python
+import pandas as pd
+
+
+def compute_daily_performance(
+    tickers: list,
+    data: pd.DataFrame,
+    trades: pd.DataFrame,
+    initial_capital: int,
+) -> pd.DataFrame:
+    """
+    Computes daily portfolio equity, return, etc. from trades dataframe.
+
+    Parameters:
+    -----------
+    tickers : list
+        List of crypto tickers, e.g., ["BTC-USD", "ETH-USD", "SOL-USD"].
+    data : pd.DataFrame
+        DataFrame containing merged price data for all tickers.
+    trades : pd.DataFrame
+        DataFrame of trades from backtest_rsi_multi_asset_strategy.
+    initial_capital : int
+        Initial capital for the portfolio.
+
+    Returns:
+    --------
+    pd.DataFrame
+        DataFrame containing daily data for the portfolio with equity, cash,
+        returns, positions, drawdowns, and prices.
+    """
+
+    # Copy the data dataframe
+    df = data.copy().set_index("Date")
+
+    # Filter the entry trades
+    entry_trades_df = trades.copy()
+    entry_trades_df = entry_trades_df[
+        ["asset", "entry_time", "entry_price", "quantity", "entry_fee"]
+    ]
+    entry_trades_df["cash"] = (
+        entry_trades_df["entry_price"] * entry_trades_df["quantity"] * -1
+    ) - entry_trades_df["entry_fee"]
+    entry_trades_df["crypto_value"] = (
+        entry_trades_df["quantity"] * entry_trades_df["entry_price"]
+    )
+    entry_trades_df.rename(columns={"entry_time": "Date"}, inplace=True)
+
+    # Filter the exit trades
+    exit_trades_df = trades.copy()
+    exit_trades_df = exit_trades_df[
+        ["asset", "exit_time", "exit_price", "quantity", "exit_fee"]
+    ]
+    exit_trades_df["cash"] = (
+        exit_trades_df["exit_price"] * exit_trades_df["quantity"]
+    ) - exit_trades_df["exit_fee"]
+    exit_trades_df["quantity"] = (
+        exit_trades_df["quantity"] * -1
+    )  # Convert quantity to negative for exit
+    exit_trades_df["crypto_value"] = (
+        exit_trades_df["quantity"] * exit_trades_df["exit_price"]
+    )
+    exit_trades_df.rename(columns={"exit_time": "Date"}, inplace=True)
+
+    # Combine entry and exit trades into a single DataFrame
+    ledger_events_df = pd.concat([entry_trades_df, exit_trades_df], ignore_index=True)
+    ledger_events_df = ledger_events_df.sort_values("Date")
+
+    # Create pivot table for quantity held by date per asset
+    quantity_df = ledger_events_df.pivot_table(
+        index="Date",
+        columns="asset",
+        values="quantity",
+        aggfunc="sum",
+    ).fillna(0)
+
+    quantity_df.columns = [f"{col}_qty" for col in quantity_df.columns]
+
+    # Cash flow dataframe
+    cash_df = ledger_events_df.groupby("Date")["cash"].sum().to_frame()
+
+    # Combine quantity and cash dataframes into the ledger
+    ledger_qtys_df = pd.concat([quantity_df, cash_df], axis=1).fillna(0)
+    ledger_qtys_df = ledger_qtys_df.sort_index()
+
+    # Isolate the daily close prices for each asset
+    price_cols = [f"{ticker}_close" for ticker in tickers]
+    price_df = df[price_cols].copy()
+
+    # Merge the daily close prices DataFrame into the ledger
+    ledger_qtys_prices_df = ledger_qtys_df.join(price_df, how="outer")
+
+    # Replace all NaN values with 0
+    ledger_qtys_prices_df.fillna(0, inplace=True)
+
+    # Add columns for each asset's cumulative quantity
+    quantity_cols = [
+        col for col in ledger_qtys_prices_df.columns if col.endswith("_qty")
+    ]
+    for col in quantity_cols:
+        ledger_qtys_prices_df[col] = ledger_qtys_prices_df[col].cumsum()
+
+    # Cumulative cash column
+    ledger_qtys_prices_df["cash"] = ledger_qtys_prices_df["cash"].cumsum()
+
+    # Add initial capital amount to cash to represent initial capital
+    ledger_qtys_prices_df["cash"] += initial_capital
+
+    # Establish position columns for each asset
+    ledger_qtys_prices_pos_df = ledger_qtys_prices_df.copy()
+    for col in quantity_cols:
+        asset_symbol = col.replace("_qty", "")
+        ledger_qtys_prices_pos_df[f"{asset_symbol}_position"] = (
+            ledger_qtys_prices_pos_df[col]
+            * ledger_qtys_prices_pos_df[f"{asset_symbol}_close"]
+        )
+
+    # Re-arrange the columns to have date, cash, then quantities, prices, positions grouped by asset
+    asset_symbols = []
+    for col in quantity_cols:
+        asset_symbol = col.replace("_qty", "")
+        asset_symbols.append(asset_symbol)
+
+    cols = ["cash"] + [
+        col
+        for ticker in asset_symbols
+        for col in ledger_qtys_prices_pos_df.columns
+        if col.startswith(ticker)
+    ]
+    ledger_qtys_prices_pos_df = ledger_qtys_prices_pos_df[cols]
+
+    # Calculate total portfolio value
+    ledger_qtys_prices_pos_df["equity"] = ledger_qtys_prices_pos_df[
+        "cash"
+    ] + ledger_qtys_prices_pos_df[
+        [col for col in ledger_qtys_prices_pos_df.columns if col.endswith("_position")]
+    ].sum(
+        axis=1
+    )
+
+    # Reindex ledger to daily using last price for the day
+    daily_ledger_qtys_prices_pos_df = ledger_qtys_prices_pos_df.copy()
+    daily_ledger_qtys_prices_pos_df = daily_ledger_qtys_prices_pos_df.resample(
+        "D"
+    ).last()
+
+    # Drop the columns where any of the crypto asset prices = 0
+    price_cols = [
+        col for col in daily_ledger_qtys_prices_pos_df.columns if col.endswith("_close")
+    ]
+    complete_ledger = daily_ledger_qtys_prices_pos_df[
+        ~(daily_ledger_qtys_prices_pos_df[price_cols] == 0).any(axis=1)
+    ]
+
+    # Calculate crypto daily return, cumulative return, and drawdown
+    for col in asset_symbols:
+        complete_ledger[f"{col}_return"] = complete_ledger[f"{col}_close"].pct_change()
+        complete_ledger[f"{col}_cum_return"] = (
+            1 + complete_ledger[f"{col}_return"]
+        ).cumprod() - 1
+        complete_ledger[f"{col}_drawdown"] = (
+            complete_ledger[f"{col}_close"] - complete_ledger[f"{col}_close"].cummax()
+        ) / complete_ledger[f"{col}_close"].cummax()
+
+    # Calculate portfolio daily return and cumulative return
+    complete_ledger["Return"] = complete_ledger["equity"].pct_change()
+    complete_ledger["Cum_Return"] = (1 + complete_ledger["Return"]).cumprod() - 1
+
+    # Calculate drawdown
+    complete_ledger["Drawdown"] = (
+        complete_ledger["equity"] - complete_ledger["equity"].cummax()
+    ) / complete_ledger["equity"].cummax()
+
+    # Fill NaN values with 0 to return a complete DataFrame
+    complete_ledger.fillna(0, inplace=True)
+
+    return complete_ledger
+```
+
+
 ### create_ma_trend_signals
 
 
@@ -1751,6 +2633,199 @@ def create_ma_trend_signals(
 ```
 
 
+### create_signals
+
+
+```python
+import pandas as pd
+
+
+def create_signals(
+    tickers: list,
+    data: pd.DataFrame,
+    # --- RSI settings ---
+    use_rsi: bool,
+    rsi_threshold: int,
+    # --- MA settings ---
+    use_ma: bool,
+    ma_days: list,
+    # --- Bollinger settings ---
+    use_bbands: bool,
+    bb_rule: str = "touch_lower",  # {"touch_lower", "cross_up_from_below", "below_lower"}
+) -> pd.DataFrame:
+    """
+    Generate entry signals combining RSI, optional MA filter, and optional Bollinger Bands.
+
+    Notes:
+    - Bollinger bands are computed on *_close_prev so the signal at time t only uses info up to t-1.
+    - BB rules:
+        * "touch_lower": close_prev <= lower_prev  (default)
+        * "below_lower": close_prev  < lower_prev  (strict)
+        * "cross_up_from_below": close_prev crosses from < lower_prev to >= lower_prev (uses previous bar of prev-close)
+    """
+
+    # Copy the data dataframe
+    df = data.copy()
+
+    signals = []
+    for ticker in tickers:
+        # --- RSI mask ---
+        if use_rsi:
+            rsi_mask = (
+                df.get(f"{ticker}_RSI_prev", pd.Series(index=df.index, dtype="float64"))
+                .lt(rsi_threshold)
+                .fillna(False)
+            )
+        else:
+            rsi_mask = pd.Series(True, index=df.index, dtype="bool")
+
+        # --- MA mask ---
+        if use_ma:
+            if ma_days:
+                ma_cols = [
+                    f"{ticker}_MA_{day}d_prev"
+                    for day in ma_days
+                    if f"{ticker}_MA_{day}d_prev" in df.columns
+                ]
+                if not ma_cols:
+                    # MA periods requested but none present → this ticker yields no signals
+                    continue
+
+                ma_pass_df = pd.concat(
+                    [(df[f"{ticker}_close"] > df[col]).rename(col) for col in ma_cols],
+                    axis=1,
+                ).fillna(False)
+
+                ma_passes = ma_pass_df.sum(axis=1)
+                allocation_pct = ma_passes / len(ma_days)
+                ma_mask = ma_passes.ge(1)
+            else:
+                ma_passes = pd.Series(0, index=df.index, dtype="int64")
+                allocation_pct = pd.Series(
+                    1.0, index=df.index, dtype="float64"
+                )  # full allocation if no MAs
+                ma_mask = pd.Series(True, index=df.index, dtype="bool")
+
+        # --- Bollinger Bands mask ---
+        if use_bbands:
+            # close_prev = df.get(f"{ticker}_close_prev")
+            # if close_prev is None:
+            #     # If we don't have *_close_prev, skip BB logic safely
+            #     bb_mask = pd.Series(True, index=df.index, dtype="bool")  # don't block RSI/MA if missing
+            #     bb_mid_prev = bb_up_prev = bb_low_prev = pd.Series(pd.NA, index=df.index)
+            #     bb_z_prev = pd.Series(pd.NA, index=df.index)
+            # else:
+            #     rolling = close_prev.rolling(window=bb_window, min_periods=bb_window)
+            #     mid_prev = rolling.mean()
+            #     std_prev = rolling.std(ddof=0)
+            #     up_prev = mid_prev + bb_num_std * std_prev
+            #     low_prev = mid_prev - bb_num_std * std_prev
+
+            #     # Band position (z-score) using prev values
+            #     bb_z_prev = (close_prev - mid_prev) / std_prev
+
+            close_prev = df.get(f"{ticker}_close_prev")
+            low_prev = df.get(f"{ticker}_BB_LOWER_prev")
+            mid_prev = df.get(f"{ticker}_BB_MID_prev")
+            up_prev = df.get(f"{ticker}_BB_UPPER_prev")
+            bb_z_prev = df.get(f"{ticker}_BB_Z_prev")
+
+            # Choose BB rule
+            if bb_rule == "below_lower":
+                bb_mask = close_prev.lt(low_prev)
+            elif bb_rule == "cross_up_from_below":
+                prev_below = close_prev.shift(1).lt(low_prev.shift(1))
+                now_at_or_above = close_prev.ge(low_prev)
+                bb_mask = prev_below & now_at_or_above
+            else:  # "touch_lower"
+                bb_mask = close_prev.le(low_prev)
+
+            bb_mask = bb_mask.fillna(False)
+            bb_mid_prev, bb_up_prev, bb_low_prev = mid_prev, up_prev, low_prev
+        else:
+            # BB disabled
+            bb_mask = pd.Series(True, index=df.index, dtype="bool")
+            bb_mid_prev = bb_up_prev = bb_low_prev = pd.Series(pd.NA, index=df.index)
+            bb_z_prev = pd.Series(pd.NA, index=df.index)
+
+        # --- Combined entry rule ---
+        mask = rsi_mask & ma_mask & bb_mask
+        if not mask.any():
+            continue
+
+        # Collect signal rows
+        cols = [
+            "Date",
+            f"{ticker}_open",
+            f"{ticker}_high",
+            f"{ticker}_low",
+            f"{ticker}_close",
+            f"{ticker}_close_prev",
+        ]
+
+        # pick only columns that exist (avoids KeyError if some are missing)
+        available_cols = [c for c in cols if c in df.columns]
+        s = df.loc[mask, available_cols].copy()
+
+        # Add metadata
+        s["asset"] = ticker
+        s["ma_passes"] = ma_passes.loc[mask].astype(int)
+        s["allocation_pct"] = allocation_pct.loc[mask]
+        s["bb_rule"] = bb_rule if use_bbands else pd.NA
+        s["bb_mid_prev"] = bb_mid_prev.loc[mask]
+        s["bb_up_prev"] = bb_up_prev.loc[mask]
+        s["bb_low_prev"] = bb_low_prev.loc[mask]
+        s["bb_z_prev"] = bb_z_prev.loc[
+            mask
+        ]  # negative means below mid; ~-2 at/below lower band
+
+        # Standardize column names
+        rename_map = {
+            f"{ticker}_open": "open",
+            f"{ticker}_high": "high",
+            f"{ticker}_low": "low",
+            f"{ticker}_close": "close",
+            f"{ticker}_close_prev": "close_prev",
+        }
+        s.rename(
+            columns={k: v for k, v in rename_map.items() if k in s.columns},
+            inplace=True,
+        )
+
+        signals.append(s)
+
+    signals_df = (
+        pd.concat(signals, ignore_index=True)
+        if signals
+        else pd.DataFrame(
+            columns=[
+                "Date",
+                "open",
+                "high",
+                "low",
+                "close",
+                "asset",
+                "ma_passes",
+                "allocation_pct",
+                "bb_rule",
+                "bb_mid_prev",
+                "bb_up_prev",
+                "bb_low_prev",
+                "bb_z_prev",
+                "close_prev",
+            ]
+        )
+    )
+
+    # Sort and de-dup (1 per asset per timestamp)
+    if not signals_df.empty:
+        signals_df = signals_df.sort_values(by="Date")
+        signals_df = signals_df.drop_duplicates(subset=["Date", "asset"])
+
+    return signals_df
+```
+
+
 ### df_info
 
 
@@ -1943,6 +3018,185 @@ def export_track_md_deps(
         f.write(md_filename + "\n")
     print(f"✅ Exported and tracked: {md_filename}")
 ````
+
+
+### filter_top_percent
+
+
+```python
+from typing import Iterable, Mapping, Optional, Tuple
+
+import pandas as pd
+
+
+def filter_top_percent(
+    df: pd.DataFrame,
+    cols: Iterable[str],
+    top_pct: float,
+    how: str = "all",
+    ascending: Optional[Mapping[str, bool]] = None,
+    coerce_numeric: bool = True,
+) -> Tuple[pd.DataFrame, pd.Series]:
+    """
+    Filter rows to the top X% for a set of columns.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Source data. Not modified.
+    cols : Iterable[str]
+        Columns to evaluate.
+    top_pct : float
+        Percentage (e.g., 10 or 0.10 for top 10%).
+    how : {"all", "any"}, default "all"
+        "all": keep rows that are in the top X% for *every* column (intersection).
+        "any": keep rows that are in the top X% for *at least one* column (union).
+    ascending : dict[str, bool] | None
+        Per-column direction. For each col: True => smaller is better (use lower tail),
+        False => larger is better (use upper tail). If None, defaults to False for all.
+        Example: {"Max Drawdown": True, "MAR Ratio": False}
+    coerce_numeric : bool
+        If True, converts the specified cols to numeric (non-numeric values become NaN).
+
+    Returns
+    -------
+    filtered_df : pd.DataFrame
+        Rows meeting the criterion.
+    thresholds : pd.Series
+        Threshold value used for each column (the cutoff included in the keep).
+    """
+
+    if 0 < top_pct <= 1:
+        frac = top_pct
+    elif 1 < top_pct <= 100:
+        frac = top_pct / 100.0
+    else:
+        raise ValueError("top_pct must be in (0,1] or (1,100].")
+
+    # Work on a copy so the caller's DataFrame is left untouched
+    df = df.copy()
+
+    cols = list(cols)
+    if coerce_numeric:
+        for c in cols:
+            if c in df.columns:
+                df[c] = pd.to_numeric(df[c], errors="coerce")
+
+    # Any unspecified column defaults to larger-is-better
+    ascending = {**{c: False for c in cols}, **(ascending or {})}
+
+    thresholds = {}
+    masks = {}
+
+    for c in cols:
+        if c not in df.columns:
+            raise KeyError(f"Column '{c}' not found in DataFrame.")
+
+        # If smaller is better, top X% = bottom X% (lower tail). Else upper tail.
+        q = frac if ascending[c] else (1 - frac)
+
+        # Guard against all-NaN columns
+        cutoff = df[c].quantile(q) if df[c].notna().any() else float("nan")
+        thresholds[c] = cutoff
+
+        # Use quantile cutoff; include ties on the boundary
+        if ascending[c]:
+            masks[c] = df[c] <= cutoff
+        else:
+            masks[c] = df[c] >= cutoff
+
+    thresholds = pd.Series(thresholds)
+
+    if how == "all":
+        keep_mask = pd.concat(masks, axis=1).all(axis=1)
+    elif how == "any":
+        keep_mask = pd.concat(masks, axis=1).any(axis=1)
+    else:
+        raise ValueError("how must be 'all' or 'any'.")
+
+    filtered_df = df[keep_mask].copy()
+
+    return filtered_df, thresholds
+```
+
+
+### load_crypto_data
+
+
+```python
+import pandas as pd
+
+from load_data import load_data
+
+
+def load_crypto_data(
+    tickers: list,
+    base_directory,
+    start_date: str,
+    end_date: str,
+) -> pd.DataFrame:
+    """
+    Loads minute-level data for multiple crypto tickers from Coinbase source.
+
+
+    Parameters:
+    -----------
+    tickers : list
+        List of crypto tickers, e.g., ["BTC-USD", "ETH-USD", "SOL-USD"].
+    base_directory
+        Base directory where data files are stored.
+    start_date : str
+        Optional start date for filtering data, e.g., "2023-01-01".
+    end_date : str
+        Optional end date for filtering data, e.g., "2023-12-31".
+
+    Returns:
+    --------
+    pd.DataFrame
+        DataFrame containing merged price data for all tickers.
+    """
+
+    # Create empty DataFrame
+    df = pd.DataFrame()
+
+    for ticker in tickers:
+        # Load data
+        temp_df = load_data(
+            base_directory=base_directory,
+            ticker=ticker,
+            source="Coinbase",
+            asset_class="Cryptocurrencies",
+            timeframe="Minute",
+            file_format="pickle",
+        )
+        temp_df.index = pd.to_datetime(temp_df.index)
+        temp_df = temp_df.sort_index()
+
+        # Rename columns
+        temp_df = temp_df.rename(
+            columns={
+                "open": f"{ticker}_open",
+                "high": f"{ticker}_high",
+                "low": f"{ticker}_low",
+                "close": f"{ticker}_close",
+                "volume": f"{ticker}_volume",
+            }
+        )
+
+        # Merge the data
+        df = pd.merge(df, temp_df, how="outer", left_index=True, right_index=True)
+
+    # Apply date filtering if specified
+    if start_date:
+        df = df[df.index >= pd.to_datetime(start_date)]
+    if end_date:
+        df = df[df.index <= pd.to_datetime(end_date)]
+
+    # Reset index
+    df = df.reset_index()
+
+    return df
+```
 
 
 ### load_data
@@ -2329,6 +3583,374 @@ def plot_histogram(
 
     # Display the plot
     plt.show()
+
+    return None
+```
+
+
+### plot_iteration_results
+
+
+```python
+import matplotlib.pyplot as plt
+import pandas as pd
+
+
+def plot_iteration_results(
+    results_df: pd.DataFrame,
+) -> None:
+    """
+    Plot the distribution of backtest parameter sweep results.
+
+    Draws histograms of the MAR ratio and of each swept parameter, followed by
+    scatter plots of the MAR ratio against each parameter and against the other
+    performance statistics.
+
+    Parameters
+    ----------
+    results_df : pd.DataFrame
+        DataFrame of backtest results, one row per parameter combination. Must
+        contain the columns MAR Ratio, MA_DAYS, RSI_PERIOD, RSI_THRESHOLD,
+        TRAILING_STOP_PCT, Total Return, Win Rate, Max Drawdown, Total Trades,
+        CAGR, Annualized Mean Return, Annualized Volatility, and Annualized
+        Sharpe Ratio.
+
+    Returns
+    -------
+    None
+    """
+
+    df = results_df.copy()
+
+    # Histograms: (column, title, x-axis label)
+    histograms = [
+        ("MAR Ratio", "Distribution of MAR Ratio", "MAR Ratio"),
+        ("MA_DAYS", "Distribution of MA Days", "MA Days"),
+        ("RSI_PERIOD", "Distribution of RSI Period", "RSI Period"),
+        ("RSI_THRESHOLD", "Distribution of RSI Threshold", "RSI Threshold"),
+        (
+            "TRAILING_STOP_PCT",
+            "Distribution of Trailing Stop Percentage",
+            "Trailing Stop Percentage",
+        ),
+    ]
+
+    for col, title, xlabel in histograms:
+        plt.figure(figsize=(12, 6))
+        plt.hist(df[col], bins=200, density=True, alpha=0.6, color="g")
+        plt.title(title)
+        plt.xlabel(xlabel)
+        plt.ylabel("Frequency")
+        plt.grid()
+        plt.show()
+
+    # Scatter plots of MAR Ratio vs: (column, x-axis label)
+    scatters = [
+        ("MA_DAYS", "MA_DAYS"),
+        ("RSI_PERIOD", "RSI_PERIOD"),
+        ("RSI_THRESHOLD", "RSI_THRESHOLD"),
+        ("TRAILING_STOP_PCT", "TRAILING_STOP"),
+        ("Total Return", "Total Return"),
+        ("Win Rate", "Win Rate"),
+        ("Max Drawdown", "Max Drawdown"),
+        ("Total Trades", "Total Trades"),
+        ("CAGR", "CAGR"),
+        ("Annualized Mean Return", "Annualized Mean Return"),
+        ("Annualized Volatility", "Annualized Volatility"),
+        ("Annualized Sharpe Ratio", "Annualized Sharpe Ratio"),
+    ]
+
+    for col, xlabel in scatters:
+        plt.figure(figsize=(12, 6))
+        plt.scatter(df[col], df["MAR Ratio"], alpha=0.6)
+        plt.title(f"MAR Ratio vs. {xlabel}")
+        plt.xlabel(xlabel)
+        plt.ylabel("MAR Ratio")
+        plt.grid()
+        plt.show()
+
+    return None
+```
+
+
+### plot_multi_asset_equity_and_drawdown
+
+
+```python
+import matplotlib.pyplot as plt
+import pandas as pd
+
+from label_start_end_min_max import label_start_end_min_max
+from matplotlib.ticker import StrMethodFormatter
+from pathlib import Path
+
+
+def plot_multi_asset_equity_and_drawdown(
+    tickers: list[str],
+    daily_perf: pd.DataFrame,
+    trades: pd.DataFrame,
+    data: pd.DataFrame,
+    title: str,
+    show_plot: bool,
+    export_plot: bool,
+    export_dir: Path | str = None,  # <-- new optional parameter
+    caption: str = None,
+) -> None:
+    """
+    Plots:
+    - Total equity, cash, and per-asset position values
+    - Cumulative returns (strategy and crypto assets)
+    - Drawdowns (strategy and crypto assets)
+    - Price series and trade markers for BTC, ETH, SOL
+
+    Parameters:
+    -----------
+    tickers : list
+        List of crypto tickers, e.g., ["BTC-USD", "ETH-USD", "SOL-USD"].
+    daily_perf : pd.DataFrame
+        DataFrame containing daily performance metrics from compute_daily_performance.
+    trades : pd.DataFrame
+        DataFrame of trades from backtest_rsi_multi_asset_strategy.
+    data : pd.DataFrame
+        DataFrame containing merged price data for all tickers.
+    title : str
+        Title for the overall plot.
+    show_plot : bool
+        Whether to display the plot.
+    export_plot : bool
+        Whether to save the plot as a PNG file.
+    export_dir : Path | str, optional
+        Directory to save the plot if export_plot is True. Defaults to current directory.
+    caption : str, optional
+        Caption drawn centered below the figure, e.g. "Figure 1". Defaults to None.
+
+    Returns:
+    --------
+    None
+    """
+
+    # Copy the data dataframe
+    prices_df = data.copy().set_index("Date")
+
+    # Drop NaN rows
+    perf_df = daily_perf.copy().dropna()
+
+    # Compute position values and crypto drawdowns
+    colors = ["blue", "red", "purple", "orange", "yellow"]
+
+    # Determine number of subplots
+    n_fixed = 3  # ax1, ax2, ax3
+    n_tickers = len(tickers)
+    total_axes = n_fixed + n_tickers
+
+    # Setup plot
+    fig, axes = plt.subplots(
+        total_axes,
+        1,
+        figsize=(14, 4 * total_axes),
+        sharex=True,
+        gridspec_kw={"height_ratios": [1] * total_axes},
+    )
+
+    # Unpack fixed axes
+    ax1, ax2, ax3 = axes[:3]
+
+    # Assign price axes
+    price_axes = axes[3:]
+
+    # ax1: Equity, Cash, and Position Values
+    ax1.plot(perf_df.index, perf_df["equity"], color="black", label="Strategy Equity")
+    label_start_end_min_max(
+        ax1, perf_df.index, perf_df["equity"], fmt="{:,.0f}", fontsize=10
+    )
+    ax1.plot(
+        perf_df.index,
+        perf_df["cash"],
+        color="green",
+        alpha=0.6,
+        linestyle="--",
+        label="Strategy Cash",
+    )
+    for i, symbol in enumerate(tickers):
+        ax1.plot(
+            perf_df.index,
+            perf_df[f"{symbol}_position"],
+            alpha=0.6,
+            linestyle="--",
+            color=colors[i % len(colors)],
+            label=f"{symbol} Strategy Position Value",
+        )
+    ax1.set_title("Equity, Cash, and Position Values (Daily Data)", fontsize=12)
+    ax1.yaxis.set_major_formatter(StrMethodFormatter("{x:,.0f}"))
+    ax1.set_ylabel("Account Value ($)")
+    ax1.legend()
+    ax1.grid(True)
+
+    # ax2: Cumulative Returns
+    ax2.plot(
+        perf_df.index,
+        perf_df["Cum_Return"] * 100,
+        color="black",
+        label="Strategy Return",
+    )
+    label_start_end_min_max(
+        ax2, perf_df.index, perf_df["Cum_Return"] * 100, fmt="{:.1f}%", fontsize=10
+    )
+    for i, symbol in enumerate(tickers):
+        ax2.plot(
+            perf_df.index,
+            perf_df[f"{symbol}_cum_return"] * 100,
+            linestyle="--",
+            color=colors[i % len(colors)],
+            label=f"{symbol} Buy-Hold Return",
+        )
+        label_start_end_min_max(
+            ax2,
+            perf_df.index,
+            perf_df[f"{symbol}_cum_return"] * 100,
+            fmt="{:.1f}%",
+            fontsize=10,
+        )
+    ax2.set_title("Cumulative Return (Daily Data)", fontsize=12)
+    ax2.set_ylabel("Return (%)")
+    ax2.legend()
+    ax2.grid(True)
+
+    # ax3: Drawdowns
+    ax3.plot(
+        perf_df.index,
+        perf_df["Drawdown"] * 100,
+        color="black",
+        label="Strategy Drawdown",
+    )
+    label_start_end_min_max(
+        ax3, perf_df.index, perf_df["Drawdown"] * 100, fmt="{:.1f}%", fontsize=10
+    )
+    for i, symbol in enumerate(tickers):
+        ax3.plot(
+            perf_df.index,
+            perf_df[f"{symbol}_drawdown"] * 100,
+            linestyle="--",
+            color=colors[i % len(colors)],
+            label=f"{symbol} Buy-Hold Drawdown",
+        )
+        label_start_end_min_max(
+            ax3,
+            perf_df.index,
+            y=perf_df[f"{symbol}_drawdown"] * 100,
+            fmt="{:.1f}%",
+            fontsize=10,
+        )
+    ax3.set_title("Drawdown (Daily Data)", fontsize=12)
+    ax3.set_ylabel("Drawdown (%)")
+    ax3.legend()
+    ax3.grid(True)
+
+    # ax4, ax5, ax6... : Price plots with trade markers are dynamically created based on the number of crypto assets
+    for i, symbol in enumerate(tickers):
+        df = prices_df[[f"{symbol}_close"]].copy()
+        df.index = pd.to_datetime(df.index)
+        # plot_df = df[df.index >= trades["entry_time"].min()]
+        plot_df = df.copy()
+        ax = price_axes[i]
+        ax.plot(
+            plot_df.index,
+            plot_df[f"{symbol}_close"],
+            color="gray",
+            label=f"{symbol} Price",
+        )
+        label_start_end_min_max(
+            ax, plot_df.index, plot_df[f"{symbol}_close"], fmt="{:,.0f}", fontsize=10
+        )
+
+        # Mark trades
+        asset_trades = trades[trades["asset"] == symbol]
+        for _, trade in asset_trades.iterrows():
+            if trade["quantity"] > 0:
+                entry_time = trade["entry_time"]
+                exit_time = trade["exit_time"]
+                if entry_time in plot_df.index:
+                    ax.plot(
+                        entry_time,
+                        plot_df.loc[entry_time, f"{symbol}_close"],
+                        marker="^",
+                        color="green",
+                        label=(
+                            "Entry"
+                            if "Entry" not in ax.get_legend_handles_labels()[1]
+                            else ""
+                        ),
+                    )
+                if exit_time in plot_df.index:
+                    ax.plot(
+                        exit_time,
+                        plot_df.loc[exit_time, f"{symbol}_close"],
+                        marker="v",
+                        color="red",
+                        label=(
+                            "Exit"
+                            if "Exit" not in ax.get_legend_handles_labels()[1]
+                            else ""
+                        ),
+                    )
+            else:
+                entry_time = trade["entry_time"]
+                exit_time = trade["exit_time"]
+                if entry_time in plot_df.index:
+                    ax.plot(
+                        entry_time,
+                        plot_df.loc[entry_time, f"{symbol}_close"],
+                        marker="^",
+                        color="lightgreen",
+                        label=(
+                            "Entry (No trade due to position conflict)"
+                            if "Entry (No trade due to position conflict)"
+                            not in ax.get_legend_handles_labels()[1]
+                            else ""
+                        ),
+                    )
+                if exit_time in plot_df.index:
+                    ax.plot(
+                        exit_time,
+                        plot_df.loc[exit_time, f"{symbol}_close"],
+                        marker="v",
+                        color="pink",
+                        label=(
+                            "Exit (No trade due to position conflict)"
+                            if "Exit (No trade due to position conflict)"
+                            not in ax.get_legend_handles_labels()[1]
+                            else ""
+                        ),
+                    )
+        ax.set_title(f"{symbol} Price History With Trades (Minute Data)", fontsize=12)
+        ax.yaxis.set_major_formatter(StrMethodFormatter("{x:,.0f}"))
+        ax.set_ylabel("Price ($)")
+        ax.legend()
+        ax.grid(True)
+
+    # Set global title and layout
+    fig.suptitle(title, fontsize=16, y=0.99)
+    plt.tight_layout()
+
+    # Caption
+    if caption is not None:
+        fig.text(0.5, 0, caption, ha="center", va="top", fontsize=9)
+
+    # Export plot as PNG
+    if export_plot:
+        export_dir = Path(export_dir) if export_dir else Path.cwd()
+        export_dir.mkdir(parents=True, exist_ok=True)
+        # Expand the saved image to include a caption below the figure
+        plt.savefig(
+            export_dir / "multi_asset_strategy.png",
+            bbox_inches="tight" if caption is not None else None,
+        )
+
+    # Show the plot
+    if show_plot == True:
+        plt.show()
+    else:
+        plt.close(fig)
 
     return None
 ```

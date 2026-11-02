@@ -8,10 +8,20 @@
 #       format_version: '1.3'
 #       jupytext_version: 1.19.6
 #   kernelspec:
-#     display_name: general-venv-p313 (3.13.11)
+#     display_name: general-venv-p313 (3.13.18)
 #     language: python
 #     name: python3
 # ---
+
+# %% [markdown]
+# ## Post Updates
+
+# %% [markdown]
+# Update 11/1/2026: Added `backtest_dca_strategy` and `calc_money_weighted_return`, the functions behind the dollar cost averaging post.
+
+# %% [markdown]
+# Update 10/31/2026: Added `add_rsi_ma_bb`, `analyze_trades`, `backtest_rsi_multi_asset_strategy`, `calculate_rsi`, `compute_daily_performance`, `create_signals`, `filter_top_percent`, `load_crypto_data`, `plot_iteration_results`, and `plot_multi_asset_equity_and_drawdown`, the functions behind the trend following and RSI crypto strategy posts.
+
 # %% [markdown]
 # ## Introduction
 
@@ -57,23 +67,33 @@ sys.path.append(str(Path(SOURCE_DIR))) if str(Path(SOURCE_DIR)) not in sys.path 
 # ## Function Index
 
 # %% [markdown]
+# * [add_rsi_ma_bb](/posts/reusable-extensible-python-functions-financial-data-analysis/#add_rsi_ma_bb): Add RSI, moving averages, and Bollinger Bands for each crypto asset.
+# * [analyze_trades](/posts/reusable-extensible-python-functions-financial-data-analysis/#analyze_trades): Summarize a set of trades: win rate, returns, PnL, and maximum drawdown.
+# * [backtest_rsi_multi_asset_strategy](/posts/reusable-extensible-python-functions-financial-data-analysis/#backtest_rsi_multi_asset_strategy): Backtest an RSI entry strategy across one or more assets, with limit or market entries, a trailing stop exit, and trading fees.
 # * [backtest_target_weight_portfolio](/posts/reusable-extensible-python-functions-financial-data-analysis/#backtest_target_weight_portfolio): Backtest a portfolio that periodically rebalances toward a set of target weights.
 # * [bb_clean_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#bb_clean_data): Takes an Excel export from Bloomberg, removes the miscellaneous headings/rows, and returns a DataFrame.
 # * [build_index](/posts/reusable-extensible-python-functions-financial-data-analysis/#build_index): Reads the `index_temp.md` markdown file, inserts the markdown dependencies where indicated, and then saves the file as `index.md`.
 # * [calc_fed_cycle_asset_performance](/posts/reusable-extensible-python-functions-financial-data-analysis/#calc_fed_cycle_asset_performance): Calculates metrics for an asset based on a specified Fed tightening/easing cycle.
 # * [calc_vix_trade_pnl](/posts/reusable-extensible-python-functions-financial-data-analysis/#calc_vix_trade_pnl): Calculates the profit/loss from VIX options trades.
+# * [calculate_rsi](/posts/reusable-extensible-python-functions-financial-data-analysis/#calculate_rsi): Calculate the Relative Strength Index for a price series using Wilder's smoothing.
 # * [coinbase_fetch_available_products](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_available_products): Fetch available products from Coinbase Exchange API.
 # * [coinbase_fetch_full_history](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_full_history): Fetch full historical data for a given product from Coinbase Exchange API.
 # * [coinbase_fetch_historical_candles](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_fetch_historical_candles): Fetch historical candle data for a given product from Coinbase Exchange API.
 # * [coinbase_pull_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#coinbase_pull_data): Update existing record or pull full historical data for a given product from Coinbase Exchange API.
+# * [compute_daily_performance](/posts/reusable-extensible-python-functions-financial-data-analysis/#compute_daily_performance): Build the daily equity, cash, position, return, and drawdown series from a set of trades.
 # * [create_ma_trend_signals](/posts/reusable-extensible-python-functions-financial-data-analysis/#create_ma_trend_signals): Generate multi-asset trend following target weights from a grid of moving averages.
+# * [create_signals](/posts/reusable-extensible-python-functions-financial-data-analysis/#create_signals): Generate entry signals combining RSI, an optional moving average filter, and optional Bollinger Bands.
 # * [df_info](/posts/reusable-extensible-python-functions-financial-data-analysis/#df_info): A simple function to display the information about a DataFrame and the first five rows and last five rows.
 # * [df_info_markdown](/posts/reusable-extensible-python-functions-financial-data-analysis/#df_info_markdown): Similar to the `df_info` function above, except that it coverts the output to markdown.
 # * [export_track_md_deps](/posts/reusable-extensible-python-functions-financial-data-analysis/#export_track_md_deps): Exports various text outputs to markdown files, which are included in the `index.md` file created when building the site with Hugo.
+# * [filter_top_percent](/posts/reusable-extensible-python-functions-financial-data-analysis/#filter_top_percent): Filter a DataFrame to the rows in the top X% for one or more columns.
+# * [load_crypto_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#load_crypto_data): Load minute-level data for one or more crypto assets from Coinbase and merge it into a single DataFrame.
 # * [load_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#load_data): Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.
 # * [pandas_set_decimal_places](/posts/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places): Set the number of decimal places displayed for floating-point numbers in pandas.
 # * [plot_bar_returns_ffr_change](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_bar_returns_ffr_change): Plot the bar chart of the cumulative or annualized returns for the asset class along with the change in the Fed Funds Rate.
 # * [plot_histogram](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_histogram): Plot the histogram of a data set from a DataFrame.
+# * [plot_iteration_results](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_iteration_results): Plot the distribution of backtest parameter sweep results, and the MAR ratio against each parameter and statistic.
+# * [plot_multi_asset_equity_and_drawdown](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_multi_asset_equity_and_drawdown): Plot equity, cumulative return, drawdown, and each asset's price history with trades.
 # * [plot_scatter](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_scatter): Plot the data from a DataFrame for a specified date range and columns.
 # * [plot_scatter_regression_ffr_vs_returns](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_scatter_regression_ffr_vs_returns): Plot a scatter plot of annualized returns vs annualized change in Fed Funds Rate, with a regression line and annotations for each policy cycle.
 # * [plot_stats](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_stats): Generate a scatter plot for the mean OHLC prices.
@@ -100,6 +120,30 @@ def display_source(module_name: str) -> None:
     display(Markdown(f"{fence}python\n{code}\n{fence}"))
 
 # %% [markdown]
+# ### add_rsi_ma_bb
+
+# %% tags=["remove_input"]
+display_source("add_rsi_ma_bb")
+
+# %% [markdown]
+# ### analyze_trades
+
+# %% tags=["remove_input"]
+display_source("analyze_trades")
+
+# %% [markdown]
+# ### backtest_dca_strategy
+
+# %% tags=["remove_input"]
+display_source("backtest_dca_strategy")
+
+# %% [markdown]
+# ### backtest_rsi_multi_asset_strategy
+
+# %% tags=["remove_input"]
+display_source("backtest_rsi_multi_asset_strategy")
+
+# %% [markdown]
 # ### backtest_target_weight_portfolio
 
 # %% tags=["remove_input"]
@@ -124,10 +168,22 @@ display_source("build_index")
 display_source("calc_fed_cycle_asset_performance")
 
 # %% [markdown]
+# ### calc_money_weighted_return
+
+# %% tags=["remove_input"]
+display_source("calc_money_weighted_return")
+
+# %% [markdown]
 # ### calc_vix_trade_pnl
 
 # %% tags=["remove_input"]
 display_source("calc_vix_trade_pnl")
+
+# %% [markdown]
+# ### calculate_rsi
+
+# %% tags=["remove_input"]
+display_source("calculate_rsi")
 
 # %% [markdown]
 # ### coinbase_fetch_available_products
@@ -154,10 +210,22 @@ display_source("coinbase_fetch_historical_candles")
 display_source("coinbase_pull_data")
 
 # %% [markdown]
+# ### compute_daily_performance
+
+# %% tags=["remove_input"]
+display_source("compute_daily_performance")
+
+# %% [markdown]
 # ### create_ma_trend_signals
 
 # %% tags=["remove_input"]
 display_source("create_ma_trend_signals")
+
+# %% [markdown]
+# ### create_signals
+
+# %% tags=["remove_input"]
+display_source("create_signals")
 
 # %% [markdown]
 # ### df_info
@@ -176,6 +244,18 @@ display_source("df_info_markdown")
 
 # %% tags=["remove_input"]
 display_source("export_track_md_deps")
+
+# %% [markdown]
+# ### filter_top_percent
+
+# %% tags=["remove_input"]
+display_source("filter_top_percent")
+
+# %% [markdown]
+# ### load_crypto_data
+
+# %% tags=["remove_input"]
+display_source("load_crypto_data")
 
 # %% [markdown]
 # ### load_data
@@ -200,6 +280,18 @@ display_source("plot_bar_returns_ffr_change")
 
 # %% tags=["remove_input"]
 display_source("plot_histogram")
+
+# %% [markdown]
+# ### plot_iteration_results
+
+# %% tags=["remove_input"]
+display_source("plot_iteration_results")
+
+# %% [markdown]
+# ### plot_multi_asset_equity_and_drawdown
+
+# %% tags=["remove_input"]
+display_source("plot_multi_asset_equity_and_drawdown")
 
 # %% [markdown]
 # ### plot_scatter
