@@ -86,27 +86,30 @@ def polygon_fetch_index_full_history(
     # Copy DataFrame
     full_history_df = existing_history_df.copy()
 
-    if timespan == "minute":
-        time_delta = 15
-        time_overlap = 1
-    elif timespan == "hour":
-        time_delta = 15
-        time_overlap = 1
-    elif timespan == "day":
-        time_delta = 180
-        time_overlap = 1
-    else:
+    # Set time_delta based on the timespan
+    window_days = {"minute": 15, "hour": 15, "day": 180}
+    if timespan not in window_days:
         raise Exception(f"Invalid {timespan}.")
+    time_delta = window_days[timespan]
 
-    price_cols = ["open", "high", "low", "close"]
+    # Set the number of overlapping days to check for revisions in the data
+    time_overlap = 1
 
-    new_data_last_date = None
-    new_date_last_date_check = None
+    # List of columns to check for overlapping data
+    price_cols = [
+        "open",
+        "high",
+        "low",
+        "close",
+    ]
+
+    # Set current_end to the start of the window
+    current_end = current_start
 
     while current_start < datetime.now():
 
-        # Offset end date by time_delta
-        current_end = current_start + timedelta(days=time_delta)
+        # Move the end of the window forward by time_delta
+        current_end = current_end + timedelta(days=time_delta)
 
         if verbose == True:
             print(
@@ -122,17 +125,15 @@ def polygon_fetch_index_full_history(
                 from_=current_start,
                 to=current_end,
                 sort="asc",
-                limit=50000,
+                limit=5000,
             )
 
+            # If no new data is returned, print a message indicating no data was found
+            # Always prints regardless of the verbose setting
             if len(aggs) == 0:
                 print(
-                    f"No data is available for {ticker} from {current_start} thru {current_end}."
+                    f"No data for {ticker} from {current_start} thru {current_end}.\n"
                 )
-
-                # Set new_data_last_date to current_end because we know data was not
-                # available up until current_end
-                new_data_last_date = current_end
 
             else:
                 # Convert to DataFrame
@@ -145,9 +146,6 @@ def polygon_fetch_index_full_history(
                 # Enforce dtypes to match full_history_df
                 new_data = new_data.astype(full_history_df.dtypes.to_dict())
 
-                # Find last date in new_data
-                new_data_last_date = new_data["Date"].max()
-
                 if verbose == True:
                     print("New data:")
                     print(new_data)
@@ -156,7 +154,7 @@ def polygon_fetch_index_full_history(
                 # the existing data on price, as a check against revisions or gaps
                 if not full_history_df.empty:
                     overlap = full_history_df.merge(
-                        new_data, on=price_cols, how="inner"
+                        new_data, on=["Date"] + price_cols, how="inner"
                     )
 
                     if overlap.empty:
@@ -164,7 +162,8 @@ def polygon_fetch_index_full_history(
                             f"New data does not overlap with existing data (price data check)."
                         )
 
-                # Combine existing data with recent data, drop duplicates, sort values, reset index
+                # Combine existing data with recent data, drop duplicates, sort values,
+                # reset index
                 full_history_df = pd.concat([full_history_df, new_data])
                 full_history_df = full_history_df.drop_duplicates(
                     subset="Date", keep="last"
@@ -176,26 +175,24 @@ def polygon_fetch_index_full_history(
                     print("Combined data:")
                     print(full_history_df)
 
+                # Start the next window before the last bar pulled, so that the bar
+                # is included in the next overlap check
+                current_start = new_data["Date"].max() - timedelta(days=time_overlap)
+                current_end = current_start
+
+        # Exception handling for failed data pull
         except Exception as e:
             print(
                 f"Failed to pull {timespan} data for {current_start} thru {current_end} for {ticker}: {e}"
             )
             raise  # Re-raise the original exception
 
-        # Break out of loop if data is up-to-date
+        # Break out of while loop if current_end is beyond the present date
         if current_end > datetime.now():
             break
-        else:
-            # Edge case, if the last date for new_data is exactly time_overlap's duration
-            # past current_start
-            if new_date_last_date_check == new_data_last_date:
-                current_start = current_end - timedelta(days=time_overlap)
-            else:
-                current_start = new_data_last_date - timedelta(days=time_overlap)
 
-            new_date_last_date_check = new_data_last_date
-
-        # Check for free tier and if so then pause for 12 seconds to avoid hitting API rate limits
+        # Check for free tier and if so then pause for 12 seconds to avoid hitting
+        # API rate limits
         if free_tier == True:
             if verbose == True:
                 print(f"Sleeping for 12 seconds to avoid hitting API rate limits...\n")
@@ -304,8 +301,9 @@ def polygon_pull_index_data(
         starting_rows = len(existing_history_df)
         print(f"Number of rows in existing data: {starting_rows}")
 
-        # Overlap with existing data to capture all data
-        current_start = last_data_date - timedelta(days=1)
+        # Overlap with existing data by enough to span a weekend, so that a session
+        # still in progress at the last update is not the only bar being compared
+        current_start = last_data_date - timedelta(days=7)
 
     except FileNotFoundError:
         # Print error
@@ -343,6 +341,12 @@ def polygon_pull_index_data(
         free_tier=free_tier,
         verbose=verbose,
     )
+
+    # Do not export an empty file, since later runs would read it as existing data
+    # and have no last date from which to resume
+    if full_history_df.empty:
+        print(f"No {timespan} data found for {ticker}, so nothing was exported.")
+        return full_history_df
 
     # Create directory
     os.makedirs(directory, exist_ok=True)
@@ -504,7 +508,7 @@ if __name__ == "__main__":
                 multiplier=1,
                 force_existing_check=False,
                 free_tier=GLOBAL_FREE_TIER,
-                verbose=False,
+                verbose=True,
                 excel_export=True,
                 pickle_export=True,
                 parquet_export=True,

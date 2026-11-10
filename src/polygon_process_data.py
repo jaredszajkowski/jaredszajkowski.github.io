@@ -1,26 +1,42 @@
 """
 This script uses existing functions to download price data from Polygon
-and save it under DATA_DIR/Polygon:
+(Massive) and save it under DATA_DIR/Polygon. Each data type has its own
+section, run in this order by main():
 
-* Equities (tickers from equities.csv), indices (tickers from indexes.csv),
-  and ETFs (tickers from etfs.csv):
+* pull_equities: tickers from equities.csv
     * Pull day, hour, and minute bars
     * Resample the daily data to month end and quarter end
-* Options (underlying tickers from options.csv):
-    * Fetch the list of expired and active contracts and export it
+* pull_indices: tickers from indices.csv (e.g. I:NDX)
     * Pull day, hour, and minute bars
+    * Resample the daily data to month end and quarter end
+* pull_etfs: tickers from etfs.csv
+    * Pull day, hour, and minute bars
+    * Resample the daily data to month end and quarter end
+* pull_options: underlying tickers from options.csv
+    * Fetch the list of expired and active contracts and export it
+    * Pull day, hour, and minute bars for each contract
+* pull_futures: contract tickers from futures.csv (e.g. ESZ6)
+    * Pull day, hour, and minute bars (no resampling, since each ticker is a
+      single dated contract)
+
+Massive sells a separate subscription for each data type, so
+GLOBAL_PAID_ACCESS sets paid or free tier per type. Free-tier types start
+from GLOBAL_FREE_START_DATE and pause 12 seconds between API calls to stay
+under 5 calls per minute; paid types start from GLOBAL_PAID_START_DATE and
+run without the pause.
+
+All bars are exported to Pickle (and Parquet if GLOBAL_PARQUET_EXPORT is
+True). Excel exports cover only the timespans in excel_timespans (day and
+hour), plus the month-end, quarter-end, and options contract list files.
 """
 
 import os
 import pandas as pd
-import time
 
 from datetime import datetime, timedelta
 from massive import RESTClient
-from polygon_pull_equity_data import (
-    polygon_pull_equity_data,
-    polygon_resample_period_end,
-)
+from polygon_pull_equity_data import polygon_pull_equity_data
+from polygon_pull_futures_data import polygon_pull_futures_data
 from polygon_pull_index_data import (
     polygon_pull_index_data,
     polygon_resample_index_period_end,
@@ -29,6 +45,7 @@ from polygon_pull_options_data import (
     polygon_fetch_options_contracts,
     polygon_pull_options_data,
 )
+from polygon_resample_period_end import polygon_resample_period_end
 from settings import config
 
 # Get the environment variable for where data is stored
@@ -36,14 +53,42 @@ POLYGON_KEY = config("POLYGON_KEY")
 DATA_DIR = config("DATA_DIR")
 
 # Set global variables
-GLOBAL_FREE_TIER = False
 GLOBAL_PARQUET_EXPORT = False
-GLOBAL_FREE_START_DATE = datetime.now() - timedelta(days=2*365)
-GLOBAL_PAID_START_DATE = datetime.now() - timedelta(days=5*365)
+GLOBAL_FREE_START_DATE = datetime.now() - timedelta(days=2 * 365)
+GLOBAL_PAID_START_DATE = datetime.now() - timedelta(days=5 * 365)
 GLOBAL_VERBOSE = False
+
+# Massive (Polygon) sells a separate subscription for each data type.
+# True = paid plan, False = free tier.
+GLOBAL_PAID_ACCESS = {
+    "equities": True,
+    "etfs": True,
+    "indices": False,
+    "options": False,
+    "futures": False,
+}
+
+
+def tier_settings(data_type: str) -> dict:
+    """
+    Return the free_tier flag and start date for a data type.
+
+    On the free tier the pull functions sleep 12 seconds around each API
+    call, which keeps that data type under the 5 calls per minute limit.
+    Paid data types run without the pause.
+    """
+    paid = GLOBAL_PAID_ACCESS[data_type]
+    return {
+        "free_tier": not paid,
+        "start_date": GLOBAL_PAID_START_DATE if paid else GLOBAL_FREE_START_DATE,
+    }
+
 
 # Timespans
 timespans = ["day", "hour", "minute"]
+
+# Timespans to export to Excel (minute data is too large)
+excel_timespans = ["day", "hour"]
 
 
 def pull_equities():
@@ -53,6 +98,8 @@ def pull_equities():
     equities_df = pd.read_csv(f"{DATA_DIR}/Polygon/equities.csv", index_col=0)
     equities = equities_df.to_dict()["Name"]
 
+    tier = tier_settings("equities")
+
     # Iterate through each stock
     for stock in equities.keys():
         for span in timespans:
@@ -61,21 +108,18 @@ def pull_equities():
                 ticker=stock,
                 source="Polygon",
                 asset_class="Equities",
-                start_date=GLOBAL_PAID_START_DATE,
+                start_date=tier["start_date"],
                 timespan=span,
                 multiplier=1,
                 adjusted=True,
                 force_existing_check=False,
                 verbose=GLOBAL_VERBOSE,
-                free_tier=GLOBAL_FREE_TIER,
-                excel_export=True,
+                free_tier=tier["free_tier"],
+                excel_export=span in excel_timespans,
                 pickle_export=True,
                 parquet_export=GLOBAL_PARQUET_EXPORT,
                 output_confirmation=True,
             )
-
-            if GLOBAL_FREE_TIER == True:
-                time.sleep(12)
 
         # Resample to month-end data
         polygon_resample_period_end(
@@ -107,11 +151,13 @@ def pull_equities():
 
 
 def pull_indices():
-    """Pull and resample data for the tickers in indexes.csv."""
+    """Pull and resample data for the tickers in indices.csv."""
 
     # Read existing data from csv file into index dictionary
-    index_df = pd.read_csv(f"{DATA_DIR}/Polygon/indexes.csv", index_col=0)
+    index_df = pd.read_csv(f"{DATA_DIR}/Polygon/indices.csv", index_col=0)
     indices = index_df.to_dict()["Name"]
+
+    tier = tier_settings("indices")
 
     # Iterate through each index
     for index in indices:
@@ -121,20 +167,17 @@ def pull_indices():
                 ticker=index,
                 source="Polygon",
                 asset_class="Indices",
-                start_date=GLOBAL_FREE_START_DATE,
+                start_date=tier["start_date"],
                 timespan=timespan,
                 multiplier=1,
                 force_existing_check=False,
-                free_tier=True,
+                free_tier=tier["free_tier"],
                 verbose=GLOBAL_VERBOSE,
-                excel_export=True,
+                excel_export=timespan in excel_timespans,
                 pickle_export=True,
                 parquet_export=GLOBAL_PARQUET_EXPORT,
                 output_confirmation=True,
             )
-
-            if GLOBAL_FREE_TIER == True:
-                time.sleep(12)
 
         # Resample to month-end data
         polygon_resample_index_period_end(
@@ -172,6 +215,8 @@ def pull_etfs():
     etfs_df = pd.read_csv(f"{DATA_DIR}/Polygon/etfs.csv", index_col=0)
     etfs = etfs_df.to_dict()["Name"]
 
+    tier = tier_settings("etfs")
+
     # Iterate through each ETF
     for fund in etfs.keys():
         for span in timespans:
@@ -180,21 +225,18 @@ def pull_etfs():
                 ticker=fund,
                 source="Polygon",
                 asset_class="Exchange_Traded_Funds",
-                start_date=GLOBAL_PAID_START_DATE,
+                start_date=tier["start_date"],
                 timespan=span,
                 multiplier=1,
                 adjusted=True,
                 force_existing_check=False,
                 verbose=GLOBAL_VERBOSE,
-                free_tier=GLOBAL_FREE_TIER,
-                excel_export=True,
+                free_tier=tier["free_tier"],
+                excel_export=span in excel_timespans,
                 pickle_export=True,
                 parquet_export=GLOBAL_PARQUET_EXPORT,
                 output_confirmation=True,
             )
-
-            if GLOBAL_FREE_TIER == True:
-                time.sleep(12)
 
         # Resample to month-end data
         polygon_resample_period_end(
@@ -232,11 +274,13 @@ def pull_options(client):
     options_df = pd.read_csv(f"{DATA_DIR}/Polygon/options.csv", index_col=0)
     options = options_df.to_dict()["Name"]
 
+    tier = tier_settings("options")
+
     # Iterate through each underlying option ticker
     for underlying in options.keys():
 
-        # Inactive (expired) contracts expiring within the last 2 years
-        # Active (unexpired) contracts expiring within the next 5 years
+        # Expired contracts that expired after the start date, plus active
+        # (unexpired) contracts expiring within the next 5 years
         contracts_df = (
             pd.concat(
                 [
@@ -244,13 +288,13 @@ def pull_options(client):
                         client=client,
                         underlying_ticker=underlying,
                         contract_type=None,
-                        expiration_date_gte=datetime.now() - timedelta(days=2 * 365),
+                        expiration_date_gte=tier["start_date"],
                         expiration_date_lte=datetime.now() + timedelta(days=5 * 365),
                         strike_price_gte=None,
                         strike_price_lte=None,
                         expired=is_expired,
                         as_of=None,
-                        free_tier=True,
+                        free_tier=tier["free_tier"],
                         verbose=False,
                     )
                     for is_expired in (True, False)
@@ -277,20 +321,47 @@ def pull_options(client):
                     ticker=option_ticker,
                     source="Polygon",
                     asset_class="Options",
-                    start_date=GLOBAL_FREE_START_DATE,
+                    start_date=tier["start_date"],
                     timespan=timespan,
                     multiplier=1,
                     force_existing_check=False,
-                    free_tier=True,
+                    free_tier=tier["free_tier"],
                     verbose=False,
-                    excel_export=True,
+                    excel_export=timespan in excel_timespans,
                     pickle_export=True,
                     parquet_export=GLOBAL_PARQUET_EXPORT,
                     output_confirmation=True,
                 )
 
-                if GLOBAL_FREE_TIER == True:
-                    time.sleep(12)
+
+def pull_futures():
+    """Pull data for the futures contracts in futures.csv."""
+
+    # Read existing data from csv file into futures dictionary
+    futures_df = pd.read_csv(f"{DATA_DIR}/Polygon/futures.csv", index_col=0)
+    futures = futures_df.to_dict()["Name"]
+
+    tier = tier_settings("futures")
+
+    # Iterate through each futures contract
+    for contract in futures.keys():
+        for timespan in timespans:
+            polygon_pull_futures_data(
+                base_directory=DATA_DIR,
+                ticker=contract,
+                source="Polygon",
+                asset_class="Futures",
+                start_date=tier["start_date"],
+                timespan=timespan,
+                multiplier=1,
+                force_existing_check=False,
+                free_tier=tier["free_tier"],
+                verbose=GLOBAL_VERBOSE,
+                excel_export=timespan in excel_timespans,
+                pickle_export=True,
+                parquet_export=GLOBAL_PARQUET_EXPORT,
+                output_confirmation=True,
+            )
 
 
 def main():
@@ -302,6 +373,7 @@ def main():
     pull_etfs()
     # Mutual fund data: none
     pull_options(client)
+    pull_futures()
 
 
 if __name__ == "__main__":

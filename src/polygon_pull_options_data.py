@@ -21,7 +21,9 @@ OCC_PATTERN = re.compile(
 )
 
 
-def parse_option_ticker(ticker: str) -> dict:
+def parse_option_ticker(
+    ticker: str,
+) -> dict:
     """
     Parse an OCC-format option ticker into its components.
 
@@ -176,14 +178,13 @@ def polygon_fetch_options_full_history(
     """
     Fetch full historical aggregate data for an option contract from Polygon API.
 
-    Differs from the equity version in three ways, all because option contracts
-    trade sparsely and have a finite life:
+    Differs from the equity version in two ways, because option contracts trade
+    sparsely and have a finite life:
     - The pull stops at end_date (the day after expiration, or now if still active).
-    - Windows with no bars are skipped silently instead of prompting, since many
-      contracts have no trades for days or weeks at a time.
-    - Windows advance by fixed steps rather than from the last bar returned, and
-      the price-overlap check against existing data is not applied, since sparse
-      bars mean two windows often have no rows in common.
+    - The start and end of each window move independently. The end moves forward
+      by time_delta on every pass, and the start follows the last bar pulled minus
+      time_overlap. Each window therefore contains the last pulled bar, even across
+      a trading gap, so the overlap check always has a row to compare against.
 
     Parameters:
     -----------
@@ -215,19 +216,32 @@ def polygon_fetch_options_full_history(
     # Copy DataFrame
     full_history_df = existing_history_df.copy()
 
-    if timespan == "minute":
-        time_delta = 30
-    elif timespan == "hour":
-        time_delta = 180
-    elif timespan == "day":
-        time_delta = 365
-    else:
+    # Set time_delta based on the timespan
+    window_days = {"minute": 15, "hour": 15, "day": 180}
+    if timespan not in window_days:
         raise Exception(f"Invalid {timespan}.")
+    time_delta = window_days[timespan]
+
+    # Set the number of overlapping days to check for revisions in the data
+    time_overlap = 1
+
+    price_cols = [
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume",
+        "vwap",
+        "transactions",
+    ]
+
+    # Set current_end to the start of the window
+    current_end = current_start
 
     while current_start < end_date:
 
-        # Offset end date by time_delta, capped at end_date
-        current_end = min(current_start + timedelta(days=time_delta), end_date)
+        # Move the end of the window forward by time_delta, capped at end_date
+        current_end = min(current_end + timedelta(days=time_delta), end_date)
 
         if verbose == True:
             print(
@@ -243,31 +257,22 @@ def polygon_fetch_options_full_history(
                 from_=current_start,
                 to=current_end,
                 sort="asc",
-                limit=50000,
+                limit=5000,
             )
 
+            # If no new data is returned, print a message indicating no data was found
+            # Always prints regardless of the verbose setting
             if len(aggs) == 0:
-                if verbose == True:
-                    print(
-                        f"No data for {ticker} from {current_start} thru {current_end}.\n"
-                    )
+                print(
+                    f"No data for {ticker} from {current_start} thru {current_end}.\n"
+                )
+
             else:
                 # Convert to DataFrame
                 new_data = pd.DataFrame([bar.__dict__ for bar in aggs])
                 new_data["timestamp"] = pd.to_datetime(new_data["timestamp"], unit="ms")
                 new_data = new_data.rename(columns={"timestamp": "Date"})
-                new_data = new_data[
-                    [
-                        "Date",
-                        "open",
-                        "high",
-                        "low",
-                        "close",
-                        "volume",
-                        "vwap",
-                        "transactions",
-                    ]
-                ]
+                new_data = new_data[["Date"] + price_cols]
                 new_data = new_data.sort_values(by="Date", ascending=True)
 
                 # Enforce dtypes to match full_history_df
@@ -277,7 +282,20 @@ def polygon_fetch_options_full_history(
                     print("New data:")
                     print(new_data)
 
-                # Combine existing data with recent data, drop duplicates, sort values, reset index
+                # If full_history_df is not empty, confirm that the new data overlaps
+                # the existing data on price, as a check against revisions or gaps
+                if not full_history_df.empty:
+                    overlap = full_history_df.merge(
+                        new_data, on=["Date"] + price_cols, how="inner"
+                    )
+
+                    if overlap.empty:
+                        raise Exception(
+                            f"New data does not overlap with existing data (price data check)."
+                        )
+
+                # Combine existing data with recent data, drop duplicates, sort values,
+                # reset index
                 full_history_df = pd.concat([full_history_df, new_data])
                 full_history_df = full_history_df.drop_duplicates(
                     subset="Date", keep="last"
@@ -289,18 +307,24 @@ def polygon_fetch_options_full_history(
                     print("Combined data:")
                     print(full_history_df)
 
+                # Start the next window before the last bar pulled, so that the bar
+                # is included in the next overlap check
+                current_start = new_data["Date"].max() - timedelta(days=time_overlap)
+                current_end = current_start
+
+        # Exception handling for failed data pull
         except Exception as e:
             print(
                 f"Failed to pull {timespan} data for {current_start} thru {current_end} for {ticker}: {e}"
             )
             raise  # Re-raise the original exception
 
+        # Break out of while loop once the window has reached end_date
         if current_end >= end_date:
             break
-        else:
-            current_start = current_end
 
-        # Check for free tier and if so then pause for 12 seconds to avoid hitting API rate limits
+        # Check for free tier and if so then pause for 12 seconds to avoid hitting
+        # API rate limits
         if free_tier == True:
             if verbose == True:
                 print(f"Sleeping for 12 seconds to avoid hitting API rate limits...\n")
@@ -335,9 +359,9 @@ def polygon_pull_options_data(
 
     The contract's expiration date is parsed from the OCC ticker, and the pull stops
     the day after expiration. An expired contract whose existing data already runs
-    to expiration is therefore not re-queried. With free_tier=True the pull also
-    stops at midnight today, since the free tier has no same-day data and only
-    about two years of history.
+    to expiration therefore takes a single request, which confirms the overlap.
+    With free_tier=True the pull also stops at midnight today, since the free tier
+    has no same-day data and only about two years of history.
 
     Option aggregates are not dividend-adjusted, so no adj_* columns are created.
 
@@ -428,8 +452,9 @@ def polygon_pull_options_data(
         starting_rows = len(existing_history_df)
         print(f"Number of rows in existing data: {starting_rows}")
 
-        # Overlap with existing data to capture all data
-        current_start = last_data_date - timedelta(days=1)
+        # Overlap with existing data by enough to span a weekend, so that a session
+        # still in progress at the last update is not the only bar being compared
+        current_start = last_data_date - timedelta(days=7)
 
     except FileNotFoundError:
         # Print error
@@ -472,9 +497,10 @@ def polygon_pull_options_data(
         verbose=verbose,
     )
 
+    # Do not export an empty file, since later runs would read it as existing data
+    # and have no last date from which to resume
     if full_history_df.empty:
-        print(f"No {timespan} data is available for {ticker}; nothing exported.")
-        print(f"--------------------")
+        print(f"No {timespan} data found for {ticker}, so nothing was exported.")
         return full_history_df
 
     # Create directory
@@ -529,7 +555,7 @@ if __name__ == "__main__":
     # Iterate through each underlying ticker
     for underlying in underlyings:
 
-        # Active contracts expiring within the next 60 days
+        # Active contracts expiring within the next 3 years
         contracts_df = polygon_fetch_options_contracts(
             client=client,
             underlying_ticker=underlying,
@@ -565,7 +591,7 @@ if __name__ == "__main__":
                     multiplier=1,
                     force_existing_check=False,
                     free_tier=GLOBAL_FREE_TIER,
-                    verbose=False,
+                    verbose=True,
                     excel_export=True,
                     pickle_export=True,
                     parquet_export=True,

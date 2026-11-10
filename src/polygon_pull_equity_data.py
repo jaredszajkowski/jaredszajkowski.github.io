@@ -26,7 +26,7 @@ def polygon_fetch_full_history(
     verbose: bool,
 ) -> pd.DataFrame:
     """
-    Fetch full historical data for a given product from Polygon API.
+    Fetch full historical data for a given equity or ETF product from Polygon API.
 
     Parameters:
     -----------
@@ -58,25 +58,34 @@ def polygon_fetch_full_history(
     # Copy DataFrame
     full_history_df = existing_history_df.copy()
 
-    if timespan == "minute":
-        time_delta = 15
-        time_overlap = 1
-    elif timespan == "hour":
-        time_delta = 15
-        time_overlap = 1
-    elif timespan == "day":
-        time_delta = 180
-        time_overlap = 1
-    else:
+    # Set time_delta based on the timespan
+    window_days = {"minute": 15, "hour": 15, "day": 180}
+    if timespan not in window_days:
         raise Exception(f"Invalid {timespan}.")
+    time_delta = window_days[timespan]
 
-    new_data_last_date = None
-    new_date_last_date_check = None
+    # Set the number of overlapping days to check for revisions in the data
+    time_overlap = 1
+
+    # List of columns to check for overlapping data
+    price_cols = [
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume",
+        "vwap",
+        "transactions",
+        "otc",
+    ]
+
+    # Set current_end to the start of the window
+    current_end = current_start
 
     while current_start < datetime.now():
 
-        # Offset end date by time_delta
-        current_end = current_start + timedelta(days=time_delta)
+        # Move the end of the window forward by time_delta
+        current_end = current_end + timedelta(days=time_delta)
 
         if verbose == True:
             print(
@@ -96,137 +105,71 @@ def polygon_fetch_full_history(
                 limit=5000,
             )
 
-            # if len(aggs) == 0:
-            # raise Exception(f"No data is available for {ticker} for {current_start} thru {current_end}. Please attempt different dates.")
-
-            # Convert to DataFrame
-            new_data = pd.DataFrame([bar.__dict__ for bar in aggs])
-            new_data["timestamp"] = pd.to_datetime(new_data["timestamp"], unit="ms")
-            new_data = new_data.rename(columns={"timestamp": "Date"})
-            new_data = new_data[
-                [
-                    "Date",
-                    "open",
-                    "high",
-                    "low",
-                    "close",
-                    "volume",
-                    "vwap",
-                    "transactions",
-                    "otc",
-                ]
-            ]
-            new_data = new_data.sort_values(by="Date", ascending=True)
-
-            # Enforce dtypes to match full_history_df
-            new_data = new_data.astype(full_history_df.dtypes.to_dict())
-
-            # (Optional) reorder columns to match schema
-            # new_data = new_data[full_history_df.columns]
-
-            # Find last date in new_data
-            new_data_last_date = new_data["Date"].max()
-
-            if verbose == True:
-                print("New data:")
-                print(new_data)
-
-            # No longer necessary to check for 5000 rows of data
-
-            # Check if new data contains 5000 rows
-            # if len(new_data) == 5000:
-            # raise Exception(f"New data for {ticker} contains 5000 rows, indicating potential issues with data completeness or API limits.")
-
-            # If full_history_df length is not 0, check to confirm that data overlaps to verify that there were not any splits in the data
-            # if not full_history_df.empty:
-            # if not full_history_df['Date'].isin(new_data['Date']).any():
-            # raise Exception(f"New data does not overlap with existing data.")
-
-            if not full_history_df.empty:
-                # Columns present in both frames
-                common_cols = list(
-                    full_history_df.columns.intersection(new_data.columns)
+            # If no new data is returned, print a message indicating no data was found
+            # Always prints regardless of the verbose setting
+            if len(aggs) == 0:
+                print(
+                    f"No data for {ticker} from {current_start} thru {current_end}.\n"
                 )
-                if not common_cols:
-                    raise Exception("No common columns to compare.")
 
-                # (Optional) de-duplicate to speed up the merge
-                # full_dedup = full_history_df[common_cols].drop_duplicates()
-                # new_dedup  = new_data[common_cols].drop_duplicates()
+            else:
+                # Convert to DataFrame
+                new_data = pd.DataFrame([bar.__dict__ for bar in aggs])
+                new_data["timestamp"] = pd.to_datetime(new_data["timestamp"], unit="ms")
+                new_data = new_data.rename(columns={"timestamp": "Date"})
+                new_data = new_data[["Date"] + price_cols]
+                new_data = new_data.sort_values(by="Date", ascending=True)
 
-                price_cols = ["open", "high", "low", "close"]
+                # Enforce dtypes to match full_history_df
+                new_data = new_data.astype(full_history_df.dtypes.to_dict())
 
-                # Inner join on every shared column = exact row matches
-                # overlap = full_dedup.merge(new_dedup, on=common_cols, how="inner")
-                # overlap = full_dedup.merge(new_dedup, on=price_cols, how="inner")
-                overlap = full_history_df.merge(new_data, on=price_cols, how="inner")
+                if verbose == True:
+                    print("New data:")
+                    print(new_data)
 
-                if overlap.empty:
-                    raise Exception(
-                        # f"New data does not overlap with existing data (full-row check)."
-                        f"New data does not overlap with existing data (price data check)."
+                # If full_history_df is not empty, confirm that the new data overlaps
+                # the existing data on price, as a check against revisions or gaps
+                if not full_history_df.empty:
+                    overlap = full_history_df.merge(
+                        new_data, on=["Date"] + price_cols, how="inner"
                     )
 
-            # Combine existing data with recent data, drop duplicates, sort values, reset index
-            full_history_df = pd.concat([full_history_df, new_data])
-            full_history_df = full_history_df.drop_duplicates(
-                subset="Date", keep="last"
-            )
-            full_history_df = full_history_df.sort_values(by="Date", ascending=True)
-            full_history_df = full_history_df.reset_index(drop=True)
+                    if overlap.empty:
+                        raise Exception(
+                            f"New data does not overlap with existing data (price data check)."
+                        )
 
-            if verbose == True:
-                print("Combined data:")
-                print(full_history_df)
+                # Combine existing data with new data, drop duplicates, sort values,
+                # and reset index
+                full_history_df = pd.concat([full_history_df, new_data])
+                full_history_df = full_history_df.drop_duplicates(
+                    subset="Date", keep="last"
+                )
+                full_history_df = full_history_df.sort_values(by="Date", ascending=True)
+                full_history_df = full_history_df.reset_index(drop=True)
 
-        except KeyError as e:
-            print(
-                f"No data is available for {ticker} from {current_start} thru {current_end}."
-            )
+                if verbose == True:
+                    print("Combined data:")
+                    print(full_history_df)
 
-            user_choice = input(f"Press Enter to continue, or type 'q' to quit: ")
-            if user_choice.lower() == "q":
-                print(f"Aborting operation to update {ticker} {timespan} data.")
-                break  # break out of the while loop
-            else:
-                print(f"Trying next timeframe for {ticker} {timespan} data.")
+                # Start the next window before the last bar pulled, so that the bar
+                # is included in the next overlap check
+                current_start = new_data["Date"].max() - timedelta(days=time_overlap)
+                current_end = current_start
 
-                # Set last_data_date to current_end because we know data was not available
-                # up until current_end
-                new_data_last_date = current_end
-                pass
-
+        # Exception handling for failed data pull
         except Exception as e:
             print(
                 f"Failed to pull {timespan} data for {current_start} thru {current_end} for {ticker}: {e}"
             )
             raise  # Re-raise the original exception
 
-        # Break out of loop if data is up-to-date (or close to being up-to-date because it is
-        # possible that entire range was not pulled due to the way API handles hour data
-        # from minute data)
+        # Break out of while loop if current_end is beyond the present date
         if current_end > datetime.now():
             break
-        else:
-            # Edge case, if the last date for new_date is exactly time_overlap's duration
-            # past current_start
-            if new_date_last_date_check == new_data_last_date:
-                current_start = current_end - timedelta(days=time_overlap)
-            else:
-                current_start = new_data_last_date - timedelta(days=time_overlap)
 
-            new_date_last_date_check = new_data_last_date
-
-            # Code below is likely not necessary
-
-            # # Overlap with existing data to capture all data but check to see if
-            # # current_end is a Sunday and if so ensure overlap covers a trading day
-            # if current_end.weekday() == 6:
-            #     current_start = last_data_date - timedelta(days=(time_overlap+1))
-            # else:
-            #     current_start = last_data_date - timedelta(days=time_overlap)
-
-        # Check for free tier and if so then pause for 12 seconds to avoid hitting API rate limits
+        # Check for free tier and if so then pause for 12 seconds to avoid hitting
+        # API rate limits
         if free_tier == True:
             if verbose == True:
                 print(f"Sleeping for 12 seconds to avoid hitting API rate limits...\n")
@@ -274,7 +217,8 @@ def polygon_fetch_dividend_factors(
         "historical_adjustment_factor",
     ]
 
-    # Check for free tier and if so then pause for 12 seconds to avoid hitting API rate limits
+    # Check for free tier and if so then pause for 12 seconds to avoid hitting
+    # API rate limits
     if free_tier == True:
         if verbose == True:
             print(f"Sleeping for 12 seconds to avoid hitting API rate limits...\n")
@@ -460,7 +404,8 @@ def polygon_pull_equity_data(
     client = RESTClient(api_key=POLYGON_KEY)
 
     # Set file location based on parameters
-    file_location = f"{base_directory}/{source}/{asset_class}/{timespan}/{ticker}.pkl"
+    directory = f"{base_directory}/{source}/{asset_class}/{timespan}"
+    file_location = f"{directory}/{ticker}.pkl"
 
     # Create list of acceptable timespans
     acceptable_timespans = ["minute", "hour", "day"]
@@ -497,9 +442,9 @@ def polygon_pull_equity_data(
         starting_rows = len(existing_history_df)
         print(f"Number of rows in existing data: {starting_rows}")
 
-        # Overlap with existing data to capture all data
-        # current_start = last_data_date - timedelta(days=time_overlap)
-        current_start = last_data_date - timedelta(days=1)
+        # Overlap with existing data by enough to span a weekend, so that a session
+        # still in progress at the last update is not the only bar being compared
+        current_start = last_data_date - timedelta(days=7)
 
     except FileNotFoundError:
         # Print error
@@ -543,6 +488,12 @@ def polygon_pull_equity_data(
         verbose=verbose,
     )
 
+    # Do not export an empty file, since later runs would read it as existing data
+    # and have no last date from which to resume
+    if full_history_df.empty:
+        print(f"No {timespan} data found for {ticker}, so nothing was exported.")
+        return full_history_df
+
     # Apply dividend adjustment factors to the split-adjusted prices
     if adjusted == True:
         dividends_df = polygon_fetch_dividend_factors(
@@ -561,7 +512,6 @@ def polygon_pull_equity_data(
         )
 
     # Create directory
-    directory = f"{base_directory}/{source}/{asset_class}/{timespan}"
     os.makedirs(directory, exist_ok=True)
 
     # Export to Excel
@@ -597,109 +547,6 @@ def polygon_pull_equity_data(
     return full_history_df
 
 
-def polygon_resample_period_end(
-    base_directory,
-    ticker: str,
-    source: str,
-    asset_class: str,
-    timespan: str,
-    period: str,
-    excel_export: bool,
-    pickle_export: bool,
-    parquet_export: bool,
-    output_confirmation: bool,
-) -> pd.DataFrame:
-    """
-    Read data from an existing pickle file and export month-end or quarter-end
-    close prices (and dividend-adjusted close prices, if present).
-
-    Parameters:
-    -----------
-    base_directory : any
-        Root path to store downloaded data.
-    ticker : str
-        Ticker symbol to resample.
-    source : str
-        Name of the data source (e.g., 'Polygon').
-    asset_class : str
-        Asset class name (e.g., 'Equities').
-    timespan : str
-        Time span of the existing data to read (e.g., "day").
-    period : str
-        Period to resample to, either "month" (month-end) or "quarter" (quarter-end).
-    excel_export : bool
-        If True, export data to Excel format.
-    pickle_export : bool
-        If True, export data to Pickle format.
-    parquet_export : bool
-        If True, export data to Parquet format.
-    output_confirmation : bool
-        If True, print confirmation message.
-
-    Returns:
-    --------
-    df_period_end : pd.DataFrame
-        DataFrame indexed by period-end date containing the close column, plus
-        adj_close if it exists in the source data.
-    """
-
-    # Resample frequency, output directory, and file suffix for each period
-    period_settings = {
-        "month": {"freq": "ME", "directory": "Month_End", "suffix": "ME"},
-        "quarter": {"freq": "QE", "directory": "Quarter_End", "suffix": "QE"},
-    }
-    if period not in period_settings:
-        raise Exception(
-            f"Invalid period: {period}. Acceptable periods are: {list(period_settings)}."
-        )
-    settings = period_settings[period]
-
-    # Set location from where to read existing pickle file
-    location = f"{base_directory}/{source}/{asset_class}/{timespan}/{ticker}.pkl"
-
-    # Read data from pickle
-    df = pd.read_pickle(location)
-
-    # Reset index if 'Date' is column is the index
-    if "Date" not in df.columns:
-        df = df.reset_index()
-
-    # Keep only required columns
-    keep_cols = ["Date", "close"] + (["adj_close"] if "adj_close" in df.columns else [])
-    df = df[keep_cols]
-
-    # Set index to date column
-    df = df.set_index("Date")
-
-    # Resample data to period end
-    df_period_end = df.resample(settings["freq"]).last()
-
-    # Create directory
-    directory = f"{base_directory}/{source}/{asset_class}/{settings['directory']}"
-    os.makedirs(directory, exist_ok=True)
-
-    file_stem = f"{directory}/{ticker}_{settings['suffix']}"
-
-    # Export to Excel
-    if excel_export == True:
-        df_period_end.to_excel(f"{file_stem}.xlsx", sheet_name="data")
-
-    # Export to Pickle
-    if pickle_export == True:
-        df_period_end.to_pickle(f"{file_stem}.pkl")
-
-    # Export to Parquet
-    if parquet_export == True:
-        df_period_end.to_parquet(f"{file_stem}.parquet")
-
-    # Output confirmation
-    if output_confirmation == True:
-        print(f"{period.capitalize()} end data complete for {ticker}")
-        print(f"--------------------")
-
-    return df_period_end
-
-
 if __name__ == "__main__":
 
     # Set global variables
@@ -725,7 +572,7 @@ if __name__ == "__main__":
                 adjusted=True,
                 force_existing_check=False,
                 free_tier=GLOBAL_FREE_TIER,
-                verbose=False,
+                verbose=True,
                 excel_export=True,
                 pickle_export=True,
                 parquet_export=True,
