@@ -30,12 +30,10 @@ In [part 1](/posts/asset-class-return-correlations-part-1/), we looked at histor
 
 
 ```python
-# Standard Library
 import os
 import sys
 import warnings
 
-from IPython.display import display, Markdown
 from itertools import combinations, count
 from pathlib import Path
 
@@ -43,32 +41,20 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+# Display
+from IPython.display import Markdown, display
+
 # Suppress warnings
 warnings.filterwarnings("ignore")
 
-# Pandas display options
-pd.set_option("display.float_format", lambda x: f"%.2f" % x)
-```
+# Add src/ to the path so settings.py and the helper modules can be imported
+src_directory = str(Path.cwd().parents[2] / "src")
+if src_directory not in sys.path:
+    sys.path.append(src_directory)
 
-
-```python
-# Add the source subdirectory to the system path to allow import config from settings.py
-current_directory = Path(os.getcwd())
-BASE_DIR = current_directory.parent.parent.parent
-src_directory = BASE_DIR / "src"
-sys.path.append(str(src_directory)) if str(src_directory) not in sys.path else None
-
-# Import settings.py
 from settings import config
 
-# Add other configured directories
-CONTENT_DIR = config("CONTENT_DIR")
-POSTS_DIR = config("POSTS_DIR")
-PAGES_DIR = config("PAGES_DIR")
-PUBLIC_DIR = config("PUBLIC_DIR")
-SOURCE_DIR = config("SOURCE_DIR")
-DATA_DIR = config("DATA_DIR")
-DATA_MANUAL_DIR = config("DATA_MANUAL_DIR")
+DATA_DIR = config("DATA_DIR")  # keep only the directories this post uses
 ```
 
 ## Python Functions
@@ -76,6 +62,7 @@ DATA_MANUAL_DIR = config("DATA_MANUAL_DIR")
 Here are the functions needed for this project:
 
 * [load_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#load_data): Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.
+* [pandas_set_decimal_places](/posts/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places): Set the number of decimal places displayed for floating-point numbers in pandas.
 * [plot_histogram](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_histogram): Plot the histogram of a data set from a DataFrame.
 * [plot_scatter](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_scatter): Plot the data from a DataFrame for a specified date range and columns.
 * [plot_time_series](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_time_series): Plot the timeseries data from a DataFrame for a specified date range and columns.
@@ -85,11 +72,19 @@ Here are the functions needed for this project:
 
 ```python
 from load_data import load_data
+from pandas_set_decimal_places import pandas_set_decimal_places
 from plot_histogram import plot_histogram
 from plot_scatter import plot_scatter
 from plot_time_series import plot_time_series
 from summary_stats import summary_stats
 from yf_pull_data import yf_pull_data
+```
+
+
+```python
+pandas_set_decimal_places(2)
+figure_number = count(1)
+table_number = count(1)
 ```
 
 ## Data Overview
@@ -114,9 +109,6 @@ For all of these, we will use the adjusted closing price, which accounts for div
 
 
 ```python
-figure_number = count(1)
-table_number = count(1)
-
 # Create list of tickers to pull data for
 us_equity_tickers = ["IVV", "IJH", "IJR", "QQQ", "IWB", "IWD", "IWF", "IWM"]
 intl_equity_tickers = ["EFA", "EEM", "IEV"]
@@ -152,6 +144,423 @@ for ticker in etf_tickers + leveraged_tickers:
         output_confirmation=False,
     )
 ```
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:604: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:606: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:604: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:606: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:604: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:606: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:604: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:606: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:604: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:606: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:604: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:606: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:604: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:606: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:604: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:606: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:604: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:606: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:604: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:606: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:604: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:606: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:604: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:606: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
 
 
 ```python
@@ -408,128 +817,128 @@ Table 1: Fund Data
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-10-23</th>
-      <td>763.25</td>
-      <td>-0.01</td>
-      <td>72.37</td>
-      <td>-0.01</td>
-      <td>138.22</td>
-      <td>-0.00</td>
-      <td>704.40</td>
-      <td>-0.00</td>
-      <td>415.35</td>
-      <td>-0.00</td>
-      <td>...</td>
-      <td>37.70</td>
+      <th>2026-11-04</th>
+      <td>770.17</td>
       <td>0.02</td>
-      <td>98.40</td>
-      <td>0.00</td>
-      <td>68.52</td>
-      <td>-0.01</td>
-      <td>79.72</td>
-      <td>-0.01</td>
-      <td>32.37</td>
-      <td>-0.01</td>
+      <td>74.59</td>
+      <td>0.01</td>
+      <td>142.93</td>
+      <td>0.01</td>
+      <td>691.95</td>
+      <td>0.01</td>
+      <td>419.20</td>
+      <td>0.02</td>
+      <td>...</td>
+      <td>34.20</td>
+      <td>-0.04</td>
+      <td>104.02</td>
+      <td>0.03</td>
+      <td>69.62</td>
+      <td>0.03</td>
+      <td>84.56</td>
+      <td>0.01</td>
+      <td>34.51</td>
+      <td>0.03</td>
     </tr>
     <tr>
-      <th>2026-10-26</th>
-      <td>768.69</td>
-      <td>0.01</td>
-      <td>72.91</td>
-      <td>0.01</td>
-      <td>138.93</td>
-      <td>0.01</td>
-      <td>712.20</td>
-      <td>0.01</td>
-      <td>418.06</td>
-      <td>0.01</td>
+      <th>2026-11-05</th>
+      <td>736.21</td>
+      <td>-0.04</td>
+      <td>71.68</td>
+      <td>-0.04</td>
+      <td>137.49</td>
+      <td>-0.04</td>
+      <td>647.05</td>
+      <td>-0.06</td>
+      <td>401.06</td>
+      <td>-0.04</td>
       <td>...</td>
-      <td>37.31</td>
-      <td>-0.01</td>
-      <td>98.83</td>
-      <td>0.00</td>
-      <td>69.48</td>
+      <td>34.53</td>
       <td>0.01</td>
-      <td>80.89</td>
-      <td>0.01</td>
-      <td>32.66</td>
-      <td>0.01</td>
+      <td>102.24</td>
+      <td>-0.02</td>
+      <td>63.51</td>
+      <td>-0.09</td>
+      <td>77.80</td>
+      <td>-0.08</td>
+      <td>31.93</td>
+      <td>-0.07</td>
     </tr>
     <tr>
-      <th>2026-10-27</th>
-      <td>773.25</td>
-      <td>0.01</td>
-      <td>73.22</td>
+      <th>2026-11-06</th>
+      <td>738.68</td>
       <td>0.00</td>
-      <td>139.68</td>
+      <td>72.11</td>
       <td>0.01</td>
-      <td>721.25</td>
+      <td>137.64</td>
+      <td>0.00</td>
+      <td>656.10</td>
       <td>0.01</td>
-      <td>420.41</td>
-      <td>0.01</td>
+      <td>402.58</td>
+      <td>0.00</td>
       <td>...</td>
-      <td>36.99</td>
+      <td>34.46</td>
+      <td>-0.00</td>
+      <td>101.62</td>
       <td>-0.01</td>
-      <td>97.97</td>
-      <td>-0.01</td>
-      <td>70.28</td>
+      <td>63.85</td>
       <td>0.01</td>
-      <td>81.51</td>
+      <td>78.77</td>
       <td>0.01</td>
-      <td>33.05</td>
-      <td>0.01</td>
+      <td>31.85</td>
+      <td>-0.00</td>
     </tr>
     <tr>
-      <th>2026-10-28</th>
-      <td>775.65</td>
-      <td>0.00</td>
-      <td>73.35</td>
-      <td>0.00</td>
-      <td>139.76</td>
-      <td>0.00</td>
-      <td>725.61</td>
-      <td>0.01</td>
-      <td>421.72</td>
-      <td>0.00</td>
+      <th>2026-11-09</th>
+      <td>756.05</td>
+      <td>0.02</td>
+      <td>74.39</td>
+      <td>0.03</td>
+      <td>141.72</td>
+      <td>0.03</td>
+      <td>679.35</td>
+      <td>0.04</td>
+      <td>412.33</td>
+      <td>0.02</td>
       <td>...</td>
-      <td>37.15</td>
-      <td>0.00</td>
-      <td>97.29</td>
-      <td>-0.01</td>
-      <td>70.77</td>
-      <td>0.01</td>
-      <td>81.77</td>
-      <td>0.00</td>
-      <td>33.30</td>
-      <td>0.01</td>
+      <td>33.93</td>
+      <td>-0.02</td>
+      <td>103.18</td>
+      <td>0.02</td>
+      <td>66.85</td>
+      <td>0.05</td>
+      <td>83.81</td>
+      <td>0.06</td>
+      <td>33.75</td>
+      <td>0.06</td>
     </tr>
     <tr>
-      <th>2026-10-29</th>
-      <td>772.97</td>
+      <th>2026-11-10</th>
+      <td>753.37</td>
       <td>-0.00</td>
-      <td>74.20</td>
-      <td>0.01</td>
-      <td>142.01</td>
-      <td>0.02</td>
-      <td>715.34</td>
+      <td>74.13</td>
+      <td>-0.00</td>
+      <td>141.19</td>
+      <td>-0.00</td>
+      <td>674.76</td>
       <td>-0.01</td>
-      <td>420.52</td>
+      <td>410.85</td>
       <td>-0.00</td>
       <td>...</td>
-      <td>37.11</td>
-      <td>-0.00</td>
-      <td>99.47</td>
-      <td>0.02</td>
-      <td>70.23</td>
+      <td>33.67</td>
       <td>-0.01</td>
-      <td>83.65</td>
-      <td>0.02</td>
-      <td>34.10</td>
-      <td>0.02</td>
+      <td>102.98</td>
+      <td>-0.00</td>
+      <td>66.37</td>
+      <td>-0.01</td>
+      <td>83.13</td>
+      <td>-0.01</td>
+      <td>33.62</td>
+      <td>-0.00</td>
     </tr>
   </tbody>
 </table>
-<p>6954 rows × 42 columns</p>
+<p>6962 rows × 42 columns</p>
 </div>
 
 
@@ -576,8 +985,8 @@ print(f"Shape of fund_data_daily_returns: {fund_data_daily_returns.shape}")
 print(f"First date in sample: {fund_data_daily_returns.index[0]}")
 ```
 
-    Shape of fund_data_daily_returns_all: (6954, 18)
-    Shape of fund_data_daily_returns: (5100, 18)
+    Shape of fund_data_daily_returns_all: (6962, 18)
+    Shape of fund_data_daily_returns: (5108, 18)
     First date in sample: 2006-07-24 00:00:00
 
 
@@ -867,128 +1276,128 @@ Table 2: Rolling Correlations
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-10-23</th>
-      <td>0.98</td>
-      <td>0.83</td>
-      <td>0.86</td>
-      <td>0.76</td>
-      <td>0.80</td>
-      <td>0.78</td>
-      <td>0.80</td>
-      <td>0.88</td>
-      <td>0.90</td>
-      <td>-0.45</td>
-      <td>...</td>
-      <td>0.83</td>
-      <td>-0.25</td>
-      <td>0.53</td>
-      <td>0.84</td>
-      <td>0.86</td>
-      <td>0.90</td>
-      <td>0.90</td>
-      <td>0.93</td>
-      <td>0.97</td>
-      <td>0.96</td>
-    </tr>
-    <tr>
-      <th>2026-10-26</th>
-      <td>0.98</td>
-      <td>0.91</td>
-      <td>0.89</td>
-      <td>0.78</td>
-      <td>0.80</td>
-      <td>0.78</td>
-      <td>0.80</td>
-      <td>0.88</td>
-      <td>0.90</td>
-      <td>0.07</td>
-      <td>...</td>
-      <td>0.83</td>
-      <td>0.28</td>
-      <td>0.54</td>
-      <td>0.83</td>
-      <td>0.86</td>
-      <td>0.91</td>
-      <td>0.90</td>
-      <td>0.93</td>
-      <td>0.97</td>
-      <td>0.96</td>
-    </tr>
-    <tr>
-      <th>2026-10-27</th>
-      <td>0.99</td>
-      <td>0.98</td>
-      <td>0.89</td>
-      <td>0.76</td>
-      <td>0.78</td>
-      <td>0.78</td>
-      <td>0.80</td>
-      <td>0.88</td>
-      <td>0.90</td>
-      <td>0.99</td>
-      <td>...</td>
-      <td>0.83</td>
-      <td>0.97</td>
-      <td>0.25</td>
-      <td>0.84</td>
-      <td>0.86</td>
-      <td>0.90</td>
-      <td>0.90</td>
-      <td>0.93</td>
-      <td>0.97</td>
-      <td>0.96</td>
-    </tr>
-    <tr>
-      <th>2026-10-28</th>
-      <td>0.95</td>
-      <td>0.98</td>
-      <td>0.85</td>
-      <td>0.76</td>
-      <td>0.79</td>
-      <td>0.78</td>
-      <td>0.80</td>
-      <td>0.88</td>
-      <td>0.90</td>
-      <td>0.94</td>
-      <td>...</td>
-      <td>0.83</td>
-      <td>0.80</td>
-      <td>0.29</td>
+      <th>2026-11-04</th>
+      <td>-0.23</td>
+      <td>0.58</td>
+      <td>0.67</td>
+      <td>0.64</td>
+      <td>0.70</td>
       <td>0.75</td>
-      <td>0.86</td>
+      <td>0.80</td>
+      <td>0.88</td>
       <td>0.90</td>
-      <td>0.90</td>
+      <td>0.40</td>
+      <td>...</td>
+      <td>0.83</td>
+      <td>0.80</td>
+      <td>0.92</td>
+      <td>0.76</td>
+      <td>0.87</td>
+      <td>0.89</td>
+      <td>0.91</td>
       <td>0.93</td>
       <td>0.97</td>
       <td>0.96</td>
     </tr>
     <tr>
-      <th>2026-10-29</th>
-      <td>-0.86</td>
-      <td>0.32</td>
-      <td>0.71</td>
-      <td>0.68</td>
-      <td>0.76</td>
-      <td>0.77</td>
+      <th>2026-11-05</th>
+      <td>0.99</td>
+      <td>0.93</td>
+      <td>0.90</td>
+      <td>0.88</td>
       <td>0.80</td>
+      <td>0.79</td>
+      <td>0.81</td>
       <td>0.88</td>
       <td>0.90</td>
-      <td>-0.82</td>
+      <td>0.99</td>
+      <td>...</td>
+      <td>0.83</td>
+      <td>0.97</td>
+      <td>0.97</td>
+      <td>0.97</td>
+      <td>0.93</td>
+      <td>0.93</td>
+      <td>0.92</td>
+      <td>0.94</td>
+      <td>0.97</td>
+      <td>0.96</td>
+    </tr>
+    <tr>
+      <th>2026-11-06</th>
+      <td>0.98</td>
+      <td>0.93</td>
+      <td>0.90</td>
+      <td>0.89</td>
+      <td>0.80</td>
+      <td>0.79</td>
+      <td>0.81</td>
+      <td>0.88</td>
+      <td>0.90</td>
+      <td>1.00</td>
+      <td>...</td>
+      <td>0.83</td>
+      <td>0.97</td>
+      <td>0.97</td>
+      <td>0.97</td>
+      <td>0.93</td>
+      <td>0.92</td>
+      <td>0.92</td>
+      <td>0.94</td>
+      <td>0.97</td>
+      <td>0.96</td>
+    </tr>
+    <tr>
+      <th>2026-11-09</th>
+      <td>1.00</td>
+      <td>0.96</td>
+      <td>0.92</td>
+      <td>0.90</td>
+      <td>0.83</td>
+      <td>0.81</td>
+      <td>0.82</td>
+      <td>0.88</td>
+      <td>0.90</td>
+      <td>0.99</td>
       <td>...</td>
       <td>0.83</td>
       <td>1.00</td>
-      <td>0.92</td>
-      <td>0.77</td>
-      <td>0.86</td>
-      <td>0.91</td>
-      <td>0.90</td>
+      <td>0.98</td>
+      <td>0.98</td>
+      <td>0.95</td>
+      <td>0.94</td>
       <td>0.93</td>
+      <td>0.94</td>
+      <td>0.97</td>
+      <td>0.96</td>
+    </tr>
+    <tr>
+      <th>2026-11-10</th>
+      <td>1.00</td>
+      <td>0.96</td>
+      <td>0.92</td>
+      <td>0.91</td>
+      <td>0.83</td>
+      <td>0.81</td>
+      <td>0.82</td>
+      <td>0.88</td>
+      <td>0.90</td>
+      <td>0.99</td>
+      <td>...</td>
+      <td>0.83</td>
+      <td>0.99</td>
+      <td>0.98</td>
+      <td>0.98</td>
+      <td>0.95</td>
+      <td>0.94</td>
+      <td>0.93</td>
+      <td>0.94</td>
       <td>0.97</td>
       <td>0.96</td>
     </tr>
   </tbody>
 </table>
-<p>5100 rows × 27 columns</p>
+<p>5108 rows × 27 columns</p>
 </div>
 
 
@@ -1222,128 +1631,128 @@ rolling_corr_results_df.replace(0.00, np.nan, inplace=True)
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-10-23</th>
-      <td>0.98</td>
-      <td>0.83</td>
-      <td>0.86</td>
-      <td>0.76</td>
-      <td>0.80</td>
-      <td>0.78</td>
-      <td>0.80</td>
-      <td>0.88</td>
-      <td>0.90</td>
-      <td>-0.45</td>
-      <td>...</td>
-      <td>0.96</td>
-      <td>0.09</td>
-      <td>0.45</td>
-      <td>0.75</td>
-      <td>0.73</td>
-      <td>0.80</td>
-      <td>0.79</td>
-      <td>0.83</td>
-      <td>0.89</td>
-      <td>0.90</td>
-    </tr>
-    <tr>
-      <th>2026-10-26</th>
-      <td>0.98</td>
-      <td>0.91</td>
-      <td>0.89</td>
-      <td>0.78</td>
-      <td>0.80</td>
-      <td>0.78</td>
-      <td>0.80</td>
-      <td>0.88</td>
-      <td>0.90</td>
-      <td>0.07</td>
-      <td>...</td>
-      <td>0.96</td>
-      <td>0.44</td>
-      <td>0.54</td>
-      <td>0.76</td>
-      <td>0.73</td>
-      <td>0.81</td>
-      <td>0.79</td>
-      <td>0.83</td>
-      <td>0.89</td>
-      <td>0.90</td>
-    </tr>
-    <tr>
-      <th>2026-10-27</th>
-      <td>0.99</td>
-      <td>0.98</td>
-      <td>0.89</td>
-      <td>0.76</td>
-      <td>0.78</td>
-      <td>0.78</td>
-      <td>0.80</td>
-      <td>0.88</td>
-      <td>0.90</td>
-      <td>0.99</td>
-      <td>...</td>
-      <td>0.96</td>
-      <td>0.98</td>
-      <td>0.44</td>
-      <td>0.77</td>
-      <td>0.72</td>
-      <td>0.80</td>
-      <td>0.79</td>
-      <td>0.82</td>
-      <td>0.89</td>
-      <td>0.90</td>
-    </tr>
-    <tr>
-      <th>2026-10-28</th>
-      <td>0.95</td>
-      <td>0.98</td>
-      <td>0.85</td>
-      <td>0.76</td>
-      <td>0.79</td>
-      <td>0.78</td>
-      <td>0.80</td>
-      <td>0.88</td>
-      <td>0.90</td>
-      <td>0.94</td>
-      <td>...</td>
-      <td>0.96</td>
-      <td>0.90</td>
-      <td>0.46</td>
-      <td>0.67</td>
-      <td>0.72</td>
-      <td>0.80</td>
-      <td>0.79</td>
-      <td>0.83</td>
-      <td>0.89</td>
-      <td>0.90</td>
-    </tr>
-    <tr>
-      <th>2026-10-29</th>
-      <td>-0.86</td>
-      <td>0.32</td>
-      <td>0.71</td>
-      <td>0.68</td>
-      <td>0.76</td>
-      <td>0.77</td>
-      <td>0.80</td>
-      <td>0.88</td>
-      <td>0.90</td>
-      <td>-0.82</td>
-      <td>...</td>
-      <td>0.96</td>
+      <th>2026-11-04</th>
       <td>-0.23</td>
-      <td>0.41</td>
-      <td>0.57</td>
-      <td>0.66</td>
-      <td>0.77</td>
+      <td>0.58</td>
+      <td>0.67</td>
+      <td>0.64</td>
+      <td>0.70</td>
+      <td>0.75</td>
+      <td>0.80</td>
+      <td>0.88</td>
+      <td>0.90</td>
+      <td>0.40</td>
+      <td>...</td>
+      <td>0.96</td>
+      <td>0.32</td>
+      <td>0.70</td>
+      <td>0.64</td>
+      <td>0.68</td>
+      <td>0.73</td>
       <td>0.77</td>
       <td>0.82</td>
+      <td>0.89</td>
+      <td>0.90</td>
+    </tr>
+    <tr>
+      <th>2026-11-05</th>
+      <td>0.99</td>
+      <td>0.93</td>
+      <td>0.90</td>
+      <td>0.88</td>
+      <td>0.80</td>
+      <td>0.79</td>
+      <td>0.81</td>
+      <td>0.88</td>
+      <td>0.90</td>
+      <td>0.99</td>
+      <td>...</td>
+      <td>0.96</td>
+      <td>0.98</td>
+      <td>0.95</td>
+      <td>0.92</td>
+      <td>0.87</td>
+      <td>0.82</td>
+      <td>0.81</td>
+      <td>0.83</td>
+      <td>0.89</td>
+      <td>0.90</td>
+    </tr>
+    <tr>
+      <th>2026-11-06</th>
+      <td>0.98</td>
+      <td>0.93</td>
+      <td>0.90</td>
+      <td>0.89</td>
+      <td>0.80</td>
+      <td>0.79</td>
+      <td>0.81</td>
+      <td>0.88</td>
+      <td>0.90</td>
+      <td>1.00</td>
+      <td>...</td>
+      <td>0.96</td>
+      <td>0.98</td>
+      <td>0.95</td>
+      <td>0.91</td>
+      <td>0.87</td>
+      <td>0.82</td>
+      <td>0.81</td>
+      <td>0.83</td>
+      <td>0.89</td>
+      <td>0.90</td>
+    </tr>
+    <tr>
+      <th>2026-11-09</th>
+      <td>1.00</td>
+      <td>0.96</td>
+      <td>0.92</td>
+      <td>0.90</td>
+      <td>0.83</td>
+      <td>0.81</td>
+      <td>0.82</td>
+      <td>0.88</td>
+      <td>0.90</td>
+      <td>0.99</td>
+      <td>...</td>
+      <td>0.96</td>
+      <td>1.00</td>
+      <td>0.97</td>
+      <td>0.93</td>
+      <td>0.90</td>
+      <td>0.85</td>
+      <td>0.82</td>
+      <td>0.84</td>
+      <td>0.89</td>
+      <td>0.90</td>
+    </tr>
+    <tr>
+      <th>2026-11-10</th>
+      <td>1.00</td>
+      <td>0.96</td>
+      <td>0.92</td>
+      <td>0.91</td>
+      <td>0.83</td>
+      <td>0.81</td>
+      <td>0.82</td>
+      <td>0.88</td>
+      <td>0.90</td>
+      <td>0.99</td>
+      <td>...</td>
+      <td>0.96</td>
+      <td>0.99</td>
+      <td>0.98</td>
+      <td>0.93</td>
+      <td>0.90</td>
+      <td>0.85</td>
+      <td>0.82</td>
+      <td>0.84</td>
       <td>0.89</td>
       <td>0.90</td>
     </tr>
   </tbody>
 </table>
-<p>5100 rows × 36 columns</p>
+<p>5108 rows × 36 columns</p>
 </div>
 
 
@@ -1685,128 +2094,128 @@ Table 3: Total Rolling Correlations With Forward Returns
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-10-23</th>
-      <td>0.98</td>
-      <td>0.83</td>
-      <td>0.86</td>
-      <td>0.76</td>
-      <td>0.80</td>
-      <td>0.78</td>
-      <td>0.80</td>
-      <td>0.88</td>
-      <td>0.90</td>
-      <td>-0.45</td>
-      <td>...</td>
-      <td>-0.05</td>
-      <td>NaN</td>
-      <td>-0.05</td>
-      <td>NaN</td>
-      <td>0.03</td>
-      <td>NaN</td>
-      <td>-0.04</td>
-      <td>NaN</td>
-      <td>-0.05</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>2026-10-26</th>
-      <td>0.98</td>
-      <td>0.91</td>
-      <td>0.89</td>
-      <td>0.78</td>
-      <td>0.80</td>
-      <td>0.78</td>
+      <th>2026-11-04</th>
+      <td>-0.23</td>
+      <td>0.58</td>
+      <td>0.67</td>
+      <td>0.64</td>
+      <td>0.70</td>
+      <td>0.75</td>
       <td>0.80</td>
       <td>0.88</td>
       <td>0.90</td>
-      <td>0.07</td>
+      <td>0.40</td>
       <td>...</td>
-      <td>-0.05</td>
+      <td>-0.01</td>
       <td>NaN</td>
-      <td>-0.05</td>
+      <td>-0.01</td>
       <td>NaN</td>
-      <td>0.04</td>
+      <td>0.00</td>
       <td>NaN</td>
-      <td>-0.04</td>
-      <td>NaN</td>
-      <td>-0.05</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>2026-10-27</th>
-      <td>0.99</td>
-      <td>0.98</td>
-      <td>0.89</td>
-      <td>0.76</td>
-      <td>0.78</td>
-      <td>0.78</td>
-      <td>0.80</td>
-      <td>0.88</td>
-      <td>0.90</td>
-      <td>0.99</td>
-      <td>...</td>
-      <td>-0.04</td>
-      <td>NaN</td>
-      <td>-0.04</td>
-      <td>NaN</td>
-      <td>0.06</td>
-      <td>NaN</td>
-      <td>-0.02</td>
+      <td>-0.03</td>
       <td>NaN</td>
       <td>-0.03</td>
       <td>NaN</td>
     </tr>
     <tr>
-      <th>2026-10-28</th>
-      <td>0.95</td>
-      <td>0.98</td>
-      <td>0.85</td>
-      <td>0.76</td>
+      <th>2026-11-05</th>
+      <td>0.99</td>
+      <td>0.93</td>
+      <td>0.90</td>
+      <td>0.88</td>
+      <td>0.80</td>
       <td>0.79</td>
-      <td>0.78</td>
-      <td>0.80</td>
+      <td>0.81</td>
       <td>0.88</td>
       <td>0.90</td>
-      <td>0.94</td>
+      <td>0.99</td>
       <td>...</td>
-      <td>-0.03</td>
+      <td>-0.05</td>
       <td>NaN</td>
       <td>-0.04</td>
       <td>NaN</td>
-      <td>0.04</td>
+      <td>-0.05</td>
+      <td>NaN</td>
+      <td>-0.08</td>
+      <td>NaN</td>
+      <td>-0.07</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2026-11-06</th>
+      <td>0.98</td>
+      <td>0.93</td>
+      <td>0.90</td>
+      <td>0.89</td>
+      <td>0.80</td>
+      <td>0.79</td>
+      <td>0.81</td>
+      <td>0.88</td>
+      <td>0.90</td>
+      <td>1.00</td>
+      <td>...</td>
+      <td>-0.03</td>
+      <td>NaN</td>
+      <td>-0.03</td>
+      <td>NaN</td>
+      <td>-0.05</td>
+      <td>NaN</td>
+      <td>-0.07</td>
+      <td>NaN</td>
+      <td>-0.07</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2026-11-09</th>
+      <td>1.00</td>
+      <td>0.96</td>
+      <td>0.92</td>
+      <td>0.90</td>
+      <td>0.83</td>
+      <td>0.81</td>
+      <td>0.82</td>
+      <td>0.88</td>
+      <td>0.90</td>
+      <td>0.99</td>
+      <td>...</td>
+      <td>0.01</td>
+      <td>NaN</td>
+      <td>0.01</td>
       <td>NaN</td>
       <td>-0.02</td>
+      <td>NaN</td>
+      <td>-0.04</td>
       <td>NaN</td>
       <td>-0.04</td>
       <td>NaN</td>
     </tr>
     <tr>
-      <th>2026-10-29</th>
-      <td>-0.86</td>
-      <td>0.32</td>
-      <td>0.71</td>
-      <td>0.68</td>
-      <td>0.76</td>
-      <td>0.77</td>
-      <td>0.80</td>
+      <th>2026-11-10</th>
+      <td>1.00</td>
+      <td>0.96</td>
+      <td>0.92</td>
+      <td>0.91</td>
+      <td>0.83</td>
+      <td>0.81</td>
+      <td>0.82</td>
       <td>0.88</td>
       <td>0.90</td>
-      <td>-0.82</td>
+      <td>0.99</td>
       <td>...</td>
-      <td>-0.01</td>
+      <td>-0.00</td>
       <td>NaN</td>
-      <td>-0.01</td>
+      <td>-0.00</td>
       <td>NaN</td>
-      <td>0.03</td>
+      <td>-0.03</td>
       <td>NaN</td>
-      <td>-0.01</td>
+      <td>-0.05</td>
       <td>NaN</td>
-      <td>-0.02</td>
+      <td>-0.05</td>
       <td>NaN</td>
     </tr>
   </tbody>
 </table>
-<p>5100 rows × 81 columns</p>
+<p>5108 rows × 81 columns</p>
 </div>
 
 
@@ -1916,45 +2325,45 @@ Table 4: Percentage of Positive Future Returns by 1w Total Rolling Correlation D
   <tbody>
     <tr>
       <th>Baseline (all days)</th>
-      <td>54.84</td>
-      <td>53.68</td>
-      <td>52.33</td>
-      <td>58.77</td>
-      <td>55.45</td>
-      <td>53.98</td>
-      <td>60.20</td>
-      <td>56.94</td>
-      <td>54.98</td>
-      <td>63.88</td>
+      <td>54.83</td>
+      <td>53.69</td>
+      <td>52.32</td>
+      <td>58.71</td>
+      <td>55.42</td>
+      <td>53.99</td>
+      <td>60.09</td>
+      <td>56.93</td>
+      <td>55.05</td>
+      <td>63.78</td>
       <td>...</td>
-      <td>57.31</td>
-      <td>67.65</td>
-      <td>62.34</td>
-      <td>60.87</td>
-      <td>71.71</td>
-      <td>67.10</td>
-      <td>65.63</td>
-      <td>73.91</td>
-      <td>69.48</td>
-      <td>66.70</td>
+      <td>57.36</td>
+      <td>67.52</td>
+      <td>62.35</td>
+      <td>60.91</td>
+      <td>71.59</td>
+      <td>67.01</td>
+      <td>65.57</td>
+      <td>73.83</td>
+      <td>69.37</td>
+      <td>66.59</td>
     </tr>
     <tr>
       <th>D1 (-0.28 to 0.68)</th>
-      <td>54.03</td>
-      <td>48.13</td>
-      <td>47.15</td>
-      <td>57.79</td>
-      <td>50.30</td>
-      <td>47.34</td>
-      <td>60.79</td>
-      <td>54.26</td>
-      <td>49.50</td>
-      <td>67.46</td>
+      <td>54.01</td>
+      <td>48.14</td>
+      <td>47.16</td>
+      <td>57.34</td>
+      <td>50.29</td>
+      <td>47.36</td>
+      <td>60.08</td>
+      <td>54.40</td>
+      <td>50.10</td>
+      <td>66.93</td>
       <td>...</td>
-      <td>56.35</td>
-      <td>68.86</td>
-      <td>56.69</td>
-      <td>54.29</td>
+      <td>56.50</td>
+      <td>68.39</td>
+      <td>56.86</td>
+      <td>54.47</td>
       <td>73.65</td>
       <td>64.67</td>
       <td>62.08</td>
@@ -1964,177 +2373,177 @@ Table 4: Percentage of Positive Future Returns by 1w Total Rolling Correlation D
     </tr>
     <tr>
       <th>D2 (0.68 to 0.81)</th>
-      <td>56.47</td>
-      <td>54.71</td>
-      <td>51.96</td>
-      <td>57.84</td>
-      <td>55.10</td>
-      <td>50.78</td>
+      <td>56.08</td>
+      <td>54.90</td>
+      <td>51.57</td>
       <td>57.45</td>
-      <td>54.71</td>
-      <td>50.98</td>
-      <td>64.24</td>
+      <td>54.90</td>
+      <td>50.59</td>
+      <td>57.37</td>
+      <td>54.62</td>
+      <td>50.69</td>
+      <td>64.10</td>
       <td>...</td>
-      <td>53.44</td>
-      <td>67.26</td>
-      <td>59.76</td>
-      <td>57.59</td>
-      <td>74.40</td>
+      <td>53.45</td>
+      <td>67.19</td>
+      <td>59.68</td>
+      <td>57.91</td>
+      <td>74.00</td>
       <td>67.80</td>
       <td>66.00</td>
-      <td>76.88</td>
-      <td>71.81</td>
-      <td>68.36</td>
+      <td>76.83</td>
+      <td>71.75</td>
+      <td>68.29</td>
     </tr>
     <tr>
       <th>D3 (0.81 to 0.87)</th>
-      <td>54.42</td>
-      <td>49.71</td>
-      <td>50.49</td>
-      <td>57.37</td>
-      <td>53.44</td>
-      <td>52.46</td>
-      <td>60.51</td>
-      <td>55.01</td>
-      <td>54.22</td>
-      <td>64.64</td>
+      <td>54.71</td>
+      <td>49.41</td>
+      <td>50.78</td>
+      <td>57.45</td>
+      <td>53.53</td>
+      <td>52.75</td>
+      <td>60.20</td>
+      <td>54.90</td>
+      <td>54.12</td>
+      <td>64.71</td>
       <td>...</td>
-      <td>55.99</td>
-      <td>68.12</td>
-      <td>60.99</td>
-      <td>58.22</td>
-      <td>72.51</td>
-      <td>66.14</td>
-      <td>62.95</td>
-      <td>76.35</td>
-      <td>71.14</td>
-      <td>68.54</td>
+      <td>56.08</td>
+      <td>67.39</td>
+      <td>60.71</td>
+      <td>58.35</td>
+      <td>71.94</td>
+      <td>65.42</td>
+      <td>62.25</td>
+      <td>76.00</td>
+      <td>70.80</td>
+      <td>68.20</td>
     </tr>
     <tr>
       <th>D4 (0.87 to 0.91)</th>
-      <td>56.08</td>
-      <td>59.02</td>
-      <td>58.24</td>
-      <td>62.16</td>
-      <td>57.25</td>
-      <td>56.67</td>
-      <td>63.14</td>
-      <td>60.39</td>
-      <td>59.61</td>
-      <td>59.33</td>
+      <td>56.16</td>
+      <td>59.30</td>
+      <td>58.32</td>
+      <td>62.43</td>
+      <td>57.14</td>
+      <td>56.75</td>
+      <td>63.41</td>
+      <td>60.67</td>
+      <td>60.08</td>
+      <td>59.49</td>
       <td>...</td>
-      <td>55.01</td>
-      <td>67.32</td>
-      <td>60.83</td>
-      <td>58.66</td>
-      <td>69.31</td>
-      <td>65.35</td>
-      <td>66.34</td>
-      <td>75.20</td>
-      <td>68.25</td>
-      <td>66.87</td>
+      <td>55.19</td>
+      <td>67.58</td>
+      <td>60.90</td>
+      <td>58.74</td>
+      <td>69.09</td>
+      <td>65.16</td>
+      <td>66.14</td>
+      <td>75.25</td>
+      <td>68.32</td>
+      <td>66.93</td>
     </tr>
     <tr>
       <th>D5 (0.91 to 0.93)</th>
-      <td>59.33</td>
-      <td>58.35</td>
-      <td>55.80</td>
-      <td>61.30</td>
-      <td>57.76</td>
-      <td>56.97</td>
-      <td>60.51</td>
-      <td>55.80</td>
-      <td>53.44</td>
-      <td>66.54</td>
+      <td>59.22</td>
+      <td>58.24</td>
+      <td>55.69</td>
+      <td>60.98</td>
+      <td>57.65</td>
+      <td>56.86</td>
+      <td>60.39</td>
+      <td>55.69</td>
+      <td>53.33</td>
+      <td>66.27</td>
       <td>...</td>
-      <td>57.28</td>
-      <td>66.86</td>
-      <td>63.91</td>
-      <td>62.33</td>
-      <td>68.85</td>
-      <td>64.29</td>
-      <td>63.10</td>
-      <td>70.58</td>
-      <td>63.82</td>
-      <td>62.82</td>
+      <td>57.25</td>
+      <td>66.60</td>
+      <td>63.85</td>
+      <td>62.08</td>
+      <td>68.91</td>
+      <td>64.36</td>
+      <td>63.17</td>
+      <td>70.63</td>
+      <td>63.89</td>
+      <td>62.90</td>
     </tr>
     <tr>
       <th>D6 (0.93 to 0.95)</th>
-      <td>49.41</td>
-      <td>49.41</td>
-      <td>48.24</td>
-      <td>54.31</td>
-      <td>52.16</td>
-      <td>51.37</td>
-      <td>56.67</td>
-      <td>54.71</td>
-      <td>53.92</td>
-      <td>57.76</td>
+      <td>49.61</td>
+      <td>49.80</td>
+      <td>48.63</td>
+      <td>54.42</td>
+      <td>52.06</td>
+      <td>51.47</td>
+      <td>56.50</td>
+      <td>54.72</td>
+      <td>53.94</td>
+      <td>57.48</td>
       <td>...</td>
-      <td>55.40</td>
-      <td>62.67</td>
-      <td>61.49</td>
-      <td>60.12</td>
-      <td>66.54</td>
-      <td>63.58</td>
-      <td>62.80</td>
-      <td>66.93</td>
-      <td>63.76</td>
-      <td>60.59</td>
+      <td>55.31</td>
+      <td>62.52</td>
+      <td>61.34</td>
+      <td>59.96</td>
+      <td>66.60</td>
+      <td>63.64</td>
+      <td>63.04</td>
+      <td>66.73</td>
+      <td>63.56</td>
+      <td>60.40</td>
     </tr>
     <tr>
       <th>D7 (0.95 to 0.96)</th>
-      <td>54.22</td>
-      <td>54.62</td>
-      <td>53.63</td>
-      <td>61.30</td>
-      <td>60.31</td>
-      <td>59.14</td>
-      <td>63.65</td>
-      <td>60.71</td>
-      <td>58.15</td>
-      <td>68.96</td>
+      <td>54.21</td>
+      <td>54.40</td>
+      <td>53.42</td>
+      <td>61.45</td>
+      <td>60.27</td>
+      <td>59.10</td>
+      <td>63.60</td>
+      <td>60.47</td>
+      <td>58.12</td>
+      <td>69.08</td>
       <td>...</td>
-      <td>58.74</td>
-      <td>69.16</td>
-      <td>64.24</td>
-      <td>63.26</td>
-      <td>71.34</td>
-      <td>67.98</td>
-      <td>63.64</td>
-      <td>72.76</td>
-      <td>71.17</td>
-      <td>68.39</td>
+      <td>58.90</td>
+      <td>69.28</td>
+      <td>64.38</td>
+      <td>63.41</td>
+      <td>71.26</td>
+      <td>67.91</td>
+      <td>63.58</td>
+      <td>72.44</td>
+      <td>70.67</td>
+      <td>67.91</td>
     </tr>
     <tr>
       <th>D8 (0.96 to 0.97)</th>
-      <td>53.33</td>
-      <td>52.94</td>
-      <td>50.98</td>
-      <td>58.63</td>
-      <td>55.29</td>
-      <td>53.73</td>
-      <td>59.41</td>
-      <td>58.82</td>
-      <td>54.90</td>
-      <td>62.35</td>
+      <td>53.14</td>
+      <td>52.75</td>
+      <td>50.78</td>
+      <td>58.55</td>
+      <td>55.40</td>
+      <td>53.63</td>
+      <td>59.33</td>
+      <td>58.74</td>
+      <td>55.01</td>
+      <td>62.08</td>
       <td>...</td>
-      <td>58.04</td>
-      <td>68.63</td>
-      <td>65.29</td>
-      <td>64.71</td>
-      <td>73.33</td>
-      <td>69.22</td>
-      <td>68.63</td>
+      <td>57.96</td>
+      <td>68.57</td>
+      <td>65.42</td>
+      <td>64.64</td>
+      <td>73.28</td>
+      <td>69.16</td>
+      <td>68.57</td>
       <td>72.10</td>
-      <td>71.91</td>
-      <td>68.37</td>
+      <td>71.71</td>
+      <td>68.17</td>
     </tr>
     <tr>
       <th>D9 (0.97 to 0.98)</th>
-      <td>55.80</td>
-      <td>56.39</td>
-      <td>54.03</td>
+      <td>55.99</td>
+      <td>56.58</td>
+      <td>54.22</td>
       <td>59.14</td>
       <td>57.17</td>
       <td>55.60</td>
@@ -2156,27 +2565,27 @@ Table 4: Percentage of Positive Future Returns by 1w Total Rolling Correlation D
     </tr>
     <tr>
       <th>D10 (0.98 to 1.00)</th>
-      <td>55.29</td>
-      <td>53.53</td>
-      <td>52.75</td>
-      <td>57.84</td>
-      <td>55.69</td>
-      <td>55.69</td>
-      <td>60.59</td>
-      <td>57.45</td>
-      <td>58.24</td>
-      <td>61.96</td>
+      <td>55.19</td>
+      <td>53.42</td>
+      <td>52.64</td>
+      <td>57.93</td>
+      <td>55.77</td>
+      <td>55.77</td>
+      <td>60.67</td>
+      <td>57.53</td>
+      <td>58.32</td>
+      <td>62.04</td>
       <td>...</td>
-      <td>61.37</td>
-      <td>70.39</td>
-      <td>66.67</td>
-      <td>65.10</td>
-      <td>73.92</td>
-      <td>72.16</td>
-      <td>70.39</td>
-      <td>77.65</td>
-      <td>75.49</td>
-      <td>71.96</td>
+      <td>61.45</td>
+      <td>70.45</td>
+      <td>66.73</td>
+      <td>65.17</td>
+      <td>73.97</td>
+      <td>72.21</td>
+      <td>70.45</td>
+      <td>77.69</td>
+      <td>75.54</td>
+      <td>72.02</td>
     </tr>
   </tbody>
 </table>
@@ -2246,7 +2655,7 @@ Table 5: Mean Future Return (%) by 1w Total Rolling Correlation Decile
       <td>0.05</td>
       <td>0.05</td>
       <td>0.05</td>
-      <td>0.15</td>
+      <td>0.14</td>
       <td>0.14</td>
       <td>0.14</td>
       <td>0.24</td>
@@ -2258,30 +2667,30 @@ Table 5: Mean Future Return (%) by 1w Total Rolling Correlation Decile
       <td>1.01</td>
       <td>0.95</td>
       <td>0.95</td>
-      <td>2.02</td>
+      <td>2.01</td>
       <td>1.90</td>
       <td>1.88</td>
-      <td>3.01</td>
-      <td>2.85</td>
-      <td>2.82</td>
+      <td>3.00</td>
+      <td>2.84</td>
+      <td>2.81</td>
     </tr>
     <tr>
       <th>D1 (-0.28 to 0.68)</th>
       <td>0.07</td>
       <td>0.05</td>
       <td>0.04</td>
-      <td>0.13</td>
-      <td>0.06</td>
+      <td>0.12</td>
       <td>0.05</td>
-      <td>0.28</td>
-      <td>0.24</td>
+      <td>0.04</td>
       <td>0.25</td>
-      <td>0.56</td>
+      <td>0.24</td>
+      <td>0.26</td>
+      <td>0.53</td>
       <td>...</td>
-      <td>0.71</td>
-      <td>0.97</td>
       <td>0.70</td>
-      <td>0.81</td>
+      <td>0.95</td>
+      <td>0.70</td>
+      <td>0.82</td>
       <td>1.90</td>
       <td>1.45</td>
       <td>1.39</td>
@@ -2291,75 +2700,75 @@ Table 5: Mean Future Return (%) by 1w Total Rolling Correlation Decile
     </tr>
     <tr>
       <th>D2 (0.68 to 0.81)</th>
-      <td>0.06</td>
-      <td>0.04</td>
+      <td>0.05</td>
       <td>0.03</td>
+      <td>0.02</td>
+      <td>0.11</td>
+      <td>0.09</td>
+      <td>0.05</td>
       <td>0.13</td>
-      <td>0.10</td>
-      <td>0.07</td>
-      <td>0.14</td>
-      <td>0.04</td>
-      <td>-0.01</td>
-      <td>0.37</td>
+      <td>0.03</td>
+      <td>-0.03</td>
+      <td>0.38</td>
       <td>...</td>
-      <td>0.14</td>
+      <td>0.15</td>
       <td>0.85</td>
       <td>0.43</td>
       <td>0.35</td>
       <td>1.82</td>
-      <td>1.41</td>
-      <td>1.43</td>
+      <td>1.40</td>
+      <td>1.40</td>
       <td>2.93</td>
+      <td>2.34</td>
       <td>2.37</td>
-      <td>2.41</td>
     </tr>
     <tr>
       <th>D3 (0.81 to 0.87)</th>
       <td>-0.00</td>
       <td>-0.03</td>
-      <td>-0.03</td>
-      <td>0.09</td>
+      <td>-0.02</td>
+      <td>0.10</td>
       <td>0.03</td>
       <td>0.03</td>
       <td>0.14</td>
       <td>0.05</td>
-      <td>0.05</td>
-      <td>0.39</td>
+      <td>0.06</td>
+      <td>0.38</td>
       <td>...</td>
       <td>0.22</td>
-      <td>0.89</td>
-      <td>0.69</td>
-      <td>0.65</td>
-      <td>1.82</td>
-      <td>1.40</td>
-      <td>1.24</td>
-      <td>3.16</td>
-      <td>2.70</td>
-      <td>2.70</td>
+      <td>0.85</td>
+      <td>0.68</td>
+      <td>0.66</td>
+      <td>1.77</td>
+      <td>1.36</td>
+      <td>1.22</td>
+      <td>3.13</td>
+      <td>2.67</td>
+      <td>2.68</td>
     </tr>
     <tr>
       <th>D4 (0.87 to 0.91)</th>
+      <td>0.12</td>
       <td>0.11</td>
-      <td>0.10</td>
-      <td>0.08</td>
+      <td>0.09</td>
+      <td>0.27</td>
       <td>0.26</td>
-      <td>0.25</td>
-      <td>0.23</td>
-      <td>0.32</td>
+      <td>0.24</td>
+      <td>0.33</td>
       <td>0.31</td>
-      <td>0.30</td>
+      <td>0.31</td>
       <td>0.34</td>
       <td>...</td>
-      <td>0.34</td>
-      <td>0.67</td>
-      <td>0.57</td>
-      <td>0.62</td>
-      <td>1.71</td>
-      <td>1.52</td>
+      <td>0.35</td>
+      <td>0.68</td>
+      <td>0.59</td>
+      <td>0.63</td>
+      <td>1.70</td>
+      <td>1.53</td>
       <td>1.68</td>
-      <td>2.62</td>
-      <td>2.34</td>
-      <td>2.46</td>
+      <td>2.63</td>
+      <td>2.36</td>
+      <td>2.47</td>
     </tr>
     <tr>
       <th>D5 (0.91 to 0.93)</th>
@@ -2368,46 +2777,46 @@ Table 5: Mean Future Return (%) by 1w Total Rolling Correlation Decile
       <td>0.16</td>
       <td>0.24</td>
       <td>0.27</td>
-      <td>0.26</td>
+      <td>0.25</td>
       <td>0.31</td>
       <td>0.34</td>
-      <td>0.29</td>
-      <td>0.63</td>
+      <td>0.28</td>
+      <td>0.62</td>
       <td>...</td>
       <td>0.54</td>
-      <td>1.08</td>
       <td>1.07</td>
-      <td>1.03</td>
+      <td>1.07</td>
+      <td>1.02</td>
       <td>1.70</td>
-      <td>1.48</td>
-      <td>1.35</td>
+      <td>1.49</td>
+      <td>1.36</td>
       <td>2.26</td>
-      <td>2.02</td>
-      <td>1.94</td>
+      <td>2.03</td>
+      <td>1.96</td>
     </tr>
     <tr>
       <th>D6 (0.93 to 0.95)</th>
       <td>-0.07</td>
-      <td>-0.11</td>
       <td>-0.10</td>
-      <td>-0.04</td>
-      <td>-0.07</td>
+      <td>-0.10</td>
       <td>-0.03</td>
-      <td>0.09</td>
+      <td>-0.06</td>
+      <td>-0.03</td>
+      <td>0.08</td>
       <td>0.11</td>
       <td>0.13</td>
       <td>0.10</td>
       <td>...</td>
       <td>0.09</td>
-      <td>0.56</td>
-      <td>0.73</td>
-      <td>0.73</td>
+      <td>0.55</td>
+      <td>0.72</td>
+      <td>0.71</td>
       <td>0.85</td>
       <td>0.78</td>
-      <td>0.82</td>
-      <td>1.71</td>
-      <td>1.77</td>
-      <td>1.85</td>
+      <td>0.81</td>
+      <td>1.69</td>
+      <td>1.74</td>
+      <td>1.81</td>
     </tr>
     <tr>
       <th>D7 (0.95 to 0.96)</th>
@@ -2424,86 +2833,86 @@ Table 5: Mean Future Return (%) by 1w Total Rolling Correlation Decile
       <td>...</td>
       <td>0.79</td>
       <td>1.38</td>
-      <td>1.40</td>
-      <td>1.35</td>
+      <td>1.42</td>
+      <td>1.37</td>
       <td>2.11</td>
-      <td>2.22</td>
+      <td>2.21</td>
       <td>2.14</td>
-      <td>3.24</td>
-      <td>3.46</td>
-      <td>3.50</td>
+      <td>3.20</td>
+      <td>3.41</td>
+      <td>3.45</td>
     </tr>
     <tr>
       <th>D8 (0.96 to 0.97)</th>
       <td>0.08</td>
       <td>0.11</td>
-      <td>0.13</td>
+      <td>0.12</td>
       <td>0.10</td>
       <td>0.17</td>
       <td>0.15</td>
-      <td>0.16</td>
-      <td>0.22</td>
+      <td>0.15</td>
+      <td>0.21</td>
       <td>0.22</td>
       <td>0.30</td>
       <td>...</td>
-      <td>0.29</td>
+      <td>0.28</td>
+      <td>0.92</td>
+      <td>0.97</td>
       <td>0.93</td>
-      <td>0.98</td>
-      <td>0.93</td>
-      <td>2.34</td>
+      <td>2.33</td>
       <td>2.47</td>
       <td>2.45</td>
-      <td>3.32</td>
-      <td>3.40</td>
-      <td>3.35</td>
+      <td>3.30</td>
+      <td>3.38</td>
+      <td>3.33</td>
     </tr>
     <tr>
       <th>D9 (0.97 to 0.98)</th>
       <td>0.04</td>
-      <td>0.04</td>
+      <td>0.05</td>
       <td>0.06</td>
       <td>0.08</td>
       <td>0.09</td>
       <td>0.14</td>
       <td>0.28</td>
       <td>0.31</td>
-      <td>0.35</td>
-      <td>0.76</td>
+      <td>0.34</td>
+      <td>0.77</td>
       <td>...</td>
-      <td>0.82</td>
+      <td>0.83</td>
       <td>1.22</td>
       <td>1.29</td>
-      <td>1.32</td>
-      <td>2.49</td>
+      <td>1.30</td>
+      <td>2.50</td>
       <td>2.60</td>
       <td>2.64</td>
-      <td>3.35</td>
+      <td>3.36</td>
       <td>3.41</td>
       <td>3.36</td>
     </tr>
     <tr>
       <th>D10 (0.98 to 1.00)</th>
       <td>0.04</td>
-      <td>0.05</td>
-      <td>0.05</td>
-      <td>0.11</td>
+      <td>0.04</td>
+      <td>0.04</td>
+      <td>0.12</td>
       <td>0.11</td>
       <td>0.12</td>
-      <td>0.24</td>
-      <td>0.19</td>
+      <td>0.25</td>
+      <td>0.20</td>
       <td>0.23</td>
-      <td>0.49</td>
+      <td>0.50</td>
       <td>...</td>
-      <td>0.56</td>
-      <td>1.59</td>
-      <td>1.67</td>
-      <td>1.67</td>
+      <td>0.57</td>
+      <td>1.60</td>
+      <td>1.68</td>
+      <td>1.68</td>
       <td>3.43</td>
       <td>3.65</td>
       <td>3.67</td>
       <td>4.56</td>
-      <td>5.06</td>
-      <td>5.08</td>
+      <td>5.07</td>
+      <td>5.09</td>
     </tr>
   </tbody>
 </table>
@@ -2571,266 +2980,266 @@ Table 6: Percentage of Positive Future Returns by 2w Total Rolling Correlation D
     <tr>
       <th>Baseline (all days)</th>
       <td>54.85</td>
-      <td>53.69</td>
-      <td>52.32</td>
-      <td>58.77</td>
-      <td>55.44</td>
-      <td>53.97</td>
-      <td>60.20</td>
-      <td>56.98</td>
-      <td>55.01</td>
-      <td>63.89</td>
+      <td>53.71</td>
+      <td>52.31</td>
+      <td>58.71</td>
+      <td>55.42</td>
+      <td>53.98</td>
+      <td>60.09</td>
+      <td>56.97</td>
+      <td>55.08</td>
+      <td>63.78</td>
       <td>...</td>
-      <td>57.31</td>
-      <td>67.61</td>
+      <td>57.36</td>
+      <td>67.49</td>
       <td>62.31</td>
-      <td>60.83</td>
-      <td>71.68</td>
-      <td>67.06</td>
-      <td>65.60</td>
-      <td>73.89</td>
-      <td>69.45</td>
-      <td>66.67</td>
+      <td>60.87</td>
+      <td>71.56</td>
+      <td>66.98</td>
+      <td>65.53</td>
+      <td>73.81</td>
+      <td>69.34</td>
+      <td>66.56</td>
     </tr>
     <tr>
       <th>D1 (-0.03 to 0.76)</th>
-      <td>55.40</td>
-      <td>48.33</td>
-      <td>47.74</td>
-      <td>60.83</td>
-      <td>49.02</td>
-      <td>48.23</td>
-      <td>64.30</td>
-      <td>53.85</td>
+      <td>55.29</td>
+      <td>48.43</td>
+      <td>47.65</td>
+      <td>60.20</td>
+      <td>48.63</td>
+      <td>47.84</td>
+      <td>63.65</td>
+      <td>53.63</td>
       <td>50.69</td>
-      <td>69.37</td>
+      <td>68.85</td>
       <td>...</td>
-      <td>55.53</td>
-      <td>73.11</td>
-      <td>58.96</td>
-      <td>55.98</td>
-      <td>75.85</td>
-      <td>63.87</td>
-      <td>64.07</td>
-      <td>79.04</td>
-      <td>67.27</td>
-      <td>65.27</td>
+      <td>55.36</td>
+      <td>72.26</td>
+      <td>59.08</td>
+      <td>56.29</td>
+      <td>75.50</td>
+      <td>63.45</td>
+      <td>63.65</td>
+      <td>79.07</td>
+      <td>67.20</td>
+      <td>65.19</td>
     </tr>
     <tr>
       <th>D2 (0.76 to 0.83)</th>
-      <td>54.81</td>
-      <td>55.40</td>
-      <td>54.62</td>
-      <td>58.46</td>
-      <td>56.89</td>
-      <td>52.95</td>
-      <td>60.75</td>
-      <td>56.61</td>
-      <td>53.65</td>
-      <td>66.80</td>
+      <td>54.71</td>
+      <td>55.49</td>
+      <td>54.71</td>
+      <td>58.43</td>
+      <td>57.25</td>
+      <td>53.33</td>
+      <td>60.39</td>
+      <td>56.86</td>
+      <td>53.92</td>
+      <td>66.47</td>
       <td>...</td>
-      <td>51.69</td>
-      <td>70.88</td>
-      <td>60.44</td>
-      <td>57.83</td>
-      <td>74.74</td>
-      <td>66.32</td>
-      <td>62.63</td>
-      <td>78.59</td>
-      <td>72.77</td>
-      <td>65.70</td>
+      <td>52.55</td>
+      <td>70.72</td>
+      <td>60.36</td>
+      <td>58.37</td>
+      <td>74.44</td>
+      <td>66.13</td>
+      <td>62.47</td>
+      <td>78.42</td>
+      <td>72.61</td>
+      <td>65.77</td>
     </tr>
     <tr>
       <th>D3 (0.83 to 0.87)</th>
-      <td>51.67</td>
-      <td>53.44</td>
-      <td>52.46</td>
-      <td>54.42</td>
-      <td>52.06</td>
-      <td>50.88</td>
-      <td>55.01</td>
-      <td>53.05</td>
-      <td>52.26</td>
-      <td>57.17</td>
+      <td>51.57</td>
+      <td>53.14</td>
+      <td>52.16</td>
+      <td>54.51</td>
+      <td>51.96</td>
+      <td>50.98</td>
+      <td>54.90</td>
+      <td>53.14</td>
+      <td>52.35</td>
+      <td>57.06</td>
       <td>...</td>
-      <td>51.08</td>
-      <td>64.57</td>
-      <td>59.65</td>
-      <td>58.07</td>
-      <td>72.11</td>
-      <td>68.53</td>
-      <td>66.33</td>
-      <td>77.02</td>
-      <td>72.18</td>
-      <td>68.95</td>
+      <td>50.98</td>
+      <td>64.31</td>
+      <td>59.41</td>
+      <td>57.84</td>
+      <td>71.49</td>
+      <td>68.12</td>
+      <td>65.94</td>
+      <td>76.91</td>
+      <td>72.29</td>
+      <td>68.88</td>
     </tr>
     <tr>
       <th>D4 (0.87 to 0.90)</th>
-      <td>57.17</td>
-      <td>55.80</td>
-      <td>54.22</td>
-      <td>57.96</td>
-      <td>54.03</td>
-      <td>52.26</td>
-      <td>58.15</td>
-      <td>55.99</td>
-      <td>54.03</td>
-      <td>63.85</td>
+      <td>57.25</td>
+      <td>55.88</td>
+      <td>54.31</td>
+      <td>57.65</td>
+      <td>53.92</td>
+      <td>52.16</td>
+      <td>58.04</td>
+      <td>55.88</td>
+      <td>53.92</td>
+      <td>63.92</td>
       <td>...</td>
-      <td>57.37</td>
-      <td>63.78</td>
-      <td>58.07</td>
-      <td>57.48</td>
-      <td>67.98</td>
-      <td>65.61</td>
-      <td>61.46</td>
-      <td>71.17</td>
-      <td>64.61</td>
-      <td>64.41</td>
+      <td>57.06</td>
+      <td>63.73</td>
+      <td>58.04</td>
+      <td>57.45</td>
+      <td>68.24</td>
+      <td>65.88</td>
+      <td>61.74</td>
+      <td>71.49</td>
+      <td>64.55</td>
+      <td>64.36</td>
     </tr>
     <tr>
       <th>D5 (0.90 to 0.92)</th>
-      <td>54.22</td>
-      <td>56.19</td>
-      <td>51.87</td>
-      <td>61.69</td>
-      <td>60.31</td>
-      <td>56.58</td>
-      <td>62.28</td>
-      <td>63.46</td>
-      <td>56.39</td>
-      <td>66.60</td>
+      <td>54.71</td>
+      <td>56.67</td>
+      <td>52.35</td>
+      <td>62.08</td>
+      <td>60.71</td>
+      <td>56.97</td>
+      <td>62.40</td>
+      <td>63.58</td>
+      <td>56.89</td>
+      <td>66.54</td>
       <td>...</td>
-      <td>59.33</td>
-      <td>70.53</td>
-      <td>66.60</td>
-      <td>64.44</td>
-      <td>75.20</td>
-      <td>69.69</td>
-      <td>67.91</td>
-      <td>75.90</td>
-      <td>69.72</td>
-      <td>67.13</td>
+      <td>59.45</td>
+      <td>70.87</td>
+      <td>66.93</td>
+      <td>64.76</td>
+      <td>74.95</td>
+      <td>69.43</td>
+      <td>67.65</td>
+      <td>74.95</td>
+      <td>68.64</td>
+      <td>66.07</td>
     </tr>
     <tr>
       <th>D6 (0.92 to 0.94)</th>
-      <td>56.58</td>
-      <td>54.03</td>
-      <td>53.63</td>
-      <td>57.96</td>
-      <td>56.58</td>
-      <td>53.83</td>
-      <td>58.55</td>
-      <td>55.40</td>
-      <td>52.46</td>
-      <td>61.30</td>
+      <td>56.30</td>
+      <td>53.74</td>
+      <td>53.15</td>
+      <td>58.19</td>
+      <td>56.61</td>
+      <td>54.04</td>
+      <td>58.97</td>
+      <td>55.62</td>
+      <td>52.66</td>
+      <td>61.54</td>
       <td>...</td>
-      <td>55.80</td>
-      <td>62.28</td>
-      <td>60.31</td>
-      <td>58.35</td>
-      <td>67.19</td>
-      <td>63.65</td>
-      <td>63.65</td>
-      <td>70.14</td>
-      <td>65.62</td>
-      <td>65.03</td>
+      <td>56.02</td>
+      <td>62.33</td>
+      <td>60.36</td>
+      <td>58.19</td>
+      <td>67.65</td>
+      <td>63.91</td>
+      <td>63.91</td>
+      <td>70.41</td>
+      <td>65.88</td>
+      <td>65.29</td>
     </tr>
     <tr>
       <th>D7 (0.94 to 0.95)</th>
-      <td>55.99</td>
-      <td>54.03</td>
-      <td>49.51</td>
-      <td>60.12</td>
-      <td>56.58</td>
-      <td>55.60</td>
-      <td>57.76</td>
-      <td>55.01</td>
-      <td>56.19</td>
-      <td>57.76</td>
+      <td>56.08</td>
+      <td>54.12</td>
+      <td>49.80</td>
+      <td>59.80</td>
+      <td>55.88</td>
+      <td>55.10</td>
+      <td>57.25</td>
+      <td>54.51</td>
+      <td>55.69</td>
+      <td>57.65</td>
       <td>...</td>
-      <td>56.39</td>
-      <td>62.67</td>
-      <td>59.33</td>
-      <td>58.74</td>
-      <td>64.64</td>
-      <td>59.14</td>
-      <td>58.55</td>
-      <td>63.26</td>
-      <td>61.89</td>
-      <td>59.53</td>
+      <td>56.27</td>
+      <td>62.35</td>
+      <td>59.41</td>
+      <td>58.43</td>
+      <td>64.31</td>
+      <td>59.02</td>
+      <td>58.43</td>
+      <td>63.33</td>
+      <td>61.96</td>
+      <td>59.61</td>
     </tr>
     <tr>
       <th>D8 (0.95 to 0.96)</th>
-      <td>52.06</td>
-      <td>48.72</td>
-      <td>50.88</td>
-      <td>57.17</td>
-      <td>53.63</td>
-      <td>55.01</td>
-      <td>59.33</td>
-      <td>55.80</td>
-      <td>54.03</td>
-      <td>63.26</td>
+      <td>51.96</td>
+      <td>48.82</td>
+      <td>50.78</td>
+      <td>57.25</td>
+      <td>54.12</td>
+      <td>55.10</td>
+      <td>59.22</td>
+      <td>55.88</td>
+      <td>54.12</td>
+      <td>63.14</td>
       <td>...</td>
-      <td>58.35</td>
-      <td>61.69</td>
-      <td>62.28</td>
-      <td>60.71</td>
-      <td>66.60</td>
-      <td>63.46</td>
-      <td>61.69</td>
-      <td>65.82</td>
-      <td>65.42</td>
-      <td>61.69</td>
+      <td>58.24</td>
+      <td>61.57</td>
+      <td>61.96</td>
+      <td>60.59</td>
+      <td>66.47</td>
+      <td>63.53</td>
+      <td>61.76</td>
+      <td>65.69</td>
+      <td>65.29</td>
+      <td>61.57</td>
     </tr>
     <tr>
       <th>D9 (0.96 to 0.97)</th>
-      <td>56.39</td>
-      <td>54.81</td>
-      <td>53.24</td>
-      <td>64.44</td>
-      <td>60.51</td>
-      <td>60.51</td>
-      <td>66.40</td>
-      <td>64.05</td>
-      <td>63.06</td>
-      <td>66.60</td>
+      <td>56.27</td>
+      <td>54.51</td>
+      <td>53.14</td>
+      <td>64.31</td>
+      <td>60.39</td>
+      <td>60.39</td>
+      <td>66.47</td>
+      <td>63.92</td>
+      <td>63.14</td>
+      <td>66.67</td>
       <td>...</td>
-      <td>62.67</td>
-      <td>72.30</td>
-      <td>66.40</td>
-      <td>64.05</td>
-      <td>73.87</td>
-      <td>71.12</td>
-      <td>70.73</td>
-      <td>75.83</td>
-      <td>74.07</td>
-      <td>69.55</td>
+      <td>62.75</td>
+      <td>72.35</td>
+      <td>66.47</td>
+      <td>64.12</td>
+      <td>73.92</td>
+      <td>71.18</td>
+      <td>70.78</td>
+      <td>75.69</td>
+      <td>73.92</td>
+      <td>69.41</td>
     </tr>
     <tr>
       <th>D10 (0.97 to 0.99)</th>
-      <td>54.22</td>
-      <td>56.19</td>
-      <td>55.01</td>
-      <td>54.62</td>
-      <td>54.81</td>
-      <td>53.83</td>
-      <td>59.53</td>
-      <td>56.58</td>
-      <td>57.37</td>
-      <td>66.21</td>
+      <td>54.31</td>
+      <td>56.27</td>
+      <td>55.10</td>
+      <td>54.71</td>
+      <td>54.71</td>
+      <td>53.92</td>
+      <td>59.61</td>
+      <td>56.67</td>
+      <td>57.45</td>
+      <td>66.08</td>
       <td>...</td>
-      <td>64.83</td>
-      <td>74.46</td>
-      <td>70.92</td>
-      <td>72.50</td>
-      <td>78.78</td>
-      <td>79.17</td>
-      <td>78.78</td>
-      <td>82.51</td>
-      <td>81.14</td>
-      <td>79.37</td>
+      <td>64.90</td>
+      <td>74.51</td>
+      <td>70.98</td>
+      <td>72.55</td>
+      <td>78.82</td>
+      <td>79.02</td>
+      <td>78.82</td>
+      <td>82.55</td>
+      <td>81.18</td>
+      <td>79.41</td>
     </tr>
   </tbody>
 </table>
@@ -2900,7 +3309,7 @@ Table 7: Mean Future Return (%) by 2w Total Rolling Correlation Decile
       <td>0.05</td>
       <td>0.05</td>
       <td>0.05</td>
-      <td>0.15</td>
+      <td>0.14</td>
       <td>0.14</td>
       <td>0.14</td>
       <td>0.24</td>
@@ -2912,95 +3321,95 @@ Table 7: Mean Future Return (%) by 2w Total Rolling Correlation Decile
       <td>1.01</td>
       <td>0.95</td>
       <td>0.95</td>
-      <td>2.02</td>
+      <td>2.01</td>
       <td>1.90</td>
       <td>1.88</td>
-      <td>3.01</td>
-      <td>2.85</td>
-      <td>2.82</td>
+      <td>3.00</td>
+      <td>2.84</td>
+      <td>2.80</td>
     </tr>
     <tr>
       <th>D1 (-0.03 to 0.76)</th>
+      <td>0.05</td>
+      <td>-0.00</td>
+      <td>-0.01</td>
+      <td>0.16</td>
       <td>0.06</td>
-      <td>0.00</td>
-      <td>0.00</td>
+      <td>0.11</td>
+      <td>0.28</td>
       <td>0.19</td>
-      <td>0.09</td>
-      <td>0.13</td>
-      <td>0.31</td>
-      <td>0.20</td>
-      <td>0.31</td>
-      <td>0.63</td>
+      <td>0.29</td>
+      <td>0.61</td>
       <td>...</td>
-      <td>0.64</td>
-      <td>1.11</td>
-      <td>0.51</td>
+      <td>0.63</td>
+      <td>1.07</td>
+      <td>0.49</td>
       <td>0.66</td>
-      <td>1.77</td>
-      <td>0.90</td>
-      <td>0.96</td>
-      <td>2.97</td>
-      <td>1.41</td>
-      <td>0.95</td>
+      <td>1.75</td>
+      <td>0.88</td>
+      <td>0.94</td>
+      <td>2.95</td>
+      <td>1.39</td>
+      <td>0.94</td>
     </tr>
     <tr>
       <th>D2 (0.76 to 0.83)</th>
       <td>0.05</td>
-      <td>0.05</td>
-      <td>0.07</td>
+      <td>0.06</td>
+      <td>0.08</td>
+      <td>0.17</td>
       <td>0.16</td>
-      <td>0.15</td>
-      <td>0.14</td>
+      <td>0.16</td>
       <td>0.24</td>
-      <td>0.18</td>
-      <td>0.14</td>
-      <td>0.55</td>
+      <td>0.19</td>
+      <td>0.16</td>
+      <td>0.54</td>
       <td>...</td>
-      <td>0.21</td>
+      <td>0.26</td>
       <td>1.02</td>
-      <td>0.63</td>
-      <td>0.45</td>
-      <td>1.77</td>
-      <td>1.21</td>
-      <td>1.03</td>
-      <td>2.91</td>
+      <td>0.65</td>
+      <td>0.48</td>
+      <td>1.75</td>
+      <td>1.18</td>
+      <td>1.01</td>
+      <td>2.92</td>
       <td>2.03</td>
-      <td>1.91</td>
+      <td>1.90</td>
     </tr>
     <tr>
       <th>D3 (0.83 to 0.87)</th>
       <td>0.01</td>
       <td>0.01</td>
-      <td>0.03</td>
-      <td>0.03</td>
+      <td>0.02</td>
+      <td>0.04</td>
       <td>-0.03</td>
       <td>-0.02</td>
       <td>0.08</td>
-      <td>-0.01</td>
+      <td>-0.00</td>
       <td>0.02</td>
-      <td>0.17</td>
+      <td>0.16</td>
       <td>...</td>
-      <td>0.04</td>
-      <td>0.66</td>
-      <td>0.57</td>
-      <td>0.65</td>
-      <td>2.01</td>
-      <td>1.71</td>
-      <td>1.94</td>
-      <td>3.04</td>
-      <td>2.63</td>
-      <td>3.09</td>
+      <td>0.03</td>
+      <td>0.64</td>
+      <td>0.56</td>
+      <td>0.63</td>
+      <td>1.98</td>
+      <td>1.70</td>
+      <td>1.93</td>
+      <td>3.02</td>
+      <td>2.62</td>
+      <td>3.07</td>
     </tr>
     <tr>
       <th>D4 (0.87 to 0.90)</th>
       <td>0.09</td>
       <td>0.10</td>
       <td>0.09</td>
-      <td>0.13</td>
+      <td>0.12</td>
       <td>0.17</td>
-      <td>0.17</td>
-      <td>0.19</td>
-      <td>0.23</td>
+      <td>0.16</td>
+      <td>0.18</td>
+      <td>0.22</td>
       <td>0.18</td>
       <td>0.34</td>
       <td>...</td>
@@ -3008,84 +3417,84 @@ Table 7: Mean Future Return (%) by 2w Total Rolling Correlation Decile
       <td>0.73</td>
       <td>0.95</td>
       <td>0.98</td>
-      <td>1.35</td>
-      <td>1.39</td>
-      <td>1.31</td>
-      <td>2.15</td>
-      <td>2.09</td>
+      <td>1.37</td>
+      <td>1.40</td>
+      <td>1.33</td>
       <td>2.18</td>
+      <td>2.12</td>
+      <td>2.22</td>
     </tr>
     <tr>
       <th>D5 (0.90 to 0.92)</th>
-      <td>0.06</td>
-      <td>0.11</td>
       <td>0.07</td>
-      <td>0.20</td>
-      <td>0.29</td>
-      <td>0.22</td>
-      <td>0.38</td>
-      <td>0.47</td>
+      <td>0.12</td>
+      <td>0.09</td>
+      <td>0.21</td>
+      <td>0.30</td>
+      <td>0.24</td>
       <td>0.39</td>
+      <td>0.47</td>
+      <td>0.40</td>
       <td>0.57</td>
       <td>...</td>
-      <td>0.61</td>
-      <td>1.34</td>
-      <td>1.42</td>
-      <td>1.39</td>
-      <td>2.09</td>
+      <td>0.62</td>
+      <td>1.36</td>
+      <td>1.44</td>
+      <td>1.41</td>
       <td>2.07</td>
-      <td>2.01</td>
-      <td>2.98</td>
-      <td>3.02</td>
-      <td>3.05</td>
+      <td>2.06</td>
+      <td>1.99</td>
+      <td>2.87</td>
+      <td>2.87</td>
+      <td>2.88</td>
     </tr>
     <tr>
       <th>D6 (0.92 to 0.94)</th>
       <td>0.03</td>
-      <td>0.02</td>
+      <td>0.01</td>
+      <td>0.04</td>
       <td>0.05</td>
-      <td>0.04</td>
-      <td>0.03</td>
-      <td>0.04</td>
-      <td>0.12</td>
-      <td>0.17</td>
+      <td>0.05</td>
+      <td>0.05</td>
+      <td>0.15</td>
       <td>0.19</td>
+      <td>0.21</td>
       <td>0.30</td>
       <td>...</td>
-      <td>0.35</td>
-      <td>0.59</td>
+      <td>0.34</td>
+      <td>0.61</td>
       <td>0.66</td>
-      <td>0.63</td>
-      <td>1.03</td>
-      <td>0.88</td>
-      <td>0.82</td>
-      <td>1.96</td>
-      <td>2.01</td>
-      <td>1.93</td>
+      <td>0.64</td>
+      <td>1.08</td>
+      <td>0.91</td>
+      <td>0.86</td>
+      <td>2.00</td>
+      <td>2.02</td>
+      <td>1.98</td>
     </tr>
     <tr>
       <th>D7 (0.94 to 0.95)</th>
       <td>0.03</td>
-      <td>0.01</td>
-      <td>-0.03</td>
-      <td>0.16</td>
-      <td>0.13</td>
-      <td>0.07</td>
-      <td>0.09</td>
-      <td>0.01</td>
-      <td>-0.05</td>
+      <td>0.02</td>
+      <td>-0.02</td>
+      <td>0.14</td>
+      <td>0.11</td>
+      <td>0.05</td>
+      <td>0.06</td>
+      <td>-0.01</td>
+      <td>-0.08</td>
       <td>0.14</td>
       <td>...</td>
-      <td>0.02</td>
-      <td>0.51</td>
-      <td>0.41</td>
-      <td>0.38</td>
-      <td>1.19</td>
-      <td>1.11</td>
-      <td>0.94</td>
+      <td>0.03</td>
+      <td>0.49</td>
+      <td>0.40</td>
+      <td>0.36</td>
+      <td>1.16</td>
+      <td>1.08</td>
+      <td>0.91</td>
       <td>1.64</td>
-      <td>1.78</td>
-      <td>1.58</td>
+      <td>1.79</td>
+      <td>1.59</td>
     </tr>
     <tr>
       <th>D8 (0.95 to 0.96)</th>
@@ -3094,54 +3503,54 @@ Table 7: Mean Future Return (%) by 2w Total Rolling Correlation Decile
       <td>0.02</td>
       <td>0.05</td>
       <td>0.01</td>
-      <td>0.03</td>
+      <td>0.04</td>
       <td>0.16</td>
       <td>0.15</td>
       <td>0.14</td>
-      <td>0.44</td>
+      <td>0.43</td>
       <td>...</td>
-      <td>0.42</td>
-      <td>0.60</td>
-      <td>0.60</td>
+      <td>0.41</td>
       <td>0.58</td>
-      <td>1.38</td>
+      <td>0.58</td>
+      <td>0.56</td>
+      <td>1.35</td>
+      <td>1.44</td>
       <td>1.46</td>
-      <td>1.49</td>
-      <td>2.56</td>
+      <td>2.54</td>
       <td>2.74</td>
-      <td>2.77</td>
+      <td>2.75</td>
     </tr>
     <tr>
       <th>D9 (0.96 to 0.97)</th>
       <td>0.12</td>
-      <td>0.12</td>
+      <td>0.11</td>
       <td>0.12</td>
       <td>0.42</td>
       <td>0.43</td>
-      <td>0.49</td>
-      <td>0.59</td>
+      <td>0.48</td>
+      <td>0.60</td>
       <td>0.59</td>
       <td>0.64</td>
       <td>0.65</td>
       <td>...</td>
       <td>0.62</td>
-      <td>1.17</td>
+      <td>1.19</td>
       <td>1.11</td>
-      <td>1.02</td>
-      <td>3.05</td>
-      <td>3.27</td>
+      <td>1.03</td>
+      <td>3.07</td>
+      <td>3.28</td>
       <td>3.25</td>
-      <td>3.99</td>
-      <td>4.27</td>
-      <td>4.20</td>
+      <td>3.98</td>
+      <td>4.26</td>
+      <td>4.19</td>
     </tr>
     <tr>
       <th>D10 (0.97 to 0.99)</th>
       <td>0.02</td>
       <td>0.03</td>
-      <td>0.03</td>
+      <td>0.04</td>
       <td>0.10</td>
-      <td>0.12</td>
+      <td>0.13</td>
       <td>0.11</td>
       <td>0.27</td>
       <td>0.31</td>
@@ -3149,15 +3558,15 @@ Table 7: Mean Future Return (%) by 2w Total Rolling Correlation Decile
       <td>1.05</td>
       <td>...</td>
       <td>1.24</td>
-      <td>2.39</td>
+      <td>2.38</td>
       <td>2.66</td>
-      <td>2.71</td>
-      <td>4.50</td>
-      <td>4.97</td>
+      <td>2.72</td>
+      <td>4.49</td>
+      <td>4.96</td>
       <td>5.03</td>
-      <td>5.87</td>
+      <td>5.86</td>
       <td>6.44</td>
-      <td>6.43</td>
+      <td>6.42</td>
     </tr>
   </tbody>
 </table>
@@ -3225,266 +3634,266 @@ Table 8: Percentage of Positive Future Returns by 1m Total Rolling Correlation D
     <tr>
       <th>Baseline (all days)</th>
       <td>54.85</td>
-      <td>53.71</td>
+      <td>53.73</td>
       <td>52.33</td>
-      <td>58.76</td>
-      <td>55.49</td>
-      <td>53.99</td>
-      <td>60.22</td>
-      <td>56.99</td>
-      <td>55.01</td>
-      <td>63.81</td>
+      <td>58.70</td>
+      <td>55.46</td>
+      <td>54.00</td>
+      <td>60.10</td>
+      <td>56.97</td>
+      <td>55.09</td>
+      <td>63.71</td>
       <td>...</td>
-      <td>57.22</td>
-      <td>67.54</td>
+      <td>57.27</td>
+      <td>67.42</td>
       <td>62.25</td>
-      <td>60.74</td>
-      <td>71.62</td>
-      <td>66.99</td>
-      <td>65.52</td>
-      <td>73.83</td>
-      <td>69.38</td>
-      <td>66.59</td>
+      <td>60.79</td>
+      <td>71.50</td>
+      <td>66.90</td>
+      <td>65.46</td>
+      <td>73.75</td>
+      <td>69.27</td>
+      <td>66.49</td>
     </tr>
     <tr>
       <th>D1 (0.19 to 0.79)</th>
-      <td>55.82</td>
-      <td>51.68</td>
-      <td>50.30</td>
-      <td>59.01</td>
-      <td>52.67</td>
-      <td>49.11</td>
-      <td>58.65</td>
-      <td>52.49</td>
-      <td>49.90</td>
-      <td>63.20</td>
+      <td>55.80</td>
+      <td>51.87</td>
+      <td>50.29</td>
+      <td>58.35</td>
+      <td>52.65</td>
+      <td>49.12</td>
+      <td>57.87</td>
+      <td>52.36</td>
+      <td>50.20</td>
+      <td>62.43</td>
       <td>...</td>
-      <td>54.20</td>
-      <td>68.02</td>
+      <td>54.47</td>
+      <td>67.61</td>
       <td>59.11</td>
-      <td>55.06</td>
-      <td>74.39</td>
-      <td>62.60</td>
-      <td>59.96</td>
-      <td>75.00</td>
-      <td>60.37</td>
-      <td>57.52</td>
+      <td>55.26</td>
+      <td>73.93</td>
+      <td>62.12</td>
+      <td>59.47</td>
+      <td>74.85</td>
+      <td>60.12</td>
+      <td>57.26</td>
     </tr>
     <tr>
       <th>D2 (0.79 to 0.84)</th>
-      <td>55.12</td>
-      <td>52.17</td>
-      <td>51.38</td>
-      <td>59.45</td>
-      <td>50.98</td>
-      <td>49.02</td>
-      <td>61.22</td>
-      <td>51.38</td>
-      <td>49.80</td>
-      <td>66.80</td>
+      <td>55.01</td>
+      <td>51.87</td>
+      <td>51.28</td>
+      <td>59.53</td>
+      <td>50.88</td>
+      <td>49.12</td>
+      <td>60.90</td>
+      <td>51.67</td>
+      <td>50.29</td>
+      <td>66.60</td>
       <td>...</td>
-      <td>50.79</td>
-      <td>65.67</td>
-      <td>55.09</td>
-      <td>53.69</td>
-      <td>72.16</td>
-      <td>65.36</td>
-      <td>60.62</td>
-      <td>80.58</td>
-      <td>74.38</td>
-      <td>70.04</td>
+      <td>50.88</td>
+      <td>64.69</td>
+      <td>55.42</td>
+      <td>54.24</td>
+      <td>71.69</td>
+      <td>65.17</td>
+      <td>60.49</td>
+      <td>80.86</td>
+      <td>74.69</td>
+      <td>70.37</td>
     </tr>
     <tr>
       <th>D3 (0.84 to 0.87)</th>
-      <td>55.31</td>
-      <td>54.53</td>
-      <td>51.57</td>
-      <td>58.46</td>
-      <td>53.74</td>
-      <td>50.79</td>
-      <td>61.22</td>
-      <td>56.10</td>
-      <td>51.18</td>
-      <td>65.16</td>
+      <td>55.40</td>
+      <td>55.21</td>
+      <td>52.06</td>
+      <td>58.86</td>
+      <td>53.94</td>
+      <td>50.59</td>
+      <td>61.34</td>
+      <td>56.21</td>
+      <td>50.89</td>
+      <td>65.29</td>
       <td>...</td>
-      <td>51.57</td>
-      <td>72.44</td>
-      <td>61.02</td>
-      <td>58.46</td>
+      <td>51.28</td>
+      <td>72.78</td>
+      <td>61.14</td>
+      <td>58.58</td>
       <td>78.22</td>
       <td>68.91</td>
-      <td>63.17</td>
-      <td>75.05</td>
-      <td>68.10</td>
-      <td>67.08</td>
+      <td>62.97</td>
+      <td>74.14</td>
+      <td>67.07</td>
+      <td>66.06</td>
     </tr>
     <tr>
       <th>D4 (0.87 to 0.89)</th>
       <td>53.74</td>
-      <td>54.72</td>
-      <td>51.38</td>
+      <td>54.33</td>
+      <td>50.98</td>
       <td>58.27</td>
-      <td>57.87</td>
-      <td>52.95</td>
+      <td>58.07</td>
+      <td>53.54</td>
       <td>59.65</td>
       <td>61.02</td>
-      <td>57.28</td>
-      <td>60.43</td>
+      <td>57.68</td>
+      <td>60.63</td>
       <td>...</td>
-      <td>56.30</td>
-      <td>69.69</td>
-      <td>62.80</td>
-      <td>60.04</td>
-      <td>72.83</td>
-      <td>70.67</td>
+      <td>56.69</td>
       <td>69.49</td>
+      <td>62.20</td>
+      <td>59.84</td>
+      <td>72.64</td>
+      <td>70.47</td>
+      <td>69.29</td>
       <td>80.75</td>
-      <td>71.83</td>
-      <td>71.83</td>
+      <td>71.63</td>
+      <td>71.63</td>
     </tr>
     <tr>
       <th>D5 (0.89 to 0.92)</th>
-      <td>56.10</td>
-      <td>55.31</td>
-      <td>54.92</td>
-      <td>60.43</td>
-      <td>58.46</td>
-      <td>58.66</td>
-      <td>59.06</td>
-      <td>57.68</td>
-      <td>56.89</td>
-      <td>64.76</td>
+      <td>56.30</td>
+      <td>55.51</td>
+      <td>55.12</td>
+      <td>60.55</td>
+      <td>57.99</td>
+      <td>58.38</td>
+      <td>59.17</td>
+      <td>57.79</td>
+      <td>56.80</td>
+      <td>64.69</td>
       <td>...</td>
-      <td>57.09</td>
-      <td>67.91</td>
-      <td>63.98</td>
-      <td>60.63</td>
-      <td>70.67</td>
-      <td>64.37</td>
-      <td>63.98</td>
-      <td>71.85</td>
-      <td>68.31</td>
-      <td>65.94</td>
+      <td>57.40</td>
+      <td>68.05</td>
+      <td>64.10</td>
+      <td>60.75</td>
+      <td>70.81</td>
+      <td>64.50</td>
+      <td>64.30</td>
+      <td>71.99</td>
+      <td>68.44</td>
+      <td>66.07</td>
     </tr>
     <tr>
       <th>D6 (0.92 to 0.93)</th>
-      <td>53.35</td>
-      <td>52.17</td>
-      <td>51.38</td>
-      <td>58.86</td>
-      <td>57.48</td>
-      <td>55.51</td>
-      <td>60.63</td>
-      <td>60.24</td>
-      <td>59.65</td>
-      <td>57.28</td>
+      <td>53.24</td>
+      <td>52.06</td>
+      <td>51.28</td>
+      <td>58.55</td>
+      <td>57.56</td>
+      <td>55.60</td>
+      <td>60.12</td>
+      <td>60.12</td>
+      <td>59.33</td>
+      <td>56.97</td>
       <td>...</td>
-      <td>57.87</td>
-      <td>61.22</td>
-      <td>60.24</td>
-      <td>61.42</td>
-      <td>58.86</td>
-      <td>54.13</td>
-      <td>52.56</td>
-      <td>58.86</td>
-      <td>54.72</td>
-      <td>51.38</td>
+      <td>57.37</td>
+      <td>60.90</td>
+      <td>60.12</td>
+      <td>61.30</td>
+      <td>58.94</td>
+      <td>54.03</td>
+      <td>52.46</td>
+      <td>58.94</td>
+      <td>54.81</td>
+      <td>51.47</td>
     </tr>
     <tr>
       <th>D7 (0.93 to 0.94)</th>
-      <td>55.71</td>
-      <td>53.94</td>
-      <td>52.56</td>
-      <td>54.53</td>
-      <td>50.79</td>
-      <td>50.98</td>
-      <td>55.31</td>
-      <td>52.36</td>
-      <td>52.56</td>
-      <td>59.06</td>
-      <td>...</td>
       <td>55.51</td>
-      <td>63.98</td>
-      <td>59.84</td>
-      <td>58.86</td>
+      <td>53.74</td>
+      <td>52.36</td>
+      <td>54.33</td>
+      <td>50.79</td>
+      <td>50.79</td>
+      <td>55.51</td>
+      <td>52.17</td>
+      <td>52.56</td>
+      <td>59.25</td>
+      <td>...</td>
+      <td>55.71</td>
+      <td>64.17</td>
+      <td>59.65</td>
+      <td>58.66</td>
       <td>62.80</td>
-      <td>61.81</td>
-      <td>61.81</td>
+      <td>62.01</td>
+      <td>62.01</td>
+      <td>64.96</td>
       <td>65.16</td>
-      <td>65.35</td>
-      <td>58.07</td>
+      <td>57.87</td>
     </tr>
     <tr>
       <th>D8 (0.94 to 0.95)</th>
-      <td>55.71</td>
-      <td>53.74</td>
-      <td>51.97</td>
-      <td>59.06</td>
-      <td>56.50</td>
-      <td>58.86</td>
-      <td>64.76</td>
-      <td>60.04</td>
-      <td>57.28</td>
-      <td>63.98</td>
+      <td>55.99</td>
+      <td>53.83</td>
+      <td>52.06</td>
+      <td>58.94</td>
+      <td>56.39</td>
+      <td>58.74</td>
+      <td>64.83</td>
+      <td>60.12</td>
+      <td>57.37</td>
+      <td>64.05</td>
       <td>...</td>
-      <td>60.04</td>
-      <td>64.57</td>
-      <td>63.78</td>
-      <td>63.19</td>
-      <td>71.46</td>
-      <td>70.28</td>
-      <td>72.05</td>
-      <td>74.02</td>
-      <td>73.43</td>
-      <td>71.06</td>
+      <td>60.12</td>
+      <td>64.64</td>
+      <td>64.24</td>
+      <td>63.26</td>
+      <td>71.32</td>
+      <td>70.14</td>
+      <td>71.91</td>
+      <td>74.07</td>
+      <td>73.48</td>
+      <td>71.12</td>
     </tr>
     <tr>
       <th>D9 (0.95 to 0.97)</th>
-      <td>54.33</td>
-      <td>55.71</td>
-      <td>54.33</td>
-      <td>62.20</td>
-      <td>58.86</td>
-      <td>55.91</td>
-      <td>60.43</td>
-      <td>58.46</td>
-      <td>56.10</td>
-      <td>70.08</td>
+      <td>54.03</td>
+      <td>55.60</td>
+      <td>54.42</td>
+      <td>62.48</td>
+      <td>59.14</td>
+      <td>56.19</td>
+      <td>60.51</td>
+      <td>58.35</td>
+      <td>56.39</td>
+      <td>69.74</td>
       <td>...</td>
-      <td>62.60</td>
-      <td>69.09</td>
-      <td>66.93</td>
-      <td>65.75</td>
-      <td>74.80</td>
-      <td>73.62</td>
-      <td>72.83</td>
-      <td>73.82</td>
-      <td>76.57</td>
-      <td>73.03</td>
+      <td>62.67</td>
+      <td>68.96</td>
+      <td>66.80</td>
+      <td>65.62</td>
+      <td>74.66</td>
+      <td>73.48</td>
+      <td>72.89</td>
+      <td>73.67</td>
+      <td>76.42</td>
+      <td>72.89</td>
     </tr>
     <tr>
       <th>D10 (0.97 to 0.99)</th>
-      <td>53.35</td>
-      <td>53.15</td>
-      <td>53.54</td>
-      <td>57.28</td>
-      <td>57.48</td>
-      <td>58.07</td>
-      <td>61.22</td>
-      <td>60.04</td>
-      <td>59.45</td>
-      <td>67.32</td>
+      <td>53.44</td>
+      <td>53.24</td>
+      <td>53.44</td>
+      <td>57.17</td>
+      <td>57.17</td>
+      <td>57.96</td>
+      <td>61.10</td>
+      <td>59.92</td>
+      <td>59.33</td>
+      <td>67.39</td>
       <td>...</td>
-      <td>66.14</td>
-      <td>72.83</td>
-      <td>69.49</td>
-      <td>70.08</td>
-      <td>80.12</td>
-      <td>77.95</td>
-      <td>78.35</td>
-      <td>83.66</td>
-      <td>80.71</td>
-      <td>79.92</td>
+      <td>66.01</td>
+      <td>72.89</td>
+      <td>69.55</td>
+      <td>70.14</td>
+      <td>80.16</td>
+      <td>78.00</td>
+      <td>78.39</td>
+      <td>83.69</td>
+      <td>80.75</td>
+      <td>79.96</td>
     </tr>
   </tbody>
 </table>
@@ -3554,7 +3963,7 @@ Table 9: Mean Future Return (%) by 1m Total Rolling Correlation Decile
       <td>0.05</td>
       <td>0.05</td>
       <td>0.05</td>
-      <td>0.15</td>
+      <td>0.14</td>
       <td>0.14</td>
       <td>0.14</td>
       <td>0.24</td>
@@ -3563,87 +3972,87 @@ Table 9: Mean Future Return (%) by 1m Total Rolling Correlation Decile
       <td>0.48</td>
       <td>...</td>
       <td>0.45</td>
-      <td>1.01</td>
+      <td>1.00</td>
       <td>0.95</td>
       <td>0.94</td>
-      <td>2.01</td>
+      <td>2.00</td>
       <td>1.89</td>
       <td>1.87</td>
-      <td>3.00</td>
-      <td>2.84</td>
-      <td>2.80</td>
+      <td>2.99</td>
+      <td>2.83</td>
+      <td>2.79</td>
     </tr>
     <tr>
       <th>D1 (0.19 to 0.79)</th>
       <td>0.02</td>
-      <td>-0.00</td>
+      <td>-0.01</td>
       <td>0.00</td>
-      <td>0.10</td>
-      <td>0.05</td>
+      <td>0.07</td>
+      <td>0.04</td>
       <td>0.08</td>
-      <td>0.16</td>
-      <td>0.09</td>
+      <td>0.13</td>
+      <td>0.08</td>
       <td>0.15</td>
-      <td>0.39</td>
+      <td>0.35</td>
       <td>...</td>
-      <td>0.36</td>
-      <td>0.82</td>
+      <td>0.37</td>
+      <td>0.80</td>
       <td>0.50</td>
       <td>0.60</td>
-      <td>1.28</td>
-      <td>0.20</td>
-      <td>-0.03</td>
-      <td>2.50</td>
-      <td>0.58</td>
-      <td>-0.14</td>
+      <td>1.24</td>
+      <td>0.16</td>
+      <td>-0.07</td>
+      <td>2.48</td>
+      <td>0.57</td>
+      <td>-0.16</td>
     </tr>
     <tr>
       <th>D2 (0.79 to 0.84)</th>
       <td>0.06</td>
       <td>0.04</td>
-      <td>0.06</td>
-      <td>0.16</td>
+      <td>0.05</td>
+      <td>0.15</td>
       <td>0.04</td>
       <td>0.04</td>
       <td>0.28</td>
-      <td>0.11</td>
-      <td>0.09</td>
-      <td>0.54</td>
+      <td>0.12</td>
+      <td>0.10</td>
+      <td>0.53</td>
       <td>...</td>
-      <td>0.25</td>
-      <td>0.67</td>
+      <td>0.27</td>
+      <td>0.64</td>
       <td>0.33</td>
-      <td>0.33</td>
-      <td>1.81</td>
+      <td>0.36</td>
+      <td>1.79</td>
+      <td>1.10</td>
       <td>1.09</td>
-      <td>1.08</td>
-      <td>3.34</td>
-      <td>2.52</td>
-      <td>2.66</td>
+      <td>3.39</td>
+      <td>2.58</td>
+      <td>2.73</td>
     </tr>
     <tr>
       <th>D3 (0.84 to 0.87)</th>
+      <td>0.07</td>
       <td>0.06</td>
-      <td>0.05</td>
-      <td>0.03</td>
+      <td>0.04</td>
       <td>0.19</td>
-      <td>0.15</td>
-      <td>0.08</td>
-      <td>0.29</td>
+      <td>0.16</td>
+      <td>0.09</td>
+      <td>0.30</td>
       <td>0.18</td>
       <td>0.09</td>
       <td>0.60</td>
       <td>...</td>
-      <td>0.20</td>
-      <td>1.28</td>
-      <td>0.94</td>
-      <td>0.76</td>
-      <td>2.37</td>
-      <td>1.83</td>
-      <td>1.81</td>
-      <td>2.98</td>
-      <td>2.22</td>
-      <td>2.50</td>
+      <td>0.19</td>
+      <td>1.30</td>
+      <td>0.96</td>
+      <td>0.77</td>
+      <td>2.38</td>
+      <td>1.82</td>
+      <td>1.79</td>
+      <td>2.90</td>
+      <td>2.08</td>
+      <td>2.35</td>
     </tr>
     <tr>
       <th>D4 (0.87 to 0.89)</th>
@@ -3651,102 +4060,102 @@ Table 9: Mean Future Return (%) by 1m Total Rolling Correlation Decile
       <td>0.05</td>
       <td>0.04</td>
       <td>0.16</td>
-      <td>0.21</td>
-      <td>0.19</td>
+      <td>0.22</td>
+      <td>0.20</td>
       <td>0.25</td>
       <td>0.34</td>
-      <td>0.33</td>
       <td>0.34</td>
+      <td>0.35</td>
       <td>...</td>
       <td>0.49</td>
-      <td>1.24</td>
-      <td>1.21</td>
-      <td>1.27</td>
-      <td>2.47</td>
-      <td>2.34</td>
-      <td>2.54</td>
-      <td>3.45</td>
-      <td>3.56</td>
-      <td>4.09</td>
+      <td>1.22</td>
+      <td>1.20</td>
+      <td>1.26</td>
+      <td>2.44</td>
+      <td>2.30</td>
+      <td>2.49</td>
+      <td>3.41</td>
+      <td>3.53</td>
+      <td>4.05</td>
     </tr>
     <tr>
       <th>D5 (0.89 to 0.92)</th>
       <td>0.10</td>
-      <td>0.11</td>
+      <td>0.12</td>
       <td>0.13</td>
-      <td>0.19</td>
-      <td>0.23</td>
-      <td>0.28</td>
-      <td>0.23</td>
+      <td>0.18</td>
+      <td>0.22</td>
+      <td>0.27</td>
+      <td>0.24</td>
       <td>0.31</td>
       <td>0.40</td>
-      <td>0.53</td>
+      <td>0.54</td>
       <td>...</td>
-      <td>0.73</td>
-      <td>1.07</td>
+      <td>0.74</td>
+      <td>1.08</td>
       <td>1.12</td>
-      <td>1.22</td>
-      <td>1.56</td>
-      <td>1.46</td>
+      <td>1.23</td>
       <td>1.62</td>
-      <td>2.30</td>
-      <td>2.33</td>
-      <td>2.71</td>
+      <td>1.51</td>
+      <td>1.69</td>
+      <td>2.34</td>
+      <td>2.37</td>
+      <td>2.75</td>
     </tr>
     <tr>
       <th>D6 (0.92 to 0.93)</th>
       <td>0.02</td>
       <td>0.02</td>
-      <td>0.02</td>
-      <td>0.10</td>
+      <td>0.03</td>
+      <td>0.11</td>
+      <td>0.16</td>
+      <td>0.16</td>
+      <td>0.13</td>
+      <td>0.23</td>
+      <td>0.23</td>
       <td>0.15</td>
-      <td>0.15</td>
-      <td>0.15</td>
-      <td>0.24</td>
-      <td>0.24</td>
-      <td>0.17</td>
       <td>...</td>
-      <td>0.37</td>
-      <td>0.18</td>
-      <td>0.37</td>
-      <td>0.36</td>
-      <td>-0.45</td>
-      <td>-0.36</td>
-      <td>-0.56</td>
-      <td>0.14</td>
-      <td>0.24</td>
+      <td>0.35</td>
+      <td>0.15</td>
+      <td>0.34</td>
+      <td>0.33</td>
+      <td>-0.46</td>
+      <td>-0.39</td>
+      <td>-0.58</td>
+      <td>0.13</td>
+      <td>0.23</td>
       <td>-0.10</td>
     </tr>
     <tr>
       <th>D7 (0.93 to 0.94)</th>
-      <td>0.00</td>
-      <td>0.01</td>
-      <td>0.01</td>
-      <td>-0.15</td>
+      <td>-0.01</td>
+      <td>-0.01</td>
+      <td>-0.01</td>
+      <td>-0.17</td>
+      <td>-0.20</td>
       <td>-0.18</td>
-      <td>-0.16</td>
       <td>-0.05</td>
       <td>-0.11</td>
       <td>-0.11</td>
-      <td>0.11</td>
+      <td>0.12</td>
       <td>...</td>
-      <td>0.03</td>
-      <td>0.46</td>
-      <td>0.27</td>
-      <td>0.37</td>
-      <td>0.78</td>
-      <td>0.83</td>
+      <td>0.04</td>
+      <td>0.47</td>
+      <td>0.28</td>
+      <td>0.38</td>
+      <td>0.77</td>
+      <td>0.84</td>
       <td>0.75</td>
-      <td>1.31</td>
-      <td>1.51</td>
-      <td>1.34</td>
+      <td>1.28</td>
+      <td>1.49</td>
+      <td>1.30</td>
     </tr>
     <tr>
       <th>D8 (0.94 to 0.95)</th>
       <td>0.03</td>
       <td>0.02</td>
       <td>0.02</td>
-      <td>0.17</td>
+      <td>0.18</td>
       <td>0.19</td>
       <td>0.19</td>
       <td>0.28</td>
@@ -3755,15 +4164,15 @@ Table 9: Mean Future Return (%) by 1m Total Rolling Correlation Decile
       <td>0.35</td>
       <td>...</td>
       <td>0.39</td>
-      <td>0.55</td>
+      <td>0.56</td>
       <td>0.64</td>
-      <td>0.58</td>
+      <td>0.59</td>
       <td>2.23</td>
       <td>2.60</td>
-      <td>2.70</td>
-      <td>3.26</td>
-      <td>3.72</td>
-      <td>3.68</td>
+      <td>2.69</td>
+      <td>3.28</td>
+      <td>3.75</td>
+      <td>3.71</td>
     </tr>
     <tr>
       <th>D9 (0.95 to 0.97)</th>
@@ -3771,23 +4180,23 @@ Table 9: Mean Future Return (%) by 1m Total Rolling Correlation Decile
       <td>0.10</td>
       <td>0.10</td>
       <td>0.26</td>
-      <td>0.21</td>
-      <td>0.17</td>
-      <td>0.25</td>
+      <td>0.22</td>
       <td>0.18</td>
+      <td>0.25</td>
+      <td>0.19</td>
       <td>0.13</td>
       <td>0.65</td>
       <td>...</td>
-      <td>0.44</td>
-      <td>1.22</td>
-      <td>1.31</td>
+      <td>0.45</td>
       <td>1.21</td>
-      <td>2.81</td>
+      <td>1.30</td>
+      <td>1.20</td>
+      <td>2.79</td>
+      <td>3.21</td>
       <td>3.22</td>
-      <td>3.24</td>
-      <td>3.81</td>
-      <td>4.29</td>
-      <td>4.24</td>
+      <td>3.78</td>
+      <td>4.25</td>
+      <td>4.21</td>
     </tr>
     <tr>
       <th>D10 (0.97 to 0.99)</th>
@@ -3797,17 +4206,17 @@ Table 9: Mean Future Return (%) by 1m Total Rolling Correlation Decile
       <td>0.29</td>
       <td>0.34</td>
       <td>0.35</td>
-      <td>0.59</td>
+      <td>0.58</td>
+      <td>0.66</td>
       <td>0.67</td>
-      <td>0.68</td>
       <td>1.12</td>
       <td>...</td>
-      <td>1.24</td>
-      <td>2.59</td>
+      <td>1.23</td>
+      <td>2.60</td>
       <td>2.82</td>
       <td>2.71</td>
       <td>5.18</td>
-      <td>5.64</td>
+      <td>5.65</td>
       <td>5.49</td>
       <td>6.87</td>
       <td>7.32</td>
@@ -4149,128 +4558,128 @@ Table 10: Total Rolling Correlations With 2w Decile Assignments
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-10-23</th>
-      <td>0.98</td>
-      <td>0.83</td>
-      <td>0.86</td>
-      <td>0.76</td>
-      <td>0.80</td>
-      <td>0.78</td>
-      <td>0.80</td>
-      <td>0.88</td>
-      <td>0.90</td>
-      <td>-0.45</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>-0.05</td>
-      <td>NaN</td>
-      <td>0.03</td>
-      <td>NaN</td>
-      <td>-0.04</td>
-      <td>NaN</td>
-      <td>-0.05</td>
-      <td>NaN</td>
-      <td>D1</td>
-    </tr>
-    <tr>
-      <th>2026-10-26</th>
-      <td>0.98</td>
-      <td>0.91</td>
-      <td>0.89</td>
-      <td>0.78</td>
-      <td>0.80</td>
-      <td>0.78</td>
+      <th>2026-11-04</th>
+      <td>-0.23</td>
+      <td>0.58</td>
+      <td>0.67</td>
+      <td>0.64</td>
+      <td>0.70</td>
+      <td>0.75</td>
       <td>0.80</td>
       <td>0.88</td>
       <td>0.90</td>
-      <td>0.07</td>
+      <td>0.40</td>
       <td>...</td>
       <td>NaN</td>
-      <td>-0.05</td>
+      <td>-0.01</td>
       <td>NaN</td>
-      <td>0.04</td>
-      <td>NaN</td>
-      <td>-0.04</td>
-      <td>NaN</td>
-      <td>-0.05</td>
-      <td>NaN</td>
-      <td>D2</td>
-    </tr>
-    <tr>
-      <th>2026-10-27</th>
-      <td>0.99</td>
-      <td>0.98</td>
-      <td>0.89</td>
-      <td>0.76</td>
-      <td>0.78</td>
-      <td>0.78</td>
-      <td>0.80</td>
-      <td>0.88</td>
-      <td>0.90</td>
-      <td>0.99</td>
-      <td>...</td>
-      <td>NaN</td>
-      <td>-0.04</td>
-      <td>NaN</td>
-      <td>0.06</td>
-      <td>NaN</td>
-      <td>-0.02</td>
+      <td>0.00</td>
       <td>NaN</td>
       <td>-0.03</td>
       <td>NaN</td>
-      <td>D2</td>
+      <td>-0.03</td>
+      <td>NaN</td>
+      <td>D1</td>
     </tr>
     <tr>
-      <th>2026-10-28</th>
-      <td>0.95</td>
-      <td>0.98</td>
-      <td>0.85</td>
-      <td>0.76</td>
+      <th>2026-11-05</th>
+      <td>0.99</td>
+      <td>0.93</td>
+      <td>0.90</td>
+      <td>0.88</td>
+      <td>0.80</td>
       <td>0.79</td>
-      <td>0.78</td>
-      <td>0.80</td>
+      <td>0.81</td>
       <td>0.88</td>
       <td>0.90</td>
-      <td>0.94</td>
+      <td>0.99</td>
       <td>...</td>
       <td>NaN</td>
       <td>-0.04</td>
       <td>NaN</td>
-      <td>0.04</td>
+      <td>-0.05</td>
       <td>NaN</td>
-      <td>-0.02</td>
+      <td>-0.08</td>
       <td>NaN</td>
-      <td>-0.04</td>
+      <td>-0.07</td>
       <td>NaN</td>
-      <td>D1</td>
+      <td>D5</td>
     </tr>
     <tr>
-      <th>2026-10-29</th>
-      <td>-0.86</td>
-      <td>0.32</td>
-      <td>0.71</td>
-      <td>0.68</td>
-      <td>0.76</td>
-      <td>0.77</td>
+      <th>2026-11-06</th>
+      <td>0.98</td>
+      <td>0.93</td>
+      <td>0.90</td>
+      <td>0.89</td>
       <td>0.80</td>
+      <td>0.79</td>
+      <td>0.81</td>
       <td>0.88</td>
       <td>0.90</td>
-      <td>-0.82</td>
+      <td>1.00</td>
       <td>...</td>
       <td>NaN</td>
-      <td>-0.01</td>
+      <td>-0.03</td>
       <td>NaN</td>
-      <td>0.03</td>
+      <td>-0.05</td>
       <td>NaN</td>
-      <td>-0.01</td>
+      <td>-0.07</td>
+      <td>NaN</td>
+      <td>-0.07</td>
+      <td>NaN</td>
+      <td>D5</td>
+    </tr>
+    <tr>
+      <th>2026-11-09</th>
+      <td>1.00</td>
+      <td>0.96</td>
+      <td>0.92</td>
+      <td>0.90</td>
+      <td>0.83</td>
+      <td>0.81</td>
+      <td>0.82</td>
+      <td>0.88</td>
+      <td>0.90</td>
+      <td>0.99</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>0.01</td>
       <td>NaN</td>
       <td>-0.02</td>
       <td>NaN</td>
-      <td>D1</td>
+      <td>-0.04</td>
+      <td>NaN</td>
+      <td>-0.04</td>
+      <td>NaN</td>
+      <td>D6</td>
+    </tr>
+    <tr>
+      <th>2026-11-10</th>
+      <td>1.00</td>
+      <td>0.96</td>
+      <td>0.92</td>
+      <td>0.91</td>
+      <td>0.83</td>
+      <td>0.81</td>
+      <td>0.82</td>
+      <td>0.88</td>
+      <td>0.90</td>
+      <td>0.99</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>-0.00</td>
+      <td>NaN</td>
+      <td>-0.03</td>
+      <td>NaN</td>
+      <td>-0.05</td>
+      <td>NaN</td>
+      <td>-0.05</td>
+      <td>NaN</td>
+      <td>D6</td>
     </tr>
   </tbody>
 </table>
-<p>5091 rows × 82 columns</p>
+<p>5099 rows × 82 columns</p>
 </div>
 
 
@@ -4613,7 +5022,7 @@ Table 11: Days in D10 With an Open Position
       <td>0.99</td>
       <td>D10</td>
       <td>0.03</td>
-      <td>0.02</td>
+      <td>0.03</td>
       <td>0.02</td>
       <td>0.05</td>
       <td>0.05</td>
@@ -4621,7 +5030,7 @@ Table 11: Days in D10 With an Open Position
       <td>True</td>
       <td>1.00</td>
       <td>0.03</td>
-      <td>0.02</td>
+      <td>0.03</td>
       <td>0.02</td>
       <td>0.05</td>
       <td>0.05</td>
@@ -4705,7 +5114,7 @@ Table 11: Days in D10 With an Open Position
     </tr>
   </tbody>
 </table>
-<p>472 rows × 16 columns</p>
+<p>473 rows × 16 columns</p>
 </div>
 
 
@@ -5388,7 +5797,7 @@ for ticker in strategy_tickers:
 ```
 
     Total trades: 44 (44 closed)
-    Time in market: 54.45%
+    Time in market: 54.36%
     
     IVV:
       Closed trades: 44
@@ -5503,12 +5912,12 @@ Table 13: Strategy vs Buy and Hold Summary Statistics
   <tbody>
     <tr>
       <th>IVV_Strategy_Return</th>
-      <td>5091</td>
+      <td>5099</td>
       <td>2006-08-04</td>
-      <td>2026-10-29</td>
+      <td>2026-11-10</td>
       <td>0.09</td>
       <td>0.15</td>
-      <td>0.60</td>
+      <td>0.59</td>
       <td>0.08</td>
       <td>0.10</td>
       <td>2025-04-09</td>
@@ -5523,10 +5932,10 @@ Table 13: Strategy vs Buy and Hold Summary Statistics
     </tr>
     <tr>
       <th>IVV_Daily_Return</th>
-      <td>5091</td>
+      <td>5099</td>
       <td>2006-08-04</td>
-      <td>2026-10-29</td>
-      <td>0.13</td>
+      <td>2026-11-10</td>
+      <td>0.12</td>
       <td>0.19</td>
       <td>0.65</td>
       <td>0.11</td>
@@ -5543,9 +5952,9 @@ Table 13: Strategy vs Buy and Hold Summary Statistics
     </tr>
     <tr>
       <th>IJH_Strategy_Return</th>
-      <td>5091</td>
+      <td>5099</td>
       <td>2006-08-04</td>
-      <td>2026-10-29</td>
+      <td>2026-11-10</td>
       <td>0.10</td>
       <td>0.18</td>
       <td>0.58</td>
@@ -5563,9 +5972,9 @@ Table 13: Strategy vs Buy and Hold Summary Statistics
     </tr>
     <tr>
       <th>IJH_Daily_Return</th>
-      <td>5091</td>
+      <td>5099</td>
       <td>2006-08-04</td>
-      <td>2026-10-29</td>
+      <td>2026-11-10</td>
       <td>0.12</td>
       <td>0.22</td>
       <td>0.54</td>
@@ -5583,9 +5992,9 @@ Table 13: Strategy vs Buy and Hold Summary Statistics
     </tr>
     <tr>
       <th>IJR_Strategy_Return</th>
-      <td>5091</td>
+      <td>5099</td>
       <td>2006-08-04</td>
-      <td>2026-10-29</td>
+      <td>2026-11-10</td>
       <td>0.10</td>
       <td>0.19</td>
       <td>0.54</td>
@@ -5603,9 +6012,9 @@ Table 13: Strategy vs Buy and Hold Summary Statistics
     </tr>
     <tr>
       <th>IJR_Daily_Return</th>
-      <td>5091</td>
+      <td>5099</td>
       <td>2006-08-04</td>
-      <td>2026-10-29</td>
+      <td>2026-11-10</td>
       <td>0.12</td>
       <td>0.24</td>
       <td>0.50</td>
@@ -5623,12 +6032,12 @@ Table 13: Strategy vs Buy and Hold Summary Statistics
     </tr>
     <tr>
       <th>SSO_Strategy_Return</th>
-      <td>5091</td>
+      <td>5099</td>
       <td>2006-08-04</td>
-      <td>2026-10-29</td>
+      <td>2026-11-10</td>
       <td>0.17</td>
       <td>0.31</td>
-      <td>0.55</td>
+      <td>0.54</td>
       <td>0.13</td>
       <td>0.19</td>
       <td>2020-03-24</td>
@@ -5643,13 +6052,13 @@ Table 13: Strategy vs Buy and Hold Summary Statistics
     </tr>
     <tr>
       <th>SSO_Daily_Return</th>
-      <td>5091</td>
+      <td>5099</td>
       <td>2006-08-04</td>
-      <td>2026-10-29</td>
-      <td>0.22</td>
+      <td>2026-11-10</td>
+      <td>0.21</td>
       <td>0.38</td>
-      <td>0.57</td>
-      <td>0.16</td>
+      <td>0.56</td>
+      <td>0.15</td>
       <td>0.22</td>
       <td>2008-10-13</td>
       <td>-0.23</td>
@@ -5663,9 +6072,9 @@ Table 13: Strategy vs Buy and Hold Summary Statistics
     </tr>
     <tr>
       <th>MVV_Strategy_Return</th>
-      <td>5091</td>
+      <td>5099</td>
       <td>2006-08-04</td>
-      <td>2026-10-29</td>
+      <td>2026-11-10</td>
       <td>0.19</td>
       <td>0.36</td>
       <td>0.53</td>
@@ -5683,9 +6092,9 @@ Table 13: Strategy vs Buy and Hold Summary Statistics
     </tr>
     <tr>
       <th>MVV_Daily_Return</th>
-      <td>5091</td>
+      <td>5099</td>
       <td>2006-08-04</td>
-      <td>2026-10-29</td>
+      <td>2026-11-10</td>
       <td>0.20</td>
       <td>0.44</td>
       <td>0.46</td>
@@ -5703,9 +6112,9 @@ Table 13: Strategy vs Buy and Hold Summary Statistics
     </tr>
     <tr>
       <th>SAA_Strategy_Return</th>
-      <td>4972</td>
+      <td>4980</td>
       <td>2007-01-26</td>
-      <td>2026-10-29</td>
+      <td>2026-11-10</td>
       <td>0.18</td>
       <td>0.38</td>
       <td>0.48</td>
@@ -5723,9 +6132,9 @@ Table 13: Strategy vs Buy and Hold Summary Statistics
     </tr>
     <tr>
       <th>SAA_Daily_Return</th>
-      <td>4972</td>
+      <td>4980</td>
       <td>2007-01-26</td>
-      <td>2026-10-29</td>
+      <td>2026-11-10</td>
       <td>0.20</td>
       <td>0.48</td>
       <td>0.42</td>

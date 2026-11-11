@@ -29,12 +29,10 @@
 #  ## Python Imports
 
 # %%
-# Standard Library
 import os
 import sys
 import warnings
 
-from IPython.display import display, Markdown
 from itertools import combinations, count
 from pathlib import Path
 
@@ -42,30 +40,20 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+# Display
+from IPython.display import Markdown, display
+
 # Suppress warnings
 warnings.filterwarnings("ignore")
 
-# Pandas display options
-pd.set_option("display.float_format", lambda x: f"%.2f" % x)
+# Add src/ to the path so settings.py and the helper modules can be imported
+src_directory = str(Path.cwd().parents[2] / "src")
+if src_directory not in sys.path:
+    sys.path.append(src_directory)
 
-# %%
-# Add the source subdirectory to the system path to allow import config from settings.py
-current_directory = Path(os.getcwd())
-BASE_DIR = current_directory.parent.parent.parent
-src_directory = BASE_DIR / "src"
-sys.path.append(str(src_directory)) if str(src_directory) not in sys.path else None
-
-# Import settings.py
 from settings import config
 
-# Add other configured directories
-CONTENT_DIR = config("CONTENT_DIR")
-POSTS_DIR = config("POSTS_DIR")
-PAGES_DIR = config("PAGES_DIR")
-PUBLIC_DIR = config("PUBLIC_DIR")
-SOURCE_DIR = config("SOURCE_DIR")
-DATA_DIR = config("DATA_DIR")
-DATA_MANUAL_DIR = config("DATA_MANUAL_DIR")
+DATA_DIR = config("DATA_DIR")  # keep only the directories this post uses
 
 # %% [markdown]
 # ## Python Functions
@@ -74,6 +62,7 @@ DATA_MANUAL_DIR = config("DATA_MANUAL_DIR")
 # Here are the functions needed for this project:
 #
 # * [load_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#load_data): Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.
+# * [pandas_set_decimal_places](/posts/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places): Set the number of decimal places displayed for floating-point numbers in pandas.
 # * [plot_histogram](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_histogram): Plot the histogram of a data set from a DataFrame.
 # * [plot_scatter](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_scatter): Plot the data from a DataFrame for a specified date range and columns.
 # * [plot_time_series](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_time_series): Plot the timeseries data from a DataFrame for a specified date range and columns.
@@ -82,11 +71,17 @@ DATA_MANUAL_DIR = config("DATA_MANUAL_DIR")
 
 # %%
 from load_data import load_data
+from pandas_set_decimal_places import pandas_set_decimal_places
 from plot_histogram import plot_histogram
 from plot_scatter import plot_scatter
 from plot_time_series import plot_time_series
 from summary_stats import summary_stats
 from yf_pull_data import yf_pull_data
+
+# %%
+pandas_set_decimal_places(2)
+figure_number = count(1)
+table_number = count(1)
 
 # %% [markdown]
 # ## Data Overview
@@ -112,9 +107,6 @@ from yf_pull_data import yf_pull_data
 # ### Acquire & Load Data
 
 # %%
-figure_number = count(1)
-table_number = count(1)
-
 # Create list of tickers to pull data for
 us_equity_tickers = ["IVV", "IJH", "IJR", "QQQ", "IWB", "IWD", "IWF", "IWM"]
 intl_equity_tickers = ["EFA", "EEM", "IEV"]
