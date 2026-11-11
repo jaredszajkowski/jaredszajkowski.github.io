@@ -310,7 +310,6 @@ def polygon_fetch_options_full_history(
                 # Start the next window before the last bar pulled, so that the bar
                 # is included in the next overlap check
                 current_start = new_data["Date"].max() - timedelta(days=time_overlap)
-                current_end = current_start
 
         # Exception handling for failed data pull
         except Exception as e:
@@ -322,6 +321,8 @@ def polygon_fetch_options_full_history(
         # Break out of while loop once the window has reached end_date
         if current_end >= end_date:
             break
+        else:
+            current_end = current_start
 
         # Check for free tier and if so then pause for 12 seconds to avoid hitting
         # API rate limits

@@ -31,6 +31,7 @@ hour), plus the month-end, quarter-end, and options contract list files.
 """
 
 import os
+from matplotlib.pylab import true_divide
 import pandas as pd
 
 from datetime import datetime, timedelta
@@ -38,8 +39,8 @@ from massive import RESTClient
 from polygon_pull_equity_data import polygon_pull_equity_data
 from polygon_pull_futures_data import polygon_pull_futures_data
 from polygon_pull_index_data import (
+    normalize_index_ticker,
     polygon_pull_index_data,
-    polygon_resample_index_period_end,
 )
 from polygon_pull_options_data import (
     polygon_fetch_options_contracts,
@@ -56,7 +57,7 @@ DATA_DIR = config("DATA_DIR")
 GLOBAL_PARQUET_EXPORT = False
 GLOBAL_FREE_START_DATE = datetime.now() - timedelta(days=2 * 365)
 GLOBAL_PAID_START_DATE = datetime.now() - timedelta(days=5 * 365)
-GLOBAL_VERBOSE = False
+GLOBAL_VERBOSE = True
 
 # Massive (Polygon) sells a separate subscription for each data type.
 # True = paid plan, False = free tier.
@@ -161,6 +162,10 @@ def pull_indices():
 
     # Iterate through each index
     for index in indices:
+
+        # Index files are saved without the "I:" prefix (e.g. I:NDX -> NDX.pkl)
+        file_ticker = normalize_index_ticker(index)["file_ticker"]
+
         for timespan in timespans:
             polygon_pull_index_data(
                 base_directory=DATA_DIR,
@@ -180,9 +185,9 @@ def pull_indices():
             )
 
         # Resample to month-end data
-        polygon_resample_index_period_end(
+        polygon_resample_period_end(
             base_directory=DATA_DIR,
-            ticker=index,
+            ticker=file_ticker,
             source="Polygon",
             asset_class="Indices",
             timespan="day",
@@ -194,9 +199,9 @@ def pull_indices():
         )
 
         # Resample to quarter-end data
-        polygon_resample_index_period_end(
+        polygon_resample_period_end(
             base_directory=DATA_DIR,
-            ticker=index,
+            ticker=file_ticker,
             source="Polygon",
             asset_class="Indices",
             timespan="day",

@@ -178,7 +178,6 @@ def polygon_fetch_index_full_history(
                 # Start the next window before the last bar pulled, so that the bar
                 # is included in the next overlap check
                 current_start = new_data["Date"].max() - timedelta(days=time_overlap)
-                current_end = current_start
 
         # Exception handling for failed data pull
         except Exception as e:
@@ -188,8 +187,10 @@ def polygon_fetch_index_full_history(
             raise  # Re-raise the original exception
 
         # Break out of while loop if current_end is beyond the present date
-        if current_end > datetime.now():
+        if current_end >= datetime.now():
             break
+        else:
+            current_end = current_start
 
         # Check for free tier and if so then pause for 12 seconds to avoid hitting
         # API rate limits
@@ -382,106 +383,6 @@ def polygon_pull_index_data(
         print(f"--------------------")
 
     return full_history_df
-
-
-def polygon_resample_index_period_end(
-    base_directory,
-    ticker: str,
-    source: str,
-    asset_class: str,
-    timespan: str,
-    period: str,
-    excel_export: bool,
-    pickle_export: bool,
-    parquet_export: bool,
-    output_confirmation: bool,
-) -> pd.DataFrame:
-    """
-    Read index data from an existing pickle file and export month-end or
-    quarter-end close values.
-
-    Parameters:
-    -----------
-    base_directory : any
-        Root path to store downloaded data.
-    ticker : str
-        Index ticker to resample, with or without the "I:" prefix (e.g., "I:SPX").
-    source : str
-        Name of the data source (e.g., 'Polygon').
-    asset_class : str
-        Asset class name (e.g., 'Indices').
-    timespan : str
-        Time span of the existing data to read (e.g., "day").
-    period : str
-        Period to resample to, either "month" (month-end) or "quarter" (quarter-end).
-    excel_export : bool
-        If True, export data to Excel format.
-    pickle_export : bool
-        If True, export data to Pickle format.
-    parquet_export : bool
-        If True, export data to Parquet format.
-    output_confirmation : bool
-        If True, print confirmation message.
-
-    Returns:
-    --------
-    df_period_end : pd.DataFrame
-        DataFrame indexed by period-end date containing the close column.
-    """
-
-    # Resample frequency, output directory, and file suffix for each period
-    period_settings = {
-        "month": {"freq": "ME", "directory": "Month_End", "suffix": "ME"},
-        "quarter": {"freq": "QE", "directory": "Quarter_End", "suffix": "QE"},
-    }
-    if period not in period_settings:
-        raise Exception(
-            f"Invalid period: {period}. Acceptable periods are: {list(period_settings)}."
-        )
-    settings = period_settings[period]
-
-    file_ticker = normalize_index_ticker(ticker)["file_ticker"]
-
-    # Set location from where to read existing pickle file
-    location = f"{base_directory}/{source}/{asset_class}/{timespan}/{file_ticker}.pkl"
-
-    # Read data from pickle
-    df = pd.read_pickle(location)
-
-    # Reset index if 'Date' is column is the index
-    if "Date" not in df.columns:
-        df = df.reset_index()
-
-    # Keep only required columns and set index to date column
-    df = df[["Date", "close"]].set_index("Date")
-
-    # Resample data to period end
-    df_period_end = df.resample(settings["freq"]).last()
-
-    # Create directory
-    directory = f"{base_directory}/{source}/{asset_class}/{settings['directory']}"
-    os.makedirs(directory, exist_ok=True)
-
-    file_stem = f"{directory}/{file_ticker}_{settings['suffix']}"
-
-    # Export to Excel
-    if excel_export == True:
-        df_period_end.to_excel(f"{file_stem}.xlsx", sheet_name="data")
-
-    # Export to Pickle
-    if pickle_export == True:
-        df_period_end.to_pickle(f"{file_stem}.pkl")
-
-    # Export to Parquet
-    if parquet_export == True:
-        df_period_end.to_parquet(f"{file_stem}.parquet")
-
-    # Output confirmation
-    if output_confirmation == True:
-        print(f"{period.capitalize()} end data complete for {file_ticker}")
-        print(f"--------------------")
-
-    return df_period_end
 
 
 if __name__ == "__main__":
