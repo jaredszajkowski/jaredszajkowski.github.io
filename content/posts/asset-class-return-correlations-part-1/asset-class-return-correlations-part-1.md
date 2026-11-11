@@ -10,44 +10,30 @@ In this post, we'll take a look at historical return correlations between asset 
 
 
 ```python
-# Standard Library
 import os
 import sys
 import warnings
 
-from IPython.display import display, Markdown
 from itertools import combinations, count
 from pathlib import Path
 
 # Data Handling
 import pandas as pd
 
+# Display
+from IPython.display import Markdown, display
+
 # Suppress warnings
 warnings.filterwarnings("ignore")
 
-# Pandas display options
-pd.set_option("display.float_format", lambda x: f"%.2f" % x)
-```
+# Add src/ to the path so settings.py and the helper modules can be imported
+src_directory = str(Path.cwd().parents[2] / "src")
+if src_directory not in sys.path:
+    sys.path.append(src_directory)
 
-
-```python
-# Add the source subdirectory to the system path to allow import config from settings.py
-current_directory = Path(os.getcwd())
-BASE_DIR = current_directory.parent.parent.parent
-src_directory = BASE_DIR / "src"
-sys.path.append(str(src_directory)) if str(src_directory) not in sys.path else None
-
-# Import settings.py
 from settings import config
 
-# Add other configured directories
-CONTENT_DIR = config("CONTENT_DIR")
-POSTS_DIR = config("POSTS_DIR")
-PAGES_DIR = config("PAGES_DIR")
-PUBLIC_DIR = config("PUBLIC_DIR")
-SOURCE_DIR = config("SOURCE_DIR")
-DATA_DIR = config("DATA_DIR")
-DATA_MANUAL_DIR = config("DATA_MANUAL_DIR")
+DATA_DIR = config("DATA_DIR")  # keep only the directories this post uses
 ```
 
 ## Python Functions
@@ -55,15 +41,25 @@ DATA_MANUAL_DIR = config("DATA_MANUAL_DIR")
 Here are the functions needed for this project:
 
 * [load_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#load_data): Load data from a CSV, Excel, or Pickle file into a pandas DataFrame.
+* [pandas_set_decimal_places](/posts/reusable-extensible-python-functions-financial-data-analysis/#pandas_set_decimal_places): Set the number of decimal places displayed for floating-point numbers in pandas.
+* [plot_heatmap](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_heatmap): Plot a heatmap from a DataFrame, such as a correlation matrix, with annotated cells and a configurable color scale.
 * [plot_time_series](/posts/reusable-extensible-python-functions-financial-data-analysis/#plot_time_series): Plot the timeseries data from a DataFrame for a specified date range and columns.
 * [yf_pull_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#yf_pull_data): Download daily price data from Yahoo Finance and export it.
 
 
 ```python
 from load_data import load_data
+from pandas_set_decimal_places import pandas_set_decimal_places
 from plot_heatmap import plot_heatmap
 from plot_time_series import plot_time_series
 from yf_pull_data import yf_pull_data
+```
+
+
+```python
+pandas_set_decimal_places(2)
+figure_number = count(1)
+table_number = count(1)
 ```
 
 ## Data Overview
@@ -99,9 +95,6 @@ We'll now pull the data for all the ETFs and cryptocurrencies listed above.
 
 
 ```python
-figure_number = count(1)
-table_number = count(1)
-
 # Create list of tickers to pull data for
 us_equity_tickers = ["IVV", "IJH", "IJR", "QQQ", "IWB", "IWD", "IWF", "IWM"]
 intl_equity_tickers = ["EFA", "EEM", "IEV"]
@@ -169,6 +162,376 @@ for ticker in cryptoasset_tickers:
         output_confirmation=False,
     )
 ```
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:604: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:606: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:604: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:606: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:604: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:606: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:604: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:606: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:604: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:606: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:604: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:606: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:604: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:606: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:604: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:606: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      dividends.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:604: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.set_index("date", inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:606: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      splits.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
+
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      quotes.sort_index(inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:220: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.rename(columns=ctx.isins, inplace=True)
+    /home/jared/Cloud_Storage/Dropbox/Websites/jaredszajkowski.github.io/.venv/lib/python3.14/site-packages/yfinance/multi.py:224: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+    See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+      data.sort_index(level=0, axis=1, inplace=True)
+
 
 ### Load & Filter Data
 
@@ -466,128 +829,128 @@ Table 1: Fund Data
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-10-27</th>
-      <td>773.25</td>
-      <td>0.01</td>
-      <td>73.22</td>
+      <th>2026-11-06</th>
+      <td>738.68</td>
       <td>0.00</td>
-      <td>139.68</td>
+      <td>72.11</td>
       <td>0.01</td>
-      <td>721.25</td>
-      <td>0.01</td>
-      <td>420.41</td>
-      <td>0.01</td>
-      <td>...</td>
-      <td>372.28</td>
-      <td>0.01</td>
-      <td>36.99</td>
-      <td>-0.01</td>
-      <td>97.97</td>
-      <td>-0.01</td>
-      <td>80805.08</td>
-      <td>0.01</td>
-      <td>2347.73</td>
-      <td>0.01</td>
-    </tr>
-    <tr>
-      <th>2026-10-28</th>
-      <td>775.65</td>
+      <td>137.64</td>
       <td>0.00</td>
-      <td>73.35</td>
-      <td>0.00</td>
-      <td>139.76</td>
-      <td>0.00</td>
-      <td>725.61</td>
+      <td>656.10</td>
       <td>0.01</td>
-      <td>421.72</td>
+      <td>402.58</td>
       <td>0.00</td>
       <td>...</td>
-      <td>373.51</td>
-      <td>0.00</td>
-      <td>37.15</td>
-      <td>0.00</td>
-      <td>97.29</td>
+      <td>372.52</td>
       <td>-0.01</td>
-      <td>81267.59</td>
-      <td>0.01</td>
-      <td>2357.62</td>
+      <td>34.46</td>
+      <td>-0.00</td>
+      <td>101.62</td>
+      <td>-0.01</td>
+      <td>75746.93</td>
+      <td>-0.00</td>
+      <td>2235.05</td>
       <td>0.00</td>
     </tr>
     <tr>
-      <th>2026-10-29</th>
-      <td>772.97</td>
-      <td>-0.00</td>
-      <td>74.20</td>
-      <td>0.01</td>
-      <td>142.01</td>
-      <td>0.02</td>
-      <td>715.34</td>
-      <td>-0.01</td>
-      <td>420.52</td>
-      <td>-0.00</td>
+      <th>2026-11-07</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>...</td>
-      <td>368.57</td>
-      <td>-0.01</td>
-      <td>37.11</td>
-      <td>-0.00</td>
-      <td>99.47</td>
-      <td>0.02</td>
-      <td>77775.11</td>
-      <td>-0.04</td>
-      <td>2249.50</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>75747.58</td>
+      <td>0.00</td>
+      <td>2236.32</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>2026-11-08</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>74584.65</td>
+      <td>-0.02</td>
+      <td>2120.98</td>
       <td>-0.05</td>
     </tr>
     <tr>
-      <th>2026-10-30</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <th>2026-11-09</th>
+      <td>756.05</td>
+      <td>0.02</td>
+      <td>74.39</td>
+      <td>0.03</td>
+      <td>141.72</td>
+      <td>0.03</td>
+      <td>679.35</td>
+      <td>0.04</td>
+      <td>412.33</td>
+      <td>0.02</td>
       <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>77198.21</td>
-      <td>-0.01</td>
-      <td>2241.05</td>
-      <td>-0.00</td>
+      <td>379.53</td>
+      <td>0.02</td>
+      <td>33.93</td>
+      <td>-0.02</td>
+      <td>103.18</td>
+      <td>0.02</td>
+      <td>75223.15</td>
+      <td>0.01</td>
+      <td>2131.50</td>
+      <td>0.00</td>
     </tr>
     <tr>
-      <th>2026-10-31</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <th>2026-11-10</th>
+      <td>753.37</td>
+      <td>-0.00</td>
+      <td>74.13</td>
+      <td>-0.00</td>
+      <td>141.19</td>
+      <td>-0.00</td>
+      <td>674.76</td>
+      <td>-0.01</td>
+      <td>410.85</td>
+      <td>-0.00</td>
       <td>...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>77434.75</td>
-      <td>0.00</td>
-      <td>2252.75</td>
-      <td>0.01</td>
+      <td>369.36</td>
+      <td>-0.03</td>
+      <td>33.67</td>
+      <td>-0.01</td>
+      <td>102.98</td>
+      <td>-0.00</td>
+      <td>73720.12</td>
+      <td>-0.02</td>
+      <td>2050.18</td>
+      <td>-0.04</td>
     </tr>
   </tbody>
 </table>
-<p>8334 rows × 40 columns</p>
+<p>8344 rows × 40 columns</p>
 </div>
 
 
@@ -796,8 +1159,8 @@ display(Markdown(f"Table {next(table_number)}: Correlation Matrix of Daily Retur
 display(correlation_matrix_no_crypto)
 ```
 
-    Shape of fund_data_daily_returns_no_crypto: (8334, 18)
-    Rows to drop due to missing data: (5100, 18)
+    Shape of fund_data_daily_returns_no_crypto: (8344, 18)
+    Rows to drop due to missing data: (5108, 18)
 
 
 
@@ -882,8 +1245,8 @@ Table 2: Correlation Matrix of Daily Returns (Excluding BTC and ETH)
       <td>-0.28</td>
       <td>-0.30</td>
       <td>-0.00</td>
-      <td>0.07</td>
-      <td>0.38</td>
+      <td>0.08</td>
+      <td>0.37</td>
       <td>0.78</td>
     </tr>
     <tr>
@@ -904,7 +1267,7 @@ Table 2: Correlation Matrix of Daily Returns (Excluding BTC and ETH)
       <td>-0.29</td>
       <td>-0.03</td>
       <td>0.05</td>
-      <td>0.35</td>
+      <td>0.34</td>
       <td>0.76</td>
     </tr>
     <tr>
@@ -917,13 +1280,13 @@ Table 2: Correlation Matrix of Daily Returns (Excluding BTC and ETH)
       <td>0.82</td>
       <td>0.81</td>
       <td>0.97</td>
-      <td>0.79</td>
+      <td>0.78</td>
       <td>0.76</td>
       <td>0.76</td>
       <td>-0.19</td>
       <td>-0.24</td>
       <td>-0.25</td>
-      <td>0.01</td>
+      <td>0.00</td>
       <td>0.06</td>
       <td>0.29</td>
       <td>0.63</td>
@@ -943,7 +1306,7 @@ Table 2: Correlation Matrix of Daily Returns (Excluding BTC and ETH)
       <td>0.86</td>
       <td>-0.22</td>
       <td>-0.29</td>
-      <td>-0.31</td>
+      <td>-0.30</td>
       <td>-0.01</td>
       <td>0.07</td>
       <td>0.37</td>
@@ -966,7 +1329,7 @@ Table 2: Correlation Matrix of Daily Returns (Excluding BTC and ETH)
       <td>-0.27</td>
       <td>-0.28</td>
       <td>-0.02</td>
-      <td>0.06</td>
+      <td>0.07</td>
       <td>0.35</td>
       <td>0.76</td>
     </tr>
@@ -982,7 +1345,7 @@ Table 2: Correlation Matrix of Daily Returns (Excluding BTC and ETH)
       <td>0.86</td>
       <td>0.88</td>
       <td>0.80</td>
-      <td>0.86</td>
+      <td>0.87</td>
       <td>-0.24</td>
       <td>-0.31</td>
       <td>-0.33</td>
@@ -1017,7 +1380,7 @@ Table 2: Correlation Matrix of Daily Returns (Excluding BTC and ETH)
       <td>0.88</td>
       <td>0.85</td>
       <td>0.80</td>
-      <td>0.79</td>
+      <td>0.78</td>
       <td>0.88</td>
       <td>0.81</td>
       <td>0.88</td>
@@ -1026,7 +1389,7 @@ Table 2: Correlation Matrix of Daily Returns (Excluding BTC and ETH)
       <td>0.87</td>
       <td>0.98</td>
       <td>-0.18</td>
-      <td>-0.26</td>
+      <td>-0.25</td>
       <td>-0.28</td>
       <td>0.04</td>
       <td>0.17</td>
@@ -1062,7 +1425,7 @@ Table 2: Correlation Matrix of Daily Returns (Excluding BTC and ETH)
       <td>0.76</td>
       <td>0.86</td>
       <td>0.80</td>
-      <td>0.86</td>
+      <td>0.87</td>
       <td>0.80</td>
       <td>0.98</td>
       <td>0.84</td>
@@ -1106,7 +1469,7 @@ Table 2: Correlation Matrix of Daily Returns (Excluding BTC and ETH)
       <td>-0.27</td>
       <td>-0.31</td>
       <td>-0.25</td>
-      <td>-0.26</td>
+      <td>-0.25</td>
       <td>-0.26</td>
       <td>-0.26</td>
       <td>0.76</td>
@@ -1114,7 +1477,7 @@ Table 2: Correlation Matrix of Daily Returns (Excluding BTC and ETH)
       <td>0.91</td>
       <td>0.77</td>
       <td>0.22</td>
-      <td>-0.22</td>
+      <td>-0.21</td>
       <td>-0.14</td>
     </tr>
     <tr>
@@ -1123,7 +1486,7 @@ Table 2: Correlation Matrix of Daily Returns (Excluding BTC and ETH)
       <td>-0.30</td>
       <td>-0.29</td>
       <td>-0.25</td>
-      <td>-0.31</td>
+      <td>-0.30</td>
       <td>-0.28</td>
       <td>-0.33</td>
       <td>-0.26</td>
@@ -1143,7 +1506,7 @@ Table 2: Correlation Matrix of Daily Returns (Excluding BTC and ETH)
       <td>-0.01</td>
       <td>-0.00</td>
       <td>-0.03</td>
-      <td>0.01</td>
+      <td>0.00</td>
       <td>-0.01</td>
       <td>-0.02</td>
       <td>-0.01</td>
@@ -1162,11 +1525,11 @@ Table 2: Correlation Matrix of Daily Returns (Excluding BTC and ETH)
     <tr>
       <th>GLD_Daily_Return</th>
       <td>0.07</td>
-      <td>0.07</td>
+      <td>0.08</td>
       <td>0.05</td>
       <td>0.06</td>
       <td>0.07</td>
-      <td>0.06</td>
+      <td>0.07</td>
       <td>0.06</td>
       <td>0.08</td>
       <td>0.17</td>
@@ -1183,8 +1546,8 @@ Table 2: Correlation Matrix of Daily Returns (Excluding BTC and ETH)
     <tr>
       <th>GSG_Daily_Return</th>
       <td>0.37</td>
-      <td>0.38</td>
-      <td>0.35</td>
+      <td>0.37</td>
+      <td>0.34</td>
       <td>0.29</td>
       <td>0.37</td>
       <td>0.35</td>
@@ -1194,7 +1557,7 @@ Table 2: Correlation Matrix of Daily Returns (Excluding BTC and ETH)
       <td>0.40</td>
       <td>0.40</td>
       <td>-0.14</td>
-      <td>-0.22</td>
+      <td>-0.21</td>
       <td>-0.24</td>
       <td>-0.06</td>
       <td>0.25</td>
@@ -1262,8 +1625,8 @@ display(Markdown(f"Table {next(table_number)}: Correlation Matrix of Daily Retur
 display(correlation_matrix)
 ```
 
-    Shape of fund_data_daily_returns: (8334, 20)
-    Rows to drop due to missing data: (2253, 20)
+    Shape of fund_data_daily_returns: (8344, 20)
+    Rows to drop due to missing data: (2261, 20)
 
 
 
@@ -1330,8 +1693,8 @@ Table 3: Correlation Matrix of Daily Returns (Including BTC and ETH)
       <td>-0.14</td>
       <td>0.14</td>
       <td>0.12</td>
-      <td>0.29</td>
-      <td>0.73</td>
+      <td>0.28</td>
+      <td>0.72</td>
       <td>0.30</td>
       <td>0.33</td>
     </tr>
@@ -1355,7 +1718,7 @@ Table 3: Correlation Matrix of Daily Returns (Including BTC and ETH)
       <td>0.11</td>
       <td>0.29</td>
       <td>0.77</td>
-      <td>0.28</td>
+      <td>0.29</td>
       <td>0.30</td>
     </tr>
     <tr>
@@ -1363,19 +1726,19 @@ Table 3: Correlation Matrix of Daily Returns (Including BTC and ETH)
       <td>0.84</td>
       <td>0.96</td>
       <td>1.00</td>
-      <td>0.70</td>
+      <td>0.71</td>
       <td>0.85</td>
       <td>0.98</td>
       <td>0.90</td>
       <td>0.73</td>
       <td>0.78</td>
-      <td>0.65</td>
+      <td>0.66</td>
       <td>0.76</td>
-      <td>-0.02</td>
+      <td>-0.03</td>
       <td>-0.09</td>
       <td>-0.12</td>
       <td>0.16</td>
-      <td>0.09</td>
+      <td>0.10</td>
       <td>0.28</td>
       <td>0.73</td>
       <td>0.28</td>
@@ -1385,7 +1748,7 @@ Table 3: Correlation Matrix of Daily Returns (Including BTC and ETH)
       <th>QQQ_Daily_Return</th>
       <td>0.93</td>
       <td>0.77</td>
-      <td>0.70</td>
+      <td>0.71</td>
       <td>1.00</td>
       <td>0.93</td>
       <td>0.77</td>
@@ -1393,14 +1756,14 @@ Table 3: Correlation Matrix of Daily Returns (Including BTC and ETH)
       <td>0.98</td>
       <td>0.76</td>
       <td>0.74</td>
-      <td>0.72</td>
+      <td>0.71</td>
       <td>-0.02</td>
-      <td>-0.06</td>
+      <td>-0.07</td>
       <td>-0.09</td>
       <td>0.14</td>
       <td>0.14</td>
-      <td>0.22</td>
-      <td>0.57</td>
+      <td>0.21</td>
+      <td>0.56</td>
       <td>0.31</td>
       <td>0.34</td>
     </tr>
@@ -1412,7 +1775,7 @@ Table 3: Correlation Matrix of Daily Returns (Including BTC and ETH)
       <td>0.93</td>
       <td>1.00</td>
       <td>0.88</td>
-      <td>0.93</td>
+      <td>0.92</td>
       <td>0.96</td>
       <td>0.85</td>
       <td>0.75</td>
@@ -1421,10 +1784,10 @@ Table 3: Correlation Matrix of Daily Returns (Including BTC and ETH)
       <td>-0.10</td>
       <td>-0.13</td>
       <td>0.15</td>
-      <td>0.12</td>
+      <td>0.13</td>
       <td>0.28</td>
       <td>0.73</td>
-      <td>0.30</td>
+      <td>0.31</td>
       <td>0.33</td>
     </tr>
     <tr>
@@ -1445,7 +1808,7 @@ Table 3: Correlation Matrix of Daily Returns (Including BTC and ETH)
       <td>-0.10</td>
       <td>0.17</td>
       <td>0.13</td>
-      <td>0.28</td>
+      <td>0.27</td>
       <td>0.72</td>
       <td>0.31</td>
       <td>0.33</td>
@@ -1456,7 +1819,7 @@ Table 3: Correlation Matrix of Daily Returns (Including BTC and ETH)
       <td>0.94</td>
       <td>0.90</td>
       <td>0.75</td>
-      <td>0.93</td>
+      <td>0.92</td>
       <td>0.89</td>
       <td>1.00</td>
       <td>0.78</td>
@@ -1514,7 +1877,7 @@ Table 3: Correlation Matrix of Daily Returns (Including BTC and ETH)
       <td>-0.08</td>
       <td>0.22</td>
       <td>0.25</td>
-      <td>0.27</td>
+      <td>0.26</td>
       <td>0.68</td>
       <td>0.29</td>
       <td>0.32</td>
@@ -1523,7 +1886,7 @@ Table 3: Correlation Matrix of Daily Returns (Including BTC and ETH)
       <th>EEM_Daily_Return</th>
       <td>0.75</td>
       <td>0.71</td>
-      <td>0.65</td>
+      <td>0.66</td>
       <td>0.74</td>
       <td>0.75</td>
       <td>0.70</td>
@@ -1531,15 +1894,15 @@ Table 3: Correlation Matrix of Daily Returns (Including BTC and ETH)
       <td>0.73</td>
       <td>0.82</td>
       <td>1.00</td>
-      <td>0.79</td>
+      <td>0.78</td>
       <td>0.01</td>
       <td>-0.05</td>
       <td>-0.08</td>
       <td>0.16</td>
       <td>0.27</td>
-      <td>0.26</td>
+      <td>0.25</td>
       <td>0.51</td>
-      <td>0.26</td>
+      <td>0.27</td>
       <td>0.30</td>
     </tr>
     <tr>
@@ -1547,20 +1910,20 @@ Table 3: Correlation Matrix of Daily Returns (Including BTC and ETH)
       <td>0.82</td>
       <td>0.81</td>
       <td>0.76</td>
-      <td>0.72</td>
+      <td>0.71</td>
       <td>0.82</td>
       <td>0.77</td>
       <td>0.83</td>
       <td>0.74</td>
       <td>0.98</td>
-      <td>0.79</td>
+      <td>0.78</td>
       <td>1.00</td>
-      <td>0.03</td>
+      <td>0.02</td>
       <td>-0.04</td>
-      <td>-0.09</td>
+      <td>-0.08</td>
       <td>0.21</td>
       <td>0.24</td>
-      <td>0.26</td>
+      <td>0.25</td>
       <td>0.67</td>
       <td>0.29</td>
       <td>0.31</td>
@@ -1569,7 +1932,7 @@ Table 3: Correlation Matrix of Daily Returns (Including BTC and ETH)
       <th>SHY_Daily_Return</th>
       <td>-0.04</td>
       <td>-0.04</td>
-      <td>-0.02</td>
+      <td>-0.03</td>
       <td>-0.02</td>
       <td>-0.04</td>
       <td>-0.01</td>
@@ -1577,13 +1940,13 @@ Table 3: Correlation Matrix of Daily Returns (Including BTC and ETH)
       <td>-0.02</td>
       <td>0.03</td>
       <td>0.01</td>
-      <td>0.03</td>
+      <td>0.02</td>
       <td>1.00</td>
       <td>0.82</td>
       <td>0.60</td>
       <td>0.74</td>
       <td>0.32</td>
-      <td>-0.13</td>
+      <td>-0.12</td>
       <td>0.14</td>
       <td>0.03</td>
       <td>0.03</td>
@@ -1593,7 +1956,7 @@ Table 3: Correlation Matrix of Daily Returns (Including BTC and ETH)
       <td>-0.11</td>
       <td>-0.10</td>
       <td>-0.09</td>
-      <td>-0.06</td>
+      <td>-0.07</td>
       <td>-0.10</td>
       <td>-0.07</td>
       <td>-0.13</td>
@@ -1623,7 +1986,7 @@ Table 3: Correlation Matrix of Daily Returns (Including BTC and ETH)
       <td>-0.09</td>
       <td>-0.08</td>
       <td>-0.08</td>
-      <td>-0.09</td>
+      <td>-0.08</td>
       <td>0.60</td>
       <td>0.91</td>
       <td>1.00</td>
@@ -1655,15 +2018,15 @@ Table 3: Correlation Matrix of Daily Returns (Including BTC and ETH)
       <td>-0.04</td>
       <td>0.30</td>
       <td>0.12</td>
-      <td>0.11</td>
+      <td>0.12</td>
     </tr>
     <tr>
       <th>GLD_Daily_Return</th>
       <td>0.12</td>
       <td>0.11</td>
-      <td>0.09</td>
+      <td>0.10</td>
       <td>0.14</td>
-      <td>0.12</td>
+      <td>0.13</td>
       <td>0.13</td>
       <td>0.11</td>
       <td>0.13</td>
@@ -1682,33 +2045,33 @@ Table 3: Correlation Matrix of Daily Returns (Including BTC and ETH)
     </tr>
     <tr>
       <th>GSG_Daily_Return</th>
+      <td>0.28</td>
       <td>0.29</td>
-      <td>0.29</td>
       <td>0.28</td>
-      <td>0.22</td>
+      <td>0.21</td>
       <td>0.28</td>
-      <td>0.28</td>
+      <td>0.27</td>
       <td>0.32</td>
       <td>0.22</td>
-      <td>0.27</td>
       <td>0.26</td>
-      <td>0.26</td>
-      <td>-0.13</td>
+      <td>0.25</td>
+      <td>0.25</td>
+      <td>-0.12</td>
       <td>-0.16</td>
       <td>-0.18</td>
       <td>-0.04</td>
       <td>0.17</td>
       <td>1.00</td>
       <td>0.19</td>
-      <td>0.09</td>
+      <td>0.08</td>
       <td>0.10</td>
     </tr>
     <tr>
       <th>IYR_Daily_Return</th>
-      <td>0.73</td>
+      <td>0.72</td>
       <td>0.77</td>
       <td>0.73</td>
-      <td>0.57</td>
+      <td>0.56</td>
       <td>0.73</td>
       <td>0.72</td>
       <td>0.80</td>
@@ -1729,22 +2092,22 @@ Table 3: Correlation Matrix of Daily Returns (Including BTC and ETH)
     <tr>
       <th>BTC-USD_Daily_Return</th>
       <td>0.30</td>
-      <td>0.28</td>
+      <td>0.29</td>
       <td>0.28</td>
       <td>0.31</td>
-      <td>0.30</td>
+      <td>0.31</td>
       <td>0.31</td>
       <td>0.26</td>
       <td>0.31</td>
       <td>0.29</td>
-      <td>0.26</td>
+      <td>0.27</td>
       <td>0.29</td>
       <td>0.03</td>
       <td>-0.00</td>
       <td>-0.01</td>
       <td>0.12</td>
       <td>0.13</td>
-      <td>0.09</td>
+      <td>0.08</td>
       <td>0.19</td>
       <td>1.00</td>
       <td>0.80</td>
@@ -1765,7 +2128,7 @@ Table 3: Correlation Matrix of Daily Returns (Including BTC and ETH)
       <td>0.03</td>
       <td>-0.00</td>
       <td>-0.01</td>
-      <td>0.11</td>
+      <td>0.12</td>
       <td>0.13</td>
       <td>0.10</td>
       <td>0.21</td>
@@ -2097,128 +2460,128 @@ Table 4: Rolling Correlations
       <td>...</td>
     </tr>
     <tr>
-      <th>2026-10-23</th>
-      <td>0.98</td>
-      <td>0.83</td>
-      <td>0.86</td>
-      <td>0.76</td>
-      <td>0.80</td>
-      <td>0.78</td>
-      <td>0.80</td>
-      <td>0.88</td>
-      <td>0.90</td>
-      <td>-0.45</td>
-      <td>...</td>
-      <td>0.83</td>
-      <td>-0.25</td>
-      <td>0.53</td>
-      <td>0.84</td>
-      <td>0.86</td>
-      <td>0.90</td>
-      <td>0.90</td>
-      <td>0.93</td>
-      <td>0.97</td>
-      <td>0.96</td>
-    </tr>
-    <tr>
-      <th>2026-10-26</th>
-      <td>0.98</td>
-      <td>0.91</td>
-      <td>0.89</td>
-      <td>0.78</td>
-      <td>0.80</td>
-      <td>0.78</td>
-      <td>0.80</td>
-      <td>0.88</td>
-      <td>0.90</td>
-      <td>0.07</td>
-      <td>...</td>
-      <td>0.83</td>
-      <td>0.28</td>
-      <td>0.54</td>
-      <td>0.83</td>
-      <td>0.86</td>
-      <td>0.91</td>
-      <td>0.90</td>
-      <td>0.93</td>
-      <td>0.97</td>
-      <td>0.96</td>
-    </tr>
-    <tr>
-      <th>2026-10-27</th>
-      <td>0.99</td>
-      <td>0.98</td>
-      <td>0.89</td>
-      <td>0.76</td>
-      <td>0.78</td>
-      <td>0.78</td>
-      <td>0.80</td>
-      <td>0.88</td>
-      <td>0.90</td>
-      <td>0.99</td>
-      <td>...</td>
-      <td>0.83</td>
-      <td>0.97</td>
-      <td>0.25</td>
-      <td>0.84</td>
-      <td>0.86</td>
-      <td>0.90</td>
-      <td>0.90</td>
-      <td>0.93</td>
-      <td>0.97</td>
-      <td>0.96</td>
-    </tr>
-    <tr>
-      <th>2026-10-28</th>
-      <td>0.95</td>
-      <td>0.98</td>
-      <td>0.85</td>
-      <td>0.76</td>
-      <td>0.79</td>
-      <td>0.78</td>
-      <td>0.80</td>
-      <td>0.88</td>
-      <td>0.90</td>
-      <td>0.94</td>
-      <td>...</td>
-      <td>0.83</td>
-      <td>0.80</td>
-      <td>0.29</td>
+      <th>2026-11-04</th>
+      <td>-0.23</td>
+      <td>0.58</td>
+      <td>0.67</td>
+      <td>0.64</td>
+      <td>0.70</td>
       <td>0.75</td>
-      <td>0.86</td>
+      <td>0.80</td>
+      <td>0.88</td>
       <td>0.90</td>
-      <td>0.90</td>
+      <td>0.40</td>
+      <td>...</td>
+      <td>0.83</td>
+      <td>0.80</td>
+      <td>0.92</td>
+      <td>0.76</td>
+      <td>0.87</td>
+      <td>0.89</td>
+      <td>0.91</td>
       <td>0.93</td>
       <td>0.97</td>
       <td>0.96</td>
     </tr>
     <tr>
-      <th>2026-10-29</th>
-      <td>-0.86</td>
-      <td>0.32</td>
-      <td>0.71</td>
-      <td>0.68</td>
-      <td>0.76</td>
-      <td>0.77</td>
+      <th>2026-11-05</th>
+      <td>0.99</td>
+      <td>0.93</td>
+      <td>0.90</td>
+      <td>0.88</td>
       <td>0.80</td>
+      <td>0.79</td>
+      <td>0.81</td>
       <td>0.88</td>
       <td>0.90</td>
-      <td>-0.82</td>
+      <td>0.99</td>
+      <td>...</td>
+      <td>0.83</td>
+      <td>0.97</td>
+      <td>0.97</td>
+      <td>0.97</td>
+      <td>0.93</td>
+      <td>0.93</td>
+      <td>0.92</td>
+      <td>0.94</td>
+      <td>0.97</td>
+      <td>0.96</td>
+    </tr>
+    <tr>
+      <th>2026-11-06</th>
+      <td>0.98</td>
+      <td>0.93</td>
+      <td>0.90</td>
+      <td>0.89</td>
+      <td>0.80</td>
+      <td>0.79</td>
+      <td>0.81</td>
+      <td>0.88</td>
+      <td>0.90</td>
+      <td>1.00</td>
+      <td>...</td>
+      <td>0.83</td>
+      <td>0.97</td>
+      <td>0.97</td>
+      <td>0.97</td>
+      <td>0.93</td>
+      <td>0.92</td>
+      <td>0.92</td>
+      <td>0.94</td>
+      <td>0.97</td>
+      <td>0.96</td>
+    </tr>
+    <tr>
+      <th>2026-11-09</th>
+      <td>1.00</td>
+      <td>0.96</td>
+      <td>0.92</td>
+      <td>0.90</td>
+      <td>0.83</td>
+      <td>0.81</td>
+      <td>0.82</td>
+      <td>0.88</td>
+      <td>0.90</td>
+      <td>0.99</td>
       <td>...</td>
       <td>0.83</td>
       <td>1.00</td>
-      <td>0.92</td>
-      <td>0.77</td>
-      <td>0.86</td>
-      <td>0.91</td>
-      <td>0.90</td>
+      <td>0.98</td>
+      <td>0.98</td>
+      <td>0.95</td>
+      <td>0.94</td>
       <td>0.93</td>
+      <td>0.94</td>
+      <td>0.97</td>
+      <td>0.96</td>
+    </tr>
+    <tr>
+      <th>2026-11-10</th>
+      <td>1.00</td>
+      <td>0.96</td>
+      <td>0.92</td>
+      <td>0.91</td>
+      <td>0.83</td>
+      <td>0.81</td>
+      <td>0.82</td>
+      <td>0.88</td>
+      <td>0.90</td>
+      <td>0.99</td>
+      <td>...</td>
+      <td>0.83</td>
+      <td>0.99</td>
+      <td>0.98</td>
+      <td>0.98</td>
+      <td>0.95</td>
+      <td>0.94</td>
+      <td>0.93</td>
+      <td>0.94</td>
       <td>0.97</td>
       <td>0.96</td>
     </tr>
   </tbody>
 </table>
-<p>5100 rows × 27 columns</p>
+<p>5108 rows × 27 columns</p>
 </div>
 
 
