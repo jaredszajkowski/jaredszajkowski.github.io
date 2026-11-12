@@ -17,6 +17,8 @@ topics: [
 
 ## Post Updates
 
+Update 11/6/2026: Merged `polygon_fetch_full_history` and `polygon_pull_data` into a single module, `polygon_pull_equity_data`, and renamed `polygon_pull_data` to `polygon_pull_equity_data`. The pull now also fetches Massive's dividend adjustment factors and applies them to the split-adjusted prices, adding `adj_open`, `adj_high`, `adj_low`, `adj_close`, and `adj_vwap` columns. That was the one item under Future Investigation, so that section is gone, and a new section below covers the dividend adjustment. Also folded `polygon_month_end` and `polygon_quarter_end` into the same module as a single function, `polygon_resample_period_end`, which takes a `period` argument of either `month` or `quarter`. Switched the examples from AMZN to AAPL, since AMZN doesn't pay a dividend and AAPL shows the adjustment at work.
+
 Update 8/6/2026: Brought the post back in line with the current source. Polygon.io has rebranded to Massive and the Python client is now imported as `massive`, `polygon_pull_data` gained a `parquet_export` parameter and returns the resulting DataFrame, and `polygon_fetch_full_history` renamed its `full_history_df` parameter to `existing_history_df`. Replaced the reproduced docstrings with prose descriptions, added the free tier constraints that shape the design, and documented the on-disk layout the data lands in.
 
 ## Introduction
@@ -25,7 +27,7 @@ Where the [previous post on collecting crypto asset data from Coinbase](/posts/d
 
 Two constraints from the free tier drive most of the design. The first is a two year limit on historical data, which is why the examples below start from a date two years back rather than attempting to pull an asset's full history. The second is a rate limit of five API requests per minute, which is what the `free_tier` flag handles. When using the free tier, the fetch pauses for twelve seconds between requests. A single API call also returns at most 5,000 records, so any meaningful date range has to be walked through in chunks and reassembled.
 
-The work is split across two functions that build on one another. `polygon_fetch_full_history` walks a date range and returns it as a single dataframe. `polygon_pull_data` wraps that to maintain pickle, Excel, and Parquet files on disk, extending an existing record with the rows it is missing, or creating a new record where none exists.
+The work lives in a single module, `polygon_pull_equity_data`, and is split across functions that build on one another. `polygon_fetch_full_history` walks a date range and returns it as a single dataframe. `polygon_pull_equity_data` wraps that to maintain pickle, Excel, and Parquet files on disk, extending an existing record with the rows it is missing, or creating a new record where none exists. It also adds dividend-adjusted prices, using two helpers in the same module: `polygon_fetch_dividend_factors` and `apply_dividend_adjustment`.
 
 ## Python Imports
 
@@ -45,52 +47,38 @@ import pandas as pd
 
 # Suppress warnings
 warnings.filterwarnings("ignore")
-```
 
+# Add src/ to the path so settings.py and the helper modules can be imported
+src_directory = str(Path.cwd().parents[2] / "src")
+if src_directory not in sys.path:
+    sys.path.append(src_directory)
 
-```python
-# Add the source subdirectory to the system path to allow import config from settings.py
-current_directory = Path(os.getcwd())
-website_base_directory = current_directory.parent.parent.parent
-src_directory = website_base_directory / "src"
-sys.path.append(str(src_directory)) if str(src_directory) not in sys.path else None
-
-# Import settings.py
 from settings import config
 
-# Add configured directories from config to path
-SOURCE_DIR = config("SOURCE_DIR")
-sys.path.append(str(Path(SOURCE_DIR))) if str(Path(SOURCE_DIR)) not in sys.path else None
-
-# Add other configured directories
-BASE_DIR = config("BASE_DIR")
-CONTENT_DIR = config("CONTENT_DIR")
-POSTS_DIR = config("POSTS_DIR")
-PAGES_DIR = config("PAGES_DIR")
-PUBLIC_DIR = config("PUBLIC_DIR")
-SOURCE_DIR = config("SOURCE_DIR")
-DATA_DIR = config("DATA_DIR")
-DATA_MANUAL_DIR = config("DATA_MANUAL_DIR")
+DATA_DIR = config("DATA_DIR")  # keep only the directories this post uses
 ```
 
 ## Python Functions
 
-Here are the functions needed for this project, listed in the order they build on one another:
+Here are the modules needed for this project:
 
-* [polygon_fetch_full_history](/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_fetch_full_history): Fetch full historical data for a given product from Polygon API.
-* [polygon_pull_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_pull_data): Read existing data file, download price data from Polygon, and export data.
+* [polygon_pull_equity_data](/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_pull_equity_data): Read existing data file, download price data from Polygon, apply dividend adjustment factors, and export data. The module also holds the helpers `polygon_fetch_full_history`, `polygon_fetch_dividend_factors`, and `apply_dividend_adjustment`.
+* [polygon_resample_period_end](/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_resample_period_end): Resample the daily data on disk to month-end or quarter-end closes.
 
 
 ```python
-from polygon_fetch_full_history import polygon_fetch_full_history
-from polygon_pull_data import polygon_pull_data
+from polygon_pull_equity_data import (
+    polygon_fetch_full_history,
+    polygon_pull_equity_data,
+)
+from polygon_resample_period_end import polygon_resample_period_end
 ```
 
 One naming note before the code: Polygon.io has rebranded to Massive, and the official Python client followed. The package is now [`massive`](https://pypi.org/project/massive/) rather than `polygon-api-client`, so the import below reads `from massive import RESTClient`. The API surface is otherwise unchanged, and I've kept "Polygon" in the function names and directory layout since that's what the existing data is filed under.
 
 ## Function Usage
 
-Both examples below use daily bars, but switching to minute or hour data is a matter of changing the `timespan` and `multiplier` arguments, with everything else unchanged. Note that finer granularity burns through the free tier rate limit considerably faster, since each request covers a much shorter window. Massive actually aggregates minute data into hour bars, so the time to pull minute and hour data is actually the same. Both functions accept only `minute`, `hour`, or `day` for `timespan` and raise an exception otherwise, since the window sizing logic is only defined for those three.
+Both examples below use daily bars, but switching to minute or hour data is a matter of changing the `timespan` and `multiplier` arguments, with everything else unchanged. Note that finer granularity burns through the free tier rate limit considerably faster, since each request covers a much shorter window. Massive aggregates minute data into hour bars, so the time to pull minute and hour data is actually the same. Both functions accept only `minute`, `hour`, or `day` for `timespan` and raise an exception otherwise, since the window sizing logic is only defined for those three.
 
 ### Polygon Fetch Full History
 
@@ -127,7 +115,7 @@ df = pd.DataFrame({
 # Example usage - daily
 df = polygon_fetch_full_history(
     client=client,
-    ticker="AMZN",
+    ticker="AAPL",
     timespan="day",
     multiplier=1,
     adjusted=True,
@@ -181,61 +169,61 @@ display(df.head())
     <tr>
       <th>0</th>
       <td>2025-01-02 05:00:00</td>
-      <td>222.030</td>
-      <td>225.150</td>
-      <td>218.19</td>
-      <td>220.22</td>
-      <td>33956579.0</td>
-      <td>221.2745</td>
-      <td>449631</td>
+      <td>248.93</td>
+      <td>249.1000</td>
+      <td>241.8201</td>
+      <td>243.85</td>
+      <td>55740731.0</td>
+      <td>244.3303</td>
+      <td>685448</td>
       <td>None</td>
     </tr>
     <tr>
       <th>1</th>
       <td>2025-01-03 05:00:00</td>
-      <td>222.505</td>
-      <td>225.360</td>
-      <td>221.62</td>
-      <td>224.19</td>
-      <td>27503606.0</td>
-      <td>223.7046</td>
-      <td>346975</td>
+      <td>243.36</td>
+      <td>244.1800</td>
+      <td>241.8900</td>
+      <td>243.36</td>
+      <td>40244114.0</td>
+      <td>243.0805</td>
+      <td>493786</td>
       <td>None</td>
     </tr>
     <tr>
       <th>2</th>
       <td>2025-01-06 05:00:00</td>
-      <td>226.780</td>
-      <td>228.835</td>
-      <td>224.84</td>
-      <td>227.61</td>
-      <td>31849831.0</td>
-      <td>227.0921</td>
-      <td>410686</td>
+      <td>244.31</td>
+      <td>247.3300</td>
+      <td>243.2000</td>
+      <td>245.00</td>
+      <td>45045571.0</td>
+      <td>245.1726</td>
+      <td>493920</td>
       <td>None</td>
     </tr>
     <tr>
       <th>3</th>
       <td>2025-01-07 05:00:00</td>
-      <td>227.900</td>
-      <td>228.381</td>
-      <td>221.46</td>
-      <td>222.11</td>
-      <td>28084164.0</td>
-      <td>223.4033</td>
-      <td>379570</td>
+      <td>242.98</td>
+      <td>245.5500</td>
+      <td>241.3500</td>
+      <td>242.21</td>
+      <td>40855960.0</td>
+      <td>242.9459</td>
+      <td>462887</td>
       <td>None</td>
     </tr>
     <tr>
       <th>4</th>
       <td>2025-01-08 05:00:00</td>
-      <td>223.185</td>
-      <td>223.520</td>
-      <td>220.20</td>
-      <td>222.13</td>
-      <td>25033292.0</td>
-      <td>222.0414</td>
-      <td>325539</td>
+      <td>241.92</td>
+      <td>243.7123</td>
+      <td>240.0500</td>
+      <td>242.70</td>
+      <td>37628940.0</td>
+      <td>242.2995</td>
+      <td>406916</td>
       <td>None</td>
     </tr>
   </tbody>
@@ -243,24 +231,25 @@ display(df.head())
 </div>
 
 
-### Polygon Pull Data
+### Polygon Pull Equity Data
 
 This function wraps the one above and performs the following:
 
 1. Attempt to read an existing pickle data file.
 2. If a data file exists, then pull updated data starting from the last date on record.
 3. Otherwise, pull all historical data available for that asset for the past 2 years (or chosen interval).
-4. Store Pickle, Excel, and/or Parquet files of the data in the specified directories.
-5. Return the resulting dataframe.
+4. If `adjusted` is set, pull the dividend adjustment factors and add the `adj_open`, `adj_high`, `adj_low`, `adj_close`, and `adj_vwap` columns (covered in the next section).
+5. Store Pickle, Excel, and/or Parquet files of the data in the specified directories.
+6. Return the resulting dataframe.
 
 Setting `force_existing_check` re-pulls the entire range rather than starting from the last date on record, which is how gaps in an existing file get filled.
 
 The `base_directory`, `source`, `asset_class`, and `timespan` arguments together tell the function where in the local filesystem to look for an existing pickle file, and where to store the updated exports. They assemble into a path of the form `{base_directory}/{source}/{asset_class}/{timespan}/{ticker}`, so the example below reads and writes:
 
 ```text
-Data/Polygon/Equities/day/AMZN.pkl
-Data/Polygon/Equities/day/AMZN.xlsx
-Data/Polygon/Equities/day/AMZN.parquet
+Data/Polygon/Equities/day/AAPL.pkl
+Data/Polygon/Equities/day/AAPL.xlsx
+Data/Polygon/Equities/day/AAPL.parquet
 ```
 
 Keeping the timespan in the path means minute, hour, and daily records for the same ticker sit side by side without overwriting one another.
@@ -272,9 +261,9 @@ current_month = datetime.now().month
 current_day = datetime.now().day
 
 # Example usage - daily
-df = polygon_pull_data(
+df = polygon_pull_equity_data(
     base_directory=DATA_DIR,
-    ticker="AMZN",
+    ticker="AAPL",
     source="Polygon",
     asset_class="Equities",
     start_date=datetime(current_year - 2, current_month, current_day),
@@ -293,18 +282,20 @@ df = polygon_pull_data(
 time.sleep(12)  # Sleep for 12 seconds to avoid hitting rate limits
 ```
 
-    File found...updating the AMZN day data.
-    Last date in existing data: 2026-10-29 04:00:00
-    Number of rows in existing data: 818
+    File found...updating the AAPL day data.
+    Last date in existing data: 2026-11-11 05:00:00
+    Number of rows in existing data: 1257
     Forcing check of existing data...
 
 
-    Exporting AMZN day data to Excel...
-    Exporting AMZN day data to Pickle...
-    Exporting AMZN day data to Parquet...
+    Pulling dividend adjustment factors for AAPL...
+    Number of dividends found for AAPL: 58
+    Exporting AAPL day data to Excel...
 
 
-    The first and last date of day data for AMZN is: 
+    Exporting AAPL day data to Pickle...
+    Exporting AAPL day data to Parquet...
+    The first and last date of day data for AAPL is: 
 
 
 
@@ -335,20 +326,30 @@ time.sleep(12)  # Sleep for 12 seconds to avoid hitting rate limits
       <th>vwap</th>
       <th>transactions</th>
       <th>otc</th>
+      <th>adj_open</th>
+      <th>adj_high</th>
+      <th>adj_low</th>
+      <th>adj_close</th>
+      <th>adj_vwap</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-07-28 04:00:00</td>
-      <td>129.69</td>
-      <td>133.01</td>
-      <td>129.33</td>
-      <td>132.21</td>
-      <td>46269781.0</td>
-      <td>131.8837</td>
-      <td>413438</td>
+      <td>2021-11-09 05:00:00</td>
+      <td>150.2</td>
+      <td>151.428</td>
+      <td>150.0601</td>
+      <td>150.81</td>
+      <td>56787930.0</td>
+      <td>150.792</td>
+      <td>455006</td>
       <td>None</td>
+      <td>146.603161</td>
+      <td>147.801754</td>
+      <td>146.466611</td>
+      <td>147.198553</td>
+      <td>147.180984</td>
     </tr>
   </tbody>
 </table>
@@ -383,29 +384,39 @@ time.sleep(12)  # Sleep for 12 seconds to avoid hitting rate limits
       <th>vwap</th>
       <th>transactions</th>
       <th>otc</th>
+      <th>adj_open</th>
+      <th>adj_high</th>
+      <th>adj_low</th>
+      <th>adj_close</th>
+      <th>adj_vwap</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>817</th>
-      <td>2026-10-29 04:00:00</td>
-      <td>246.95</td>
-      <td>249.14</td>
-      <td>241.24</td>
-      <td>246.36</td>
-      <td>2.899970e+07</td>
-      <td>246.0853</td>
-      <td>458904</td>
+      <th>1256</th>
+      <td>2026-11-11 05:00:00</td>
+      <td>349.545</td>
+      <td>355.91</td>
+      <td>349.325</td>
+      <td>355.63</td>
+      <td>3.445348e+07</td>
+      <td>354.3937</td>
+      <td>684164</td>
       <td>None</td>
+      <td>349.279695</td>
+      <td>355.639864</td>
+      <td>349.059862</td>
+      <td>355.360077</td>
+      <td>354.124715</td>
     </tr>
   </tbody>
 </table>
 </div>
 
 
-    Number of rows after data update: 818
+    Number of rows after data update: 1257
     Number of rows added during update: 0
-    Polygon data complete for AMZN day data.
+    Polygon data complete for AAPL day data.
     --------------------
 
 
@@ -444,68 +455,98 @@ display(df.head())
       <th>vwap</th>
       <th>transactions</th>
       <th>otc</th>
+      <th>adj_open</th>
+      <th>adj_high</th>
+      <th>adj_low</th>
+      <th>adj_close</th>
+      <th>adj_vwap</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>2023-07-28 04:00:00</td>
-      <td>129.690</td>
-      <td>133.01</td>
-      <td>129.3300</td>
-      <td>132.21</td>
-      <td>46269781.0</td>
-      <td>131.8837</td>
-      <td>413438</td>
+      <td>2021-11-09 05:00:00</td>
+      <td>150.20</td>
+      <td>151.428</td>
+      <td>150.0601</td>
+      <td>150.81</td>
+      <td>56787930.0</td>
+      <td>150.7920</td>
+      <td>455006</td>
       <td>None</td>
+      <td>146.603161</td>
+      <td>147.801754</td>
+      <td>146.466611</td>
+      <td>147.198553</td>
+      <td>147.180984</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2023-07-31 04:00:00</td>
-      <td>133.200</td>
-      <td>133.87</td>
-      <td>132.3800</td>
-      <td>133.68</td>
-      <td>41901516.0</td>
-      <td>133.3410</td>
-      <td>406644</td>
+      <td>2021-11-10 05:00:00</td>
+      <td>150.02</td>
+      <td>150.130</td>
+      <td>147.8500</td>
+      <td>147.92</td>
+      <td>65160017.0</td>
+      <td>148.6034</td>
+      <td>544210</td>
       <td>None</td>
+      <td>146.427471</td>
+      <td>146.534837</td>
+      <td>144.309436</td>
+      <td>144.377760</td>
+      <td>145.044794</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2023-08-01 04:00:00</td>
-      <td>133.550</td>
-      <td>133.69</td>
-      <td>131.6199</td>
-      <td>131.69</td>
-      <td>42250989.0</td>
-      <td>132.2470</td>
-      <td>385743</td>
+      <td>2021-11-11 05:00:00</td>
+      <td>148.96</td>
+      <td>149.430</td>
+      <td>147.6810</td>
+      <td>147.87</td>
+      <td>40699950.0</td>
+      <td>148.1690</td>
+      <td>338584</td>
       <td>None</td>
+      <td>145.392855</td>
+      <td>145.851600</td>
+      <td>144.144483</td>
+      <td>144.328957</td>
+      <td>144.620797</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2023-08-02 04:00:00</td>
-      <td>130.154</td>
-      <td>130.23</td>
-      <td>126.8200</td>
-      <td>128.21</td>
-      <td>50988614.0</td>
-      <td>128.3973</td>
-      <td>532942</td>
+      <td>2021-11-12 05:00:00</td>
+      <td>148.43</td>
+      <td>150.400</td>
+      <td>147.4800</td>
+      <td>149.99</td>
+      <td>63804006.0</td>
+      <td>149.3536</td>
+      <td>404421</td>
       <td>None</td>
+      <td>144.875547</td>
+      <td>146.798371</td>
+      <td>143.948296</td>
+      <td>146.398189</td>
+      <td>145.777029</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2023-08-03 04:00:00</td>
-      <td>127.480</td>
-      <td>129.84</td>
-      <td>126.4100</td>
-      <td>128.91</td>
-      <td>90855736.0</td>
-      <td>131.4941</td>
-      <td>746639</td>
+      <td>2021-11-15 05:00:00</td>
+      <td>150.37</td>
+      <td>151.880</td>
+      <td>149.4300</td>
+      <td>150.00</td>
+      <td>59182803.0</td>
+      <td>150.2881</td>
+      <td>422055</td>
       <td>None</td>
+      <td>146.769090</td>
+      <td>148.242930</td>
+      <td>145.851600</td>
+      <td>146.407950</td>
+      <td>146.689151</td>
     </tr>
   </tbody>
 </table>
@@ -514,9 +555,296 @@ display(df.head())
 
 Note that `Date` is returned as a regular column with a plain integer index rather than as the index itself. That is deliberate, and any downstream analysis can call `set_index("Date")` as needed.
 
-## Future Investigation
+### Dividend Adjustment
 
-1. Calculate adjusted open/high/low/close prices using the dividend adjustment factor.
+Setting `adjusted=True` makes the API adjust the bars for splits, but not for dividends. To get total return prices, `polygon_pull_equity_data` makes one more request, to Massive's dividends endpoint (`client.list_stocks_dividends`). Each dividend record there carries a `historical_adjustment_factor`, and Massive documents how to use it: for a price on date D, find the first dividend whose ex-dividend date falls after D, and multiply the price by that dividend's factor. The factors are already cumulative, so no running product is needed, and bars on or after the most recent ex-dividend date get a factor of 1.
+
+`apply_dividend_adjustment` does this lookup with a forward `merge_asof` and multiplies the split-adjusted open, high, low, close, and VWAP by the result to create `adj_open`, `adj_high`, `adj_low`, `adj_close`, and `adj_vwap`. A few details are worth noting:
+
+* Every new dividend changes the factor for all of the history before it, so the adjusted columns are recomputed over the full record on every run rather than only for the newly appended rows.
+* Volume gets no dividend adjustment. A cash dividend doesn't change the number of shares outstanding or traded, so only the split adjustment the API already applies is needed.
+* The timestamps are in UTC, so each bar is first mapped to its trading date in US/Eastern time. Otherwise an after-hours minute or hour bar, which falls after midnight UTC, would be counted as part of the next session.
+
+If `adjusted=False`, the prices aren't split-adjusted, so applying the factors would be wrong across any split. In that case the function skips the adjusted columns and prints a note saying so.
+
+Here is the ratio of `adj_close` to `close` on the last bar before each recent ex-dividend date, which is where the factor steps up:
+
+
+```python
+ratio = (df["adj_close"] / df["close"]).round(6)
+display(df.loc[ratio.ne(ratio.shift(-1)), ["Date", "close", "adj_close"]].assign(factor=ratio).tail(8))
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Date</th>
+      <th>close</th>
+      <th>adj_close</th>
+      <th>factor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>814</th>
+      <td>2025-02-07 05:00:00</td>
+      <td>227.63</td>
+      <td>225.818293</td>
+      <td>0.992041</td>
+    </tr>
+    <tr>
+      <th>877</th>
+      <td>2025-05-09 04:00:00</td>
+      <td>198.53</td>
+      <td>197.166496</td>
+      <td>0.993132</td>
+    </tr>
+    <tr>
+      <th>939</th>
+      <td>2025-08-08 04:00:00</td>
+      <td>229.35</td>
+      <td>228.073667</td>
+      <td>0.994435</td>
+    </tr>
+    <tr>
+      <th>1003</th>
+      <td>2025-11-07 05:00:00</td>
+      <td>268.47</td>
+      <td>267.278799</td>
+      <td>0.995563</td>
+    </tr>
+    <tr>
+      <th>1064</th>
+      <td>2026-02-06 05:00:00</td>
+      <td>278.12</td>
+      <td>277.154367</td>
+      <td>0.996528</td>
+    </tr>
+    <tr>
+      <th>1127</th>
+      <td>2026-05-08 04:00:00</td>
+      <td>293.32</td>
+      <td>292.575261</td>
+      <td>0.997461</td>
+    </tr>
+    <tr>
+      <th>1189</th>
+      <td>2026-08-07 04:00:00</td>
+      <td>313.33</td>
+      <td>312.822405</td>
+      <td>0.998380</td>
+    </tr>
+    <tr>
+      <th>1256</th>
+      <td>2026-11-11 05:00:00</td>
+      <td>355.63</td>
+      <td>355.360077</td>
+      <td>0.999241</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+### Polygon Resample Period End
+
+Monthly and quarterly analysis doesn't need daily bars, so this function makes a lower-frequency copy of a record already on disk. It makes no API calls. It reads the existing pickle file, keeps `close` (plus `adj_close` when the file has it), and takes the last value in each month or quarter. The `period` argument chooses between the two: `month` resamples to month-end and `quarter` resamples to quarter-end. Any other value raises an exception.
+
+The other arguments work the same as above, with `timespan` naming the record to read. The results go in their own directories alongside the daily data, so the two examples below write:
+
+```text
+Data/Polygon/Equities/Month_End/AAPL_ME.pkl
+Data/Polygon/Equities/Month_End/AAPL_ME.xlsx
+Data/Polygon/Equities/Month_End/AAPL_ME.parquet
+Data/Polygon/Equities/Quarter_End/AAPL_QE.pkl
+Data/Polygon/Equities/Quarter_End/AAPL_QE.xlsx
+Data/Polygon/Equities/Quarter_End/AAPL_QE.parquet
+```
+
+
+```python
+# Example usage - month end
+df_month_end = polygon_resample_period_end(
+    base_directory=DATA_DIR,
+    ticker="AAPL",
+    source="Polygon",
+    asset_class="Equities",
+    timespan="day",
+    period="month",
+    excel_export=True,
+    pickle_export=True,
+    parquet_export=True,
+    output_confirmation=True,
+)
+
+# Example usage - quarter end
+df_quarter_end = polygon_resample_period_end(
+    base_directory=DATA_DIR,
+    ticker="AAPL",
+    source="Polygon",
+    asset_class="Equities",
+    timespan="day",
+    period="quarter",
+    excel_export=True,
+    pickle_export=True,
+    parquet_export=True,
+    output_confirmation=True,
+)
+```
+
+    Month end data complete for AAPL
+    --------------------
+    Quarter end data complete for AAPL
+    --------------------
+
+
+Unlike the daily data, the result is indexed by the period-end date. Here are the last five month-end rows:
+
+
+```python
+display(df_month_end.tail())
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>close</th>
+      <th>adj_close</th>
+    </tr>
+    <tr>
+      <th>Date</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2026-07-31</th>
+      <td>308.91</td>
+      <td>308.409566</td>
+    </tr>
+    <tr>
+      <th>2026-08-31</th>
+      <td>316.85</td>
+      <td>316.609511</td>
+    </tr>
+    <tr>
+      <th>2026-09-30</th>
+      <td>333.02</td>
+      <td>332.767238</td>
+    </tr>
+    <tr>
+      <th>2026-10-31</th>
+      <td>344.63</td>
+      <td>344.368426</td>
+    </tr>
+    <tr>
+      <th>2026-11-30</th>
+      <td>355.63</td>
+      <td>355.360077</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+And the last five quarter-end rows:
+
+
+```python
+display(df_quarter_end.tail())
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>close</th>
+      <th>adj_close</th>
+    </tr>
+    <tr>
+      <th>Date</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2025-12-31</th>
+      <td>271.86</td>
+      <td>270.916102</td>
+    </tr>
+    <tr>
+      <th>2026-03-31</th>
+      <td>253.79</td>
+      <td>253.145627</td>
+    </tr>
+    <tr>
+      <th>2026-06-30</th>
+      <td>289.36</td>
+      <td>288.891237</td>
+    </tr>
+    <tr>
+      <th>2026-09-30</th>
+      <td>333.02</td>
+      <td>332.767238</td>
+    </tr>
+    <tr>
+      <th>2026-12-31</th>
+      <td>355.63</td>
+      <td>355.360077</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
 
 ## References
 

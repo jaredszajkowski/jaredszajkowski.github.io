@@ -7813,6 +7813,7 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Update 11/6/2026: Merged <code>polygon_fetch_full_history</code> and <code>polygon_pull_data</code> into a single module, <code>polygon_pull_equity_data</code>, and renamed <code>polygon_pull_data</code> to <code>polygon_pull_equity_data</code>. The pull now also fetches Massive's dividend adjustment factors and applies them to the split-adjusted prices, adding <code>adj_open</code>, <code>adj_high</code>, <code>adj_low</code>, <code>adj_close</code>, and <code>adj_vwap</code> columns. That was the one item under Future Investigation, so that section is gone, and a new section below covers the dividend adjustment. Also folded <code>polygon_month_end</code> and <code>polygon_quarter_end</code> into the same module as a single function, <code>polygon_resample_period_end</code>, which takes a <code>period</code> argument of either <code>month</code> or <code>quarter</code>. Switched the examples from AMZN to AAPL, since AMZN doesn't pay a dividend and AAPL shows the adjustment at work.</p>
 <p>Update 8/6/2026: Brought the post back in line with the current source. Polygon.io has rebranded to Massive and the Python client is now imported as <code>massive</code>, <code>polygon_pull_data</code> gained a <code>parquet_export</code> parameter and returns the resulting DataFrame, and <code>polygon_fetch_full_history</code> renamed its <code>full_history_df</code> parameter to <code>existing_history_df</code>. Replaced the reproduced docstrings with prose descriptions, added the free tier constraints that shape the design, and documented the on-disk layout the data lands in.</p>
 </div>
 </div>
@@ -7837,7 +7838,7 @@ a.anchor-link {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Where the <a href="/posts/data-pipelining-with-coinbase/">previous post on collecting crypto asset data from Coinbase</a> covered digital assets, this one covers the equity side. The two functions below pull minute, hour, and daily bars for equities and ETFs from Polygon.io, since rebranded as <a href="https://massive.com">Massive</a>.</p>
 <p>Two constraints from the free tier drive most of the design. The first is a two year limit on historical data, which is why the examples below start from a date two years back rather than attempting to pull an asset's full history. The second is a rate limit of five API requests per minute, which is what the <code>free_tier</code> flag handles. When using the free tier, the fetch pauses for twelve seconds between requests. A single API call also returns at most 5,000 records, so any meaningful date range has to be walked through in chunks and reassembled.</p>
-<p>The work is split across two functions that build on one another. <code>polygon_fetch_full_history</code> walks a date range and returns it as a single dataframe. <code>polygon_pull_data</code> wraps that to maintain pickle, Excel, and Parquet files on disk, extending an existing record with the rows it is missing, or creating a new record where none exists.</p>
+<p>The work lives in a single module, <code>polygon_pull_equity_data</code>, and is split across functions that build on one another. <code>polygon_fetch_full_history</code> walks a date range and returns it as a single dataframe. <code>polygon_pull_equity_data</code> wraps that to maintain pickle, Excel, and Parquet files on disk, extending an existing record with the rows it is missing, or creating a new record where none exists. It also adds dividend-adjusted prices, using two helpers in the same module: <code>polygon_fetch_dividend_factors</code> and <code>apply_dividend_adjustment</code>.</p>
 </div>
 </div>
 </div>
@@ -7874,41 +7875,15 @@ a.anchor-link {
 
 <span class="c1"># Suppress warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">"ignore"</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=b615d7a2">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Add the source subdirectory to the system path to allow import config from settings.py</span>
-<span class="n">current_directory</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
-<span class="n">website_base_directory</span> <span class="o">=</span> <span class="n">current_directory</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
-<span class="n">src_directory</span> <span class="o">=</span> <span class="n">website_base_directory</span> <span class="o">/</span> <span class="s2">"src"</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">src_directory</span><span class="p">))</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">src_directory</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span> <span class="k">else</span> <span class="kc">None</span>
 
-<span class="c1"># Import settings.py</span>
+<span class="c1"># Add src/ to the path so settings.py and the helper modules can be imported</span>
+<span class="n">src_directory</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="s2">"src"</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">src_directory</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">src_directory</span><span class="p">)</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">settings</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
 
-<span class="c1"># Add configured directories from config to path</span>
-<span class="n">SOURCE_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">"SOURCE_DIR"</span><span class="p">)</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span><span class="p">)))</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">SOURCE_DIR</span><span class="p">))</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span> <span class="k">else</span> <span class="kc">None</span>
-
-<span class="c1"># Add other configured directories</span>
-<span class="n">BASE_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">"BASE_DIR"</span><span class="p">)</span>
-<span class="n">CONTENT_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">"CONTENT_DIR"</span><span class="p">)</span>
-<span class="n">POSTS_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">"POSTS_DIR"</span><span class="p">)</span>
-<span class="n">PAGES_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">"PAGES_DIR"</span><span class="p">)</span>
-<span class="n">PUBLIC_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">"PUBLIC_DIR"</span><span class="p">)</span>
-<span class="n">SOURCE_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">"SOURCE_DIR"</span><span class="p">)</span>
-<span class="n">DATA_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">"DATA_DIR"</span><span class="p">)</span>
-<span class="n">DATA_MANUAL_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">"DATA_MANUAL_DIR"</span><span class="p">)</span>
+<span class="n">DATA_DIR</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s2">"DATA_DIR"</span><span class="p">)</span>  <span class="c1"># keep only the directories this post uses</span>
 </pre></div>
 </div>
 </div>
@@ -7932,10 +7907,10 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Here are the functions needed for this project, listed in the order they build on one another:</p>
+<p>Here are the modules needed for this project:</p>
 <ul>
-<li><a href="/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_fetch_full_history">polygon_fetch_full_history</a>: Fetch full historical data for a given product from Polygon API.</li>
-<li><a href="/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_pull_data">polygon_pull_data</a>: Read existing data file, download price data from Polygon, and export data.</li>
+<li><a href="/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_pull_equity_data">polygon_pull_equity_data</a>: Read existing data file, download price data from Polygon, apply dividend adjustment factors, and export data. The module also holds the helpers <code>polygon_fetch_full_history</code>, <code>polygon_fetch_dividend_factors</code>, and <code>apply_dividend_adjustment</code>.</li>
+<li><a href="/posts/reusable-extensible-python-functions-financial-data-analysis/#polygon_resample_period_end">polygon_resample_period_end</a>: Resample the daily data on disk to month-end or quarter-end closes.</li>
 </ul>
 </div>
 </div>
@@ -7945,11 +7920,14 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">polygon_fetch_full_history</span><span class="w"> </span><span class="kn">import</span> <span class="n">polygon_fetch_full_history</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">polygon_pull_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">polygon_pull_data</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">polygon_pull_equity_data</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">polygon_fetch_full_history</span><span class="p">,</span>
+    <span class="n">polygon_pull_equity_data</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">polygon_resample_period_end</span><span class="w"> </span><span class="kn">import</span> <span class="n">polygon_resample_period_end</span>
 </pre></div>
 </div>
 </div>
@@ -7984,7 +7962,7 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Both examples below use daily bars, but switching to minute or hour data is a matter of changing the <code>timespan</code> and <code>multiplier</code> arguments, with everything else unchanged. Note that finer granularity burns through the free tier rate limit considerably faster, since each request covers a much shorter window. Massive actually aggregates minute data into hour bars, so the time to pull minute and hour data is actually the same. Both functions accept only <code>minute</code>, <code>hour</code>, or <code>day</code> for <code>timespan</code> and raise an exception otherwise, since the window sizing logic is only defined for those three.</p>
+<p>Both examples below use daily bars, but switching to minute or hour data is a matter of changing the <code>timespan</code> and <code>multiplier</code> arguments, with everything else unchanged. Note that finer granularity burns through the free tier rate limit considerably faster, since each request covers a much shorter window. Massive aggregates minute data into hour bars, so the time to pull minute and hour data is actually the same. Both functions accept only <code>minute</code>, <code>hour</code>, or <code>day</code> for <code>timespan</code> and raise an exception otherwise, since the window sizing logic is only defined for those three.</p>
 </div>
 </div>
 </div>
@@ -8016,7 +7994,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">massive</span><span class="w"> </span><span class="kn">import</span> <span class="n">RESTClient</span>
@@ -8046,7 +8024,7 @@ a.anchor-link {
 <span class="c1"># Example usage - daily</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">polygon_fetch_full_history</span><span class="p">(</span>
     <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
-    <span class="n">ticker</span><span class="o">=</span><span class="s2">"AMZN"</span><span class="p">,</span>
+    <span class="n">ticker</span><span class="o">=</span><span class="s2">"AAPL"</span><span class="p">,</span>
     <span class="n">timespan</span><span class="o">=</span><span class="s2">"day"</span><span class="p">,</span>
     <span class="n">multiplier</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
     <span class="n">adjusted</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -8078,7 +8056,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
@@ -8127,61 +8105,61 @@ a.anchor-link {
 <tr>
 <th>0</th>
 <td>2025-01-02 05:00:00</td>
-<td>222.030</td>
-<td>225.150</td>
-<td>218.19</td>
-<td>220.22</td>
-<td>33956579.0</td>
-<td>221.2745</td>
-<td>449631</td>
+<td>248.93</td>
+<td>249.1000</td>
+<td>241.8201</td>
+<td>243.85</td>
+<td>55740731.0</td>
+<td>244.3303</td>
+<td>685448</td>
 <td>None</td>
 </tr>
 <tr>
 <th>1</th>
 <td>2025-01-03 05:00:00</td>
-<td>222.505</td>
-<td>225.360</td>
-<td>221.62</td>
-<td>224.19</td>
-<td>27503606.0</td>
-<td>223.7046</td>
-<td>346975</td>
+<td>243.36</td>
+<td>244.1800</td>
+<td>241.8900</td>
+<td>243.36</td>
+<td>40244114.0</td>
+<td>243.0805</td>
+<td>493786</td>
 <td>None</td>
 </tr>
 <tr>
 <th>2</th>
 <td>2025-01-06 05:00:00</td>
-<td>226.780</td>
-<td>228.835</td>
-<td>224.84</td>
-<td>227.61</td>
-<td>31849831.0</td>
-<td>227.0921</td>
-<td>410686</td>
+<td>244.31</td>
+<td>247.3300</td>
+<td>243.2000</td>
+<td>245.00</td>
+<td>45045571.0</td>
+<td>245.1726</td>
+<td>493920</td>
 <td>None</td>
 </tr>
 <tr>
 <th>3</th>
 <td>2025-01-07 05:00:00</td>
-<td>227.900</td>
-<td>228.381</td>
-<td>221.46</td>
-<td>222.11</td>
-<td>28084164.0</td>
-<td>223.4033</td>
-<td>379570</td>
+<td>242.98</td>
+<td>245.5500</td>
+<td>241.3500</td>
+<td>242.21</td>
+<td>40855960.0</td>
+<td>242.9459</td>
+<td>462887</td>
 <td>None</td>
 </tr>
 <tr>
 <th>4</th>
 <td>2025-01-08 05:00:00</td>
-<td>223.185</td>
-<td>223.520</td>
-<td>220.20</td>
-<td>222.13</td>
-<td>25033292.0</td>
-<td>222.0414</td>
-<td>325539</td>
+<td>241.92</td>
+<td>243.7123</td>
+<td>240.0500</td>
+<td>242.70</td>
+<td>37628940.0</td>
+<td>242.2995</td>
+<td>406916</td>
 <td>None</td>
 </tr>
 </tbody>
@@ -8198,7 +8176,7 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Polygon-Pull-Data">Polygon Pull Data<a class="anchor-link" href="#Polygon-Pull-Data">¶</a></h3>
+<h3 id="Polygon-Pull-Equity-Data">Polygon Pull Equity Data<a class="anchor-link" href="#Polygon-Pull-Equity-Data">¶</a></h3>
 </div>
 </div>
 </div>
@@ -8214,6 +8192,7 @@ a.anchor-link {
 <li>Attempt to read an existing pickle data file.</li>
 <li>If a data file exists, then pull updated data starting from the last date on record.</li>
 <li>Otherwise, pull all historical data available for that asset for the past 2 years (or chosen interval).</li>
+<li>If <code>adjusted</code> is set, pull the dividend adjustment factors and add the <code>adj_open</code>, <code>adj_high</code>, <code>adj_low</code>, <code>adj_close</code>, and <code>adj_vwap</code> columns (covered in the next section).</li>
 <li>Store Pickle, Excel, and/or Parquet files of the data in the specified directories.</li>
 <li>Return the resulting dataframe.</li>
 </ol>
@@ -8229,9 +8208,9 @@ a.anchor-link {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>The <code>base_directory</code>, <code>source</code>, <code>asset_class</code>, and <code>timespan</code> arguments together tell the function where in the local filesystem to look for an existing pickle file, and where to store the updated exports. They assemble into a path of the form <code>{base_directory}/{source}/{asset_class}/{timespan}/{ticker}</code>, so the example below reads and writes:</p>
-<div class="highlight"><pre><span></span>Data/Polygon/Equities/day/AMZN.pkl
-Data/Polygon/Equities/day/AMZN.xlsx
-Data/Polygon/Equities/day/AMZN.parquet
+<div class="highlight"><pre><span></span>Data/Polygon/Equities/day/AAPL.pkl
+Data/Polygon/Equities/day/AAPL.xlsx
+Data/Polygon/Equities/day/AAPL.parquet
 </pre></div>
 <p>Keeping the timespan in the path means minute, hour, and daily records for the same ticker sit side by side without overwriting one another.</p>
 </div>
@@ -8242,7 +8221,7 @@ Data/Polygon/Equities/day/AMZN.parquet
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">current_year</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">year</span>
@@ -8250,9 +8229,9 @@ Data/Polygon/Equities/day/AMZN.parquet
 <span class="n">current_day</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">day</span>
 
 <span class="c1"># Example usage - daily</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">polygon_pull_data</span><span class="p">(</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">polygon_pull_equity_data</span><span class="p">(</span>
     <span class="n">base_directory</span><span class="o">=</span><span class="n">DATA_DIR</span><span class="p">,</span>
-    <span class="n">ticker</span><span class="o">=</span><span class="s2">"AMZN"</span><span class="p">,</span>
+    <span class="n">ticker</span><span class="o">=</span><span class="s2">"AAPL"</span><span class="p">,</span>
     <span class="n">source</span><span class="o">=</span><span class="s2">"Polygon"</span><span class="p">,</span>
     <span class="n">asset_class</span><span class="o">=</span><span class="s2">"Equities"</span><span class="p">,</span>
     <span class="n">start_date</span><span class="o">=</span><span class="n">datetime</span><span class="p">(</span><span class="n">current_year</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="n">current_month</span><span class="p">,</span> <span class="n">current_day</span><span class="p">),</span>
@@ -8281,9 +8260,9 @@ Data/Polygon/Equities/day/AMZN.parquet
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>File found...updating the AMZN day data.
-Last date in existing data: 2026-10-29 04:00:00
-Number of rows in existing data: 818
+<pre>File found...updating the AAPL day data.
+Last date in existing data: 2026-11-11 05:00:00
+Number of rows in existing data: 1257
 Forcing check of existing data...
 </pre>
 </div>
@@ -8291,16 +8270,18 @@ Forcing check of existing data...
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Exporting AMZN day data to Excel...
-Exporting AMZN day data to Pickle...
-Exporting AMZN day data to Parquet...
+<pre>Pulling dividend adjustment factors for AAPL...
+Number of dividends found for AAPL: 58
+Exporting AAPL day data to Excel...
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>The first and last date of day data for AMZN is: 
+<pre>Exporting AAPL day data to Pickle...
+Exporting AAPL day data to Parquet...
+The first and last date of day data for AAPL is: 
 </pre>
 </div>
 </div>
@@ -8334,20 +8315,30 @@ Exporting AMZN day data to Parquet...
 <th>vwap</th>
 <th>transactions</th>
 <th>otc</th>
+<th>adj_open</th>
+<th>adj_high</th>
+<th>adj_low</th>
+<th>adj_close</th>
+<th>adj_vwap</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <th>0</th>
-<td>2023-07-28 04:00:00</td>
-<td>129.69</td>
-<td>133.01</td>
-<td>129.33</td>
-<td>132.21</td>
-<td>46269781.0</td>
-<td>131.8837</td>
-<td>413438</td>
+<td>2021-11-09 05:00:00</td>
+<td>150.2</td>
+<td>151.428</td>
+<td>150.0601</td>
+<td>150.81</td>
+<td>56787930.0</td>
+<td>150.792</td>
+<td>455006</td>
 <td>None</td>
+<td>146.603161</td>
+<td>147.801754</td>
+<td>146.466611</td>
+<td>147.198553</td>
+<td>147.180984</td>
 </tr>
 </tbody>
 </table>
@@ -8384,20 +8375,30 @@ Exporting AMZN day data to Parquet...
 <th>vwap</th>
 <th>transactions</th>
 <th>otc</th>
+<th>adj_open</th>
+<th>adj_high</th>
+<th>adj_low</th>
+<th>adj_close</th>
+<th>adj_vwap</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<th>817</th>
-<td>2026-10-29 04:00:00</td>
-<td>246.95</td>
-<td>249.14</td>
-<td>241.24</td>
-<td>246.36</td>
-<td>2.899970e+07</td>
-<td>246.0853</td>
-<td>458904</td>
+<th>1256</th>
+<td>2026-11-11 05:00:00</td>
+<td>349.545</td>
+<td>355.91</td>
+<td>349.325</td>
+<td>355.63</td>
+<td>3.445348e+07</td>
+<td>354.3937</td>
+<td>684164</td>
 <td>None</td>
+<td>349.279695</td>
+<td>355.639864</td>
+<td>349.059862</td>
+<td>355.360077</td>
+<td>354.124715</td>
 </tr>
 </tbody>
 </table>
@@ -8407,9 +8408,9 @@ Exporting AMZN day data to Parquet...
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Number of rows after data update: 818
+<pre>Number of rows after data update: 1257
 Number of rows added during update: 0
-Polygon data complete for AMZN day data.
+Polygon data complete for AAPL day data.
 --------------------
 </pre>
 </div>
@@ -8432,7 +8433,7 @@ Polygon data complete for AMZN day data.
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
@@ -8475,68 +8476,98 @@ Polygon data complete for AMZN day data.
 <th>vwap</th>
 <th>transactions</th>
 <th>otc</th>
+<th>adj_open</th>
+<th>adj_high</th>
+<th>adj_low</th>
+<th>adj_close</th>
+<th>adj_vwap</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <th>0</th>
-<td>2023-07-28 04:00:00</td>
-<td>129.690</td>
-<td>133.01</td>
-<td>129.3300</td>
-<td>132.21</td>
-<td>46269781.0</td>
-<td>131.8837</td>
-<td>413438</td>
+<td>2021-11-09 05:00:00</td>
+<td>150.20</td>
+<td>151.428</td>
+<td>150.0601</td>
+<td>150.81</td>
+<td>56787930.0</td>
+<td>150.7920</td>
+<td>455006</td>
 <td>None</td>
+<td>146.603161</td>
+<td>147.801754</td>
+<td>146.466611</td>
+<td>147.198553</td>
+<td>147.180984</td>
 </tr>
 <tr>
 <th>1</th>
-<td>2023-07-31 04:00:00</td>
-<td>133.200</td>
-<td>133.87</td>
-<td>132.3800</td>
-<td>133.68</td>
-<td>41901516.0</td>
-<td>133.3410</td>
-<td>406644</td>
+<td>2021-11-10 05:00:00</td>
+<td>150.02</td>
+<td>150.130</td>
+<td>147.8500</td>
+<td>147.92</td>
+<td>65160017.0</td>
+<td>148.6034</td>
+<td>544210</td>
 <td>None</td>
+<td>146.427471</td>
+<td>146.534837</td>
+<td>144.309436</td>
+<td>144.377760</td>
+<td>145.044794</td>
 </tr>
 <tr>
 <th>2</th>
-<td>2023-08-01 04:00:00</td>
-<td>133.550</td>
-<td>133.69</td>
-<td>131.6199</td>
-<td>131.69</td>
-<td>42250989.0</td>
-<td>132.2470</td>
-<td>385743</td>
+<td>2021-11-11 05:00:00</td>
+<td>148.96</td>
+<td>149.430</td>
+<td>147.6810</td>
+<td>147.87</td>
+<td>40699950.0</td>
+<td>148.1690</td>
+<td>338584</td>
 <td>None</td>
+<td>145.392855</td>
+<td>145.851600</td>
+<td>144.144483</td>
+<td>144.328957</td>
+<td>144.620797</td>
 </tr>
 <tr>
 <th>3</th>
-<td>2023-08-02 04:00:00</td>
-<td>130.154</td>
-<td>130.23</td>
-<td>126.8200</td>
-<td>128.21</td>
-<td>50988614.0</td>
-<td>128.3973</td>
-<td>532942</td>
+<td>2021-11-12 05:00:00</td>
+<td>148.43</td>
+<td>150.400</td>
+<td>147.4800</td>
+<td>149.99</td>
+<td>63804006.0</td>
+<td>149.3536</td>
+<td>404421</td>
 <td>None</td>
+<td>144.875547</td>
+<td>146.798371</td>
+<td>143.948296</td>
+<td>146.398189</td>
+<td>145.777029</td>
 </tr>
 <tr>
 <th>4</th>
-<td>2023-08-03 04:00:00</td>
-<td>127.480</td>
-<td>129.84</td>
-<td>126.4100</td>
-<td>128.91</td>
-<td>90855736.0</td>
-<td>131.4941</td>
-<td>746639</td>
+<td>2021-11-15 05:00:00</td>
+<td>150.37</td>
+<td>151.880</td>
+<td>149.4300</td>
+<td>150.00</td>
+<td>59182803.0</td>
+<td>150.2881</td>
+<td>422055</td>
 <td>None</td>
+<td>146.769090</td>
+<td>148.242930</td>
+<td>145.851600</td>
+<td>146.407950</td>
+<td>146.689151</td>
 </tr>
 </tbody>
 </table>
@@ -8563,7 +8594,7 @@ Polygon data complete for AMZN day data.
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Future-Investigation">Future Investigation<a class="anchor-link" href="#Future-Investigation">¶</a></h2>
+<h3 id="Dividend-Adjustment">Dividend Adjustment<a class="anchor-link" href="#Dividend-Adjustment">¶</a></h3>
 </div>
 </div>
 </div>
@@ -8574,9 +8605,395 @@ Polygon data complete for AMZN day data.
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<ol>
-<li>Calculate adjusted open/high/low/close prices using the dividend adjustment factor.</li>
-</ol>
+<p>Setting <code>adjusted=True</code> makes the API adjust the bars for splits, but not for dividends. To get total return prices, <code>polygon_pull_equity_data</code> makes one more request, to Massive's dividends endpoint (<code>client.list_stocks_dividends</code>). Each dividend record there carries a <code>historical_adjustment_factor</code>, and Massive documents how to use it: for a price on date D, find the first dividend whose ex-dividend date falls after D, and multiply the price by that dividend's factor. The factors are already cumulative, so no running product is needed, and bars on or after the most recent ex-dividend date get a factor of 1.</p>
+<p><code>apply_dividend_adjustment</code> does this lookup with a forward <code>merge_asof</code> and multiplies the split-adjusted open, high, low, close, and VWAP by the result to create <code>adj_open</code>, <code>adj_high</code>, <code>adj_low</code>, <code>adj_close</code>, and <code>adj_vwap</code>. A few details are worth noting:</p>
+<ul>
+<li>Every new dividend changes the factor for all of the history before it, so the adjusted columns are recomputed over the full record on every run rather than only for the newly appended rows.</li>
+<li>Volume gets no dividend adjustment. A cash dividend doesn't change the number of shares outstanding or traded, so only the split adjustment the API already applies is needed.</li>
+<li>The timestamps are in UTC, so each bar is first mapped to its trading date in US/Eastern time. Otherwise an after-hours minute or hour bar, which falls after midnight UTC, would be counted as part of the next session.</li>
+</ul>
+<p>If <code>adjusted=False</code>, the prices aren't split-adjusted, so applying the factors would be wrong across any split. In that case the function skips the adjusted columns and prints a note saying so.</p>
+<p>Here is the ratio of <code>adj_close</code> to <code>close</code> on the last bar before each recent ex-dividend date, which is where the factor steps up:</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=08d029d7">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">ratio</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"adj_close"</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s2">"close"</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">ratio</span><span class="o">.</span><span class="n">ne</span><span class="p">(</span><span class="n">ratio</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)),</span> <span class="p">[</span><span class="s2">"Date"</span><span class="p">,</span> <span class="s2">"close"</span><span class="p">,</span> <span class="s2">"adj_close"</span><span class="p">]]</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">factor</span><span class="o">=</span><span class="n">ratio</span><span class="p">)</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Date</th>
+<th>close</th>
+<th>adj_close</th>
+<th>factor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>814</th>
+<td>2025-02-07 05:00:00</td>
+<td>227.63</td>
+<td>225.818293</td>
+<td>0.992041</td>
+</tr>
+<tr>
+<th>877</th>
+<td>2025-05-09 04:00:00</td>
+<td>198.53</td>
+<td>197.166496</td>
+<td>0.993132</td>
+</tr>
+<tr>
+<th>939</th>
+<td>2025-08-08 04:00:00</td>
+<td>229.35</td>
+<td>228.073667</td>
+<td>0.994435</td>
+</tr>
+<tr>
+<th>1003</th>
+<td>2025-11-07 05:00:00</td>
+<td>268.47</td>
+<td>267.278799</td>
+<td>0.995563</td>
+</tr>
+<tr>
+<th>1064</th>
+<td>2026-02-06 05:00:00</td>
+<td>278.12</td>
+<td>277.154367</td>
+<td>0.996528</td>
+</tr>
+<tr>
+<th>1127</th>
+<td>2026-05-08 04:00:00</td>
+<td>293.32</td>
+<td>292.575261</td>
+<td>0.997461</td>
+</tr>
+<tr>
+<th>1189</th>
+<td>2026-08-07 04:00:00</td>
+<td>313.33</td>
+<td>312.822405</td>
+<td>0.998380</td>
+</tr>
+<tr>
+<th>1256</th>
+<td>2026-11-11 05:00:00</td>
+<td>355.63</td>
+<td>355.360077</td>
+<td>0.999241</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=7034f9d3">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Polygon-Resample-Period-End">Polygon Resample Period End<a class="anchor-link" href="#Polygon-Resample-Period-End">¶</a></h3>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f2bcca89">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Monthly and quarterly analysis doesn't need daily bars, so this function makes a lower-frequency copy of a record already on disk. It makes no API calls. It reads the existing pickle file, keeps <code>close</code> (plus <code>adj_close</code> when the file has it), and takes the last value in each month or quarter. The <code>period</code> argument chooses between the two: <code>month</code> resamples to month-end and <code>quarter</code> resamples to quarter-end. Any other value raises an exception.</p>
+<p>The other arguments work the same as above, with <code>timespan</code> naming the record to read. The results go in their own directories alongside the daily data, so the two examples below write:</p>
+<div class="highlight"><pre><span></span>Data/Polygon/Equities/Month_End/AAPL_ME.pkl
+Data/Polygon/Equities/Month_End/AAPL_ME.xlsx
+Data/Polygon/Equities/Month_End/AAPL_ME.parquet
+Data/Polygon/Equities/Quarter_End/AAPL_QE.pkl
+Data/Polygon/Equities/Quarter_End/AAPL_QE.xlsx
+Data/Polygon/Equities/Quarter_End/AAPL_QE.parquet
+</pre></div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=041da5f3">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Example usage - month end</span>
+<span class="n">df_month_end</span> <span class="o">=</span> <span class="n">polygon_resample_period_end</span><span class="p">(</span>
+    <span class="n">base_directory</span><span class="o">=</span><span class="n">DATA_DIR</span><span class="p">,</span>
+    <span class="n">ticker</span><span class="o">=</span><span class="s2">"AAPL"</span><span class="p">,</span>
+    <span class="n">source</span><span class="o">=</span><span class="s2">"Polygon"</span><span class="p">,</span>
+    <span class="n">asset_class</span><span class="o">=</span><span class="s2">"Equities"</span><span class="p">,</span>
+    <span class="n">timespan</span><span class="o">=</span><span class="s2">"day"</span><span class="p">,</span>
+    <span class="n">period</span><span class="o">=</span><span class="s2">"month"</span><span class="p">,</span>
+    <span class="n">excel_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">pickle_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">parquet_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">output_confirmation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Example usage - quarter end</span>
+<span class="n">df_quarter_end</span> <span class="o">=</span> <span class="n">polygon_resample_period_end</span><span class="p">(</span>
+    <span class="n">base_directory</span><span class="o">=</span><span class="n">DATA_DIR</span><span class="p">,</span>
+    <span class="n">ticker</span><span class="o">=</span><span class="s2">"AAPL"</span><span class="p">,</span>
+    <span class="n">source</span><span class="o">=</span><span class="s2">"Polygon"</span><span class="p">,</span>
+    <span class="n">asset_class</span><span class="o">=</span><span class="s2">"Equities"</span><span class="p">,</span>
+    <span class="n">timespan</span><span class="o">=</span><span class="s2">"day"</span><span class="p">,</span>
+    <span class="n">period</span><span class="o">=</span><span class="s2">"quarter"</span><span class="p">,</span>
+    <span class="n">excel_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">pickle_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">parquet_export</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">output_confirmation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Month end data complete for AAPL
+--------------------
+Quarter end data complete for AAPL
+--------------------
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d8714ae7">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Unlike the daily data, the result is indexed by the period-end date. Here are the last five month-end rows:</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=4e7b349e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">df_month_end</span><span class="o">.</span><span class="n">tail</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>close</th>
+<th>adj_close</th>
+</tr>
+<tr>
+<th>Date</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>2026-07-31</th>
+<td>308.91</td>
+<td>308.409566</td>
+</tr>
+<tr>
+<th>2026-08-31</th>
+<td>316.85</td>
+<td>316.609511</td>
+</tr>
+<tr>
+<th>2026-09-30</th>
+<td>333.02</td>
+<td>332.767238</td>
+</tr>
+<tr>
+<th>2026-10-31</th>
+<td>344.63</td>
+<td>344.368426</td>
+</tr>
+<tr>
+<th>2026-11-30</th>
+<td>355.63</td>
+<td>355.360077</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b4029d54">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>And the last five quarter-end rows:</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=f08dc912">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">df_quarter_end</span><span class="o">.</span><span class="n">tail</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>close</th>
+<th>adj_close</th>
+</tr>
+<tr>
+<th>Date</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>2025-12-31</th>
+<td>271.86</td>
+<td>270.916102</td>
+</tr>
+<tr>
+<th>2026-03-31</th>
+<td>253.79</td>
+<td>253.145627</td>
+</tr>
+<tr>
+<th>2026-06-30</th>
+<td>289.36</td>
+<td>288.891237</td>
+</tr>
+<tr>
+<th>2026-09-30</th>
+<td>333.02</td>
+<td>332.767238</td>
+</tr>
+<tr>
+<th>2026-12-31</th>
+<td>355.63</td>
+<td>355.360077</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 </div>
