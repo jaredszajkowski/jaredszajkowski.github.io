@@ -139,7 +139,7 @@ def polygon_fetch_options_contracts(
         as_of=fmt(as_of),
         sort="expiration_date",
         order="asc",
-        limit=1000,
+        limit=500,
     )
 
     contracts_df = pd.DataFrame(
@@ -178,13 +178,14 @@ def polygon_fetch_options_full_history(
     """
     Fetch full historical aggregate data for an option contract from Polygon API.
 
-    Differs from the equity version in two ways, because option contracts trade
-    sparsely and have a finite life:
-    - The pull stops at end_date (the day after expiration, or now if still active).
-    - The start and end of each window move independently. The end moves forward
-      by time_delta on every pass, and the start follows the last bar pulled minus
-      time_overlap. Each window therefore contains the last pulled bar, even across
-      a trading gap, so the overlap check always has a row to compare against.
+    Differs from the equity version because option contracts have a finite life:
+    the pull stops at end_date (the day after expiration, or now if still active).
+
+    As in the equity version, the start of each window follows the last bar pulled
+    minus time_overlap. When a pull returns no later bar than the previous pull,
+    the start stays in place and the end extends by another time_delta (capped at
+    end_date), so the window still contains the last pulled bar across a trading
+    gap and the overlap check has a row to compare against.
 
     Parameters:
     -----------
@@ -238,10 +239,17 @@ def polygon_fetch_options_full_history(
     # Set current_end to the start of the window
     current_end = current_start
 
+    # Date of the latest bar returned by any pull so far, used to detect a pull
+    # that did not move forward
+    latest_bar_date = None
+
     while current_start < end_date:
 
         # Move the end of the window forward by time_delta, capped at end_date
         current_end = min(current_end + timedelta(days=time_delta), end_date)
+
+        # Set to True if this pull returns a bar later than any previous pull
+        progress = False
 
         if verbose == True:
             print(
@@ -308,8 +316,13 @@ def polygon_fetch_options_full_history(
                     print(full_history_df)
 
                 # Start the next window before the last bar pulled, so that the bar
-                # is included in the next overlap check
-                current_start = new_data["Date"].max() - timedelta(days=time_overlap)
+                # is included in the next overlap check. If the pull did not return
+                # a later bar than the previous pull, leave current_start in place.
+                new_latest_bar_date = new_data["Date"].max()
+                if latest_bar_date is None or new_latest_bar_date > latest_bar_date:
+                    progress = True
+                    latest_bar_date = new_latest_bar_date
+                    current_start = latest_bar_date - timedelta(days=time_overlap)
 
         # Exception handling for failed data pull
         except Exception as e:
@@ -321,8 +334,17 @@ def polygon_fetch_options_full_history(
         # Break out of while loop once the window has reached end_date
         if current_end >= end_date:
             break
-        else:
+        elif progress == True:
             current_end = current_start
+        else:
+            # The window held no bars beyond those already pulled (a gap in the
+            # data longer than the window, or no data yet). Keep current_start
+            # anchored so the next pull still overlaps the existing data, and leave
+            # current_end in place so the window extends by another time_delta.
+            # Always prints regardless of the verbose setting
+            print(
+                f"No new data for {ticker} from {current_start} thru {current_end}...extending the window.\n"
+            )
 
         # Check for free tier and if so then pause for 12 seconds to avoid hitting
         # API rate limits
@@ -562,13 +584,13 @@ if __name__ == "__main__":
             underlying_ticker=underlying,
             contract_type=None,
             expiration_date_gte=datetime.now(),
-            expiration_date_lte=datetime.now() + timedelta(days=1095),
+            expiration_date_lte=datetime.now() + timedelta(days=365),
             strike_price_gte=None,
             strike_price_lte=None,
             expired=False,
             as_of=None,
             free_tier=GLOBAL_FREE_TIER,
-            verbose=False,
+            verbose=True,
         )
 
         # Export contract list for that underlying ticker
@@ -587,7 +609,7 @@ if __name__ == "__main__":
                     ticker=option_ticker,
                     source="Polygon",
                     asset_class="Options",
-                    start_date=datetime.now() - timedelta(days=2 * 365),
+                    start_date=datetime.now() - timedelta(days=0 * 365),
                     timespan=timespan,
                     multiplier=1,
                     force_existing_check=False,

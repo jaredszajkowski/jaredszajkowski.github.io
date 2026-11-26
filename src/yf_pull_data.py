@@ -3,6 +3,10 @@ import pandas as pd
 import yfinance as yf
 
 from IPython.display import display
+from settings import config
+
+# Get the environment variable for where data is stored
+DATA_DIR = config("DATA_DIR")
 
 
 def yf_pull_data(
@@ -66,7 +70,7 @@ def yf_pull_data(
     df = df.drop(df.index[-1])
 
     # Create directory
-    directory = f"{base_directory}/{source}/{asset_class}/Daily"
+    directory = f"{base_directory}/{source}/{asset_class}/day"
     os.makedirs(directory, exist_ok=True)
 
     # Export to excel
@@ -92,3 +96,17 @@ def yf_pull_data(
         pass
 
     return df
+
+
+if __name__ == "__main__":
+
+    yf_pull_data(
+        base_directory=DATA_DIR,
+        ticker="AAPL",
+        adjusted=False,
+        source="Yahoo_Finance",
+        asset_class="Equities",
+        excel_export=True,
+        pickle_export=True,
+        output_confirmation=True,
+    )

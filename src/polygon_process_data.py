@@ -31,8 +31,8 @@ hour), plus the month-end, quarter-end, and options contract list files.
 """
 
 import os
-from matplotlib.pylab import true_divide
 import pandas as pd
+import time
 
 from datetime import datetime, timedelta
 from massive import RESTClient
@@ -46,7 +46,7 @@ from polygon_pull_options_data import (
     polygon_fetch_options_contracts,
     polygon_pull_options_data,
 )
-from polygon_resample_period_end import polygon_resample_period_end
+from resample_period_end import resample_period_end
 from settings import config
 
 # Get the environment variable for where data is stored
@@ -62,8 +62,8 @@ GLOBAL_VERBOSE = True
 # Massive (Polygon) sells a separate subscription for each data type.
 # True = paid plan, False = free tier.
 GLOBAL_PAID_ACCESS = {
-    "equities": True,
-    "etfs": True,
+    "equities": False,
+    "etfs": False,
     "indices": False,
     "options": False,
     "futures": False,
@@ -122,33 +122,20 @@ def pull_equities():
                 output_confirmation=True,
             )
 
-        # Resample to month-end data
-        polygon_resample_period_end(
-            base_directory=DATA_DIR,
-            ticker=stock,
-            source="Polygon",
-            asset_class="Equities",
-            timespan="day",
-            period="month",
-            excel_export=True,
-            pickle_export=True,
-            parquet_export=GLOBAL_PARQUET_EXPORT,
-            output_confirmation=True,
-        )
-
-        # Resample to quarter-end data
-        polygon_resample_period_end(
-            base_directory=DATA_DIR,
-            ticker=stock,
-            source="Polygon",
-            asset_class="Equities",
-            timespan="day",
-            period="quarter",
-            excel_export=True,
-            pickle_export=True,
-            parquet_export=GLOBAL_PARQUET_EXPORT,
-            output_confirmation=True,
-        )
+        # Resample to month-end and quarter-end data
+        for period in ["month", "quarter"]:
+            resample_period_end(
+                base_directory=DATA_DIR,
+                ticker=stock,
+                source="Polygon",
+                asset_class="Equities",
+                timespan="day",
+                period=period,
+                excel_export=True,
+                pickle_export=True,
+                parquet_export=GLOBAL_PARQUET_EXPORT,
+                output_confirmation=True,
+            )
 
 
 def pull_indices():
@@ -184,33 +171,20 @@ def pull_indices():
                 output_confirmation=True,
             )
 
-        # Resample to month-end data
-        polygon_resample_period_end(
-            base_directory=DATA_DIR,
-            ticker=file_ticker,
-            source="Polygon",
-            asset_class="Indices",
-            timespan="day",
-            period="month",
-            excel_export=True,
-            pickle_export=True,
-            parquet_export=GLOBAL_PARQUET_EXPORT,
-            output_confirmation=True,
-        )
-
-        # Resample to quarter-end data
-        polygon_resample_period_end(
-            base_directory=DATA_DIR,
-            ticker=file_ticker,
-            source="Polygon",
-            asset_class="Indices",
-            timespan="day",
-            period="quarter",
-            excel_export=True,
-            pickle_export=True,
-            parquet_export=GLOBAL_PARQUET_EXPORT,
-            output_confirmation=True,
-        )
+        # Resample to month-end and quarter-end data
+        for period in ["month", "quarter"]:
+            resample_period_end(
+                base_directory=DATA_DIR,
+                ticker=file_ticker,
+                source="Polygon",
+                asset_class="Indices",
+                timespan="day",
+                period=period,
+                excel_export=True,
+                pickle_export=True,
+                parquet_export=GLOBAL_PARQUET_EXPORT,
+                output_confirmation=True,
+            )
 
 
 def pull_etfs():
@@ -243,33 +217,20 @@ def pull_etfs():
                 output_confirmation=True,
             )
 
-        # Resample to month-end data
-        polygon_resample_period_end(
-            base_directory=DATA_DIR,
-            ticker=fund,
-            source="Polygon",
-            asset_class="Exchange_Traded_Funds",
-            timespan="day",
-            period="month",
-            excel_export=True,
-            pickle_export=True,
-            parquet_export=GLOBAL_PARQUET_EXPORT,
-            output_confirmation=True,
-        )
-
-        # Resample to quarter-end data
-        polygon_resample_period_end(
-            base_directory=DATA_DIR,
-            ticker=fund,
-            source="Polygon",
-            asset_class="Exchange_Traded_Funds",
-            timespan="day",
-            period="quarter",
-            excel_export=True,
-            pickle_export=True,
-            parquet_export=GLOBAL_PARQUET_EXPORT,
-            output_confirmation=True,
-        )
+        # Resample to month-end and quarter-end data
+        for period in ["month", "quarter"]:
+            resample_period_end(
+                base_directory=DATA_DIR,
+                ticker=fund,
+                source="Polygon",
+                asset_class="Exchange_Traded_Funds",
+                timespan="day",
+                period=period,
+                excel_export=True,
+                pickle_export=True,
+                parquet_export=GLOBAL_PARQUET_EXPORT,
+                output_confirmation=True,
+            )
 
 
 def pull_options(client):
@@ -368,17 +329,34 @@ def pull_futures():
                 output_confirmation=True,
             )
 
+            # Check for free tier and if so then pause for 12 seconds to avoid hitting
+            # API rate limits
+            if tier["free_tier"] == True:
+                print(f"Sleeping for 13 seconds to avoid hitting API rate limits...\n")
+                time.sleep(13)
+
 
 def main():
     client = RESTClient(api_key=POLYGON_KEY)
 
-    # Crypto data: none
-    pull_equities()
-    pull_indices()
-    pull_etfs()
-    # Mutual fund data: none
-    pull_options(client)
-    pull_futures()
+    # Crypto and mutual fund data: none
+    pulls = [
+        pull_equities,
+        pull_indices,
+        pull_etfs,
+        lambda: pull_options(client),
+        pull_futures,
+    ]
+
+    # Sleep between sections (not after the last) so the first API call of
+    # one section does not land inside the rate limit window of the previous
+    # This is a fix for the API rate limit on the free tier, but has minimal
+    # impact for the paid tiers
+    for i, pull in enumerate(pulls):
+        if i > 0:
+            print("Sleeping for 13 seconds to avoid hitting API rate limits...\n")
+            time.sleep(13)
+        pull()
 
 
 if __name__ == "__main__":

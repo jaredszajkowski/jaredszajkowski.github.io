@@ -2,7 +2,7 @@ import os
 import pandas as pd
 
 
-def polygon_resample_period_end(
+def resample_period_end(
     base_directory,
     ticker: str,
     source: str,
@@ -25,7 +25,7 @@ def polygon_resample_period_end(
     ticker : str
         Ticker symbol to resample.
     source : str
-        Name of the data source (e.g., 'Polygon').
+        Name of the data source (e.g., 'Polygon', 'Yahoo_Finance').
     asset_class : str
         Asset class name (e.g., 'Equities').
     timespan : str
@@ -50,8 +50,8 @@ def polygon_resample_period_end(
 
     # Resample frequency, output directory, and file suffix for each period
     period_settings = {
-        "month": {"freq": "ME", "directory": "Month_End", "suffix": "ME"},
-        "quarter": {"freq": "QE", "directory": "Quarter_End", "suffix": "QE"},
+        "month": {"freq": "ME", "directory": "month_end", "suffix": "ME"},
+        "quarter": {"freq": "QE", "directory": "quarter_end", "suffix": "QE"},
     }
     if period not in period_settings:
         raise Exception(
@@ -70,8 +70,14 @@ def polygon_resample_period_end(
         df = df.reset_index()
 
     # Keep only required columns
-    keep_cols = ["Date", "close"] + (["adj_close"] if "adj_close" in df.columns else [])
-    df = df[keep_cols]
+    if source == "Polygon":
+        keep_cols = ["Date", "close"] + (["adj_close"] if "adj_close" in df.columns else [])
+        df = df[keep_cols]
+    elif source == "Yahoo_Finance":
+        keep_cols = ["Date", "Close"] + (["Adj Close"] if "Adj Close" in df.columns else [])
+        df = df[keep_cols]
+    else:
+        raise Exception(f"Unsupported source: {source}")
 
     # Set index to date column
     df = df.set_index("Date")

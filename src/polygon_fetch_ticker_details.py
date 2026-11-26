@@ -223,7 +223,14 @@ if __name__ == "__main__":
         ],
         "futures.csv": [
             # Put new tickers here that you want to pull details for
-            "ESZ6",
+            # *[f"ES{month}4" for month in "HMUZ"],
+            # *[f"ES{month}5" for month in "HMUZ"],
+            # *[f"ES{month}6" for month in "HMUZ"],
+            # *[f"ES{month}7" for month in "HMUZ"],
+            *[f"VX{month}4" for month in "FGHJKMNQUVXZ"],
+            *[f"VX{month}5" for month in "FGHJKMNQUVXZ"],
+            *[f"VX{month}6" for month in "FGHJKMNQUVXZ"],
+            *[f"VX{month}7" for month in "FGHJKMNQUVXZ"],
         ],
     }
 

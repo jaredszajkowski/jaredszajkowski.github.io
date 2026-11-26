@@ -82,10 +82,17 @@ def polygon_fetch_full_history(
     # Set current_end to the start of the window
     current_end = current_start
 
+    # Date of the latest bar returned by any pull so far, used to detect a pull
+    # that did not move forward
+    latest_bar_date = None
+
     while current_start < datetime.now():
 
         # Move the end of the window forward by time_delta
         current_end = current_end + timedelta(days=time_delta)
+
+        # Set to True if this pull returns a bar later than any previous pull
+        progress = False
 
         if verbose == True:
             print(
@@ -153,8 +160,13 @@ def polygon_fetch_full_history(
                     print(full_history_df)
 
                 # Start the next window before the last bar pulled, so that the bar
-                # is included in the next overlap check
-                current_start = new_data["Date"].max() - timedelta(days=time_overlap)
+                # is included in the next overlap check. If the pull did not return
+                # a later bar than the previous pull, leave current_start in place.
+                new_latest_bar_date = new_data["Date"].max()
+                if latest_bar_date is None or new_latest_bar_date > latest_bar_date:
+                    progress = True
+                    latest_bar_date = new_latest_bar_date
+                    current_start = latest_bar_date - timedelta(days=time_overlap)
 
         # Exception handling for failed data pull
         except Exception as e:
@@ -166,15 +178,24 @@ def polygon_fetch_full_history(
         # Break out of while loop if current_end is beyond the present date
         if current_end >= datetime.now():
             break
-        else:
+        elif progress == True:
             current_end = current_start
+        else:
+            # The window held no bars beyond those already pulled (a gap in the
+            # data longer than the window, or no data yet). Keep current_start
+            # anchored so the next pull still overlaps the existing data, and leave
+            # current_end in place so the window extends by another time_delta.
+            # Always prints regardless of the verbose setting
+            print(
+                f"No new data for {ticker} from {current_start} thru {current_end}...extending the window.\n"
+            )
 
         # Check for free tier and if so then pause for 12 seconds to avoid hitting
         # API rate limits
         if free_tier == True:
             if verbose == True:
-                print(f"Sleeping for 12 seconds to avoid hitting API rate limits...\n")
-            time.sleep(12)
+                print(f"Sleeping for 13 seconds to avoid hitting API rate limits...\n")
+            time.sleep(13)
 
     # Return the DataFrame containing the full history
     return full_history_df
@@ -222,8 +243,8 @@ def polygon_fetch_dividend_factors(
     # API rate limits
     if free_tier == True:
         if verbose == True:
-            print(f"Sleeping for 12 seconds to avoid hitting API rate limits...\n")
-        time.sleep(12)
+            print(f"Sleeping for 13 seconds to avoid hitting API rate limits...\n")
+        time.sleep(13)
 
     print(f"Pulling dividend adjustment factors for {ticker}...")
 
@@ -581,4 +602,4 @@ if __name__ == "__main__":
             )
 
             if GLOBAL_FREE_TIER == True:
-                time.sleep(12)
+                time.sleep(13)
